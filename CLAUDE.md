@@ -27,8 +27,7 @@ src/
   main.jsx          importa tokens.css
   App.jsx           banco de pruebas temporal (se sobrescribe)
 docs/
-  project-overview.md
-  component-inventory.md
+  architecture.md
 ```
 
 ## Reglas críticas — NO hacer nunca
@@ -140,14 +139,15 @@ Fix [ComponentName]: descripción del fix
 
 ## Estado actual
 
-✅ tokens.css — generado desde Figma, variables --ds-*
-✅ Button.jsx — DS v2, pill shape, Lucide icons, sin hexes
-✅ ButtonBar.jsx — DS v2, tokens, variantes correctas
-✅ Input.jsx — DS v2, todos los estados, forwardRef, aria completo
-✅ CLAUDE.md — convenciones del proyecto
-✅ 8 commits en GitHub, historial limpio
+✅✅ tokens.css — paleta + tipografía completa
+✅ Button.jsx — DS v2, pill shape, Lucide icons
+✅ ButtonBar.jsx — DS v2, variantes correctas
+✅ Input.jsx — todos los estados, forwardRef, aria completo
+✅ Checkbox.jsx — DS v2, indeterminate, aria-checked=mixed
+✅ 2 commits en GitHub, historial limpio
 
-🔄 Siguiente: Label o Checkbox → organismos de formulario
+🔄 Siguiente: Radio o Link
+
 
 ## Arquitectura (dos capas)
 
