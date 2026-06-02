@@ -1,0 +1,336 @@
+/**
+ * tokens.css â€” CS Design System
+ * Generado desde Figma CS Design System (29/05/2026)
+ * Fuente: Base_tokens Â· Mode (Light/Dark) Â· Component_tokens
+ *
+ * ESTRUCTURA:
+ *   1. Base color palette   â†’ --ds-color-{group}-{step}
+ *   2. Semantic tokens      â†’ --ds-fg-* Â· --ds-bg-* Â· --ds-borderColor-*
+ *   3. Component tokens     â†’ --ds-button-*
+ *   4. Shadows & misc
+ *   5. Dark mode override
+ */
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   1. BASE COLOR PALETTE
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+:root {
+
+  /* Primary â€” teal */
+  --ds-color-primary-50:  #F7FBFC;
+  --ds-color-primary-100: #E8F4F7;
+  --ds-color-primary-200: #CAE6ED;
+  --ds-color-primary-300: #A0D1DE;
+  --ds-color-primary-400: #75BDCF;
+  --ds-color-primary-500: #4BA9C0;
+  --ds-color-primary-600: #36879C;
+  --ds-color-primary-700: #286371;
+  --ds-color-primary-800: #193E47;
+  --ds-color-primary-900: #0A191D;
+  --ds-color-primary-950: #030708;
+
+  /* Secondary â€” pink */
+  --ds-color-secondary-50:  #FEF6F9;
+  --ds-color-secondary-100: #FBE4EE;
+  --ds-color-secondary-200: #F6C1D8;
+  --ds-color-secondary-300: #EE8FB9;
+  --ds-color-secondary-400: #E75D9B;
+  --ds-color-secondary-500: #E02C7C;
+  --ds-color-secondary-600: #B71B60;
+  --ds-color-secondary-700: #851446;
+  --ds-color-secondary-800: #530C2C;
+  --ds-color-secondary-900: #220512;
+  --ds-color-secondary-950: #090105;
+
+  /* Tertiary â€” lavender */
+  --ds-color-tertiary-50:  #F6F1F8;
+  --ds-color-tertiary-100: #EDE3F1;
+  --ds-color-tertiary-200: #DDCAE6;
+  --ds-color-tertiary-300: #CAABD7;
+  --ds-color-tertiary-400: #B890CA;
+  --ds-color-tertiary-500: #B185C5;
+  --ds-color-tertiary-600: #9558B0;
+  --ds-color-tertiary-700: #703F87;
+  --ds-color-tertiary-800: #4E2C5D;
+  --ds-color-tertiary-900: #2B1834;
+  --ds-color-tertiary-950: #170D1B;
+
+  /* Neutral */
+  --ds-color-neutral-50:  #F9FAFA;
+  --ds-color-neutral-100: #EEEFF1;
+  --ds-color-neutral-200: #D8DBDE;
+  --ds-color-neutral-300: #B9BEC4;
+  --ds-color-neutral-400: #9AA1AA;
+  --ds-color-neutral-500: #7B8490;
+  --ds-color-neutral-600: #606772;
+  --ds-color-neutral-700: #464B53;
+  --ds-color-neutral-800: #2C2F34;
+  --ds-color-neutral-900: #121315;
+  --ds-color-neutral-950: #050506;
+
+  /* Error */
+  --ds-color-error-50:  #FDF7F7;
+  --ds-color-error-100: #FAE6E6;
+  --ds-color-error-200: #F3C4C4;
+  --ds-color-error-300: #E99595;
+  --ds-color-error-400: #DF6666;
+  --ds-color-error-500: #D53737;
+  --ds-color-error-600: #AD2525;
+  --ds-color-error-700: #7E1B1B;
+  --ds-color-error-800: #4F1111;
+  --ds-color-error-900: #200707;
+
+  /* Warning */
+  --ds-color-warning-50:  #FFFCF5;
+  --ds-color-warning-100: #FFF5E0;
+  --ds-color-warning-200: #FFE7B8;
+  --ds-color-warning-300: #FFD47E;
+  --ds-color-warning-400: #FFC145;
+  --ds-color-warning-500: #FFAE0C;
+  --ds-color-warning-600: #D28C00;
+  --ds-color-warning-700: #996600;
+  --ds-color-warning-800: #604000;
+  --ds-color-warning-900: #271A00;
+
+  /* Success */
+  --ds-color-success-50:  #F8FCF8;
+  --ds-color-success-100: #E9F7E9;
+  --ds-color-success-200: #CBECCC;
+  --ds-color-success-300: #A1DDA4;
+  --ds-color-success-400: #77CE7C;
+  --ds-color-success-500: #4DBE53;
+  --ds-color-success-600: #389A3D;
+  --ds-color-success-700: #29702D;
+  --ds-color-success-800: #1A461C;
+  --ds-color-success-900: #0A1C0B;
+
+  /* Info */
+  --ds-color-info-50:  #F5FBFF;
+  --ds-color-info-100: #E1F4FF;
+  --ds-color-info-200: #B8E6FE;
+  --ds-color-info-300: #80D1FE;
+  --ds-color-info-400: #47BDFD;
+  --ds-color-info-500: #0FA9FD;
+  --ds-color-info-600: #0287D0;
+  --ds-color-info-700: #016398;
+  --ds-color-info-800: #013E5F;
+  --ds-color-info-900: #001926;
+
+  /* White / Black */
+  --ds-color-white: #FFFFFF;
+  --ds-color-black: #000000;
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   2. SEMANTIC TOKENS â€” Light mode (default)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+  /* Foreground */
+  --ds-fg-default:   #050506;
+  --ds-fg-subtle:    #9AA1AA;
+  --ds-fg-disabled:  #B9BEC4;
+  --ds-fg-onColor:   #FFFFFF;
+  --ds-fg-inverse:   #FFFFFF;
+  --ds-fg-primary:   #286371;
+  --ds-fg-secondary: #B71B60;
+  --ds-fg-tertiary:  #B185C5;
+  --ds-fg-error:     #AD2525;
+  --ds-fg-warning:   #FFAE0C;
+  --ds-fg-success:   #389A3D;
+  --ds-fg-info:      #016398;
+
+  /* Background */
+  --ds-bg-default:   #FFFFFF;
+  --ds-bg-subtle:    #EEEFF1;
+  --ds-bg-primary:   #4BA9C0;
+  --ds-bg-secondary: #E02C7C;
+  --ds-bg-tertiary:  #B185C5;
+  --ds-bg-error:     #D53737;
+  --ds-bg-warning:   #FFAE0C;
+  --ds-bg-success:   #389A3D;
+  --ds-bg-info:      #0FA9FD;
+
+  /* Border */
+  --ds-borderColor-default:  #9AA1AA;
+  --ds-borderColor-subtle:   #D8DBDE;
+  --ds-borderColor-primary:  #286371;
+  --ds-borderColor-error:    #AD2525;
+  --ds-borderColor-focus:    #050506;
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   3. COMPONENT TOKENS â€” Button
+   ExtraÃ­dos de Component_tokens / button / all
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+  /* Background */
+  --ds-button-bg-default-filled:    #050506;
+  --ds-button-bg-default-hover:     #050506;
+  --ds-button-bg-accent-filled:     #4BA9C0;
+  --ds-button-bg-accent-hover:      #4BA9C0;
+  --ds-button-bg-disabled:          #EEEFF1;
+
+  /* Border */
+  --ds-button-border-default:          #2C2F34;
+  --ds-button-border-default-disabled: #B9BEC4;
+  --ds-button-border-accent:           #286371;
+  --ds-button-border-accent-disabled:  #B9BEC4;
+  --ds-button-border-focus-inner:      #FFFFFF;
+  --ds-button-border-focus-outer:      #050506;
+
+  /* Foreground / label */
+  --ds-button-fg-default-filled:   #FFFFFF;
+  --ds-button-fg-default-outline:  #050506;
+  --ds-button-fg-accent-filled:    #FFFFFF;
+  --ds-button-fg-accent-outline:   #286371;
+  --ds-button-fg-disabled:         #B9BEC4;
+
+  /* Shape */
+  --ds-button-radius:       80px;
+  --ds-button-border-width: 2px;
+
+  /* Spacing */
+  --ds-button-px-sm: 8px;
+  --ds-button-px-md: 12px;
+  --ds-button-px-lg: 16px;
+  --ds-button-py-sm: 6px;
+  --ds-button-py-md: 6px;
+  --ds-button-py-lg: 8px;
+
+  /* Icon sizes */
+  --ds-button-icon-sm: 16px;
+  --ds-button-icon-md: 20px;
+  --ds-button-icon-lg: 24px;
+
+  /* Hover mix (overlay sobre el color base) */
+  --ds-button-hover-mix-default: rgba(255,255,255,0.08);
+  --ds-button-hover-mix-accent:  rgba(0,0,0,0.08);
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   4. SHADOWS & MISC
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+  --ds-shadow-sm: 0 1px 4px rgba(0,0,0,0.10);
+  --ds-shadow-md: 0 2px 8px rgba(0,0,0,0.15);
+  --ds-shadow-lg: 0 4px 12px rgba(0,0,0,0.20);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   5. DARK MODE
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ds-fg-default:   #F9FAFA;
+    --ds-fg-subtle:    #7B8490;
+    --ds-fg-disabled:  #464B53;
+    --ds-fg-onColor:   #FFFFFF;
+    --ds-fg-inverse:   #050506;
+    --ds-fg-primary:   #4BA9C0;
+    --ds-fg-secondary: #E02C7C;
+    --ds-fg-error:     #D53737;
+
+    --ds-bg-default:   #121315;
+    --ds-bg-subtle:    #2C2F34;
+    --ds-bg-primary:   #286371;
+
+    --ds-borderColor-default: #464B53;
+    --ds-borderColor-subtle:  #2C2F34;
+    --ds-borderColor-focus:   #F9FAFA;
+
+    --ds-button-bg-default-filled:   #F9FAFA;
+    --ds-button-bg-accent-filled:    #4BA9C0;
+    --ds-button-fg-default-filled:   #050506;
+    --ds-button-fg-default-outline:  #F9FAFA;
+    --ds-button-fg-accent-outline:   #4BA9C0;
+    --ds-button-border-default:      #D8DBDE;
+    --ds-button-border-focus-outer:  #F9FAFA;
+  
+    /* ════════════════════════════════════════════════════════════
+   TYPOGRAPHY TOKENS
+   Añadir en tokens.css dentro de :root { }
+   Generado desde Device_Junio_2 (Generic) · 02/06/2026
+   ════════════════════════════════════════════════════════════ */
+
+  /* ── Font family ── */
+  --ds-fontFamily-default:    'Nunito', Arial, sans-serif;
+  --ds-fontFamily-code:       'Courier New', monospace;
+
+  /* ── Font weights ── */
+  --ds-fontWeight-regular: 400;
+  --ds-fontWeight-bold:    700;
+
+  /* ── Label scale ── */
+  --ds-fontSize-label-xs: 12px;
+  --ds-fontSize-label-sm: 14px;
+  --ds-fontSize-label-md: 16px;
+  --ds-fontSize-label-lg: 19px;
+
+  /* ── Body scale ── */
+  --ds-fontSize-body-2xs: 12px;
+  --ds-fontSize-body-xs:  14px;
+  --ds-fontSize-body-sm:  16px;
+  --ds-fontSize-body-md:  19px;
+
+  /* ── Title scale ── */
+  --ds-fontSize-title-sm: 16px;
+  --ds-fontSize-title-md: 19px;
+  --ds-fontSize-title-lg: 24px;
+  --ds-fontSize-title-xl: 32px;
+
+  /* ── Headline scale ── */
+  --ds-fontSize-headline-xs:  19px;
+  --ds-fontSize-headline-sm:  24px;
+  --ds-fontSize-headline-md:  28px;
+  --ds-fontSize-headline-lg:  32px;
+  --ds-fontSize-headline-xl:  36px;
+  --ds-fontSize-headline-2xl: 48px;
+
+  /* ── Annotation scale ── */
+  --ds-fontSize-annotation-sm: 12px;
+  --ds-fontSize-annotation-md: 14px;
+  --ds-fontSize-annotation-lg: 16px;
+
+  /* ── Line heights ── */
+  --ds-fontLheight-3xs: 18px;
+  --ds-fontLheight-2xs: 21px;
+  --ds-fontLheight-xs:  24px;
+  --ds-fontLheight-sm:  28.5px;
+  --ds-fontLheight-md:  36px;
+  --ds-fontLheight-lg:  42px;
+  --ds-fontLheight-xl:  48px;
+  --ds-fontLheight-2xl: 54px;
+  --ds-fontLheight-3xl: 72px;
+
+  /* ── Label line heights (referencia rápida) ──
+     label/xs → --ds-fontLheight-3xs (18px)
+     label/sm → --ds-fontLheight-2xs (21px)
+     label/md → --ds-fontLheight-xs  (24px)
+     label/lg → --ds-fontLheight-sm  (28.5px)
+  ── */
+  }
+}
+
+[data-theme="dark"] {
+  --ds-fg-default:   #F9FAFA;
+  --ds-fg-subtle:    #7B8490;
+  --ds-fg-disabled:  #464B53;
+  --ds-fg-onColor:   #FFFFFF;
+  --ds-fg-inverse:   #050506;
+  --ds-fg-primary:   #4BA9C0;
+  --ds-fg-secondary: #E02C7C;
+  --ds-fg-error:     #D53737;
+
+  --ds-bg-default:   #121315;
+  --ds-bg-subtle:    #2C2F34;
+  --ds-bg-primary:   #286371;
+
+  --ds-borderColor-default: #464B53;
+  --ds-borderColor-subtle:  #2C2F34;
+  --ds-borderColor-focus:   #F9FAFA;
+
+  --ds-button-bg-default-filled:   #F9FAFA;
+  --ds-button-bg-accent-filled:    #4BA9C0;
+  --ds-button-fg-default-filled:   #050506;
+  --ds-button-fg-default-outline:  #F9FAFA;
+  --ds-button-fg-accent-outline:   #4BA9C0;
+  --ds-button-border-default:      #D8DBDE;
+  --ds-button-border-focus-outer:  #F9FAFA;
+}
