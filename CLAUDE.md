@@ -159,7 +159,6 @@ ButtonBar.jsx importa Button.jsx — no reimplementa el botón.
 
 ## Figma MCP (pendiente configurar en Claude Code)
 
-URL: https://mcp.figma.com/mcp
-Archivo DS: https://www.figma.com/design/QiWDJdMPB5pfY3vHy9CqZv/CS---Design-System
-Cuando esté configurado, hacer Explore antes de cualquier implementación:
-"Read Figma file [URL], component [nombre]. Don't write code yet."
+## Figma MCP
+Usar siempre claude.ai Figma (OAuth) — nunca añadir manualmente.
+Si falla: claude mcp remove figma (el OAuth se activa solo).
