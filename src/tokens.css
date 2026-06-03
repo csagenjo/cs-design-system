@@ -1,22 +1,23 @@
 /**
- * tokens.css â€” CS Design System
+ * tokens.css — CS Design System
  * Generado desde Figma CS Design System (29/05/2026)
- * Fuente: Base_tokens Â· Mode (Light/Dark) Â· Component_tokens
+ * Fuente: Base_tokens · Mode (Light/Dark) · Component_tokens
  *
  * ESTRUCTURA:
- *   1. Base color palette   â†’ --ds-color-{group}-{step}
- *   2. Semantic tokens      â†’ --ds-fg-* Â· --ds-bg-* Â· --ds-borderColor-*
- *   3. Component tokens     â†’ --ds-button-*
- *   4. Shadows & misc
- *   5. Dark mode override
+ *   1. Base color palette   → --ds-color-{group}-{step}
+ *   2. Semantic tokens      → --ds-fg-* · --ds-bg-* · --ds-borderColor-*
+ *   3. Component tokens     → --ds-button-*
+ *   4. Typography tokens    → --ds-fontFamily-* · --ds-fontWeight-* · --ds-fontSize-* · --ds-fontLheight-*
+ *   5. Shadows & misc
+ *   6. Dark mode override
  */
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ══════════════════════════════════════════════════════════════
    1. BASE COLOR PALETTE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ══════════════════════════════════════════════════════════════ */
 :root {
 
-  /* Primary â€” teal */
+  /* Primary — teal */
   --ds-color-primary-50:  #F7FBFC;
   --ds-color-primary-100: #E8F4F7;
   --ds-color-primary-200: #CAE6ED;
@@ -29,7 +30,7 @@
   --ds-color-primary-900: #0A191D;
   --ds-color-primary-950: #030708;
 
-  /* Secondary â€” pink */
+  /* Secondary — pink */
   --ds-color-secondary-50:  #FEF6F9;
   --ds-color-secondary-100: #FBE4EE;
   --ds-color-secondary-200: #F6C1D8;
@@ -42,7 +43,7 @@
   --ds-color-secondary-900: #220512;
   --ds-color-secondary-950: #090105;
 
-  /* Tertiary â€” lavender */
+  /* Tertiary — lavender */
   --ds-color-tertiary-50:  #F6F1F8;
   --ds-color-tertiary-100: #EDE3F1;
   --ds-color-tertiary-200: #DDCAE6;
@@ -120,9 +121,9 @@
   --ds-color-white: #FFFFFF;
   --ds-color-black: #000000;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   2. SEMANTIC TOKENS â€” Light mode (default)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══════════════════════════════════════════════════════════════
+   2. SEMANTIC TOKENS — Light mode (default)
+   ══════════════════════════════════════════════════════════════ */
 
   /* Foreground */
   --ds-fg-default:   #050506;
@@ -156,10 +157,10 @@
   --ds-borderColor-error:    #AD2525;
   --ds-borderColor-focus:    #050506;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   3. COMPONENT TOKENS â€” Button
-   ExtraÃ­dos de Component_tokens / button / all
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ══════════════════════════════════════════════════════════════
+   3. COMPONENT TOKENS — Button
+   Extraídos de Component_tokens / button / all
+   ══════════════════════════════════════════════════════════════ */
 
   /* Background */
   --ds-button-bg-default-filled:    #050506;
@@ -204,50 +205,10 @@
   --ds-button-hover-mix-default: rgba(255,255,255,0.08);
   --ds-button-hover-mix-accent:  rgba(0,0,0,0.08);
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   4. SHADOWS & MISC
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-
-  --ds-shadow-sm: 0 1px 4px rgba(0,0,0,0.10);
-  --ds-shadow-md: 0 2px 8px rgba(0,0,0,0.15);
-  --ds-shadow-lg: 0 4px 12px rgba(0,0,0,0.20);
-}
-
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   5. DARK MODE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ds-fg-default:   #F9FAFA;
-    --ds-fg-subtle:    #7B8490;
-    --ds-fg-disabled:  #464B53;
-    --ds-fg-onColor:   #FFFFFF;
-    --ds-fg-inverse:   #050506;
-    --ds-fg-primary:   #4BA9C0;
-    --ds-fg-secondary: #E02C7C;
-    --ds-fg-error:     #D53737;
-
-    --ds-bg-default:   #121315;
-    --ds-bg-subtle:    #2C2F34;
-    --ds-bg-primary:   #286371;
-
-    --ds-borderColor-default: #464B53;
-    --ds-borderColor-subtle:  #2C2F34;
-    --ds-borderColor-focus:   #F9FAFA;
-
-    --ds-button-bg-default-filled:   #F9FAFA;
-    --ds-button-bg-accent-filled:    #4BA9C0;
-    --ds-button-fg-default-filled:   #050506;
-    --ds-button-fg-default-outline:  #F9FAFA;
-    --ds-button-fg-accent-outline:   #4BA9C0;
-    --ds-button-border-default:      #D8DBDE;
-    --ds-button-border-focus-outer:  #F9FAFA;
-  
-    /* ════════════════════════════════════════════════════════════
-   TYPOGRAPHY TOKENS
-   Añadir en tokens.css dentro de :root { }
+/* ══════════════════════════════════════════════════════════════
+   4. TYPOGRAPHY TOKENS
    Generado desde Device_Junio_2 (Generic) · 02/06/2026
-   ════════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════════ */
 
   /* ── Font family ── */
   --ds-fontFamily-default:    'Nunito', Arial, sans-serif;
@@ -305,6 +266,45 @@
      label/md → --ds-fontLheight-xs  (24px)
      label/lg → --ds-fontLheight-sm  (28.5px)
   ── */
+
+/* ══════════════════════════════════════════════════════════════
+   5. SHADOWS & MISC
+   ══════════════════════════════════════════════════════════════ */
+
+  --ds-shadow-sm: 0 1px 4px rgba(0,0,0,0.10);
+  --ds-shadow-md: 0 2px 8px rgba(0,0,0,0.15);
+  --ds-shadow-lg: 0 4px 12px rgba(0,0,0,0.20);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. DARK MODE
+   ══════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ds-fg-default:   #F9FAFA;
+    --ds-fg-subtle:    #7B8490;
+    --ds-fg-disabled:  #464B53;
+    --ds-fg-onColor:   #FFFFFF;
+    --ds-fg-inverse:   #050506;
+    --ds-fg-primary:   #4BA9C0;
+    --ds-fg-secondary: #E02C7C;
+    --ds-fg-error:     #D53737;
+
+    --ds-bg-default:   #121315;
+    --ds-bg-subtle:    #2C2F34;
+    --ds-bg-primary:   #286371;
+
+    --ds-borderColor-default: #464B53;
+    --ds-borderColor-subtle:  #2C2F34;
+    --ds-borderColor-focus:   #F9FAFA;
+
+    --ds-button-bg-default-filled:   #F9FAFA;
+    --ds-button-bg-accent-filled:    #4BA9C0;
+    --ds-button-fg-default-filled:   #050506;
+    --ds-button-fg-default-outline:  #F9FAFA;
+    --ds-button-fg-accent-outline:   #4BA9C0;
+    --ds-button-border-default:      #D8DBDE;
+    --ds-button-border-focus-outer:  #F9FAFA;
   }
 }
 
