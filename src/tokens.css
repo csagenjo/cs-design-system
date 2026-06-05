@@ -1,20 +1,21 @@
 /**
  * tokens.css — CS Design System
- * Generado desde Figma CS Design System (29/05/2026)
- * Fuente: Base_tokens · Mode (Light/Dark) · Component_tokens
+ * Generado cruzando: Base tokens → Theme → Mode → Component tokens → Device
+ * Última actualización: 03/06/2026
  *
  * ESTRUCTURA:
- *   1. Base color palette   → --ds-color-{group}-{step}
- *   2. Semantic tokens      → --ds-fg-* · --ds-bg-* · --ds-borderColor-*
- *   3. Component tokens     → --ds-button-*
- *   4. Typography tokens    → --ds-fontFamily-* · --ds-fontWeight-* · --ds-fontSize-* · --ds-fontLheight-*
- *   5. Shadows & misc
- *   6. Dark mode override
+ *   1. Base color palette     → --ds-color-{group}-{step}
+ *   2. Base opacity           → --ds-color-opacity-{color}-{step}
+ *   3. Semantic tokens        → --ds-fg-* · --ds-bg-* · --ds-borderColor-* · --ds-opacity-*
+ *   4. Typography             → --ds-fontFamily-* · --ds-fontWeight-* · --ds-fontSize-* · --ds-fontLheight-*
+ *   5. Component tokens       → --ds-button-* · --ds-link-* · --ds-cta-link-*
+ *   6. Shadows
+ *   7. Dark mode override
  */
 
-/* ══════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════
    1. BASE COLOR PALETTE
-   ══════════════════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════════════════ */
 :root {
 
   /* Primary — teal */
@@ -121,9 +122,21 @@
   --ds-color-white: #FFFFFF;
   --ds-color-black: #000000;
 
-/* ══════════════════════════════════════════════════════════════
-   2. SEMANTIC TOKENS — Light mode (default)
-   ══════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════
+   2. BASE OPACITY
+   ════════════════════════════════════════════════════════════ */
+
+  --ds-color-opacity-black-100: rgba(0, 0, 0, 0.08);
+  --ds-color-opacity-black-150: rgba(0, 0, 0, 0.16);
+  --ds-color-opacity-black-300: rgba(0, 0, 0, 0.30);
+  --ds-color-opacity-white-100: rgba(255, 255, 255, 0.08);
+  --ds-color-opacity-white-150: rgba(255, 255, 255, 0.16);
+  --ds-color-opacity-white-300: rgba(255, 255, 255, 0.30);
+
+/* ════════════════════════════════════════════════════════════
+   3. SEMANTIC TOKENS — Light mode (default)
+   Fuente: Mode/Light → Theme/Overall (Retail)
+   ════════════════════════════════════════════════════════════ */
 
   /* Foreground */
   --ds-fg-default:   #050506;
@@ -150,93 +163,65 @@
   --ds-bg-success:   #389A3D;
   --ds-bg-info:      #0FA9FD;
 
-  /* Border */
-  --ds-borderColor-default:  #9AA1AA;
-  --ds-borderColor-subtle:   #D8DBDE;
-  --ds-borderColor-primary:  #286371;
-  --ds-borderColor-error:    #AD2525;
-  --ds-borderColor-focus:    #050506;
+  /* Border Color */
+  --ds-borderColor-default:          #9AA1AA;
+  --ds-borderColor-subtle:           #EEEFF1;
+  --ds-borderColor-emphasis:         #2C2F34;
+  --ds-borderColor-disabled:         #B9BEC4;
+  --ds-borderColor-primary:          #286371;
+  --ds-borderColor-accent-primary:   #4BA9C0;
+  --ds-borderColor-secondary:        #E02C7C;
+  --ds-borderColor-accent:           #E02C7C;
+  --ds-borderColor-accent-inverse:   #EE8FB9;
+  --ds-borderColor-tertiary:         #B185C5;
+  --ds-borderColor-tertiary-inverse: #CAABD7;
+  --ds-borderColor-inverse:          #FFFFFF;
+  --ds-borderColor-error:            #AD2525;
+  --ds-borderColor-warning:          #FFAE0C;
+  --ds-borderColor-success:          #389A3D;
+  --ds-borderColor-info:             #016398;
+  --ds-borderColor-focus-inner:          #FFFFFF;
+  --ds-borderColor-focus-outer:          #050506;
+  --ds-borderColor-focus-inner-inverse:  #050506;
+  --ds-borderColor-focus-outer-inverse:  #FFFFFF;
 
-/* ══════════════════════════════════════════════════════════════
-   3. COMPONENT TOKENS — Button
-   Extraídos de Component_tokens / button / all
-   ══════════════════════════════════════════════════════════════ */
+  /* Opacity — semantic */
+  --ds-opacity-hover-subtle:         var(--ds-color-opacity-black-100);
+  --ds-opacity-hover-subtle-inverse: var(--ds-color-opacity-white-100);
+  --ds-opacity-overlay:              var(--ds-color-opacity-black-300);
 
-  /* Background */
-  --ds-button-bg-default-filled:    #050506;
-  --ds-button-bg-default-hover:     #050506;
-  --ds-button-bg-accent-filled:     #4BA9C0;
-  --ds-button-bg-accent-hover:      #4BA9C0;
-  --ds-button-bg-disabled:          #EEEFF1;
+/* ════════════════════════════════════════════════════════════
+   4. TYPOGRAPHY
+   Fuente: Device/Generic · Base tokens
+   ════════════════════════════════════════════════════════════ */
 
-  /* Border */
-  --ds-button-border-default:          #2C2F34;
-  --ds-button-border-default-disabled: #B9BEC4;
-  --ds-button-border-accent:           #286371;
-  --ds-button-border-accent-disabled:  #B9BEC4;
-  --ds-button-border-focus-inner:      #FFFFFF;
-  --ds-button-border-focus-outer:      #050506;
+  /* Font family */
+  --ds-fontFamily-default: 'Nunito', Arial, sans-serif;
+  --ds-fontFamily-code:    'Courier New', monospace;
 
-  /* Foreground / label */
-  --ds-button-fg-default-filled:   #FFFFFF;
-  --ds-button-fg-default-outline:  #050506;
-  --ds-button-fg-accent-filled:    #FFFFFF;
-  --ds-button-fg-accent-outline:   #286371;
-  --ds-button-fg-disabled:         #B9BEC4;
-
-  /* Shape */
-  --ds-button-radius:       80px;
-  --ds-button-border-width: 2px;
-
-  /* Spacing */
-  --ds-button-px-sm: 8px;
-  --ds-button-px-md: 12px;
-  --ds-button-px-lg: 16px;
-  --ds-button-py-sm: 6px;
-  --ds-button-py-md: 6px;
-  --ds-button-py-lg: 8px;
-
-  /* Icon sizes */
-  --ds-button-icon-sm: 16px;
-  --ds-button-icon-md: 20px;
-  --ds-button-icon-lg: 24px;
-
-  /* Hover mix (overlay sobre el color base) */
-  --ds-button-hover-mix-default: rgba(255,255,255,0.08);
-  --ds-button-hover-mix-accent:  rgba(0,0,0,0.08);
-
-/* ══════════════════════════════════════════════════════════════
-   4. TYPOGRAPHY TOKENS
-   Generado desde Device_Junio_2 (Generic) · 02/06/2026
-   ══════════════════════════════════════════════════════════════ */
-
-  /* ── Font family ── */
-  --ds-fontFamily-default:    'Nunito', Arial, sans-serif;
-  --ds-fontFamily-code:       'Courier New', monospace;
-
-  /* ── Font weights ── */
+  /* Font weights */
   --ds-fontWeight-regular: 400;
   --ds-fontWeight-bold:    700;
 
-  /* ── Label scale ── */
+  /* Label scale */
   --ds-fontSize-label-xs: 12px;
   --ds-fontSize-label-sm: 14px;
   --ds-fontSize-label-md: 16px;
   --ds-fontSize-label-lg: 19px;
 
-  /* ── Body scale ── */
+  /* Body scale */
   --ds-fontSize-body-2xs: 12px;
   --ds-fontSize-body-xs:  14px;
   --ds-fontSize-body-sm:  16px;
   --ds-fontSize-body-md:  19px;
 
-  /* ── Title scale ── */
+  /* Title scale */
   --ds-fontSize-title-sm: 16px;
   --ds-fontSize-title-md: 19px;
   --ds-fontSize-title-lg: 24px;
   --ds-fontSize-title-xl: 32px;
 
-  /* ── Headline scale ── */
+  /* Headline scale */
   --ds-fontSize-headline-xs:  19px;
   --ds-fontSize-headline-sm:  24px;
   --ds-fontSize-headline-md:  28px;
@@ -244,12 +229,12 @@
   --ds-fontSize-headline-xl:  36px;
   --ds-fontSize-headline-2xl: 48px;
 
-  /* ── Annotation scale ── */
+  /* Annotation scale */
   --ds-fontSize-annotation-sm: 12px;
   --ds-fontSize-annotation-md: 14px;
   --ds-fontSize-annotation-lg: 16px;
 
-  /* ── Line heights ── */
+  /* Line heights */
   --ds-fontLheight-3xs: 18px;
   --ds-fontLheight-2xs: 21px;
   --ds-fontLheight-xs:  24px;
@@ -260,31 +245,92 @@
   --ds-fontLheight-2xl: 54px;
   --ds-fontLheight-3xl: 72px;
 
-  /* ── Label line heights (referencia rápida) ──
-     label/xs → --ds-fontLheight-3xs (18px)
-     label/sm → --ds-fontLheight-2xs (21px)
-     label/md → --ds-fontLheight-xs  (24px)
-     label/lg → --ds-fontLheight-sm  (28.5px)
-  ── */
+/* ════════════════════════════════════════════════════════════
+   5. COMPONENT TOKENS
+   ════════════════════════════════════════════════════════════ */
 
-/* ══════════════════════════════════════════════════════════════
-   5. SHADOWS & MISC
-   ══════════════════════════════════════════════════════════════ */
+  /* ── Button ── */
+  --ds-button-bg-accent-filled:    #4BA9C0;
+  --ds-button-bg-default-filled:   #050506;
+  --ds-button-bg-disabled:         #EEEFF1;
+  --ds-button-fg-accent-filled:    #FFFFFF;
+  --ds-button-fg-accent-outline:   #286371;
+  --ds-button-fg-default-filled:   #FFFFFF;
+  --ds-button-fg-default-outline:  #050506;
+  --ds-button-fg-disabled:         #B9BEC4;
+  --ds-button-border-accent:       #286371;
+  --ds-button-border-default:      #2C2F34;
+  --ds-button-border-focus-inner:  var(--ds-borderColor-focus-inner);
+  --ds-button-border-focus-outer:  var(--ds-borderColor-focus-outer);
+  --ds-button-radius:              80px;
+  --ds-button-border-width:        2px;
+  --ds-button-px-sm: 8px;
+  --ds-button-px-md: 12px;
+  --ds-button-px-lg: 16px;
+  --ds-button-py-sm: 6px;
+  --ds-button-py-md: 6px;
+  --ds-button-py-lg: 8px;
+  --ds-button-icon-sm: 16px;
+  --ds-button-icon-md: 20px;
+  --ds-button-icon-lg: 24px;
+  --ds-button-hover-mix-default: var(--ds-color-opacity-white-100);
+  --ds-button-hover-mix-accent:  var(--ds-color-opacity-black-100);
 
-  --ds-shadow-sm: 0 1px 4px rgba(0,0,0,0.10);
-  --ds-shadow-md: 0 2px 8px rgba(0,0,0,0.15);
-  --ds-shadow-lg: 0 4px 12px rgba(0,0,0,0.20);
+  /* ── Link ── */
+  --ds-link-fg-default:        var(--ds-fg-default);
+  --ds-link-fg-accent:         #B71B60;
+  --ds-link-fg-accent-visited: var(--ds-color-tertiary-500);
+  --ds-link-fg-inverse:        var(--ds-color-white);
+  --ds-link-border-default:    var(--ds-borderColor-emphasis);
+  --ds-link-border-accent:     var(--ds-borderColor-accent-primary);
+  --ds-link-border-visited:    var(--ds-borderColor-tertiary);
+  --ds-link-border-inverse:    var(--ds-borderColor-inverse);
+  --ds-link-bg-hover:          var(--ds-opacity-hover-subtle);
+  --ds-link-bg-hover-inverse:  var(--ds-opacity-hover-subtle-inverse);
+  --ds-link-focus-inner:       var(--ds-borderColor-focus-inner);
+  --ds-link-focus-outer:       var(--ds-borderColor-focus-outer);
+  --ds-link-focus-inner-inverse: var(--ds-borderColor-focus-inner-inverse);
+  --ds-link-focus-outer-inverse: var(--ds-borderColor-focus-outer-inverse);
+  --ds-link-gap: 4px;
+
+  /* ── CTA Link ── */
+  --ds-cta-link-fg-default-generic:    var(--ds-fg-default);
+  --ds-cta-link-fg-default-high:       var(--ds-color-white);
+  --ds-cta-link-fg-accent-generic:     #286371;
+  --ds-cta-link-fg-accent-high:        var(--ds-color-white);
+  --ds-cta-link-bg-default-high:       var(--ds-fg-default);
+  --ds-cta-link-bg-accent-high:        var(--ds-bg-primary);
+  --ds-cta-link-bg-hover-mix:          var(--ds-opacity-hover-subtle);
+  --ds-cta-link-border-default-medium: var(--ds-borderColor-emphasis);
+  --ds-cta-link-border-accent-medium:  var(--ds-borderColor-primary);
+  --ds-cta-link-border-focus-inner:    var(--ds-borderColor-focus-inner);
+  --ds-cta-link-border-focus-outer:    var(--ds-borderColor-focus-outer);
+  --ds-cta-link-radius:    80px;
+  --ds-cta-link-gap:       6px;
+  --ds-cta-link-padding-h: 12px;
+  --ds-cta-link-padding-v: 6px;
+
+  /* ── Link List ── */
+  --ds-link-list-icon-color: var(--ds-borderColor-primary);
+  --ds-link-list-gap: 4px;
+
+/* ════════════════════════════════════════════════════════════
+   6. SHADOWS
+   ════════════════════════════════════════════════════════════ */
+
+  --ds-shadow-sm: 0 1px 4px var(--ds-color-opacity-black-100);
+  --ds-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --ds-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.20);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   6. DARK MODE
-   ══════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════
+   7. DARK MODE
+   ════════════════════════════════════════════════════════════ */
 @media (prefers-color-scheme: dark) {
   :root {
     --ds-fg-default:   #F9FAFA;
     --ds-fg-subtle:    #7B8490;
     --ds-fg-disabled:  #464B53;
-    --ds-fg-onColor:   #FFFFFF;
     --ds-fg-inverse:   #050506;
     --ds-fg-primary:   #4BA9C0;
     --ds-fg-secondary: #E02C7C;
@@ -294,17 +340,32 @@
     --ds-bg-subtle:    #2C2F34;
     --ds-bg-primary:   #286371;
 
-    --ds-borderColor-default: #464B53;
-    --ds-borderColor-subtle:  #2C2F34;
-    --ds-borderColor-focus:   #F9FAFA;
+    --ds-borderColor-default:        #464B53;
+    --ds-borderColor-subtle:         #2C2F34;
+    --ds-borderColor-primary:        #4BA9C0;
+    --ds-borderColor-accent-primary: #4BA9C0;
+    --ds-borderColor-accent:         #FBE4EE;
+    --ds-borderColor-accent-inverse: #F6C1D8;
+    --ds-borderColor-tertiary:       #CAABD7;
+    --ds-borderColor-emphasis:       #FFFFFF;
+    --ds-borderColor-inverse:        #050506;
+    --ds-borderColor-focus-inner:        #050506;
+    --ds-borderColor-focus-outer:        #FFFFFF;
+    --ds-borderColor-focus-inner-inverse: #FFFFFF;
+    --ds-borderColor-focus-outer-inverse: #050506;
 
-    --ds-button-bg-default-filled:   #F9FAFA;
-    --ds-button-bg-accent-filled:    #4BA9C0;
-    --ds-button-fg-default-filled:   #050506;
-    --ds-button-fg-default-outline:  #F9FAFA;
-    --ds-button-fg-accent-outline:   #4BA9C0;
-    --ds-button-border-default:      #D8DBDE;
-    --ds-button-border-focus-outer:  #F9FAFA;
+    --ds-opacity-hover-subtle:         var(--ds-color-opacity-white-100);
+    --ds-opacity-hover-subtle-inverse: var(--ds-color-opacity-black-100);
+
+    --ds-button-bg-accent-filled:   #4BA9C0;
+    --ds-button-fg-default-filled:  #050506;
+    --ds-button-fg-default-outline: #F9FAFA;
+    --ds-button-fg-accent-outline:  #4BA9C0;
+    --ds-button-border-default:     #D8DBDE;
+    --ds-button-border-focus-inner: var(--ds-borderColor-focus-inner);
+    --ds-button-border-focus-outer: var(--ds-borderColor-focus-outer);
+    --ds-button-hover-mix-default:  var(--ds-color-opacity-black-100);
+    --ds-button-hover-mix-accent:   var(--ds-color-opacity-white-100);
   }
 }
 
@@ -312,7 +373,6 @@
   --ds-fg-default:   #F9FAFA;
   --ds-fg-subtle:    #7B8490;
   --ds-fg-disabled:  #464B53;
-  --ds-fg-onColor:   #FFFFFF;
   --ds-fg-inverse:   #050506;
   --ds-fg-primary:   #4BA9C0;
   --ds-fg-secondary: #E02C7C;
@@ -322,15 +382,27 @@
   --ds-bg-subtle:    #2C2F34;
   --ds-bg-primary:   #286371;
 
-  --ds-borderColor-default: #464B53;
-  --ds-borderColor-subtle:  #2C2F34;
-  --ds-borderColor-focus:   #F9FAFA;
+  --ds-borderColor-default:        #464B53;
+  --ds-borderColor-subtle:         #2C2F34;
+  --ds-borderColor-primary:        #4BA9C0;
+  --ds-borderColor-accent-primary: #4BA9C0;
+  --ds-borderColor-accent:         #FBE4EE;
+  --ds-borderColor-tertiary:       #CAABD7;
+  --ds-borderColor-emphasis:       #FFFFFF;
+  --ds-borderColor-inverse:        #050506;
+  --ds-borderColor-focus-inner:        #050506;
+  --ds-borderColor-focus-outer:        #FFFFFF;
+  --ds-borderColor-focus-inner-inverse: #FFFFFF;
+  --ds-borderColor-focus-outer-inverse: #050506;
 
-  --ds-button-bg-default-filled:   #F9FAFA;
-  --ds-button-bg-accent-filled:    #4BA9C0;
-  --ds-button-fg-default-filled:   #050506;
-  --ds-button-fg-default-outline:  #F9FAFA;
-  --ds-button-fg-accent-outline:   #4BA9C0;
-  --ds-button-border-default:      #D8DBDE;
-  --ds-button-border-focus-outer:  #F9FAFA;
+  --ds-opacity-hover-subtle:         var(--ds-color-opacity-white-100);
+  --ds-opacity-hover-subtle-inverse: var(--ds-color-opacity-black-100);
+
+  --ds-button-bg-accent-filled:   #4BA9C0;
+  --ds-button-fg-default-filled:  #050506;
+  --ds-button-fg-default-outline: #F9FAFA;
+  --ds-button-fg-accent-outline:  #4BA9C0;
+  --ds-button-border-default:     #D8DBDE;
+  --ds-button-hover-mix-default:  var(--ds-color-opacity-black-100);
+  --ds-button-hover-mix-accent:   var(--ds-color-opacity-white-100);
 }
