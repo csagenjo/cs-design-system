@@ -171,7 +171,7 @@
   --ds-borderColor-primary:          #286371;
   --ds-borderColor-accent-primary:   #4BA9C0;
   --ds-borderColor-secondary:        #E02C7C;
-  --ds-borderColor-accent:           #E02C7C;
+  --ds-borderColor-accent:           #B71B60;   /* secondary-600 — link accent underline */
   --ds-borderColor-accent-inverse:   #EE8FB9;
   --ds-borderColor-tertiary:         #B185C5;
   --ds-borderColor-tertiary-inverse: #CAABD7;
@@ -281,10 +281,16 @@
   --ds-link-fg-accent:         #B71B60;
   --ds-link-fg-accent-visited: var(--ds-color-tertiary-500);
   --ds-link-fg-inverse:        var(--ds-color-white);
-  --ds-link-border-default:    var(--ds-borderColor-emphasis);
-  --ds-link-border-accent:     var(--ds-borderColor-accent-primary);
+  --ds-link-border-default:         var(--ds-borderColor-emphasis);    /* Default initial underline */
+  --ds-link-border-accent-initial:  var(--ds-borderColor-accent);      /* Accent initial underline #B71B60 */
+  --ds-link-border-hover:           var(--ds-borderColor-accent-primary); /* Hover all variants → teal */
+
   --ds-link-border-visited:    var(--ds-borderColor-tertiary);
-  --ds-link-border-inverse:    var(--ds-borderColor-inverse);
+  --ds-link-border-inverse:         var(--ds-borderColor-inverse);
+
+  --ds-link-icon-default:  var(--ds-fg-default);    /* #050506 */
+  --ds-link-icon-accent:   var(--ds-fg-secondary);  /* #B71B60 */
+  --ds-link-icon-visited:  var(--ds-fg-tertiary);   /* #B185C5 */
   --ds-link-bg-hover:          var(--ds-opacity-hover-subtle);
   --ds-link-bg-hover-inverse:  var(--ds-opacity-hover-subtle-inverse);
   --ds-link-focus-inner:       var(--ds-borderColor-focus-inner);

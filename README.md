@@ -86,7 +86,7 @@ Opens at `http://localhost:5173`
 
 ## Design system
 
-Figma: [CS Design System](https://www.figma.com/design/QiWDJdMPB5pfY3vHy9CqZv/CS---Design-System)
+Figma: [CS Design System]
 
 ---
 

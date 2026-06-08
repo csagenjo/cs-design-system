@@ -31,7 +31,7 @@
  */
 
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -155,9 +155,9 @@ export function Link({
       aria-label={ariaLabel}
       {...rest}
     >
-      {leftIcon  && <ArrowUpRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
+      {leftIcon  && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
       <span className="ds-link__text">{children}</span>
-      {rightIcon && <ArrowUpRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
+      {rightIcon && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
       {external  && <span className="sr-only">(opens in new tab)</span>}
     </a>
   );
