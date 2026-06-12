@@ -26,7 +26,7 @@ src/
     Checkbox.jsx    ✅ DS v2, indeterminate, aria-checked=mixed
     Link.jsx        ✅ variantes default/accent, tokens teal
     LinkList.jsx    ✅ wrapper semántico nav/ul/li sobre Link
-    CTALink.jsx     🔄 próximo a construir
+    CTALink.jsx     ✅ énfasis low/medium/high, variantes default/accent, tokens teal
   tokens.css        ✅ fuente de verdad — 532 líneas
   main.jsx
   App.jsx           banco de pruebas (se sobrescribe cada sesión)
@@ -239,9 +239,8 @@ Fix [ComponentName]: descripción
 
 ## Próximos componentes
 
-1. CTALink.jsx — en progreso
-2. Radio.jsx
-3. Chip.jsx
+1. Radio.jsx
+2. Chip.jsx
 
 ## Figma MCP
 
