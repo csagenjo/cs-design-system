@@ -1,0 +1,185 @@
+# Token Architecture — CS Design System
+*Estado: Retail ✅ · Youth Banking ✅ · Junio 2026*
+
+## Cascada de colecciones
+
+```
+Base (157)
+  └─ primitivos raw: hex, opacidades, dimensiones, tipografía
+  └─ el código NUNCA los usa directamente
+
+Theme (873 por tema × 7 temas)
+  └─ mapea Base a roles semánticos POR TEMA
+  └─ 7 modos: Retail · Youth · Wholesale⚠️ · Business⚠️ · Private⚠️ · Wireframe⚠️ · Legacy⚠️
+  └─ convenio: {rol}-light / {rol}-dark  (los dos valores posibles para el Mode)
+  └─ el código NUNCA los usa directamente
+
+Mode (364 × 2 modos: Light/Dark)
+  └─ resuelve qué valor de Theme usar según modo UI activo
+  └─ tokens SIN sufijo de modo — semánticos puros
+  └─ EL LAYER QUE USA EL CÓDIGO → var(--ds-fg-primary), etc.
+
+Component (1038 · 41 accent/visited visibles · 997 hidden)
+  └─ tokens por componente, referencian SOLO Mode
+  └─ convenio: {componente}/{dispositivo}/{parte}/{propiedad}/{estado}
+
+Device (79 × 2: Mobile/Desk)
+  └─ tipografía y espaciados responsivos
+  └─ capa paralela — no interviene en cascada de color
+```
+
+**Regla de oro:** `Component → Mode → Theme → Base`
+Saltar capas rompe el dark mode y la multi-temabilidad.
+
+---
+
+## Base tokens (157)
+
+### Paleta de color — 9 familias + 2 auxiliares
+
+| Familia | Hex 500 | Rol Retail | Rol Youth |
+|---|---|---|---|
+| primary (teal) | #4BA9C0 | Hero CTA · superficies primarias | Soporte · acento |
+| secondary (magenta) | #E02C7C | Acento secundario | Hero CTA · superficies primarias |
+| tertiary (lavanda) | #B185C5 | Decorativo · containerShape | Decorativo · containerShape |
+| neutral | #7B8390 | Grises de interfaz | Igual |
+| info | #0287D0 | Quaternary · informativo | Igual |
+| error | #D53737 | Feedback error | Igual |
+| success | #4CAF50 | Feedback éxito | Igual |
+| warning | #FFAE0C | Feedback aviso | Igual |
+| annotation | #9747FF | Uso interno DS | Igual |
+
+Cada familia: 11 pasos (50, 100–900, 950).
+`color/black: #050506` · `color/white: #FFFFFF` — alias de conveniencia, 449 refs en Theme.
+
+### Opacidades — dos familias distintas ⚠️ no mezclar
+
+**`color/opacity/black/*` y `color/opacity/white/*`** — type: color — para fills con transparencia en shapes decorativos.
+- 4 niveles: 10% (rgba 0.1) · 16% (rgba 0.16) · 30% (rgba 0.3) · 40% (rgba 0.4)
+- Uso: bg/shape-subtle→10%, bg/shape-default→16%, bg/shape-bold→30%
+
+**`opacity/*`** — type: number — para el atributo CSS `opacity` del elemento completo.
+- 5 valores: 30 · 40 · 60 · 70 · 80
+
+---
+
+## Theme — Retail vs Youth Banking
+
+| Aspecto | Retail | Youth |
+|---|---|---|
+| Hero de marca (CTA, primary surfaces) | primary/teal (#4BA9C0) | secondary/magenta (#E02C7C) |
+| Color de soporte | secondary/magenta | primary/teal |
+| Decorativo / containerShape | tertiary/lavanda | tertiary/lavanda — sin cambio |
+| Tokens cambiados entre temas | — | 148 (primary↔secondary swap) |
+
+El swap primary↔secondary permite que los componentes funcionen en ambos temas sin cambio de código: solo cambia el modo activo de Theme.
+
+### Cómo leer fg/*/onSurface
+
+`fg/label/onSurface/primary` = texto sobre una superficie de tipo primary.
+- **No** es "texto en color primary"
+- **Sí** es "texto que garantiza contraste AA cuando el fondo es `bg/surface/primary`"
+
+`fg/label/default` → texto sobre fondo neutro. Invierte a blanco en dark mode.
+`fg/label/onSurface/primary` → texto sobre superficie primary. Ajusta al fondo, no invierte genéricamente.
+
+---
+
+## Mode (364 tokens × Light/Dark)
+
+Tokens semánticos que el código consume. Grupos principales:
+
+- `fg/*` — 208 tokens: texto e iconos
+- `bg/*` — 114 tokens: fondos y superficies
+- `borderColor/*` — 36 tokens: bordes
+- `opacity/*` — 6 tokens: overlays y hover
+
+### Roles de icono disponibles en fg/icon
+
+```
+default       → negro/blanco según modo
+subtle        → gris medio
+primary       → teal #286371 (light) / #4BA9C0 (dark)
+secondary     → magenta #B71B60 (light) / #FEF6F9 (dark)
+tertiary      → lavanda #B185C5 (light) / #F6F1F8 (dark)
+accent-primary→ teal claro #4BA9C0 (light+dark)
+inverse       → blanco/negro según modo
+onColor       → blanco (sobre fondos de color)
+info          → azul #016398
+success       → verde #389A3D
+warning       → ámbar #996600
+error         → rojo #AD2525
+disabled      → gris #B9BEC4
+```
+
+### Renames aplicados en la última auditoría (51 tokens)
+
+- `-light` → `-subtle` × 47 (ej: `bg/secondary-light` → `bg/secondary-subtle`)
+- `default-primary` → `static-primary` × 4
+
+11 tokens nuevos añadidos: `bg/accent-primary`, `bg/accent-secondary`, `bg/completed`, `bg/shape/primary-subtle/medium/bold`, `bg/surface/primary-subtle/medium/bold`, `fg/icon/accent-primary`, `fg/icon/onSurface/inverse`.
+
+---
+
+## Component tokens (1038)
+
+- **41 visibles** (accent + visited): personalizables por tema desde el picker de Figma
+- **997 hidden**: internos del componente
+
+Componentes con tokens definidos: button, buttonBlob, checkbox, chipChoice, chipFilter, chipInput, ctaLink, link, linkList, iconButton, input (text/amount/date/telephone/dropdown), calendar, cards, accordion, tabs, dialog, drawer, pagination, radioButton, segmentedControl, slider, switch, table, text, tooltip, y ~35 más.
+
+---
+
+## Device tokens (79 × Mobile/Desk)
+
+### Spacing
+
+| Token | Mobile | Desk |
+|---|---|---|
+| spacing/2xs | 2px | — |
+| spacing/xs | 4px | — |
+| spacing/sm | 6px | — |
+| spacing/md | 8px | — |
+| spacing/lg | 12px | — |
+| spacing/xl | 16px | — |
+| spacing/2xl | 24px | — |
+| spacing/3xl | 32px | — |
+
+### Border radius
+
+`xs · sm · md · lg · xl · 2xl · 3xl · circle`
+
+### Border width
+
+`sm · md · lg · xl`
+
+---
+
+## Estado de temas
+
+| Tema | Estado |
+|---|---|
+| Retail (Overall) | ✅ Auditado · 0 KOs |
+| Youth Banking | ✅ Auditado · 0 KOs · 148 tokens cambiados |
+| Wholesale Banking | ⚠️ Sin auditar |
+| Business Banking | ⚠️ Sin auditar |
+| Private Banking | ⚠️ Sin auditar |
+| Wireframe | ⚠️ Sin auditar |
+| Legacy | ⚠️ Sin auditar |
+
+---
+
+## Reglas de consumo en código React
+
+```css
+/* ✅ Correcto — usa Mode token */
+color: var(--ds-fg-primary);
+background: var(--ds-bg-primary);
+
+/* ❌ Incorrecto — salta la cascada */
+color: var(--ds-color-primary-700);
+color: #286371;
+```
+
+El tema activo se activa con `data-theme="youth"` en el elemento raíz.
+El modo claro/oscuro con `data-mode="dark"` o `prefers-color-scheme`.
