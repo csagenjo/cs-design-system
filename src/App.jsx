@@ -3,6 +3,7 @@ import { ButtonBar } from './components/ButtonBar'
 import { Input } from './components/Input'
 import { Checkbox } from './components/Checkbox'
 import { Link } from './components/Link'
+import { CTALink } from './components/CTALink'
 
 function App() {
   return (
@@ -49,6 +50,28 @@ function App() {
         <Link href="/ruta" size="lg">Large link</Link>
         <Link href="/ruta" rightIcon={false}>Sin icono</Link>
         <Link href="https://ejemplo.com" external>Enlace externo</Link>
+      </section>
+
+      {/* CTALink */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CTALINK — Low</p>
+        <div style={{ display: 'inline-flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <CTALink href="#" emphasis="low">Ver detalle</CTALink>
+          <CTALink href="#" emphasis="low" variant="accent">Leer más</CTALink>
+          <CTALink emphasis="low" disabled>No disponible</CTALink>
+        </div>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CTALINK — Medium</p>
+        <div style={{ display: 'inline-flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <CTALink href="#">Ver detalle</CTALink>
+          <CTALink href="#" variant="accent">Leer más</CTALink>
+          <CTALink disabled>No disponible</CTALink>
+        </div>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CTALINK — High</p>
+        <div style={{ display: 'inline-flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <CTALink href="#" emphasis="high">Registrarse</CTALink>
+          <CTALink href="#" emphasis="high" variant="accent">Empezar</CTALink>
+          <CTALink emphasis="high" disabled>No disponible</CTALink>
+        </div>
       </section>
 
       {/* ButtonBar */}
