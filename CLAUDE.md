@@ -24,13 +24,22 @@ src/
     ButtonBar.jsx   ✅ organismo DS v2
     Input.jsx       ✅ todos los estados, forwardRef, aria
     Checkbox.jsx    ✅ DS v2, indeterminate, aria-checked=mixed
-    Link.jsx        ✅ variantes default/accent, --ds-link-* tokens
-    LinkList.jsx    ✅ wrapper semántico sobre Link
-  tokens.css        ✅ fuente de verdad de tokens
-  main.jsx          importa tokens.css
-  App.jsx           banco de pruebas temporal (se sobrescribe)
+    Link.jsx        ✅ variantes default/accent, tokens teal
+    LinkList.jsx    ✅ wrapper semántico nav/ul/li sobre Link
+    CTALink.jsx     🔄 próximo a construir
+  tokens.css        ✅ fuente de verdad — 532 líneas
+  main.jsx
+  App.jsx           banco de pruebas (se sobrescribe cada sesión)
+tokens/
+  Base/             ✅ Mode 1.tokens.json
+  Theme/            ✅ Retail + Youth + 5 más
+  Mode/             ✅ Light.tokens.json + Dark.tokens.json
+  Component/        ✅ Mode 1.tokens.json
+  Device/           ✅ Mobile + Desk + Generic
 docs/
-  architecture.md
+  token-architecture.md  ✅ arquitectura completa
+CLAUDE.md
+README.md
 ```
 
 ## Aliases — usar SIEMPRE, nunca los nombres reales
@@ -53,72 +62,40 @@ docs/
 ## Arquitectura de tokens — 5 capas (cascada)
 
 ```
-Base tokens (160)
-  Paleta raw. Solo hex. Sin aliases.
-  Grupos: color/primary, color/secondary, color/tertiary,
-          color/neutral, color/black, color/white,
-          color/error, color/warning, color/success, color/info
-  Convenio: color/{grupo}/{paso}  ej: color/primary/700 = #286371
+Base (157) — paleta raw, solo hex, el código NUNCA los usa directamente
 
       ↓ referencia Base
 
-Theme (869) — 7 modos: Overall(Retail), Wholesale, Youth, Business, Private, Wireframe, Legacy
+Theme (873) — 7 temas: Retail ✅ · Youth ✅ · Wholesale ⚠️ · Business ⚠️ · Private ⚠️ · Wireframe ⚠️ · Legacy ⚠️
   Mapea Base a roles semánticos POR TEMA.
-  Cada token tiene sufijo de modo UI: -light / -dark
-  Convenio: {rol}-{uiMode}  ej: fg/icon/primary-light → color/primary/700
-  IMPORTANTE: -light/-dark aquí son los dos valores posibles,
-  NO el modo UI activo — eso lo resuelve Mode.
+  Convenio: {rol}-light / {rol}-dark  (dos valores posibles para Mode)
+  El código NUNCA los usa directamente.
 
       ↓ referencia Theme
 
-Mode (348) — 2 modos: Light, Dark
+Mode (364) — 2 modos: Light / Dark
   Resuelve qué valor de Theme usar según modo UI activo.
   SIN sufijo de modo — tokens semánticos puros.
-  Convenio: {rol}  ej: fg/icon/primary
-    Light → Theme/fg/icon/primary-light
-    Dark  → Theme/fg/icon/primary-dark
-  ESTE es el layer que referencian los Component tokens.
+  ESTE es el layer que usa el código → var(--ds-fg-primary)
 
       ↓ referencia Mode
 
-Component tokens (1038) — 1 modo: Mode 1
-  Tokens por componente. Referencian SOLO Mode.
+Component (1038) — tokens por componente, referencian SOLO Mode
   Convenio: {componente}/{dispositivo}/{parte}/{propiedad}/{estado}
-  ej: link/all/icon/fg/default-generic → Mode/fg/icon/default
 
 Device (79) — capa paralela, no de color
-  Tipografía y tamaños. No interviene en la cascada de color.
+  Tipografía y espaciados. Mobile / Desk / Generic.
 ```
 
 **Regla de oro:** Component → Mode → Theme → Base. Saltar capas rompe dark mode y multi-tema.
 
-## Roles semánticos en Mode — fg/icon
+**Sufijos -light/-dark en Theme:** son los dos valores posibles (light/dark mode), NO intensidad.
+**Sufijos -subtle/-medium/-bold en Mode:** indican intensidad (renombrados de -light/-medium/-bold en Jun 2026).
 
-```
-fg/icon/default    → negro/blanco según modo
-fg/icon/subtle     → gris medio
-fg/icon/primary    → teal #286371 (light) / #4BA9C0 (dark)
-fg/icon/secondary  → pink #B71B60 (light) / #FEF6F9 (dark)
-fg/icon/tertiary   → lavanda #B185C5 (light) / #F6F1F8 (dark)
-fg/icon/inverse    → blanco/negro según modo
-fg/icon/onColor    → blanco (sobre fondos de color)
-fg/icon/info       → azul informativo
-fg/icon/success    → verde
-fg/icon/warning    → ámbar oscuro
-fg/icon/error      → rojo
-fg/icon/disabled   → gris desactivado
-```
+## Decisión de sistema — accent color
 
-## Tokens clave en tokens.css
-
-```css
---ds-color-primary-500: #4BA9C0   /* teal claro — color de marca */
---ds-color-primary-700: #286371   /* teal oscuro — texto accent */
---ds-button-radius: 80px          /* pill shape */
---ds-bg-default: #FFFFFF
---ds-fg-default: #050506
---ds-borderColor-subtle: #D8DBDE
-```
+`accent` = teal en TODOS los componentes (Button, CTALink, Checkbox, Link...).
+Secondary/pink = rol de datos e información, no de navegación/acción.
 
 ## Button.jsx — API
 
@@ -155,8 +132,8 @@ fg/icon/disabled   → gris desactivado
   onSecondary      = {fn}
   cancelLabel      = "Cancelar"
   onCancel         = {fn}
-  negativeActions  = [{label, onClick, icon?}]
-  extraSecondary   = [{label, onClick, icon?}]
+  negativeActions  = [{label, onClick, icon?}]   // SIEMPRE izquierda
+  extraSecondary   = [{label, onClick, icon?}]   // solo complex
   onPrev           = {fn}
   prevDisabled     = {false}
   nextIsConfirm    = {false}
@@ -181,35 +158,66 @@ fg/icon/disabled   → gris desactivado
 </Link>
 ```
 
-Estado actual de tokens Link en Figma (Component layer):
-
-**link/all/label/fg:**
-- default-generic → fg/label/default (negro)
-- accent-generic  → fg/label/primary (teal #286371) ✅
-- accent-visited  → fg/label/tertiary (lavanda) ✅
-
-**link/all/label/borderBottomColor:**
-- default-generic  → borderColor/primary (#286371)
-- accent-generic   → borderColor/primary-light (#4BA9C0)
-- default-visited  → borderColor/tertiary (lavanda)
-- monochrome-generic → borderColor/emphasis (casi negro)
-- inverse          → borderColor/inverse (blanco)
-
-**link/all/icon/fg:**
-- default-generic → fg/icon/default (negro) ← PENDIENTE revisar
-- accent-generic  → fg/icon/secondary (pink) ← INCONSISTENTE con label accent (teal)
-- accent-visited  → fg/icon/tertiary (lavanda) ✅
+Tokens de color Link (post-auditoría Jun 2026):
+- default: texto negro, underline teal `#286371`, icono negro
+- accent: texto teal `#286371`, underline teal claro `#4BA9C0`, icono teal
+- visited: texto lavanda, underline lavanda
+- hover: overlay `rgba(5,5,6,0.1)`
 
 ## LinkList.jsx — API
 
 ```jsx
 <LinkList
   items     = [{label, href, variant, size, emphasis, external, onClick, ariaLabel, disabled}]
-  title     = ""       // opcional, heading de la lista
+  title     = ""       // opcional
   gap       = "sm" | "md" | "lg"   // default: md
   ariaLabel = ""
 />
 ```
+
+Semántica: `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
+
+## CTALink.jsx — API (próximo componente)
+
+```jsx
+<CTALink
+  emphasis  = "low" | "medium" | "high"   // default: medium
+  variant   = "default" | "accent"        // default: default
+  href
+  onClick
+  external  = {false}
+  disabled  = {false}
+  ariaLabel
+>
+  Texto
+</CTALink>
+```
+
+Tokens disponibles en tokens.css:
+```css
+--ds-cta-link-fg-default              #050506
+--ds-cta-link-fg-primary              #FFFFFF
+--ds-cta-link-fg-accent               #286371
+--ds-cta-link-fg-accent-primary       #FFFFFF
+--ds-cta-link-bg-primary              #050506
+--ds-cta-link-bg-accent-primary       #4BA9C0
+--ds-cta-link-bg-mix-hover            rgba(5,5,6,0.1)
+--ds-cta-link-border-secondary        #2C2F34
+--ds-cta-link-border-accent-secondary #286371
+--ds-cta-link-border-bottom-default   #2C2F34
+--ds-cta-link-border-bottom-accent    #286371
+--ds-cta-link-focus-inner             #FFFFFF
+--ds-cta-link-focus-outer             #050506
+```
+
+Sizing: padding 6px 12px · borderRadius 80px · borderWidth 1px · gap 6px · focus borderWidth 2px
+Sin icono. Sin prop size. Talla única.
+
+| Emphasis | Visual | Default | Accent |
+|---|---|---|---|
+| low | texto + underline | negro + underline #2C2F34 | teal + underline #286371 |
+| medium | pill outline | borde #2C2F34 | borde #286371 |
+| high | pill filled | fondo negro, texto blanco | fondo #4BA9C0, texto blanco |
 
 ## Workflow de componentes
 
@@ -231,7 +239,7 @@ Fix [ComponentName]: descripción
 
 ## Próximos componentes
 
-1. CTALink.jsx — 3 emphasis (low/medium/high) · 2 variantes (default/accent) · icono ChevronRight siempre bold lg
+1. CTALink.jsx — en progreso
 2. Radio.jsx
 3. Chip.jsx
 
