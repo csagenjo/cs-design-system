@@ -3742,7 +3742,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:693b72a2867277e4e3b3100ae5099991cac0749d/-1:-1",
@@ -3769,7 +3770,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:2a91979c0b6617eadb57f4e9a90e7778c8408d4a/-1:-1",
@@ -3796,7 +3798,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:1bdf3bec031f7482d750b29a6ef620900adaef19/-1:-1",
@@ -3823,7 +3826,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:f222866735bca5381a16f98517a31fab558b59e5/-1:-1",
@@ -3850,7 +3854,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:6b7f255e97ccfec04dfc26c2562ffaf420e55599/-1:-1",
@@ -3877,7 +3882,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:ab3b335e87a64f2b2305b13cf2f8da3e77cc4fc9/-1:-1",
@@ -3903,7 +3909,8 @@
           "com.figma.variableId": "VariableID:5018:10366",
           "com.figma.scopes": [
             "FRAME_FILL",
-            "SHAPE_FILL"
+            "SHAPE_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:ab3b335e87a64f2b2305b13cf2f8da3e77cc4fc9/-1:-1",
@@ -3930,7 +3937,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:33f8463bd8befa543b1f4e41a416a1f84a3b6b89/-1:-1",
@@ -3957,7 +3965,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:bb9e6847a2c2d1f0c934f4edeb764b381e8540fe/-1:-1",
@@ -3984,7 +3993,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:cb8399734f73908e77fb957a933767891caeeb09/-1:-1",
@@ -4011,7 +4021,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:d553c40aaf5346dbf4d6dd5c739b2db2708ab837/-1:-1",
@@ -4038,7 +4049,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:18a4edc9e62b7db967394f00678acbf9d5f7fbb7/-1:-1",
@@ -4065,7 +4077,8 @@
           "com.figma.scopes": [
             "FRAME_FILL",
             "SHAPE_FILL",
-            "TEXT_FILL"
+            "TEXT_FILL",
+            "STROKE"
           ],
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:20f7409c8d1221315b55a1516f21c939d370be83/-1:-1",
@@ -4091,7 +4104,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7102",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:e330d576456b7bae9979f48e324b8e800408a17a/-1:-1",
@@ -4116,7 +4130,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7104",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:7ca1cba51e9b6bc50291a2ca05cb347fa92d770c/-1:-1",
@@ -4141,7 +4156,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7103",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:91c94eff7014114aea35ea3e2aa02777c16e05b9/-1:-1",
@@ -4166,7 +4182,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7105",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:9e301590cbb61d0adc9da9fcc7bab1fa2a4b2031/-1:-1",
@@ -4191,7 +4208,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7106",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:8a9fd47cd59d54ba71d6ff72b784f96af05b1f24/-1:-1",
@@ -4216,7 +4234,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7107",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:61a6b7270ac92d693579368ab960dd8634f4011f/-1:-1",
@@ -4241,7 +4260,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7108",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:5d9e9d030a9aab65bf804b35a6655ae49e03e854/-1:-1",
@@ -4266,7 +4286,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7109",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:4911395fa5655b3afea8a971a16dadd74c30884e/-1:-1",
@@ -4291,7 +4312,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7110",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:0e66375846005dbb145835c0fa4ab1db6806c012/-1:-1",
@@ -4316,7 +4338,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7111",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:1acbd0fd793f568f74fc0a7c3ca2d485b9c0e44b/-1:-1",
@@ -4341,7 +4364,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7112",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:be7428a814aa6e9b1ed91d68d1ae16e4b575851f/-1:-1",
@@ -4366,7 +4390,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7113",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:089ed8b544fb3c667119c73392656ab71813bf20/-1:-1",
@@ -4391,7 +4416,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7114",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:f3fbe2189cd7dd71b968f2373aa018f822e460d9/-1:-1",
@@ -4416,7 +4442,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7115",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:2d215906daa50c8310b1a8a0b0f9de5189d67853/-1:-1",
@@ -4441,7 +4468,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17787:7116",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:67060c98541714c928a4b32b220cec95c2268bc3/-1:-1",
@@ -4468,7 +4496,8 @@
             "com.figma.scopes": [
               "FRAME_FILL",
               "SHAPE_FILL",
-              "TEXT_FILL"
+              "TEXT_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:11060611de05ad2ddcdd4b804dd164cde825b928/-1:-1",
@@ -4495,7 +4524,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7117",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:df2b7131956dfefaa49a2a0b699bf7e521435e58/-1:-1",
@@ -4520,7 +4550,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7118",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:dba60535973499b79ac4ea94ed1d53b5995b59bd/-1:-1",
@@ -4545,7 +4576,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7119",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:b72ba201196ca9698b36cdbf9716834198a0a48b/-1:-1",
@@ -4570,7 +4602,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7120",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:56937536f0f44b28acea89019ca57d1cf2223205/-1:-1",
@@ -4595,7 +4628,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7121",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:0d3f670b753af3299bbedc096d72b3fcafc4a1a3/-1:-1",
@@ -4620,7 +4654,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7122",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:99157e2cfd8058d8db18541be25c46f5547a2e37/-1:-1",
@@ -4645,7 +4680,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7123",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:0dccfb4df4d068df18d17246a8a949f77bbf5ad8/-1:-1",
@@ -4670,7 +4706,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7124",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:0b124a58824cd13e47119da6341a3106a050f2c6/-1:-1",
@@ -4695,7 +4732,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7125",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:a93e925516f73cec0cba9c766899484d40489813/-1:-1",
@@ -4720,7 +4758,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7126",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:54bb4193aededa815b9bffe8fe06f6f73a8ff275/-1:-1",
@@ -4745,7 +4784,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7127",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:ad6fab84a08c34e4681415fd00a6c6bf58235502/-1:-1",
@@ -4770,7 +4810,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7128",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:99c6ba2deaaf48f3dd38d00f709034accaabfbb7/-1:-1",
@@ -4795,7 +4836,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7129",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:ccb0d9e616c0ffd0afa92f935fed4f44351d577e/-1:-1",
@@ -4820,7 +4862,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7130",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:7af65edfdae6646740d03c7b60930fade613a9c1/-1:-1",
@@ -4847,7 +4890,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7138",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:f077a14f74e4367bd841293ecfb26bf0da32227a/-1:-1",
@@ -4872,7 +4916,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2827",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:e2de94ca7b06c08d69f0d38f36c2b7041aba87e5/-1:-1",
@@ -4897,7 +4942,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2828",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:ad9c826cc7de4f344e850d80b4de923d9bf49718/-1:-1",
@@ -4922,7 +4968,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2829",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:e39279ac1060011e57f7b792ec7b10f1076f8413/-1:-1",
@@ -4947,7 +4994,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2830",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:f1f5f60a83fe363e031e6f7d7bf179c962960f1a/-1:-1",
@@ -4972,7 +5020,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2831",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:0544294e60c19abcbb201f9bf1f567547876ae8e/-1:-1",
@@ -4997,7 +5046,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2832",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:683003cf63330e7ba98c89ad9c0956b35a9ca597/-1:-1",
@@ -5022,7 +5072,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2833",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:0479150369a2cbc15741d1841dd91cf969cc0096/-1:-1",
@@ -5047,7 +5098,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2834",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:952ad98fd81953284b2cb5276414a6d6c95c1e2f/-1:-1",
@@ -5072,7 +5124,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2835",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:489f7f977a5ebfacafd4d57f0d80c769a18f85f7/-1:-1",
@@ -5097,7 +5150,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:21146:16847",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:6cc1a3be9ea409918630b87c7da4e2b924f0784e/-1:-1",
@@ -5122,7 +5176,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:21146:16845",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:65455497e86a4869604d1541601ce11eb2cfb92d/-1:-1",
@@ -5147,7 +5202,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:21146:16844",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:c5137a17c23c45b53df950b0ed5855257afb152e/-1:-1",
@@ -5172,7 +5228,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:21146:16846",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:fac40b678e431f026b7d55e6037c1d96982fa681/-1:-1",
@@ -5197,7 +5254,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7139",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:f7d013e638a6a5da2d1a9e5d477ba328bbd7bb0e/-1:-1",
@@ -5222,7 +5280,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:19352:2836",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:2eacfb00f2359405cb1c4998143d332e3bff91df/-1:-1",
@@ -5247,7 +5306,8 @@
           "$extensions": {
             "com.figma.variableId": "VariableID:17813:7140",
             "com.figma.scopes": [
-              "SHAPE_FILL"
+              "SHAPE_FILL",
+              "STROKE"
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:ce3cd7d6b8bdceb98c79691e08ceae45656ea4a6/-1:-1",

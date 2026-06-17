@@ -1,6 +1,6 @@
 import { Button } from './components/Button'
-import { ButtonBar } from './components/ButtonBar'
-import { Input } from './components/Input'
+import { ButtonBar } from './organisms/ButtonBar'
+import { InputText } from './components/InputText'
 import { Checkbox } from './components/Checkbox'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
@@ -23,12 +23,30 @@ function App() {
         </div>
       </section>
 
-      {/* Input */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT</p>
-        <Input label="Default" placeholder="Escribe aquí" />
-        <Input label="Error" state="error" errorMessage="Campo obligatorio" />
-        <Input label="Disabled" state="disabled" />
+      {/* InputText */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT TEXT</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputText label="Default" placeholder="Escribe aquí" />
+          <InputText label="Con helper" placeholder="Escribe aquí" helperText="Texto de ayuda descriptivo" />
+          <InputText label="Read-only" state="read-only" value="Valor no editable" />
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputText label="Error" state="error" errorMessage="Campo obligatorio" />
+          <InputText label="Error con valor" state="error" defaultValue="valor inválido" errorMessage="Formato incorrecto. Ej: usuario@email.com" />
+          <InputText label="Disabled" state="disabled" placeholder="No disponible" />
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputText label="Icono izq. subtle" iconLeft="Search" placeholder="Buscar..." />
+          <InputText label="Icono izq. primary" iconLeft="Search" iconLeftPrimary placeholder="Buscar..." />
+          <InputText label="Icono der. subtle" iconRight="Eye" placeholder="Contraseña" type="password" />
+          <InputText label="Icono der. primary" iconRight="Eye" iconRightPrimary placeholder="Contraseña" />
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputText label="Ambos iconos" iconLeft="Lock" iconRight="Eye" placeholder="Contraseña segura" type="password" />
+          <InputText label="Icono + error" state="error" iconLeft="Search" errorMessage="Sin resultados" defaultValue="xk9@##" />
+          <InputText label="Adaptive (textarea)" adaptive placeholder="Escribe varias líneas..." helperText="Crece con el contenido" />
+        </div>
       </section>
 
       {/* Checkbox */}

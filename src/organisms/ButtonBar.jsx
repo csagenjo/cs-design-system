@@ -18,7 +18,7 @@
  */
 
 import React from 'react';
-import { Button } from './Button';
+import { Button } from '../components/Button';
 
 const barCss = `
 .ds-btn-bar {

@@ -311,49 +311,131 @@
      COMPONENT TOKENS — Button
      ════════════════════════════════════════════════════════════ */
 
-  --ds-button-fg-default:              #050506;
-  --ds-button-fg-primary:              #FFFFFF;
-  --ds-button-fg-accent:               #286371;
-  --ds-button-fg-accent-primary:       #FFFFFF;
-  --ds-button-fg-disabled:             #B9BEC4;
+  /* Geometría */
+  --ds-button-radius:      80px;   /* borderRadius/circle → pill */
+  --ds-button-border-width: 2px;   /* borderWidth/lg → outline + focus */
 
-  --ds-button-bg-primary:              #050506;
-  --ds-button-bg-hover:                #050506;
-  --ds-button-bg-accent-primary:       #4BA9C0;
-  --ds-button-bg-accent-hover:         #4BA9C0;
-  --ds-button-bg-disabled:             #EEEFF1;
-  --ds-button-bg-mix-hover:            rgba(5,5,6,0.1);
-  --ds-button-bg-mix-hover-inverse:    rgba(255,255,255,0.1);
+  /* Padding por tamaño */
+  --ds-button-px-sm: 8px;
+  --ds-button-px-md: 12px;
+  --ds-button-px-lg: 16px;
+  --ds-button-py-sm: 6px;
+  --ds-button-py-md: 6px;
+  --ds-button-py-lg: 8px;
 
-  --ds-button-border-secondary:        #2C2F34;
-  --ds-button-border-accent-secondary: #286371;
-  --ds-button-border-disabled:         #B9BEC4;
-  --ds-button-focus-inner:             #FFFFFF;
-  --ds-button-focus-outer:             #050506;
+  /* Fondos */
+  --ds-button-bg-accent-filled:   #4BA9C0;
+  --ds-button-bg-default-filled:  #050506;
+  --ds-button-bg-disabled:        #EEEFF1;
+
+  /* Texto */
+  --ds-button-fg-accent-filled:   #FFFFFF;
+  --ds-button-fg-accent-outline:  #286371;
+  --ds-button-fg-default-filled:  #FFFFFF;
+  --ds-button-fg-default-outline: #050506;
+  --ds-button-fg-disabled:        #B9BEC4;
+
+  /* Bordes */
+  --ds-button-border-accent:        #286371;
+  --ds-button-border-default:       #2C2F34;
+  --ds-button-border-disabled:      #B9BEC4;
+  --ds-button-border-focus-outer:   #050506;
 
 
   /* ════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Input
+     COMPONENT TOKENS — Input (familia completa)
      ════════════════════════════════════════════════════════════ */
 
-  --ds-input-bg-default:               #FFFFFF;
-  --ds-input-bg-disabled:              #EEEFF1;
-  --ds-input-bg-readonly:              #F9FAFA;
+  /* ── InputCommon — base compartida por todos los tipos ────── */
+  --ds-input-bg-default:                    #FFFFFF;
+  --ds-input-bg-disabled:                   #EEEFF1;
 
-  --ds-input-fg-default:               #050506;
-  --ds-input-fg-placeholder:           #9AA1AA;
-  --ds-input-fg-disabled:              #B9BEC4;
-  --ds-input-fg-label:                 #050506;
-  --ds-input-fg-helper:                #9AA1AA;
-  --ds-input-fg-error:                 #AD2525;
+  --ds-input-fg-default:                    #050506;
+  --ds-input-fg-disabled:                   #B9BEC4;
+  --ds-input-fg-label:                      #050506;
+  --ds-input-fg-helper:                     #9AA1AA;
+  --ds-input-fg-error:                      #AD2525;
 
-  --ds-input-border-default:           #9AA1AA;
-  --ds-input-border-hover:             #2C2F34;
-  --ds-input-border-focus:             #286371;
-  --ds-input-border-disabled:          #B9BEC4;
-  --ds-input-border-error:             #AD2525;
-  --ds-input-focus-inner:              #FFFFFF;
-  --ds-input-focus-outer:              #050506;
+  --ds-input-border-default:                #9AA1AA;
+  --ds-input-border-disabled:               #B9BEC4;
+  --ds-input-border-error:                  #AD2525;
+  --ds-input-focus-inner:                   #FFFFFF;
+  --ds-input-focus-outer:                   #050506;
+
+  --ds-input-border-width:                  1.5px;
+  --ds-input-border-width-focus:            2px;
+  --ds-input-border-radius:                 8px;
+  --ds-input-border-radius-focus-inner:     8px;
+  --ds-input-border-radius-focus-outer:     10px;
+  --ds-input-padding-hor:                   16px;
+  --ds-input-padding-ver:                   16px;
+  --ds-input-min-height:                    56px;
+  --ds-input-field-icon-gap:                12px;
+  --ds-input-label-gap:                     4px;
+  --ds-input-label-fg-disabled:             #B9BEC4;
+  --ds-input-helper-fg-disabled:            #B9BEC4;
+  --ds-input-helper-gap:                    8px;
+  --ds-input-validation-fg-text:            #050506;
+  --ds-input-validation-gap:                4px;
+
+  /* ── InputText — iconos opcionales left/right ─────────────── */
+  --ds-input-text-icon-left-fg:             #9AA1AA;
+  --ds-input-text-icon-left-fg-primary:     #286371;
+  --ds-input-text-icon-left-fg-disabled:    #B9BEC4;
+  --ds-input-text-icon-left-size:           24px;
+  --ds-input-text-icon-right-fg:            #9AA1AA;
+  --ds-input-text-icon-right-fg-primary:    #286371;
+  --ds-input-text-icon-right-fg-disabled:   #B9BEC4;
+  --ds-input-text-icon-right-size:          24px;
+
+  /* ── InputDate — icono calendario fijo teal ───────────────── */
+  --ds-input-date-icon-right-fg:            #286371;
+  --ds-input-date-icon-right-fg-disabled:   #B9BEC4;
+  --ds-input-date-icon-right-size:          24px;
+
+  /* ── InputDropdown — icono chevron fijo teal ──────────────── */
+  --ds-input-dropdown-icon-right-fg:        #286371;
+  --ds-input-dropdown-icon-right-fg-disabled:#B9BEC4;
+  --ds-input-dropdown-icon-right-size:      24px;
+
+  /* ── InputTelephone — dos sub-campos + flag + divider ─────── */
+  --ds-input-telephone-country-bg:                 #FFFFFF;
+  --ds-input-telephone-country-bg-disabled:        #EEEFF1;
+  --ds-input-telephone-country-height:             56px;
+  --ds-input-telephone-country-padding-hor:        16px;
+  --ds-input-telephone-country-padding-ver:        12px;
+  --ds-input-telephone-country-gap:                4px;
+  --ds-input-telephone-country-text-fg:            #050506;
+  --ds-input-telephone-country-text-fg-disabled:   #B9BEC4;
+  --ds-input-telephone-field-bg:                   #FFFFFF;
+  --ds-input-telephone-field-bg-disabled:          #EEEFF1;
+  --ds-input-telephone-field-height:               56px;
+  --ds-input-telephone-field-padding-hor:          16px;
+  --ds-input-telephone-field-padding-ver:          16px;
+  --ds-input-telephone-icon-dropdown-fg:           #286371;
+  --ds-input-telephone-icon-dropdown-fg-disabled:  #B9BEC4;
+  --ds-input-telephone-icon-dropdown-size:         24px;
+  --ds-input-telephone-icon-flag-size:             32px;
+  --ds-input-telephone-icon-flag-opacity-disabled: 0.4;
+  --ds-input-telephone-divider-color:              #286371;
+
+  /* ── InputAmount — importe + moneda ──────────────────────── */
+  --ds-input-amount-currency-field-height:          56px;
+  --ds-input-amount-currency-field-gap-hor:         4px;
+  --ds-input-amount-field-height:                   56px;
+  --ds-input-amount-icon-dropdown-size:             24px;
+  --ds-input-amount-icon-dropdown-fg:               #286371;
+  --ds-input-amount-icon-dropdown-fg-disabled:      #B9BEC4;
+  --ds-input-amount-currency-text-fg:               #050506;
+  --ds-input-amount-currency-text-fg-disabled:      #B9BEC4;
+
+  /* ── InputStepper — botones − / + teal ───────────────────── */
+  --ds-input-stepper-icon-left-fg:                  #286371;
+  --ds-input-stepper-icon-left-fg-disabled:         #B9BEC4;
+  --ds-input-stepper-icon-left-size:                24px;
+  --ds-input-stepper-icon-right-fg:                 #286371;
+  --ds-input-stepper-icon-right-fg-disabled:        #B9BEC4;
+  --ds-input-stepper-icon-right-size:               24px;
 
 
   /* ════════════════════════════════════════════════════════════
