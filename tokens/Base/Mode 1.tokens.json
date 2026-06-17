@@ -1955,6 +1955,17 @@
     }
   },
   "typography": {
+    "fontStyle": {
+      "italic": {
+        "$type": "string",
+        "$value": "Italic",
+        "$extensions": {
+          "com.figma.variableId": "VariableID:63:492",
+          "com.figma.hiddenFromPublishing": true,
+          "com.figma.type": "string"
+        }
+      }
+    },
     "fontFamily": {
       "default": {
         "$type": "string",
@@ -2006,17 +2017,6 @@
         "$value": "Arial",
         "$extensions": {
           "com.figma.variableId": "VariableID:63:487",
-          "com.figma.hiddenFromPublishing": true,
-          "com.figma.type": "string"
-        }
-      }
-    },
-    "fontStyle": {
-      "italic": {
-        "$type": "string",
-        "$value": "Italic",
-        "$extensions": {
-          "com.figma.variableId": "VariableID:63:492",
           "com.figma.hiddenFromPublishing": true,
           "com.figma.type": "string"
         }
