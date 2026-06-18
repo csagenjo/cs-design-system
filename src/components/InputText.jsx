@@ -148,11 +148,11 @@ const css = `
   padding-right: calc(var(--ds-input-padding-hor) + var(--ds-input-text-icon-right-size) + var(--ds-input-field-icon-gap));
 }
 
-/* Helper text */
+/* Helper text — aparece ENCIMA del campo */
 .ds-input-text__helper {
   font-size:   12px;
   color:       var(--ds-input-fg-helper);
-  margin:      var(--ds-input-helper-gap) 0 0;
+  margin:      0 0 var(--ds-input-helper-gap);
   line-height: 1.4;
 }
 .ds-input-text--disabled .ds-input-text__helper { color: var(--ds-input-helper-fg-disabled); }
@@ -211,7 +211,7 @@ export const InputText = forwardRef(function InputText({
   const generatedId = useId();
   const inputId     = id || generatedId;
 
-  const helperId  = helperText && state !== 'error' ? `${inputId}-helper` : null;
+  const helperId  = helperText ? `${inputId}-helper` : null;
   const messageId = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
   const describedBy = [helperId, messageId].filter(Boolean).join(' ') || undefined;
 
@@ -277,6 +277,12 @@ export const InputText = forwardRef(function InputText({
         </label>
       )}
 
+      {helperText && (
+        <p className="ds-input-text__helper" id={helperId}>
+          {helperText}
+        </p>
+      )}
+
       <div className={fieldWrapClass}>
         {iconLeft && (
           <span className={[
@@ -301,12 +307,6 @@ export const InputText = forwardRef(function InputText({
           </span>
         )}
       </div>
-
-      {state !== 'error' && helperText && (
-        <p className="ds-input-text__helper" id={helperId}>
-          {helperText}
-        </p>
-      )}
 
       {state === 'error' && errorMessage && (
         <p className="ds-input-text__message" id={messageId} aria-live="polite">

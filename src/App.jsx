@@ -1,13 +1,16 @@
 import { Button } from './components/Button'
 import { ButtonBar } from './organisms/ButtonBar'
 import { InputText } from './components/InputText'
+import { InputDate } from './components/InputDate'
+import { InputDropdown } from './components/InputDropdown'
+import { InputStepper } from './components/InputStepper'
 import { Checkbox } from './components/Checkbox'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
 
 function App() {
   return (
-    <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+    <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', textAlign: 'left' }}>
 
       {/* Button */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -28,24 +31,69 @@ function App() {
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT TEXT</p>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <InputText label="Default" placeholder="Escribe aquí" />
-          <InputText label="Con helper" placeholder="Escribe aquí" helperText="Texto de ayuda descriptivo" />
-          <InputText label="Read-only" state="read-only" value="Valor no editable" />
+          <InputText label="Helper visible" placeholder="Escribe aquí" helperText="Instrucciones de relleno" />
+          <InputText label="Error sin helper" state="error" errorMessage="Campo obligatorio" />
         </div>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          <InputText label="Error" state="error" errorMessage="Campo obligatorio" />
-          <InputText label="Error con valor" state="error" defaultValue="valor inválido" errorMessage="Formato incorrecto. Ej: usuario@email.com" />
-          <InputText label="Disabled" state="disabled" placeholder="No disponible" />
+          <InputText label="Helper + Error (ambos)" state="error" helperText="Instrucciones que siguen visibles" errorMessage="Formato incorrecto" defaultValue="valor inválido" />
+          <InputText label="Disabled con helper" state="disabled" helperText="Texto de ayuda" placeholder="No disponible" />
+          <InputText label="Read-only" state="read-only" value="Valor no editable" />
         </div>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <InputText label="Icono izq. subtle" iconLeft="Search" placeholder="Buscar..." />
           <InputText label="Icono izq. primary" iconLeft="Search" iconLeftPrimary placeholder="Buscar..." />
-          <InputText label="Icono der. subtle" iconRight="Eye" placeholder="Contraseña" type="password" />
-          <InputText label="Icono der. primary" iconRight="Eye" iconRightPrimary placeholder="Contraseña" />
+          <InputText label="Icono der." iconRight="Eye" placeholder="Contraseña" type="password" />
+          <InputText label="Ambos iconos" iconLeft="Lock" iconRight="Eye" placeholder="Contraseña segura" />
         </div>
+      </section>
+
+      {/* InputDate */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT DATE</p>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-          <InputText label="Ambos iconos" iconLeft="Lock" iconRight="Eye" placeholder="Contraseña segura" type="password" />
-          <InputText label="Icono + error" state="error" iconLeft="Search" errorMessage="Sin resultados" defaultValue="xk9@##" />
-          <InputText label="Adaptive (textarea)" adaptive placeholder="Escribe varias líneas..." helperText="Crece con el contenido" />
+          <InputDate label="Default" />
+          <InputDate label="Con helper" helperText="Formato: DD/MM/AAAA" />
+          <InputDate label="Helper + Error (ambos)" state="error" helperText="Formato: DD/MM/AAAA" errorMessage="Fecha inválida" />
+          <InputDate label="Disabled" state="disabled" />
+        </div>
+      </section>
+
+      {/* InputDropdown */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT DROPDOWN</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputDropdown
+            label="País"
+            options={[{label:'España',value:'es'},{label:'Francia',value:'fr'},{label:'Alemania',value:'de'}]}
+          />
+          <InputDropdown
+            label="Con helper"
+            helperText="Selecciona tu región de residencia"
+            options={[{label:'Madrid',value:'mad'},{label:'Barcelona',value:'bcn'},{label:'Valencia',value:'val'}]}
+          />
+          <InputDropdown
+            label="Helper + Error (ambos)"
+            state="error"
+            helperText="Elige una opción válida"
+            errorMessage="Selección obligatoria"
+            options={[{label:'Opción A',value:'a'}]}
+          />
+          <InputDropdown
+            label="Disabled"
+            state="disabled"
+            options={[{label:'Sin opciones',value:'x'}]}
+          />
+        </div>
+      </section>
+
+      {/* InputStepper */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT STEPPER</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputStepper label="Cantidad" defaultValue={1} min={0} max={10} />
+          <InputStepper label="Con helper" helperText="Entre 0 y 99 unidades" defaultValue={5} min={0} max={99} />
+          <InputStepper label="Helper + Error" state="error" helperText="Mínimo 1 unidad" errorMessage="Cantidad inválida" defaultValue={0} min={1} />
+          <InputStepper label="Disabled" state="disabled" defaultValue={3} />
         </div>
       </section>
 

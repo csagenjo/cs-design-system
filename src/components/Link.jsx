@@ -1,39 +1,5 @@
-/**
- * Link — Componente atómico
- * CS Design System · v1.0
- *
- * Tokens: --ds-fg-* · --ds-fontSize-* · --ds-fontLheight-* · --ds-fontWeight-*
- * Icono:  ArrowUpRight (lucide-react) — escala con tamaño, strokeWidth con énfasis
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
- *
- * VARIANTES (variant):
- *   "default"  → --ds-fg-default  (#050506)
- *   "accent"   → --ds-fg-secondary (#B71B60)
- *
- * TAMAÑOS (size):
- *   "xs" → 12px   "sm" → 14px (default)   "md" → 16px   "lg" → 19px
- *
- * ÉNFASIS (emphasis):
- *   "low"    → font-weight 400, strokeWidth 1.75  (default)
- *   "medium" → font-weight 700, strokeWidth 2.5
- *
- * ESTADOS (CSS automático):
- *   :hover   → underline secondary-500 + bg overlay var(--ds-button-hover-mix-accent)
- *   :focus   → underline secondary-500 + doble anillo (#050506 / white)
- *   :active  → underline secondary-500 + opacity 0.8
- *   :visited → Default: sin cambio · Accent: color terciario (lavender)
- *
- * USO:
- *   <Link href="/ruta">Ver detalle</Link>
- *   <Link href="/ruta" variant="accent" emphasis="medium">Más información</Link>
- *   <Link href="https://..." external>Enlace externo</Link>
- *   <Link href="/ruta" size="lg" rightIcon={false}>Sin icono</Link>
- */
-
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
-
-/* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
 .ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-fontLheight-3xs); --_icon: 12; }
@@ -52,46 +18,41 @@ const css = `
   text-decoration: none;
   cursor:          pointer;
   border-radius:   2px;
-  transition:      background 0.12s, opacity 0.12s, color 0.12s;
+  transition:      background 0.12s, opacity 0.12s;
 }
 
-/* Text wrapper — carries the border-bottom underline */
 .ds-link__text { border-bottom: 1px solid; }
 
-/* ── Default variant ── */
-.ds-link--default                        { color: var(--ds-fg-default); }
-.ds-link--default .ds-link__text         { border-bottom-color: var(--ds-link-border-default); }
-.ds-link--default:visited .ds-link__text { border-bottom-color: var(--ds-link-border-visited); }
+/* ── Default ── */
+.ds-link--default                         { color: var(--ds-link-fg-default); }
+.ds-link--default .ds-link__text          { border-bottom-color: var(--ds-link-border-default); }
+.ds-link--default .ds-link__icon          { color: var(--ds-link-icon-default); }
+.ds-link--default:visited .ds-link__text  { border-bottom-color: var(--ds-link-border-visited); }
 
-/* ── Accent variant ── */
-.ds-link--accent                        { color: var(--ds-fg-secondary); }
-.ds-link--accent .ds-link__text         { border-bottom-color: var(--ds-link-border-accent-initial); }
-.ds-link--accent:visited                { color: var(--ds-fg-tertiary); }
-.ds-link--accent:visited .ds-link__text { border-bottom-color: var(--ds-link-border-visited); }
+/* ── Accent ── */
+.ds-link--accent                          { color: var(--ds-link-fg-accent); }
+.ds-link--accent .ds-link__text           { border-bottom-color: var(--ds-link-border-accent-light); }
+.ds-link--accent .ds-link__icon           { color: var(--ds-link-icon-accent); }
+.ds-link--accent:visited                  { color: var(--ds-link-fg-accent-visited); }
+.ds-link--accent:visited .ds-link__text   { border-bottom-color: var(--ds-link-border-visited); }
+.ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-icon-visited); }
 
-/* ── Icon color ── */
-.ds-link--default .ds-link__icon { color: var(--ds-link-icon-default); }
-.ds-link--accent  .ds-link__icon { color: var(--ds-link-icon-accent); }
-
-/* ── Medium emphasis ── */
+/* ── Emphasis ── */
 .ds-link--emphasis-medium { font-weight: var(--ds-fontWeight-bold); }
 
-/* ── Hover — underline + background overlay ── */
-.ds-link:hover                { background: var(--ds-link-bg-hover); }
-.ds-link:hover .ds-link__text { border-bottom-color: var(--ds-link-border-hover); }
+/* ── Hover ── */
+.ds-link:hover { background: var(--ds-link-bg-hover); }
 
-/* ── Focus — underline + double ring ── */
+/* ── Focus ── */
 .ds-link:focus-visible {
   outline:    none;
   box-shadow: 0 0 0 2px var(--ds-link-focus-inner), 0 0 0 4px var(--ds-link-focus-outer);
 }
-.ds-link:focus-visible .ds-link__text { border-bottom-color: var(--ds-link-border-hover); }
 
-/* ── Pressed — underline + opacity ── */
-.ds-link:active                { opacity: 0.8; }
-.ds-link:active .ds-link__text { border-bottom-color: var(--ds-link-border-hover); }
+/* ── Active ── */
+.ds-link:active { opacity: 0.8; }
 
-/* ── Screen-reader only (external link announcement) ── */
+/* ── SR-only (enlace externo) ── */
 .ds-link .sr-only {
   position:    absolute;
   width:       1px;
@@ -114,8 +75,6 @@ function injectStyles() {
   _styleInjected = true;
 }
 injectStyles();
-
-/* ─── Link ─────────────────────────────────────────────────────────────────── */
 
 export function Link({
   variant   = 'default',
@@ -164,17 +123,3 @@ export function Link({
 }
 
 export default Link;
-
-
-/* ─── Ejemplos de uso ──────────────────────────────────────────────────────
-
-<Link href="/detalle">Ver detalle</Link>
-<Link href="/detalle" variant="accent">Ver detalle</Link>
-<Link href="/detalle" emphasis="medium">Ver detalle</Link>
-<Link href="/detalle" variant="accent" emphasis="medium">Más información</Link>
-<Link href="/detalle" size="lg">Enlace grande</Link>
-<Link href="/detalle" size="xs" rightIcon={false}>Sin icono</Link>
-<Link href="/detalle" leftIcon rightIcon={false}>Icono izquierda</Link>
-<Link href="https://ejemplo.com" external>Enlace externo</Link>
-<Link href="/detalle" ariaLabel="Ver detalle del producto" rightIcon={false} />
-*/
