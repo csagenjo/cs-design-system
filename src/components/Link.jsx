@@ -1,5 +1,39 @@
+/**
+ * Link — Componente atómico
+ * CS Design System · v2.0
+ *
+ * Tokens: --ds-link-* (tokens.css) — alineados con arquitectura link/all/ de Figma
+ * Iconos: lucide-react (ChevronRight)
+ * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
+ *
+ * VARIANTES:
+ *   "default" → label negro, underline negro, icono negro
+ *   "accent"  → label teal, underline teal, icono teal · visited: lavanda
+ *
+ * TAMAÑOS: xs · sm (default) · md · lg
+ *
+ * EMPHASIS:
+ *   "low"    → fontWeight regular (400)
+ *   "medium" → fontWeight bold (700)
+ *
+ * ESTADOS:
+ *   Initial  → estilos base
+ *   Hover    → overlay bgMix rgba(5,5,6,0.1)
+ *   Focus    → doble focus ring (inner blanco + outer negro)
+ *   Active   → opacity 0.8 + SemiBold
+ *   Visited  → lavanda (solo variant accent)
+ *
+ * USO:
+ *   <Link href="/ruta">Ver detalle</Link>
+ *   <Link href="/ruta" variant="accent" size="md" emphasis="medium">Más info</Link>
+ *   <Link href="/ruta" leftIcon rightIcon={false}>Anterior</Link>
+ *   <Link href="https://..." external>Enlace externo</Link>
+ */
+
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
+
+/* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
 .ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-fontLheight-3xs); --_icon: 12; }
@@ -21,36 +55,43 @@ const css = `
   transition:      background 0.12s, opacity 0.12s;
 }
 
-.ds-link__text { border-bottom: 1px solid; }
+/* ── Underline sobre el texto ── */
+.ds-link__text {
+  border-bottom: var(--ds-link-border-bottom-width) solid;
+}
 
 /* ── Default ── */
-.ds-link--default                         { color: var(--ds-link-fg-default); }
-.ds-link--default .ds-link__text          { border-bottom-color: var(--ds-link-border-default); }
-.ds-link--default .ds-link__icon          { color: var(--ds-link-icon-default); }
-.ds-link--default:visited .ds-link__text  { border-bottom-color: var(--ds-link-border-visited); }
+.ds-link--default                        { color: var(--ds-link-fg-label-default); }
+.ds-link--default .ds-link__text         { border-bottom-color: var(--ds-link-border-bottom-default); }
+.ds-link--default .ds-link__icon         { color: var(--ds-link-fg-icon-default); }
+.ds-link--default:visited .ds-link__text { border-bottom-color: var(--ds-link-border-bottom-visited); }
 
 /* ── Accent ── */
-.ds-link--accent                          { color: var(--ds-link-fg-accent); }
-.ds-link--accent .ds-link__text           { border-bottom-color: var(--ds-link-border-accent-light); }
-.ds-link--accent .ds-link__icon           { color: var(--ds-link-icon-accent); }
-.ds-link--accent:visited                  { color: var(--ds-link-fg-accent-visited); }
-.ds-link--accent:visited .ds-link__text   { border-bottom-color: var(--ds-link-border-visited); }
-.ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-icon-visited); }
+.ds-link--accent                          { color: var(--ds-link-fg-label-accent); }
+.ds-link--accent .ds-link__text           { border-bottom-color: var(--ds-link-border-bottom-accent); }
+.ds-link--accent .ds-link__icon           { color: var(--ds-link-fg-icon-accent); }
+.ds-link--accent:visited                  { color: var(--ds-link-fg-label-accent-visited); }
+.ds-link--accent:visited .ds-link__text   { border-bottom-color: var(--ds-link-border-bottom-visited); }
+.ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-fg-icon-visited); }
 
 /* ── Emphasis ── */
 .ds-link--emphasis-medium { font-weight: var(--ds-fontWeight-bold); }
 
 /* ── Hover ── */
-.ds-link:hover { background: var(--ds-link-bg-hover); }
+.ds-link:hover { background: var(--ds-link-bg-mix-hover); }
 
 /* ── Focus ── */
 .ds-link:focus-visible {
   outline:    none;
-  box-shadow: 0 0 0 2px var(--ds-link-focus-inner), 0 0 0 4px var(--ds-link-focus-outer);
+  box-shadow: 0 0 0 2px var(--ds-link-focus-inner),
+              0 0 0 4px var(--ds-link-focus-outer);
 }
 
-/* ── Active ── */
-.ds-link:active { opacity: 0.8; }
+/* ── Active — opacity + SemiBold ── */
+.ds-link:active {
+  opacity:     var(--ds-link-opacity-pressed);
+  font-weight: var(--ds-fontWeight-semibold);
+}
 
 /* ── SR-only (enlace externo) ── */
 .ds-link .sr-only {
@@ -75,6 +116,8 @@ function injectStyles() {
   _styleInjected = true;
 }
 injectStyles();
+
+/* ─── Link ─────────────────────────────────────────────────────────────────── */
 
 export function Link({
   variant   = 'default',
@@ -123,3 +166,14 @@ export function Link({
 }
 
 export default Link;
+
+
+/* ─── Ejemplos de uso ──────────────────────────────────────────────────────
+
+<Link href="/ruta">Ver detalle</Link>
+<Link href="/ruta" variant="accent">Ver más</Link>
+<Link href="/ruta" size="md" emphasis="medium">Título de sección</Link>
+<Link href="/ruta" leftIcon rightIcon={false}>Anterior</Link>
+<Link href="/ruta" rightIcon={false}>Sin icono</Link>
+<Link href="https://..." external>Enlace externo</Link>
+*/

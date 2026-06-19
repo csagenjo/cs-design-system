@@ -465,32 +465,34 @@
      COMPONENT TOKENS â€” Link
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* label fg */
-  --ds-link-fg-default:                #050506;
-  --ds-link-fg-accent:                 #286371;
-  --ds-link-fg-accent-visited:         #B185C5;
+  /* fg/label (link/all/fg/label/*) */
+  --ds-link-fg-label-default:          #050506;   /* default-generic */
+  --ds-link-fg-label-accent:           #286371;   /* accent-generic */
+  --ds-link-fg-label-accent-visited:   #B185C5;   /* accent-visited */
 
-  /* label borderBottom */
-  --ds-link-border-default:            #286371;
-  --ds-link-border-default-monochrome: #2C2F34;
-  --ds-link-border-accent:             #286371;
-  --ds-link-border-accent-light:       #4BA9C0;
-  --ds-link-border-accent-inverse:     #A0D1DE;
-  --ds-link-border-visited:            #B185C5;
-  --ds-link-border-inverse:            #FFFFFF;
+  /* fg/icon (link/all/fg/icon/*) */
+  --ds-link-fg-icon-default:           #050506;   /* default-generic */
+  --ds-link-fg-icon-accent:            #286371;   /* accent-generic */
+  --ds-link-fg-icon-visited:           #B185C5;   /* accent-visited */
 
-  /* icon fg */
-  --ds-link-icon-default:              #050506;
-  --ds-link-icon-accent:               #286371;
-  --ds-link-icon-visited:              #B185C5;
+  /* borderBottomColor/label (link/all/borderBottomColor/label/*) */
+  --ds-link-border-bottom-default:     #2C2F34;   /* default-generic â† era teal, corregido */
+  --ds-link-border-bottom-accent:      #286371;   /* accent-generic */
+  --ds-link-border-bottom-visited:     #B185C5;   /* default-visited */
+  --ds-link-border-bottom-accent-inv:  #A0D1DE;   /* accent-inverse */
+  --ds-link-border-bottom-inverse:     #FFFFFF;   /* inverse */
 
-  /* interacciÃ³n */
-  --ds-link-bg-hover:                  rgba(5,5,6,0.1);
-  --ds-link-bg-hover-inverse:          rgba(255,255,255,0.1);
-  --ds-link-focus-inner:               #FFFFFF;
-  --ds-link-focus-outer:               #050506;
-  --ds-link-focus-inner-inverse:       #050506;
-  --ds-link-focus-outer-inverse:       #FFFFFF;
+  /* borderBottomWidth (link/all/borderBottomWidth/label/*) */
+  --ds-link-border-bottom-width:       1px;       /* generic */
+
+  /* interacciÃ³n (link/all/root/*) */
+  --ds-link-bg-mix-hover:              rgba(5,5,6,0.1);
+  --ds-link-bg-mix-hover-inverse:      rgba(255,255,255,0.1);
+  --ds-link-opacity-pressed:           0.8;       /* opacity/pressed = 80 */
+  --ds-link-focus-inner:               #FFFFFF;   /* borderColor/default-focus-inner */
+  --ds-link-focus-outer:               #050506;   /* borderColor/default-focus-outer */
+  --ds-link-focus-inner-inverse:       #050506;   /* borderColor/invertedDefault-focus-inner */
+  --ds-link-focus-outer-inverse:       #FFFFFF;   /* borderColor/invertedDefault-focus-outer */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -568,15 +570,15 @@
     --ds-opacity-overlay:       rgba(5,5,6,0.3);
 
     /* Link dark */
-    --ds-link-fg-default:     #FFFFFF;
-    --ds-link-fg-accent:      #4BA9C0;
-    --ds-link-border-default: #A0D1DE;
-    --ds-link-border-accent:  #A0D1DE;
-    --ds-link-icon-default:   #FFFFFF;
-    --ds-link-icon-accent:    #4BA9C0;
-    --ds-link-bg-hover:       rgba(255,255,255,0.1);
-    --ds-link-focus-inner:    #050506;
-    --ds-link-focus-outer:    #FFFFFF;
+    --ds-link-fg-label-default:        #FFFFFF;
+    --ds-link-fg-label-accent:         #4BA9C0;
+    --ds-link-fg-icon-default:         #FFFFFF;
+    --ds-link-fg-icon-accent:          #4BA9C0;
+    --ds-link-border-bottom-default:   #A0D1DE;
+    --ds-link-border-bottom-accent:    #A0D1DE;
+    --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
+    --ds-link-focus-inner:             #050506;
+    --ds-link-focus-outer:             #FFFFFF;
   }
 }
 
@@ -613,13 +615,13 @@
   --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
   --ds-opacity-overlay:       rgba(5,5,6,0.3);
 
-  --ds-link-fg-default:     #FFFFFF;
-  --ds-link-fg-accent:      #4BA9C0;
-  --ds-link-border-default: #A0D1DE;
-  --ds-link-border-accent:  #A0D1DE;
-  --ds-link-icon-default:   #FFFFFF;
-  --ds-link-icon-accent:    #4BA9C0;
-  --ds-link-bg-hover:       rgba(255,255,255,0.1);
-  --ds-link-focus-inner:    #050506;
-  --ds-link-focus-outer:    #FFFFFF;
+  --ds-link-fg-label-default:        #FFFFFF;
+  --ds-link-fg-label-accent:         #4BA9C0;
+  --ds-link-fg-icon-default:         #FFFFFF;
+  --ds-link-fg-icon-accent:          #4BA9C0;
+  --ds-link-border-bottom-default:   #A0D1DE;
+  --ds-link-border-bottom-accent:    #A0D1DE;
+  --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
+  --ds-link-focus-inner:             #050506;
+  --ds-link-focus-outer:             #FFFFFF;
 }
