@@ -4,6 +4,7 @@ import { InputText } from './components/InputText'
 import { InputDate } from './components/InputDate'
 import { InputDropdown } from './components/InputDropdown'
 import { InputStepper } from './components/InputStepper'
+import { InputTelephone } from './components/InputTelephone'
 import { Checkbox } from './components/Checkbox'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
@@ -94,6 +95,20 @@ function App() {
           <InputStepper label="Con helper" helperText="Entre 0 y 99 unidades" defaultValue={5} min={0} max={99} />
           <InputStepper label="Helper + Error" state="error" helperText="Mínimo 1 unidad" errorMessage="Cantidad inválida" defaultValue={0} min={1} />
           <InputStepper label="Disabled" state="disabled" defaultValue={3} />
+        </div>
+      </section>
+
+      {/* InputTelephone */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT TELEPHONE</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputTelephone label="Selectable (default)" flagEmoji="🇪🇸" countryCode="+34" placeholder="600 000 000" />
+          <InputTelephone label="Fixed" countryVariant="fixed" flagEmoji="🇬🇧" countryCode="+44" placeholder="07700 000000" />
+          <InputTelephone label="Con helper" helperText="Solo para verificación" flagEmoji="🇪🇸" countryCode="+34" />
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputTelephone label="Helper + Error" state="error" helperText="Introduce tu móvil" errorMessage="Número inválido" flagEmoji="🇪🇸" countryCode="+34" />
+          <InputTelephone label="Disabled" state="disabled" flagEmoji="🇪🇸" countryCode="+34" />
         </div>
       </section>
 
