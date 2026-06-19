@@ -17,12 +17,23 @@ Typography       → font family, size, weight, line-height scales
 ### CSS variable naming
 
 ```css
---ds-color-{group}-{step}      /* base palette:  --ds-color-primary-500 */
---ds-fg-{role}                 /* foreground:    --ds-fg-default */
---ds-bg-{role}                 /* background:    --ds-bg-subtle */
---ds-borderColor-{role}        /* borders:       --ds-borderColor-error */
---ds-{component}-{property}    /* component:     --ds-button-radius */
---ds-fontSize-{scale}-{step}   /* typography:    --ds-fontSize-label-md */
+--ds-color-{group}-{step}        /* base palette:   --ds-color-primary-500 */
+--ds-fg-{role}                   /* foreground:     --ds-fg-default */
+--ds-bg-{role}                   /* background:     --ds-bg-subtle */
+--ds-borderColor-{role}          /* borders:        --ds-borderColor-error */
+--ds-{component}-{part}-{state}  /* component:      --ds-link-fg-label-default */
+--ds-fontSize-{scale}-{step}     /* typography:     --ds-fontSize-label-md */
+```
+
+Component token naming follows Figma path convention:
+`{component}/{device}/{part}/{property}/{state}` → `--ds-{component}-{part}-{property}-{state}`
+
+Example — Link tokens aligned with `link/all/` Figma architecture:
+```css
+--ds-link-fg-label-default        /* link/all/fg/label/default-generic */
+--ds-link-fg-icon-accent          /* link/all/fg/icon/accent-generic */
+--ds-link-border-bottom-default   /* link/all/borderBottomColor/label/default-generic */
+--ds-link-bg-mix-hover            /* link/all/root/bgMix/hover */
 ```
 
 ---
@@ -74,12 +85,19 @@ Layer 2 — Organisms (planned)
 
 ### Layer 1 — Current components
 
-| Component | Variants | Tokens |
-|-----------|----------|--------|
-| `Button` | accent · default · negative · ghost · outline · floating | `--ds-button-*` |
-| `ButtonBar` | complex · simple · form · detail | inherits Button |
-| `Input` | text · all states · adaptive (textarea) | semantic `--ds-*` |
-| `Checkbox` | unselected · selected · indeterminate · all states | semantic `--ds-*` |
+| Component | Variants | Tokens | Status |
+|-----------|----------|--------|--------|
+| `Button` | accent · default · negative · ghost · outline · floating | `--ds-button-*` | ✅ v2 |
+| `ButtonBar` | complex · simple · form · detail | inherits Button | ✅ v2 |
+| `Checkbox` | unselected · selected · indeterminate · all states | `--ds-checkbox-*` | ✅ v2 |
+| `Link` | default · accent · visited · all states | `--ds-link-fg-label-*` `--ds-link-fg-icon-*` `--ds-link-border-bottom-*` | ✅ v2 |
+| `LinkList` | wrapper over Link | inherits Link | ✅ v1 |
+| `CTALink` | low · medium · high emphasis × default · accent | `--ds-cta-link-*` | ✅ v2 |
+| `InputText` | all states · icon left/right · adaptive | `--ds-input-*` | ✅ v1 |
+| `InputDate` | all states | `--ds-input-*` `--ds-input-date-*` | ✅ v1 |
+| `InputDropdown` | all states | `--ds-input-*` `--ds-input-dropdown-*` | ✅ v1 |
+| `InputStepper` | all states · min/max/step | `--ds-input-*` `--ds-input-stepper-*` | ✅ v1 |
+| `InputTelephone` | selectable · fixed × all states | `--ds-input-*` `--ds-input-telephone-*` | ✅ v1 |
 
 ---
 

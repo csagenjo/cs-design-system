@@ -26,6 +26,11 @@ src/
     Link.jsx           ✅ variantes default/accent, tokens teal
     LinkList.jsx       ✅ wrapper semántico nav/ul/li sobre Link
     CTALink.jsx        ✅ v2.0 — 24 variantes, 4 estados, borderRadius por énfasis
+    InputText.jsx      ✅ v1 — texto, iconos izq/der, adaptive
+    InputDate.jsx      ✅ v1
+    InputDropdown.jsx  ✅ v1
+    InputStepper.jsx   ✅ v1
+    InputTelephone.jsx ✅ v1 — selectable/fixed, doble campo, divider teal
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — pendiente añadir tokens de Input
@@ -170,7 +175,7 @@ Aplicar este mismo patrón ("Common" + específicos) a futuras familias de compo
 />
 ```
 
-## Link.jsx — API
+## Link.jsx — API ✅ v2.0
 
 ```jsx
 <Link
@@ -188,11 +193,13 @@ Aplicar este mismo patrón ("Common" + específicos) a futuras familias de compo
 </Link>
 ```
 
-Tokens de color Link (post-auditoría Jun 2026):
-- default: texto negro, underline teal `#286371`, icono teal `#286371`
-- accent: texto teal `#286371`, underline teal claro `#4BA9C0`, icono teal
-- visited: texto lavanda, underline lavanda
-- hover: overlay `rgba(5,5,6,0.1)`
+Tokens de color Link (arquitectura v2 — alineada con Figma link/all/):
+- `--ds-link-fg-label-default` / `accent` / `accent-visited`
+- `--ds-link-fg-icon-default` / `accent` / `visited`
+- `--ds-link-border-bottom-default` (#2C2F34 negro) / `accent` (#286371) / `visited` (#B185C5)
+- `--ds-link-bg-mix-hover` rgba(5,5,6,0.1)
+- `--ds-link-opacity-pressed` 0.8
+- Active: opacity 0.8 + SemiBold
 
 ## LinkList.jsx — API
 
@@ -299,11 +306,37 @@ Fix [ComponentName]: descripción
 Move [ComponentName]: descripción (ej. reubicación de capas)
 ```
 
+## InputTelephone.jsx — API ✅ completado
+
+```jsx
+<InputTelephone
+  label
+  helperText
+  errorMessage
+  state          = "default" | "error" | "disabled"
+  countryVariant = "selectable" | "fixed"   // default: selectable
+  flagEmoji      = "🇪🇸"
+  countryCode    = "+34"
+  onCountryClick = {fn}                     // abre el Country Picker (componente separado)
+  value
+  onChange
+  placeholder    = "600 000 000"
+  fullWidth      = {false}
+  id
+  name
+/>
+```
+
+Estructura: Label → Helper → [CountryField | Divider teal | PhoneField] → ValidationMessage.
+Sin validación de formato — el estado error lo gestiona el padre.
+`autoComplete="tel-national"` en el campo de número.
+Country Picker (Advanced List Item) es componente separado — fuera del scope de este átomo.
+
 ## Próximos componentes
 
-1. **Input (familia completa)** — en progreso, ver sección Input arriba
-2. Radio.jsx
-3. Chip.jsx
+1. **InputAmount.jsx** — mismo patrón dual que Telephone (amountField + currencyField)
+2. **Radio.jsx**
+3. **Chip.jsx**
 
 ## Figma MCP
 
