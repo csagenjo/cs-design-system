@@ -51,7 +51,7 @@ const css = `
 /* Label */
 .ds-input-telephone__label {
   font-size:     14px;
-  font-weight:   500;
+  font-weight:   700;
   color:         var(--ds-input-fg-label);
   cursor:        default;
   line-height:   1.4;

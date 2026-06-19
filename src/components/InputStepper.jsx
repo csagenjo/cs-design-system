@@ -12,7 +12,7 @@ const css = `
 
 .ds-input-stepper__label {
   font-size:     14px;
-  font-weight:   500;
+  font-weight:   700;
   color:         var(--ds-input-fg-label);
   line-height:   1.4;
   margin-bottom: var(--ds-input-label-gap);
