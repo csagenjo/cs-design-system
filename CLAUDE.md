@@ -25,7 +25,7 @@ src/
     Checkbox.jsx       ✅ DS v2, indeterminate, aria-checked=mixed
     Link.jsx           ✅ variantes default/accent, tokens teal
     LinkList.jsx       ✅ wrapper semántico nav/ul/li sobre Link
-    CTALink.jsx        ✅ emphasis low/medium/high, variantes default/accent
+    CTALink.jsx        ✅ v2.0 — 24 variantes, 4 estados, borderRadius por énfasis
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — pendiente añadir tokens de Input
@@ -207,7 +207,7 @@ Tokens de color Link (post-auditoría Jun 2026):
 
 Semántica: `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
 
-## CTALink.jsx — API ✅ completado
+## CTALink.jsx — API ✅ completado v2.0
 
 ```jsx
 <CTALink
@@ -223,7 +223,9 @@ Semántica: `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
 </CTALink>
 ```
 
-Tokens disponibles en tokens.css:
+24 variantes en Figma (4 estados × 6 combinaciones). Estados: Initial · Hover · Focus · Pressed.
+
+Tokens en tokens.css:
 ```css
 --ds-cta-link-fg-default              #050506
 --ds-cta-link-fg-primary              #FFFFFF
@@ -238,9 +240,20 @@ Tokens disponibles en tokens.css:
 --ds-cta-link-border-bottom-accent    #286371
 --ds-cta-link-focus-inner             #FFFFFF
 --ds-cta-link-focus-outer             #050506
+--ds-cta-link-border-radius-low       16px    /* ctaLink/all/root/borderRadius/lowEmphasis */
+--ds-cta-link-border-radius-medium    24px    /* ctaLink/all/root/borderRadius/mediumEmphasis */
+--ds-cta-link-border-radius-high      80px    /* ctaLink/all/root/borderRadius/highEmphasis */
+--ds-cta-link-border-radius-focus     80px    /* ctaLink/all/root/borderRadius/focus */
+--ds-cta-link-opacity-pressed         0.8     /* ctaLink/all/root/opacity/pressed = 80 */
+--ds-cta-link-padding-ver             6px     /* ctaLink/all/root/paddingVer/generic */
+--ds-cta-link-padding-hor             12px    /* ctaLink/all/root/paddingHor/generic */
 ```
 
-Sin icono. Sin prop size. Talla única. 6 combinaciones (emphasis × variant) funcionando, hover via mix-token, disabled con aria-disabled + tabIndex -1, focus ring doble.
+Sin icono. Sin prop size. Talla única.
+- Hover: overlay bgMix rgba(5,5,6,0.1). Low emphasis: underline sube a 1.5px en hover.
+- Focus: doble anillo (inner blanco + outer negro), solo en estado Focus.
+- Pressed: opacity 0.8 vía `:active`.
+- Disabled: aria-disabled + tabIndex -1 + opacity 0.6.
 
 ## Input — familia completa 🔄 EN CONSTRUCCIÓN
 

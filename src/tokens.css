@@ -1,17 +1,17 @@
 /* ============================================================
-   CS Design System — tokens.css
-   Generado desde Figma Variables + auditoría manual
+   CS Design System â€” tokens.css
+   Generado desde Figma Variables + auditorÃ­a manual
    Fuente de verdad: Figma CS Design System (csagenjo)
-   Última actualización: Junio 2026
+   Ãšltima actualizaciÃ³n: Junio 2026
    
-   CASCADA: Base → Theme → Mode → Component
-   El código SOLO usa tokens de Mode y Component.
+   CASCADA: Base â†’ Theme â†’ Mode â†’ Component
+   El cÃ³digo SOLO usa tokens de Mode y Component.
    Nunca referenciar Base o Theme directamente.
    ============================================================ */
 
 :root {
 
-  /* ── PALETA BASE (solo para referencia — no usar en componentes) ─── */
+  /* â”€â”€ PALETA BASE (solo para referencia â€” no usar en componentes) â”€â”€â”€ */
   --ds-color-primary-50:    #F7FBFC;
   --ds-color-primary-100:   #EDF7FA;
   --ds-color-primary-200:   #CAE6ED;
@@ -114,7 +114,7 @@
   --ds-color-black:         #050506;
   --ds-color-white:         #FFFFFF;
 
-  /* ── OPACIDADES BASE ─────────────────────────────────────── */
+  /* â”€â”€ OPACIDADES BASE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-color-opacity-black-10:  rgba(5,5,6,0.1);
   --ds-color-opacity-black-16:  rgba(5,5,6,0.16);
   --ds-color-opacity-black-30:  rgba(5,5,6,0.3);
@@ -125,11 +125,11 @@
   --ds-color-opacity-white-40:  rgba(255,255,255,0.4);
 
 
-  /* ════════════════════════════════════════════════════════════
-     MODE TOKENS — LIGHT (estos son los que usa el código)
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     MODE TOKENS â€” LIGHT (estos son los que usa el cÃ³digo)
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* ── FOREGROUND — texto ──────────────────────────────────── */
+  /* â”€â”€ FOREGROUND â€” texto â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-fg-default:          #050506;
   --ds-fg-subtle:           #9AA1AA;
   --ds-fg-disabled:         #B9BEC4;
@@ -183,7 +183,7 @@
   --ds-fg-icon-warning:     #996600;
   --ds-fg-icon-error:       #AD2525;
 
-  /* ── BACKGROUND ──────────────────────────────────────────── */
+  /* â”€â”€ BACKGROUND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-bg-default:          #FFFFFF;
   --ds-bg-page:             #F9FAFA;
   --ds-bg-subtle:           #EEEFF1;
@@ -231,7 +231,7 @@
   --ds-bg-hover-secondary:  #FEF6F9;
   --ds-bg-hover-tertiary:   #F6F1F8;
 
-  /* ── BORDER COLOR ────────────────────────────────────────── */
+  /* â”€â”€ BORDER COLOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-borderColor-default:        #9AA1AA;
   --ds-borderColor-emphasis:       #2C2F34;
   --ds-borderColor-subtle:         #EEEFF1;
@@ -261,7 +261,7 @@
   --ds-borderColor-focus-inner-inverse:#050506;
   --ds-borderColor-focus-outer-inverse:#FFFFFF;
 
-  /* ── OPACITY ─────────────────────────────────────────────── */
+  /* â”€â”€ OPACITY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-opacity-hover-default:      rgba(5,5,6,0.1);
   --ds-opacity-hover-inverse:      rgba(255,255,255,0.1);
   --ds-opacity-hover-subtle:       rgba(5,5,6,0.1);
@@ -269,9 +269,9 @@
   --ds-opacity-overlay:            rgba(5,5,6,0.3);
 
 
-  /* ════════════════════════════════════════════════════════════
-     DEVICE / SPACING — Generic (Mobile base)
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     DEVICE / SPACING â€” Generic (Mobile base)
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-spacing-2xs: 2px;
   --ds-spacing-xs:  4px;
@@ -283,9 +283,9 @@
   --ds-spacing-3xl: 32px;
 
 
-  /* ════════════════════════════════════════════════════════════
-     TYPOGRAPHY — Device tokens
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     TYPOGRAPHY â€” Device tokens
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-fontSize-annotation-xs: 10px;
   --ds-fontSize-annotation-sm: 12px;
@@ -307,15 +307,15 @@
   --ds-fontSize-headline-2xl:  56px;
 
 
-  /* ════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Button
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     COMPONENT TOKENS â€” Button
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* Geometría */
-  --ds-button-radius:      80px;   /* borderRadius/circle → pill */
-  --ds-button-border-width: 2px;   /* borderWidth/lg → outline + focus */
+  /* GeometrÃ­a */
+  --ds-button-radius:      80px;   /* borderRadius/circle â†’ pill */
+  --ds-button-border-width: 2px;   /* borderWidth/lg â†’ outline + focus */
 
-  /* Padding por tamaño */
+  /* Padding por tamaÃ±o */
   --ds-button-px-sm: 8px;
   --ds-button-px-md: 12px;
   --ds-button-px-lg: 16px;
@@ -342,11 +342,11 @@
   --ds-button-border-focus-outer:   #050506;
 
 
-  /* ════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Input (familia completa)
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     COMPONENT TOKENS â€” Input (familia completa)
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* ── InputCommon — base compartida por todos los tipos ────── */
+  /* â”€â”€ InputCommon â€” base compartida por todos los tipos â”€â”€â”€â”€â”€â”€ */
   --ds-input-bg-default:                    #FFFFFF;
   --ds-input-bg-disabled:                   #EEEFF1;
 
@@ -378,7 +378,7 @@
   --ds-input-validation-fg-text:            #050506;
   --ds-input-validation-gap:                4px;
 
-  /* ── InputText — iconos opcionales left/right ─────────────── */
+  /* â”€â”€ InputText â€” iconos opcionales left/right â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-text-icon-left-fg:             #9AA1AA;
   --ds-input-text-icon-left-fg-primary:     #286371;
   --ds-input-text-icon-left-fg-disabled:    #B9BEC4;
@@ -388,17 +388,17 @@
   --ds-input-text-icon-right-fg-disabled:   #B9BEC4;
   --ds-input-text-icon-right-size:          24px;
 
-  /* ── InputDate — icono calendario fijo teal ───────────────── */
+  /* â”€â”€ InputDate â€” icono calendario fijo teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-date-icon-right-fg:            #286371;
   --ds-input-date-icon-right-fg-disabled:   #B9BEC4;
   --ds-input-date-icon-right-size:          24px;
 
-  /* ── InputDropdown — icono chevron fijo teal ──────────────── */
+  /* â”€â”€ InputDropdown â€” icono chevron fijo teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-dropdown-icon-right-fg:        #286371;
   --ds-input-dropdown-icon-right-fg-disabled:#B9BEC4;
   --ds-input-dropdown-icon-right-size:      24px;
 
-  /* ── InputTelephone — dos sub-campos + flag + divider ─────── */
+  /* â”€â”€ InputTelephone â€” dos sub-campos + flag + divider â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-telephone-country-bg:                 #FFFFFF;
   --ds-input-telephone-country-bg-disabled:        #EEEFF1;
   --ds-input-telephone-country-height:             56px;
@@ -419,7 +419,7 @@
   --ds-input-telephone-icon-flag-opacity-disabled: 0.4;
   --ds-input-telephone-divider-color:              #286371;
 
-  /* ── InputAmount — importe + moneda ──────────────────────── */
+  /* â”€â”€ InputAmount â€” importe + moneda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-amount-currency-field-height:          56px;
   --ds-input-amount-currency-field-gap-hor:         4px;
   --ds-input-amount-field-height:                   56px;
@@ -429,7 +429,7 @@
   --ds-input-amount-currency-text-fg:               #050506;
   --ds-input-amount-currency-text-fg-disabled:      #B9BEC4;
 
-  /* ── InputStepper — botones − / + teal ───────────────────── */
+  /* â”€â”€ InputStepper â€” botones âˆ’ / + teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-stepper-icon-left-fg:                  #286371;
   --ds-input-stepper-icon-left-fg-disabled:         #B9BEC4;
   --ds-input-stepper-icon-left-size:                24px;
@@ -438,9 +438,9 @@
   --ds-input-stepper-icon-right-size:               24px;
 
 
-  /* ════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Checkbox
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     COMPONENT TOKENS â€” Checkbox
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-checkbox-bg-default:            #FFFFFF;
   --ds-checkbox-bg-selected:           #4BA9C0;
@@ -461,9 +461,9 @@
   --ds-checkbox-label-disabled:        #B9BEC4;
 
 
-  /* ════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Link
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     COMPONENT TOKENS â€” Link
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* label fg */
   --ds-link-fg-default:                #050506;
@@ -484,7 +484,7 @@
   --ds-link-icon-accent:               #286371;
   --ds-link-icon-visited:              #B185C5;
 
-  /* interacción */
+  /* interacciÃ³n */
   --ds-link-bg-hover:                  rgba(5,5,6,0.1);
   --ds-link-bg-hover-inverse:          rgba(255,255,255,0.1);
   --ds-link-focus-inner:               #FFFFFF;
@@ -493,9 +493,9 @@
   --ds-link-focus-outer-inverse:       #FFFFFF;
 
 
-  /* ════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — CTALink
-     ════════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     COMPONENT TOKENS â€” CTALink
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-cta-link-fg-default:              #050506;
   --ds-cta-link-fg-primary:             #FFFFFF;
@@ -514,13 +514,24 @@
   --ds-cta-link-focus-inner:             #FFFFFF;
   --ds-cta-link-focus-outer:             #050506;
 
+  /* borderRadius por Ã©nfasis (ctaLink/all/root/borderRadius/*) */
+  --ds-cta-link-border-radius-low:       16px;   /* borderRadius/2xl */
+  --ds-cta-link-border-radius-medium:    24px;   /* borderRadius/3xl */
+  --ds-cta-link-border-radius-high:      80px;   /* borderRadius/circle */
+  --ds-cta-link-border-radius-focus:     80px;   /* borderRadius/circle */
+
+  /* Pressed + padding (ctaLink/all/root/opacity + paddingVer/Hor) */
+  --ds-cta-link-opacity-pressed:         0.8;    /* opacity/pressed = 80 */
+  --ds-cta-link-padding-ver:             6px;    /* paddingVer/generic */
+  --ds-cta-link-padding-hor:             12px;   /* paddingHor/generic */
+
 }
 
 
-/* ════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    DARK MODE overrides
    Se activa con: <html data-mode="dark"> o prefers-color-scheme
-   ════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 @media (prefers-color-scheme: dark) {
   :root {
