@@ -12,7 +12,7 @@ const css = `
 
 .ds-input-dropdown__label {
   font-size:     14px;
-  font-weight:   500;
+  font-weight:   700;
   color:         var(--ds-input-fg-label);
   cursor:        pointer;
   line-height:   1.4;
