@@ -420,14 +420,25 @@
   --ds-input-telephone-divider-color:              #286371;
 
   /* â”€â”€ InputAmount â€” importe + moneda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-amount-currency-field-height:          56px;
-  --ds-input-amount-currency-field-gap-hor:         4px;
-  --ds-input-amount-field-height:                   56px;
-  --ds-input-amount-icon-dropdown-size:             24px;
-  --ds-input-amount-icon-dropdown-fg:               #286371;
-  --ds-input-amount-icon-dropdown-fg-disabled:      #B9BEC4;
-  --ds-input-amount-currency-text-fg:               #050506;
-  --ds-input-amount-currency-text-fg-disabled:      #B9BEC4;
+  --ds-input-amount-currency-field-height-generic:    var(--ds-input-common-root-minheight-generic);
+  --ds-input-amount-currency-field-gap-hor-generic:   4px;
+  --ds-input-amount-currency-field-padding-hor-generic: 16px;
+  --ds-input-amount-currency-field-padding-ver-generic: 16px;
+  --ds-input-amount-currency-field-bg-generic:        var(--ds-input-common-root-bg-generic);
+  --ds-input-amount-currency-field-bg-disabled:       var(--ds-input-common-root-bg-disabled);
+
+  --ds-input-amount-amount-field-height-generic:      var(--ds-input-common-root-minheight-generic);
+  --ds-input-amount-amount-field-padding-hor-generic: 16px;
+  --ds-input-amount-amount-field-padding-ver-generic: 16px;
+  --ds-input-amount-amount-field-bg-generic:          var(--ds-input-common-root-bg-generic);
+  --ds-input-amount-amount-field-bg-disabled:         var(--ds-input-common-root-bg-disabled);
+
+  --ds-input-amount-currency-text-fg-generic:         var(--ds-input-common-valuetext-fg-generic);
+  --ds-input-amount-currency-text-fg-disabled:        var(--ds-input-common-valuetext-fg-disabled);
+
+  --ds-input-amount-icon-dropdown-fg-generic:         #286371;
+  --ds-input-amount-icon-dropdown-fg-disabled:        #B9BEC4;
+  --ds-input-amount-icon-dropdown-size-generic:       24px;
 
   /* â”€â”€ InputStepper â€” botones âˆ’ / + teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-stepper-icon-left-fg:                  #286371;
