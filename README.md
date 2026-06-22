@@ -18,14 +18,14 @@ Five-layer cascade: **Base → Theme → Mode → Component → Device**.
 - **Component** — per-component tokens referencing Mode only
 - **Device** — responsive typography and spacing (Mobile / Desk)
 
-The code only ever consumes Mode and Component tokens — never Base or Theme directly.
+The code only ever consumes Component tokens — never Mode, Base or Theme directly.
 
 ### Components — Capa 1 (Atoms)
 
 | Component | Description | Status |
 |-----------|-------------|--------|
 | `Button` | Accent · Default · Negative · Ghost · Outline · Floating · Pill shape · Lucide icons | ✅ v2 |
-| `Checkbox` | Unselected · Selected · Indeterminate · Error · Disabled · `aria-checked=mixed` | ✅ v2 |
+| `Checkbox` | Unselected · Selected · Indeterminate · Error · Disabled · `aria-checked=mixed` · Double focus ring · Hover+Focus state | ✅ v2 |
 | `Link` | Default · Accent · Visited · 4 sizes · Low/Medium emphasis · External | ✅ v2 |
 | `LinkList` | Semantic `nav > ul > li > Link` wrapper | ✅ v1 |
 | `CTALink` | Low · Medium · High emphasis × Default · Accent · 24 Figma variants | ✅ v2 |
@@ -34,6 +34,7 @@ The code only ever consumes Mode and Component tokens — never Base or Theme di
 | `InputDropdown` | All states · ChevronDown icon · Options array | ✅ v1 |
 | `InputStepper` | All states · −/+ buttons · min/max/step | ✅ v1 |
 | `InputTelephone` | Selectable/Fixed country · Flag + code + divider · All states | ✅ v1 |
+| `InputAmount` | Selectable/Fixed currency · locale-aware number format · All states | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -67,7 +68,7 @@ Opens at `http://localhost:5173`
 
 ```css
 :root {
-  /* Mode — semantic layer consumed by all components */
+  /* Mode — semantic layer, never used directly by components */
   --ds-fg-default:         #050506;
   --ds-bg-default:         #FFFFFF;
   --ds-borderColor-subtle: #D8DBDE;
@@ -79,6 +80,9 @@ Opens at `http://localhost:5173`
   --ds-cta-link-border-radius-low:  16px;
   --ds-cta-link-border-radius-high: 80px;
   --ds-input-min-height:            56px;
+  --ds-checkbox-bg-selected:        #4BA9C0;
+  --ds-checkbox-focus-outer:        #050506;
+  --ds-input-amount-currency-field-gap-hor-generic: 4px;
 }
 ```
 
@@ -88,7 +92,7 @@ Opens at `http://localhost:5173`
 
 ```
 src/
-  components/    ← Layer 1: pure atoms (--ds-* tokens only)
+  components/    ← Layer 1: pure atoms (--ds-{component}-* tokens only)
   organisms/     ← Layer 2: UIKit Plataforma (composed from atoms)
   tokens.css     ← single source of truth for all CSS variables
 tokens/
@@ -99,7 +103,25 @@ tokens/
   Device/        ← responsive spacing and typography
 ```
 
-Rule: organisms import atoms — they never re-implement atom logic.
+Rule: organisms import atoms — they never re-implement atom logic.  
+Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base directly.
+
+---
+
+## Input family audit — June 2026
+
+All 6 input types audited against the Component token architecture. Zero violations.
+
+| Component | Audit result |
+|-----------|-------------|
+| `InputText` | ✅ Zero violations |
+| `InputDate` | ✅ Zero violations |
+| `InputDropdown` | ✅ Zero violations |
+| `InputTelephone` | ✅ Zero violations |
+| `InputAmount` | ✅ Zero violations |
+| `InputStepper` | ✅ Zero violations |
+
+Shared tokens consolidated under `Input/InputCommon/` (27 tokens across 5 semantic groups).
 
 ---
 
