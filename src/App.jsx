@@ -5,6 +5,7 @@ import { InputDate } from './components/InputDate'
 import { InputDropdown } from './components/InputDropdown'
 import { InputStepper } from './components/InputStepper'
 import { InputTelephone } from './components/InputTelephone'
+import { InputAmount } from './components/InputAmount'
 import { Checkbox } from './components/Checkbox'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
@@ -109,6 +110,17 @@ function App() {
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <InputTelephone label="Helper + Error" state="error" helperText="Introduce tu móvil" errorMessage="Número inválido" flagEmoji="🇪🇸" countryCode="+34" />
           <InputTelephone label="Disabled" state="disabled" flagEmoji="🇪🇸" countryCode="+34" />
+        </div>
+      </section>
+
+      {/* InputAmount */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>INPUT AMOUNT</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <InputAmount label="Selectable default" currency="EUR" locale="es-ES" value="" />
+          <InputAmount label="Selectable error" state="error" currency="EUR" locale="es-ES" errorMessage="Importe no válido" />
+          <InputAmount label="Fixed disabled" state="disabled" currencyVariant="fixed" currency="USD" locale="en-US" value="1,000.00" />
+          <InputAmount label="Fixed default" currencyVariant="fixed" currency="GBP" locale="en-GB" value="500.00" />
         </div>
       </section>
 
