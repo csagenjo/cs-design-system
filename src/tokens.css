@@ -461,6 +461,7 @@
 
   --ds-checkbox-border-default:        #9AA1AA;
   --ds-checkbox-border-selected:       #286371;
+  --ds-checkbox-border-hover:          var(--ds-borderColor-primary);
   --ds-checkbox-border-disabled:       #B9BEC4;
   --ds-checkbox-border-error:          #AD2525;
   --ds-checkbox-focus-inner:           #FFFFFF;
@@ -470,6 +471,13 @@
   --ds-checkbox-icon-disabled:         #B9BEC4;
   --ds-checkbox-label-fg:              #050506;
   --ds-checkbox-label-disabled:        #B9BEC4;
+  --ds-checkbox-description-fg:        var(--ds-fg-subtle);
+  --ds-checkbox-validation-fg:         var(--ds-fg-error);
+
+  --ds-checkbox-size:                  24px;
+  --ds-checkbox-border-radius:         2px;
+  --ds-checkbox-border-width:          1.5px;
+  --ds-checkbox-label-gap:             8px;
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•

@@ -22,7 +22,7 @@ src/
   components/        ← Capa 1: DS csagenjo — SOLO átomos puros
     Button.jsx        ✅ átomo DS v2
     Input.jsx          🔄 a rehacer — ver sección Input más abajo
-    Checkbox.jsx       ✅ DS v2, indeterminate, aria-checked=mixed
+    Checkbox.jsx       🔄 DS v2, indeterminate, aria-checked=mixed — refactor de tokens en progreso (ver sección Checkbox)
     Link.jsx           ✅ variantes default/accent, tokens teal
     LinkList.jsx       ✅ wrapper semántico nav/ul/li sobre Link
     CTALink.jsx        ✅ v2.0 — 24 variantes, 4 estados, borderRadius por énfasis
@@ -31,6 +31,7 @@ src/
     InputDropdown.jsx  ✅ v1
     InputStepper.jsx   ✅ v1
     InputTelephone.jsx ✅ v1 — selectable/fixed, doble campo, divider teal
+    InputAmount.jsx    ✅ v1.0 — selectable/fixed, doble campo, formato de número locale-aware
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — pendiente añadir tokens de Input
@@ -102,6 +103,15 @@ Device (79) — capa paralela, no de color
 
 **Sufijos -light/-dark en Theme:** son los dos valores posibles (light/dark mode), NO intensidad.
 **Sufijos -subtle/-medium/-bold en Mode:** indican intensidad (renombrados de -light/-medium/-bold en Jun 2026).
+
+**Consolidado (22/06/2026):** el código de cada componente debe consumir EXCLUSIVAMENTE
+tokens de Component (`--ds-{componente}-*`, ej. `--ds-input-*`, `--ds-checkbox-*`) — nunca
+`var(--ds-fg-*)`, `--ds-bg-*`, `--ds-borderColor-*` (Mode) ni `--ds-color-*` (Base) directamente
+desde un `.jsx`. La familia Input ya cumple esto en su totalidad (ver auditoría más abajo).
+Excepción detectada: `Checkbox.jsx` todavía referencia tokens de Mode (`--ds-bg-primary`,
+`--ds-borderColor-subtle`, `--ds-fg-subtle`...) y de Base (`--ds-color-primary-50`) en su CSS,
+a pesar de que los tokens `--ds-checkbox-*` ya existen en `tokens.css` — pendiente de migrar
+(ver sección Checkbox).
 
 ## Decisión de sistema — accent color
 
@@ -262,22 +272,23 @@ Sin icono. Sin prop size. Talla única.
 - Pressed: opacity 0.8 vía `:active`.
 - Disabled: aria-disabled + tabIndex -1 + opacity 0.6.
 
-## Input — familia completa 🔄 EN CONSTRUCCIÓN
+## Input — familia completa ✅ código React completo
 
 Estado: tokens de Figma 100% listos y auditados (Component tokens, grupo `Input/`).
-Código React: pendiente — el `Input.jsx` actual es de una sesión anterior y necesita rehacerse
-con la nueva estructura de tokens (ver patrón "Common + específico" arriba).
+Código React: los 6 tipos están construidos (InputText, InputDate, InputDropdown,
+InputStepper, InputTelephone, InputAmount). El `Input.jsx` genérico de la sesión anterior
+queda obsoleto frente a estos átomos independientes.
 
-### Tipos a construir
+### Tipos construidos
 
-1. **InputText** — texto simple, iconLeft opcional (subtle/primary/disabled), iconRight opcional
-2. **InputTelephone** — dos sub-campos (country selector + número), variantes Selectable/Fixed, divider entre campos
+1. **InputText** ✅ — texto simple, iconLeft opcional (subtle/primary/disabled), iconRight opcional
+2. **InputTelephone** ✅ — dos sub-campos (country selector + número), variantes Selectable/Fixed, divider entre campos
    - Focus rings construidos en Figma (doble anillo blanco+negro) ✅
-   - Deuda: Country Picker (Advanced List Item) tiene focus-inner en teal en vez de blanco — pendiente investigar alcance antes de tocar, NO es bloqueante para el código
-3. **InputAmount** — mismo patrón dual que Telephone (amountField + currencyField)
-4. **InputDate** — iconRight fijo (calendario), confirmar si el date picker es parte de este componente
-5. **InputDropdown** — iconRight fijo (chevron)
-6. **InputStepper** — iconLeft + iconRight (botones −/+)
+   - Deuda: Country Picker (Advanced List Item) tiene focus-inner en teal en vez de blanco — alcance sin investigar, NO bloqueante (ver Deuda técnica)
+3. **InputAmount** ✅ — mismo patrón dual que Telephone (amountField + currencyField), formato numérico locale-aware vía `Intl.NumberFormat`
+4. **InputDate** ✅ — iconRight fijo (calendario)
+5. **InputDropdown** ✅ — iconRight fijo (chevron)
+6. **InputStepper** ✅ — iconLeft + iconRight (botones −/+)
 
 ### Decisión pendiente de arquitectura de código
 
@@ -332,11 +343,61 @@ Sin validación de formato — el estado error lo gestiona el padre.
 `autoComplete="tel-national"` en el campo de número.
 Country Picker (Advanced List Item) es componente separado — fuera del scope de este átomo.
 
+## InputAmount.jsx — API ✅ completado v1.0
+
+```jsx
+<InputAmount
+  label
+  ariaLabel
+  helperText
+  errorMessage
+  state           = "default" | "error" | "disabled"
+  currencyVariant = "selectable" | "fixed"   // default: selectable
+  currency        = "EUR"
+  onCurrencyClick = {fn}                     // abre el Currency Picker (componente separado)
+  locale          = "es-ES"                  // usado por Intl.NumberFormat para el placeholder
+  value
+  defaultValue
+  onChange
+  fullWidth       = {false}
+  id
+  name
+  onFocus
+  onBlur
+/>
+```
+
+Estructura: Label → Helper → [CurrencyField | AmountField] → ValidationMessage.
+Sin prop `placeholder` explícita — se genera automáticamente vía `Intl.NumberFormat(locale)`
+para mostrar el formato decimal correcto según el locale. Sin prop `variant` ni `validation`
+genéricas — el estado de error se controla con `state="error"` + `errorMessage`, igual que en
+el resto de la familia Input.
+Currency Picker (selector de moneda) es componente separado — fuera del scope de este átomo,
+mismo patrón que el Country Picker de InputTelephone.
+
+## Auditoría Input family (22/06/2026)
+
+InputText, InputDropdown, InputDate, InputTelephone, InputAmount e InputStepper pasaron
+auditoría de tokens con **cero violaciones**: todos consumen exclusivamente
+`--ds-input-*` (InputCommon + específicos por tipo), sin hex hardcodeados ni referencias
+directas a tokens de Mode o Base. Confirma el patrón "Common + específico" como válido
+para escalar a futuras familias (Selectors, Chips).
+
+## Checkbox.jsx — estado (22/06/2026) 🔄 refactor en progreso
+
+Figma: limpio y auditado — 23 tokens en Component tokens (`--ds-checkbox-*` en `tokens.css`):
+bg (default/selected/hover/disabled/error), border (default/selected/hover/disabled/error),
+focus (inner/outer), icon (fg/disabled), label (fg/disabled), description, validation,
+geometría (size, borderRadius, borderWidth, labelGap).
+Código: `Checkbox.jsx` aún NO usa estos tokens — su CSS sigue referenciando tokens de Mode
+(`--ds-bg-primary`, `--ds-borderColor-subtle`, `--ds-borderColor-primary`, `--ds-fg-subtle`,
+`--ds-fg-error`...) y de Base (`--ds-color-primary-50`) directamente. Pendiente: migrar
+`Checkbox.jsx` para que consuma únicamente `--ds-checkbox-*` (ver Deuda técnica).
+
 ## Próximos componentes
 
-1. **InputAmount.jsx** — mismo patrón dual que Telephone (amountField + currencyField)
-2. **Radio.jsx**
-3. **Chip.jsx**
+1. **Radio.jsx**
+2. **Chip.jsx**
 
 ## Figma MCP
 
@@ -347,11 +408,20 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 Para tareas grandes en Figma (renombrar/reestructurar muchos tokens), pedir confirmación
 después de cada componente — no avanzar en cadena sin verificación visual.
 
+## Deuda técnica
+
+- **Country Picker / Advanced List Item** (InputTelephone) — el focus-inner está en teal en
+  vez de blanco. Alcance sin investigar todavía. NO bloqueante para el código de InputTelephone.
+- **Checkbox.jsx** — refactor de tokens pendiente de aplicar al código. Los tokens
+  `--ds-checkbox-*` ya existen en `tokens.css` y Figma está auditado (23 tokens), pero el
+  componente sigue leyendo tokens de Mode/Base directamente (ver sección Checkbox).
+
 ## Arquitectura (dos capas)
 
 ```
 CAPA 1 — DS csagenjo · átomos puros · /src/components/
-  Button, Link, CTALink, Checkbox, LinkList, Input (familia) ✅/🔄
+  Button, Link, CTALink, LinkList ✅ · Input (familia, 6 tipos) ✅ auditada 22/06/2026
+  Checkbox 🔄 (refactor de tokens en progreso)
 
 CAPA 2 — UIKit Plataforma · organismos · /src/organisms/
   ButtonBar ✅ (movido desde components/ — Jun 2026)
