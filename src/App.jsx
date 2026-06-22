@@ -125,13 +125,35 @@ function App() {
       </section>
 
       {/* Checkbox */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHECKBOX</p>
-        <Checkbox label="Unselected" />
-        <Checkbox label="Selected" defaultChecked />
-        <Checkbox label="Indeterminate" indeterminate />
-        <Checkbox label="Error" state="error" errorMessage="Campo obligatorio" />
-        <Checkbox label="Disabled" state="disabled" />
+
+        {/* Fila 1 — default */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Checkbox label="Unselected" />
+          <Checkbox label="Selected" defaultChecked />
+          <Checkbox label="Indeterminate" indeterminate />
+        </div>
+
+        {/* Fila 2 — error */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Checkbox label="Error unselected" state="error" errorMessage="Campo obligatorio" />
+          <Checkbox label="Error selected" state="error" defaultChecked errorMessage="Campo obligatorio" />
+          <Checkbox label="Error indeterminate" state="error" indeterminate errorMessage="Campo obligatorio" />
+        </div>
+
+        {/* Fila 3 — disabled */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Checkbox label="Disabled" state="disabled" />
+          <Checkbox label="Disabled selected" state="disabled" defaultChecked />
+          <Checkbox label="Disabled indeterminate" state="disabled" indeterminate />
+        </div>
+
+        {/* Fila 4 — extras */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Checkbox label="Con description" description="Texto de ayuda" defaultChecked />
+          <Checkbox ariaLabel="Seleccionar fila" />
+        </div>
       </section>
 
       {/* Link */}

@@ -22,7 +22,7 @@ src/
   components/        ← Capa 1: DS csagenjo — SOLO átomos puros
     Button.jsx        ✅ átomo DS v2
     Input.jsx          🔄 a rehacer — ver sección Input más abajo
-    Checkbox.jsx       🔄 DS v2, indeterminate, aria-checked=mixed — refactor de tokens en progreso (ver sección Checkbox)
+    Checkbox.jsx       ✅ DS v2, indeterminate, aria-checked=mixed — tokens migrados a --ds-checkbox-* (22/06/2026)
     Link.jsx           ✅ variantes default/accent, tokens teal
     LinkList.jsx       ✅ wrapper semántico nav/ul/li sobre Link
     CTALink.jsx        ✅ v2.0 — 24 variantes, 4 estados, borderRadius por énfasis
@@ -107,11 +107,7 @@ Device (79) — capa paralela, no de color
 **Consolidado (22/06/2026):** el código de cada componente debe consumir EXCLUSIVAMENTE
 tokens de Component (`--ds-{componente}-*`, ej. `--ds-input-*`, `--ds-checkbox-*`) — nunca
 `var(--ds-fg-*)`, `--ds-bg-*`, `--ds-borderColor-*` (Mode) ni `--ds-color-*` (Base) directamente
-desde un `.jsx`. La familia Input ya cumple esto en su totalidad (ver auditoría más abajo).
-Excepción detectada: `Checkbox.jsx` todavía referencia tokens de Mode (`--ds-bg-primary`,
-`--ds-borderColor-subtle`, `--ds-fg-subtle`...) y de Base (`--ds-color-primary-50`) en su CSS,
-a pesar de que los tokens `--ds-checkbox-*` ya existen en `tokens.css` — pendiente de migrar
-(ver sección Checkbox).
+desde un `.jsx`. La familia Input y `Checkbox.jsx` cumplen esto en su totalidad (ver auditorías).
 
 ## Decisión de sistema — accent color
 
@@ -383,16 +379,16 @@ auditoría de tokens con **cero violaciones**: todos consumen exclusivamente
 directas a tokens de Mode o Base. Confirma el patrón "Common + específico" como válido
 para escalar a futuras familias (Selectors, Chips).
 
-## Checkbox.jsx — estado (22/06/2026) 🔄 refactor en progreso
+## Checkbox.jsx — estado (22/06/2026) ✅ tokens migrados
 
 Figma: limpio y auditado — 23 tokens en Component tokens (`--ds-checkbox-*` en `tokens.css`):
 bg (default/selected/hover/disabled/error), border (default/selected/hover/disabled/error),
 focus (inner/outer), icon (fg/disabled), label (fg/disabled), description, validation,
 geometría (size, borderRadius, borderWidth, labelGap).
-Código: `Checkbox.jsx` aún NO usa estos tokens — su CSS sigue referenciando tokens de Mode
-(`--ds-bg-primary`, `--ds-borderColor-subtle`, `--ds-borderColor-primary`, `--ds-fg-subtle`,
-`--ds-fg-error`...) y de Base (`--ds-color-primary-50`) directamente. Pendiente: migrar
-`Checkbox.jsx` para que consuma únicamente `--ds-checkbox-*` (ver Deuda técnica).
+Código: migrado — `Checkbox.jsx` consume exclusivamente `--ds-checkbox-*`. Sin referencias
+directas a tokens de Mode ni de Base. Focus ring actualizado a doble anillo (outer+inner via
+box-shadow). Disabled: `opacity: 0.5` eliminado, reemplazado por `--ds-checkbox-icon-disabled`
+en `color`. Hover+Focus combinado añadido.
 
 ## Próximos componentes
 
@@ -412,16 +408,13 @@ después de cada componente — no avanzar en cadena sin verificación visual.
 
 - **Country Picker / Advanced List Item** (InputTelephone) — el focus-inner está en teal en
   vez de blanco. Alcance sin investigar todavía. NO bloqueante para el código de InputTelephone.
-- **Checkbox.jsx** — refactor de tokens pendiente de aplicar al código. Los tokens
-  `--ds-checkbox-*` ya existen en `tokens.css` y Figma está auditado (23 tokens), pero el
-  componente sigue leyendo tokens de Mode/Base directamente (ver sección Checkbox).
 
 ## Arquitectura (dos capas)
 
 ```
 CAPA 1 — DS csagenjo · átomos puros · /src/components/
   Button, Link, CTALink, LinkList ✅ · Input (familia, 6 tipos) ✅ auditada 22/06/2026
-  Checkbox 🔄 (refactor de tokens en progreso)
+  Checkbox ✅ tokens migrados a --ds-checkbox-* (22/06/2026)
 
 CAPA 2 — UIKit Plataforma · organismos · /src/organisms/
   ButtonBar ✅ (movido desde components/ — Jun 2026)
