@@ -454,7 +454,7 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-checkbox-bg-default:            #FFFFFF;
-  --ds-checkbox-bg-selected:           #4BA9C0;
+  --ds-checkbox-bg-selected:           var(--ds-bg-primary-bold);
   --ds-checkbox-bg-hover:              #B8E6FE;
   --ds-checkbox-bg-disabled:           #EEEFF1;
   --ds-checkbox-bg-error:              #D53737;
