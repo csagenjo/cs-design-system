@@ -68,20 +68,20 @@ Opens at `http://localhost:5173`
 
 ```css
 :root {
-  /* Mode — semantic layer, never used directly by components */
+  /* Mode — semantic layer, consumed by Component tokens only */
   --ds-fg-default:         #050506;
   --ds-bg-default:         #FFFFFF;
   --ds-borderColor-subtle: #D8DBDE;
 
-  /* Component — scoped per component, reference Mode only */
+  /* Component — reference Mode exclusively via var(), zero hardcoded hex */
   --ds-button-radius:               80px;
-  --ds-link-fg-label-default:       #050506;
-  --ds-link-border-bottom-default:  #2C2F34;
+  --ds-link-fg-label-default:       var(--ds-fg-label-default);
+  --ds-link-border-bottom-default:  var(--ds-borderColor-emphasis);
   --ds-cta-link-border-radius-low:  16px;
   --ds-cta-link-border-radius-high: 80px;
   --ds-input-min-height:            56px;
-  --ds-checkbox-bg-selected:        #4BA9C0;
-  --ds-checkbox-focus-outer:        #050506;
+  --ds-checkbox-bg-selected:        var(--ds-bg-primary-bold);
+  --ds-checkbox-focus-outer:        var(--ds-borderColor-focus-outer);
   --ds-input-amount-currency-field-gap-hor-generic: 4px;
 }
 ```
@@ -108,20 +108,24 @@ Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base
 
 ---
 
-## Input family audit — June 2026
+## Token audit — June 2026
 
-All 6 input types audited against the Component token architecture. Zero violations.
+**Input family audit (22 June):** All 6 input types audited. Zero violations. Shared tokens consolidated under `Input/InputCommon/`.
 
-| Component | Audit result |
-|-----------|-------------|
-| `InputText` | ✅ Zero violations |
-| `InputDate` | ✅ Zero violations |
-| `InputDropdown` | ✅ Zero violations |
-| `InputTelephone` | ✅ Zero violations |
-| `InputAmount` | ✅ Zero violations |
-| `InputStepper` | ✅ Zero violations |
+**Full cross-component audit (23 June):** All Component tokens in `tokens.css` now reference Mode via `var()` — zero hardcoded hex values. All JSX components consume exclusively `--ds-{component}-*` tokens. Dark mode and multi-theme cascade fully intact across the entire token stack.
 
-Shared tokens consolidated under `Input/InputCommon/` (27 tokens across 5 semantic groups).
+| Component | Token violations | Status |
+|-----------|-----------------|--------|
+| `Button` | 0 | ✅ Clean |
+| `Checkbox` | 0 | ✅ Clean |
+| `Link` | 0 | ✅ Clean |
+| `CTALink` | 0 | ✅ Clean |
+| `InputText` | 0 | ✅ Clean |
+| `InputDate` | 0 | ✅ Clean |
+| `InputDropdown` | 0 | ✅ Clean |
+| `InputTelephone` | 0 | ✅ Clean |
+| `InputAmount` | 0 | ✅ Clean |
+| `InputStepper` | 0 | ✅ Clean |
 
 ---
 

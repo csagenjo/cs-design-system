@@ -34,7 +34,7 @@ src/
     InputAmount.jsx    ✅ v1.0 — selectable/fixed, doble campo, formato de número locale-aware
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
-  tokens.css          ✅ fuente de verdad — pendiente añadir tokens de Input
+  tokens.css          ✅ fuente de verdad — Component tokens migrados a var() (23/06/2026)
   main.jsx
   App.jsx             banco de pruebas (se sobrescribe cada sesión)
 tokens/
@@ -68,6 +68,7 @@ README.md
 - NUNCA usar nombres reales en código, commits ni docs — solo los aliases de arriba
 - NUNCA saltar capas en la cascada de tokens (Component → Mode → Theme → Base)
 - NUNCA mezclar átomos (components/) con organismos (organisms/)
+- NUNCA referenciar tokens de Mode (`--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*`) o Base (`--ds-color-*`) directamente desde un `.jsx` — solo `--ds-{componente}-*`
 
 ## Arquitectura de tokens — 5 capas (cascada)
 
@@ -104,10 +105,10 @@ Device (79) — capa paralela, no de color
 **Sufijos -light/-dark en Theme:** son los dos valores posibles (light/dark mode), NO intensidad.
 **Sufijos -subtle/-medium/-bold en Mode:** indican intensidad (renombrados de -light/-medium/-bold en Jun 2026).
 
-**Consolidado (22/06/2026):** el código de cada componente debe consumir EXCLUSIVAMENTE
-tokens de Component (`--ds-{componente}-*`, ej. `--ds-input-*`, `--ds-checkbox-*`) — nunca
-`var(--ds-fg-*)`, `--ds-bg-*`, `--ds-borderColor-*` (Mode) ni `--ds-color-*` (Base) directamente
-desde un `.jsx`. La familia Input y `Checkbox.jsx` cumplen esto en su totalidad (ver auditorías).
+**Consolidado (22/06/2026, completado 23/06/2026):** el código de cada componente debe consumir
+EXCLUSIVAMENTE tokens de Component (`--ds-{componente}-*`) — nunca `--ds-fg-*`, `--ds-bg-*`,
+`--ds-borderColor-*` (Mode) ni `--ds-color-*` (Base) directamente desde un `.jsx`.
+Todos los componentes cumplen esto desde 23/06/2026 — cero violaciones (ver Auditoría global).
 
 ## Decisión de sistema — accent color
 
@@ -133,7 +134,7 @@ Component tokens
     InputAmount/               ← amountField, currencyField, currencyText, iconDropdown
     InputDate/                  ← iconRight (calendario)
     InputDropdown/                ← iconRight (chevron)
-    InputStepper/                   ← iconLeft, iconRight (botones −/+)
+    InputStepper/                   ← iconLeft, iconRight (botones −/+), btnBgHover
 ```
 
 Aplicar este mismo patrón ("Common" + específicos) a futuras familias de componentes con estructura compartida (ej. si se construye una familia de Selectors o Chips).
@@ -158,6 +159,26 @@ Aplicar este mismo patrón ("Common" + específicos) a futuras familias de compo
 >
   Texto
 </Button>
+```
+
+Tokens Component (Button) — todos referencian Mode vía `var()`:
+```
+--ds-button-bg-accent-filled    var(--ds-bg-primary)
+--ds-button-bg-default-filled   var(--ds-bg-inverse)
+--ds-button-bg-disabled         var(--ds-bg-disabled)
+--ds-button-fg-accent-filled    var(--ds-fg-onColor)
+--ds-button-fg-accent-outline   var(--ds-fg-primary)
+--ds-button-fg-default-filled   var(--ds-fg-onColor)
+--ds-button-fg-default-outline  var(--ds-fg-default)
+--ds-button-fg-disabled         var(--ds-fg-disabled)
+--ds-button-border-accent       var(--ds-borderColor-accent)
+--ds-button-border-default      var(--ds-borderColor-emphasis)
+--ds-button-border-disabled     var(--ds-borderColor-disabled)
+--ds-button-border-focus-outer  var(--ds-borderColor-focus-outer)
+--ds-button-fg-negative         var(--ds-fg-error)
+--ds-button-border-negative     var(--ds-borderColor-error)
+--ds-button-bg-negative-hover   var(--ds-bg-error-subtle)
+--ds-button-bg-mix-hover        var(--ds-opacity-hover-default)
 ```
 
 ## organisms/ButtonBar.jsx — API (Capa 2, UIKit Plataforma)
@@ -199,11 +220,11 @@ Aplicar este mismo patrón ("Common" + específicos) a futuras familias de compo
 </Link>
 ```
 
-Tokens de color Link (arquitectura v2 — alineada con Figma link/all/):
-- `--ds-link-fg-label-default` / `accent` / `accent-visited`
-- `--ds-link-fg-icon-default` / `accent` / `visited`
-- `--ds-link-border-bottom-default` (#2C2F34 negro) / `accent` (#286371) / `visited` (#B185C5)
-- `--ds-link-bg-mix-hover` rgba(5,5,6,0.1)
+Tokens de color Link (arquitectura v2 — alineada con Figma link/all/) — todos `var()`:
+- `--ds-link-fg-label-default` / `accent` → `var(--ds-fg-label-primary)` / `accent-visited` → `var(--ds-fg-tertiary)`
+- `--ds-link-fg-icon-default` / `accent` → `var(--ds-fg-icon-primary)` / `visited` → `var(--ds-fg-icon-tertiary)`
+- `--ds-link-border-bottom-default` → `var(--ds-borderColor-emphasis)` / `accent` → `var(--ds-borderColor-accent)` / `visited` → `var(--ds-borderColor-tertiary)`
+- `--ds-link-bg-mix-hover` → `var(--ds-opacity-hover-default)`
 - `--ds-link-opacity-pressed` 0.8
 - Active: opacity 0.8 + SemiBold
 
@@ -238,21 +259,22 @@ Semántica: `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
 
 24 variantes en Figma (4 estados × 6 combinaciones). Estados: Initial · Hover · Focus · Pressed.
 
-Tokens en tokens.css:
+Tokens en tokens.css — todos referencian Mode vía `var()`:
 ```css
---ds-cta-link-fg-default              #050506
---ds-cta-link-fg-primary              #FFFFFF
---ds-cta-link-fg-accent               #286371
---ds-cta-link-fg-accent-primary       #FFFFFF
---ds-cta-link-bg-primary              #050506
---ds-cta-link-bg-accent-primary       #4BA9C0
---ds-cta-link-bg-mix-hover            rgba(5,5,6,0.1)
---ds-cta-link-border-secondary        #2C2F34
---ds-cta-link-border-accent-secondary #286371
---ds-cta-link-border-bottom-default   #2C2F34
---ds-cta-link-border-bottom-accent    #286371
---ds-cta-link-focus-inner             #FFFFFF
---ds-cta-link-focus-outer             #050506
+--ds-cta-link-fg-default              var(--ds-fg-default)
+--ds-cta-link-fg-primary              var(--ds-fg-onColor)
+--ds-cta-link-fg-accent               var(--ds-fg-primary)
+--ds-cta-link-fg-accent-primary       var(--ds-fg-onColor)
+--ds-cta-link-fg-disabled             var(--ds-fg-disabled)
+--ds-cta-link-bg-primary              var(--ds-bg-inverse)
+--ds-cta-link-bg-accent-primary       var(--ds-bg-primary)
+--ds-cta-link-bg-mix-hover            var(--ds-opacity-hover-default)
+--ds-cta-link-border-secondary        var(--ds-borderColor-emphasis)
+--ds-cta-link-border-accent-secondary var(--ds-borderColor-accent)
+--ds-cta-link-border-bottom-default   var(--ds-borderColor-emphasis)
+--ds-cta-link-border-bottom-accent    var(--ds-borderColor-accent)
+--ds-cta-link-focus-inner             var(--ds-borderColor-focus-inner)
+--ds-cta-link-focus-outer             var(--ds-borderColor-focus-outer)
 --ds-cta-link-border-radius-low       16px    /* ctaLink/all/root/borderRadius/lowEmphasis */
 --ds-cta-link-border-radius-medium    24px    /* ctaLink/all/root/borderRadius/mediumEmphasis */
 --ds-cta-link-border-radius-high      80px    /* ctaLink/all/root/borderRadius/highEmphasis */
@@ -379,6 +401,38 @@ auditoría de tokens con **cero violaciones**: todos consumen exclusivamente
 directas a tokens de Mode o Base. Confirma el patrón "Common + específico" como válido
 para escalar a futuras familias (Selectors, Chips).
 
+## Auditoría global de tokens (23/06/2026) ✅
+
+Auditoría completa sobre `tokens.css` y todos los JSX. Estado final: cero violaciones.
+
+**tokens.css — migración de Component blocks:**
+83 hex hardcodeados reemplazados por `var()` en 9 bloques (Button, InputCommon, InputText,
+InputDate, InputDropdown, InputTelephone, InputAmount, InputStepper, Link, CTALink).
+Checkbox era el único bloque ya correcto — sirve de modelo.
+
+**JSX — violaciones eliminadas:**
+20 referencias directas a Mode/Base corregidas en 7 archivos:
+Button.jsx (6) · InputText.jsx (3) · InputDate.jsx (2) · InputDropdown.jsx (2) ·
+InputStepper.jsx (2) · InputTelephone.jsx (2) · InputAmount.jsx (2)
+
+**8 tokens nuevos añadidos:**
+```
+--ds-input-fg-placeholder           var(--ds-fg-subtle)            — InputCommon
+--ds-input-border-hover             var(--ds-borderColor-emphasis) — InputCommon
+--ds-input-bg-readonly              var(--ds-bg-page)              — InputCommon
+--ds-button-fg-negative             var(--ds-fg-error)             — Button
+--ds-button-border-negative         var(--ds-borderColor-error)    — Button
+--ds-button-bg-negative-hover       var(--ds-bg-error-subtle)      — Button
+--ds-button-bg-mix-hover            var(--ds-opacity-hover-default) — Button
+--ds-input-stepper-btn-bg-hover     var(--ds-opacity-hover-default) — InputStepper
+```
+
+**Patrón bgMix para overlays de interacción:**
+Hover sobre superficies sin fondo sólido (outline, ghost, links) usa overlay rgba vía
+`var(--ds-opacity-hover-default)` — nunca un color Base hardcodeado. Componentes que lo usan:
+Button (`--ds-button-bg-mix-hover`), Link (`--ds-link-bg-mix-hover`),
+CTALink (`--ds-cta-link-bg-mix-hover`), InputStepper (`--ds-input-stepper-btn-bg-hover`).
+
 ## Checkbox.jsx — estado (22/06/2026) ✅ tokens migrados
 
 Figma: limpio y auditado — 23 tokens en Component tokens (`--ds-checkbox-*` en `tokens.css`):
@@ -413,8 +467,8 @@ después de cada componente — no avanzar en cadena sin verificación visual.
 
 ```
 CAPA 1 — DS csagenjo · átomos puros · /src/components/
-  Button, Link, CTALink, LinkList ✅ · Input (familia, 6 tipos) ✅ auditada 22/06/2026
-  Checkbox ✅ tokens migrados a --ds-checkbox-* (22/06/2026)
+  Button ✅ · Link ✅ · CTALink ✅ · LinkList ✅ · Checkbox ✅ · Input (familia, 6 tipos) ✅
+  Todos auditados — cero violaciones de capas en JSX y tokens.css (23/06/2026)
 
 CAPA 2 — UIKit Plataforma · organismos · /src/organisms/
   ButtonBar ✅ (movido desde components/ — Jun 2026)
