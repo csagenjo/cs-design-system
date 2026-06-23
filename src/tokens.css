@@ -453,24 +453,24 @@
      COMPONENT TOKENS â€” Checkbox
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  --ds-checkbox-bg-default:            #FFFFFF;
+  --ds-checkbox-bg-default:            var(--ds-bg-default);
   --ds-checkbox-bg-selected:           var(--ds-bg-primary-bold);
-  --ds-checkbox-bg-hover:              #B8E6FE;
-  --ds-checkbox-bg-disabled:           #EEEFF1;
-  --ds-checkbox-bg-error:              #D53737;
+  --ds-checkbox-bg-hover:              var(--ds-bg-hover-primary);
+  --ds-checkbox-bg-disabled:           var(--ds-bg-disabled);
+  --ds-checkbox-bg-error:              var(--ds-bg-error);
 
-  --ds-checkbox-border-default:        #9AA1AA;
-  --ds-checkbox-border-selected:       #286371;
+  --ds-checkbox-border-default:        var(--ds-borderColor-default);
+  --ds-checkbox-border-selected:       var(--ds-borderColor-primary);
   --ds-checkbox-border-hover:          var(--ds-borderColor-primary);
-  --ds-checkbox-border-disabled:       #B9BEC4;
-  --ds-checkbox-border-error:          #AD2525;
-  --ds-checkbox-focus-inner:           #FFFFFF;
-  --ds-checkbox-focus-outer:           #050506;
+  --ds-checkbox-border-disabled:       var(--ds-borderColor-disabled);
+  --ds-checkbox-border-error:          var(--ds-borderColor-error);
+  --ds-checkbox-focus-inner:           var(--ds-borderColor-focus-inner);
+  --ds-checkbox-focus-outer:           var(--ds-borderColor-focus-outer);
 
-  --ds-checkbox-icon-fg:               #FFFFFF;
-  --ds-checkbox-icon-disabled:         #B9BEC4;
-  --ds-checkbox-label-fg:              #050506;
-  --ds-checkbox-label-disabled:        #B9BEC4;
+  --ds-checkbox-icon-fg:               var(--ds-fg-onColor);
+  --ds-checkbox-icon-disabled:         var(--ds-fg-disabled);
+  --ds-checkbox-label-fg:              var(--ds-fg-label-default);
+  --ds-checkbox-label-disabled:        var(--ds-fg-label-disabled);
   --ds-checkbox-description-fg:        var(--ds-fg-subtle);
   --ds-checkbox-validation-fg:         var(--ds-fg-error);
 
