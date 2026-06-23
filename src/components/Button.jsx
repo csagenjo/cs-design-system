@@ -137,7 +137,7 @@ const css = `
   border-color: var(--ds-button-border-accent);
 }
 .ds-btn--accent.ds-btn--outline:hover:not(:disabled) {
-  background: var(--ds-color-primary-50);
+  background: var(--ds-button-bg-mix-hover);
 }
 
 /* Default filled */
@@ -157,7 +157,7 @@ const css = `
   border-color: var(--ds-button-border-default);
 }
 .ds-btn--default.ds-btn--outline:hover:not(:disabled) {
-  background: var(--ds-color-neutral-100);
+  background: var(--ds-button-bg-mix-hover);
 }
 
 /* Ghost */
@@ -166,15 +166,15 @@ const css = `
   color:        var(--ds-button-fg-accent-outline);
   border-color: transparent;
 }
-.ds-btn--ghost:hover:not(:disabled) { background: var(--ds-color-primary-50); }
+.ds-btn--ghost:hover:not(:disabled) { background: var(--ds-button-bg-mix-hover); }
 
 /* Negative */
 .ds-btn--negative {
   background:   transparent;
-  color:        var(--ds-fg-error);
-  border-color: var(--ds-borderColor-error);
+  color:        var(--ds-button-fg-negative);
+  border-color: var(--ds-button-border-negative);
 }
-.ds-btn--negative:hover:not(:disabled) { background: var(--ds-color-error-50); }
+.ds-btn--negative:hover:not(:disabled) { background: var(--ds-button-bg-negative-hover); }
 
 /* Floating */
 .ds-btn--floating { box-shadow: var(--ds-shadow-md); }

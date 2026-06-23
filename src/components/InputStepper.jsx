@@ -44,7 +44,7 @@ const css = `
 /* Hover */
 .ds-input-stepper:not(.ds-input-stepper--disabled):not(.ds-input-stepper--error)
   .ds-input-stepper__field-wrap:hover {
-  border-color: var(--ds-borderColor-emphasis);
+  border-color: var(--ds-input-border-hover);
 }
 
 /* Focus — anillo doble cuando cualquier botón tiene foco */

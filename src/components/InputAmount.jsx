@@ -82,7 +82,7 @@ const css = `
 /* Hover — solo en estado genérico */
 .ds-input-amount:not(.ds-input-amount--disabled):not(.ds-input-amount--error)
   .ds-input-amount__field-wrap:hover {
-  border-color: var(--ds-borderColor-emphasis);
+  border-color: var(--ds-input-border-hover);
 }
 
 /* Focus — anillo doble via :focus-within */
@@ -181,7 +181,7 @@ const css = `
   outline:            none;
   -webkit-appearance: none;
 }
-.ds-input-amount__amount::placeholder { color: var(--ds-fg-subtle); }
+.ds-input-amount__amount::placeholder { color: var(--ds-input-fg-placeholder); }
 
 .ds-input-amount--disabled .ds-input-amount__amount {
   background: var(--ds-input-amount-amount-field-bg-disabled, var(--ds-input-bg-disabled));

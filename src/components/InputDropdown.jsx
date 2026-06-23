@@ -61,7 +61,7 @@ const css = `
 /* Hover */
 .ds-input-dropdown:not(.ds-input-dropdown--disabled):not(.ds-input-dropdown--error)
   .ds-input-dropdown__control:hover {
-  border-color: var(--ds-borderColor-emphasis);
+  border-color: var(--ds-input-border-hover);
 }
 
 /* Focus — anillo doble */
@@ -95,7 +95,7 @@ const css = `
 }
 
 /* Placeholder option — aplica color subtle cuando no hay valor seleccionado */
-.ds-input-dropdown__control--placeholder { color: var(--ds-fg-subtle); }
+.ds-input-dropdown__control--placeholder { color: var(--ds-input-fg-placeholder); }
 
 /* Icono chevron */
 .ds-input-dropdown__icon {
