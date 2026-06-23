@@ -341,6 +341,11 @@
   --ds-button-border-disabled:      var(--ds-borderColor-disabled);
   --ds-button-border-focus-outer:   var(--ds-borderColor-focus-outer);
 
+  /* Negative */
+  --ds-button-fg-negative:          var(--ds-fg-error);
+  --ds-button-border-negative:      var(--ds-borderColor-error);
+  --ds-button-bg-negative-hover:    var(--ds-bg-error-subtle);
+
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
@@ -377,6 +382,9 @@
   --ds-input-helper-gap:                    8px;
   --ds-input-validation-fg-text:            var(--ds-fg-default);
   --ds-input-validation-gap:                4px;
+  --ds-input-fg-placeholder:               var(--ds-fg-subtle);
+  --ds-input-border-hover:                 var(--ds-borderColor-emphasis);
+  --ds-input-bg-readonly:                  var(--ds-bg-page);
 
   /* â”€â”€ InputText â€” iconos opcionales left/right â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-text-icon-left-fg:             var(--ds-fg-icon-subtle);
