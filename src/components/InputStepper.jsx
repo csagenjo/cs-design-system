@@ -96,7 +96,7 @@ const css = `
 .ds-input-stepper__btn:focus  { outline: none; }
 
 .ds-input-stepper__btn:hover:not(:disabled) {
-  background: var(--ds-opacity-hover-default);
+  background: var(--ds-input-stepper-btn-bg-hover);
 }
 
 .ds-input-stepper__btn:disabled {
