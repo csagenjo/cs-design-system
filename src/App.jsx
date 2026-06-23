@@ -7,6 +7,7 @@ import { InputStepper } from './components/InputStepper'
 import { InputTelephone } from './components/InputTelephone'
 import { InputAmount } from './components/InputAmount'
 import { Checkbox } from './components/Checkbox'
+import { Radio } from './components/Radio'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
 
@@ -153,6 +154,35 @@ function App() {
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Checkbox label="Con description" description="Texto de ayuda" defaultChecked />
           <Checkbox ariaLabel="Seleccionar fila" />
+        </div>
+      </section>
+
+      {/* Radio Button */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>RADIO BUTTON</p>
+
+        {/* Fila 1 — default */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Radio label="Unselected" name="radio-default" value="a" />
+          <Radio label="Selected" name="radio-default" value="b" defaultChecked />
+        </div>
+
+        {/* Fila 2 — error */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Radio label="Error unselected" name="radio-error" value="a" state="error" errorMessage="Selecciona una opción" />
+          <Radio label="Error selected" name="radio-error" value="b" state="error" defaultChecked errorMessage="Selecciona una opción" />
+        </div>
+
+        {/* Fila 3 — disabled */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Radio label="Disabled" name="radio-disabled" value="a" state="disabled" />
+          <Radio label="Disabled selected" name="radio-disabled" value="b" state="disabled" defaultChecked />
+        </div>
+
+        {/* Fila 4 — sin label */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Radio ariaLabel="Seleccionar opción A" name="radio-nolabel" value="a" />
+          <Radio ariaLabel="Seleccionar opción B" name="radio-nolabel" value="b" defaultChecked />
         </div>
       </section>
 
