@@ -88,7 +88,7 @@ const css = `
 /* Hover — solo en estado genérico */
 .ds-input-telephone:not(.ds-input-telephone--disabled):not(.ds-input-telephone--error)
   .ds-input-telephone__field-wrap:hover {
-  border-color: var(--ds-borderColor-emphasis);
+  border-color: var(--ds-input-border-hover);
 }
 
 /* Focus — anillo doble via :focus-within */
@@ -211,7 +211,7 @@ const css = `
   outline:            none;
   -webkit-appearance: none;
 }
-.ds-input-telephone__phone::placeholder { color: var(--ds-fg-subtle); }
+.ds-input-telephone__phone::placeholder { color: var(--ds-input-fg-placeholder); }
 
 .ds-input-telephone--disabled .ds-input-telephone__phone {
   background: var(--ds-input-telephone-field-bg-disabled);

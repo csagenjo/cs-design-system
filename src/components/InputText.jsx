@@ -54,12 +54,12 @@ const css = `
   transition:         border-color 0.12s, background 0.12s;
   -webkit-appearance: none;
 }
-.ds-input-text__control::placeholder { color: var(--ds-fg-subtle); }
+.ds-input-text__control::placeholder { color: var(--ds-input-fg-placeholder); }
 
 /* Hover — solo en estado genérico */
 .ds-input-text:not(.ds-input-text--disabled):not(.ds-input-text--error):not(.ds-input-text--readonly)
   .ds-input-text__control:hover {
-  border-color: var(--ds-borderColor-emphasis);
+  border-color: var(--ds-input-border-hover);
 }
 
 /* Focus — anillo doble */
@@ -83,7 +83,7 @@ const css = `
 
 /* Read-only */
 .ds-input-text--readonly .ds-input-text__control {
-  background: var(--ds-bg-page);
+  background: var(--ds-input-bg-readonly);
   cursor:     default;
 }
 .ds-input-text--readonly .ds-input-text__control:focus {

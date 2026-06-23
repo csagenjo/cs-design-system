@@ -47,12 +47,12 @@ const css = `
   transition:         border-color 0.12s, background 0.12s;
   -webkit-appearance: none;
 }
-.ds-input-date__control::placeholder { color: var(--ds-fg-subtle); }
+.ds-input-date__control::placeholder { color: var(--ds-input-fg-placeholder); }
 
 /* Hover */
 .ds-input-date:not(.ds-input-date--disabled):not(.ds-input-date--error)
   .ds-input-date__control:hover {
-  border-color: var(--ds-borderColor-emphasis);
+  border-color: var(--ds-input-border-hover);
 }
 
 /* Focus — anillo doble */

@@ -345,6 +345,7 @@
   --ds-button-fg-negative:          var(--ds-fg-error);
   --ds-button-border-negative:      var(--ds-borderColor-error);
   --ds-button-bg-negative-hover:    var(--ds-bg-error-subtle);
+  --ds-button-bg-mix-hover:         var(--ds-opacity-hover-default);
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
