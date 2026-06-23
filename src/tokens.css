@@ -324,22 +324,22 @@
   --ds-button-py-lg: 8px;
 
   /* Fondos */
-  --ds-button-bg-accent-filled:   #4BA9C0;
-  --ds-button-bg-default-filled:  #050506;
-  --ds-button-bg-disabled:        #EEEFF1;
+  --ds-button-bg-accent-filled:   var(--ds-bg-primary);
+  --ds-button-bg-default-filled:  var(--ds-bg-inverse);
+  --ds-button-bg-disabled:        var(--ds-bg-disabled);
 
   /* Texto */
-  --ds-button-fg-accent-filled:   #FFFFFF;
-  --ds-button-fg-accent-outline:  #286371;
-  --ds-button-fg-default-filled:  #FFFFFF;
-  --ds-button-fg-default-outline: #050506;
-  --ds-button-fg-disabled:        #B9BEC4;
+  --ds-button-fg-accent-filled:   var(--ds-fg-onColor);
+  --ds-button-fg-accent-outline:  var(--ds-fg-primary);
+  --ds-button-fg-default-filled:  var(--ds-fg-onColor);
+  --ds-button-fg-default-outline: var(--ds-fg-default);
+  --ds-button-fg-disabled:        var(--ds-fg-disabled);
 
   /* Bordes */
-  --ds-button-border-accent:        #286371;
-  --ds-button-border-default:       #2C2F34;
-  --ds-button-border-disabled:      #B9BEC4;
-  --ds-button-border-focus-outer:   #050506;
+  --ds-button-border-accent:        var(--ds-borderColor-accent);
+  --ds-button-border-default:       var(--ds-borderColor-emphasis);
+  --ds-button-border-disabled:      var(--ds-borderColor-disabled);
+  --ds-button-border-focus-outer:   var(--ds-borderColor-focus-outer);
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -347,20 +347,20 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* â”€â”€ InputCommon â€” base compartida por todos los tipos â”€â”€â”€â”€â”€â”€ */
-  --ds-input-bg-default:                    #FFFFFF;
-  --ds-input-bg-disabled:                   #EEEFF1;
+  --ds-input-bg-default:                    var(--ds-bg-default);
+  --ds-input-bg-disabled:                   var(--ds-bg-disabled);
 
-  --ds-input-fg-default:                    #050506;
-  --ds-input-fg-disabled:                   #B9BEC4;
-  --ds-input-fg-label:                      #050506;
-  --ds-input-fg-helper:                     #9AA1AA;
-  --ds-input-fg-error:                      #AD2525;
+  --ds-input-fg-default:                    var(--ds-fg-default);
+  --ds-input-fg-disabled:                   var(--ds-fg-disabled);
+  --ds-input-fg-label:                      var(--ds-fg-label-default);
+  --ds-input-fg-helper:                     var(--ds-fg-subtle);
+  --ds-input-fg-error:                      var(--ds-fg-error);
 
-  --ds-input-border-default:                #9AA1AA;
-  --ds-input-border-disabled:               #B9BEC4;
-  --ds-input-border-error:                  #AD2525;
-  --ds-input-focus-inner:                   #FFFFFF;
-  --ds-input-focus-outer:                   #050506;
+  --ds-input-border-default:                var(--ds-borderColor-default);
+  --ds-input-border-disabled:               var(--ds-borderColor-disabled);
+  --ds-input-border-error:                  var(--ds-borderColor-error);
+  --ds-input-focus-inner:                   var(--ds-borderColor-focus-inner);
+  --ds-input-focus-outer:                   var(--ds-borderColor-focus-outer);
 
   --ds-input-border-width:                  1.5px;
   --ds-input-border-width-focus:            2px;
@@ -372,52 +372,52 @@
   --ds-input-min-height:                    56px;
   --ds-input-field-icon-gap:                12px;
   --ds-input-label-gap:                     4px;
-  --ds-input-label-fg-disabled:             #B9BEC4;
-  --ds-input-helper-fg-disabled:            #B9BEC4;
+  --ds-input-label-fg-disabled:             var(--ds-fg-label-disabled);
+  --ds-input-helper-fg-disabled:            var(--ds-fg-disabled);
   --ds-input-helper-gap:                    8px;
-  --ds-input-validation-fg-text:            #050506;
+  --ds-input-validation-fg-text:            var(--ds-fg-default);
   --ds-input-validation-gap:                4px;
 
   /* â”€â”€ InputText â€” iconos opcionales left/right â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-text-icon-left-fg:             #9AA1AA;
-  --ds-input-text-icon-left-fg-primary:     #286371;
-  --ds-input-text-icon-left-fg-disabled:    #B9BEC4;
+  --ds-input-text-icon-left-fg:             var(--ds-fg-icon-subtle);
+  --ds-input-text-icon-left-fg-primary:     var(--ds-fg-icon-primary);
+  --ds-input-text-icon-left-fg-disabled:    var(--ds-fg-icon-disabled);
   --ds-input-text-icon-left-size:           24px;
-  --ds-input-text-icon-right-fg:            #9AA1AA;
-  --ds-input-text-icon-right-fg-primary:    #286371;
-  --ds-input-text-icon-right-fg-disabled:   #B9BEC4;
+  --ds-input-text-icon-right-fg:            var(--ds-fg-icon-subtle);
+  --ds-input-text-icon-right-fg-primary:    var(--ds-fg-icon-primary);
+  --ds-input-text-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
   --ds-input-text-icon-right-size:          24px;
 
   /* â”€â”€ InputDate â€” icono calendario fijo teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-date-icon-right-fg:            #286371;
-  --ds-input-date-icon-right-fg-disabled:   #B9BEC4;
+  --ds-input-date-icon-right-fg:            var(--ds-fg-icon-primary);
+  --ds-input-date-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
   --ds-input-date-icon-right-size:          24px;
 
   /* â”€â”€ InputDropdown â€” icono chevron fijo teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-dropdown-icon-right-fg:        #286371;
-  --ds-input-dropdown-icon-right-fg-disabled:#B9BEC4;
+  --ds-input-dropdown-icon-right-fg:        var(--ds-fg-icon-primary);
+  --ds-input-dropdown-icon-right-fg-disabled:var(--ds-fg-icon-disabled);
   --ds-input-dropdown-icon-right-size:      24px;
 
   /* â”€â”€ InputTelephone â€” dos sub-campos + flag + divider â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-telephone-country-bg:                 #FFFFFF;
-  --ds-input-telephone-country-bg-disabled:        #EEEFF1;
+  --ds-input-telephone-country-bg:                 var(--ds-bg-default);
+  --ds-input-telephone-country-bg-disabled:        var(--ds-bg-disabled);
   --ds-input-telephone-country-height:             56px;
   --ds-input-telephone-country-padding-hor:        16px;
   --ds-input-telephone-country-padding-ver:        12px;
   --ds-input-telephone-country-gap:                4px;
-  --ds-input-telephone-country-text-fg:            #050506;
-  --ds-input-telephone-country-text-fg-disabled:   #B9BEC4;
-  --ds-input-telephone-field-bg:                   #FFFFFF;
-  --ds-input-telephone-field-bg-disabled:          #EEEFF1;
+  --ds-input-telephone-country-text-fg:            var(--ds-fg-default);
+  --ds-input-telephone-country-text-fg-disabled:   var(--ds-fg-disabled);
+  --ds-input-telephone-field-bg:                   var(--ds-bg-default);
+  --ds-input-telephone-field-bg-disabled:          var(--ds-bg-disabled);
   --ds-input-telephone-field-height:               56px;
   --ds-input-telephone-field-padding-hor:          16px;
   --ds-input-telephone-field-padding-ver:          16px;
-  --ds-input-telephone-icon-dropdown-fg:           #286371;
-  --ds-input-telephone-icon-dropdown-fg-disabled:  #B9BEC4;
+  --ds-input-telephone-icon-dropdown-fg:           var(--ds-fg-icon-primary);
+  --ds-input-telephone-icon-dropdown-fg-disabled:  var(--ds-fg-icon-disabled);
   --ds-input-telephone-icon-dropdown-size:         24px;
   --ds-input-telephone-icon-flag-size:             32px;
   --ds-input-telephone-icon-flag-opacity-disabled: 0.4;
-  --ds-input-telephone-divider-color:              #286371;
+  --ds-input-telephone-divider-color:              var(--ds-borderColor-accent);
 
   /* â”€â”€ InputAmount â€” importe + moneda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-amount-currency-field-height-generic:    var(--ds-input-common-root-minheight-generic);
@@ -436,16 +436,16 @@
   --ds-input-amount-currency-text-fg-generic:         var(--ds-input-common-valuetext-fg-generic);
   --ds-input-amount-currency-text-fg-disabled:        var(--ds-input-common-valuetext-fg-disabled);
 
-  --ds-input-amount-icon-dropdown-fg-generic:         #286371;
-  --ds-input-amount-icon-dropdown-fg-disabled:        #B9BEC4;
+  --ds-input-amount-icon-dropdown-fg-generic:         var(--ds-fg-icon-primary);
+  --ds-input-amount-icon-dropdown-fg-disabled:        var(--ds-fg-icon-disabled);
   --ds-input-amount-icon-dropdown-size-generic:       24px;
 
   /* â”€â”€ InputStepper â€” botones âˆ’ / + teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-stepper-icon-left-fg:                  #286371;
-  --ds-input-stepper-icon-left-fg-disabled:         #B9BEC4;
+  --ds-input-stepper-icon-left-fg:                  var(--ds-fg-icon-primary);
+  --ds-input-stepper-icon-left-fg-disabled:         var(--ds-fg-icon-disabled);
   --ds-input-stepper-icon-left-size:                24px;
-  --ds-input-stepper-icon-right-fg:                 #286371;
-  --ds-input-stepper-icon-right-fg-disabled:        #B9BEC4;
+  --ds-input-stepper-icon-right-fg:                 var(--ds-fg-icon-primary);
+  --ds-input-stepper-icon-right-fg-disabled:        var(--ds-fg-icon-disabled);
   --ds-input-stepper-icon-right-size:               24px;
 
 
@@ -485,55 +485,55 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* fg/label (link/all/fg/label/*) */
-  --ds-link-fg-label-default:          #050506;   /* default-generic */
-  --ds-link-fg-label-accent:           #286371;   /* accent-generic */
-  --ds-link-fg-label-accent-visited:   #B185C5;   /* accent-visited */
+  --ds-link-fg-label-default:          var(--ds-fg-label-default);   /* default-generic */
+  --ds-link-fg-label-accent:           var(--ds-fg-label-primary);   /* accent-generic */
+  --ds-link-fg-label-accent-visited:   var(--ds-fg-tertiary);        /* accent-visited */
 
   /* fg/icon (link/all/fg/icon/*) */
-  --ds-link-fg-icon-default:           #050506;   /* default-generic */
-  --ds-link-fg-icon-accent:            #286371;   /* accent-generic */
-  --ds-link-fg-icon-visited:           #B185C5;   /* accent-visited */
+  --ds-link-fg-icon-default:           var(--ds-fg-icon-default);    /* default-generic */
+  --ds-link-fg-icon-accent:            var(--ds-fg-icon-primary);    /* accent-generic */
+  --ds-link-fg-icon-visited:           var(--ds-fg-icon-tertiary);   /* accent-visited */
 
   /* borderBottomColor/label (link/all/borderBottomColor/label/*) */
-  --ds-link-border-bottom-default:     #2C2F34;   /* default-generic â† era teal, corregido */
-  --ds-link-border-bottom-accent:      #286371;   /* accent-generic */
-  --ds-link-border-bottom-visited:     #B185C5;   /* default-visited */
-  --ds-link-border-bottom-accent-inv:  #A0D1DE;   /* accent-inverse */
-  --ds-link-border-bottom-inverse:     #FFFFFF;   /* inverse */
+  --ds-link-border-bottom-default:     var(--ds-borderColor-emphasis);   /* default-generic â† era teal, corregido */
+  --ds-link-border-bottom-accent:      var(--ds-borderColor-accent);         /* accent-generic */
+  --ds-link-border-bottom-visited:     var(--ds-borderColor-tertiary);       /* default-visited */
+  --ds-link-border-bottom-accent-inv:  var(--ds-borderColor-accent-inverse); /* accent-inverse */
+  --ds-link-border-bottom-inverse:     var(--ds-borderColor-inverse);        /* inverse */
 
   /* borderBottomWidth (link/all/borderBottomWidth/label/*) */
   --ds-link-border-bottom-width:       1px;       /* generic */
 
   /* interacciÃ³n (link/all/root/*) */
-  --ds-link-bg-mix-hover:              rgba(5,5,6,0.1);
-  --ds-link-bg-mix-hover-inverse:      rgba(255,255,255,0.1);
+  --ds-link-bg-mix-hover:              var(--ds-opacity-hover-default);
+  --ds-link-bg-mix-hover-inverse:      var(--ds-opacity-hover-inverse);
   --ds-link-opacity-pressed:           0.8;       /* opacity/pressed = 80 */
-  --ds-link-focus-inner:               #FFFFFF;   /* borderColor/default-focus-inner */
-  --ds-link-focus-outer:               #050506;   /* borderColor/default-focus-outer */
-  --ds-link-focus-inner-inverse:       #050506;   /* borderColor/invertedDefault-focus-inner */
-  --ds-link-focus-outer-inverse:       #FFFFFF;   /* borderColor/invertedDefault-focus-outer */
+  --ds-link-focus-inner:               var(--ds-borderColor-focus-inner);         /* borderColor/default-focus-inner */
+  --ds-link-focus-outer:               var(--ds-borderColor-focus-outer);         /* borderColor/default-focus-outer */
+  --ds-link-focus-inner-inverse:       var(--ds-borderColor-focus-inner-inverse); /* borderColor/invertedDefault-focus-inner */
+  --ds-link-focus-outer-inverse:       var(--ds-borderColor-focus-outer-inverse); /* borderColor/invertedDefault-focus-outer */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” CTALink
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  --ds-cta-link-fg-default:              #050506;
-  --ds-cta-link-fg-primary:             #FFFFFF;
-  --ds-cta-link-fg-accent:              #286371;
-  --ds-cta-link-fg-accent-primary:      #FFFFFF;
-  --ds-cta-link-fg-disabled:            #B9BEC4;
+  --ds-cta-link-fg-default:              var(--ds-fg-default);
+  --ds-cta-link-fg-primary:             var(--ds-fg-onColor);
+  --ds-cta-link-fg-accent:              var(--ds-fg-primary);
+  --ds-cta-link-fg-accent-primary:      var(--ds-fg-onColor);
+  --ds-cta-link-fg-disabled:            var(--ds-fg-disabled);
 
-  --ds-cta-link-bg-primary:             #050506;
-  --ds-cta-link-bg-accent-primary:      #4BA9C0;
-  --ds-cta-link-bg-mix-hover:           rgba(5,5,6,0.1);
+  --ds-cta-link-bg-primary:             var(--ds-bg-inverse);
+  --ds-cta-link-bg-accent-primary:      var(--ds-bg-primary);
+  --ds-cta-link-bg-mix-hover:           var(--ds-opacity-hover-default);
 
-  --ds-cta-link-border-secondary:        #2C2F34;
-  --ds-cta-link-border-accent-secondary: #286371;
-  --ds-cta-link-border-bottom-default:   #2C2F34;
-  --ds-cta-link-border-bottom-accent:    #286371;
-  --ds-cta-link-focus-inner:             #FFFFFF;
-  --ds-cta-link-focus-outer:             #050506;
+  --ds-cta-link-border-secondary:        var(--ds-borderColor-emphasis);
+  --ds-cta-link-border-accent-secondary: var(--ds-borderColor-accent);
+  --ds-cta-link-border-bottom-default:   var(--ds-borderColor-emphasis);
+  --ds-cta-link-border-bottom-accent:    var(--ds-borderColor-accent);
+  --ds-cta-link-focus-inner:             var(--ds-borderColor-focus-inner);
+  --ds-cta-link-focus-outer:             var(--ds-borderColor-focus-outer);
 
   /* borderRadius por Ã©nfasis (ctaLink/all/root/borderRadius/*) */
   --ds-cta-link-border-radius-low:       16px;   /* borderRadius/2xl */
