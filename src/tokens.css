@@ -456,6 +456,7 @@
   --ds-input-stepper-icon-right-fg:                 var(--ds-fg-icon-primary);
   --ds-input-stepper-icon-right-fg-disabled:        var(--ds-fg-icon-disabled);
   --ds-input-stepper-icon-right-size:               24px;
+  --ds-input-stepper-btn-bg-hover:                  var(--ds-opacity-hover-default);
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
