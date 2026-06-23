@@ -4107,7 +4107,7 @@
               }
             }
           },
-          "disabled-primary": {
+          "disabled-generic": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -4313,7 +4313,7 @@
           }
         },
         "borderColor": {
-          "default-secondary": {
+          "default-generic": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -4339,7 +4339,7 @@
               }
             }
           },
-          "default-secondary-disabled": {
+          "disabled-generic": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -4365,7 +4365,7 @@
               }
             }
           },
-          "accent-secondary": {
+          "accent-generic": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -4390,7 +4390,7 @@
               }
             }
           },
-          "accent-secondary-disabled": {
+          "accent-disabled-generic": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -4485,48 +4485,14 @@
                 "targetVariableSetName": "Device"
               }
             }
-          },
-          "focus": {
-            "$type": "number",
-            "$value": 80,
-            "$extensions": {
-              "com.figma.variableId": "VariableID:26613:4271",
-              "com.figma.hiddenFromPublishing": true,
-              "com.figma.scopes": [
-                "CORNER_RADIUS"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:96e90c7c0d1fdcc1aec787f83e63c1b6f55a7e58/-1:-1",
-                "targetVariableName": "borderRadius/circle",
-                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
-                "targetVariableSetName": "Device"
-              }
-            }
           }
         },
         "borderWidth": {
-          "secondary": {
+          "generic": {
             "$type": "number",
             "$value": 2,
             "$extensions": {
               "com.figma.variableId": "VariableID:26404:6321",
-              "com.figma.hiddenFromPublishing": true,
-              "com.figma.scopes": [
-                "STROKE_FLOAT"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:ce483d9670953a6967e58e10f6ff1a16b5fcf007/-1:-1",
-                "targetVariableName": "borderWidth/lg",
-                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
-                "targetVariableSetName": "Device"
-              }
-            }
-          },
-          "focus": {
-            "$type": "number",
-            "$value": 2,
-            "$extensions": {
-              "com.figma.variableId": "VariableID:4221:12073",
               "com.figma.hiddenFromPublishing": true,
               "com.figma.scopes": [
                 "STROKE_FLOAT"
