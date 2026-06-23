@@ -172,14 +172,53 @@ Componentes con tokens definidos: button, buttonBlob, checkbox, chipChoice, chip
 ## Reglas de consumo en código React
 
 ```css
-/* ✅ Correcto — usa Mode token */
-color: var(--ds-fg-primary);
-background: var(--ds-bg-primary);
+/* ✅ Correcto — JSX usa Component token */
+color: var(--ds-button-fg-accent-outline);
+background: var(--ds-input-bg-default);
 
-/* ❌ Incorrecto — salta la cascada */
+/* ✅ Correcto — tokens.css usa Mode token */
+--ds-button-fg-accent-outline: var(--ds-fg-primary);
+--ds-input-bg-default: var(--ds-bg-default);
+
+/* ❌ Incorrecto — JSX salta la cascada usando Mode directamente */
+color: var(--ds-fg-primary);
+background: var(--ds-bg-default);
+
+/* ❌ Incorrecto — salta todas las capas */
 color: var(--ds-color-primary-700);
 color: #286371;
 ```
 
 El tema activo se activa con `data-theme="youth"` en el elemento raíz.
 El modo claro/oscuro con `data-mode="dark"` o `prefers-color-scheme`.
+
+---
+
+## Auditoría 23/06/2026
+
+**Estado post-auditoría: cero violaciones en todos los componentes.**
+
+### Cambios aplicados
+
+**tokens.css:** 83 hex hardcodeados → `var()` en los bloques Button, InputCommon, InputText, InputDate, InputDropdown, InputTelephone, InputAmount, InputStepper, Link, CTALink. Checkbox era el único bloque ya correcto.
+
+**JSX:** 20 referencias directas a Mode/Base eliminadas en Button.jsx (6), InputText.jsx (3), InputDate.jsx (2), InputDropdown.jsx (2), InputStepper.jsx (2), InputTelephone.jsx (2), InputAmount.jsx (2).
+
+### Tokens nuevos (8)
+
+Tokens faltantes creados para permitir la migración completa de JSX:
+
+```
+InputCommon:  --ds-input-fg-placeholder     → var(--ds-fg-subtle)
+              --ds-input-border-hover       → var(--ds-borderColor-emphasis)
+              --ds-input-bg-readonly        → var(--ds-bg-page)
+Button:       --ds-button-fg-negative       → var(--ds-fg-error)
+              --ds-button-border-negative   → var(--ds-borderColor-error)
+              --ds-button-bg-negative-hover → var(--ds-bg-error-subtle)
+              --ds-button-bg-mix-hover      → var(--ds-opacity-hover-default)
+InputStepper: --ds-input-stepper-btn-bg-hover → var(--ds-opacity-hover-default)
+```
+
+### Patrón bgMix
+
+Overlays de hover sobre superficies transparentes (botones outline/ghost, links) usan `var(--ds-opacity-hover-default)` envuelto en un Component token propio, nunca referenciado directamente desde el JSX. Esto garantiza que el dark mode override (`rgba(255,255,255,0.1)`) llegue hasta el JSX por la cascada normal.

@@ -3,7 +3,8 @@
 ## Token structure
 
 Tokens are generated from Figma exports and compiled into `src/tokens.css`.  
-All components reference `--ds-*` CSS custom properties — no hardcoded values anywhere.
+All components reference `--ds-*` CSS custom properties — no hardcoded values anywhere.  
+**All Component tokens reference Mode via `var()` — zero hardcoded hex (audited 23/06/2026).**
 
 ### Four layers (Figma → CSS)
 
@@ -104,6 +105,8 @@ Layer 2 — Organisms (planned)
 ## System rules
 
 - **No hardcoded values** — every color, size, and radius comes from a `--ds-*` token
+- **Component tokens only in JSX** — `.jsx` files must reference `--ds-{component}-*` exclusively, never `--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*` (Mode) or `--ds-color-*` (Base) directly
+- **bgMix pattern for hover overlays** — use `var(--ds-opacity-hover-default)` via a Component token (e.g. `--ds-button-bg-mix-hover`), never a Base color token
 - **Pill shape** for buttons: `--ds-button-radius: 80px`
 - **Semantic tokens** for components without Figma component token exports
 - **Component tokens** only when confirmed from Figma variable exports
@@ -122,3 +125,31 @@ Supported via two mechanisms:
 ```
 
 Semantic tokens (`--ds-fg-*`, `--ds-bg-*`) automatically switch between modes.
+
+---
+
+## Token audit — June 2026
+
+### Full cross-component audit (23 June 2026)
+
+**Result: zero violations across all components.**
+
+83 hardcoded hex values in `tokens.css` Component blocks migrated to `var(--ds-mode-token)` references. 20 direct Mode/Base token references removed from JSX files.
+
+**8 new Component tokens added:**
+
+| Token | Value | Block |
+|---|---|---|
+| `--ds-input-fg-placeholder` | `var(--ds-fg-subtle)` | InputCommon |
+| `--ds-input-border-hover` | `var(--ds-borderColor-emphasis)` | InputCommon |
+| `--ds-input-bg-readonly` | `var(--ds-bg-page)` | InputCommon |
+| `--ds-button-fg-negative` | `var(--ds-fg-error)` | Button |
+| `--ds-button-border-negative` | `var(--ds-borderColor-error)` | Button |
+| `--ds-button-bg-negative-hover` | `var(--ds-bg-error-subtle)` | Button |
+| `--ds-button-bg-mix-hover` | `var(--ds-opacity-hover-default)` | Button |
+| `--ds-input-stepper-btn-bg-hover` | `var(--ds-opacity-hover-default)` | InputStepper |
+
+**bgMix pattern for interaction overlays:**  
+Hover states on transparent surfaces (outline buttons, ghost, links) use a `rgba` overlay token rather than a solid Base color. The pattern: define `--ds-{component}-bg-mix-hover: var(--ds-opacity-hover-default)` at Component level, reference it from JSX. Enables dark mode inversion automatically when `--ds-opacity-hover-default` overrides to `rgba(255,255,255,0.1)`.
+
+Components using bgMix: `Button` · `Link` · `CTALink` · `InputStepper`
