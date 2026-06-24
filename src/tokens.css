@@ -267,6 +267,7 @@
   --ds-opacity-hover-subtle:       rgba(5,5,6,0.1);
   --ds-opacity-hover-subtle-inverse: rgba(255,255,255,0.1);
   --ds-opacity-overlay:            rgba(5,5,6,0.3);
+  --ds-opacity-pressed:            0.8;
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -281,6 +282,27 @@
   --ds-spacing-xl:  16px;
   --ds-spacing-2xl: 24px;
   --ds-spacing-3xl: 32px;
+
+  /* ── Border Width ── */
+  --ds-border-width-sm:     1px;
+  --ds-border-width-md:     1.5px;
+  --ds-border-width-lg:     2px;
+
+  /* ── Border Radius ── */
+  --ds-border-radius-xs:     2px;
+  --ds-border-radius-sm:     4px;
+  --ds-border-radius-md:     8px;
+  --ds-border-radius-2xl:    16px;
+  --ds-border-radius-3xl:    24px;
+  --ds-border-radius-circle: 80px;
+
+  /* ── Sizing ── */
+  --ds-sizing-xs:  20px;
+  --ds-sizing-sm:  24px;
+  --ds-sizing-md:  32px;
+  --ds-sizing-lg:  40px;
+  --ds-sizing-xl:  48px;
+  --ds-sizing-2xl: 56px;
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -484,9 +506,9 @@
   --ds-checkbox-description-fg:        var(--ds-fg-subtle);
   --ds-checkbox-validation-fg:         var(--ds-fg-error);
 
-  --ds-checkbox-size:                  24px;
-  --ds-checkbox-border-radius:         2px;
-  --ds-checkbox-border-width:          1.5px;
+  --ds-checkbox-size:                  var(--ds-sizing-sm);
+  --ds-checkbox-border-radius:         var(--ds-border-radius-xs);
+  --ds-checkbox-border-width:          var(--ds-border-width-md);
   --ds-checkbox-label-gap:             8px;
 
   /* ══════════════════════════════════════════════════════════════
@@ -513,11 +535,11 @@
   --ds-radio-description-fg:                var(--ds-fg-subtle);
   --ds-radio-validation-fg:                 var(--ds-fg-error);
 
-  --ds-radio-root-size-generic:                24px;
-  --ds-radio-root-border-radius-generic:       80px;
-  --ds-radio-root-border-width-generic:        2px;
+  --ds-radio-root-size-generic:                var(--ds-sizing-sm);
+  --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);
+  --ds-radio-root-border-width-generic:        var(--ds-border-width-lg);
   --ds-radio-root-gap-generic:                 2px;
-  --ds-radio-indicator-border-radius-generic:  80px;
+  --ds-radio-indicator-border-radius-generic:  var(--ds-border-radius-circle);
 
 
 
