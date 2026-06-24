@@ -370,6 +370,7 @@ Comportamientos: `checked=false` → Unselected · `checked=true` → Selected (
   required      = {false}
   ariaLabel
   fullWidth     = {false}
+  showLabel     = {true}
 />
 ```
 

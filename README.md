@@ -35,6 +35,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `InputStepper` | All states · −/+ buttons · min/max/step | ✅ v1 |
 | `InputTelephone` | Selectable/Fixed country · Flag + code + divider · All states | ✅ v1 |
 | `InputAmount` | Selectable/Fixed currency · locale-aware number format · All states | ✅ v1 |
+| `Radio` | Default · Error · Disabled · Label opcional · showLabel · forwardRef | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -126,6 +127,51 @@ Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base
 | `InputTelephone` | 0 | ✅ Clean |
 | `InputAmount` | 0 | ✅ Clean |
 | `InputStepper` | 0 | ✅ Clean |
+| `Radio` | 0 | ✅ Clean |
+
+---
+
+## Radio — API
+
+```jsx
+<Radio
+  checked                                          // controlled
+  defaultChecked                                   // uncontrolled — never use both
+  onChange     = {fn}
+  state        = "default" | "error" | "disabled"
+  label        = "Opción A"
+  showLabel    = {true}    // false → label hidden visually, ariaLabel required
+  description  = ""        // helper text below label
+  errorMessage = ""        // shown when state="error"
+  id
+  name                                             // group radios with the same name
+  value
+  required     = {false}
+  fullWidth    = {false}
+  ariaLabel    = ""        // required when showLabel={false} or no label
+  onFocus      = {fn}
+  onBlur       = {fn}
+/>
+```
+
+Group usage — the browser enforces mutual exclusivity within a `name` group:
+
+```jsx
+<Radio label="SEPA"   name="payment" value="sepa"   checked={v === 'sepa'}   onChange={fn} />
+<Radio label="Tarjeta" name="payment" value="card"  checked={v === 'card'}   onChange={fn} />
+```
+
+### Focus ring — dual wrapper pattern
+
+Radio uses two nested `<span>` wrappers around the visual circle. On `:focus-visible` the
+outer wrapper receives `--ds-radio-root-border-color-focus-outer` and the inner wrapper
+receives `--ds-radio-root-border-color-focus-inner`, producing a double ring via two
+separate borders.
+
+Checkbox achieves the same double-ring result differently: a single `.ds-checkbox__box`
+element uses `outline` (outer ring) + `box-shadow` (inner ring). Both approaches are
+intentional — Radio's dual wrapper allows the hover background (`control-wrap`) to be
+scoped inside the outer ring without leaking color.
 
 ---
 
