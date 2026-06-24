@@ -1,7 +1,7 @@
 # CLAUDE.md — CS Design System
 # Leído automáticamente por Claude Code al iniciar cada sesión.
 
-## Qué es este proyecto
+## 1. Qué es este proyecto
 
 Librería personal de componentes React basada en un design system de banca (alias: Sistema Origen).
 Completamente limpia de IP. Conectada con Figma CS Design System (csagenjo).
@@ -9,22 +9,18 @@ Caso de uso: UIKit para apps internas de back-office (alias: La Plataforma).
 
 Repo: https://github.com/csagenjo/cs-design-system
 
-## Stack
+## 2. Stack y estructura de carpetas
 
 Node.js v24.16.0 · Vite · React · lucide-react (iconos)
 Servidor local: http://localhost:5173/
 Comando dev: npm run dev
 
-## Estructura
-
 ```
 src/
   components/        ← Capa 1: DS csagenjo — SOLO átomos puros
     Button.jsx        ✅ átomo DS v2
-    Input.jsx          🔄 a rehacer — ver sección Input más abajo
     Checkbox.jsx       ✅ DS v2, indeterminate, aria-checked=mixed — tokens migrados a --ds-checkbox-* (22/06/2026)
     Link.jsx           ✅ variantes default/accent, tokens teal
-    LinkList.jsx       ✅ wrapper semántico nav/ul/li sobre Link
     CTALink.jsx        ✅ v2.0 — 24 variantes, 4 estados, borderRadius por énfasis
     InputText.jsx      ✅ v1 — texto, iconos izq/der, adaptive
     InputDate.jsx      ✅ v1
@@ -32,6 +28,7 @@ src/
     InputStepper.jsx   ✅ v1
     InputTelephone.jsx ✅ v1 — selectable/fixed, doble campo, divider teal
     InputAmount.jsx    ✅ v1.0 — selectable/fixed, doble campo, formato de número locale-aware
+    Radio.jsx          ✅ v1 — dual wrapper focus ring, label opcional, 21 tokens --ds-radio-*, zero violaciones
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — Component tokens migrados a var() (23/06/2026)
@@ -49,28 +46,14 @@ CLAUDE.md
 README.md
 ```
 
-**IMPORTANTE — regla de capas:** `src/components/` es SOLO para átomos de Capa 1 (DS csagenjo). Cualquier organismo o componente compuesto pensado para La Plataforma va en `src/organisms/`. No mezclar.
-
-## Aliases — usar SIEMPRE, nunca los nombres reales
+## 3. Aliases — usar SIEMPRE, nunca los nombres reales
 
 - **La Empresa** — la organización de origen
 - **Sistema Origen** — el design system de referencia
 - **La Plataforma** — la aplicación back-office de caso de uso
 - **UIKit Plataforma** — el UIKit de componentes de La Plataforma
 
-## Reglas críticas — NO hacer nunca
-
-- NUNCA usar hex hardcodeados en componentes — solo `var(--ds-*)`
-- NUNCA referenciar colores del Sistema Origen
-- NUNCA usar prefijo `.oj-` en CSS — usar `.ds-`
-- NUNCA editar `package-lock.json` a mano
-- NUNCA acumular imports en App.jsx — es banco de pruebas, se sobrescribe
-- NUNCA usar nombres reales en código, commits ni docs — solo los aliases de arriba
-- NUNCA saltar capas en la cascada de tokens (Component → Mode → Theme → Base)
-- NUNCA mezclar átomos (components/) con organismos (organisms/)
-- NUNCA referenciar tokens de Mode (`--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*`) o Base (`--ds-color-*`) directamente desde un `.jsx` — solo `--ds-{componente}-*`
-
-## Arquitectura de tokens — 5 capas (cascada)
+## 4. Arquitectura de tokens — 5 capas (cascada)
 
 ```
 Base (157) — paleta raw, solo hex, el código NUNCA los usa directamente
@@ -94,7 +77,7 @@ Mode (364) — 2 modos: Light / Dark
 Component (1026+) — tokens por componente, referencian SOLO Mode
   Convenio: {Grupo}/{Componente}/{parte}/{propiedad}/{estado}
   Patrón nuevo (Jun 2026): familias con tokens comunes usan un grupo "Common"
-  compartido — ver sección Input más abajo como referencia del patrón.
+  compartido — ver sección Familia Input como referencia del patrón.
 
 Device (79) — capa paralela, no de color
   Tipografía y espaciados. Mobile / Desk / Generic.
@@ -105,17 +88,21 @@ Device (79) — capa paralela, no de color
 **Sufijos -light/-dark en Theme:** son los dos valores posibles (light/dark mode), NO intensidad.
 **Sufijos -subtle/-medium/-bold en Mode:** indican intensidad (renombrados de -light/-medium/-bold en Jun 2026).
 
+**Decisión de sistema — accent color:** `accent` = teal en TODOS los componentes (Button, CTALink, Checkbox, Link, Input...). Secondary/pink = rol de datos e información, no de navegación/acción.
+
 **Consolidado (22/06/2026, completado 23/06/2026):** el código de cada componente debe consumir
 EXCLUSIVAMENTE tokens de Component (`--ds-{componente}-*`) — nunca `--ds-fg-*`, `--ds-bg-*`,
 `--ds-borderColor-*` (Mode) ni `--ds-color-*` (Base) directamente desde un `.jsx`.
-Todos los componentes cumplen esto desde 23/06/2026 — cero violaciones (ver Auditoría global).
+Todos los componentes cumplen esto desde 23/06/2026 — cero violaciones.
 
-## Decisión de sistema — accent color
+### Patrón bgMix para overlays de interacción
 
-`accent` = teal en TODOS los componentes (Button, CTALink, Checkbox, Link, Input...).
-Secondary/pink = rol de datos e información, no de navegación/acción.
+Hover sobre superficies sin fondo sólido (outline, ghost, links) usa overlay rgba vía
+`var(--ds-opacity-hover-default)` — nunca un color Base hardcodeado. Componentes que lo usan:
+Button (`--ds-button-bg-mix-hover`), Link (`--ds-link-bg-mix-hover`),
+CTALink (`--ds-cta-link-bg-mix-hover`), InputStepper (`--ds-input-stepper-btn-bg-hover`).
 
-## Patrón de tokens "Common + específico" (establecido con la familia Input)
+### Patrón "Common + específico" (establecido con la familia Input)
 
 Cuando varios componentes comparten estructura (ej. los 6 tipos de Input), los tokens se organizan así en Figma:
 
@@ -139,7 +126,81 @@ Component tokens
 
 Aplicar este mismo patrón ("Common" + específicos) a futuras familias de componentes con estructura compartida (ej. si se construye una familia de Selectors o Chips).
 
-## Button.jsx — API
+### Auditoría global de tokens (23/06/2026) ✅
+
+Auditoría completa sobre `tokens.css` y todos los JSX. Estado final: cero violaciones.
+
+**tokens.css — migración de Component blocks:**
+83 hex hardcodeados reemplazados por `var()` en 9 bloques (Button, InputCommon, InputText,
+InputDate, InputDropdown, InputTelephone, InputAmount, InputStepper, Link, CTALink).
+Checkbox era el único bloque ya correcto — sirve de modelo.
+
+**JSX — violaciones eliminadas:**
+20 referencias directas a Mode/Base corregidas en 7 archivos:
+Button.jsx (6) · InputText.jsx (3) · InputDate.jsx (2) · InputDropdown.jsx (2) ·
+InputStepper.jsx (2) · InputTelephone.jsx (2) · InputAmount.jsx (2)
+
+**8 tokens nuevos añadidos:**
+```
+--ds-input-fg-placeholder           var(--ds-fg-subtle)             — InputCommon
+--ds-input-border-hover             var(--ds-borderColor-emphasis)  — InputCommon
+--ds-input-bg-readonly              var(--ds-bg-page)               — InputCommon
+--ds-button-fg-negative             var(--ds-fg-error)              — Button
+--ds-button-border-negative         var(--ds-borderColor-error)     — Button
+--ds-button-bg-negative-hover       var(--ds-bg-error-subtle)       — Button
+--ds-button-bg-mix-hover            var(--ds-opacity-hover-default) — Button
+--ds-input-stepper-btn-bg-hover     var(--ds-opacity-hover-default) — InputStepper
+```
+
+## 5. Arquitectura de capas
+
+```
+CAPA 1 — DS csagenjo · átomos puros · /src/components/
+  Button ✅ · Link ✅ · CTALink ✅ · Checkbox ✅ · Radio ✅ · Input (familia, 6 tipos) ✅
+  Todos auditados — cero violaciones de capas en JSX y tokens.css (23/06/2026)
+
+CAPA 2 — UIKit Plataforma · organismos · /src/organisms/
+  ButtonBar ✅ (movido desde components/ — Jun 2026)
+  24 organismos totales + 5 layouts — pendiente migrar el resto
+```
+
+Regla: nunca saltarse capas. Los organismos importan átomos, no reimplementan su lógica.
+`src/components/` es SOLO para átomos de Capa 1 (DS csagenjo). Cualquier organismo o componente compuesto pensado para La Plataforma va en `src/organisms/`. No mezclar.
+
+## 6. Reglas críticas — NO hacer nunca
+
+- NUNCA usar hex hardcodeados en componentes — solo `var(--ds-*)`
+- NUNCA referenciar colores del Sistema Origen
+- NUNCA usar prefijo `.oj-` en CSS — usar `.ds-`
+- NUNCA editar `package-lock.json` a mano
+- NUNCA acumular imports en App.jsx — es banco de pruebas, se sobrescribe
+- NUNCA usar nombres reales en código, commits ni docs — solo los aliases de arriba
+- NUNCA saltar capas en la cascada de tokens (Component → Mode → Theme → Base)
+- NUNCA mezclar átomos (components/) con organismos (organisms/)
+- NUNCA referenciar tokens de Mode (`--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*`) o Base (`--ds-color-*`) directamente desde un `.jsx` — solo `--ds-{componente}-*`
+
+## 7. Workflow de componentes
+
+```
+1. EXPLORE en Claude Code (leer código actual + tokens de Figma ya auditados)
+2. PLAN en Claude Code (arquitectura + API + tokens CSS faltantes — NO code yet)
+3. CODE en Claude Code
+4. REVIEW con GPT (auditoría técnica)
+5. FIX en Claude Code (solo críticos)
+6. COMMIT cuando ≥8/10
+```
+
+Convención de commits:
+```
+Add [ComponentName] using --ds-* tokens
+Update [ComponentName]: descripción
+Fix [ComponentName]: descripción
+Move [ComponentName]: descripción (ej. reubicación de capas)
+```
+
+## 8. Componentes construidos
+
+### Button.jsx ✅ v2
 
 ```jsx
 <Button
@@ -181,28 +242,7 @@ Tokens Component (Button) — todos referencian Mode vía `var()`:
 --ds-button-bg-mix-hover        var(--ds-opacity-hover-default)
 ```
 
-## organisms/ButtonBar.jsx — API (Capa 2, UIKit Plataforma)
-
-```jsx
-<ButtonBar
-  variant          = "complex" | "simple" | "form" | "detail"
-  size             = "sm" | "md" | "lg"
-  primaryLabel     = "Aceptar y continuar"
-  onPrimary        = {fn}
-  primaryIcon      = "ArrowRight"
-  secondaryLabel   = ""
-  onSecondary      = {fn}
-  cancelLabel      = "Cancelar"
-  onCancel         = {fn}
-  negativeActions  = [{label, onClick, icon?}]   // SIEMPRE izquierda
-  extraSecondary   = [{label, onClick, icon?}]   // solo complex
-  onPrev           = {fn}
-  prevDisabled     = {false}
-  nextIsConfirm    = {false}
-/>
-```
-
-## Link.jsx — API ✅ v2.0
+### Link.jsx ✅ v2.0
 
 ```jsx
 <Link
@@ -228,20 +268,7 @@ Tokens de color Link (arquitectura v2 — alineada con Figma link/all/) — todo
 - `--ds-link-opacity-pressed` 0.8
 - Active: opacity 0.8 + SemiBold
 
-## LinkList.jsx — API
-
-```jsx
-<LinkList
-  items     = [{label, href, variant, size, emphasis, external, onClick, ariaLabel, disabled}]
-  title     = ""       // opcional
-  gap       = "sm" | "md" | "lg"   // default: md
-  ariaLabel = ""
-/>
-```
-
-Semántica: `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
-
-## CTALink.jsx — API ✅ completado v2.0
+### CTALink.jsx ✅ v2.0
 
 ```jsx
 <CTALink
@@ -290,52 +317,107 @@ Sin icono. Sin prop size. Talla única.
 - Pressed: opacity 0.8 vía `:active`.
 - Disabled: aria-disabled + tabIndex -1 + opacity 0.6.
 
-## Input — familia completa ✅ código React completo
+### Checkbox.jsx ✅ v2
 
-Estado: tokens de Figma 100% listos y auditados (Component tokens, grupo `Input/`).
-Código React: los 6 tipos están construidos (InputText, InputDate, InputDropdown,
-InputStepper, InputTelephone, InputAmount). El `Input.jsx` genérico de la sesión anterior
-queda obsoleto frente a estos átomos independientes.
+**Historial v1 → v2 (22/06/2026):**
+- v1: tokens Mode/Base directos, `opacity: 0.5` para disabled, focus ring simple.
+- v2: migrado a `--ds-checkbox-*` exclusivamente. Focus ring doble anillo (outer+inner via box-shadow). Disabled: `opacity: 0.5` eliminado, reemplazado por `--ds-checkbox-icon-disabled` en `color`. Hover+Focus combinado añadido.
 
-### Tipos construidos
+Figma: limpio y auditado — 23 tokens en Component tokens (`--ds-checkbox-*` en `tokens.css`):
+bg (default/selected/hover/disabled/error), border (default/selected/hover/disabled/error),
+focus (inner/outer), icon (fg/disabled), label (fg/disabled), description, validation,
+geometría (size, borderRadius, borderWidth, labelGap).
 
-1. **InputText** ✅ — texto simple, iconLeft opcional (subtle/primary/disabled), iconRight opcional
-2. **InputTelephone** ✅ — dos sub-campos (country selector + número), variantes Selectable/Fixed, divider entre campos
-   - Focus rings construidos en Figma (doble anillo blanco+negro) ✅
-   - Deuda: Country Picker (Advanced List Item) tiene focus-inner en teal en vez de blanco — alcance sin investigar, NO bloqueante (ver Deuda técnica)
-3. **InputAmount** ✅ — mismo patrón dual que Telephone (amountField + currencyField), formato numérico locale-aware vía `Intl.NumberFormat`
-4. **InputDate** ✅ — iconRight fijo (calendario)
-5. **InputDropdown** ✅ — iconRight fijo (chevron)
-6. **InputStepper** ✅ — iconLeft + iconRight (botones −/+)
+```jsx
+<Checkbox
+  checked
+  defaultChecked
+  indeterminate = {false}
+  state         = "default" | "error" | "disabled"
+  label
+  description
+  errorMessage
+  onChange
+  onFocus
+  onBlur
+  id
+  name
+  value
+  required      = {false}
+  ariaLabel
+  fullWidth     = {false}
+/>
+```
 
-### Decisión pendiente de arquitectura de código
+Comportamientos: `checked=false` → Unselected · `checked=true` → Selected (checkmark teal) · `indeterminate=true` → Indeterminate (dash teal, ignora `checked`). Sin validación de formato — el estado error lo gestiona el padre.
 
-¿Un componente por tipo (`InputText.jsx`, `InputTelephone.jsx`...) con lógica común compartida vía hook/wrapper, o un solo `Input.jsx` con prop `type`? Evaluar en la fase PLAN antes de codear — ver `src/components/` ya sigue el patrón de átomos separados (Button, Link, CTALink son componentes independientes, no uno genérico con prop `type`), así que lo más consistente es Opción A (un componente por tipo).
+### Radio.jsx ✅ v1
 
-### Estados comunes a todos (InputCommon)
+```jsx
+<Radio
+  checked
+  defaultChecked
+  state         = "default" | "error" | "disabled"
+  label
+  description
+  errorMessage
+  onChange
+  onFocus
+  onBlur
+  id
+  name
+  value
+  required      = {false}
+  ariaLabel
+  fullWidth     = {false}
+/>
+```
 
+Tokens Component (Radio) — 21 tokens, todos referencian Mode vía `var()`:
+```
+--ds-radio-root-bg-generic:                var(--ds-bg-default)
+--ds-radio-root-bg-hover:                  var(--ds-bg-hover-primary)
+--ds-radio-root-bg-disabled:               var(--ds-bg-disabled)
+--ds-radio-root-border-color-generic:      var(--ds-borderColor-default)
+--ds-radio-root-border-color-selected:     var(--ds-borderColor-primary)
+--ds-radio-root-border-color-error:        var(--ds-borderColor-error)
+--ds-radio-root-border-color-disabled:     var(--ds-borderColor-disabled)
+--ds-radio-root-border-color-focus-inner:  var(--ds-borderColor-focus-inner)
+--ds-radio-root-border-color-focus-outer:  var(--ds-borderColor-focus-outer)
+--ds-radio-indicator-fg-generic:           var(--ds-bg-primary-bold)
+--ds-radio-indicator-fg-disabled:          var(--ds-fg-disabled)
+--ds-radio-indicator-fg-error:             var(--ds-fg-error)
+--ds-radio-label-fg-generic:               var(--ds-fg-label-default)
+--ds-radio-label-fg-disabled:              var(--ds-fg-label-disabled)
+--ds-radio-description-fg:                 var(--ds-fg-subtle)
+--ds-radio-validation-fg:                  var(--ds-fg-error)
+--ds-radio-root-size-generic:              24px
+--ds-radio-root-border-radius-generic:     80px
+--ds-radio-root-border-width-generic:      2px
+--ds-radio-root-gap-generic:               2px
+--ds-radio-indicator-border-radius-generic: 80px
+```
+
+**Notas de implementación:**
+- Dual wrapper focus ring: input nativo oculto (visually hidden) + dos wrappers span (`focus-ring` → `control-wrap`) que reciben los bordes de focus vía `:focus-visible`. Mismo patrón que Checkbox.
+- Label opcional — si no se pasa `label`, requiere `ariaLabel` (warning en dev si falta).
+- Controlado/no controlado: acepta `checked` (controlado) o `defaultChecked` (no controlado) — nunca los dos.
+- Sin `indeterminate` — Radio no tiene ese estado (a diferencia de Checkbox).
+- Grupos de radio: agrupar con la misma prop `name`. El navegador gestiona la exclusividad.
+- `forwardRef` expuesto — permite `ref.current.focus()` desde el padre.
+
+### Familia Input ✅ (6 tipos)
+
+6 átomos independientes en `src/components/`. Tokens: `tokens/Component/Mode 1.tokens.json`, grupo `Input/`.
+
+**Estados comunes a todos (InputCommon):**
 generic/enabled · error · disabled · focus (doble anillo blanco+negro) · helper text · validation message
 
-## Workflow de componentes
+#### InputText ✅ v1
 
-```
-1. EXPLORE en Claude Code (leer código actual + tokens de Figma ya auditados)
-2. PLAN en Claude Code (arquitectura + API + tokens CSS faltantes — NO code yet)
-3. CODE en Claude Code
-4. REVIEW con GPT (auditoría técnica)
-5. FIX en Claude Code (solo críticos)
-6. COMMIT cuando ≥8/10
-```
+texto simple, iconLeft opcional (subtle/primary/disabled), iconRight opcional.
 
-Convención de commits:
-```
-Add [ComponentName] using --ds-* tokens
-Update [ComponentName]: descripción
-Fix [ComponentName]: descripción
-Move [ComponentName]: descripción (ej. reubicación de capas)
-```
-
-## InputTelephone.jsx — API ✅ completado
+#### InputTelephone ✅ v1
 
 ```jsx
 <InputTelephone
@@ -361,7 +443,7 @@ Sin validación de formato — el estado error lo gestiona el padre.
 `autoComplete="tel-national"` en el campo de número.
 Country Picker (Advanced List Item) es componente separado — fuera del scope de este átomo.
 
-## InputAmount.jsx — API ✅ completado v1.0
+#### InputAmount ✅ v1.0
 
 ```jsx
 <InputAmount
@@ -387,69 +469,68 @@ Country Picker (Advanced List Item) es componente separado — fuera del scope d
 
 Estructura: Label → Helper → [CurrencyField | AmountField] → ValidationMessage.
 Sin prop `placeholder` explícita — se genera automáticamente vía `Intl.NumberFormat(locale)`
-para mostrar el formato decimal correcto según el locale. Sin prop `variant` ni `validation`
-genéricas — el estado de error se controla con `state="error"` + `errorMessage`, igual que en
-el resto de la familia Input.
+para mostrar el formato decimal correcto según el locale.
 Currency Picker (selector de moneda) es componente separado — fuera del scope de este átomo,
 mismo patrón que el Country Picker de InputTelephone.
 
-## Auditoría Input family (22/06/2026)
+#### InputDate ✅ v1
 
-InputText, InputDropdown, InputDate, InputTelephone, InputAmount e InputStepper pasaron
-auditoría de tokens con **cero violaciones**: todos consumen exclusivamente
-`--ds-input-*` (InputCommon + específicos por tipo), sin hex hardcodeados ni referencias
-directas a tokens de Mode o Base. Confirma el patrón "Common + específico" como válido
-para escalar a futuras familias (Selectors, Chips).
+iconRight fijo (calendario).
 
-## Auditoría global de tokens (23/06/2026) ✅
+#### InputDropdown ✅ v1
 
-Auditoría completa sobre `tokens.css` y todos los JSX. Estado final: cero violaciones.
+iconRight fijo (chevron).
 
-**tokens.css — migración de Component blocks:**
-83 hex hardcodeados reemplazados por `var()` en 9 bloques (Button, InputCommon, InputText,
-InputDate, InputDropdown, InputTelephone, InputAmount, InputStepper, Link, CTALink).
-Checkbox era el único bloque ya correcto — sirve de modelo.
+#### InputStepper ✅ v1
 
-**JSX — violaciones eliminadas:**
-20 referencias directas a Mode/Base corregidas en 7 archivos:
-Button.jsx (6) · InputText.jsx (3) · InputDate.jsx (2) · InputDropdown.jsx (2) ·
-InputStepper.jsx (2) · InputTelephone.jsx (2) · InputAmount.jsx (2)
+iconLeft + iconRight (botones −/+).
 
-**8 tokens nuevos añadidos:**
+#### Tokens InputCommon + específicos
+
+Ver diagrama completo en sección 4 — Patrón "Common + específico".
+
+#### Auditoría Input family (22/06/2026)
+
+Cero violaciones: todos consumen exclusivamente `--ds-input-*` (InputCommon + específicos por tipo),
+sin hex hardcodeados ni referencias directas a tokens de Mode o Base. Confirma el patrón
+"Common + específico" como válido para escalar a futuras familias (Selectors, Chips).
+
+### ButtonBar.jsx ✅ (Capa 2 — organisms/)
+
+```jsx
+<ButtonBar
+  variant          = "complex" | "simple" | "form" | "detail"
+  size             = "sm" | "md" | "lg"
+  primaryLabel     = "Aceptar y continuar"
+  onPrimary        = {fn}
+  primaryIcon      = "ArrowRight"
+  secondaryLabel   = ""
+  onSecondary      = {fn}
+  cancelLabel      = "Cancelar"
+  onCancel         = {fn}
+  negativeActions  = [{label, onClick, icon?}]   // SIEMPRE izquierda
+  extraSecondary   = [{label, onClick, icon?}]   // solo complex
+  onPrev           = {fn}
+  prevDisabled     = {false}
+  nextIsConfirm    = {false}
+/>
 ```
---ds-input-fg-placeholder           var(--ds-fg-subtle)            — InputCommon
---ds-input-border-hover             var(--ds-borderColor-emphasis) — InputCommon
---ds-input-bg-readonly              var(--ds-bg-page)              — InputCommon
---ds-button-fg-negative             var(--ds-fg-error)             — Button
---ds-button-border-negative         var(--ds-borderColor-error)    — Button
---ds-button-bg-negative-hover       var(--ds-bg-error-subtle)      — Button
---ds-button-bg-mix-hover            var(--ds-opacity-hover-default) — Button
---ds-input-stepper-btn-bg-hover     var(--ds-opacity-hover-default) — InputStepper
-```
 
-**Patrón bgMix para overlays de interacción:**
-Hover sobre superficies sin fondo sólido (outline, ghost, links) usa overlay rgba vía
-`var(--ds-opacity-hover-default)` — nunca un color Base hardcodeado. Componentes que lo usan:
-Button (`--ds-button-bg-mix-hover`), Link (`--ds-link-bg-mix-hover`),
-CTALink (`--ds-cta-link-bg-mix-hover`), InputStepper (`--ds-input-stepper-btn-bg-hover`).
+## 9. Próximos componentes
 
-## Checkbox.jsx — estado (22/06/2026) ✅ tokens migrados
+1. **Chip.jsx**
+2. **LinkList.jsx** — wrapper semántico `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
+   API prevista:
+   ```jsx
+   <LinkList
+     items     = [{label, href, variant, size, emphasis, external, onClick, ariaLabel, disabled}]
+     title     = ""       // opcional
+     gap       = "sm" | "md" | "lg"   // default: md
+     ariaLabel = ""
+   />
+   ```
 
-Figma: limpio y auditado — 23 tokens en Component tokens (`--ds-checkbox-*` en `tokens.css`):
-bg (default/selected/hover/disabled/error), border (default/selected/hover/disabled/error),
-focus (inner/outer), icon (fg/disabled), label (fg/disabled), description, validation,
-geometría (size, borderRadius, borderWidth, labelGap).
-Código: migrado — `Checkbox.jsx` consume exclusivamente `--ds-checkbox-*`. Sin referencias
-directas a tokens de Mode ni de Base. Focus ring actualizado a doble anillo (outer+inner via
-box-shadow). Disabled: `opacity: 0.5` eliminado, reemplazado por `--ds-checkbox-icon-disabled`
-en `color`. Hover+Focus combinado añadido.
-
-## Próximos componentes
-
-1. **Radio.jsx**
-2. **Chip.jsx**
-
-## Figma MCP
+## 10. Figma MCP
 
 Usar siempre claude.ai Figma (OAuth) — nunca añadir manualmente.
 Si falla: `claude mcp remove figma` (el OAuth se reactiva solo).
@@ -458,21 +539,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 Para tareas grandes en Figma (renombrar/reestructurar muchos tokens), pedir confirmación
 después de cada componente — no avanzar en cadena sin verificación visual.
 
-## Deuda técnica
+## 11. Deuda técnica
 
 - **Country Picker / Advanced List Item** (InputTelephone) — el focus-inner está en teal en
   vez de blanco. Alcance sin investigar todavía. NO bloqueante para el código de InputTelephone.
-
-## Arquitectura (dos capas)
-
-```
-CAPA 1 — DS csagenjo · átomos puros · /src/components/
-  Button ✅ · Link ✅ · CTALink ✅ · LinkList ✅ · Checkbox ✅ · Input (familia, 6 tipos) ✅
-  Todos auditados — cero violaciones de capas en JSX y tokens.css (23/06/2026)
-
-CAPA 2 — UIKit Plataforma · organismos · /src/organisms/
-  ButtonBar ✅ (movido desde components/ — Jun 2026)
-  24 organismos totales + 5 layouts — pendiente migrar el resto
-```
-
-Regla: nunca saltarse capas. Los organismos importan átomos, no reimplementan su lógica.
