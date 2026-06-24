@@ -63,10 +63,10 @@ const css = `
 /* Visual box */
 .ds-checkbox__box {
   flex-shrink:     0;
-  width:           24px;
-  height:          24px;
-  border:          1.5px solid var(--ds-checkbox-border-default);
-  border-radius:   2px;
+  width:           var(--ds-checkbox-size);
+  height:          var(--ds-checkbox-size);
+  border:          var(--ds-checkbox-border-width) solid var(--ds-checkbox-border-default);
+  border-radius:   var(--ds-checkbox-border-radius);
   background:      var(--ds-checkbox-bg-default);
   display:         flex;
   align-items:     center;
