@@ -99,6 +99,31 @@ Layer 2 — Organisms (planned)
 | `InputDropdown` | all states | `--ds-input-*` `--ds-input-dropdown-*` | ✅ v1 |
 | `InputStepper` | all states · min/max/step | `--ds-input-*` `--ds-input-stepper-*` | ✅ v1 |
 | `InputTelephone` | selectable · fixed × all states | `--ds-input-*` `--ds-input-telephone-*` | ✅ v1 |
+| `Radio` | default · error · disabled · label · showLabel · forwardRef | `--ds-radio-*` | ✅ v1 |
+
+### Focus ring implementation patterns
+
+Two components share the same visual output (double focus ring: white inner + black outer) but use different DOM/CSS strategies:
+
+**Checkbox — outline + box-shadow on a single element:**
+```
+.ds-checkbox__box
+  outline:    2px solid var(--ds-checkbox-focus-outer)   ← outer ring
+  box-shadow: 0 0 0 4px var(--ds-checkbox-focus-inner)   ← inner ring
+```
+Simple DOM. The outer ring sits outside the element boundary via `outline`; the inner
+ring wraps the element via `box-shadow` inset offset.
+
+**Radio — dual wrapper (two nested `<span>` elements, each with a border):**
+```
+.ds-radio__focus-ring          border: transparent → focus-outer on :focus-visible
+  .ds-radio__control-wrap      border: transparent → focus-inner on :focus-visible
+    .ds-radio__circle          visual circle
+```
+The extra wrapper layer lets the hover background (`control-wrap` background) be
+scoped inside the outer ring — preventing the hover tint from bleeding outside the
+outer focus border. This constraint does not exist in Checkbox (hover is on the row,
+not the box), which is why the simpler `outline` + `box-shadow` approach works there.
 
 ---
 

@@ -176,6 +176,7 @@ export const Radio = forwardRef(function Radio({
   required      = false,
   ariaLabel,
   fullWidth     = false,
+  showLabel     = true,
 }, forwardedRef) {
 
   const inputRef    = useRef(null);
@@ -186,7 +187,7 @@ export const Radio = forwardRef(function Radio({
   const msgId  = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
   const describedBy = [descId, msgId].filter(Boolean).join(' ') || undefined;
 
-  if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
+  if (process.env.NODE_ENV !== 'production' && !(label && showLabel) && !ariaLabel) {
     console.warn('[DS Radio] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
   }
 
@@ -209,7 +210,7 @@ export const Radio = forwardRef(function Radio({
     onChange,
     onFocus,
     onBlur,
-    'aria-label':      !label ? ariaLabel : undefined,
+    'aria-label':      (!label || !showLabel) ? ariaLabel : undefined,
     'aria-describedby': describedBy,
     'aria-invalid':    state === 'error' ? 'true' : undefined,
   };
@@ -231,7 +232,7 @@ export const Radio = forwardRef(function Radio({
             </span>
           </span>
         </span>
-        {label && <span className="ds-radio__label">{label}</span>}
+        {label && showLabel && <span className="ds-radio__label">{label}</span>}
       </label>
 
       {description && (

@@ -128,6 +128,43 @@ disabled      → gris #B9BEC4
 
 Componentes con tokens definidos: button, buttonBlob, checkbox, chipChoice, chipFilter, chipInput, ctaLink, link, linkList, iconButton, input (text/amount/date/telephone/dropdown), calendar, cards, accordion, tabs, dialog, drawer, pagination, radioButton, segmentedControl, slider, switch, table, text, tooltip, y ~35 más.
 
+### Bloque `--ds-radio-*` (21 tokens)
+
+```css
+/* Fondos */
+--ds-radio-root-bg-generic:                var(--ds-bg-default)
+--ds-radio-root-bg-hover:                  var(--ds-bg-hover-primary)
+--ds-radio-root-bg-disabled:               var(--ds-bg-disabled)
+
+/* Bordes del círculo */
+--ds-radio-root-border-color-generic:      var(--ds-borderColor-default)
+--ds-radio-root-border-color-selected:     var(--ds-borderColor-primary)
+--ds-radio-root-border-color-error:        var(--ds-borderColor-error)
+--ds-radio-root-border-color-disabled:     var(--ds-borderColor-disabled)
+
+/* Focus ring — dual wrapper */
+--ds-radio-root-border-color-focus-inner:  var(--ds-borderColor-focus-inner)
+--ds-radio-root-border-color-focus-outer:  var(--ds-borderColor-focus-outer)
+
+/* Indicador (punto interior) */
+--ds-radio-indicator-fg-generic:           var(--ds-bg-primary-bold)
+--ds-radio-indicator-fg-disabled:          var(--ds-fg-disabled)
+--ds-radio-indicator-fg-error:             var(--ds-fg-error)
+
+/* Label y texto */
+--ds-radio-label-fg-generic:               var(--ds-fg-label-default)
+--ds-radio-label-fg-disabled:              var(--ds-fg-label-disabled)
+--ds-radio-description-fg:                 var(--ds-fg-subtle)
+--ds-radio-validation-fg:                  var(--ds-fg-error)
+
+/* Geometría */
+--ds-radio-root-size-generic:              24px
+--ds-radio-root-border-radius-generic:     80px
+--ds-radio-root-border-width-generic:      2px
+--ds-radio-root-gap-generic:               2px
+--ds-radio-indicator-border-radius-generic: 80px
+```
+
 ---
 
 ## Device tokens (79 × Mobile/Desk)
