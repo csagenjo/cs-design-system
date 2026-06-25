@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { MapPin } from 'lucide-react'
 import { Button } from './components/Button'
 import { ButtonBar } from './organisms/ButtonBar'
 import { InputText } from './components/InputText'
@@ -19,7 +20,7 @@ function App() {
   const [filterOn, setFilterOn] = useState(true);
   const [filterOff, setFilterOff] = useState(false);
   const [showFilter, setShowFilter] = useState(true);
-  const [inputVal, setInputVal] = useState('');
+  const [chips, setChips] = useState(['Madrid', 'Barcelona']);
 
   return (
     <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', textAlign: 'left' }}>
@@ -223,40 +224,49 @@ function App() {
       </section>
 
       {/* Chip */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Choice</p>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
           <Chip type="choice" label="Unselected" selected={choiceA} onSelectedChange={setChoiceA} />
           <Chip type="choice" label="Selected" selected={choiceB} onSelectedChange={setChoiceB} />
-          <Chip type="choice" label="Con icono" iconLeft="Star" selected={choiceA} onSelectedChange={setChoiceA} />
           <Chip type="choice" label="Disabled" disabled />
           <Chip type="choice" label="Disabled selected" disabled selected />
         </div>
 
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Filter</p>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <Chip type="filter" label="Sin X — off" selected={filterOff} onSelectedChange={setFilterOff} />
-          <Chip type="filter" label="Sin X — on" selected={filterOn} onSelectedChange={setFilterOn} />
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Filter Selectable</p>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <Chip type="filter" variant="selectable" label="Pendiente" selected={filterOff} onSelectedChange={setFilterOff} />
+          <Chip type="filter" variant="selectable" label="Activos" selected={filterOn} onSelectedChange={setFilterOn} />
+          <Chip type="filter" variant="selectable" label="Disabled" disabled />
+          <Chip type="filter" variant="selectable" label="Disabled sel." disabled selected />
+        </div>
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Filter Dismissible</p>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
           {showFilter && (
-            <Chip
-              type="filter"
-              label="Con X — on"
-              selected={filterOn}
-              onSelectedChange={setFilterOn}
-              onRemove={() => setShowFilter(false)}
-            />
+            <Chip type="filter" variant="dismissible" filterLabel="Ciudad" value="Madrid" onRemove={() => setShowFilter(false)} />
           )}
-          <Chip type="filter" label="Disabled" disabled />
-          <Chip type="filter" label="Disabled sel." disabled selected />
+          <Chip type="filter" variant="dismissible" filterLabel="Fecha" value="01/01/2026" onRemove={() => {}} />
+          <Chip type="filter" variant="dismissible" filterLabel="Estado" value="Activo" onRemove={() => {}} disabled />
         </div>
 
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Input</p>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <Chip type="input" placeholder="Añadir etiqueta" value={inputVal} onChange={e => setInputVal(e.target.value)} />
-          <Chip type="input" placeholder="Con clear" value={inputVal} onChange={e => setInputVal(e.target.value)} onRemove={() => setInputVal('')} />
-          <Chip type="input" label="EUR" placeholder="0.00" />
-          <Chip type="input" placeholder="Disabled" disabled />
+          {chips.map((city) => (
+            <Chip
+              key={city}
+              type="input"
+              label={city}
+              icon={<MapPin />}
+              onChipClick={() => alert(`Editar: ${city}`)}
+              onRemove={() => setChips((prev) => prev.filter((c) => c !== city))}
+            />
+          ))}
+          <Chip type="input" label="Sin click" onRemove={() => {}} />
+          <Chip type="input" label="Disabled" disabled onRemove={() => {}} />
         </div>
+
       </section>
 
     </div>
