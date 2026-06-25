@@ -1,307 +1,274 @@
-/**
- * Chip — Componente atómico
- * CS Design System · v1.0
- *
- * Tokens: todos los estilos vienen de tokens.css (--ds-chip-*)
- * Iconos: lucide-react — X (remove/clear) + cualquier Lucide para iconLeft
- *
- * VARIANTES (prop type):
- *   "choice" — toggle button, iconLeft opcional
- *   "filter" — toggle + botón X de dismiss (si se pasa onRemove)
- *   "input"  — campo de texto estilizado como chip, botón X de clear opcional
- *
- * ESTADOS:
- *   selected/defaultSelected — controlado/no controlado (choice/filter)
- *   disabled                 — no interactivo
- *
- * USO:
- *   <Chip type="choice" label="Activos" />
- *   <Chip type="filter" label="Pendiente" selected={v} onSelectedChange={fn} onRemove={fn} />
- *   <Chip type="input"  placeholder="Etiqueta" value={v} onChange={fn} onRemove={fn} />
- */
-
-import React, { useRef, useId, forwardRef, useState } from 'react';
-import { X } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
+import React, { forwardRef, useId, useState } from 'react';
+import { X, Check } from 'lucide-react';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
 
-/* ── Shared toggle button (choice + filter-toggle) ── */
-.ds-chip__toggle {
-  display:        inline-flex;
-  align-items:    center;
-  gap:            var(--ds-chip-root-gap-generic);
-  padding:        var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
-  background:     var(--ds-chip-root-bg-generic);
-  border:         var(--ds-chip-root-border-width-generic) solid var(--ds-chip-root-border-color-generic);
-  border-radius:  var(--ds-chip-root-border-radius-generic);
-  color:          var(--ds-chip-label-fg-generic);
-  cursor:         pointer;
-  font-size:      14px;
-  font-weight:    500;
-  font-family:    inherit;
-  white-space:    nowrap;
-  position:       relative;
-  overflow:       hidden;
-  transition:     background 0.12s, border-color 0.12s, color 0.12s;
-  box-sizing:     border-box;
+/* ── ChipToggle — ChipChoice + ChipFilter Selectable ── */
+
+.ds-chip-toggle {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--ds-chip-root-gap-generic);
+  padding:       var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
+  background:    var(--ds-chip-root-bg-generic);
+  border:        none;
+  border-radius: var(--ds-chip-root-border-radius-generic);
+  color:         var(--ds-chip-label-fg-generic);
+  cursor:        pointer;
+  font-family:   inherit;
+  font-size:     var(--ds-chip-label-font-size);
+  font-weight:   var(--ds-font-weight-medium);
+  white-space:   nowrap;
+  position:      relative;
+  box-sizing:    border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* bgMix overlay */
-.ds-chip__toggle::before {
+.ds-chip-toggle::before {
   content:        '';
   position:       absolute;
   inset:          0;
+  border-radius:  inherit;
   background:     transparent;
   pointer-events: none;
-  transition:     background 0.12s;
 }
-
-.ds-chip__toggle:not(:disabled):hover::before {
+.ds-chip-toggle:not(:disabled):hover::before {
   background: var(--ds-chip-root-bgmix-hover);
 }
 
-/* selected */
-.ds-chip__toggle[aria-pressed="true"] {
-  background:   var(--ds-chip-root-bg-selected);
-  border-color: var(--ds-chip-root-bg-selected);
-  color:        var(--ds-chip-label-fg-selected);
+.ds-chip-toggle[aria-pressed="true"] {
+  background: var(--ds-chip-root-bg-selected);
+  color:      var(--ds-chip-label-fg-selected);
 }
-.ds-chip__toggle[aria-pressed="true"]:not(:disabled):hover::before {
+.ds-chip-toggle[aria-pressed="true"]:not(:disabled):hover::before {
   background: var(--ds-chip-root-bgmix-hover-selected);
 }
-.ds-chip__toggle[aria-pressed="true"] .ds-chip__icon {
-  color: var(--ds-chip-icon-fg-selected);
-}
 
-/* pressed */
-.ds-chip__toggle:not(:disabled):active {
+.ds-chip-toggle:not(:disabled):active {
   opacity: var(--ds-chip-root-opacity-pressed);
 }
 
-/* disabled */
-.ds-chip__toggle:disabled {
-  background:   var(--ds-chip-root-bg-disabled);
-  border-color: var(--ds-chip-root-border-color-generic);
-  color:        var(--ds-chip-label-fg-disabled);
-  cursor:       not-allowed;
+.ds-chip-toggle:disabled {
+  background: var(--ds-chip-root-bg-disabled);
+  color:      var(--ds-chip-label-fg-disabled);
+  cursor:     not-allowed;
 }
-.ds-chip__toggle:disabled .ds-chip__icon {
+
+.ds-chip-toggle:focus-visible {
+  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
+  outline-offset: var(--ds-chip-root-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
+}
+
+.ds-chip-toggle__check {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       var(--ds-chip-icon-fg-selected);
+}
+.ds-chip-toggle:disabled .ds-chip-toggle__check {
   color: var(--ds-chip-icon-fg-disabled);
 }
 
-/* focus ring */
-.ds-chip__toggle:focus-visible {
-  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  outline-offset: 2px;
-  box-shadow:     0 0 0 4px var(--ds-chip-root-border-color-focus-inner);
+
+/* ── ChipFilter Dismissible — div + X button ── */
+
+.ds-chip-dismissible {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--ds-chip-root-gap-generic);
+  padding:       var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
+  background:    var(--ds-chip-root-bg-generic);
+  border-radius: var(--ds-chip-root-border-radius-generic);
+  box-sizing:    border-box;
+  position:      relative;
+}
+.ds-chip-dismissible::before {
+  content:        '';
+  position:       absolute;
+  inset:          0;
+  border-radius:  inherit;
+  background:     transparent;
+  pointer-events: none;
+}
+.ds-chip-dismissible:not(.ds-chip-dismissible--disabled):hover::before {
+  background: var(--ds-chip-root-bgmix-hover);
+}
+.ds-chip-dismissible--disabled {
+  background: var(--ds-chip-root-bg-disabled);
 }
 
-/* icon */
-.ds-chip__icon {
+.ds-chip-dismissible__filter-label {
+  padding-left:  var(--ds-chip-filter-label-padding-left);
+  padding-right: var(--ds-chip-filter-label-padding-right);
+  color:         var(--ds-chip-label-fg-generic);
+  font-family:   inherit;
+  font-size:     var(--ds-chip-label-font-size);
+  font-weight:   var(--ds-chip-filter-label-font-weight);
+  white-space:   nowrap;
+}
+.ds-chip-dismissible--disabled .ds-chip-dismissible__filter-label {
+  color: var(--ds-chip-label-fg-disabled);
+}
+
+.ds-chip-dismissible__value {
+  padding-left:  var(--ds-chip-filter-valuetext-padding-hor);
+  padding-right: var(--ds-chip-filter-valuetext-padding-hor);
+  color:         var(--ds-chip-label-fg-generic);
+  font-family:   inherit;
+  font-size:     var(--ds-chip-label-font-size);
+  font-weight:   var(--ds-font-weight-medium);
+  white-space:   nowrap;
+}
+.ds-chip-dismissible--disabled .ds-chip-dismissible__value {
+  color: var(--ds-chip-label-fg-disabled);
+}
+
+.ds-chip-dismissible__remove {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
+  background:      transparent;
+  border:          none;
+  border-radius:   var(--ds-chip-root-border-radius-generic);
+  color:           var(--ds-chip-icon-fg-generic);
+  cursor:          pointer;
+  flex-shrink:     0;
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-chip-dismissible--disabled .ds-chip-dismissible__remove {
+  color:  var(--ds-chip-icon-fg-disabled);
+  cursor: not-allowed;
+}
+.ds-chip-dismissible__remove:not(:disabled):active {
+  opacity: var(--ds-chip-root-opacity-pressed);
+}
+.ds-chip-dismissible__remove:focus-visible {
+  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
+  outline-offset: var(--ds-chip-root-border-width-focus);
+  box-shadow:     inset 0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
+}
+
+
+/* ── ChipInput — div + body button + X button ── */
+
+.ds-chip-input {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--ds-chip-root-gap-generic);
+  padding:       var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
+  background:    var(--ds-chip-root-bg-generic);
+  border-radius: var(--ds-chip-root-border-radius-generic);
+  box-sizing:    border-box;
+  position:      relative;
+}
+.ds-chip-input::before {
+  content:        '';
+  position:       absolute;
+  inset:          0;
+  border-radius:  inherit;
+  background:     transparent;
+  pointer-events: none;
+}
+.ds-chip-input:not(.ds-chip-input--disabled):hover::before {
+  background: var(--ds-chip-root-bgmix-hover);
+}
+.ds-chip-input--disabled {
+  background: var(--ds-chip-root-bg-disabled);
+}
+
+/* 1px ring en el chip cuando la X está en hover/focus */
+.ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__remove:hover),
+.ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__remove:focus-visible) {
+  box-shadow: 0 0 0 var(--ds-chip-root-border-width-generic) var(--ds-chip-root-border-color-generic);
+}
+
+/* outer ring en el wrapper cuando el body tiene foco */
+.ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__body:focus-visible) {
+  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
+  outline-offset: var(--ds-chip-root-border-width-focus);
+}
+
+.ds-chip-input__body {
+  display:     inline-flex;
+  align-items: center;
+  gap:         var(--ds-chip-root-gap-generic);
+  background:  transparent;
+  border:      none;
+  color:       var(--ds-chip-label-fg-generic);
+  cursor:      pointer;
+  font-family: inherit;
+  font-size:   var(--ds-chip-label-font-size);
+  font-weight: var(--ds-chip-label-font-weight);
+  white-space: nowrap;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-chip-input--disabled .ds-chip-input__body {
+  color:  var(--ds-chip-label-fg-disabled);
+  cursor: not-allowed;
+}
+.ds-chip-input__body:not(:disabled):active {
+  opacity: var(--ds-chip-root-opacity-pressed);
+}
+/* inner ring en el body cuando está focused */
+.ds-chip-input__body:focus-visible {
+  outline:       none;
+  box-shadow:    inset 0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
+  border-radius: var(--ds-chip-root-border-radius-generic);
+}
+
+.ds-chip-input__icon {
   display:     flex;
   align-items: center;
   flex-shrink: 0;
   color:       var(--ds-chip-icon-fg-generic);
 }
-
-/* ── Filter chip wrapper ── */
-.ds-chip--filter {
-  display:       inline-flex;
-  align-items:   stretch;
-  border:        var(--ds-chip-root-border-width-generic) solid var(--ds-chip-root-border-color-generic);
-  border-radius: var(--ds-chip-root-border-radius-generic);
-  background:    var(--ds-chip-root-bg-generic);
-  overflow:      hidden;
-  box-sizing:    border-box;
-  transition:    background 0.12s, border-color 0.12s;
+.ds-chip-input--disabled .ds-chip-input__icon {
+  color: var(--ds-chip-icon-fg-disabled);
 }
 
-.ds-chip--filter.ds-chip--selected {
-  background:   var(--ds-chip-root-bg-selected);
-  border-color: var(--ds-chip-root-bg-selected);
+.ds-chip-input__label {
+  padding-left:  var(--ds-chip-input-valuetext-padding-hor);
+  padding-right: var(--ds-chip-input-valuetext-padding-hor);
 }
 
-.ds-chip--filter.ds-chip--disabled {
-  background:   var(--ds-chip-root-bg-disabled);
-  border-color: var(--ds-chip-root-border-color-generic);
-}
-
-/* filter inner toggle (no border/bg — wrapper handles them) */
-.ds-chip__filter-toggle {
-  display:     inline-flex;
-  align-items: center;
-  gap:         var(--ds-chip-root-gap-generic);
-  padding:     var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
-  background:  transparent;
-  border:      0;
-  color:       var(--ds-chip-label-fg-generic);
-  cursor:      pointer;
-  font-size:   14px;
-  font-weight: 500;
-  font-family: inherit;
-  white-space: nowrap;
-  position:    relative;
-  overflow:    hidden;
-  transition:  color 0.12s;
-  box-sizing:  border-box;
-}
-
-.ds-chip--filter.ds-chip--selected .ds-chip__filter-toggle {
-  color: var(--ds-chip-label-fg-selected);
-}
-
-.ds-chip--filter.ds-chip--disabled .ds-chip__filter-toggle {
-  color:  var(--ds-chip-label-fg-disabled);
-  cursor: not-allowed;
-}
-
-.ds-chip__filter-toggle::before {
-  content:        '';
-  position:       absolute;
-  inset:          0;
-  background:     transparent;
-  pointer-events: none;
-  transition:     background 0.12s;
-}
-
-.ds-chip--filter:not(.ds-chip--disabled) .ds-chip__filter-toggle:hover::before {
-  background: var(--ds-chip-root-bgmix-hover);
-}
-
-.ds-chip--filter.ds-chip--selected:not(.ds-chip--disabled) .ds-chip__filter-toggle:hover::before {
-  background: var(--ds-chip-root-bgmix-hover-selected);
-}
-
-.ds-chip__filter-toggle:not(:disabled):active {
-  opacity: var(--ds-chip-root-opacity-pressed);
-}
-
-.ds-chip__filter-toggle:focus-visible {
-  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  outline-offset: -3px;
-  box-shadow:     inset 0 0 0 2px var(--ds-chip-root-border-color-focus-inner);
-}
-
-/* filter remove button */
-.ds-chip__remove {
+.ds-chip-input__remove {
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  padding:         var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
-  padding-left:    0;
   background:      transparent;
-  border:          0;
+  border:          none;
+  border-radius:   var(--ds-chip-root-border-radius-generic);
   color:           var(--ds-chip-icon-fg-generic);
   cursor:          pointer;
-  font-family:     inherit;
-  transition:      color 0.12s, opacity 0.12s;
-  box-sizing:      border-box;
+  flex-shrink:     0;
+  -webkit-tap-highlight-color: transparent;
 }
-
-.ds-chip--filter.ds-chip--selected .ds-chip__remove {
-  color: var(--ds-chip-icon-fg-selected);
-}
-
-.ds-chip--filter.ds-chip--disabled .ds-chip__remove {
+.ds-chip-input--disabled .ds-chip-input__remove {
   color:  var(--ds-chip-icon-fg-disabled);
   cursor: not-allowed;
 }
-
-.ds-chip__remove:not(:disabled):active {
+.ds-chip-input__remove:not(:disabled):active {
   opacity: var(--ds-chip-root-opacity-pressed);
 }
-
-.ds-chip__remove:focus-visible {
+.ds-chip-input__remove:focus-visible {
   outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  outline-offset: -3px;
-  box-shadow:     inset 0 0 0 2px var(--ds-chip-root-border-color-focus-inner);
+  outline-offset: var(--ds-chip-root-border-width-focus);
+  box-shadow:     inset 0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
 }
 
-/* ── Input chip ── */
-.ds-chip--input {
-  display:       inline-flex;
-  align-items:   center;
-  gap:           var(--ds-chip-root-gap-generic);
-  padding:       var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
-  border:        var(--ds-chip-root-border-width-generic) solid var(--ds-chip-root-border-color-generic);
-  border-radius: var(--ds-chip-root-border-radius-generic);
-  background:    var(--ds-chip-root-bg-generic);
-  transition:    border-color 0.12s, outline 0.12s;
-  box-sizing:    border-box;
-}
-
-.ds-chip--input:focus-within {
-  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  outline-offset: 2px;
-  box-shadow:     0 0 0 4px var(--ds-chip-root-border-color-focus-inner);
-}
-
-.ds-chip--input.ds-chip--disabled {
-  background:   var(--ds-chip-root-bg-disabled);
-  border-color: var(--ds-chip-root-border-color-generic);
-}
-
-.ds-chip__text-input {
-  border:      0;
-  background:  transparent;
-  color:       var(--ds-chip-label-fg-generic);
-  font-size:   14px;
-  font-weight: 500;
-  font-family: inherit;
-  outline:     none;
-  padding:     0 var(--ds-chip-input-valuetext-padding-hor);
-  caret-color: var(--ds-chip-input-caret-border-color);
-  min-width:   4ch;
-}
-
-.ds-chip__text-input::placeholder {
-  color:       var(--ds-chip-label-fg-disabled);
-  font-weight: 400;
-}
-
-.ds-chip__text-input:disabled {
-  cursor: not-allowed;
-  color:  var(--ds-chip-label-fg-disabled);
-}
-
-/* input chip label */
-.ds-chip__input-label {
-  font-size:   14px;
-  font-weight: 500;
-  color:       var(--ds-chip-label-fg-generic);
-  user-select: none;
-}
-
-/* input chip clear button */
-.ds-chip__clear {
-  display:     inline-flex;
-  align-items: center;
-  background:  transparent;
-  border:      0;
-  color:       var(--ds-chip-icon-fg-generic);
-  cursor:      pointer;
-  padding:     0;
-  flex-shrink: 0;
-  font-family: inherit;
-  transition:  color 0.12s, opacity 0.12s;
-}
-
-.ds-chip__clear:not(:disabled):active {
-  opacity: var(--ds-chip-root-opacity-pressed);
-}
-
-.ds-chip__clear:focus-visible {
-  outline:       var(--ds-chip-input-icon-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  border-radius: 2px;
-}
-
-.ds-chip--disabled .ds-chip__clear {
-  color:  var(--ds-chip-icon-fg-disabled);
-  cursor: not-allowed;
+/* SVGs de Lucide dimensionados via CSS — sin size= en JSX */
+.ds-chip-toggle__check svg,
+.ds-chip-dismissible__remove svg,
+.ds-chip-input__remove svg,
+.ds-chip-input__icon svg {
+  width:   var(--ds-chip-icon-size-generic);
+  height:  var(--ds-chip-icon-size-generic);
+  display: block;
 }
 `;
 
@@ -315,46 +282,30 @@ function injectStyles() {
 }
 injectStyles();
 
-/* ─── Helpers ──────────────────────────────────────────────────────────────── */
-
-function mergeRefs(...refs) {
-  return (el) => refs.forEach((ref) => {
-    if (!ref) return;
-    if (typeof ref === 'function') ref(el);
-    else ref.current = el;
-  });
-}
-
-function resolveIcon(name) {
-  if (!name) return null;
-  return LucideIcons[name] || null;
-}
-
 /* ─── Chip ──────────────────────────────────────────────────────────────────── */
 
 export const Chip = forwardRef(function Chip({
   type             = 'choice',
+  // choice + filter selectable
   label,
   selected,
   defaultSelected  = false,
   onSelectedChange,
-  disabled         = false,
-  iconLeft,
-  onRemove,
-  // input-specific
+  // filter dismissible
+  variant          = 'selectable',
+  filterLabel,
   value,
-  defaultValue,
-  onChange,
-  placeholder,
-  onFocus,
-  onBlur,
+  onRemove,
+  // input
+  icon,
+  onChipClick,
   // common
+  disabled         = false,
   id,
   name,
   ariaLabel,
 }, forwardedRef) {
 
-  const inputRef    = useRef(null);
   const generatedId = useId();
   const chipId      = id || generatedId;
 
@@ -362,8 +313,13 @@ export const Chip = forwardRef(function Chip({
   const [uncontrolled, setUncontrolled] = useState(defaultSelected);
   const isSelected = isControlled ? selected : uncontrolled;
 
-  if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
-    console.warn('[DS Chip] Necesita `label` o `ariaLabel` para ser accesible.', { id: chipId });
+  if (process.env.NODE_ENV !== 'production') {
+    if (type !== 'filter' && !label && !ariaLabel) {
+      console.warn('[DS Chip] Necesita `label` o `ariaLabel` para ser accesible.', { id: chipId });
+    }
+    if (type === 'filter' && variant === 'dismissible' && !filterLabel) {
+      console.warn('[DS Chip] type="filter" variant="dismissible" necesita `filterLabel`.', { id: chipId });
+    }
   }
 
   function handleToggle() {
@@ -372,10 +328,8 @@ export const Chip = forwardRef(function Chip({
     onSelectedChange?.(!isSelected);
   }
 
-  const IconLeft = resolveIcon(iconLeft);
-
-  /* ── Choice ── */
-  if (type === 'choice') {
+  /* ── Choice + Filter Selectable — mismo JSX ── */
+  if (type === 'choice' || (type === 'filter' && variant === 'selectable')) {
     return (
       <button
         ref={forwardedRef}
@@ -385,95 +339,84 @@ export const Chip = forwardRef(function Chip({
         aria-pressed={isSelected}
         aria-label={!label ? ariaLabel : undefined}
         disabled={disabled}
-        className="ds-chip__toggle"
+        className="ds-chip-toggle"
         onClick={handleToggle}
       >
-        {IconLeft && (
-          <span className="ds-chip__icon" aria-hidden="true">
-            <IconLeft size={20} strokeWidth={2} />
+        {isSelected && (
+          <span className="ds-chip-toggle__check" aria-hidden="true">
+            <Check />
           </span>
         )}
-        {label && <span>{label}</span>}
+        <span className="ds-chip-toggle__label">{label}</span>
       </button>
     );
   }
 
-  /* ── Filter ── */
-  if (type === 'filter') {
-    const wrapClass = [
-      'ds-chip--filter',
-      isSelected ? 'ds-chip--selected' : '',
-      disabled   ? 'ds-chip--disabled' : '',
-    ].filter(Boolean).join(' ');
-
+  /* ── Filter Dismissible ── */
+  if (type === 'filter' && variant === 'dismissible') {
     return (
-      <div className={wrapClass} role="group" aria-label={ariaLabel || label}>
-        <button
-          ref={forwardedRef}
-          type="button"
-          id={chipId}
-          aria-pressed={isSelected}
-          disabled={disabled}
-          className="ds-chip__filter-toggle"
-          onClick={handleToggle}
-        >
-          {label && <span>{label}</span>}
-        </button>
-        {onRemove && (
-          <button
-            type="button"
-            className="ds-chip__remove"
-            aria-label={`Eliminar ${label || ''}`}
-            disabled={disabled}
-            onClick={onRemove}
-          >
-            <X size={16} strokeWidth={2} aria-hidden="true" />
-          </button>
+      <div
+        ref={forwardedRef}
+        className={`ds-chip-dismissible${disabled ? ' ds-chip-dismissible--disabled' : ''}`}
+        role="group"
+        aria-label={ariaLabel || `${filterLabel}: ${value}`}
+      >
+        {filterLabel && (
+          <span className="ds-chip-dismissible__filter-label" aria-hidden="true">
+            {filterLabel}:
+          </span>
         )}
+        {value && (
+          <span className="ds-chip-dismissible__value" aria-hidden="true">
+            {value}
+          </span>
+        )}
+        <button
+          type="button"
+          className="ds-chip-dismissible__remove"
+          aria-label={`Eliminar ${filterLabel}: ${value}`}
+          disabled={disabled}
+          onClick={onRemove}
+        >
+          <X aria-hidden="true" />
+        </button>
       </div>
     );
   }
 
   /* ── Input ── */
   if (type === 'input') {
-    const wrapClass = [
-      'ds-chip--input',
-      disabled ? 'ds-chip--disabled' : '',
-    ].filter(Boolean).join(' ');
-
-    const inputProps = {
-      ref:        mergeRefs(inputRef, forwardedRef),
-      id:         chipId,
-      name,
-      placeholder,
-      disabled,
-      className:  'ds-chip__text-input',
-      onFocus,
-      onBlur,
-      'aria-label': !label ? ariaLabel : undefined,
-    };
-
-    if (value !== undefined) {
-      inputProps.value    = value;
-      inputProps.onChange = onChange;
-    } else {
-      if (defaultValue !== undefined) inputProps.defaultValue = defaultValue;
-      if (onChange) inputProps.onChange = onChange;
-    }
+    const BodyTag  = onChipClick ? 'button' : 'span';
+    const bodyProps = onChipClick
+      ? { type: 'button', onClick: onChipClick, disabled }
+      : {};
 
     return (
-      <div className={wrapClass}>
-        {label && <span className="ds-chip__input-label">{label}</span>}
-        <input type="text" {...inputProps} />
+      <div
+        ref={forwardedRef}
+        className={`ds-chip-input${disabled ? ' ds-chip-input--disabled' : ''}`}
+      >
+        <BodyTag
+          className="ds-chip-input__body"
+          {...(onChipClick && !label ? { 'aria-label': ariaLabel } : {})}
+          {...bodyProps}
+        >
+          {icon && (
+            <span className="ds-chip-input__icon" aria-hidden="true">
+              {icon}
+            </span>
+          )}
+          {label && <span className="ds-chip-input__label">{label}</span>}
+        </BodyTag>
         {onRemove && (
           <button
             type="button"
-            className="ds-chip__clear"
-            aria-label="Borrar"
+            className="ds-chip-input__remove"
+            aria-label={`Eliminar ${label || ''}`}
             disabled={disabled}
             onClick={onRemove}
           >
-            <X size={16} strokeWidth={2} aria-hidden="true" />
+            <X aria-hidden="true" />
           </button>
         )}
       </div>
@@ -485,34 +428,3 @@ export const Chip = forwardRef(function Chip({
 
 Chip.displayName = 'Chip';
 export default Chip;
-
-
-/* ─── Ejemplos de uso ──────────────────────────────────────────────────────
-
-// Choice — no controlado
-<Chip type="choice" label="Activos" />
-
-// Choice — controlado con icono
-<Chip type="choice" label="Favoritos" iconLeft="Star" selected={v} onSelectedChange={fn} />
-
-// Choice — deshabilitado
-<Chip type="choice" label="No disponible" disabled />
-
-// Filter — solo toggle (sin X)
-<Chip type="filter" label="Pendiente" selected={v} onSelectedChange={fn} />
-
-// Filter — toggle + dismiss
-<Chip type="filter" label="Pendiente" selected={v} onSelectedChange={fn} onRemove={() => removeFilter('pendiente')} />
-
-// Filter — disabled
-<Chip type="filter" label="Archivado" disabled />
-
-// Input — no controlado
-<Chip type="input" placeholder="Añadir etiqueta" onRemove={() => removeTag(i)} />
-
-// Input — controlado
-<Chip type="input" value={v} onChange={e => setV(e.target.value)} onRemove={() => removeTag(i)} />
-
-// Input — con label visible
-<Chip type="input" label="EUR" placeholder="0.00" value={v} onChange={fn} />
-*/

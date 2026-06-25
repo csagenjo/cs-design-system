@@ -328,6 +328,10 @@
   --ds-fontSize-headline-xl:   48px;
   --ds-fontSize-headline-2xl:  56px;
 
+  --ds-font-weight-regular: 400;
+  --ds-font-weight-medium:  500;
+  --ds-font-weight-bold:    700;
+
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Button
@@ -564,15 +568,20 @@
   --ds-chip-label-fg-generic:              var(--ds-fg-label-default);
   --ds-chip-label-fg-selected:             var(--ds-fg-label-inverse);
   --ds-chip-label-fg-disabled:             var(--ds-fg-label-disabled);
+  --ds-chip-label-font-size:               var(--ds-fontSize-label-md);
   --ds-chip-icon-fg-generic:               var(--ds-fg-icon-primary);
   --ds-chip-icon-fg-selected:              var(--ds-fg-icon-inverse);
   --ds-chip-icon-fg-disabled:              var(--ds-fg-icon-disabled);
   --ds-chip-icon-size-generic:             var(--ds-sizing-xs);
 
+  /* chip/chipFilter/all/ — específicos de type="filter" variant="dismissible" */
+  --ds-chip-filter-label-font-weight:      var(--ds-font-weight-bold);
+  --ds-chip-filter-label-padding-left:     var(--ds-spacing-xs);
+  --ds-chip-filter-label-padding-right:    var(--ds-spacing-2xs);
+  --ds-chip-filter-valuetext-padding-hor:  var(--ds-spacing-xs);
+
   /* chip/chipInput/all/ — específicos de type="input" */
   --ds-chip-input-valuetext-padding-hor:   var(--ds-spacing-xs);
-  --ds-chip-input-icon-border-width-focus: var(--ds-border-width-lg);
-  --ds-chip-input-caret-border-color:      var(--ds-borderColor-primary);
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Link
