@@ -2040,6 +2040,17 @@
           "com.figma.hiddenFromPublishing": true,
           "com.figma.type": "string"
         }
+      },
+      "medium": {
+        "$type": "string",
+        "$value": "Medium",
+        "$extensions": {
+          "com.figma.variableId": "VariableID:30766:67",
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.type": "string"
+        }
       }
     },
     "fontSize": {
