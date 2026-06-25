@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Button } from './components/Button'
 import { ButtonBar } from './organisms/ButtonBar'
 import { InputText } from './components/InputText'
@@ -10,8 +11,16 @@ import { Checkbox } from './components/Checkbox'
 import { Radio } from './components/Radio'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
+import { Chip } from './components/Chip'
 
 function App() {
+  const [choiceA, setChoiceA] = useState(false);
+  const [choiceB, setChoiceB] = useState(true);
+  const [filterOn, setFilterOn] = useState(true);
+  const [filterOff, setFilterOff] = useState(false);
+  const [showFilter, setShowFilter] = useState(true);
+  const [inputVal, setInputVal] = useState('');
+
   return (
     <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', textAlign: 'left' }}>
 
@@ -128,29 +137,21 @@ function App() {
       {/* Checkbox */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHECKBOX</p>
-
-        {/* Fila 1 — default */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Checkbox label="Unselected" />
           <Checkbox label="Selected" defaultChecked />
           <Checkbox label="Indeterminate" indeterminate />
         </div>
-
-        {/* Fila 2 — error */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Checkbox label="Error unselected" state="error" errorMessage="Campo obligatorio" />
           <Checkbox label="Error selected" state="error" defaultChecked errorMessage="Campo obligatorio" />
           <Checkbox label="Error indeterminate" state="error" indeterminate errorMessage="Campo obligatorio" />
         </div>
-
-        {/* Fila 3 — disabled */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Checkbox label="Disabled" state="disabled" />
           <Checkbox label="Disabled selected" state="disabled" defaultChecked />
           <Checkbox label="Disabled indeterminate" state="disabled" indeterminate />
         </div>
-
-        {/* Fila 4 — extras */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Checkbox label="Con description" description="Texto de ayuda" defaultChecked />
           <Checkbox ariaLabel="Seleccionar fila" />
@@ -160,26 +161,18 @@ function App() {
       {/* Radio Button */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>RADIO BUTTON</p>
-
-        {/* Fila 1 — default */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Radio label="Unselected" name="radio-default" value="a" />
           <Radio label="Selected" name="radio-default" value="b" defaultChecked />
         </div>
-
-        {/* Fila 2 — error */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Radio label="Error unselected" name="radio-error" value="a" state="error" errorMessage="Selecciona una opción" />
           <Radio label="Error selected" name="radio-error" value="b" state="error" defaultChecked errorMessage="Selecciona una opción" />
         </div>
-
-        {/* Fila 3 — disabled */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Radio label="Disabled" name="radio-disabled" value="a" state="disabled" />
           <Radio label="Disabled selected" name="radio-disabled" value="b" state="disabled" defaultChecked />
         </div>
-
-        {/* Fila 4 — sin label */}
         <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <Radio ariaLabel="Seleccionar opción A" name="radio-nolabel" value="a" />
           <Radio ariaLabel="Seleccionar opción B" name="radio-nolabel" value="b" defaultChecked />
@@ -227,6 +220,43 @@ function App() {
           primaryLabel="Guardar"
           cancelLabel="Cancelar"
         />
+      </section>
+
+      {/* Chip */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Choice</p>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <Chip type="choice" label="Unselected" selected={choiceA} onSelectedChange={setChoiceA} />
+          <Chip type="choice" label="Selected" selected={choiceB} onSelectedChange={setChoiceB} />
+          <Chip type="choice" label="Con icono" iconLeft="Star" selected={choiceA} onSelectedChange={setChoiceA} />
+          <Chip type="choice" label="Disabled" disabled />
+          <Chip type="choice" label="Disabled selected" disabled selected />
+        </div>
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Filter</p>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <Chip type="filter" label="Sin X — off" selected={filterOff} onSelectedChange={setFilterOff} />
+          <Chip type="filter" label="Sin X — on" selected={filterOn} onSelectedChange={setFilterOn} />
+          {showFilter && (
+            <Chip
+              type="filter"
+              label="Con X — on"
+              selected={filterOn}
+              onSelectedChange={setFilterOn}
+              onRemove={() => setShowFilter(false)}
+            />
+          )}
+          <Chip type="filter" label="Disabled" disabled />
+          <Chip type="filter" label="Disabled sel." disabled selected />
+        </div>
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CHIP — Input</p>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <Chip type="input" placeholder="Añadir etiqueta" value={inputVal} onChange={e => setInputVal(e.target.value)} />
+          <Chip type="input" placeholder="Con clear" value={inputVal} onChange={e => setInputVal(e.target.value)} onRemove={() => setInputVal('')} />
+          <Chip type="input" label="EUR" placeholder="0.00" />
+          <Chip type="input" placeholder="Disabled" disabled />
+        </div>
       </section>
 
     </div>
