@@ -801,6 +801,23 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "medium": {
+      "$type": "string",
+      "$value": "Medium",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:30766:70",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.type": "string",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:ecf8b049b65a15ab4a0ad4f41018f5b63264b76a/-1:-1",
+          "targetVariableName": "fontWeight/medium-desk",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "fontFamily": {
@@ -1391,7 +1408,7 @@
   "dimension": {
     "iconStroke": {
       "$type": "number",
-      "$value": 0,
+      "$value": 2.6700000762939453,
       "$extensions": {
         "com.figma.variableId": "VariableID:30636:67",
         "com.figma.scopes": [

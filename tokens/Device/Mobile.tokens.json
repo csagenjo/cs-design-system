@@ -801,6 +801,23 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "medium": {
+      "$type": "string",
+      "$value": "Medium",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:30766:70",
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.type": "string",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:5bbf0b0078c1a97ddc5c440fb115d51f13a92505/-1:-1",
+          "targetVariableName": "fontWeight/medium-mobile",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "fontFamily": {
