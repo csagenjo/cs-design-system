@@ -29,6 +29,7 @@ src/
     InputTelephone.jsx ✅ v1 — selectable/fixed, doble campo, divider teal
     InputAmount.jsx    ✅ v1.0 — selectable/fixed, doble campo, formato de número locale-aware
     Radio.jsx          ✅ v1 — dual wrapper focus ring, label opcional, 21 tokens --ds-radio-*, zero violaciones
+    Chip.jsx           ✅ v1.0 — choice/filter(selectable+dismissible)/input, bgMix overlay, dual focus target via :has()
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — Component tokens migrados a var() (23/06/2026)
@@ -408,6 +409,106 @@ Tokens Component (Radio) — 21 tokens, todos referencian Mode vía `var()`:
 - Grupos de radio: agrupar con la misma prop `name`. El navegador gestiona la exclusividad.
 - `forwardRef` expuesto — permite `ref.current.focus()` desde el padre.
 
+### Chip.jsx ✅ v1.0
+
+```jsx
+// Choice — toggle button
+<Chip
+  type             = "choice"
+  label            = "Activos"
+  selected                        // controlado
+  defaultSelected  = {false}      // no controlado
+  onSelectedChange = {fn}
+  disabled         = {false}
+  id
+  name
+  ariaLabel                       // requerido si no hay label
+/>
+
+// Filter — variante selectable (toggle idéntico a choice)
+<Chip
+  type             = "filter"
+  variant          = "selectable" // default
+  label            = "Pendiente"
+  selected
+  defaultSelected  = {false}
+  onSelectedChange = {fn}
+  disabled         = {false}
+/>
+
+// Filter — variante dismissible (label + value + X)
+<Chip
+  type        = "filter"
+  variant     = "dismissible"
+  filterLabel = "Ciudad"          // texto bold antes de los dos puntos
+  value       = "Madrid"          // valor del filtro aplicado
+  onRemove    = {fn}              // click en botón X
+  disabled    = {false}
+  ariaLabel                       // auto-generado de filterLabel + value si se omite
+/>
+
+// Input — chip de valor fijo con icono y botón eliminar
+<Chip
+  type        = "input"
+  label       = "Madrid"          // valor del chip
+  icon        = {<MapPin />}      // ReactNode Lucide (opcional)
+  onChipClick = {fn}              // click en body — si se omite, body es <span>
+  onRemove    = {fn}              // click en botón X
+  disabled    = {false}
+  ariaLabel                       // requerido si no hay label y hay onChipClick
+/>
+```
+
+**Tokens — 22 comunes (`chip/all/`) + 4 chipFilter + 3 chipInput:**
+```
+chip/all/root:
+  --ds-chip-root-bg-generic             var(--ds-bg-primary-medium)
+  --ds-chip-root-bg-selected            var(--ds-bg-primary)
+  --ds-chip-root-bg-disabled            var(--ds-bg-disabled)
+  --ds-chip-root-opacity-pressed        var(--ds-opacity-pressed)
+  --ds-chip-root-bgmix-hover            var(--ds-opacity-hover-default)
+  --ds-chip-root-bgmix-hover-selected   var(--ds-opacity-hover-inverse)
+  --ds-chip-root-border-color-generic   var(--ds-borderColor-default)
+  --ds-chip-root-border-color-focus-inner var(--ds-borderColor-focus-inner)
+  --ds-chip-root-border-color-focus-outer var(--ds-borderColor-focus-outer)
+  --ds-chip-root-border-width-generic   var(--ds-border-width-sm)
+  --ds-chip-root-border-width-focus     var(--ds-border-width-lg)
+  --ds-chip-root-border-radius-generic  var(--ds-border-radius-md)
+  --ds-chip-root-gap-generic            var(--ds-spacing-xs)
+  --ds-chip-root-padding-hor-generic    var(--ds-spacing-md)
+  --ds-chip-root-padding-ver-generic    var(--ds-spacing-xs)
+
+chip/all/label:
+  --ds-chip-label-fg-generic            var(--ds-fg-label-default)
+  --ds-chip-label-fg-selected           var(--ds-fg-label-inverse)
+  --ds-chip-label-fg-disabled           var(--ds-fg-label-disabled)
+  --ds-chip-label-font-size             var(--ds-fontSize-label-md)
+
+chip/all/icon:
+  --ds-chip-icon-fg-generic             var(--ds-fg-icon-primary)
+  --ds-chip-icon-fg-selected            var(--ds-fg-icon-inverse)
+  --ds-chip-icon-fg-disabled            var(--ds-fg-icon-disabled)
+  --ds-chip-icon-size-generic           var(--ds-sizing-xs)
+
+chip/chipFilter/all/:
+  --ds-chip-filter-label-font-weight    var(--ds-font-weight-bold)
+  --ds-chip-filter-label-padding-left   var(--ds-spacing-xs)
+  --ds-chip-filter-label-padding-right  var(--ds-spacing-2xs)
+  --ds-chip-filter-valuetext-padding-hor var(--ds-spacing-xs)
+
+chip/chipInput/all/:
+  --ds-chip-input-valuetext-padding-hor var(--ds-spacing-xs)
+```
+
+**Notas de implementación:**
+- **bgMix hover overlay:** pseudo-elemento `::before` con `border-radius: inherit` y `background: var(--ds-chip-root-bgmix-hover)` en `:hover`. Seleccionado usa `--bgmix-hover-selected`. Mismo patrón que Button, Link, CTALink.
+- **Focus ring doble:** `outline` (outer, negro) + `box-shadow: 0 0 0 ...` (inner, blanco) via `:focus-visible`. Los botones X usan `box-shadow: inset 0 0 0 ...` para el inner ring.
+- **ChipInput — dual focus target via `:has()`:** `.ds-chip-input:has(.ds-chip-input__body:focus-visible)` aplica el outer ring al wrapper completo; `.ds-chip-input:has(.ds-chip-input__remove:hover/focus-visible)` aplica `box-shadow: 0 0 0 1px` (borde genérico) al wrapper. Cada botón maneja su propio inner ring.
+- **ChipInput body dinámico:** si `onChipClick` se pasa, el body es `<button>`; si no, `<span>` no interactivo.
+- **Iconos Lucide via CSS:** los SVG se dimensionan con `.ds-chip-* svg { width/height: var(--ds-chip-icon-size-generic) }` — sin prop `size=` en JSX.
+- **Choice + Filter Selectable:** misma estructura JSX (`ds-chip-toggle`), diferenciados solo por semántica en la prop `type`.
+- `forwardRef` expuesto. Controlado/no controlado via `selected` / `defaultSelected`.
+
 ### Familia Input ✅ (6 tipos)
 
 6 átomos independientes en `src/components/`. Tokens: `tokens/Component/Mode 1.tokens.json`, grupo `Input/`.
@@ -520,8 +621,7 @@ sin hex hardcodeados ni referencias directas a tokens de Mode o Base. Confirma e
 
 ## 9. Próximos componentes
 
-1. **Chip.jsx**
-2. **LinkList.jsx** — wrapper semántico `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
+1. **LinkList.jsx** — wrapper semántico `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
    API prevista:
    ```jsx
    <LinkList

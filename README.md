@@ -36,6 +36,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `InputTelephone` | Selectable/Fixed country · Flag + code + divider · All states | ✅ v1 |
 | `InputAmount` | Selectable/Fixed currency · locale-aware number format · All states | ✅ v1 |
 | `Radio` | Default · Error · Disabled · Label opcional · showLabel · forwardRef | ✅ v1 |
+| `Chip` | Choice (toggle) · Filter Selectable (toggle) · Filter Dismissible (label+value+X) · Input (icon+value+X) | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -128,6 +129,7 @@ Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base
 | `InputAmount` | 0 | ✅ Clean |
 | `InputStepper` | 0 | ✅ Clean |
 | `Radio` | 0 | ✅ Clean |
+| `Chip` | 0 | ✅ Clean |
 
 ---
 
