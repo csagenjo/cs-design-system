@@ -178,6 +178,7 @@ Regla: nunca saltarse capas. Los organismos importan átomos, no reimplementan s
 - NUNCA saltar capas en la cascada de tokens (Component → Mode → Theme → Base)
 - NUNCA mezclar átomos (components/) con organismos (organisms/)
 - NUNCA referenciar tokens de Mode (`--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*`) o Base (`--ds-color-*`) directamente desde un `.jsx` — solo `--ds-{componente}-*`
+- NUNCA usar valores hardcodeados en JSX ni en el bloque CSS de componentes — ni hex (#050506), ni rgba(), ni px sueltos (2px, 8px), ni números de opacidad (0.8). Todo valor debe venir de un token CSS via var(--ds-*). Si el token no existe en tokens.css, créalo primero siguiendo la cascada Component → Mode → Base. Los valores hex/rgba/px que aparecen en el análisis de Figma son valores resueltos para referencia visual, nunca para copiar directamente al código.
 
 ## 7. Workflow de componentes
 
