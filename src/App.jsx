@@ -13,6 +13,7 @@ import { Radio } from './components/Radio'
 import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
 import { Chip } from './components/Chip'
+import { LinkList } from './components/LinkList'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -267,6 +268,21 @@ function App() {
           <Chip type="input" label="Disabled" disabled onRemove={() => {}} />
         </div>
 
+      </section>
+
+      {/* LinkList */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>LINK LIST</p>
+        <LinkList
+          ariaLabel="Navegación de ejemplo"
+          gap="md"
+          items={[
+            { label: 'Inicio',     href: '/' },
+            { label: 'Clientes',   href: '/clientes', variant: 'accent' },
+            { label: 'Informes',   href: '/informes', emphasis: 'medium' },
+            { label: 'Ayuda externa', href: 'https://help.example.com', external: true, rightIcon: true, leftIcon: false },
+          ]}
+        />
       </section>
 
     </div>
