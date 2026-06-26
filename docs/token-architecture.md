@@ -128,6 +128,8 @@ disabled      → gris #B9BEC4
 
 Componentes con tokens definidos: button, buttonBlob, checkbox, chipChoice, chipFilter, chipInput, ctaLink, link, linkList, iconButton, input (text/amount/date/telephone/dropdown), calendar, cards, accordion, tabs, dialog, drawer, pagination, radioButton, segmentedControl, slider, switch, table, text, tooltip, y ~35 más.
 
+**Nota — LinkList:** no tiene bloque `--ds-link-list-*` propio. Usa exclusivamente tokens de Device (`--ds-spacing-xs/md/xl`) para el gap entre items, y delega todos los estilos de color/tipografía a los tokens de Link que ya porta cada `<Link>` hijo. Patrón válido para wrappers puramente estructurales.
+
 ### Bloque `--ds-radio-*` (21 tokens)
 
 ```css

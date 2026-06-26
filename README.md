@@ -130,6 +130,7 @@ Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base
 | `InputStepper` | 0 | ✅ Clean |
 | `Radio` | 0 | ✅ Clean |
 | `Chip` | 0 | ✅ Clean |
+| `LinkList` | 0 | ✅ Clean |
 
 ---
 
