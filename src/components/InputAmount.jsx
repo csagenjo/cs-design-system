@@ -98,7 +98,7 @@ const css = `
   border-color: var(--ds-input-border-error);
 }
 .ds-input-amount--error .ds-input-amount__field-wrap:focus-within {
-  border-color:   var(--ds-input-focus-inner);
+  border-color:   var(--ds-input-border-error);
   border-width:   var(--ds-input-border-width-focus);
   outline:        2px solid var(--ds-input-focus-outer);
   outline-offset: 2px;
