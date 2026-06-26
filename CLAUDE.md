@@ -30,6 +30,7 @@ src/
     InputAmount.jsx    ✅ v1.0 — selectable/fixed, doble campo, formato de número locale-aware
     Radio.jsx          ✅ v1 — dual wrapper focus ring, label opcional, 21 tokens --ds-radio-*, zero violaciones
     Chip.jsx           ✅ v1.0 — choice/filter(selectable+dismissible)/input, bgMix overlay, dual focus target via :has()
+    LinkList.jsx       ✅ v1.0 — wrapper semántico nav/ul/li sobre Link, gap via Device spacing tokens
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — Component tokens migrados a var() (23/06/2026)
@@ -598,6 +599,39 @@ Cero violaciones: todos consumen exclusivamente `--ds-input-*` (InputCommon + es
 sin hex hardcodeados ni referencias directas a tokens de Mode o Base. Confirma el patrón
 "Common + específico" como válido para escalar a futuras familias (Selectors, Chips).
 
+### LinkList.jsx ✅ v1.0
+
+```jsx
+// Wrapper semántico nav → ul[role="list"] → li → Link
+<LinkList
+  items     = {[
+    { label: 'Inicio',   href: '/' },
+    { label: 'Clientes', href: '/clientes', variant: 'accent' },
+    { label: 'Informes', href: '/informes', emphasis: 'medium' },
+    { label: 'Ayuda',    href: 'https://help.example.com', external: true },
+  ]}
+  title     = ""              // opcional — renderiza <h2> antes de la lista
+  gap       = "sm" | "md" | "lg"  // default: md
+  ariaLabel = "Navegación"
+  fullWidth = {false}
+/>
+```
+
+Items API (todos opcionales salvo `label`):
+`label · href · variant · size · emphasis · leftIcon · rightIcon · external · onClick · ariaLabel`
+
+Defaults de icono por item: `leftIcon ?? true` · `rightIcon ?? true`
+
+CSS — solo gap entre items:
+```
+gap sm → var(--ds-spacing-xs)
+gap md → var(--ds-spacing-md)
+gap lg → var(--ds-spacing-xl)
+```
+
+**Sin tokens Component propios.** Solo consume tokens de Device (spacing) via `var()`.
+`injectStyles()`. Cero hardcodes.
+
 ### ButtonBar.jsx ✅ (Capa 2 — organisms/)
 
 ```jsx
@@ -621,16 +655,7 @@ sin hex hardcodeados ni referencias directas a tokens de Mode o Base. Confirma e
 
 ## 9. Próximos componentes
 
-1. **LinkList.jsx** — wrapper semántico `<nav>` → `<ul role="list">` → `<li>` → `<Link>`.
-   API prevista:
-   ```jsx
-   <LinkList
-     items     = [{label, href, variant, size, emphasis, external, onClick, ariaLabel, disabled}]
-     title     = ""       // opcional
-     gap       = "sm" | "md" | "lg"   // default: md
-     ariaLabel = ""
-   />
-   ```
+*(sin pendientes documentados — añadir aquí el siguiente componente cuando se planifique)*
 
 ## 10. Figma MCP
 
