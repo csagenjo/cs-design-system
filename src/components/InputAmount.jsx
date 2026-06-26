@@ -166,6 +166,17 @@ const css = `
   color: var(--ds-input-amount-icon-dropdown-fg-disabled);
 }
 
+/* ── Divider ── */
+.ds-input-amount__divider {
+  width:            1px;
+  background-color: var(--ds-input-amount-divider-color);
+  flex-shrink:      0;
+  align-self:       stretch;
+}
+.ds-input-amount--disabled .ds-input-amount__divider {
+  background-color: var(--ds-input-border-disabled);
+}
+
 /* ── Campo de importe ── */
 .ds-input-amount__amount {
   flex:               1;
@@ -298,6 +309,9 @@ export const InputAmount = forwardRef(function InputAmount({
             </span>
           )}
         </CurrencyTag>
+
+        {/* Divider */}
+        <div className="ds-input-amount__divider" aria-hidden="true" />
 
         {/* Importe */}
         <input

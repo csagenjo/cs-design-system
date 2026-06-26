@@ -474,6 +474,7 @@
   --ds-input-amount-icon-dropdown-fg-generic:         var(--ds-fg-icon-primary);
   --ds-input-amount-icon-dropdown-fg-disabled:        var(--ds-fg-icon-disabled);
   --ds-input-amount-icon-dropdown-size-generic:       24px;
+  --ds-input-amount-divider-color:                    var(--ds-borderColor-accent);
 
   /* â”€â”€ InputStepper â€” botones âˆ’ / + teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-input-stepper-icon-left-fg:                  var(--ds-fg-icon-primary);
