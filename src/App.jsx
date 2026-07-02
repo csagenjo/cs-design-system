@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MapPin } from 'lucide-react'
+import { MapPin, Lock } from 'lucide-react'
 import { Button } from './components/Button'
 import { ButtonBar } from './organisms/ButtonBar'
 import { InputText } from './components/InputText'
@@ -15,6 +15,7 @@ import { CTALink } from './components/CTALink'
 import { Chip } from './components/Chip'
 import { LinkList } from './components/LinkList'
 import { BadgeNotification } from './components/BadgeNotification'
+import { BadgeHighlight } from './components/BadgeHighlight'
 import { AmountView } from './components/AmountView'
 import { SelectorInvoker } from './components/SelectorInvoker'
 import { SelectorListItem } from './components/SelectorListItem'
@@ -310,6 +311,18 @@ function App() {
           <BadgeNotification color="tertiary" size="expanded" label="99+" />
           <BadgeNotification disabled label="9" />
           <BadgeNotification disabled size="expanded" label="99+" />
+        </div>
+      </section>
+
+      {/* BadgeHighlight */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>BADGE HIGHLIGHT</p>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <BadgeHighlight variant="emphasis" icon={<Lock />} label="Badge" />
+          <BadgeHighlight variant="neutral"  icon={<Lock />} label="Badge" />
+          <BadgeHighlight variant="positive" icon={<Lock />} label="Badge" />
+          <BadgeHighlight variant="negative" icon={<Lock />} label="Badge" />
+          <BadgeHighlight disabled icon={<Lock />} label="Badge" />
         </div>
       </section>
 

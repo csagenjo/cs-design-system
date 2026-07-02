@@ -670,6 +670,32 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — BadgeHighlight (badgeHighlight/all/*)
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-badge-highlight-bg-emphasis:        var(--ds-bg-secondary-medium);  /* #FBE4EE */
+  --ds-badge-highlight-bg-neutral:         var(--ds-bg-subtle);            /* #EEEFF1 */
+  --ds-badge-highlight-bg-positive:        var(--ds-bg-success-subtle);    /* #F8FCF8 */
+  --ds-badge-highlight-bg-negative:        var(--ds-bg-error-subtle);      /* #FDF7F7 */
+  --ds-badge-highlight-bg-disabled:        var(--ds-bg-disabled);          /* #EEEFF1 */
+  --ds-badge-highlight-border-radius:      var(--ds-border-radius-sm);     /* 4px */
+  --ds-badge-highlight-height:             24px;
+  --ds-badge-highlight-gap:                var(--ds-spacing-xs);           /* 4px */
+  --ds-badge-highlight-padding-ver:        var(--ds-spacing-2xs);          /* 2px */
+  --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
+
+  --ds-badge-highlight-icon-size:          20px;
+  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #B71B60 */
+  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #9AA1AA */
+  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #389A3D */
+  --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D53737 */
+  --ds-badge-highlight-icon-fg-disabled:   var(--ds-fg-icon-disabled);     /* #B9BEC4 */
+
+  --ds-badge-highlight-label-fg:           var(--ds-fg-default);
+  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-disabled);          /* #B9BEC4 */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — AmountView (amountView/all/*)
      ══════════════════════════════════════════════════════════════════════════ */
 
