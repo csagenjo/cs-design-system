@@ -296,6 +296,7 @@
   --ds-border-radius-circle: 80px;
 
   /* ── Sizing ── */
+  --ds-sizing-2xs: 16px;
   --ds-sizing-xs:  20px;
   --ds-sizing-sm:  24px;
   --ds-sizing-md:  32px;
@@ -684,7 +685,7 @@
   --ds-badge-highlight-padding-ver:        var(--ds-spacing-2xs);          /* 2px */
   --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
 
-  --ds-badge-highlight-icon-size:          20px;
+  --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16px — reducido en Figma (sizing/xs -> sizing/2xs) */
   --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #B71B60 */
   --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #9AA1AA */
   --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #389A3D */

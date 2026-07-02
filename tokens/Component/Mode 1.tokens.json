@@ -3050,7 +3050,7 @@
         "size": {
           "generic": {
             "$type": "number",
-            "$value": 20,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:18741:8143",
               "com.figma.hiddenFromPublishing": true,
@@ -3058,8 +3058,8 @@
                 "WIDTH_HEIGHT"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:5c6664c3dea539e54526caf5be3adecd300e28f0/-1:-1",
-                "targetVariableName": "sizing/xs",
+                "targetVariableId": "VariableID:512568dae9e5c9995c48315d7792b8235bf4f002/-1:-1",
+                "targetVariableName": "sizing/2xs",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
