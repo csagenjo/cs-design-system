@@ -14,6 +14,14 @@ import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
 import { Chip } from './components/Chip'
 import { LinkList } from './components/LinkList'
+import { Badge } from './components/Badge'
+import { AmountView } from './components/AmountView'
+import { SelectorInvoker } from './components/SelectorInvoker'
+import { SelectorListItem } from './components/SelectorListItem'
+import { Selector } from './components/Selector'
+import { AccountSelectorInvoker } from './components/AccountSelectorInvoker'
+import { AccountSelectorListItem } from './components/AccountSelectorListItem'
+import { AccountSelector } from './components/AccountSelector'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -22,6 +30,9 @@ function App() {
   const [filterOff, setFilterOff] = useState(false);
   const [showFilter, setShowFilter] = useState(true);
   const [chips, setChips] = useState(['Madrid', 'Barcelona']);
+  const [selectorRadio, setSelectorRadio] = useState('a');
+  const [selectorChecks, setSelectorChecks] = useState([]);
+  const [accountRadio, setAccountRadio] = useState('a');
 
   return (
     <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', textAlign: 'left' }}>
@@ -283,6 +294,234 @@ function App() {
             { label: 'Ayuda externa', href: 'https://help.example.com', external: true, rightIcon: true, leftIcon: false },
           ]}
         />
+      </section>
+
+      {/* Badge */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>BADGE</p>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <Badge color="default" label="9" />
+          <Badge color="primary" label="9" />
+          <Badge color="secondary" label="9" />
+          <Badge color="tertiary" label="9" />
+          <Badge color="default" size="expanded" label="99+" />
+          <Badge color="primary" size="expanded" label="99+" />
+          <Badge color="secondary" size="expanded" label="99+" />
+          <Badge color="tertiary" size="expanded" label="99+" />
+        </div>
+      </section>
+
+      {/* AmountView */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>AMOUNT VIEW</p>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <AmountView amount="0,00" currency="EUR" type="positive" />
+          <AmountView amount="1.250,00" currency="EUR" type="negative" />
+          <AmountView amount="0,00" currency="EUR" type="positive" emphasis="subtle" />
+          <AmountView amount="1.250,00" currency="EUR" type="negative" emphasis="subtle" />
+        </div>
+      </section>
+
+      {/* SelectorInvoker */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>SELECTOR INVOKER</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <SelectorInvoker
+            headerText="Header Text"
+            descriptionText="Description of selected data"
+            detailText="Here is some detail text"
+            style={{ width: '359px' }}
+          />
+          <SelectorInvoker
+            state="error"
+            headerText="Header Text"
+            descriptionText="Description of selected data"
+            detailText="Here is some detail text"
+            style={{ width: '359px' }}
+          />
+          <SelectorInvoker
+            state="disabled"
+            headerText="Header Text"
+            descriptionText="Description of selected data"
+            detailText="Here is some detail text"
+            style={{ width: '359px' }}
+          />
+          <SelectorInvoker
+            state="readOnly"
+            headerText="Header Text"
+            descriptionText="Description of selected data"
+            detailText="Here is some detail text"
+            style={{ width: '359px' }}
+          />
+          <SelectorInvoker
+            state="dataHidden"
+            headerText="Header Text"
+            descriptionText="Description of selected data"
+            detailText="Here is some detail text"
+            style={{ width: '359px' }}
+          />
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <SelectorInvoker
+            dataSelection="empty"
+            headerText="Selecciona una opción"
+            style={{ width: '359px' }}
+          />
+          <SelectorInvoker
+            dataSelection="multiple"
+            selectedCount={3}
+            headerText="Header Text"
+            descriptionText="Description of selected data"
+            detailText="Here is some detail text"
+            style={{ width: '359px' }}
+          />
+        </div>
+      </section>
+
+      {/* SelectorListItem */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>SELECTOR LIST ITEM</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '359px' }}>
+          <SelectorListItem
+            data="single"
+            headerText="Cuenta corriente"
+            descriptionText="Descripción de la fila"
+            detailText="ES00 0000 0000 0000"
+            selected={selectorRadio === 'a'}
+            onSelectedChange={() => setSelectorRadio('a')}
+          />
+          <SelectorListItem
+            data="single"
+            headerText="Cuenta ahorro"
+            descriptionText="Descripción de la fila"
+            detailText="ES00 1111 1111 1111"
+            selected={selectorRadio === 'b'}
+            onSelectedChange={() => setSelectorRadio('b')}
+          />
+          <SelectorListItem
+            data="multiple"
+            headerText="Opción multiselección"
+            detailText="Detalle adicional"
+            selected={selectorChecks.includes('c')}
+            onSelectedChange={(v) => setSelectorChecks((prev) => v ? [...prev, 'c'] : prev.filter((x) => x !== 'c'))}
+          />
+          <SelectorListItem data="single" headerText="Error" state="error" detailText="Detalle" />
+          <SelectorListItem data="single" headerText="Disabled" state="disabled" detailText="Detalle" />
+        </div>
+      </section>
+
+      {/* Selector (Advanced Selector completo) */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>SELECTOR (Label + Helper + Invoker + Validation)</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <Selector
+            label="Cuenta seleccionada"
+            helperText="Elige la cuenta de origen"
+            headerText="Cuenta corriente"
+            descriptionText="Descripción de la fila"
+            detailText="ES00 0000 0000 0000"
+          />
+          <Selector
+            label="Con error"
+            state="error"
+            errorMessage="Selecciona una cuenta válida"
+            headerText="Cuenta corriente"
+            descriptionText="Descripción de la fila"
+            detailText="ES00 0000 0000 0000"
+          />
+          <Selector
+            label="Disabled"
+            state="disabled"
+            helperText="No disponible"
+            headerText="Cuenta corriente"
+            descriptionText="Descripción de la fila"
+            detailText="ES00 0000 0000 0000"
+          />
+        </div>
+      </section>
+
+      {/* AccountSelectorInvoker */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>ACCOUNT SELECTOR INVOKER</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <AccountSelectorInvoker
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR" amountType="positive"
+            detailText="ES00 0000 0000 0000"
+            style={{ width: '351px' }}
+          />
+          <AccountSelectorInvoker
+            headerText="Cuenta ahorro"
+            amount="1.250,00" currency="EUR" amountType="negative"
+            detailText="ES00 1111 1111 1111"
+            style={{ width: '351px' }}
+          />
+          <AccountSelectorInvoker
+            state="error"
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR"
+            detailText="ES00 0000 0000 0000"
+            style={{ width: '351px' }}
+          />
+          <AccountSelectorInvoker
+            state="disabled"
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR"
+            detailText="ES00 0000 0000 0000"
+            style={{ width: '351px' }}
+          />
+          <AccountSelectorInvoker
+            dataSelection="multiple"
+            selectedCount={2}
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR"
+            detailText="ES00 0000 0000 0000"
+            style={{ width: '351px' }}
+          />
+        </div>
+      </section>
+
+      {/* AccountSelectorListItem */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>ACCOUNT SELECTOR LIST ITEM</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '351px' }}>
+          <AccountSelectorListItem
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR"
+            detailText="ES00 0000 0000 0000"
+            selected={accountRadio === 'a'}
+            onSelectedChange={() => setAccountRadio('a')}
+          />
+          <AccountSelectorListItem
+            headerText="Cuenta ahorro"
+            amount="1.250,00" currency="EUR" amountType="negative"
+            detailText="ES00 1111 1111 1111"
+            selected={accountRadio === 'b'}
+            onSelectedChange={() => setAccountRadio('b')}
+          />
+        </div>
+      </section>
+
+      {/* AccountSelector (completo) */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>ACCOUNT SELECTOR (Label + Helper + Invoker + Validation)</p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          <AccountSelector
+            label="Cuenta de origen"
+            helperText="Selecciona la cuenta para el traspaso"
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR"
+            detailText="ES00 0000 0000 0000"
+          />
+          <AccountSelector
+            label="Con error"
+            state="error"
+            errorMessage="Selecciona una cuenta válida"
+            headerText="Cuenta corriente"
+            amount="0,00" currency="EUR"
+            detailText="ES00 0000 0000 0000"
+          />
+        </div>
       </section>
 
     </div>
