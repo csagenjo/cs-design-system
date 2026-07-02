@@ -727,6 +727,46 @@
   --ds-selector-detail-text-fg-tertiary:    var(--ds-fg-tertiary);
   --ds-selector-detail-icon-size:           16px;
 
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Account Selector (accountSelector/all/*)
+     Usados por AccountSelectorInvoker.jsx, AccountSelectorListItem.jsx y AccountSelector.jsx.
+     Mismos roles de Mode que Advanced Selector, pero borderWidth/gap propios (más compactos).
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-account-selector-root-bg-generic:            var(--ds-bg-default);
+  --ds-account-selector-root-bg-disabled:           var(--ds-bg-disabled);
+  --ds-account-selector-root-bg-hover:              var(--ds-bg-hover-primary);
+  --ds-account-selector-root-border-color-generic:  var(--ds-borderColor-default);
+  --ds-account-selector-root-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-account-selector-root-border-color-error:    var(--ds-borderColor-error);
+  --ds-account-selector-root-border-color-selected: var(--ds-borderColor-primary);
+  --ds-account-selector-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-account-selector-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-account-selector-root-border-width-generic:  var(--ds-border-width-sm);  /* 1px — borderWidth/sm-desk */
+  --ds-account-selector-root-border-width-focus:    2px;
+  --ds-account-selector-root-border-radius-generic: var(--ds-border-radius-md); /* 8px */
+  --ds-account-selector-root-opacity-pressed:       var(--ds-opacity-pressed);
+  --ds-account-selector-root-gap:                   var(--ds-spacing-lg);      /* 12px — spacing/lg-desk */
+  --ds-account-selector-root-padding:               var(--ds-spacing-lg);      /* 12px */
+
+  --ds-account-selector-icon-left-fg:               var(--ds-fg-icon-default);
+  --ds-account-selector-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
+  --ds-account-selector-icon-left-size:             20px;
+
+  --ds-account-selector-icon-right-fg:              var(--ds-fg-icon-default);
+  --ds-account-selector-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
+  --ds-account-selector-icon-right-size:            20px;
+
+  --ds-account-selector-header-fg-default:          var(--ds-fg-default);
+  --ds-account-selector-header-fg-disabled:         var(--ds-fg-disabled);
+
+  --ds-account-selector-detail-text-fg-default:     var(--ds-fg-body-default);
+  --ds-account-selector-detail-text-fg-disabled:    var(--ds-fg-body-disabled);
+  --ds-account-selector-detail-text-fg-secondary:   var(--ds-fg-body-secondary);
+  --ds-account-selector-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);
+  --ds-account-selector-detail-icon-size:           16px;
+
 }
 
 
