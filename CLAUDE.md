@@ -31,6 +31,14 @@ src/
     Radio.jsx          ✅ v1 — dual wrapper focus ring, label opcional, 21 tokens --ds-radio-*, zero violaciones
     Chip.jsx           ✅ v1.0 — choice/filter(selectable+dismissible)/input, bgMix overlay, dual focus target via :has()
     LinkList.jsx       ✅ v1.0 — wrapper semántico nav/ul/li sobre Link, gap via Device spacing tokens
+    Badge.jsx          ✅ v1.0 — pill de conteo, 4 colores × 2 tamaños
+    AmountView.jsx     ✅ v1.0 — pill de importe, positive/negative × emphasis/subtle
+    SelectorInvoker.jsx      ✅ v1.0 — trigger de Advanced Selector, tabla state×dataSelection
+    SelectorListItem.jsx     ✅ v1.0 — fila de lista, compone Radio/Checkbox reales
+    Selector.jsx             ✅ v1.0 — Label+Helper+SelectorInvoker+Validation
+    AccountSelectorInvoker.jsx   ✅ v1.0 — igual que SelectorInvoker, con AmountView en vez de description
+    AccountSelectorListItem.jsx  ✅ v1.0
+    AccountSelector.jsx          ✅ v1.0
   organisms/          ← Capa 2: UIKit Plataforma — ButtonBar y futuros organismos
     ButtonBar.jsx      ✅ movido aquí (antes vivía mal ubicado en components/)
   tokens.css          ✅ fuente de verdad — Component tokens migrados a var() (23/06/2026)
@@ -653,9 +661,184 @@ gap lg → var(--ds-spacing-xl)
 />
 ```
 
+### Badge.jsx ✅ v1.0
+
+```jsx
+<Badge
+  color = "default" | "primary" | "secondary" | "tertiary"  // default: "default"
+  size  = "default" | "expanded"                              // default: "default"
+  label = "99+"
+  ariaLabel
+/>
+```
+
+Pill de conteo/notificación (`badgeNotification/all/*` en Figma). 9 tokens — todos `var()` sobre Mode, verificados 1:1 contra los hex de Figma:
+```
+--ds-badge-bg-default            var(--ds-bg-error)      /* #D53737 */
+--ds-badge-bg-primary            var(--ds-bg-primary)    /* #4BA9C0 */
+--ds-badge-bg-secondary          var(--ds-bg-secondary)  /* #E02C7C */
+--ds-badge-bg-tertiary           var(--ds-bg-tertiary)   /* #B185C5 */
+--ds-badge-fg-label              var(--ds-fg-onColor)
+--ds-badge-border-radius         var(--ds-border-radius-circle)
+--ds-badge-padding-hor-default   var(--ds-spacing-xs)    /* 4px */
+--ds-badge-padding-hor-expanded  var(--ds-spacing-sm)    /* 6px */
+--ds-badge-padding-ver-expanded  var(--ds-spacing-2xs)   /* 2px — hace que expanded sea más alto (22px vs 18px), no solo más ancho */
+--ds-badge-min-width             24px
+```
+
+**Nota de implementación:** `size="default"` no lleva padding vertical (altura = line-height exacto, 18px). `size="expanded"` añade `--ds-badge-padding-ver-expanded` para que la diferencia de tamaño con `default` sea perceptible (22px), replicando el wrapper "Number container" con `py-2` que Figma aplica solo en Expanded.
+
+### AmountView.jsx ✅ v1.0
+
+```jsx
+<AmountView
+  amount    = "0,00"
+  currency  = "EUR"
+  type      = "positive" | "negative"    // default: "positive"
+  emphasis  = "emphasis" | "subtle"       // default: "emphasis"
+/>
+```
+
+Pill de importe (`amountView/all/*` en Figma — solo la variante Positive/Emphasis estaba expuesta en el nodo consultado; `negative`/`subtle` se completaron por el patrón de 3 niveles ya establecido en Mode — bold/medio/subtle — no están confirmados 1:1 contra una variante Figma específica).
+
+```
+--ds-amount-view-bg-positive-solid   var(--ds-bg-success)          /* #389A3D */
+--ds-amount-view-bg-negative-solid   var(--ds-bg-error)
+--ds-amount-view-bg-positive-subtle  var(--ds-bg-success-subtle)
+--ds-amount-view-bg-negative-subtle  var(--ds-bg-error-subtle)
+--ds-amount-view-fg-onColor          var(--ds-fg-onColor)
+--ds-amount-view-fg-positive-subtle  var(--ds-fg-success)
+--ds-amount-view-fg-negative-subtle  var(--ds-fg-error)
+--ds-amount-view-border-radius       var(--ds-border-radius-sm)    /* 4px */
+--ds-amount-view-gap                 var(--ds-spacing-xs)
+--ds-amount-view-padding-hor         var(--ds-spacing-xs)
+--ds-amount-view-padding-ver         var(--ds-spacing-2xs)
+```
+
+**Nota de implementación:** `align-self: flex-start` + `flex: 0 0 auto` en la raíz — obligatorio para que la píldora haga *hug* de su contenido cuando vive dentro de un padre `flex-direction: column` (p.ej. el Center Component de AccountSelectorInvoker); sin esto, `align-items: stretch` del padre la estira a todo el ancho de la fila.
+
+### Familia Advanced Selector ✅ v1.0
+
+3 átomos en `src/components/` (sin subcarpeta, siguiendo el patrón plano del resto de la librería). Alcance: trigger cerrado + fila de lista — igual que `InputDropdown`/`InputDate`, **no incluye el mecanismo de apertura/popover** (eso es el Country/Currency Picker, deuda técnica ya documentada en §11).
+
+Tokens compartidos por los 3 (`--ds-selector-*`, dominio `advancedSelector/all/*`): bg/border por estado (generic/hover/disabled/error/selected/focus-inner/focus-outer), borderWidth (1.5px generic / 2px focus), borderRadius 8px, gap/padding 16px, tipografía de header/description/detailText (con variantes secondary/tertiary vía `--ds-fg-secondary`/`--ds-fg-tertiary`, prestadas del rol de datos rosa/morado).
+
+#### SelectorInvoker.jsx
+
+```jsx
+<SelectorInvoker
+  state           = "default" | "error" | "disabled" | "readOnly" | "dataHidden"
+  dataSelection   = "single" | "multiple" | "empty"
+  headerText
+  descriptionText
+  descriptionEmphasis  // "secondary" | "tertiary" — color del detailText
+  detailText
+  showIconLeft    = {true}
+  selectedCount    // alimenta el <Badge color="secondary" size="expanded"> cuando dataSelection="multiple"
+  onClick / onFocus / onBlur
+  id / ariaLabel
+  fullWidth       = {false}
+/>
+```
+
+`<button>` real. Focus ring doble (inner blanco + outer negro) vía `outline` + `box-shadow`, mismo patrón que `Chip.jsx`. `dataHidden` enmascara header/description/detail con `••••••••`.
+
+#### SelectorListItem.jsx
+
+```jsx
+<SelectorListItem
+  data              = "single" | "multiple"
+  state             // "error" | "disabled" | "dataHidden" — selected/unselected via prop `selected`
+  headerText / descriptionText / detailText
+  selected          = {false}
+  onSelectedChange
+  disabled          = {false}
+/>
+```
+
+**Raíz `<div>`, no `<button>`.** Compone `<Radio>`/`<Checkbox>` reales (según `data`) para el control de selección — nunca reimplementados. Un `<button>` no puede contener elementos interactivos (`<label><input>` de Radio/Checkbox es contenido interactivo), así que el patrón correcto es: el input nativo de Radio/Checkbox es el único control realmente enfocable/operable por teclado, y el click en cualquier parte de la fila (`<div>`, no interactivo) dispara el mismo `onSelectedChange`. Focus ring: anillo único blanco vía `:has(:focus-visible)` en el wrapper — sin el doble anillo del Invoker, porque la fila vive dentro de un listado.
+
+#### Selector.jsx
+
+```jsx
+<Selector
+  label / helperText / errorMessage
+  state / dataSelection / headerText / descriptionText / detailText / selectedCount
+  onClick
+  fullWidth = {false}
+  id / name / ariaLabel
+/>
+```
+
+Composición: Label → Helper → `SelectorInvoker` → ValidationMessage. Reutiliza (borrowing intencional, mismo patrón que la familia Input) los tokens `--ds-input-fg-label`, `--ds-input-fg-helper`, `--ds-input-validation-fg-*`.
+
+### Familia Account Selector ✅ v1.0
+
+Mismo esqueleto que Advanced Selector (`AccountSelectorInvoker.jsx`, `AccountSelectorListItem.jsx`, `AccountSelector.jsx`), con tokens propios `--ds-account-selector-*` (dominio `accountSelector/all/*`) porque Figma los define como familias independientes, no como un "Common" compartido:
+
+- **borderWidth 1px** (`--ds-border-width-sm`), no 1.5px.
+- **gap/padding 12px** (`--ds-spacing-lg`, spacing/lg-desk), no 16px.
+- **detailText usa el rol `fg/body/*`** (`--ds-fg-body-default/disabled/secondary/tertiary`) en vez de `fg/*` — mismo valor hex que Advanced Selector pero token semántico distinto, tal como lo especifica Figma.
+- El slot "Description" de Advanced Selector se sustituye por **`<AmountView>`** (saldo de la cuenta) — por eso AmountView es prerrequisito real de esta familia, no solo del brief original.
+
+```jsx
+<AccountSelector
+  label / helperText / errorMessage
+  state / dataSelection
+  headerText            // nombre de cuenta
+  amount / currency / amountType = "positive" | "negative"
+  detailText             // IBAN u otro detalle
+  selectedCount
+  onClick
+  fullWidth = {false}
+/>
+```
+
+`AccountSelectorInvoker.jsx` y `AccountSelectorListItem.jsx` siguen la misma arquitectura que sus equivalentes de Advanced Selector (button/div, Radio/Checkbox reales, focus ring doble/único).
+
 ## 9. Próximos componentes
 
-*(sin pendientes documentados — añadir aquí el siguiente componente cuando se planifique)*
+Plan de construcción basado en inventario estratégico (`component_strategy_dependencies.html`).
+Prioridad: desbloquear dependencias críticas → completar experiencia de datos → escalar.
+
+### 🔴 Sprint 1 — Desbloquear dependencias críticas
+
+| Pri | Componente | Por qué | Dependencias resueltas |
+|---|---|---|---|
+| 1 | ~~**Advanced Selector**~~ ✅ | Desbloquea Country Picker + Currency Picker (deuda técnica activa en InputTelephone/InputAmount) | Chip ✅ · InputText ✅ · Checkbox ✅ |
+| — | ~~**Account Selector**~~ ✅ | Construido junto a Advanced Selector — misma familia de Figma, comparte Radio/Checkbox/Badge/AmountView | Advanced Selector ✅ |
+| 2 | **Snackbar** | Feedback de acciones — cierra el loop UX. Sin dependencias. | Button ✅ |
+| 3 | **Description List** | Layout Details se construye con él. Desbloquea List. | Link ✅ |
+| 4 | **Dialog** | Confirmaciones y formularios en modal. | Button ✅ |
+
+Nota: Country Picker / Currency Picker siguen sin construir — Advanced Selector solo entrega el trigger (`Selector.jsx`) y la fila de lista (`SelectorListItem.jsx`); el mecanismo de apertura/popover sigue pendiente (ver §11).
+
+### 🟠 Sprint 2 — Completar la experiencia de datos
+
+| Pri | Componente | Por qué | Dependencias |
+|---|---|---|---|
+| 5 | **List View** | Patrón fila de datos en Search for Results | Checkbox ✅ · Badge ✅ · Link ✅ |
+| 6 | **File Upload** | Subida de informes en La Plataforma | Button ✅ · Loading Spinner · Icon Button |
+| 7 | ~~**Badge**~~ ✅ | Estados en Table y List View. Desbloquea List View y Table. Adelantado como prerrequisito de Advanced Selector (badge de conteo en Multiple Selection). | — |
+| 8 | **Tabs** | Organización de contenido en Details | — |
+
+### 🟢 Sprint 3 — Escalar con la Tabla y organismos
+
+| Pri | Componente | Por qué | Dependencias |
+|---|---|---|---|
+| 9 | **Pagination** | Listas de datos largas. Sin dependencias. | — |
+| 10 | **Collapsible** | Formularios largos | Button ✅ · Icon Button |
+| 11 | **Table** | Dashboard + Search for Results | Checkbox ✅ · Badge ✅ · Button ✅ |
+| 12 | **Inline Notification** | Alertas contextuales en formularios | — |
+
+### ⚪ Backlog (cuando el core esté completo)
+
+Accordion · Tooltip · Combobox · Segmented Controls · Slider · Step Navigator ·
+Progress Bar · Loading Spinner · ~~Amount View~~ ✅ · Top Navigation · Popover Sheet · Drawer
+
+### ⛔ No construir
+
+Calendar · Bottom Navigation · Bottom Sheet · Image · Videoplayer
 
 ## 10. Figma MCP
 
