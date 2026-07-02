@@ -650,6 +650,39 @@
   --ds-cta-link-padding-ver:             6px;    /* paddingVer/generic */
   --ds-cta-link-padding-hor:             12px;   /* paddingHor/generic */
 
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Badge (badgeNotification/all/*)
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-badge-bg-default:            var(--ds-bg-error);      /* #D53737 */
+  --ds-badge-bg-primary:            var(--ds-bg-primary);    /* #4BA9C0 */
+  --ds-badge-bg-secondary:          var(--ds-bg-secondary);  /* #E02C7C */
+  --ds-badge-bg-tertiary:           var(--ds-bg-tertiary);   /* #B185C5 */
+  --ds-badge-fg-label:              var(--ds-fg-onColor);
+  --ds-badge-border-radius:         var(--ds-border-radius-circle);
+  --ds-badge-padding-hor-default:   var(--ds-spacing-xs);   /* 4px */
+  --ds-badge-padding-hor-expanded:  var(--ds-spacing-sm);   /* 6px */
+  --ds-badge-padding-ver-expanded:  var(--ds-spacing-2xs);  /* 2px — "Number container" py-2 en Figma */
+  --ds-badge-min-width:             24px;
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — AmountView (amountView/all/*)
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-amount-view-bg-positive-solid:  var(--ds-bg-success);         /* #389A3D */
+  --ds-amount-view-bg-negative-solid:  var(--ds-bg-error);           /* #D53737, mismo rol semántico que error */
+  --ds-amount-view-bg-positive-subtle: var(--ds-bg-success-subtle);  /* patrón subtle establecido (Primary/Secondary/Tertiary/Error) */
+  --ds-amount-view-bg-negative-subtle: var(--ds-bg-error-subtle);
+  --ds-amount-view-fg-onColor:         var(--ds-fg-onColor);         /* texto sobre solid */
+  --ds-amount-view-fg-positive-subtle: var(--ds-fg-success);         /* texto sobre subtle */
+  --ds-amount-view-fg-negative-subtle: var(--ds-fg-error);
+  --ds-amount-view-border-radius:      var(--ds-border-radius-sm);   /* 4px */
+  --ds-amount-view-gap:                var(--ds-spacing-xs);         /* 4px */
+  --ds-amount-view-padding-hor:        var(--ds-spacing-xs);         /* 4px */
+  --ds-amount-view-padding-ver:        var(--ds-spacing-2xs);        /* 2px */
+
 }
 
 
