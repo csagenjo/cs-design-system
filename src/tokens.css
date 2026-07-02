@@ -651,19 +651,22 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Badge (badgeNotification/all/*)
+     COMPONENT TOKENS — BadgeNotification (badgeNotification/all/*)
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-badge-bg-default:            var(--ds-bg-error);      /* #D53737 */
-  --ds-badge-bg-primary:            var(--ds-bg-primary);    /* #4BA9C0 */
-  --ds-badge-bg-secondary:          var(--ds-bg-secondary);  /* #E02C7C */
-  --ds-badge-bg-tertiary:           var(--ds-bg-tertiary);   /* #B185C5 */
-  --ds-badge-fg-label:              var(--ds-fg-onColor);
-  --ds-badge-border-radius:         var(--ds-border-radius-circle);
-  --ds-badge-padding-hor-default:   var(--ds-spacing-xs);   /* 4px */
-  --ds-badge-padding-hor-expanded:  var(--ds-spacing-sm);   /* 6px */
-  --ds-badge-padding-ver-expanded:  var(--ds-spacing-2xs);  /* 2px — "Number container" py-2 en Figma */
-  --ds-badge-min-width:             24px;
+  --ds-badge-notification-bg-default:            var(--ds-bg-error);      /* #D53737 */
+  --ds-badge-notification-bg-primary:            var(--ds-bg-primary);    /* #4BA9C0 */
+  --ds-badge-notification-bg-secondary:          var(--ds-bg-secondary);  /* #E02C7C */
+  --ds-badge-notification-bg-tertiary:           var(--ds-bg-tertiary);   /* #B185C5 */
+  --ds-badge-notification-bg-disabled:           var(--ds-bg-disabled);   /* #EEEFF1 */
+  --ds-badge-notification-fg-label:              var(--ds-fg-onColor);
+  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-disabled);   /* #B9BEC4 */
+  --ds-badge-notification-border-radius:         var(--ds-border-radius-circle);
+  --ds-badge-notification-gap:                   var(--ds-spacing-sm);    /* 6px — reservado para variante con icono, sin uso actual */
+  --ds-badge-notification-padding-hor-default:   var(--ds-spacing-xs);   /* 4px */
+  --ds-badge-notification-padding-hor-expanded:  var(--ds-spacing-sm);   /* 6px */
+  --ds-badge-notification-padding-ver-expanded:  var(--ds-spacing-2xs);  /* 2px — "Number container" py-2 en Figma */
+  --ds-badge-notification-min-width:             24px;
 
 
   /* ══════════════════════════════════════════════════════════════════════════
