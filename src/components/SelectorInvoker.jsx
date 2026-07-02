@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { FileText, Link as LinkIcon, ChevronRight } from 'lucide-react';
 import { injectStyles } from './_inputBase';
-import { Badge } from './Badge';
+import { BadgeNotification } from './BadgeNotification';
 
 const css = `
 .ds-selector-invoker {
@@ -219,7 +219,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
 
         <span className="ds-selector-invoker__right">
           {dataSelection === 'multiple' && selectedCount != null && (
-            <Badge color="secondary" size="expanded" label={selectedCount} />
+            <BadgeNotification color="secondary" size="expanded" label={selectedCount} />
           )}
           <ChevronRight strokeWidth={1.75} aria-hidden="true" />
         </span>

@@ -14,7 +14,7 @@ import { Link } from './components/Link'
 import { CTALink } from './components/CTALink'
 import { Chip } from './components/Chip'
 import { LinkList } from './components/LinkList'
-import { Badge } from './components/Badge'
+import { BadgeNotification } from './components/BadgeNotification'
 import { AmountView } from './components/AmountView'
 import { SelectorInvoker } from './components/SelectorInvoker'
 import { SelectorListItem } from './components/SelectorListItem'
@@ -296,18 +296,20 @@ function App() {
         />
       </section>
 
-      {/* Badge */}
+      {/* BadgeNotification */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>BADGE</p>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>BADGE NOTIFICATION</p>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          <Badge color="default" label="9" />
-          <Badge color="primary" label="9" />
-          <Badge color="secondary" label="9" />
-          <Badge color="tertiary" label="9" />
-          <Badge color="default" size="expanded" label="99+" />
-          <Badge color="primary" size="expanded" label="99+" />
-          <Badge color="secondary" size="expanded" label="99+" />
-          <Badge color="tertiary" size="expanded" label="99+" />
+          <BadgeNotification color="default" label="9" />
+          <BadgeNotification color="primary" label="9" />
+          <BadgeNotification color="secondary" label="9" />
+          <BadgeNotification color="tertiary" label="9" />
+          <BadgeNotification color="default" size="expanded" label="99+" />
+          <BadgeNotification color="primary" size="expanded" label="99+" />
+          <BadgeNotification color="secondary" size="expanded" label="99+" />
+          <BadgeNotification color="tertiary" size="expanded" label="99+" />
+          <BadgeNotification disabled label="9" />
+          <BadgeNotification disabled size="expanded" label="99+" />
         </div>
       </section>
 
