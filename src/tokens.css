@@ -683,6 +683,50 @@
   --ds-amount-view-padding-hor:        var(--ds-spacing-xs);         /* 4px */
   --ds-amount-view-padding-ver:        var(--ds-spacing-2xs);        /* 2px */
 
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Advanced Selector (advancedSelector/all/*)
+     Usados por SelectorInvoker.jsx, SelectorListItem.jsx y Selector.jsx
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-selector-root-bg-generic:            var(--ds-bg-default);         /* #FFFFFF */
+  --ds-selector-root-bg-disabled:           var(--ds-bg-disabled);        /* #EEEFF1 */
+  --ds-selector-root-bg-hover:              var(--ds-bg-hover-primary);   /* #B8E6FE */
+  --ds-selector-root-border-color-generic:  var(--ds-borderColor-default);/* #9AA1AA */
+  --ds-selector-root-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-selector-root-border-color-error:    var(--ds-borderColor-error);
+  --ds-selector-root-border-color-selected: var(--ds-borderColor-primary);/* #286371 */
+  --ds-selector-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-selector-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-selector-root-border-width-generic:  1.5px;
+  --ds-selector-root-border-width-focus:    2px;
+  --ds-selector-root-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
+  --ds-selector-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
+  --ds-selector-root-gap:                   var(--ds-spacing-xl);        /* 16px */
+  --ds-selector-root-padding:               var(--ds-spacing-xl);        /* 16px */
+
+  --ds-selector-icon-left-fg:               var(--ds-fg-icon-default);
+  --ds-selector-icon-left-fg-focus:         var(--ds-fg-icon-primary);
+  --ds-selector-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
+  --ds-selector-icon-left-size:             20px;
+
+  --ds-selector-icon-right-fg:              var(--ds-fg-icon-default);
+  --ds-selector-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
+  --ds-selector-icon-right-size:            20px;
+
+  --ds-selector-header-fg-default:          var(--ds-fg-default);
+  --ds-selector-header-fg-disabled:         var(--ds-fg-disabled);
+
+  --ds-selector-description-fg-subtle:      var(--ds-fg-subtle);
+  --ds-selector-description-fg-default:     var(--ds-fg-default);
+  --ds-selector-description-fg-disabled:    var(--ds-fg-disabled);
+
+  --ds-selector-detail-text-fg-default:     var(--ds-fg-default);
+  --ds-selector-detail-text-fg-disabled:    var(--ds-fg-disabled);
+  --ds-selector-detail-text-fg-secondary:   var(--ds-fg-secondary);
+  --ds-selector-detail-text-fg-tertiary:    var(--ds-fg-tertiary);
+  --ds-selector-detail-icon-size:           16px;
+
 }
 
 
