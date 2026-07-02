@@ -31,7 +31,8 @@ src/
     Radio.jsx          ✅ v1 — dual wrapper focus ring, label opcional, 21 tokens --ds-radio-*, zero violaciones
     Chip.jsx           ✅ v1.0 — choice/filter(selectable+dismissible)/input, bgMix overlay, dual focus target via :has()
     LinkList.jsx       ✅ v1.0 — wrapper semántico nav/ul/li sobre Link, gap via Device spacing tokens
-    Badge.jsx          ✅ v1.0 — pill de conteo, 4 colores × 2 tamaños
+    BadgeNotification.jsx  ✅ v1.0 — pill de conteo, 4 colores × 2 tamaños
+    BadgeHighlight.jsx     ✅ v1.0 — pill de estado con icono, 4 variantes semánticas
     AmountView.jsx     ✅ v1.0 — pill de importe, positive/negative × emphasis/subtle
     SelectorInvoker.jsx      ✅ v1.0 — trigger de Advanced Selector, tabla state×dataSelection
     SelectorListItem.jsx     ✅ v1.0 — fila de lista, compone Radio/Checkbox reales
@@ -661,32 +662,82 @@ gap lg → var(--ds-spacing-xl)
 />
 ```
 
-### Badge.jsx ✅ v1.0
+### BadgeNotification.jsx ✅ v1.0
+
+Figma agrupa "Badge" en dos componentes independientes — **Notification Badge** y **Highlight Badge** —
+con sus propios namespaces de token (`badgeNotification/*` / `badgeHighlight/*`). Se nombran en código
+igual que en Figma/tokens: `BadgeNotification.jsx` y `BadgeHighlight.jsx` (nunca solo "Badge").
 
 ```jsx
-<Badge
-  color = "default" | "primary" | "secondary" | "tertiary"  // default: "default"
-  size  = "default" | "expanded"                              // default: "default"
-  label = "99+"
+<BadgeNotification
+  color    = "default" | "primary" | "secondary" | "tertiary"  // default: "default"
+  size     = "default" | "expanded"                              // default: "default"
+  disabled = {false}
+  label    = "99+"
   ariaLabel
 />
 ```
 
-Pill de conteo/notificación (`badgeNotification/all/*` en Figma). 9 tokens — todos `var()` sobre Mode, verificados 1:1 contra los hex de Figma:
+Pill de conteo/notificación (`badgeNotification/all/*` en Figma, re-sincronizado 02/07/2026). 12 tokens — todos `var()` sobre Mode, verificados 1:1 contra los hex de Figma:
 ```
---ds-badge-bg-default            var(--ds-bg-error)      /* #D53737 */
---ds-badge-bg-primary            var(--ds-bg-primary)    /* #4BA9C0 */
---ds-badge-bg-secondary          var(--ds-bg-secondary)  /* #E02C7C */
---ds-badge-bg-tertiary           var(--ds-bg-tertiary)   /* #B185C5 */
---ds-badge-fg-label              var(--ds-fg-onColor)
---ds-badge-border-radius         var(--ds-border-radius-circle)
---ds-badge-padding-hor-default   var(--ds-spacing-xs)    /* 4px */
---ds-badge-padding-hor-expanded  var(--ds-spacing-sm)    /* 6px */
---ds-badge-padding-ver-expanded  var(--ds-spacing-2xs)   /* 2px — hace que expanded sea más alto (22px vs 18px), no solo más ancho */
---ds-badge-min-width             24px
+--ds-badge-notification-bg-default            var(--ds-bg-error)      /* #D53737 */
+--ds-badge-notification-bg-primary            var(--ds-bg-primary)    /* #4BA9C0 */
+--ds-badge-notification-bg-secondary          var(--ds-bg-secondary)  /* #E02C7C */
+--ds-badge-notification-bg-tertiary           var(--ds-bg-tertiary)   /* #B185C5 */
+--ds-badge-notification-bg-disabled           var(--ds-bg-disabled)   /* #EEEFF1 */
+--ds-badge-notification-fg-label              var(--ds-fg-onColor)
+--ds-badge-notification-fg-label-disabled     var(--ds-fg-disabled)   /* #B9BEC4 */
+--ds-badge-notification-border-radius         var(--ds-border-radius-circle)
+--ds-badge-notification-gap                   var(--ds-spacing-sm)    /* 6px — token de Figma reservado para una variante con icono; sin uso actual, BadgeNotification solo soporta label de texto */
+--ds-badge-notification-padding-hor-default   var(--ds-spacing-xs)    /* 4px */
+--ds-badge-notification-padding-hor-expanded  var(--ds-spacing-sm)    /* 6px */
+--ds-badge-notification-padding-ver-expanded  var(--ds-spacing-2xs)   /* 2px — hace que expanded sea más alto (22px vs 18px), no solo más ancho */
+--ds-badge-notification-min-width             24px
 ```
 
-**Nota de implementación:** `size="default"` no lleva padding vertical (altura = line-height exacto, 18px). `size="expanded"` añade `--ds-badge-padding-ver-expanded` para que la diferencia de tamaño con `default` sea perceptible (22px), replicando el wrapper "Number container" con `py-2` que Figma aplica solo en Expanded.
+**Notas de implementación:**
+- `size="default"` no lleva padding vertical (altura = line-height exacto, 18px). `size="expanded"` añade `--ds-badge-notification-padding-ver-expanded` para que la diferencia de tamaño con `default` sea perceptible (22px), replicando el wrapper "Number container" con `py-2` que Figma aplica solo en Expanded.
+- `disabled` sobrescribe el `color` elegido (bg + fg grises), añadido tras sincronizar tokens.css con el export de Figma del 02/07/2026 — no estaba en la v1.0 inicial.
+- Usado por `SelectorInvoker`/`AccountSelectorInvoker` como badge de conteo en `dataSelection="multiple"`.
+
+### BadgeHighlight.jsx ✅ v1.0
+
+```jsx
+<BadgeHighlight
+  variant  = "emphasis" | "neutral" | "positive" | "negative"  // default: "neutral"
+  disabled = {false}
+  label    = "Badge"
+  icon     = {<Lock />}   // ReactNode Lucide, opcional
+  ariaLabel
+/>
+```
+
+Pill de estado con icono + texto y fondo suave (`badgeHighlight/all/*` en Figma). 17 tokens:
+```
+--ds-badge-highlight-bg-emphasis        var(--ds-bg-secondary-medium)  /* #FBE4EE */
+--ds-badge-highlight-bg-neutral         var(--ds-bg-subtle)            /* #EEEFF1 */
+--ds-badge-highlight-bg-positive        var(--ds-bg-success-subtle)    /* #F8FCF8 */
+--ds-badge-highlight-bg-negative        var(--ds-bg-error-subtle)      /* #FDF7F7 */
+--ds-badge-highlight-bg-disabled        var(--ds-bg-disabled)          /* #EEEFF1 */
+--ds-badge-highlight-border-radius      var(--ds-border-radius-sm)     /* 4px */
+--ds-badge-highlight-height             24px
+--ds-badge-highlight-gap                var(--ds-spacing-xs)           /* 4px */
+--ds-badge-highlight-padding-ver        var(--ds-spacing-2xs)          /* 2px */
+--ds-badge-highlight-padding-hor        var(--ds-spacing-md)           /* 8px */
+--ds-badge-highlight-icon-size          20px
+--ds-badge-highlight-icon-fg-emphasis   var(--ds-fg-secondary)         /* #B71B60 */
+--ds-badge-highlight-icon-fg-neutral    var(--ds-fg-subtle)            /* #9AA1AA */
+--ds-badge-highlight-icon-fg-positive   var(--ds-fg-success)           /* #389A3D */
+--ds-badge-highlight-icon-fg-negative   var(--ds-fg-icon-error)        /* #D53737 */
+--ds-badge-highlight-icon-fg-disabled   var(--ds-fg-icon-disabled)     /* #B9BEC4 */
+--ds-badge-highlight-label-fg           var(--ds-fg-default)
+--ds-badge-highlight-label-fg-disabled  var(--ds-fg-disabled)          /* #B9BEC4 */
+```
+
+**Nota de implementación:** Figma no expone un token de `borderColor` propio para este componente —
+el borde 1px visible en cada variante reutiliza el mismo color que el icono (`icon-fg-*`), inferido
+de la captura de la documentación (cada variante muestra icono + borde del mismo tono). Si Figma
+publica un token de borde dedicado más adelante, migrar a esa referencia.
 
 ### AmountView.jsx ✅ v1.0
 
@@ -734,7 +785,7 @@ Tokens compartidos por los 3 (`--ds-selector-*`, dominio `advancedSelector/all/*
   descriptionEmphasis  // "secondary" | "tertiary" — color del detailText
   detailText
   showIconLeft    = {true}
-  selectedCount    // alimenta el <Badge color="secondary" size="expanded"> cuando dataSelection="multiple"
+  selectedCount    // alimenta el <BadgeNotification color="secondary" size="expanded"> cuando dataSelection="multiple"
   onClick / onFocus / onBlur
   id / ariaLabel
   fullWidth       = {false}
@@ -806,7 +857,7 @@ Prioridad: desbloquear dependencias críticas → completar experiencia de datos
 | Pri | Componente | Por qué | Dependencias resueltas |
 |---|---|---|---|
 | 1 | ~~**Advanced Selector**~~ ✅ | Desbloquea Country Picker + Currency Picker (deuda técnica activa en InputTelephone/InputAmount) | Chip ✅ · InputText ✅ · Checkbox ✅ |
-| — | ~~**Account Selector**~~ ✅ | Construido junto a Advanced Selector — misma familia de Figma, comparte Radio/Checkbox/Badge/AmountView | Advanced Selector ✅ |
+| — | ~~**Account Selector**~~ ✅ | Construido junto a Advanced Selector — misma familia de Figma, comparte Radio/Checkbox/BadgeNotification/AmountView | Advanced Selector ✅ |
 | 2 | **Snackbar** | Feedback de acciones — cierra el loop UX. Sin dependencias. | Button ✅ |
 | 3 | **Description List** | Layout Details se construye con él. Desbloquea List. | Link ✅ |
 | 4 | **Dialog** | Confirmaciones y formularios en modal. | Button ✅ |
@@ -817,9 +868,9 @@ Nota: Country Picker / Currency Picker siguen sin construir — Advanced Selecto
 
 | Pri | Componente | Por qué | Dependencias |
 |---|---|---|---|
-| 5 | **List View** | Patrón fila de datos en Search for Results | Checkbox ✅ · Badge ✅ · Link ✅ |
+| 5 | **List View** | Patrón fila de datos en Search for Results | Checkbox ✅ · BadgeNotification ✅ · BadgeHighlight ✅ · Link ✅ |
 | 6 | **File Upload** | Subida de informes en La Plataforma | Button ✅ · Loading Spinner · Icon Button |
-| 7 | ~~**Badge**~~ ✅ | Estados en Table y List View. Desbloquea List View y Table. Adelantado como prerrequisito de Advanced Selector (badge de conteo en Multiple Selection). | — |
+| 7 | ~~**Badge**~~ ✅ | Estados en Table y List View. Desbloquea List View y Table. BadgeNotification adelantado como prerrequisito de Advanced Selector (badge de conteo en Multiple Selection); BadgeHighlight construido junto a él al aparecer en la misma sincronización de Figma. | — |
 | 8 | **Tabs** | Organización de contenido en Details | — |
 
 ### 🟢 Sprint 3 — Escalar con la Tabla y organismos
@@ -828,7 +879,7 @@ Nota: Country Picker / Currency Picker siguen sin construir — Advanced Selecto
 |---|---|---|---|
 | 9 | **Pagination** | Listas de datos largas. Sin dependencias. | — |
 | 10 | **Collapsible** | Formularios largos | Button ✅ · Icon Button |
-| 11 | **Table** | Dashboard + Search for Results | Checkbox ✅ · Badge ✅ · Button ✅ |
+| 11 | **Table** | Dashboard + Search for Results | Checkbox ✅ · BadgeNotification ✅ · BadgeHighlight ✅ · Button ✅ |
 | 12 | **Inline Notification** | Alertas contextuales en formularios | — |
 
 ### ⚪ Backlog (cuando el core esté completo)
