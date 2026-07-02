@@ -6,6 +6,7 @@ import {
   Copy, Edit2, Filter, Download, Upload,
   Percent, Coins, Wallet, CreditCard,
   MoreHorizontal, Phone, Lock,
+  FileText, Link as LinkIcon,
 } from 'lucide-react';
 
 export const ICONS = {
@@ -38,6 +39,8 @@ export const ICONS = {
   MoreHorizontal, 'more': MoreHorizontal,
   Phone, 'phone': Phone,
   Lock, 'lock': Lock,
+  FileText, 'file-text': FileText,
+  LinkIcon, 'link': LinkIcon,
 };
 
 export function mergeRefs(...refs) {
