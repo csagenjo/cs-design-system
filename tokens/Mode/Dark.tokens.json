@@ -6309,32 +6309,6 @@
         }
       }
     },
-    "negative": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.9803921580314636,
-          0.9019607901573181,
-          0.9019607901573181
-        ],
-        "alpha": 1,
-        "hex": "#FAE6E6"
-      },
-      "$extensions": {
-        "com.figma.variableId": "VariableID:21358:33316",
-        "com.figma.scopes": [
-          "FRAME_FILL",
-          "SHAPE_FILL"
-        ],
-        "com.figma.aliasData": {
-          "targetVariableId": "VariableID:b8dee9a7ebd9dae0f708bad4755d6cf0b3bf8968/-1:-1",
-          "targetVariableName": "bg/negative-dark",
-          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-          "targetVariableSetName": "Theme"
-        }
-      }
-    },
     "done": {
       "$type": "color",
       "$value": {
