@@ -724,7 +724,7 @@ Pill de estado con icono + texto y fondo suave (`badgeHighlight/all/*` en Figma)
 --ds-badge-highlight-gap                var(--ds-spacing-xs)           /* 4px */
 --ds-badge-highlight-padding-ver        var(--ds-spacing-2xs)          /* 2px */
 --ds-badge-highlight-padding-hor        var(--ds-spacing-md)           /* 8px */
---ds-badge-highlight-icon-size          20px
+--ds-badge-highlight-icon-size          var(--ds-sizing-2xs)  /* 16px */
 --ds-badge-highlight-icon-fg-emphasis   var(--ds-fg-secondary)         /* #B71B60 */
 --ds-badge-highlight-icon-fg-neutral    var(--ds-fg-subtle)            /* #9AA1AA */
 --ds-badge-highlight-icon-fg-positive   var(--ds-fg-success)           /* #389A3D */
