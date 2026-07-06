@@ -25,7 +25,9 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | Component | Description | Status |
 |-----------|-------------|--------|
 | `Button` | Accent · Default · Negative · Ghost · Outline · Floating · Pill shape · Lucide icons | ✅ v2 |
-| `Checkbox` | Unselected · Selected · Indeterminate · Error · Disabled · `aria-checked=mixed` · Double focus ring · Hover+Focus state | ✅ v2 |
+| `Checkbox` | Unselected · Selected · Indeterminate · Error · Disabled · `aria-checked=mixed` · Double focus ring | ✅ v2 |
+| `Radio` | Default · Error · Disabled · Label opcional · showLabel · Dual wrapper focus ring | ✅ v1 |
+| `Chip` | Choice (toggle) · Filter Selectable · Filter Dismissible · Input (icon+value+X) | ✅ v1 |
 | `Link` | Default · Accent · Visited · 4 sizes · Low/Medium emphasis · External | ✅ v2 |
 | `LinkList` | Semantic `nav > ul > li > Link` wrapper | ✅ v1 |
 | `CTALink` | Low · Medium · High emphasis × Default · Accent · 24 Figma variants | ✅ v2 |
@@ -35,8 +37,15 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `InputStepper` | All states · −/+ buttons · min/max/step | ✅ v1 |
 | `InputTelephone` | Selectable/Fixed country · Flag + code + divider · All states | ✅ v1 |
 | `InputAmount` | Selectable/Fixed currency · locale-aware number format · All states | ✅ v1 |
-| `Radio` | Default · Error · Disabled · Label opcional · showLabel · forwardRef | ✅ v1 |
-| `Chip` | Choice (toggle) · Filter Selectable (toggle) · Filter Dismissible (label+value+X) · Input (icon+value+X) | ✅ v1 |
+| `BadgeNotification` | Count pill · 4 colors (primary/secondary/tertiary/disabled) × 2 sizes (default/expanded) | ✅ v1 |
+| `BadgeHighlight` | Status pill with icon · Emphasis · Neutral · Positive · Negative | ✅ v1 |
+| `AmountView` | Amount pill · positive/negative × solid/soft/plain · onColor text for solid variants | ✅ v1 |
+| `SelectorInvoker` | Advanced Selector trigger · 8 states × 3 data selections · Double focus ring | ✅ v1 |
+| `SelectorListItem` | Advanced Selector list row · Composes real Radio/Checkbox atoms | ✅ v1 |
+| `Selector` | Advanced Selector full component · Label + Helper + Invoker + Validation | ✅ v1 |
+| `AccountSelectorInvoker` | Account Selector trigger · Same structure as SelectorInvoker + AmountView | ✅ v1 |
+| `AccountSelectorListItem` | Account Selector list row | ✅ v1 |
+| `AccountSelector` | Account Selector full component | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -48,8 +57,8 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 
 ## Stack
 
-- **React 18** + Vite
-- **lucide-react** for icons (same naming convention as the Figma DS)
+- **React 19** + Vite 8
+- **lucide-react** for icons — same naming convention as Figma DS. External Lucide Icons library activated in Figma (`figma.com/community/file/1204720733890022011`) with CS Design System variables mapped for color control.
 - **CSS custom properties** — no CSS-in-JS, no Tailwind
 - Tokens compiled from Figma variable exports (Tokens Studio)
 
@@ -80,11 +89,10 @@ Opens at `http://localhost:5173`
   --ds-link-fg-label-default:       var(--ds-fg-label-default);
   --ds-link-border-bottom-default:  var(--ds-borderColor-emphasis);
   --ds-cta-link-border-radius-low:  16px;
-  --ds-cta-link-border-radius-high: 80px;
   --ds-input-min-height:            56px;
   --ds-checkbox-bg-selected:        var(--ds-bg-primary-bold);
-  --ds-checkbox-focus-outer:        var(--ds-borderColor-focus-outer);
-  --ds-input-amount-currency-field-gap-hor-generic: 4px;
+  --ds-amount-view-bg-positive-solid: var(--ds-bg-success);
+  --ds-amount-view-fg-onColor:      var(--ds-fg-onColor);
 }
 ```
 
@@ -106,75 +114,43 @@ tokens/
 ```
 
 Rule: organisms import atoms — they never re-implement atom logic.  
-Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base directly.
+Rule: components consume `--ds-{component}-*` tokens only — never Mode or Base directly.  
+Rule: icon color is always managed via `currentColor` — never a direct token on the SVG.
 
 ---
 
-## Token audit — June 2026
+## Token audits
 
-**Input family audit (22 June):** All 6 input types audited. Zero violations. Shared tokens consolidated under `Input/InputCommon/`.
+**Input family (22 June 2026):** All 6 input types audited. Zero violations. Shared tokens consolidated under `Input/InputCommon/`.
 
-**Full cross-component audit (23 June):** All Component tokens in `tokens.css` now reference Mode via `var()` — zero hardcoded hex values. All JSX components consume exclusively `--ds-{component}-*` tokens. Dark mode and multi-theme cascade fully intact across the entire token stack.
+**Full cross-component audit (23 June 2026):** Zero violations across all components. 83 hardcoded hex values migrated to `var()`.
+
+**Selector + Badge + AmountView audit (01 July 2026):** Advanced Selector and Account Selector structurally complete (24+16+8 and 24+16+8 variants respectively). AmountView token naming restructured to `plain/soft/solid` convention. BadgeHighlight backgrounds corrected to subtle surfaces. `bg/negative` token eliminated from Mode — remap to `bg/error` or `bg/error-subtle` when encountered.
 
 | Component | Token violations | Status |
 |-----------|-----------------|--------|
 | `Button` | 0 | ✅ Clean |
 | `Checkbox` | 0 | ✅ Clean |
+| `Radio` | 0 | ✅ Clean |
 | `Link` | 0 | ✅ Clean |
 | `CTALink` | 0 | ✅ Clean |
+| `Chip` | 0 | ✅ Clean |
 | `InputText` | 0 | ✅ Clean |
 | `InputDate` | 0 | ✅ Clean |
 | `InputDropdown` | 0 | ✅ Clean |
 | `InputTelephone` | 0 | ✅ Clean |
 | `InputAmount` | 0 | ✅ Clean |
 | `InputStepper` | 0 | ✅ Clean |
-| `Radio` | 0 | ✅ Clean |
-| `Chip` | 0 | ✅ Clean |
 | `LinkList` | 0 | ✅ Clean |
-
----
-
-## Radio — API
-
-```jsx
-<Radio
-  checked                                          // controlled
-  defaultChecked                                   // uncontrolled — never use both
-  onChange     = {fn}
-  state        = "default" | "error" | "disabled"
-  label        = "Opción A"
-  showLabel    = {true}    // false → label hidden visually, ariaLabel required
-  description  = ""        // helper text below label
-  errorMessage = ""        // shown when state="error"
-  id
-  name                                             // group radios with the same name
-  value
-  required     = {false}
-  fullWidth    = {false}
-  ariaLabel    = ""        // required when showLabel={false} or no label
-  onFocus      = {fn}
-  onBlur       = {fn}
-/>
-```
-
-Group usage — the browser enforces mutual exclusivity within a `name` group:
-
-```jsx
-<Radio label="SEPA"   name="payment" value="sepa"   checked={v === 'sepa'}   onChange={fn} />
-<Radio label="Tarjeta" name="payment" value="card"  checked={v === 'card'}   onChange={fn} />
-```
-
-### Focus ring — dual wrapper pattern
-
-Radio uses two nested `<span>` wrappers around the visual circle. On `:focus-visible` the
-outer wrapper receives `--ds-radio-root-border-color-focus-outer` and the inner wrapper
-receives `--ds-radio-root-border-color-focus-inner`, producing a double ring via two
-separate borders.
-
-Checkbox achieves the same double-ring result differently: a single `.ds-checkbox__box`
-element uses `outline` (outer ring) + `box-shadow` (inner ring). Both approaches are
-intentional — Radio's dual wrapper allows the hover background (`control-wrap`) to be
-scoped inside the outer ring without leaking color.
+| `BadgeNotification` | 0 | ✅ Clean |
+| `BadgeHighlight` | 0 | ✅ Clean (01/07/2026) |
+| `AmountView` | 0 | ✅ Clean (01/07/2026) |
+| `SelectorInvoker` | 0 | ✅ Clean |
+| `SelectorListItem` | 0 | ✅ Clean |
+| `Selector` | 0 | ✅ Clean |
+| `AccountSelectorInvoker` | 0 | ✅ Clean |
+| `AccountSelectorListItem` | 0 | ✅ Clean |
+| `AccountSelector` | 0 | ✅ Clean |
 
 ---
 
