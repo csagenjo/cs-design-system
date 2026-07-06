@@ -309,28 +309,48 @@
      TYPOGRAPHY â€” Device tokens
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  --ds-fontSize-annotation-xs: 10px;
-  --ds-fontSize-annotation-sm: 12px;
-  --ds-fontSize-body-sm:       12px;
-  --ds-fontSize-body-md:       14px;
-  --ds-fontSize-body-lg:       16px;
-  --ds-fontSize-label-xs:      10px;
-  --ds-fontSize-label-sm:      12px;
-  --ds-fontSize-label-md:      14px;
-  --ds-fontSize-label-lg:      16px;
-  --ds-fontSize-subheadline:   16px;
-  --ds-fontSize-title-sm:      18px;
-  --ds-fontSize-title-md:      20px;
-  --ds-fontSize-title-lg:      24px;
-  --ds-fontSize-headline-sm:   28px;
-  --ds-fontSize-headline-md:   32px;
-  --ds-fontSize-headline-lg:   40px;
-  --ds-fontSize-headline-xl:   48px;
-  --ds-fontSize-headline-2xl:  56px;
+  /* fontSize — escala Figma (Device/Desk-desk), fuente de verdad. NO editar valores a mano. */
+  --ds-fontSize-annotation-sm:  12px;
+  --ds-fontSize-annotation-md:  14px;
+  --ds-fontSize-annotation-lg:  16px;
+  --ds-fontSize-label-xs:       12px;
+  --ds-fontSize-label-sm:       14px;
+  --ds-fontSize-label-md:       16px;
+  --ds-fontSize-label-lg:       19px;
+  --ds-fontSize-body-2xs:       12px;
+  --ds-fontSize-body-xs:        14px;
+  --ds-fontSize-body-sm:        16px;
+  --ds-fontSize-body-md:        19px;
+  --ds-fontSize-body-lg:        28px;
+  --ds-fontSize-title-sm:       16px;
+  --ds-fontSize-title-md:       19px;
+  --ds-fontSize-title-lg:       24px;
+  --ds-fontSize-title-xl:       32px;
+  --ds-fontSize-subheadline-xs: 16px;
+  --ds-fontSize-subheadline-sm: 19px;
+  --ds-fontSize-subheadline-md: 28px;
+  --ds-fontSize-subheadline-lg: 32px;
+  --ds-fontSize-subheadline-xl: 36px;
+  --ds-fontSize-headline-xs:    19px;
+  --ds-fontSize-headline-sm:    24px;
+  --ds-fontSize-headline-md:    28px;
+  --ds-fontSize-headline-lg:    32px;
+  --ds-fontSize-headline-xl:    36px;
+  --ds-fontSize-headline-2xl:   48px;
 
   --ds-font-weight-regular: 400;
   --ds-font-weight-medium:  500;
   --ds-font-weight-bold:    700;
+
+  /* lineHeight — escala Figma (Device/Desk), valores absolutos px. fontLheight/* en la colección. */
+  --ds-lineHeight-3xs: 18px;
+  --ds-lineHeight-2xs: 21px;
+  --ds-lineHeight-xs:  24px;
+  --ds-lineHeight-sm:  28.5px;
+  --ds-lineHeight-md:  36px;
+  --ds-lineHeight-lg:  42px;
+  --ds-lineHeight-xl:  48px;
+  --ds-lineHeight-2xl: 54px;
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -714,47 +734,78 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Advanced Selector (advancedSelector/all/*)
-     Usados por SelectorInvoker.jsx, SelectorListItem.jsx y Selector.jsx
+     COMPONENT TOKENS — Selector family COMMON (compartido por Advanced + Account)
+     Punto único de mantenimiento de todo lo idéntico entre ambos selectores.
+     Las familias específicas (--ds-selector-* / --ds-account-selector-*) referencian
+     estos y solo redefinen sus diferencias (borderWidth, gap/padding, detailText fg).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-selector-root-bg-generic:            var(--ds-bg-default);         /* #FFFFFF */
-  --ds-selector-root-bg-disabled:           var(--ds-bg-disabled);        /* #EEEFF1 */
-  --ds-selector-root-bg-hover:              var(--ds-bg-hover-primary);   /* #B8E6FE */
-  --ds-selector-root-border-color-generic:  var(--ds-borderColor-default);/* #9AA1AA */
-  --ds-selector-root-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-selector-root-border-color-error:    var(--ds-borderColor-error);
-  --ds-selector-root-border-color-selected: var(--ds-borderColor-primary);/* #286371 */
-  --ds-selector-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-selector-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-selector-root-border-width-generic:  1.5px;
-  --ds-selector-root-border-width-focus:    2px;
-  --ds-selector-root-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
-  --ds-selector-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
-  --ds-selector-root-gap:                   var(--ds-spacing-xl);        /* 16px */
-  --ds-selector-root-padding:               var(--ds-spacing-xl);        /* 16px */
+  --ds-selector-common-root-bg-generic:            var(--ds-bg-default);         /* #FFFFFF */
+  --ds-selector-common-root-bg-disabled:           var(--ds-bg-disabled);        /* #EEEFF1 */
+  --ds-selector-common-root-bg-hover:              var(--ds-bg-hover-primary);   /* #B8E6FE */
+  --ds-selector-common-root-border-color-generic:  var(--ds-borderColor-default);/* #9AA1AA */
+  --ds-selector-common-root-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-selector-common-root-border-color-error:    var(--ds-borderColor-error);
+  --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #286371 */
+  --ds-selector-common-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-selector-common-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-selector-common-root-border-width-focus:    2px;
+  --ds-selector-common-root-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
+  --ds-selector-common-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
+  --ds-selector-common-icon-left-fg:               var(--ds-fg-icon-default);
+  --ds-selector-common-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
+  --ds-selector-common-icon-left-size:             20px;
+  --ds-selector-common-icon-right-fg:              var(--ds-fg-icon-default);
+  --ds-selector-common-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
+  --ds-selector-common-icon-right-size:            20px;
+  --ds-selector-common-header-fg-default:          var(--ds-fg-default);
+  --ds-selector-common-header-fg-disabled:         var(--ds-fg-disabled);
+  --ds-selector-common-detail-icon-size:           16px;
 
-  --ds-selector-icon-left-fg:               var(--ds-fg-icon-default);
-  --ds-selector-icon-left-fg-focus:         var(--ds-fg-icon-primary);
-  --ds-selector-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
-  --ds-selector-icon-left-size:             20px;
 
-  --ds-selector-icon-right-fg:              var(--ds-fg-icon-default);
-  --ds-selector-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
-  --ds-selector-icon-right-size:            20px;
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Advanced Selector (advancedSelector/all/*)
+     Usados por SelectorInvoker.jsx, SelectorListItem.jsx y Selector.jsx.
+     Comparte COMMON; propio: borderWidth 1.5px, gap/padding 16px, description, detailText fg genérico.
+     ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-selector-header-fg-default:          var(--ds-fg-default);
-  --ds-selector-header-fg-disabled:         var(--ds-fg-disabled);
+  --ds-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
+  --ds-selector-root-bg-disabled:           var(--ds-selector-common-root-bg-disabled);
+  --ds-selector-root-bg-hover:              var(--ds-selector-common-root-bg-hover);
+  --ds-selector-root-border-color-generic:  var(--ds-selector-common-root-border-color-generic);
+  --ds-selector-root-border-color-disabled: var(--ds-selector-common-root-border-color-disabled);
+  --ds-selector-root-border-color-error:    var(--ds-selector-common-root-border-color-error);
+  --ds-selector-root-border-color-selected: var(--ds-selector-common-root-border-color-selected);
+  --ds-selector-root-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
+  --ds-selector-root-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
+  --ds-selector-root-border-width-generic:  1.5px;                                     /* propio */
+  --ds-selector-root-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
+  --ds-selector-root-border-radius-generic: var(--ds-selector-common-root-border-radius-generic);
+  --ds-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
+  --ds-selector-root-gap:                   var(--ds-spacing-xl);                      /* 16px — propio */
+  --ds-selector-root-padding:               var(--ds-spacing-xl);                      /* 16px — propio */
 
-  --ds-selector-description-fg-subtle:      var(--ds-fg-subtle);
+  --ds-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
+  --ds-selector-icon-left-fg-focus:         var(--ds-fg-icon-primary);                 /* propio */
+  --ds-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
+  --ds-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
+
+  --ds-selector-icon-right-fg:              var(--ds-selector-common-icon-right-fg);
+  --ds-selector-icon-right-fg-disabled:     var(--ds-selector-common-icon-right-fg-disabled);
+  --ds-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
+
+  --ds-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
+  --ds-selector-header-fg-disabled:         var(--ds-selector-common-header-fg-disabled);
+
+  --ds-selector-description-fg-subtle:      var(--ds-fg-subtle);                        /* propio */
   --ds-selector-description-fg-default:     var(--ds-fg-default);
   --ds-selector-description-fg-disabled:    var(--ds-fg-disabled);
 
-  --ds-selector-detail-text-fg-default:     var(--ds-fg-default);
+  --ds-selector-detail-text-fg-default:     var(--ds-fg-default);                       /* propio: fg genérico */
   --ds-selector-detail-text-fg-disabled:    var(--ds-fg-disabled);
   --ds-selector-detail-text-fg-secondary:   var(--ds-fg-secondary);
   --ds-selector-detail-text-fg-tertiary:    var(--ds-fg-tertiary);
-  --ds-selector-detail-icon-size:           16px;
+  --ds-selector-detail-icon-size:           var(--ds-selector-common-detail-icon-size);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -763,38 +814,38 @@
      Mismos roles de Mode que Advanced Selector, pero borderWidth/gap propios (más compactos).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-account-selector-root-bg-generic:            var(--ds-bg-default);
-  --ds-account-selector-root-bg-disabled:           var(--ds-bg-disabled);
-  --ds-account-selector-root-bg-hover:              var(--ds-bg-hover-primary);
-  --ds-account-selector-root-border-color-generic:  var(--ds-borderColor-default);
-  --ds-account-selector-root-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-account-selector-root-border-color-error:    var(--ds-borderColor-error);
-  --ds-account-selector-root-border-color-selected: var(--ds-borderColor-primary);
-  --ds-account-selector-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-account-selector-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-account-selector-root-border-width-generic:  var(--ds-border-width-sm);  /* 1px — borderWidth/sm-desk */
-  --ds-account-selector-root-border-width-focus:    2px;
-  --ds-account-selector-root-border-radius-generic: var(--ds-border-radius-md); /* 8px */
-  --ds-account-selector-root-opacity-pressed:       var(--ds-opacity-pressed);
-  --ds-account-selector-root-gap:                   var(--ds-spacing-lg);      /* 12px — spacing/lg-desk */
-  --ds-account-selector-root-padding:               var(--ds-spacing-lg);      /* 12px */
+  --ds-account-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
+  --ds-account-selector-root-bg-disabled:           var(--ds-selector-common-root-bg-disabled);
+  --ds-account-selector-root-bg-hover:              var(--ds-selector-common-root-bg-hover);
+  --ds-account-selector-root-border-color-generic:  var(--ds-selector-common-root-border-color-generic);
+  --ds-account-selector-root-border-color-disabled: var(--ds-selector-common-root-border-color-disabled);
+  --ds-account-selector-root-border-color-error:    var(--ds-selector-common-root-border-color-error);
+  --ds-account-selector-root-border-color-selected: var(--ds-selector-common-root-border-color-selected);
+  --ds-account-selector-root-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
+  --ds-account-selector-root-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
+  --ds-account-selector-root-border-width-generic:  var(--ds-border-width-sm);                 /* 1px — propio */
+  --ds-account-selector-root-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
+  --ds-account-selector-root-border-radius-generic: var(--ds-selector-common-root-border-radius-generic);
+  --ds-account-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
+  --ds-account-selector-root-gap:                   var(--ds-spacing-lg);                      /* 12px — propio */
+  --ds-account-selector-root-padding:               var(--ds-spacing-lg);                      /* 12px — propio */
 
-  --ds-account-selector-icon-left-fg:               var(--ds-fg-icon-default);
-  --ds-account-selector-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
-  --ds-account-selector-icon-left-size:             20px;
+  --ds-account-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
+  --ds-account-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
+  --ds-account-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
 
-  --ds-account-selector-icon-right-fg:              var(--ds-fg-icon-default);
-  --ds-account-selector-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
-  --ds-account-selector-icon-right-size:            20px;
+  --ds-account-selector-icon-right-fg:              var(--ds-selector-common-icon-right-fg);
+  --ds-account-selector-icon-right-fg-disabled:     var(--ds-selector-common-icon-right-fg-disabled);
+  --ds-account-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
 
-  --ds-account-selector-header-fg-default:          var(--ds-fg-default);
-  --ds-account-selector-header-fg-disabled:         var(--ds-fg-disabled);
+  --ds-account-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
+  --ds-account-selector-header-fg-disabled:         var(--ds-selector-common-header-fg-disabled);
 
-  --ds-account-selector-detail-text-fg-default:     var(--ds-fg-body-default);
+  --ds-account-selector-detail-text-fg-default:     var(--ds-fg-body-default);                  /* propio: fg-body */
   --ds-account-selector-detail-text-fg-disabled:    var(--ds-fg-body-disabled);
   --ds-account-selector-detail-text-fg-secondary:   var(--ds-fg-body-secondary);
   --ds-account-selector-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);
-  --ds-account-selector-detail-icon-size:           16px;
+  --ds-account-selector-detail-icon-size:           var(--ds-selector-common-detail-icon-size);
 
 }
 

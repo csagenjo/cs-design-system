@@ -113,26 +113,26 @@ const css = `
 
 /* Label text */
 .ds-radio__label {
-  font-size:   14px;
-  font-weight: 500;
+  font-size:   var(--ds-fontSize-label-sm);
+  font-weight: var(--ds-font-weight-medium);
   color:       var(--ds-radio-label-fg-generic);
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-2xs);
   user-select: none;
 }
 .ds-radio--disabled .ds-radio__label { color: var(--ds-radio-label-fg-disabled); }
 
 /* Helper text */
 .ds-radio__description {
-  font-size:   12px;
+  font-size:   var(--ds-fontSize-annotation-sm);
   color:       var(--ds-radio-description-fg);
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-3xs);
   margin:      0;
 }
 
 /* Validation message */
 .ds-radio__message {
-  font-size:   12px;
-  line-height: 1.4;
+  font-size:   var(--ds-fontSize-annotation-sm);
+  line-height: var(--ds-lineHeight-3xs);
   margin:      0;
 }
 .ds-radio__message--error { color: var(--ds-radio-validation-fg); }

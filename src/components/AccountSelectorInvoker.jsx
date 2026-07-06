@@ -28,6 +28,10 @@ const css = `
   display:     flex;
   color:       var(--ds-account-selector-icon-left-fg);
 }
+.ds-account-selector-invoker__icon-left svg {
+  width:  var(--ds-account-selector-icon-left-size);
+  height: var(--ds-account-selector-icon-left-size);
+}
 
 .ds-account-selector-invoker__content {
   box-sizing:  border-box;
@@ -50,9 +54,9 @@ const css = `
 .ds-account-selector-invoker--empty .ds-account-selector-invoker__center { gap: 0; }
 
 .ds-account-selector-invoker__header {
-  font-size:   16px;
-  font-weight: 700;
-  line-height: 24px;
+  font-size:   var(--ds-fontSize-title-sm);
+  font-weight: var(--ds-font-weight-bold);
+  line-height: var(--ds-lineHeight-xs);
   color:       var(--ds-account-selector-header-fg-default);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -63,8 +67,8 @@ const css = `
   display:     inline-flex;
   align-items: center;
   gap:         var(--ds-spacing-xs);
-  font-size:   14px;
-  line-height: 21px;
+  font-size:   var(--ds-fontSize-body-xs);
+  line-height: var(--ds-lineHeight-2xs);
   color:       var(--ds-account-selector-detail-text-fg-default);
   overflow:    hidden;
 }
@@ -168,7 +172,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
     >
       {showIconLeft && (
         <span className="ds-account-selector-invoker__icon-left">
-          <FileText size={20} strokeWidth={1.75} aria-hidden="true" />
+          <FileText strokeWidth={1.75} aria-hidden="true" />
         </span>
       )}
 
