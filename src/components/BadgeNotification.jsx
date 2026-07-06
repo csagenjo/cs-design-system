@@ -11,9 +11,9 @@ const css = `
   padding:         0 var(--ds-badge-notification-padding-hor-default);
   border-radius:   var(--ds-badge-notification-border-radius);
   font-family:     inherit;
-  font-size:       12px;
-  font-weight:     700;
-  line-height:     18px;
+  font-size:       var(--ds-fontSize-label-xs);
+  font-weight:     var(--ds-font-weight-bold);
+  line-height:     var(--ds-lineHeight-3xs);
   color:            var(--ds-badge-notification-fg-label);
   white-space:     nowrap;
 }
