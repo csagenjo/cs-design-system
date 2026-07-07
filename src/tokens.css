@@ -735,9 +735,10 @@
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Selector family COMMON (compartido por Advanced + Account)
-     Punto único de mantenimiento de todo lo idéntico entre ambos selectores.
+     Alineado con Figma (Selector/SelectorCommon, 07/07/2026): borderWidth y
+     gap/padding pasaron a ser compartidos — Figma nunca los diferenció de verdad.
      Las familias específicas (--ds-selector-* / --ds-account-selector-*) referencian
-     estos y solo redefinen sus diferencias (borderWidth, gap/padding, detailText fg).
+     estos y solo redefinen detailText fg (única diferencia real, por el formato IBAN).
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-selector-common-root-bg-generic:            var(--ds-bg-default);         /* #FFFFFF */
@@ -749,13 +750,16 @@
   --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #286371 */
   --ds-selector-common-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-selector-common-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-selector-common-root-border-width-generic:  var(--ds-border-width-sm);    /* 1px — unificado con Figma */
   --ds-selector-common-root-border-width-focus:    2px;
   --ds-selector-common-root-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
   --ds-selector-common-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
-  --ds-selector-common-icon-left-fg:               var(--ds-fg-icon-default);
+  --ds-selector-common-root-gap:                   var(--ds-spacing-lg);         /* 12px — unificado con Figma */
+  --ds-selector-common-root-padding:               var(--ds-spacing-lg);         /* 12px — unificado con Figma */
+  --ds-selector-common-icon-left-fg:               var(--ds-fg-icon-primary);
   --ds-selector-common-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
   --ds-selector-common-icon-left-size:             20px;
-  --ds-selector-common-icon-right-fg:              var(--ds-fg-icon-default);
+  --ds-selector-common-icon-right-fg:              var(--ds-fg-icon-primary);
   --ds-selector-common-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
   --ds-selector-common-icon-right-size:            20px;
   --ds-selector-common-header-fg-default:          var(--ds-fg-default);
@@ -766,7 +770,7 @@
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Advanced Selector (advancedSelector/all/*)
      Usados por SelectorInvoker.jsx, SelectorListItem.jsx y Selector.jsx.
-     Comparte COMMON; propio: borderWidth 1.5px, gap/padding 16px, description, detailText fg genérico.
+     Comparte COMMON casi en su totalidad; propio solo: description, detailText fg genérico.
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
@@ -778,15 +782,14 @@
   --ds-selector-root-border-color-selected: var(--ds-selector-common-root-border-color-selected);
   --ds-selector-root-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
   --ds-selector-root-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
-  --ds-selector-root-border-width-generic:  1.5px;                                     /* propio */
+  --ds-selector-root-border-width-generic:  var(--ds-selector-common-root-border-width-generic);
   --ds-selector-root-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
   --ds-selector-root-border-radius-generic: var(--ds-selector-common-root-border-radius-generic);
   --ds-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
-  --ds-selector-root-gap:                   var(--ds-spacing-xl);                      /* 16px — propio */
-  --ds-selector-root-padding:               var(--ds-spacing-xl);                      /* 16px — propio */
+  --ds-selector-root-gap:                   var(--ds-selector-common-root-gap);
+  --ds-selector-root-padding:               var(--ds-selector-common-root-padding);
 
   --ds-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
-  --ds-selector-icon-left-fg-focus:         var(--ds-fg-icon-primary);                 /* propio */
   --ds-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
   --ds-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
 
@@ -811,7 +814,7 @@
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Account Selector (accountSelector/all/*)
      Usados por AccountSelectorInvoker.jsx, AccountSelectorListItem.jsx y AccountSelector.jsx.
-     Mismos roles de Mode que Advanced Selector, pero borderWidth/gap propios (más compactos).
+     Comparte COMMON en su totalidad para root; único propio: detailText fg (fg-body).
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-account-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
@@ -823,12 +826,12 @@
   --ds-account-selector-root-border-color-selected: var(--ds-selector-common-root-border-color-selected);
   --ds-account-selector-root-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
   --ds-account-selector-root-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
-  --ds-account-selector-root-border-width-generic:  var(--ds-border-width-sm);                 /* 1px — propio */
+  --ds-account-selector-root-border-width-generic:  var(--ds-selector-common-root-border-width-generic);
   --ds-account-selector-root-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
   --ds-account-selector-root-border-radius-generic: var(--ds-selector-common-root-border-radius-generic);
   --ds-account-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
-  --ds-account-selector-root-gap:                   var(--ds-spacing-lg);                      /* 12px — propio */
-  --ds-account-selector-root-padding:               var(--ds-spacing-lg);                      /* 12px — propio */
+  --ds-account-selector-root-gap:                   var(--ds-selector-common-root-gap);
+  --ds-account-selector-root-padding:               var(--ds-selector-common-root-padding);
 
   --ds-account-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
   --ds-account-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
