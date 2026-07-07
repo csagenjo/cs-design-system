@@ -136,26 +136,26 @@ const css = `
 
 /* Label text */
 .ds-checkbox__label {
-  font-size:   14px;
-  font-weight: 500;
+  font-size:   var(--ds-fontSize-label-sm);
+  font-weight: var(--ds-font-weight-medium);
   color:       var(--ds-checkbox-label-fg);
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-2xs);
   user-select: none;
 }
 .ds-checkbox--disabled .ds-checkbox__label { color: var(--ds-checkbox-label-disabled); }
 
 /* Helper text */
 .ds-checkbox__description {
-  font-size:   12px;
+  font-size:   var(--ds-fontSize-annotation-sm);
   color:       var(--ds-checkbox-description-fg);
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-3xs);
   margin:      0;
 }
 
 /* Validation message */
 .ds-checkbox__message {
-  font-size:   12px;
-  line-height: 1.4;
+  font-size:   var(--ds-fontSize-annotation-sm);
+  line-height: var(--ds-lineHeight-3xs);
   margin:      0;
 }
 .ds-checkbox__message--error { color: var(--ds-checkbox-validation-fg); }

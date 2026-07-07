@@ -26,6 +26,10 @@ const css = `
   display:     flex;
   color:       var(--ds-selector-icon-left-fg);
 }
+.ds-selector-list-item__icon-left svg {
+  width:  var(--ds-selector-icon-left-size);
+  height: var(--ds-selector-icon-left-size);
+}
 
 .ds-selector-list-item__content {
   box-sizing:  border-box;
@@ -47,9 +51,9 @@ const css = `
 }
 
 .ds-selector-list-item__header {
-  font-size:   16px;
-  font-weight: 700;
-  line-height: 24px;
+  font-size:   var(--ds-fontSize-title-sm);
+  font-weight: var(--ds-font-weight-bold);
+  line-height: var(--ds-lineHeight-xs);
   color:       var(--ds-selector-header-fg-default);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -57,8 +61,8 @@ const css = `
 }
 
 .ds-selector-list-item__description {
-  font-size:   14px;
-  line-height: 21px;
+  font-size:   var(--ds-fontSize-body-xs);
+  line-height: var(--ds-lineHeight-2xs);
   color:       var(--ds-selector-description-fg-subtle);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -69,8 +73,8 @@ const css = `
   display:     inline-flex;
   align-items: center;
   gap:         var(--ds-spacing-xs);
-  font-size:   14px;
-  line-height: 21px;
+  font-size:   var(--ds-fontSize-body-xs);
+  line-height: var(--ds-lineHeight-2xs);
   color:       var(--ds-selector-detail-text-fg-default);
   overflow:    hidden;
 }
@@ -124,7 +128,7 @@ const css = `
 }
 .ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-icon-left-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__header { color: var(--ds-selector-header-fg-disabled); }
-.ds-selector-list-item--disabled .ds-selector-list-item__description { color: var(--ds-selector-detail-text-fg-disabled); }
+.ds-selector-list-item--disabled .ds-selector-list-item__description { color: var(--ds-selector-description-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__detail { color: var(--ds-selector-detail-text-fg-disabled); }
 `;
 
@@ -173,7 +177,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
       onClick={handleRowClick}
     >
       <span className="ds-selector-list-item__icon-left">
-        <FileText size={20} strokeWidth={1.75} aria-hidden="true" />
+        <FileText strokeWidth={1.75} aria-hidden="true" />
       </span>
 
       <span className="ds-selector-list-item__content">
