@@ -12,31 +12,31 @@ const css = `
 .ds-selector--full-width { display: flex; width: 100%; }
 
 .ds-selector__label {
-  font-size:     14px;
-  font-weight:   700;
+  font-size:     var(--ds-fontSize-label-md);
+  font-weight:   var(--ds-font-weight-bold);
   color:         var(--ds-input-fg-label);
   cursor:        pointer;
-  line-height:   1.4;
+  line-height:   var(--ds-lineHeight-xs);
   margin-bottom: var(--ds-input-label-gap);
 }
 .ds-selector--disabled .ds-selector__label { color: var(--ds-input-label-fg-disabled); cursor: default; }
 
 .ds-selector__helper {
-  font-size:   12px;
+  font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-fg-helper);
   margin:      0 0 var(--ds-input-helper-gap);
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-xs);
 }
 .ds-selector--disabled .ds-selector__helper { color: var(--ds-input-helper-fg-disabled); }
 
 .ds-selector__message {
   display:     flex;
   align-items: flex-start;
-  gap:         4px;
-  font-size:   12px;
+  gap:         var(--ds-spacing-xs);
+  font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-validation-fg-text);
   margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-xs);
 }
 .ds-selector__message-icon {
   color:       var(--ds-input-fg-error);

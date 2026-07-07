@@ -83,9 +83,9 @@ const ICONS = {
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-btn--sm { --_h: 32px; --_px: var(--ds-button-px-sm); --_py: var(--ds-button-py-sm); --_fs: 12px; --_icon: 14px; --_gap: 4px; }
-.ds-btn--md { --_h: 40px; --_px: var(--ds-button-px-md); --_py: var(--ds-button-py-md); --_fs: 14px; --_icon: 16px; --_gap: 6px; }
-.ds-btn--lg { --_h: 48px; --_px: var(--ds-button-px-lg); --_py: var(--ds-button-py-lg); --_fs: 16px; --_icon: 18px; --_gap: 8px; }
+.ds-btn--sm { --_h: 32px; --_px: var(--ds-button-px-sm); --_py: var(--ds-button-py-sm); --_fs: var(--ds-fontSize-label-xs); --_icon: 14px; --_gap: 4px; }
+.ds-btn--md { --_h: 40px; --_px: var(--ds-button-px-md); --_py: var(--ds-button-py-md); --_fs: var(--ds-fontSize-label-sm); --_icon: 16px; --_gap: 6px; }
+.ds-btn--lg { --_h: 48px; --_px: var(--ds-button-px-lg); --_py: var(--ds-button-py-lg); --_fs: var(--ds-fontSize-label-md); --_icon: 18px; --_gap: 8px; }
 
 .ds-btn {
   display:         inline-flex;
@@ -95,7 +95,7 @@ const css = `
   height:          var(--_h);
   padding:         var(--_py) var(--_px);
   font-size:       var(--_fs);
-  font-weight:     500;
+  font-weight:     var(--ds-font-weight-medium);
   border-radius:   var(--ds-button-radius);
   border:          var(--ds-button-border-width) solid transparent;
   cursor:          pointer;

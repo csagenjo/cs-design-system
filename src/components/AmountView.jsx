@@ -12,8 +12,8 @@ const css = `
   padding:          var(--ds-amount-view-padding-ver) var(--ds-amount-view-padding-hor);
   border-radius:    var(--ds-amount-view-border-radius);
   font-family:      inherit;
-  font-size:        14px;
-  line-height:      21px;
+  font-size:        var(--ds-fontSize-label-sm);
+  line-height:      var(--ds-lineHeight-2xs);
   white-space:      nowrap;
 }
 

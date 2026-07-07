@@ -12,8 +12,8 @@ const css = `
   border:         1px solid transparent;
   border-radius:  var(--ds-badge-highlight-border-radius);
   font-family:    inherit;
-  font-size:      12px;
-  line-height:    18px;
+  font-size:      var(--ds-fontSize-label-xs);
+  line-height:    var(--ds-lineHeight-3xs);
   color:          var(--ds-badge-highlight-label-fg);
   white-space:    nowrap;
 }

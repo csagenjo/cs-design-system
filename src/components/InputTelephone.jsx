@@ -50,11 +50,11 @@ const css = `
 
 /* Label */
 .ds-input-telephone__label {
-  font-size:     14px;
-  font-weight:   700;
+  font-size:     var(--ds-fontSize-label-md);
+  font-weight:   var(--ds-font-weight-bold);
   color:         var(--ds-input-fg-label);
   cursor:        default;
-  line-height:   1.4;
+  line-height:   var(--ds-lineHeight-xs);
   margin-bottom: var(--ds-input-label-gap);
 }
 .ds-input-telephone--disabled .ds-input-telephone__label {
@@ -63,10 +63,10 @@ const css = `
 
 /* Helper — encima del campo */
 .ds-input-telephone__helper {
-  font-size:   12px;
+  font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-fg-helper);
   margin:      0 0 var(--ds-input-helper-gap);
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-xs);
 }
 .ds-input-telephone--disabled .ds-input-telephone__helper {
   color: var(--ds-input-helper-fg-disabled);
@@ -166,8 +166,8 @@ const css = `
 
 /* Código de país */
 .ds-input-telephone__code {
-  font-size:   14px;
-  font-weight: 500;
+  font-size:   var(--ds-fontSize-label-sm);
+  font-weight: var(--ds-font-weight-medium);
   color:       var(--ds-input-telephone-country-text-fg);
   line-height: 1;
 }
@@ -202,9 +202,9 @@ const css = `
   min-width:          0;
   padding:            var(--ds-input-telephone-field-padding-ver)
                       var(--ds-input-telephone-field-padding-hor);
-  font-size:          14px;
+  font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
-  line-height:        1.5;
+  line-height:        var(--ds-lineHeight-xs);
   color:              var(--ds-input-fg-default);
   background:         var(--ds-input-telephone-field-bg);
   border:             none;
@@ -224,10 +224,10 @@ const css = `
   display:     flex;
   align-items: flex-start;
   gap:         4px;
-  font-size:   12px;
+  font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-validation-fg-text);
   margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: 1.4;
+  line-height: var(--ds-lineHeight-xs);
 }
 .ds-input-telephone__message-icon {
   color:       var(--ds-input-fg-error);

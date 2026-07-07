@@ -27,6 +27,10 @@ const css = `
   display:     flex;
   color:       var(--ds-selector-icon-left-fg);
 }
+.ds-selector-invoker__icon-left svg {
+  width:  var(--ds-selector-icon-left-size);
+  height: var(--ds-selector-icon-left-size);
+}
 
 .ds-selector-invoker__content {
   box-sizing:  border-box;
@@ -49,9 +53,9 @@ const css = `
 .ds-selector-invoker--empty .ds-selector-invoker__center { gap: 0; }
 
 .ds-selector-invoker__header {
-  font-size:   16px;
-  font-weight: 700;
-  line-height: 24px;
+  font-size:   var(--ds-fontSize-title-sm);
+  font-weight: var(--ds-font-weight-bold);
+  line-height: var(--ds-lineHeight-xs);
   color:       var(--ds-selector-header-fg-default);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -59,8 +63,8 @@ const css = `
 }
 
 .ds-selector-invoker__description {
-  font-size:   14px;
-  line-height: 21px;
+  font-size:   var(--ds-fontSize-body-xs);
+  line-height: var(--ds-lineHeight-2xs);
   color:       var(--ds-selector-description-fg-subtle);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -71,8 +75,8 @@ const css = `
   display:     inline-flex;
   align-items: center;
   gap:         var(--ds-spacing-xs);
-  font-size:   14px;
-  line-height: 21px;
+  font-size:   var(--ds-fontSize-body-xs);
+  line-height: var(--ds-lineHeight-2xs);
   color:       var(--ds-selector-detail-text-fg-default);
   overflow:    hidden;
 }
@@ -197,7 +201,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
     >
       {showIconLeft && (
         <span className="ds-selector-invoker__icon-left">
-          <FileText size={20} strokeWidth={1.75} aria-hidden="true" />
+          <FileText strokeWidth={1.75} aria-hidden="true" />
         </span>
       )}
 
