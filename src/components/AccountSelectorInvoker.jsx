@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { FileText, Link as LinkIcon, ChevronRight } from 'lucide-react';
+import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { BadgeNotification } from './BadgeNotification';
 import { AmountView } from './AmountView';
@@ -172,7 +172,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
     >
       {showIconLeft && (
         <span className="ds-account-selector-invoker__icon-left">
-          <FileText strokeWidth={1.75} aria-hidden="true" />
+          <Icon name="file-text" size="xs" />
         </span>
       )}
 
@@ -186,7 +186,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
 
           {!isEmpty && detailText && (
             <span className="ds-account-selector-invoker__detail">
-              <LinkIcon strokeWidth={1.75} aria-hidden="true" />
+              <Icon name="link" size="2xs" />
               <span>{mask(detailText)}</span>
             </span>
           )}
@@ -196,7 +196,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
           {dataSelection === 'multiple' && selectedCount != null && (
             <BadgeNotification color="secondary" size="expanded" label={selectedCount} />
           )}
-          <ChevronRight strokeWidth={1.75} aria-hidden="true" />
+          <Icon name="chevron-right" size="xs" />
         </span>
       </span>
     </button>
