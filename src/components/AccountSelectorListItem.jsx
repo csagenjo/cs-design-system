@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { FileText, Link as LinkIcon } from 'lucide-react';
+import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { Radio } from './Radio';
 import { Checkbox } from './Checkbox';
@@ -160,7 +160,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
       onClick={handleRowClick}
     >
       <span className="ds-account-selector-list-item__icon-left">
-        <FileText strokeWidth={1.75} aria-hidden="true" />
+        <Icon name="file-text" size="xs" />
       </span>
 
       <span className="ds-account-selector-list-item__content">
@@ -173,7 +173,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
 
           {detailText && (
             <span className="ds-account-selector-list-item__detail">
-              <LinkIcon strokeWidth={1.75} aria-hidden="true" />
+              <Icon name="link" size="2xs" />
               <span>{mask(detailText)}</span>
             </span>
           )}

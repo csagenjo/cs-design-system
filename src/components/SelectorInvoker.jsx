@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { FileText, Link as LinkIcon, ChevronRight } from 'lucide-react';
+import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { BadgeNotification } from './BadgeNotification';
 
@@ -201,7 +201,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
     >
       {showIconLeft && (
         <span className="ds-selector-invoker__icon-left">
-          <FileText strokeWidth={1.75} aria-hidden="true" />
+          <Icon name="file-text" size="xs" />
         </span>
       )}
 
@@ -215,7 +215,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
 
           {!isEmpty && detailText && (
             <span className={detailClasses}>
-              <LinkIcon strokeWidth={1.75} aria-hidden="true" />
+              <Icon name="link" size="2xs" />
               <span>{mask(detailText)}</span>
             </span>
           )}
@@ -225,7 +225,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
           {dataSelection === 'multiple' && selectedCount != null && (
             <BadgeNotification color="secondary" size="expanded" label={selectedCount} />
           )}
-          <ChevronRight strokeWidth={1.75} aria-hidden="true" />
+          <Icon name="chevron-right" size="xs" />
         </span>
       </span>
     </button>
