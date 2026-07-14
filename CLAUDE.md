@@ -45,6 +45,7 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 - Icon color siempre via `currentColor` — nunca token directo en SVG
 - bgMix para hover/pressed en superficies transparentes (Button, Link, CTALink, Chip, InputStepper)
 - Borrowing de `InputCommon` hacia Selector es **intencional** — punto único de mantenimiento para label/helper/validation de formularios
+- **Color de icono: por contraste real, nunca por nombre de Variant.** El criterio correcto es "¿el fondo de este estado concreto está relleno o es contorno?", no "¿qué Variant es esta?" — en Button, Secondary/Tertiary pasan a fondo relleno en Hover y Focus Hover (feedback de interacción fuerte), manteniendo contorno en Enabled/Pressed/Focus/Focus Pressed. Como `currentColor` ya propaga el color del padre al SVG automáticamente, esto se resuelve en CSS puro vía los estados del botón — no hace falta token de icono por estado, solo que el CSS del padre defina bien qué color aplica en cada pseudo-clase
 
 ## 5. Reglas críticas — NO hacer nunca
 
@@ -54,6 +55,8 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 - NUNCA mezclar átomos (components/) con organismos (organisms/)
 - NUNCA reimplementar la lógica de un átomo dentro de otro componente — importar e instanciar
 - NUNCA usar nombres reales — solo los aliases de arriba
+- NUNCA nombrar tokens de color de icono por la Variant de origen (`default-primary`, `accent-generic`...) — nombrar por el contraste que resuelven (`on-color`, `on-outline-default`, `on-outline-accent`). El nombre debe responder "¿qué necesita verse aquí?", no "¿de dónde viene esto?"
+- NUNCA usar `fg/icon/inverse` para icono sobre superficie de color — se invierte en dark mode (pasa a negro) y deja el icono invisible. Usar `fg/icon/onColor`, que se mantiene blanco en ambos modos
 
 ## 6. Componentes construidos ✅
 
@@ -134,11 +137,14 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 | Pri | Componente | Dependencias |
 |---|---|---|
+| 0 | **Table + Celda (CellHeader/CellData/CellActions) + Pagination** | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
 | 1 | ~~Advanced Selector~~ ✅ | — |
 | — | ~~Account Selector~~ ✅ | — |
 | 2 | **Snackbar** | Button ✅ |
 | 3 | **Description List** | Link ✅ |
 | 4 | **Dialog** | Button ✅ |
+
+**Nota (14/07/2026):** Table + Celda + Pagination se prioriza por delante del resto de Sprint 1 — es lo que Carol está construyendo en Figma ahora mismo (Celda ya en desarrollo activo). Pendiente confirmar si Badge se adelanta también (si el toolkit necesita estados en celda desde ya) o si Table puede avanzar primero con celdas de texto plano.
 
 ### 🟠 Sprint 2
 
@@ -146,7 +152,7 @@ List View · File Upload · Tabs
 
 ### 🟢 Sprint 3
 
-Pagination · Collapsible · Table · Inline Notification
+Collapsible · Inline Notification
 
 ### ⚪ Backlog
 
@@ -156,10 +162,14 @@ Accordion · Tooltip · Combobox · Segmented Controls · Slider · Step Navigat
 
 Calendar · Bottom Navigation · Bottom Sheet · Image · Videoplayer
 
+
 ## 10. Deuda técnica
 
 - **Country/Currency Picker** — Selector entrega solo el trigger. El mecanismo de apertura/popover sigue pendiente.
-- **Country Picker / Advanced List Item** — focus-inner en teal en vez de blanco. Alcance sin investigar.
-- **Mode tokens dark mode** — varios tokens rotos o sin función clara. Revisión global pendiente (sesión aparte).
-- **Notification Count + Placeholder/Placeholder** — descripciones apuntan a dominio interno de Sistema Origen. Borrar en Figma.
-- **Selector token families** — tokens de iconLeft/fg y borderColor/focus-inner pendientes de crear en tokens.css (estructura en Figma completada 01/07/2026). Ver token-architecture.md §Selector families.
+- **Country Picker / Advanced List Item** — focus-inner en teal en vez de blanco. Alcance sin investigar (sigue así tras la sesión del 14/07 — se abrió el tema pero la sesión derivó hacia Button/Icon Button antes de llegar a Advanced Selector; retomar).
+- **Mode tokens dark mode** — varios tokens rotos o sin función clara. Revisión global pendiente (sesión aparte). Caso concreto ya identificado el 14/07: `fg/icon/inverse` se invierte a negro en dark mode, `fg/icon/onColor` se mantiene blanco en ambos modos — mismo valor en light, distinto en dark. Revisar si hay más pares Mode con esta misma trampa antes de dar la revisión global por completa.
+- **Notification Count + Placeholder/Placeholder** — descripciones apuntan a dominio interno de Sistema Origen. Borrar en Figma. **Sin verificar en la sesión del 14/07** — el barrido de esa sesión usaba patrones de nombre distintos (`(Beta)`, `Pill Button`, `PO-`, `OJ/INT`...) y no cubría este caso; sigue abierto.
+- **Selector token families** — tokens de iconLeft/fg y borderColor/focus-inner pendientes de crear en tokens.css (estructura en Figma completada 01/07/2026). Ver token-architecture.md §Selector families. **Al crearlos, aplicar el patrón consolidado del 14/07** (un único grupo `icon/fg` con nombres por contraste — `on-color`/`on-outline-*`/`disabled` —, no duplicar por posición ni por Variant de origen).
+- **Sync Figma → tokens.css para Button** — el 14/07 se reconstruyó en Figma la arquitectura de color de icono de Button e Icon Button: `iconLeft/fg` + `iconRight/fg` (10 tokens duplicados) consolidados en un único `button/all/icon/fg/*` (4 tokens: `on-color`, `on-outline-default`, `on-outline-accent`, `disabled`); mismo para `icon/size`. tokens.css sigue reflejando la estructura anterior — sincronizar antes de tocar Button en código otra vez.
+- **Copia de librería de Sistema Origen en la cuenta de Figma** — detectada el 14/07 vía búsqueda (`Web - SYS_OJ_INT (Copy)`), no vinculada al archivo activo pero presente en el espacio de equipo. Pendiente que Carol la revise/archive.
+- **Verificación pendiente (no bloqueante):** confirmar en Figma que `on-filled` y los tokens huérfanos de `iconLeft`/`iconRight` de Button han desaparecido del todo del panel de variables — la herramienta reporta el borrado sin error pero la lectura inmediata los seguía mostrando (problema de caché plugin↔archivo, ya confirmado benigno en casos anteriores de la misma sesión).
