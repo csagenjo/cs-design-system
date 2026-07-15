@@ -95,8 +95,12 @@ const css = `
   border-color: var(--ds-checkbox-border-error);
 }
 
-/* Disabled — muted surface */
-.ds-checkbox--disabled .ds-checkbox__box {
+/* Disabled — muted surface. Debe ganar a selected/indeterminate (mayor
+   especificidad que .ds-checkbox__input:checked + .ds-checkbox__box) para que
+   el disabled seleccionado se vea gris, no con color de marca. */
+.ds-checkbox--disabled .ds-checkbox__box,
+.ds-checkbox--disabled .ds-checkbox__input:checked       + .ds-checkbox__box,
+.ds-checkbox--disabled .ds-checkbox__input:indeterminate + .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-disabled);
   border-color: var(--ds-checkbox-border-disabled);
   color:        var(--ds-checkbox-icon-disabled);
