@@ -89,8 +89,11 @@ const css = `
   background: var(--ds-radio-indicator-fg-error);
 }
 
-/* Disabled */
-.ds-radio--disabled .ds-radio__circle {
+/* Disabled — debe ganar a selected (el borde checked tiene más especificidad
+   que .ds-radio--disabled .ds-radio__circle) para que el disabled seleccionado
+   se vea gris, no con el borde de marca. */
+.ds-radio--disabled .ds-radio__circle,
+.ds-radio--disabled .ds-radio__input:checked + .ds-radio__focus-ring .ds-radio__circle {
   background:   var(--ds-radio-root-bg-disabled);
   border-color: var(--ds-radio-root-border-color-disabled);
 }
