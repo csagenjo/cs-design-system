@@ -8,9 +8,11 @@ Base (157)
   └─ primitivos raw: hex, opacidades, dimensiones, tipografía
   └─ el código NUNCA los usa directamente
 
-Theme (873 por tema × 7 temas)
+Theme (873 por tema × 2 temas activos)
   └─ mapea Base a roles semánticos POR TEMA
-  └─ 7 modos: Retail · Youth · Wholesale⚠️ · Business⚠️ · Private⚠️ · Wireframe⚠️ · Legacy⚠️
+  └─ 2 temas activos: Overall (Retail) · Youth
+  └─ Wholesale · Business · Private · Wireframe ELIMINADOS de la colección el 15/07/2026
+     (decisión abierta — pueden volver más adelante, o no; ver "Estado de temas")
   └─ convenio: {rol}-light / {rol}-dark  (los dos valores posibles para el Mode)
   └─ el código NUNCA los usa directamente
 
@@ -69,6 +71,45 @@ Cada familia: 11 pasos (50, 100–900, 950).
 | Color de soporte | secondary/magenta | primary/teal |
 | Tokens cambiados entre temas | — | 148 (primary↔secondary swap) |
 
+### Reducción de profundidad de color primary/secondary (15/07/2026)
+
+Los roles de **texto/icono** primary y secondary se aclararon un paso hacia el `500` de su familia, en **Retail y Youth**, en light y dark. Regla aplicada por búsqueda+reemplazo en Figma sobre `primary-light/-dark` y `secondary-light/-dark`: lo que estaba en base alta (700 en primary, 600 en secondary) pasó a `500`. Valores reales del diff `tokens/Theme/`:
+
+**Roles primary → `color/primary/500`** (antes `/700`) · en Youth = `color/secondary/500` (antes `/700`):
+```
+fg/primary-light · fg/title/primary-light · fg/headline/primary-light
+fg/label/primary-light · fg/icon/primary-light
+fg/body|headline|label|icon/onSurface/static-primary-light
+borderColor/primary-light
+bg/containerShape/primary-light   ⚠️ único bg/* que cambió — ver nota
+```
+**Roles secondary → `color/secondary/500`** (antes `/600`) · en Youth = `color/primary/500` (antes `/600`):
+```
+fg/secondary-light · fg/label/secondary-light
+fg/icon/secondary-light · fg/body/secondary-light
+```
+**Tokens nuevos añadidos** (no existían antes):
+```
+fg/body/primary-light  → color/primary/500   (Youth: secondary/500)
+fg/body/primary-dark   → color/primary/300   (Youth: secondary/300)
+```
+
+**Roles `accent` — dirección CONTRARIA, hacia `/700`** (antes `500` o mixto). Son roles distintos de los primary/secondary planos, no mezclar:
+```
+fg/icon/accent-primary-light · borderColor/accent-primary-light · bg/containerShape/accent-light
+→ color/primary/700   (Youth: color/secondary/700)
+```
+
+**NO cambió (intencional — intensidades separadas):**
+- ramas `bold`: `bg/primary-bold-light` (600), `bg/secondary-bold-light` (600)
+- ramas `subtle`/`medium` y `bg/accent-primary-light` (sigue en 300)
+
+**Efectos secundarios en Component tokens:**
+- `checkbox/all/root/bg/selected` dependía de `bg/primary-bold` (`#36879C`) y quedó desincronizado → corregido a mano a `bg/primary` (`#4BA9C0`). Si algún componente en código depende de tokens `-bold` para primary/secondary, es candidato a la misma revisión.
+- `pagination/web/activePage/bg/primary` → `bg/surface/primary-bold` (`#286371`) y `bg/secondary` → `bg/secondary-bold` (`#B71B60`): **repunte intencional** para que el círculo de página activa combine con el color del texto/icono del link. **NO tocar.**
+
+> ⚠️ **Verificar:** `bg/containerShape/primary-light` es un token `bg/*` y cambió (700→500). Es coherente con la regla primary (su hermano `bg/containerShape/accent-light` fue a 700), pero conviene confirmar con Carol que fue intencional y no un efecto colateral del reemplazo global.
+
 ---
 
 ## Mode (364 tokens × Light/Dark)
@@ -94,6 +135,15 @@ Uso: Advanced Selector, Account Selector, Table rows.
 `bg/negative` (rojo muy oscuro `#4f1111`) eliminado de Mode — sin consumidores definidos en el sistema. Cuando aparezca roto en algún componente, reasignar a:
 - `bg/error` → para fondos sólidos de estado negativo/error
 - `bg/error-subtle` → para superficies suaves de estado negativo
+
+### `fg/icon/inverse` vs `fg/icon/onColor` — trampa de dark mode ⚠️
+
+Mismo valor en **light mode**, distinto en **dark mode**:
+
+- `fg/icon/inverse` → se **invierte a negro** en dark mode. Pensado para icono que debe contrastar contra el fondo del modo (blanco en light, negro en dark).
+- `fg/icon/onColor` → se **mantiene blanco** en ambos modos. Pensado para icono sobre una **superficie de color** (Button relleno, AmountView solid, chips de estado…).
+
+**Regla:** para icono sobre superficie de color usar SIEMPRE `fg/icon/onColor`. Usar `inverse` ahí deja el icono negro (invisible) en dark mode. Es el mismo par de trampa detectado en `fg/body/inverse` vs `fg/body/onColor`. (Ver deuda técnica de Mode dark mode — revisar si hay más pares con esta misma semántica antes de cerrar la revisión global.)
 
 ### Sufijos de intensidad en bg y fg
 
@@ -130,11 +180,37 @@ Los iconos son vectores de la librería Lucide. Figma no permite vincular el fil
 En código, el color se aplica via `currentColor` en el componente padre:
 ```css
 /* Component token */
---ds-selector-icon-left-fg-generic: var(--ds-fg-icon-default)
+--ds-selector-icon-fg-primary: var(--ds-fg-icon-primary)
 /* En el JSX, se aplica al contenedor, no al SVG */
-color: var(--ds-selector-icon-left-fg-generic)
+color: var(--ds-selector-icon-fg-primary)
 /* El SVG hereda via currentColor */
 ```
+
+### Nomenclatura de color de icono — por contraste, no por posición ni Variant (14–15/07/2026)
+
+Los tokens de color de icono se nombraban por su **posición** (`iconLeft`/`iconRight`) o por la **Variant de origen** (`default-primary`, `accent-generic`). Ninguno de los dos describe lo que el token resuelve. Regla nueva: **nombrar por el contraste real** — "¿qué necesita verse sobre este fondo?".
+
+**Button e Icon Button** — consolidado en Figma:
+```
+Antes: iconLeft/fg/* + iconRight/fg/*   (16 tokens, duplicados por posición y por Variant)
+Ahora: button/all/icon/fg/*             (4 tokens, por contraste)
+  on-color            → icono sobre fondo relleno (blanco)      → fg/icon/onColor
+  on-outline-default  → icono sobre contorno, tema default
+  on-outline-accent   → icono sobre contorno, tema accent
+  disabled            → icono deshabilitado
+```
+La posición (left/right) **nunca** determina el color. El criterio es el contraste del **estado concreto**, no la Variant: en Secondary/Tertiary el fondo pasa a relleno en Hover y Focus Hover, así que ahí el icono es `on-color` (blanco) aunque la Variant no sea Primary. Como `currentColor` propaga el color del padre al SVG, esto se resuelve en CSS puro vía los estados del botón — sin token de icono por estado.
+
+`button/all/icon/size/*` también consolidado (antes `iconLeft/size` + `iconRight/size` duplicados).
+
+> **Sync pendiente Figma → tokens.css (Button):** tokens.css sigue reflejando la estructura anterior de `iconLeft`/`iconRight` para Button. Sincronizar a `button/all/icon/fg/*` antes de volver a tocar Button en código. (Ver deuda técnica en CLAUDE.md.)
+
+**Selector y Account Selector** — mismo patrón aplicado (15/07/2026): `Selector/iconLeft/fg/*` == `Selector/iconRight/fg/*` (mismo valor `#4BA9C0` primary / `#B9BEC4` disabled), consolidados en CSS a un único par por componente:
+```css
+--ds-selector-icon-fg-primary   / --ds-selector-icon-fg-disabled
+--ds-account-selector-icon-fg-primary / --ds-account-selector-icon-fg-disabled
+```
+Left y right comparten color; solo el tamaño (`--ds-selector-icon-left/right-size`, ambos 20px) sigue separado por posición — candidato a la misma consolidación en una pasada futura.
 
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
@@ -182,24 +258,26 @@ badgeHighlight/all/icon/fg/
 
 Variantes renombradas en Figma: `Neutral High Emphasis` → `Emphasis`, `Neutral Low Emphasis` → `Neutral`.
 
-### Selector families — tokens pendientes de crear
+### Selector families — estado de tokens de icono
 
-Pendiente de implementar en `tokens/component/` (creación manual en Figma completada el 01/07):
+**Color de icono — CREADO y sincronizado (15/07/2026).** Figma expone `Selector/iconLeft/fg/{primary,disabled}` y `Selector/iconRight/fg/{primary,disabled}` (mismo valor left/right: `#4BA9C0` primary, `#B9BEC4` disabled → Mode `fg/icon/primary` / `fg/icon/disabled`). Consolidados en `tokens.css` a un único par por componente, sin distinción de posición:
 
-**advancedSelector (9 tokens nuevos):**
-```
-advancedSelector/all/iconLeft/fg/generic · focus · error · readOnly · dataHidden · hover · pressed
-advancedSelector/all/root/borderColor/focus-inner
-advancedSelector/all/root/opacity/pressed
+```css
+--ds-selector-common-icon-fg-primary   → var(--ds-fg-icon-primary)
+--ds-selector-common-icon-fg-disabled  → var(--ds-fg-icon-disabled)
+/* alias por componente */
+--ds-selector-icon-fg-primary  · --ds-selector-icon-fg-disabled
+--ds-account-selector-icon-fg-primary · --ds-account-selector-icon-fg-disabled
 ```
 
-**accountSelector (15 tokens nuevos):**
+Consumido por `SelectorInvoker` · `SelectorListItem` · `AccountSelectorInvoker` · `AccountSelectorListItem` vía `color:` sobre el contenedor + `currentColor` en el SVG (componente `Icon` compartido). Los sub-componentes antiguos `.Icon Left`/`.Icon Right` ya no existen en Figma.
+
+**Aún pendiente de crear:**
 ```
-accountSelector/all/iconLeft/fg/* (8 tokens — igual que advancedSelector)
-accountSelector/all/root/borderWidth/generic (1.5) · focus (2)
-accountSelector/all/root/borderColor/focus-inner
-accountSelector/all/detailText/fg/default · disabled · secondary · tertiary
+advancedSelector/all/root/borderColor/focus-inner   ← no bloqueante
+accountSelector/all/root/borderColor/focus-inner    ← no bloqueante
 ```
+(Deuda conocida — el focus-inner del Country Picker/Advanced List Item se ve en teal en vez de blanco; ver deuda técnica en CLAUDE.md.)
 
 ---
 
@@ -242,13 +320,15 @@ accountSelector/all/detailText/fg/default · disabled · secondary · tertiary
 
 | Tema | Estado |
 |---|---|
-| Retail (Overall) | ✅ Auditado · 0 KOs |
-| Youth Banking | ✅ Auditado · 0 KOs · 148 tokens cambiados |
-| Wholesale Banking | ⚠️ Sin auditar |
-| Business Banking | ⚠️ Sin auditar |
-| Private Banking | ⚠️ Sin auditar |
-| Wireframe | ⚠️ Sin auditar |
-| Legacy | ⚠️ Sin auditar |
+| Overall (Retail) | ✅ Activo · Auditado · 0 KOs |
+| Youth | ✅ Activo · Auditado · 0 KOs · 148 tokens cambiados |
+| Wholesale Banking | 🗑️ Eliminado de la colección 15/07/2026 |
+| Business Banking | 🗑️ Eliminado de la colección 15/07/2026 |
+| Private Banking | 🗑️ Eliminado de la colección 15/07/2026 |
+| Wireframe | 🗑️ Eliminado de la colección 15/07/2026 |
+| Legacy | — Nunca llegó a exportarse como archivo (figuraba en tablas antiguas sin `.tokens.json` real) |
+
+**Decisión abierta:** los 4 temas eliminados el 15/07/2026 pueden volver a añadirse más adelante, o no. No es una eliminación definitiva — se trató como reducción de alcance del sistema (solo Retail + Youth activos). Los `.tokens.json` correspondientes se borraron del repo en la misma sesión.
 
 ---
 
