@@ -83,9 +83,9 @@ const ICONS = {
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-btn--sm { --_h: 32px; --_px: var(--ds-button-px-sm); --_py: var(--ds-button-py-sm); --_fs: var(--ds-fontSize-label-xs); --_icon: 14px; --_gap: 4px; }
-.ds-btn--md { --_h: 40px; --_px: var(--ds-button-px-md); --_py: var(--ds-button-py-md); --_fs: var(--ds-fontSize-label-sm); --_icon: 16px; --_gap: 6px; }
-.ds-btn--lg { --_h: 48px; --_px: var(--ds-button-px-lg); --_py: var(--ds-button-py-lg); --_fs: var(--ds-fontSize-label-md); --_icon: 18px; --_gap: 8px; }
+.ds-btn--sm { --_h: 32px; --_px: var(--ds-button-px-sm); --_py: var(--ds-button-py-sm); --_fs: var(--ds-fontSize-label-xs); --_icon: var(--ds-button-icon-size-small);  --_gap: 4px; }
+.ds-btn--md { --_h: 40px; --_px: var(--ds-button-px-md); --_py: var(--ds-button-py-md); --_fs: var(--ds-fontSize-label-sm); --_icon: var(--ds-button-icon-size-medium); --_gap: 6px; }
+.ds-btn--lg { --_h: 48px; --_px: var(--ds-button-px-lg); --_py: var(--ds-button-py-lg); --_fs: var(--ds-fontSize-label-md); --_icon: var(--ds-button-icon-size-large);  --_gap: 8px; }
 
 .ds-btn {
   display:         inline-flex;
@@ -230,7 +230,9 @@ export function Button({
 }) {
   injectStyles();
 
-  const iconSize   = { sm: '14', md: '16', lg: '18' }[size];
+  // Tamaño intrínseco del SVG; el tamaño visual final lo fija --_icon (CSS) vía
+  // --ds-button-icon-size-*. Alineado con Figma button/all/icon/size (16/20/24).
+  const iconSize   = { sm: '16', md: '20', lg: '24' }[size];
   const isDisabled = disabled || loading;
 
   const classes = [
