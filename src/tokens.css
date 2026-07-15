@@ -757,11 +757,12 @@
   --ds-selector-common-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
   --ds-selector-common-root-gap:                   var(--ds-spacing-lg);         /* 12px — unificado con Figma */
   --ds-selector-common-root-padding:               var(--ds-spacing-lg);         /* 12px — unificado con Figma */
-  --ds-selector-common-icon-left-fg:               var(--ds-fg-icon-primary);
-  --ds-selector-common-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
+  /* Color de icono consolidado — la posición (left/right) nunca determina el color.
+     Figma: Selector/iconLeft/fg/* == Selector/iconRight/fg/* (mismo valor) → un único par.
+     Mismo patrón que Button (--ds-button-icon-fg-*, sin distinción left/right). */
+  --ds-selector-common-icon-fg-primary:            var(--ds-fg-icon-primary);
+  --ds-selector-common-icon-fg-disabled:           var(--ds-fg-icon-disabled);
   --ds-selector-common-icon-left-size:             20px;
-  --ds-selector-common-icon-right-fg:              var(--ds-fg-icon-primary);
-  --ds-selector-common-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
   --ds-selector-common-icon-right-size:            20px;
   --ds-selector-common-header-fg-default:          var(--ds-fg-default);
   --ds-selector-common-header-fg-disabled:         var(--ds-fg-disabled);
@@ -790,12 +791,9 @@
   --ds-selector-root-gap:                   var(--ds-selector-common-root-gap);
   --ds-selector-root-padding:               var(--ds-selector-common-root-padding);
 
-  --ds-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
-  --ds-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
+  --ds-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
+  --ds-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
   --ds-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
-
-  --ds-selector-icon-right-fg:              var(--ds-selector-common-icon-right-fg);
-  --ds-selector-icon-right-fg-disabled:     var(--ds-selector-common-icon-right-fg-disabled);
   --ds-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
 
   --ds-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
@@ -834,12 +832,9 @@
   --ds-account-selector-root-gap:                   var(--ds-selector-common-root-gap);
   --ds-account-selector-root-padding:               var(--ds-selector-common-root-padding);
 
-  --ds-account-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
-  --ds-account-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
+  --ds-account-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
+  --ds-account-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
   --ds-account-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
-
-  --ds-account-selector-icon-right-fg:              var(--ds-selector-common-icon-right-fg);
-  --ds-account-selector-icon-right-fg-disabled:     var(--ds-selector-common-icon-right-fg-disabled);
   --ds-account-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
 
   --ds-account-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);

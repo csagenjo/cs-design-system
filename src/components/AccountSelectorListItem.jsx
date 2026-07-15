@@ -25,7 +25,7 @@ const css = `
 .ds-account-selector-list-item__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-account-selector-icon-left-fg);
+  color:       var(--ds-account-selector-icon-fg-primary);
 }
 .ds-account-selector-list-item__icon-left svg {
   width:  var(--ds-account-selector-icon-left-size);
@@ -108,7 +108,7 @@ const css = `
   border-color: var(--ds-account-selector-root-border-color-disabled);
   cursor:       not-allowed;
 }
-.ds-account-selector-list-item--disabled .ds-account-selector-list-item__icon-left { color: var(--ds-account-selector-icon-left-fg-disabled); }
+.ds-account-selector-list-item--disabled .ds-account-selector-list-item__icon-left { color: var(--ds-account-selector-icon-fg-disabled); }
 .ds-account-selector-list-item--disabled .ds-account-selector-list-item__header { color: var(--ds-account-selector-header-fg-disabled); }
 .ds-account-selector-list-item--disabled .ds-account-selector-list-item__detail { color: var(--ds-account-selector-detail-text-fg-disabled); }
 `;
