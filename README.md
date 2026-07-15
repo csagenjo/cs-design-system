@@ -13,7 +13,7 @@ Design tokens generated from Figma exports, compiled into CSS custom properties 
 Five-layer cascade: **Base → Theme → Mode → Component → Device**.
 
 - **Base** — raw color palette (9 families, 11 steps each)
-- **Theme** — semantic roles per brand theme (Retail, Youth Banking + 5 more)
+- **Theme** — semantic roles per brand theme (2 active: Overall/Retail · Youth)
 - **Mode** — light/dark resolution (`--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*`)
 - **Component** — per-component tokens referencing Mode only
 - **Device** — responsive typography and spacing (Mobile / Desk)
@@ -126,6 +126,8 @@ Rule: icon color is always managed via `currentColor` — never a direct token o
 **Full cross-component audit (23 June 2026):** Zero violations across all components. 83 hardcoded hex values migrated to `var()`.
 
 **Selector + Badge + AmountView audit (01 July 2026):** Advanced Selector and Account Selector structurally complete (24+16+8 and 24+16+8 variants respectively). AmountView token naming restructured to `plain/soft/solid` convention. BadgeHighlight backgrounds corrected to subtle surfaces. `bg/negative` token eliminated from Mode — remap to `bg/error` or `bg/error-subtle` when encountered.
+
+**Token + IP sync (14–15 July 2026):** Icon color tokens consolidated to a single position-agnostic set named by contrast (Button, Icon Button, Selector, Account Selector). Theme collection reduced to Overall/Retail + Youth. Legacy-IP cleanup completed across the Figma file (naming + component documentation links). See `docs/token-architecture.md` for detail.
 
 | Component | Token violations | Status |
 |-----------|-----------------|--------|

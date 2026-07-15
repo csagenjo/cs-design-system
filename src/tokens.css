@@ -135,8 +135,8 @@
   --ds-fg-disabled:         #B9BEC4;
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #FFFFFF;
-  --ds-fg-primary:          #286371;
-  --ds-fg-secondary:        #B71B60;
+  --ds-fg-primary:          #4BA9C0;   /* primary/500 — reducción profundidad 15/07 (era 700 #286371) */
+  --ds-fg-secondary:        #E02C7C;   /* secondary/500 — reducción profundidad 15/07 (era 600 #B71B60) */
   --ds-fg-tertiary:         #B185C5;
   --ds-fg-info:             #016398;
   --ds-fg-success:          #389A3D;
@@ -149,8 +149,8 @@
   --ds-fg-label-disabled:   #B9BEC4;
   --ds-fg-label-inverse:    #FFFFFF;
   --ds-fg-label-onColor:    #FFFFFF;
-  --ds-fg-label-primary:    #286371;
-  --ds-fg-label-secondary:  #B71B60;
+  --ds-fg-label-primary:    #4BA9C0;   /* primary/500 (era 700) */
+  --ds-fg-label-secondary:  #E02C7C;   /* secondary/500 (era 600) */
   --ds-fg-label-tertiary:   #B185C5;
 
   --ds-fg-body-default:     #050506;
@@ -158,13 +158,13 @@
   --ds-fg-body-disabled:    #B9BEC4;
   --ds-fg-body-inverse:     #FFFFFF;
   --ds-fg-body-onColor:     #FFFFFF;
-  --ds-fg-body-secondary:   #B71B60;
+  --ds-fg-body-secondary:   #E02C7C;   /* secondary/500 (era 600) */
   --ds-fg-body-tertiary:    #B185C5;
 
   --ds-fg-headline-default: #050506;
   --ds-fg-headline-subtle:  #9AA1AA;
   --ds-fg-headline-onColor: #FFFFFF;
-  --ds-fg-headline-primary: #286371;
+  --ds-fg-headline-primary: #4BA9C0;   /* primary/500 (era 700) */
   --ds-fg-headline-secondary:#050506;
   --ds-fg-headline-tertiary: #050506;
 
@@ -174,10 +174,10 @@
   --ds-fg-icon-disabled:    #B9BEC4;
   --ds-fg-icon-inverse:     #FFFFFF;
   --ds-fg-icon-onColor:     #FFFFFF;
-  --ds-fg-icon-primary:     #286371;
-  --ds-fg-icon-secondary:   #B71B60;
+  --ds-fg-icon-primary:     #4BA9C0;   /* primary/500 (era 700) */
+  --ds-fg-icon-secondary:   #E02C7C;   /* secondary/500 (era 600) */
   --ds-fg-icon-tertiary:    #B185C5;
-  --ds-fg-icon-accent-primary: #4BA9C0;
+  --ds-fg-icon-accent-primary: #286371;/* accent/primary/700 — movido al 700 el 15/07 (era 500) */
   --ds-fg-icon-info:        #016398;
   --ds-fg-icon-success:     #389A3D;
   --ds-fg-icon-warning:     #996600;
@@ -239,9 +239,9 @@
   --ds-borderColor-onColor:        #FFFFFF;
 
   /* bordes de marca */
-  --ds-borderColor-primary:        #286371;
-  --ds-borderColor-accent:         #286371;
-  --ds-borderColor-accent-primary: #4BA9C0;
+  --ds-borderColor-primary:        #4BA9C0;   /* primary/500 (era 700) */
+  --ds-borderColor-accent:         #286371;   /* accent-light — sin cambio (ya en 700) */
+  --ds-borderColor-accent-primary: #286371;   /* accent/primary/700 — movido al 700 el 15/07 (era 500) */
   --ds-borderColor-accent-inverse: #A0D1DE;
   --ds-borderColor-secondary:      #E02C7C;
   --ds-borderColor-tertiary:       #B185C5;
@@ -394,6 +394,18 @@
   --ds-button-bg-negative-hover:    var(--ds-bg-error-subtle);
   --ds-button-bg-mix-hover:         var(--ds-opacity-hover-default);
 
+  /* Icono — tamaño (button/all/icon/size/*). Sincronizado con Figma 15/07. */
+  --ds-button-icon-size-small:      var(--ds-sizing-2xs);   /* 16px */
+  --ds-button-icon-size-medium:     var(--ds-sizing-xs);    /* 20px */
+  --ds-button-icon-size-large:      var(--ds-sizing-sm);    /* 24px */
+  /* Icono — color (button/all/icon/fg/*): NO se declara token propio.
+     El icono hereda el color del botón vía currentColor, y ese color ya lo
+     fijan los --ds-button-fg-* de arriba (regla CLAUDE.md §4):
+       on-color           → --ds-button-fg-*-filled   (fg/onColor, blanco)
+       on-outline-accent  → --ds-button-fg-accent-outline  (fg/primary)
+       on-outline-default → --ds-button-fg-default-outline (fg/default)
+       disabled           → --ds-button-fg-disabled */
+
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
@@ -512,7 +524,7 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-checkbox-bg-default:            var(--ds-bg-default);
-  --ds-checkbox-bg-selected:           var(--ds-bg-primary-bold);
+  --ds-checkbox-bg-selected:           var(--ds-bg-primary);    /* Figma: bg/primary (era bg/primary-bold — corregido a mano por Carol 15/07) */
   --ds-checkbox-bg-hover:              var(--ds-bg-hover-primary);
   --ds-checkbox-bg-disabled:           var(--ds-bg-disabled);
   --ds-checkbox-bg-error:              var(--ds-bg-error);
@@ -552,7 +564,7 @@
   --ds-radio-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-radio-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
 
-  --ds-radio-indicator-fg-generic:          var(--ds-bg-primary-bold);
+  --ds-radio-indicator-fg-generic:          var(--ds-fg-primary);   /* Figma: indicator/fg/generic → fg/primary (era bg/primary-bold — token y valor incorrectos) */
   --ds-radio-indicator-fg-disabled:         var(--ds-fg-disabled);
   --ds-radio-indicator-fg-error:            var(--ds-fg-error);
 
@@ -707,7 +719,7 @@
   --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
 
   --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16px — reducido en Figma (sizing/xs -> sizing/2xs) */
-  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #B71B60 */
+  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #E02C7C */
   --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #9AA1AA */
   --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #389A3D */
   --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D53737 */
@@ -748,7 +760,7 @@
   --ds-selector-common-root-border-color-generic:  var(--ds-borderColor-default);/* #9AA1AA */
   --ds-selector-common-root-border-color-disabled: var(--ds-borderColor-disabled);
   --ds-selector-common-root-border-color-error:    var(--ds-borderColor-error);
-  --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #286371 */
+  --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #4BA9C0 */
   --ds-selector-common-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-selector-common-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-selector-common-root-border-width-generic:  var(--ds-border-width-sm);    /* 1px — unificado con Figma */
@@ -757,11 +769,12 @@
   --ds-selector-common-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
   --ds-selector-common-root-gap:                   var(--ds-spacing-lg);         /* 12px — unificado con Figma */
   --ds-selector-common-root-padding:               var(--ds-spacing-lg);         /* 12px — unificado con Figma */
-  --ds-selector-common-icon-left-fg:               var(--ds-fg-icon-primary);
-  --ds-selector-common-icon-left-fg-disabled:      var(--ds-fg-icon-disabled);
+  /* Color de icono consolidado — la posición (left/right) nunca determina el color.
+     Figma: Selector/iconLeft/fg/* == Selector/iconRight/fg/* (mismo valor) → un único par.
+     Mismo patrón que Button (--ds-button-icon-fg-*, sin distinción left/right). */
+  --ds-selector-common-icon-fg-primary:            var(--ds-fg-icon-primary);
+  --ds-selector-common-icon-fg-disabled:           var(--ds-fg-icon-disabled);
   --ds-selector-common-icon-left-size:             20px;
-  --ds-selector-common-icon-right-fg:              var(--ds-fg-icon-primary);
-  --ds-selector-common-icon-right-fg-disabled:     var(--ds-fg-icon-disabled);
   --ds-selector-common-icon-right-size:            20px;
   --ds-selector-common-header-fg-default:          var(--ds-fg-default);
   --ds-selector-common-header-fg-disabled:         var(--ds-fg-disabled);
@@ -790,12 +803,9 @@
   --ds-selector-root-gap:                   var(--ds-selector-common-root-gap);
   --ds-selector-root-padding:               var(--ds-selector-common-root-padding);
 
-  --ds-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
-  --ds-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
+  --ds-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
+  --ds-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
   --ds-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
-
-  --ds-selector-icon-right-fg:              var(--ds-selector-common-icon-right-fg);
-  --ds-selector-icon-right-fg-disabled:     var(--ds-selector-common-icon-right-fg-disabled);
   --ds-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
 
   --ds-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
@@ -834,12 +844,9 @@
   --ds-account-selector-root-gap:                   var(--ds-selector-common-root-gap);
   --ds-account-selector-root-padding:               var(--ds-selector-common-root-padding);
 
-  --ds-account-selector-icon-left-fg:               var(--ds-selector-common-icon-left-fg);
-  --ds-account-selector-icon-left-fg-disabled:      var(--ds-selector-common-icon-left-fg-disabled);
+  --ds-account-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
+  --ds-account-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
   --ds-account-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
-
-  --ds-account-selector-icon-right-fg:              var(--ds-selector-common-icon-right-fg);
-  --ds-account-selector-icon-right-fg-disabled:     var(--ds-selector-common-icon-right-fg-disabled);
   --ds-account-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
 
   --ds-account-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);

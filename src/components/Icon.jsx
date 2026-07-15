@@ -10,7 +10,7 @@
  * Color: SIEMPRE heredado vía currentColor desde el contenedor — Icon no fija
  * color propio. Regla de CLAUDE.md: nunca referenciar tokens de Mode (--ds-fg-*)
  * directamente desde JSX; el color se controla fijando `color` en el CSS del
- * componente consumidor (p. ej. `--ds-selector-icon-left-fg`), nunca aquí.
+ * componente consumidor (p. ej. `--ds-selector-icon-fg-primary`), nunca aquí.
  *
  * Espejo de la escala de tamaños --ds-sizing-* (tokens.css) — Lucide necesita
  * un número, no puede leer var(--ds-sizing-*) directamente.
