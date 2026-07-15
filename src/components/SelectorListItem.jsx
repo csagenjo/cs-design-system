@@ -24,7 +24,7 @@ const css = `
 .ds-selector-list-item__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-selector-icon-left-fg);
+  color:       var(--ds-selector-icon-fg-primary);
 }
 .ds-selector-list-item__icon-left svg {
   width:  var(--ds-selector-icon-left-size);
@@ -126,7 +126,7 @@ const css = `
   border-color: var(--ds-selector-root-border-color-disabled);
   cursor:       not-allowed;
 }
-.ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-icon-left-fg-disabled); }
+.ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-icon-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__header { color: var(--ds-selector-header-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__description { color: var(--ds-selector-description-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__detail { color: var(--ds-selector-detail-text-fg-disabled); }
