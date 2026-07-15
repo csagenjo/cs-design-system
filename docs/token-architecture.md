@@ -203,7 +203,7 @@ La posición (left/right) **nunca** determina el color. El criterio es el contra
 
 `button/all/icon/size/*` también consolidado (antes `iconLeft/size` + `iconRight/size` duplicados).
 
-> **Sync pendiente Figma → tokens.css (Button):** tokens.css sigue reflejando la estructura anterior de `iconLeft`/`iconRight` para Button. Sincronizar a `button/all/icon/fg/*` antes de volver a tocar Button en código. (Ver deuda técnica en CLAUDE.md.)
+> **Button — sincronizado con tokens.css (15/07/2026):** `button/all/icon/size/*` → `--ds-button-icon-size-{small,medium,large}` (`sizing/2xs·xs·sm` = 16/20/24). El **color** de icono NO tiene token propio: se hereda vía `currentColor` del botón, y ese color lo fijan los `--ds-button-fg-*` existentes (`on-color`→`fg/*-filled`, `on-outline-accent`→`fg/accent-outline`, `on-outline-default`→`fg/default-outline`, `disabled`→`fg/disabled`). Regla CLAUDE.md §4 — no se crea token de icono por estado.
 
 **Selector y Account Selector** — mismo patrón aplicado (15/07/2026): `Selector/iconLeft/fg/*` == `Selector/iconRight/fg/*` (mismo valor `#4BA9C0` primary / `#B9BEC4` disabled), consolidados en CSS a un único par por componente:
 ```css
