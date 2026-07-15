@@ -10,7 +10,7 @@ All components reference `--ds-*` CSS custom properties — no hardcoded values 
 
 ```
 Base tokens      → raw color palette (50→950 scales)
-Theme tokens     → semantic roles per brand theme (7 themes)
+Theme tokens     → semantic roles per brand theme (2 active: Overall/Retail · Youth)
 Mode tokens      → semantic resolution (fg, bg, borderColor) · Light + Dark
 Component tokens → component-specific values (--ds-button-*, etc.)
 Device tokens    → responsive typography and spacing (Mobile / Desk)
@@ -165,13 +165,33 @@ Icons from lucide-react inherit color from their parent via `currentColor`.
 The parent component sets the color via its own Component token:
 ```css
 /* Component token sets the color */
---ds-selector-icon-left-fg-generic: var(--ds-fg-icon-default)
+--ds-selector-icon-fg-primary: var(--ds-fg-icon-primary)
 /* JSX applies it to the container, not the SVG directly */
-color: var(--ds-selector-icon-left-fg-generic)
-/* The <LockIcon> SVG inherits via currentColor */
+color: var(--ds-selector-icon-fg-primary)
+/* The icon SVG inherits via currentColor */
 ```
 This is necessary because Figma vector fills cannot be bound to variables — 
 the token exists in Component layer but is applied in CSS, not in Figma.
+
+**Naming by contrast, not by position or Variant (14–15/07/2026):** icon color
+tokens are named by the contrast they resolve, never by their slot or source Variant.
+`iconLeft`/`iconRight` pairs were consolidated to a single position-agnostic token —
+the position never determines the color:
+- **Button / Icon Button:** `iconLeft/fg/*` + `iconRight/fg/*` → `button/all/icon/fg/*`
+  (`on-color` · `on-outline-default` · `on-outline-accent` · `disabled`). An icon is
+  `on-color` (white) whenever the **concrete state's** background is filled — in
+  Secondary/Tertiary that includes Hover and Focus Hover, not only Primary.
+  *(tokens.css still reflects the old iconLeft/iconRight structure for Button — sync pending.)*
+- **Selector / Account Selector:** `Selector/iconLeft/fg/*` == `Selector/iconRight/fg/*`
+  (same value) → consolidated in CSS to `--ds-selector-icon-fg-primary` /
+  `--ds-selector-icon-fg-disabled` (and `--ds-account-selector-icon-fg-*`). ✅ synced.
+
+### Selector family — shared Icon atom
+
+`SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` and `AccountSelectorListItem`
+no longer depend on the old `.Icon Left` / `.Icon Right` sub-components (removed in Figma
+15/07/2026). All icons now render through the shared `Icon` atom (`src/components/Icon.jsx`):
+configurable size, color inherited from context via `currentColor`.
 
 ### AmountView — solid/soft/plain naming convention
 
@@ -232,3 +252,17 @@ In React: `import { Lock, ChevronRight } from 'lucide-react'` — always with `c
 - BadgeHighlight: all backgrounds corrected to subtle surfaces; icon colors legible on all variants
 - `bg/negative` Mode token eliminated — no consumers
 - Lucide Icons Figma library activated, local icon page removed
+
+### Token + IP sync (14–15 July 2026)
+
+- **IP cleanup** (scope only, no content reproduced): 215 legacy-naming corrections across
+  the 50 file pages + 1 page removed (leaked real name + internal URL). Additionally, an
+  internal documentation URL was cleared from the `documentationLinks` property of 64
+  components (exposed automatically in Dev Mode / Code Connect), verified across 42 pages.
+- **Icon color architecture** consolidated for Button, Icon Button, Selector and Account
+  Selector — named by contrast, position-agnostic (see *Icon color* pattern above).
+- **Theme collection reduced** to Overall (Retail) + Youth; Wholesale/Business/Private/
+  Wireframe removed (open decision — may return). primary/secondary text-role depth pulled
+  to `500`; `accent` roles pushed to `700`. See `token-architecture.md` for the full diff.
+- **Sprint priority:** Table + Cell (CellHeader/CellData/CellActions) + Pagination is now
+  the top priority of the active sprint (decision 14/07/2026).
