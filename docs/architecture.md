@@ -4,15 +4,16 @@
 
 Tokens are generated from Figma exports and compiled into `src/tokens.css`.  
 All components reference `--ds-*` CSS custom properties — no hardcoded values anywhere.  
-**All Component tokens reference Mode via `var()` — zero hardcoded hex (audited 23/06/2026).**
+**All Component tokens reference Mode via `var()` — zero hardcoded hex (audited 23/06/2026, confirmed 01/07/2026).**
 
-### Four layers (Figma → CSS)
+### Five layers (Figma → CSS)
 
 ```
 Base tokens      → raw color palette (50→950 scales)
-Mode tokens      → semantic roles (fg, bg, borderColor) · Light + Dark
+Theme tokens     → semantic roles per brand theme (2 active: Overall/Retail · Youth)
+Mode tokens      → semantic resolution (fg, bg, borderColor) · Light + Dark
 Component tokens → component-specific values (--ds-button-*, etc.)
-Typography       → font family, size, weight, line-height scales
+Device tokens    → responsive typography and spacing (Mobile / Desk)
 ```
 
 ### CSS variable naming
@@ -28,14 +29,6 @@ Typography       → font family, size, weight, line-height scales
 
 Component token naming follows Figma path convention:
 `{component}/{device}/{part}/{property}/{state}` → `--ds-{component}-{part}-{property}-{state}`
-
-Example — Link tokens aligned with `link/all/` Figma architecture:
-```css
---ds-link-fg-label-default        /* link/all/fg/label/default-generic */
---ds-link-fg-icon-accent          /* link/all/fg/icon/accent-generic */
---ds-link-border-bottom-default   /* link/all/borderBottomColor/label/default-generic */
---ds-link-bg-mix-hover            /* link/all/root/bgMix/hover */
-```
 
 ---
 
@@ -58,14 +51,13 @@ Each color has a full scale from `50` to `950`.
 
 ## Typography scale
 
-Font family: **Nunito** (default), Courier New (code)
+Font family: **Nunito** (default)
 
 | Scale | xs | sm | md | lg |
 |-------|----|----|----|----|
 | `label` | 12px | 14px | 16px | 19px |
 | `body` | 12px | 14px | 16px | 19px |
 | `title` | — | 16px | 19px | 24px |
-| `annotation` | 12px | 14px | 16px | — |
 
 Line heights: `--ds-fontLheight-{3xs → 3xl}` (18px → 72px)
 
@@ -76,105 +68,201 @@ Line heights: `--ds-fontLheight-{3xs → 3xl}` (18px → 72px)
 Two-layer system:
 
 ```
-Layer 1 — Atoms (this repo)
+Layer 1 — Atoms (src/components/)
   Standalone components · --ds-* tokens · No external dependencies
 
-Layer 2 — Organisms (planned)
+Layer 2 — Organisms (src/organisms/)
   Composed from Layer 1 atoms
   Complex UI patterns for back-office applications
 ```
 
-### Layer 1 — Current components
+### Layer 1 — Components
 
 | Component | Variants | Tokens | Status |
 |-----------|----------|--------|--------|
 | `Button` | accent · default · negative · ghost · outline · floating | `--ds-button-*` | ✅ v2 |
-| `ButtonBar` | complex · simple · form · detail | inherits Button | ✅ v2 |
 | `Checkbox` | unselected · selected · indeterminate · all states | `--ds-checkbox-*` | ✅ v2 |
-| `Link` | default · accent · visited · all states | `--ds-link-fg-label-*` `--ds-link-fg-icon-*` `--ds-link-border-bottom-*` | ✅ v2 |
-| `LinkList` | wrapper over Link | inherits Link | ✅ v1 |
+| `Radio` | default · error · disabled · label | `--ds-radio-*` | ✅ v1 |
+| `Chip` | choice · filter selectable · filter dismissible · input | `--ds-chip-*` | ✅ v1 |
+| `Link` | default · accent · visited · all states | `--ds-link-*` | ✅ v2 |
+| `LinkList` | wrapper over Link | Device spacing tokens | ✅ v1 |
 | `CTALink` | low · medium · high emphasis × default · accent | `--ds-cta-link-*` | ✅ v2 |
 | `InputText` | all states · icon left/right · adaptive | `--ds-input-*` | ✅ v1 |
 | `InputDate` | all states | `--ds-input-*` `--ds-input-date-*` | ✅ v1 |
 | `InputDropdown` | all states | `--ds-input-*` `--ds-input-dropdown-*` | ✅ v1 |
 | `InputStepper` | all states · min/max/step | `--ds-input-*` `--ds-input-stepper-*` | ✅ v1 |
 | `InputTelephone` | selectable · fixed × all states | `--ds-input-*` `--ds-input-telephone-*` | ✅ v1 |
-| `Radio` | default · error · disabled · label · showLabel · forwardRef | `--ds-radio-*` | ✅ v1 |
+| `InputAmount` | selectable · fixed × all states | `--ds-input-*` `--ds-input-amount-*` | ✅ v1 |
+| `BadgeNotification` | 4 colors × 2 sizes | `--ds-badge-notification-*` | ✅ v1 |
+| `BadgeHighlight` | emphasis · neutral · positive · negative | `--ds-badge-highlight-*` | ✅ v1 |
+| `AmountView` | positive/negative × solid/soft/plain | `--ds-amount-view-*` | ✅ v1 |
+| `SelectorInvoker` | 8 states × 3 data selections | `--ds-selector-*` | ✅ v1 |
+| `SelectorListItem` | 8 states × 2 data selections | `--ds-selector-*` | ✅ v1 |
+| `Selector` | wrapper: Label + Helper + SelectorInvoker + Validation | `--ds-selector-*` | ✅ v1 |
+| `AccountSelectorInvoker` | 8 states × 3 data selections | `--ds-account-selector-*` | ✅ v1 |
+| `AccountSelectorListItem` | 8 states × 2 data selections | `--ds-account-selector-*` | ✅ v1 |
+| `AccountSelector` | wrapper: Label + Helper + AccountSelectorInvoker + Validation | `--ds-account-selector-*` | ✅ v1 |
 
-### Focus ring implementation patterns
+### Layer 2 — Organisms
 
-Two components share the same visual output (double focus ring: white inner + black outer) but use different DOM/CSS strategies:
+| Component | Description | Status |
+|-----------|-------------|--------|
+| `ButtonBar` | complex · simple · form · detail | ✅ v2 |
 
-**Checkbox — outline + box-shadow on a single element:**
-```
-.ds-checkbox__box
-  outline:    2px solid var(--ds-checkbox-focus-outer)   ← outer ring
-  box-shadow: 0 0 0 4px var(--ds-checkbox-focus-inner)   ← inner ring
-```
-Simple DOM. The outer ring sits outside the element boundary via `outline`; the inner
-ring wraps the element via `box-shadow` inset offset.
+---
 
-**Radio — dual wrapper (two nested `<span>` elements, each with a border):**
+## Design patterns
+
+### Focus ring — two implementations
+
+**Single element (Checkbox, Chip, SelectorInvoker):**
+```css
+outline:    2px solid var(--ds-*-focus-outer)   /* outer ring */
+box-shadow: 0 0 0 4px var(--ds-*-focus-inner)   /* inner ring */
 ```
-.ds-radio__focus-ring          border: transparent → focus-outer on :focus-visible
-  .ds-radio__control-wrap      border: transparent → focus-inner on :focus-visible
-    .ds-radio__circle          visual circle
+
+**Dual wrapper (Radio, SelectorListItem):**
 ```
-The extra wrapper layer lets the hover background (`control-wrap` background) be
-scoped inside the outer ring — preventing the hover tint from bleeding outside the
-outer focus border. This constraint does not exist in Checkbox (hover is on the row,
-not the box), which is why the simpler `outline` + `box-shadow` approach works there.
+.focus-ring   → border: focus-outer on :focus-visible
+  .control    → border: focus-inner on :focus-visible
+    .visual   → the actual visual element
+```
+The dual wrapper scopes hover background inside the outer ring, preventing color bleed.
+
+### bgMix pattern for hover overlays
+
+Hover over transparent surfaces uses a `rgba` overlay token, never a solid color.
+```css
+/* Component token */
+--ds-button-bg-mix-hover: var(--ds-opacity-hover-default)
+/* JSX */
+background: var(--ds-button-bg-mix-hover)
+```
+Enables automatic dark mode inversion.
+
+Components using bgMix: `Button` · `Link` · `CTALink` · `Chip` · `InputStepper`
+
+### Common + specific pattern (Input family, Selector family)
+
+Shared tokens live in a `{Family}Common/` group. Specific tokens live in `{Component}/`.
+
+```
+Input/
+  InputCommon/   ← 27 shared tokens (root, label, helper, validation, valueText)
+  InputText/     ← only iconLeft, iconRight
+  InputTelephone/ ← countryField, telephoneField, divider, etc.
+  ...
+
+advancedSelector/all/   ← selector-specific tokens
+accountSelector/all/    ← account-selector-specific tokens
+  (label/helper/validation tokens are borrowed from InputCommon — intentional,
+   single maintenance point for all form components)
+```
+
+### Icon color — currentColor pattern
+
+Icons from lucide-react inherit color from their parent via `currentColor`.
+The parent component sets the color via its own Component token:
+```css
+/* Component token sets the color */
+--ds-selector-icon-fg-primary: var(--ds-fg-icon-primary)
+/* JSX applies it to the container, not the SVG directly */
+color: var(--ds-selector-icon-fg-primary)
+/* The icon SVG inherits via currentColor */
+```
+This is necessary because Figma vector fills cannot be bound to variables — 
+the token exists in Component layer but is applied in CSS, not in Figma.
+
+**Naming by contrast, not by position or Variant (14–15/07/2026):** icon color
+tokens are named by the contrast they resolve, never by their slot or source Variant.
+`iconLeft`/`iconRight` pairs were consolidated to a single position-agnostic token —
+the position never determines the color:
+- **Button / Icon Button:** `iconLeft/fg/*` + `iconRight/fg/*` → `button/all/icon/fg/*`
+  (`on-color` · `on-outline-default` · `on-outline-accent` · `disabled`). An icon is
+  `on-color` (white) whenever the **concrete state's** background is filled — in
+  Secondary/Tertiary that includes Hover and Focus Hover, not only Primary.
+  *(tokens.css still reflects the old iconLeft/iconRight structure for Button — sync pending.)*
+- **Selector / Account Selector:** `Selector/iconLeft/fg/*` == `Selector/iconRight/fg/*`
+  (same value) → consolidated in CSS to `--ds-selector-icon-fg-primary` /
+  `--ds-selector-icon-fg-disabled` (and `--ds-account-selector-icon-fg-*`). ✅ synced.
+
+### Selector family — shared Icon atom
+
+`SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` and `AccountSelectorListItem`
+no longer depend on the old `.Icon Left` / `.Icon Right` sub-components (removed in Figma
+15/07/2026). All icons now render through the shared `Icon` atom (`src/components/Icon.jsx`):
+configurable size, color inherited from context via `currentColor`.
+
+### AmountView — solid/soft/plain naming convention
+
+```
+plain  → no background, text only (positive/negative color via fg token)
+soft   → subtle surface background (bg/success-subtle, bg/error-subtle)
+solid  → solid surface background (bg/success, bg/error) + onColor white text
+```
+Text on `solid` variants uses `fg/onColor` (white) for legibility — verified WCAG AA:
+- positive-solid (bg/success green): black text → ratio ~5.2:1 ✅ keep black
+- negative-solid (bg/error red): white text → ratio ~9.8:1 ✅ use onColor
+
+---
+
+## Icons
+
+**Lucide Icons** — external Figma library activated from the Figma community
+(`figma.com/community/file/1204720733890022011`), connected to CS Design System variables
+for color control. No local icon page maintained in CS Design System.
+
+In React: `import { Lock, ChevronRight } from 'lucide-react'` — always with `currentColor`.
 
 ---
 
 ## System rules
 
-- **No hardcoded values** — every color, size, and radius comes from a `--ds-*` token
-- **Component tokens only in JSX** — `.jsx` files must reference `--ds-{component}-*` exclusively, never `--ds-fg-*`, `--ds-bg-*`, `--ds-borderColor-*` (Mode) or `--ds-color-*` (Base) directly
-- **bgMix pattern for hover overlays** — use `var(--ds-opacity-hover-default)` via a Component token (e.g. `--ds-button-bg-mix-hover`), never a Base color token
-- **Pill shape** for buttons: `--ds-button-radius: 80px`
-- **Semantic tokens** for components without Figma component token exports
-- **Component tokens** only when confirmed from Figma variable exports
+- **No hardcoded values** — every color, size, and radius from a `--ds-*` token
+- **Component tokens only in JSX** — never `--ds-fg-*`, `--ds-bg-*` (Mode) or `--ds-color-*` (Base)
+- **Label/Helper/Validation borrowing from InputCommon is intentional** — all form components share one maintenance point
+- **bgMix for hover overlays** — never a solid color token for transparent surface hover
+- **Icon color via currentColor** — never bind icon fill to a token in Figma (vector limitation); apply via CSS on the parent
+- **`bg/negative` eliminated** — remap to `bg/error` (solid) or `bg/error-subtle` (soft) when found broken
 - **CSS prefix** `.ds-` for all component classes
-- **Icons** via lucide-react — same naming convention as the Figma DS
+- **No subfolder per component** — all atoms flat in `src/components/`
 
 ---
 
 ## Dark mode
 
-Supported via two mechanisms:
-
 ```css
 @media (prefers-color-scheme: dark) { /* system preference */ }
-[data-theme="dark"] { /* manual toggle */ }
+[data-mode="dark"] { /* manual toggle */ }
 ```
-
-Semantic tokens (`--ds-fg-*`, `--ds-bg-*`) automatically switch between modes.
 
 ---
 
-## Token audit — June 2026
+## Token audits
 
-### Full cross-component audit (23 June 2026)
+### Full cross-component audit (23 June 2026) — zero violations
 
-**Result: zero violations across all components.**
+83 hardcoded hex values in `tokens.css` migrated to `var()`. 20 direct Mode/Base references removed from JSX.
 
-83 hardcoded hex values in `tokens.css` Component blocks migrated to `var(--ds-mode-token)` references. 20 direct Mode/Base token references removed from JSX files.
+### Selector + Badge + AmountView audit (01 July 2026)
 
-**8 new Component tokens added:**
+- Advanced Selector: 24 + 16 + 8 variants, structurally complete
+- Account Selector: 24 + 16 + 8 variants, Read Only added
+- AmountView naming restructured: `positiveHighEmphasis/negativeHighEmphasis` → `positive-solid/negative-solid`, `negative` → `negative-soft`, `positive-soft` added
+- BadgeHighlight: all backgrounds corrected to subtle surfaces; icon colors legible on all variants
+- `bg/negative` Mode token eliminated — no consumers
+- Lucide Icons Figma library activated, local icon page removed
 
-| Token | Value | Block |
-|---|---|---|
-| `--ds-input-fg-placeholder` | `var(--ds-fg-subtle)` | InputCommon |
-| `--ds-input-border-hover` | `var(--ds-borderColor-emphasis)` | InputCommon |
-| `--ds-input-bg-readonly` | `var(--ds-bg-page)` | InputCommon |
-| `--ds-button-fg-negative` | `var(--ds-fg-error)` | Button |
-| `--ds-button-border-negative` | `var(--ds-borderColor-error)` | Button |
-| `--ds-button-bg-negative-hover` | `var(--ds-bg-error-subtle)` | Button |
-| `--ds-button-bg-mix-hover` | `var(--ds-opacity-hover-default)` | Button |
-| `--ds-input-stepper-btn-bg-hover` | `var(--ds-opacity-hover-default)` | InputStepper |
+### Token + IP sync (14–15 July 2026)
 
-**bgMix pattern for interaction overlays:**  
-Hover states on transparent surfaces (outline buttons, ghost, links) use a `rgba` overlay token rather than a solid Base color. The pattern: define `--ds-{component}-bg-mix-hover: var(--ds-opacity-hover-default)` at Component level, reference it from JSX. Enables dark mode inversion automatically when `--ds-opacity-hover-default` overrides to `rgba(255,255,255,0.1)`.
-
-Components using bgMix: `Button` · `Link` · `CTALink` · `InputStepper`
+- **IP cleanup** (scope only, no content reproduced): 215 legacy-naming corrections across
+  the 50 file pages + 1 page removed (leaked real name + internal URL). Additionally, an
+  internal documentation URL was cleared from the `documentationLinks` property of 64
+  components (exposed automatically in Dev Mode / Code Connect), verified across 42 pages.
+- **Icon color architecture** consolidated for Button, Icon Button, Selector and Account
+  Selector — named by contrast, position-agnostic (see *Icon color* pattern above).
+- **Theme collection reduced** to Overall (Retail) + Youth; Wholesale/Business/Private/
+  Wireframe removed (open decision — may return). primary/secondary text-role depth pulled
+  to `500`; `accent` roles pushed to `700`. See `token-architecture.md` for the full diff.
+- **Sprint priority:** Table + Cell (CellHeader/CellData/CellActions) + Pagination is now
+  the top priority of the active sprint (decision 14/07/2026).
