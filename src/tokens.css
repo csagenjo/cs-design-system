@@ -858,6 +858,87 @@
   --ds-account-selector-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);
   --ds-account-selector-detail-icon-size:           var(--ds-selector-common-detail-icon-size);
 
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Pagination (pagination/*)
+     Usado por Pagination.jsx. Sincronizado con Figma 18/07/2026 tras la
+     reconstrucción de .Parts (nomenclatura por Part, no por intuición).
+
+     Nombres cruzados heredados de Sistema Origen, ya corregidos en Figma:
+       · previous / next   → flechas chevron (antes arrowLeft / arrowRight)
+       · activePage        → el Link de texto subrayado (resto de páginas)
+       · selectedPage      → el círculo relleno de la página actual
+     Mapear SIEMPRE por el nombre del Part, no por la intuición Active/Selected.
+
+     Regla de contraste (misma que Button/Icon Button): contenido en blanco
+     cuando el fondo del estado es relleno/sólido; oscuro cuando es contorno.
+     Aplica en hover de previous/next/dots (se rellenan) y en selectedPage.
+     Dark mode: icono/texto sobre color saturado usa onColor (blanco en ambos
+     modos), nunca inverse de icono (se invierte a negro en dark).
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* Root — geometría, foco y textos compartidos */
+  --ds-pagination-container-size:            var(--ds-sizing-md);          /* 32×32 por Part */
+  --ds-pagination-item-radius:               var(--ds-border-radius-circle); /* 80 → círculo */
+  --ds-pagination-gap:                       4px;                          /* separación entre Parts (sin token Figma) */
+  --ds-pagination-number-font-size:          var(--ds-fontSize-label-md);  /* nº/… — sin token Figma, escala label */
+  --ds-pagination-number-font-weight:        var(--ds-font-weight-medium);
+
+  --ds-pagination-root-border-width-focus:   2px;                          /* borderWidth/lg */
+  --ds-pagination-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-pagination-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  /* root/text/fg/selectedPage: Figma exporta fg/label/default (oscuro) pero por
+     coherencia con el resto de superficies rellenas se usa inverse (blanco).
+     DEUDA: (1) corregir el token en Figma; (2) blanco sobre teal = 2.7:1, no AA. */
+  --ds-pagination-root-text-fg-selected:     var(--ds-fg-label-inverse);
+  --ds-pagination-root-text-fg-disabled:     var(--ds-fg-label-disabled);
+
+  /* Previous — flecha izquierda */
+  --ds-pagination-previous-fg-primary:       var(--ds-fg-icon-primary);
+  --ds-pagination-previous-fg-secondary:     var(--ds-fg-icon-secondary);
+  --ds-pagination-previous-fg-disabled:      var(--ds-fg-icon-disabled);
+  --ds-pagination-previous-fg-hover:         var(--ds-fg-icon-onColor);    /* blanco sobre relleno */
+  --ds-pagination-previous-bg-hover-primary:   var(--ds-bg-primary);
+  --ds-pagination-previous-bg-hover-secondary: var(--ds-bg-secondary);
+  --ds-pagination-previous-opacity-pressed:  var(--ds-opacity-pressed);
+
+  /* Next — flecha derecha (idéntico a previous, se mantiene separado como en input iconLeft/Right) */
+  --ds-pagination-next-fg-primary:           var(--ds-fg-icon-primary);
+  --ds-pagination-next-fg-secondary:         var(--ds-fg-icon-secondary);
+  --ds-pagination-next-fg-disabled:          var(--ds-fg-icon-disabled);
+  --ds-pagination-next-fg-hover:             var(--ds-fg-icon-onColor);
+  --ds-pagination-next-bg-hover-primary:       var(--ds-bg-primary);
+  --ds-pagination-next-bg-hover-secondary:     var(--ds-bg-secondary);
+  --ds-pagination-next-opacity-pressed:      var(--ds-opacity-pressed);
+
+  /* Dots — el "…" de truncamiento (usa tokens de label, no de icono) */
+  --ds-pagination-dots-fg-primary:           var(--ds-fg-label-default);
+  --ds-pagination-dots-fg-secondary:         var(--ds-fg-label-secondary);
+  --ds-pagination-dots-fg-disabled:          var(--ds-fg-label-disabled);
+  --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* {icon.fg.onColor} */
+  --ds-pagination-dots-bg-hover-primary:       var(--ds-bg-primary);
+  --ds-pagination-dots-bg-hover-secondary:     var(--ds-bg-secondary);
+  --ds-pagination-dots-opacity-pressed:      var(--ds-opacity-pressed);
+
+  /* SelectedPage — círculo relleno de la página actual (texto vía root/text/fg/selected) */
+  --ds-pagination-selected-bg-primary:       var(--ds-bg-primary);
+  --ds-pagination-selected-bg-secondary:     var(--ds-bg-secondary);
+  --ds-pagination-selected-bg-disabled:      var(--ds-bg-disabled);
+  --ds-pagination-selected-bg-hover:         var(--ds-opacity-hover-default);
+  --ds-pagination-selected-opacity-pressed:  var(--ds-opacity-pressed);
+
+  /* ActivePage — Link de texto subrayado (resto de páginas) */
+  --ds-pagination-active-fg-primary:         var(--ds-fg-label-default);
+  --ds-pagination-active-fg-secondary:       var(--ds-fg-label-secondary);
+  --ds-pagination-active-fg-hover:           var(--ds-fg-label-inverse);   /* blanco sobre relleno hover */
+  --ds-pagination-active-fg-disabled:        var(--ds-fg-label-disabled);
+  --ds-pagination-active-bg-hover-primary:     var(--ds-bg-primary);
+  --ds-pagination-active-bg-hover-secondary:   var(--ds-bg-secondary);
+  --ds-pagination-active-opacity-pressed:    var(--ds-opacity-pressed);
+  --ds-pagination-active-border-bottom-width: 1px;                         /* borderWidth/sm */
+  /* borderBottomColor/{secondary,hover} de Figma se absorben en currentColor:
+     el subrayado siempre iguala el color del texto del estado (§4). */
+
 }
 
 
