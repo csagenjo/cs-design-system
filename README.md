@@ -46,12 +46,15 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `AccountSelectorInvoker` | Account Selector trigger · Same structure as SelectorInvoker + AmountView | ✅ v1 |
 | `AccountSelectorListItem` | Account Selector list row | ✅ v1 |
 | `AccountSelector` | Account Selector full component | ✅ v1 |
+| `Pagination` | Primary/Secondary · Previous/Next · SelectedPage circle · ActivePage link · Dots truncation | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
 | Component | Description | Status |
 |-----------|-------------|--------|
 | `ButtonBar` | Complex · Simple · Form · Detail · Primary/Secondary/Cancel/Negative actions | ✅ v2 |
+
+> **Estado (18/07/2026):** Pagination construido y documentado. Celda + Tabla quedan para la semana que viene.
 
 ---
 
