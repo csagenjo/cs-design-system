@@ -106,7 +106,7 @@ fg/icon/accent-primary-light · borderColor/accent-primary-light · bg/container
 
 **Efectos secundarios en Component tokens:**
 - `checkbox/all/root/bg/selected` dependía de `bg/primary-bold` (`#36879C`) y quedó desincronizado → corregido a mano a `bg/primary` (`#4BA9C0`). Si algún componente en código depende de tokens `-bold` para primary/secondary, es candidato a la misma revisión.
-- `pagination/web/activePage/bg/primary` → `bg/surface/primary-bold` (`#286371`) y `bg/secondary` → `bg/secondary-bold` (`#B71B60`): **repunte intencional** para que el círculo de página activa combine con el color del texto/icono del link. **NO tocar.**
+- ~~`pagination/web/activePage/bg/primary` → `bg/surface/primary-bold`~~ **Obsoleto.** Superado por la reconstrucción de Pagination del 18/07/2026: los rellenos ahora apuntan a `bg/surface/primary` (`#4BA9C0`) / `bg/surface/secondary` (`#E02C7C`), sin repunte a `-bold`, y el círculo de página actual es `selectedPage`, no `activePage`. Ver §Pagination — nomenclatura por Part.
 
 > ⚠️ **Verificar:** `bg/containerShape/primary-light` es un token `bg/*` y cambió (700→500). Es coherente con la regla primary (su hermano `bg/containerShape/accent-light` fue a 700), pero conviene confirmar con Carol que fue intencional y no un efecto colateral del reemplazo global.
 
@@ -278,6 +278,46 @@ advancedSelector/all/root/borderColor/focus-inner   ← no bloqueante
 accountSelector/all/root/borderColor/focus-inner    ← no bloqueante
 ```
 (Deuda conocida — el focus-inner del Country Picker/Advanced List Item se ve en teal en vez de blanco; ver deuda técnica en CLAUDE.md.)
+
+---
+
+### Pagination — nomenclatura por Part (18/07/2026)
+
+`.Parts` de Pagination se reconstruyó desde cero: cada parte tenía estructura interna distinta (Link anidado, Frame duplicado, sin fondo…) y ahora comparten contenedor 32×32 → fondo (si aplica) → contenido, sin envoltorios extra.
+
+**Renombrado de tokens — nombres cruzados heredados de Sistema Origen, ya corregidos para coincidir con el Part real:**
+
+| Antes | Ahora | Es |
+|---|---|---|
+| `arrowLeft/*`  | `previous/*`     | flecha chevron-left |
+| `arrowRight/*` | `next/*`         | flecha chevron-right |
+| (intuición: actual) | `activePage/*` | el **Link** de texto subrayado (resto de páginas) |
+| (intuición: otras)  | `selectedPage/*` | el **círculo** relleno de la página actual |
+
+⚠️ **`activePage` ↔ `selectedPage` van cruzados respecto a la intuición.** Mapear SIEMPRE por el nombre del Part, no por lo que sugiere "Active"/"Selected": `activePage` = Link, `selectedPage` = círculo.
+
+**Regla de contraste — caso de referencia (idéntica a Button/Icon Button):** contenido en blanco (`fg/icon/onColor` para icono, `fg/label/inverse` para texto) cuando el fondo del estado es **relleno/sólido**; oscuro cuando es **contorno**. En Pagination el fondo se rellena en el hover de `previous`/`next`/`dots` (chevron/…, van a blanco) y de forma persistente en `selectedPage` (círculo). El resto (Enabled/Focus/Pressed) es contorno → color por Variant (primary teal / secondary rosa).
+
+Dark mode: los rellenos usan `fg/icon/onColor` (blanco en ambos modos), nunca `fg/icon/inverse` (se invierte a negro). El JSON exportado ya está limpio de `inverse` de icono.
+
+**Mapa `--ds-pagination-*` → Mode:**
+```css
+/* selectedPage — círculo */
+selected-bg-primary/secondary/disabled → bg/primary · bg/secondary · bg/disabled
+root-text-fg-selected                  → fg/label/inverse   /* ⚠ ver deuda abajo */
+/* activePage — Link subrayado */
+active-fg-primary/secondary/hover/disabled → fg/label/default · secondary · inverse · disabled
+active-bg-hover-primary/secondary          → bg/primary · bg/secondary
+active-border-bottom-width                 → 1px (borderWidth/sm), color absorbido en currentColor
+/* previous · next — flechas (idénticas, separadas como input iconLeft/Right) */
+{previous,next}-fg-primary/secondary/disabled/hover → fg/icon/{primary,secondary,disabled,onColor}
+{previous,next}-bg-hover-primary/secondary          → bg/primary · bg/secondary
+/* dots — usa tokens de label, no de icono */
+dots-fg-primary/secondary/disabled → fg/label/{default,secondary,disabled}
+dots-fg-hover                       → fg/icon/onColor  ({icon.fg.onColor})
+```
+
+⚠️ **Deuda de contraste (SelectedPage).** Figma exporta `root/text/fg/selectedPage` = `fg/label/default` (oscuro), pero por coherencia con el resto de superficies rellenas (los hover de previous/next/activePage van en blanco sobre el mismo teal) el número del círculo se pone **blanco** (`fg/label/inverse`), por decisión de Carol (18/07). Pendiente: **(1)** corregir el token en Figma; **(2)** blanco sobre teal `#4BA9C0` = 2.7:1, no cumple WCAG AA — revisar (¿oscurecer el fill del círculo, o volver a texto oscuro?).
 
 ---
 
