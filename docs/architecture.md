@@ -102,6 +102,7 @@ Layer 2 — Organisms (src/organisms/)
 | `AccountSelectorInvoker` | 8 states × 3 data selections | `--ds-account-selector-*` | ✅ v1 |
 | `AccountSelectorListItem` | 8 states × 2 data selections | `--ds-account-selector-*` | ✅ v1 |
 | `AccountSelector` | wrapper: Label + Helper + AccountSelectorInvoker + Validation | `--ds-account-selector-*` | ✅ v1 |
+| `Pagination` | primary · secondary · previous/next · selectedPage · activePage · dots · truncation | `--ds-pagination-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 
@@ -266,3 +267,15 @@ In React: `import { Lock, ChevronRight } from 'lucide-react'` — always with `c
   to `500`; `accent` roles pushed to `700`. See `token-architecture.md` for the full diff.
 - **Sprint priority:** Table + Cell (CellHeader/CellData/CellActions) + Pagination is now
   the top priority of the active sprint (decision 14/07/2026).
+
+### Pagination + token sync (18 July 2026)
+
+- **Pagination built** (Layer 1 atom, `--ds-pagination-*`). `.Parts` rebuilt from scratch in
+  Figma (each part had a different internal structure); parts now share a consistent
+  32×32 container → fill → content shape. Token rename (part-based, not intuition):
+  `arrowLeft/arrowRight → previous/next`, and `activePage`↔`selectedPage` are crossed vs.
+  intuition (`activePage` = the underlined Link, `selectedPage` = the current-page circle).
+  Contrast rule reused from Button: white content on filled surfaces, dark on outline.
+  See `token-architecture.md` §Pagination for the full map and the SelectedPage contrast debt.
+- **`bg/container` consolidation** (before Pagination): the `bg/container` / `bg/containerShape`
+  / `bg/shape` families were merged into a single `bg/container` with widened scopes.
