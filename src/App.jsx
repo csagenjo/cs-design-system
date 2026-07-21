@@ -23,6 +23,7 @@ import { Selector } from './components/Selector'
 import { AccountSelectorInvoker } from './components/AccountSelectorInvoker'
 import { AccountSelectorListItem } from './components/AccountSelectorListItem'
 import { AccountSelector } from './components/AccountSelector'
+import { Pagination } from './components/Pagination'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -34,6 +35,9 @@ function App() {
   const [selectorRadio, setSelectorRadio] = useState('a');
   const [selectorChecks, setSelectorChecks] = useState([]);
   const [accountRadio, setAccountRadio] = useState('a');
+  const [pageA, setPageA] = useState(1);
+  const [pageB, setPageB] = useState(7);
+  const [pageC, setPageC] = useState(3);
 
   return (
     <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', textAlign: 'left' }}>
@@ -537,6 +541,23 @@ function App() {
             detailText="ES00 0000 0000 0000"
           />
         </div>
+      </section>
+
+      {/* Pagination */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>PAGINATION</p>
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · pocas páginas (4)</p>
+        <Pagination currentPage={pageA} totalPages={4} onPageChange={setPageA} />
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · truncado (20)</p>
+        <Pagination currentPage={pageB} totalPages={20} onPageChange={setPageB} />
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Secondary · truncado (20)</p>
+        <Pagination variant="secondary" currentPage={pageC} totalPages={20} onPageChange={setPageC} />
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Disabled</p>
+        <Pagination currentPage={3} totalPages={20} disabled />
       </section>
 
     </div>
