@@ -86,6 +86,7 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 | AccountSelectorInvoker | v1 | igual que SelectorInvoker + AmountView en slot descripción |
 | AccountSelectorListItem | v1 | igual que SelectorListItem |
 | AccountSelector | v1 | igual que Selector con tokens accountSelector/all/* propios |
+| Pagination | v1 | primary/secondary · previous/next · selectedPage círculo · activePage link · dots · truncado (maxSlots) |
 
 **Tokens de referencia rápida — Selector:**
 - `--ds-selector-*` (advancedSelector/all/*): borderWidth 1.5px, borderRadius 8px, gap/padding 16px
@@ -137,7 +138,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 | Pri | Componente | Dependencias |
 |---|---|---|
-| 0 | **Table + Celda (CellHeader/CellData/CellActions) + Pagination** | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
+| 0 | **Table + Celda (CellHeader/CellData/CellActions)** · ~~Pagination~~ ✅ | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
 | 1 | ~~Advanced Selector~~ ✅ | — |
 | — | ~~Account Selector~~ ✅ | — |
 | 2 | **Snackbar** | Button ✅ |
@@ -145,6 +146,8 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 | 4 | **Dialog** | Button ✅ |
 
 **Nota (14/07/2026):** Table + Celda + Pagination se prioriza por delante del resto de Sprint 1 — es lo que Carol está construyendo en Figma ahora mismo (Celda ya en desarrollo activo). Pendiente confirmar si Badge se adelanta también (si el toolkit necesita estados en celda desde ya) o si Table puede avanzar primero con celdas de texto plano.
+
+**Actualización (18/07/2026):** Pagination ✅ construido y documentado (Pagination.jsx + `--ds-pagination-*` sincronizados desde Figma tras reconstruir `.Parts`). Quedan Celda + Tabla para la semana que viene.
 
 ### 🟠 Sprint 2
 
@@ -174,3 +177,6 @@ Calendar · Bottom Navigation · Bottom Sheet · Image · Videoplayer
 - **Sync Mode layer tokens.css ↔ theme depth (15/07/2026)** ✅ hecho para light mode: `--ds-fg/borderColor` primary 700→500, secondary 600→500, accent primary 500→700; `checkbox/bg/selected` y `radio/indicator/fg` corregidos de `-bold` al token correcto. **Pendiente:** revisar los bloques dark (`@media prefers-color-scheme: dark` y `[data-mode="dark"]`) — no tocados esta sesión, se solapan con la deuda de "Mode tokens dark mode".
 - **Copia de librería de Sistema Origen en la cuenta de Figma** — detectada el 14/07 vía búsqueda (`Web - SYS_OJ_INT (Copy)`), no vinculada al archivo activo pero presente en el espacio de equipo. Pendiente que Carol la revise/archive.
 - **Verificación pendiente (no bloqueante):** confirmar en Figma que `on-filled` y los tokens huérfanos de `iconLeft`/`iconRight` de Button han desaparecido del todo del panel de variables — la herramienta reporta el borrado sin error pero la lectura inmediata los seguía mostrando (problema de caché plugin↔archivo, ya confirmado benigno en casos anteriores de la misma sesión).
+- **Pagination · SelectedPage — contraste (18/07/2026).** El nº del círculo se puso **blanco** (`fg/label/inverse`) por coherencia con las demás superficies rellenas, pero: **(1)** Figma exporta `root/text/fg/selectedPage` = `fg/label/default` (oscuro) → corregir el token en Figma para que coincida con el código; **(2)** blanco sobre teal `#4BA9C0` = 2.7:1, **no cumple WCAG AA** — decisión consciente de Carol de dejarlo así de momento; revisar (¿oscurecer el fill del círculo, o volver a texto oscuro?). En `tokens.css` va comentado en `--ds-pagination-root-text-fg-selected`.
+- **Pagination · Dots — revisión de consistencia estructural (18/07/2026).** `Dots`/`Truncated` quedó pendiente de la misma pasada de consistencia que se hizo con Previous/Next/SelectedPage/ActivePage. En código se renderiza como `<span>` presentacional (no interactivo), así que los tokens `dots/bg/hover-*` y `dots/opacity/pressed` existen en Figma/tokens.css pero no se consumen. No bloqueante; decidir si Dots debe ser interactivo.
+- **Table · Column Header `onPrimary` (18/07/2026).** La variante `onPrimary` tiene el mismo fondo blanco que `Neutral` — debería tener fondo de color y no lo tiene. Encontrado durante la sesión de Pagination, sin tocar. Revisar el lunes junto con Celda.
