@@ -57,6 +57,7 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 - NUNCA usar nombres reales — solo los aliases de arriba
 - NUNCA nombrar tokens de color de icono por la Variant de origen (`default-primary`, `accent-generic`...) — nombrar por el contraste que resuelven (`on-color`, `on-outline-default`, `on-outline-accent`). El nombre debe responder "¿qué necesita verse aquí?", no "¿de dónde viene esto?"
 - NUNCA usar `fg/icon/inverse` para icono sobre superficie de color — se invierte en dark mode (pasa a negro) y deja el icono invisible. Usar `fg/icon/onColor`, que se mantiene blanco en ambos modos
+- La regla "nunca saltar capas" aplica **al color** (Component→Mode→Theme→Base): el color cambia con Theme/Mode, por eso cada componente necesita su token de Componente. **Excepción documentada: la tipografía.** `fontSize`/`fontWeight`/`fontFamily`/`lineHeight` no cambian con Theme ni Mode (solo por dispositivo = capa Device), así que los componentes las consumen **directas de Device** (`fontSize/headline/2xl`, `fontWeight/regular`…) sin token de Componente intermedio. Checkbox/Radio/Headline/Helper Text lo hacen así. Ver `token-architecture.md` §tipografía.
 
 ## 6. Componentes construidos ✅
 

@@ -165,7 +165,7 @@
   --ds-fg-headline-subtle:  #9AA1AA;
   --ds-fg-headline-onColor: #FFFFFF;
   --ds-fg-headline-primary: #4BA9C0;   /* primary/500 (era 700) */
-  --ds-fg-headline-secondary:#050506;
+  --ds-fg-headline-secondary:#E02C7C;   /* Mode fg/headline/secondary — corregido de #050506 (desync) 22/07 */
   --ds-fg-headline-tertiary: #050506;
 
   /* fg icono */
@@ -418,7 +418,7 @@
   --ds-input-fg-default:                    var(--ds-fg-default);
   --ds-input-fg-disabled:                   var(--ds-fg-disabled);
   --ds-input-fg-label:                      var(--ds-fg-label-default);
-  --ds-input-fg-helper:                     var(--ds-fg-subtle);
+  --ds-input-fg-helper:                     var(--ds-helper-text-fg-generic);   /* borrowing átomo Helper Text */
   --ds-input-fg-error:                      var(--ds-fg-icon-error);
 
   --ds-input-border-default:                var(--ds-borderColor-default);
@@ -438,8 +438,8 @@
   --ds-input-field-icon-gap:                12px;
   --ds-input-label-gap:                     4px;
   --ds-input-label-fg-disabled:             var(--ds-fg-label-disabled);
-  --ds-input-helper-fg-disabled:            var(--ds-fg-disabled);
-  --ds-input-helper-gap:                    8px;
+  --ds-input-helper-fg-disabled:            var(--ds-helper-text-fg-disabled);  /* borrowing átomo Helper Text */
+  --ds-input-helper-gap:                    8px;   /* gap se queda en Input — layout propio, NO en Helper Text */
   --ds-input-validation-fg-text:            var(--ds-fg-default);
   --ds-input-validation-gap:                4px;
   --ds-input-fg-placeholder:               var(--ds-fg-subtle);
@@ -938,6 +938,56 @@
   --ds-pagination-active-border-bottom-width: 1px;                         /* borderWidth/sm */
   /* borderBottomColor/{secondary,hover} de Figma se absorben en currentColor:
      el subrayado siempre iguala el color del texto del estado (§4). */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Helper Text (helperText/*)
+     Átomo extraído de Input/InputCommon/helper el 22/07. SIN segmento `all`
+     (componente simple, sin variación por dispositivo). Solo color: la
+     tipografía (Nunito Regular 16/24, Body/sm) se consume directa de Device.
+     Segundo consumidor: contador de resultados de TableContainer.
+     El `gap` NO vive aquí — sigue en Input (--ds-input-helper-gap).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-helper-text-fg-generic:   var(--ds-fg-body-subtle);    /* #9AA1AA */
+  --ds-helper-text-fg-disabled:  var(--ds-fg-body-disabled);  /* #B9BEC4 */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Headline (headline/all/fg/*)
+     6 tamaños (h1–h6) × 4 colores. Color vía Componente→Mode; la tipografía
+     (fontSize/headline/*, fontFamily/headline, fontWeight/regular) se consume
+     directa de Device — sin capa de Componente (regla tipografía, 22/07).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-headline-fg-default:   var(--ds-fg-headline-default);   /* #050506 */
+  --ds-headline-fg-primary:   var(--ds-fg-headline-primary);   /* #4BA9C0 */
+  --ds-headline-fg-secondary: var(--ds-fg-headline-secondary); /* #E02C7C */
+  --ds-headline-fg-onColor:   var(--ds-fg-headline-onColor);   /* #FFFFFF */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Cell family (table/all/*)
+     Sincronizado 22/07 tras el rename de Figma a cellCommon/*. Consumido por
+     CellHeader / CellData / CellMore. CellCommon = 10 tokens compartidos;
+     lo específico NO se fusiona. Color vía Mode; tipografía directa de Device.
+     (Nombres viejos columnCell-bg-compact-onPrimary, borderBottomColor-generic,
+      etc. ya no existen en Figma — no reintroducir.)
+     ══════════════════════════════════════════════════════════════════════════ */
+  /* CellCommon — compartido Header/Cell/More */
+  --ds-cell-common-gap:                         var(--ds-spacing-xs);          /* 4 */
+  --ds-cell-common-icon-size:                   var(--ds-sizing-2xs);          /* 16 — icono de orden */
+  --ds-cell-common-icon-fg:                     var(--ds-borderColor-primary); /* #4BA9C0 */
+  --ds-cell-common-text-fg:                     var(--ds-fg-label-default);    /* #050506 */
+  --ds-cell-common-padding-hor:                 var(--ds-spacing-sm);          /* 6 */
+  --ds-cell-common-padding-ver:                 var(--ds-spacing-xs);          /* 4 */
+  --ds-cell-common-bg-on-surface:               var(--ds-bg-default);          /* #FFFFFF — ver deuda onSurface §10 */
+  --ds-cell-common-bg-zebra:                    var(--ds-bg-page);             /* #F9FAFA */
+  --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #4BA9C0 — orden columna / hover */
+  --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #EEEFF1 — divisor por defecto */
+  --ds-cell-common-border-bottom-width:         1px;                           /* borderWidth/sm */
+  /* Específico — NO fusionar con Common */
+  --ds-cell-data-padding-ver-basic:             var(--ds-spacing-sm);          /* 6 — solo Cell */
+  --ds-cell-header-padding-top-basic:           var(--ds-spacing-md);          /* 8 — solo Header */
+  --ds-cell-header-padding-bottom-basic:        var(--ds-spacing-xs);          /* 4 — solo Header */
 
 }
 
