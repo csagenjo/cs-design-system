@@ -33,6 +33,15 @@ Device (79 × 2: Mobile/Desk)
 **Regla de oro:** `Component → Mode → Theme → Base`
 Saltar capas rompe el dark mode y la multi-temabilidad.
 
+### La tipografía NO necesita capa de Componente (regla, 22/07/2026)
+
+La regla de oro de arriba aplica **al color**. La tipografía es la excepción documentada:
+
+- El **color** siempre pasa por un token de Componente propio (`{componente}/fg/*`) porque cambia con Theme y Mode (light/dark, Retail/Youth). El token de Componente es el punto donde cada componente resuelve a qué token de Mode apunta — por eso no se puede saltar.
+- La **tipografía** (`fontSize`, `fontWeight`, `fontFamily`, `lineHeight`) **no cambia con Theme ni Mode** — solo varía por dispositivo, que es exactamente para lo que existe la capa **Device** (capa paralela, no de color). Por eso un componente puede consumir `fontSize/headline/2xl`, `fontWeight/regular`, `fontFamily/headline`… **directamente de Device**, sin token de Componente intermedio.
+
+Checkbox y Radio ya lo hacían así; desde 22/07 es regla explícita, no una excepción sin documentar. Headline y Helper Text la aplican (color vía Componente→Mode, tipografía directa de Device).
+
 ---
 
 ## Base tokens (157)
