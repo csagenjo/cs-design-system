@@ -47,6 +47,9 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `AccountSelectorListItem` | Account Selector list row | ✅ v1 |
 | `AccountSelector` | Account Selector full component | ✅ v1 |
 | `Pagination` | Primary/Secondary · Previous/Next · SelectedPage circle · ActivePage link · Dots truncation | ✅ v1 |
+| `HelperText` | Generic · Disabled · Body/sm · form helper + table result counter | ✅ v1 |
+| `Headline` | h1–h6 semantic (level = tag + size) × Default/Primary/Secondary/onColor · left-only · no truncation | ✅ v1 |
+| `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -54,7 +57,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 |-----------|-------------|--------|
 | `ButtonBar` | Complex · Simple · Form · Detail · Primary/Secondary/Cancel/Negative actions | ✅ v2 |
 
-> **Estado (18/07/2026):** Pagination construido y documentado. Celda + Tabla quedan para la semana que viene.
+> **Estado (22/07/2026):** Pagination, HelperText, Headline y CellData construidos. Familia Celda en curso — faltan CellHeader, CellMore (átomos) y CellActions (organismo); luego TableContainer.
 
 ---
 

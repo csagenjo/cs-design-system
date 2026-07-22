@@ -103,6 +103,9 @@ Layer 2 — Organisms (src/organisms/)
 | `AccountSelectorListItem` | 8 states × 2 data selections | `--ds-account-selector-*` | ✅ v1 |
 | `AccountSelector` | wrapper: Label + Helper + AccountSelectorInvoker + Validation | `--ds-account-selector-*` | ✅ v1 |
 | `Pagination` | primary · secondary · previous/next · selectedPage · activePage · dots · truncation | `--ds-pagination-*` | ✅ v1 |
+| `HelperText` | generic · disabled · Body/sm · extracted from InputCommon | `--ds-helper-text-*` | ✅ v1 |
+| `Headline` | h1–h6 (level=tag+size) × default/primary/secondary/onColor · left only · no truncation | `--ds-headline-*` | ✅ v1 |
+| `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow | `--ds-cell-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 

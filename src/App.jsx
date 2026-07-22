@@ -24,6 +24,9 @@ import { AccountSelectorInvoker } from './components/AccountSelectorInvoker'
 import { AccountSelectorListItem } from './components/AccountSelectorListItem'
 import { AccountSelector } from './components/AccountSelector'
 import { Pagination } from './components/Pagination'
+import { HelperText } from './components/HelperText'
+import { Headline } from './components/Headline'
+import { CellData } from './components/CellData'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -562,6 +565,51 @@ function App() {
 
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Disabled (10/20)</p>
         <Pagination currentPage={10} totalPages={20} disabled />
+      </section>
+
+      {/* HelperText */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>HELPER TEXT</p>
+        <HelperText>Formato: DD/MM/AAAA</HelperText>
+        <HelperText disabled>No disponible (disabled)</HelperText>
+        <HelperText>1-25 de 100</HelperText>
+      </section>
+
+      {/* Headline */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>HEADLINE (h1–h6)</p>
+        <Headline level={1}>Headline h1 · 2xl</Headline>
+        <Headline level={2}>Headline h2 · xl</Headline>
+        <Headline level={3} color="primary">Headline h3 · lg · primary</Headline>
+        <Headline level={4} color="secondary">Headline h4 · md · secondary</Headline>
+        <Headline level={5}>Headline h5 · sm</Headline>
+        <Headline level={6}>Headline h6 · xs</Headline>
+        <div style={{ background: '#050506', padding: '12px', borderRadius: '8px' }}>
+          <Headline level={3} color="onColor">Headline onColor sobre fondo oscuro</Headline>
+        </div>
+      </section>
+
+      {/* CellData */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL DATA (contenedor · contenido = slot)</p>
+        <div style={{ width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ display: 'flex' }}>
+            <CellData style={{ flex: 1 }}>García Fernández</CellData>
+            <CellData align="right" style={{ width: '120px' }}>1.250,00 €</CellData>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
+            <CellData surface="zebra" align="right" style={{ width: '120px' }}>-80,00 €</CellData>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData density="basic" style={{ flex: 1 }}>Densidad basic</CellData>
+            <CellData density="basic" align="right" style={{ width: '120px' }}>0,00 €</CellData>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData lastRow style={{ flex: 1 }}>Última fila (borde teal)</CellData>
+            <CellData lastRow align="right" style={{ width: '120px' }}>Total</CellData>
+          </div>
+        </div>
       </section>
 
     </div>
