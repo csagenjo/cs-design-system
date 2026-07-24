@@ -7,6 +7,7 @@ import {
   Percent, Coins, Wallet, CreditCard,
   MoreHorizontal, Phone, Lock,
   FileText, Link as LinkIcon,
+  ArrowUpAZ,
 } from 'lucide-react';
 
 /**
@@ -48,4 +49,5 @@ export const ICONS = {
   Lock, 'lock': Lock,
   FileText, 'file-text': FileText,
   LinkIcon, 'link': LinkIcon,
+  ArrowUpAZ, 'arrow-up-az': ArrowUpAZ,
 };
