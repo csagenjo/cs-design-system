@@ -27,6 +27,7 @@ import { Pagination } from './components/Pagination'
 import { HelperText } from './components/HelperText'
 import { Headline } from './components/Headline'
 import { CellData } from './components/CellData'
+import { CellHeader } from './components/CellHeader'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -589,10 +590,31 @@ function App() {
         </div>
       </section>
 
+      {/* CellHeader */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL HEADER (contenedor · rótulo = slot)</p>
+        <div style={{ display: 'flex', width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <CellHeader style={{ flex: 1 }}>Subtle (default)</CellHeader>
+          <CellHeader align="right" style={{ width: '120px' }}>Importe</CellHeader>
+        </div>
+        <div style={{ display: 'flex', width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <CellHeader border="primary" showSort style={{ flex: 1 }}>Ordenada A→Z</CellHeader>
+          <CellHeader border="primary" showSort align="right" style={{ width: '120px' }}>Importe</CellHeader>
+        </div>
+        <div style={{ display: 'flex', width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <CellHeader density="basic" surface="onSurface" style={{ flex: 1 }}>Basic · onSurface</CellHeader>
+          <CellHeader density="basic" surface="zebra" align="right" style={{ width: '120px' }}>Zebra</CellHeader>
+        </div>
+      </section>
+
       {/* CellData */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL DATA (contenedor · contenido = slot)</p>
         <div style={{ width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ display: 'flex' }}>
+            <CellHeader border="primary" showSort style={{ flex: 1 }}>Cliente</CellHeader>
+            <CellHeader align="right" style={{ width: '120px' }}>Importe</CellHeader>
+          </div>
           <div style={{ display: 'flex' }}>
             <CellData style={{ flex: 1 }}>García Fernández</CellData>
             <CellData align="right" style={{ width: '120px' }}>1.250,00 €</CellData>

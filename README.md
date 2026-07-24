@@ -50,6 +50,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `HelperText` | Generic · Disabled · Body/sm · form helper + table result counter | ✅ v1 |
 | `Headline` | h1–h6 semantic (level = tag + size) × Default/Primary/Secondary/onColor · left-only · no truncation | ✅ v1 |
 | `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow | ✅ v1 |
+| `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -57,7 +58,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 |-----------|-------------|--------|
 | `ButtonBar` | Complex · Simple · Form · Detail · Primary/Secondary/Cancel/Negative actions | ✅ v2 |
 
-> **Estado (22/07/2026):** Pagination, HelperText, Headline y CellData construidos. Familia Celda en curso — faltan CellHeader, CellMore (átomos) y CellActions (organismo); luego TableContainer.
+> **Estado (24/07/2026):** Pagination, HelperText, Headline, CellData y CellHeader construidos. Familia Celda en curso — faltan CellMore (átomo) y CellActions (organismo); luego TableContainer.
 
 ---
 
