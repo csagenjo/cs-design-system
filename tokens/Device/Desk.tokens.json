@@ -939,7 +939,6 @@
         "$value": 16,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:752",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -956,7 +955,6 @@
         "$value": 19,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:753",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -973,7 +971,6 @@
         "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:754",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -990,7 +987,6 @@
         "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:5797:15859",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1009,7 +1005,6 @@
         "$value": 16,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:755",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1026,7 +1021,6 @@
         "$value": 19,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:756",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1043,7 +1037,6 @@
         "$value": 28,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:757",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1060,7 +1053,6 @@
         "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:758",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1077,7 +1069,6 @@
         "$value": 36,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:759",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1096,7 +1087,6 @@
         "$value": 19,
         "$extensions": {
           "com.figma.variableId": "VariableID:9386:27935",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1113,7 +1103,6 @@
         "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:5892",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1130,7 +1119,6 @@
         "$value": 28,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:5893",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1147,7 +1135,6 @@
         "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:5894",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1164,7 +1151,6 @@
         "$value": 36,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:5895",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1181,7 +1167,6 @@
         "$value": 48,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:5896",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1200,7 +1185,6 @@
         "$value": 12,
         "$extensions": {
           "com.figma.variableId": "VariableID:2281:1483",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1217,7 +1201,6 @@
         "$value": 14,
         "$extensions": {
           "com.figma.variableId": "VariableID:2281:1499",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1234,7 +1217,6 @@
         "$value": 16,
         "$extensions": {
           "com.figma.variableId": "VariableID:2281:1500",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1251,7 +1233,6 @@
         "$value": 19,
         "$extensions": {
           "com.figma.variableId": "VariableID:2281:1501",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1270,7 +1251,6 @@
         "$value": 12,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:751",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1287,7 +1267,6 @@
         "$value": 14,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:750",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1304,7 +1283,6 @@
         "$value": 16,
         "$extensions": {
           "com.figma.variableId": "VariableID:2189:2053",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1321,7 +1299,6 @@
         "$value": 19,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:748",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1338,7 +1315,6 @@
         "$value": 28,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:749",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1357,7 +1333,6 @@
         "$value": 12,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:11396",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1374,7 +1349,6 @@
         "$value": 14,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:11397",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
@@ -1391,7 +1365,6 @@
         "$value": 16,
         "$extensions": {
           "com.figma.variableId": "VariableID:9585:11398",
-          "com.figma.hiddenFromPublishing": true,
           "com.figma.scopes": [
             "FONT_SIZE"
           ],
