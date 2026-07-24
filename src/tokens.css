@@ -1008,6 +1008,13 @@
     --ds-fg-secondary:        #FEF6F9;
     --ds-fg-tertiary:         #F6F1F8;
 
+    /* fg por tipo de elemento — el "default" debe voltear a claro en dark.
+       Faltaban: quedaban en #050506 (negro) → texto invisible sobre fondo oscuro
+       en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
+    --ds-fg-label-default:    #FFFFFF;
+    --ds-fg-body-default:     #FFFFFF;
+    --ds-fg-headline-default: #FFFFFF;
+
     --ds-fg-icon-default:     #FFFFFF;
     --ds-fg-icon-primary:     #4BA9C0;
     --ds-fg-icon-secondary:   #FEF6F9;
@@ -1053,6 +1060,13 @@
   --ds-fg-primary:          #4BA9C0;
   --ds-fg-secondary:        #FEF6F9;
   --ds-fg-tertiary:         #F6F1F8;
+
+  /* fg por tipo de elemento — el "default" debe voltear a claro en dark.
+     Faltaban: quedaban en #050506 (negro) → texto invisible sobre fondo oscuro
+     en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
+  --ds-fg-label-default:    #FFFFFF;
+  --ds-fg-body-default:     #FFFFFF;
+  --ds-fg-headline-default: #FFFFFF;
 
   --ds-fg-icon-default:     #FFFFFF;
   --ds-fg-icon-primary:     #4BA9C0;
