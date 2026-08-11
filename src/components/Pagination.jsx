@@ -8,7 +8,7 @@
  *   Previous / Next  → flechas chevron (antes arrowLeft / arrowRight)
  *   ActivePage       → Link de texto subrayado (resto de páginas)
  *   SelectedPage     → círculo relleno de la página actual
- *   Dots             → "…" de truncamiento
+ *   Dots             → "…" de truncamiento (botón: salta siblingCount páginas)
  *
  * Nombres cruzados heredados de Sistema Origen: "Active"/"Selected" NO siguen la
  * intuición. Los tokens de Figma ya están renombrados por Part — mapea por el
@@ -101,12 +101,13 @@ const css = `
   cursor: default;
 }
 
-/* ── Dots ("…" de truncamiento — presentacional) ──────────────────────────── */
-.ds-pgn__dots {
-  cursor: default;
-}
+/* ── Dots ("…" — botón: salta un bloque de siblingCount páginas) ──────────── */
 .ds-pgn--primary   .ds-pgn__dots { color: var(--ds-pagination-dots-fg-primary); }
 .ds-pgn--secondary .ds-pgn__dots { color: var(--ds-pagination-dots-fg-secondary); }
+.ds-pgn--primary   .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-primary);   color: var(--ds-pagination-dots-fg-hover); }
+.ds-pgn--secondary .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-secondary); color: var(--ds-pagination-dots-fg-hover); }
+.ds-pgn__dots:active:not(:disabled) { opacity: var(--ds-pagination-dots-opacity-pressed); }
+.ds-pgn__dots:disabled { cursor: not-allowed; pointer-events: none; }
 
 /* ── Disabled global ──────────────────────────────────────────────────────── */
 .ds-pgn--disabled .ds-pgn__page,
@@ -191,6 +192,7 @@ export function Pagination({
   onPageChange,
   disabled    = false,
   maxSlots    = 7,
+  siblingCount = 1,   // páginas que salta cada "…" en su dirección
 }) {
   injectStyles();
 
@@ -222,10 +224,30 @@ export function Pagination({
         <ChevronLeft width={20} height={20} strokeWidth={1.75} aria-hidden="true" />
       </button>
 
-      {items.map((item, i) =>
-        item === 'dots' ? (
-          <span key={`dots-${i}`} className="ds-pgn__item ds-pgn__dots" aria-hidden="true">…</span>
-        ) : item === currentPage ? (
+      {items.map((item, i) => {
+        if (item === 'dots') {
+          // Dirección por el número que precede al "…": si es anterior a la
+          // página actual, este "…" está a la izquierda → retrocede; si no,
+          // está a la derecha → avanza. Salto = siblingCount páginas.
+          const prevNum = items[i - 1];
+          const back    = typeof prevNum === 'number' && prevNum < currentPage;
+          const target  = back
+            ? Math.max(1, currentPage - siblingCount)
+            : Math.min(totalPages, currentPage + siblingCount);
+          return (
+            <button
+              key={`dots-${i}`}
+              type="button"
+              className="ds-pgn__item ds-pgn__dots"
+              onClick={() => go(target)}
+              disabled={disabled}
+              aria-label="Saltar páginas"
+            >
+              …
+            </button>
+          );
+        }
+        return item === currentPage ? (
           <span
             key={item}
             className="ds-pgn__item ds-pgn__current"
@@ -245,8 +267,8 @@ export function Pagination({
           >
             {item}
           </button>
-        )
-      )}
+        );
+      })}
 
       <button
         type="button"

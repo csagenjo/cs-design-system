@@ -4981,32 +4981,6 @@
         }
       }
     },
-    "done": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.21960784494876862,
-          0.6039215922355652,
-          0.239215686917305
-        ],
-        "alpha": 1,
-        "hex": "#389A3D"
-      },
-      "$extensions": {
-        "com.figma.variableId": "VariableID:17:100",
-        "com.figma.scopes": [
-          "FRAME_FILL",
-          "SHAPE_FILL"
-        ],
-        "com.figma.aliasData": {
-          "targetVariableId": "VariableID:be9eaf64acc9f0f126525ed59c42e86deef5d891/-1:-1",
-          "targetVariableName": "bg/completed-light",
-          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-          "targetVariableSetName": "Theme"
-        }
-      }
-    },
     "error": {
       "$type": "color",
       "$value": {

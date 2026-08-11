@@ -24,6 +24,12 @@ import { AccountSelectorInvoker } from './components/AccountSelectorInvoker'
 import { AccountSelectorListItem } from './components/AccountSelectorListItem'
 import { AccountSelector } from './components/AccountSelector'
 import { Pagination } from './components/Pagination'
+import { HelperText } from './components/HelperText'
+import { Headline } from './components/Headline'
+import { CellData } from './components/CellData'
+import { CellHeader } from './components/CellHeader'
+import { CellMore } from './components/CellMore'
+import { CellActions } from './organisms/CellActions'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -35,9 +41,9 @@ function App() {
   const [selectorRadio, setSelectorRadio] = useState('a');
   const [selectorChecks, setSelectorChecks] = useState([]);
   const [accountRadio, setAccountRadio] = useState('a');
-  const [pageA, setPageA] = useState(1);
-  const [pageB, setPageB] = useState(7);
-  const [pageC, setPageC] = useState(3);
+  const [pageA, setPageA] = useState(1);   // total 4  → 0 dots
+  const [pageB, setPageB] = useState(1);   // total 20 → 1 dots (extremo)
+  const [pageC, setPageC] = useState(10);  // total 20 → 2 dots (en medio)
 
   return (
     <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', textAlign: 'left' }}>
@@ -543,21 +549,125 @@ function App() {
         </div>
       </section>
 
-      {/* Pagination */}
+      {/* Pagination — todos usan los defaults del componente (maxSlots=7, siblingCount=1).
+          El nº de "…" solo depende de totalPages y de la posición de currentPage. */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>PAGINATION</p>
 
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · pocas páginas (4)</p>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · pocas páginas (4) → 0 dots</p>
         <Pagination currentPage={pageA} totalPages={4} onPageChange={setPageA} />
 
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · truncado (20)</p>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · 20 págs, actual en extremo → 1 dots</p>
         <Pagination currentPage={pageB} totalPages={20} onPageChange={setPageB} />
 
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Secondary · truncado (20)</p>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Primary · 20 págs, actual en medio → 2 dots</p>
+        <Pagination currentPage={pageC} totalPages={20} onPageChange={setPageC} />
+
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Secondary · mismos parámetros que el anterior (10/20) → 2 dots (consistencia)</p>
         <Pagination variant="secondary" currentPage={pageC} totalPages={20} onPageChange={setPageC} />
 
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Disabled</p>
-        <Pagination currentPage={3} totalPages={20} disabled />
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>Disabled (10/20)</p>
+        <Pagination currentPage={10} totalPages={20} disabled />
+      </section>
+
+      {/* HelperText */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>HELPER TEXT</p>
+        <HelperText>Formato: DD/MM/AAAA</HelperText>
+        <HelperText disabled>No disponible (disabled)</HelperText>
+        <HelperText>1-25 de 100</HelperText>
+      </section>
+
+      {/* Headline */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>HEADLINE (h1–h6)</p>
+        <Headline level={1}>Headline h1 · 2xl</Headline>
+        <Headline level={2}>Headline h2 · xl</Headline>
+        <Headline level={3} color="primary">Headline h3 · lg · primary</Headline>
+        <Headline level={4} color="secondary">Headline h4 · md · secondary</Headline>
+        <Headline level={5}>Headline h5 · sm</Headline>
+        <Headline level={6}>Headline h6 · xs</Headline>
+        <div style={{ background: '#050506', padding: '12px', borderRadius: '8px' }}>
+          <Headline level={3} color="onColor">Headline onColor sobre fondo oscuro</Headline>
+        </div>
+      </section>
+
+      {/* CellHeader */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL HEADER (contenedor · rótulo = slot)</p>
+        <div style={{ display: 'flex', width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <CellHeader style={{ flex: 1 }}>Subtle (default)</CellHeader>
+          <CellHeader align="right" style={{ width: '120px' }}>Importe</CellHeader>
+        </div>
+        <div style={{ display: 'flex', width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <CellHeader border="primary" showSort style={{ flex: 1 }}>Ordenada A→Z</CellHeader>
+          <CellHeader border="primary" showSort align="right" style={{ width: '120px' }}>Importe</CellHeader>
+        </div>
+        <div style={{ display: 'flex', width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <CellHeader density="basic" surface="onSurface" style={{ flex: 1 }}>Basic · onSurface</CellHeader>
+          <CellHeader density="basic" surface="zebra" align="right" style={{ width: '120px' }}>Zebra</CellHeader>
+        </div>
+      </section>
+
+      {/* CellData */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL DATA (contenedor · contenido = slot)</p>
+        <div style={{ width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ display: 'flex' }}>
+            <CellHeader border="primary" showSort style={{ flex: 1 }}>Cliente</CellHeader>
+            <CellHeader align="right" style={{ width: '120px' }}>Importe</CellHeader>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData style={{ flex: 1 }}>García Fernández</CellData>
+            <CellData align="right" style={{ width: '120px' }}>1.250,00 €</CellData>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
+            <CellData surface="zebra" align="right" style={{ width: '120px' }}>-80,00 €</CellData>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData density="basic" style={{ flex: 1 }}>Densidad basic</CellData>
+            <CellData density="basic" align="right" style={{ width: '120px' }}>0,00 €</CellData>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData lastRow style={{ flex: 1 }}>Última fila (borde teal)</CellData>
+            <CellData lastRow align="right" style={{ width: '120px' }}>Total</CellData>
+          </div>
+        </div>
+      </section>
+
+      {/* CellMore + CellActions (columna de acciones) */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL MORE (disparador overflow) + CELL ACTIONS (organismo · ≤2 acciones)</p>
+        <div style={{ width: '520px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ display: 'flex' }}>
+            <CellHeader style={{ flex: 1 }}>Cliente</CellHeader>
+            <CellHeader align="right" style={{ width: '160px' }}>Acciones</CellHeader>
+            <CellHeader align="right" style={{ width: '80px' }}>{''}</CellHeader>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData style={{ flex: 1 }}>García Fernández</CellData>
+            <CellActions style={{ width: '160px' }}>
+              <Link href="#" size="sm">Editar</Link>
+            </CellActions>
+            <CellMore style={{ width: '80px' }} onClick={() => alert('More · fila 1')} />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
+            <CellActions surface="zebra" style={{ width: '160px' }}>
+              <Button variant="ghost" size="sm">Editar</Button>
+              <Button variant="ghost" size="sm">Borrar</Button>
+            </CellActions>
+            <CellMore surface="zebra" style={{ width: '80px' }} onClick={() => alert('More · fila 2')} />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData lastRow style={{ flex: 1 }}>Última fila</CellData>
+            <CellActions lastRow style={{ width: '160px' }}>
+              <Link href="#" size="sm">Ver</Link>
+            </CellActions>
+            <CellMore lastRow label="" style={{ width: '80px' }} onClick={() => alert('More · icon-only')} />
+          </div>
+        </div>
       </section>
 
     </div>
