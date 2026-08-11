@@ -195,7 +195,7 @@
 
   /* bg marca */
   --ds-bg-primary:          #4BA9C0;
-  --ds-bg-primary-bold:     #36879C;
+  --ds-bg-primary-bold:     #286371; /* corregido 11/08 — antes #36879C, desincronizado de Figma bg/surface/primary-bold (sin consumidores hoy) */
   --ds-bg-primary-medium:   #CAE6ED;
   --ds-bg-primary-subtle:   #F7FBFC;
   --ds-bg-secondary:        #E02C7C;
@@ -206,10 +206,6 @@
   --ds-bg-tertiary-bold:    #703F87;
   --ds-bg-tertiary-medium:  #CAABD7;
   --ds-bg-tertiary-subtle:  #F6F1F8;
-  --ds-bg-quaternary:       #80D1FE;
-  --ds-bg-quaternary-bold:  #016398;
-  --ds-bg-quaternary-medium:#B8E6FE;
-  --ds-bg-quaternary-subtle:#F5FBFF;
 
   /* bg accent (para usar como bg de chips, badges...) */
   --ds-bg-accent-primary:   #A0D1DE;
@@ -223,13 +219,9 @@
   --ds-bg-warning:          #FFFCF5;
   --ds-bg-info:             #0287D0;
   --ds-bg-highlight:        #F5FBFF;
-  --ds-bg-completed:        #389A3D;
-  --ds-bg-done:             #389A3D;
 
-  /* bg hover */
+  /* bg hover — un único hover aplicado igual en todos los themes, no hay variante por color */
   --ds-bg-hover-primary:    #B8E6FE;
-  --ds-bg-hover-secondary:  #FEF6F9;
-  --ds-bg-hover-tertiary:   #F6F1F8;
 
   /* â”€â”€ BORDER COLOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-borderColor-default:        #9AA1AA;
@@ -379,7 +371,7 @@
   /* Texto */
   --ds-button-fg-accent-filled:   var(--ds-fg-onColor);
   --ds-button-fg-accent-outline:  var(--ds-fg-primary);
-  --ds-button-fg-default-filled:  var(--ds-fg-onColor);
+  --ds-button-fg-default-filled:  var(--ds-fg-label-inverse); /* corregido 11/08 — bg-default-filled usa bg-inverse (invierte); el texto debe invertir con él, no quedarse fijo en blanco */
   --ds-button-fg-default-outline: var(--ds-fg-default);
   --ds-button-fg-disabled:        var(--ds-fg-disabled);
 
@@ -601,11 +593,11 @@
   --ds-chip-root-padding-hor-generic:      var(--ds-spacing-md);
   --ds-chip-root-padding-ver-generic:      var(--ds-spacing-xs);
   --ds-chip-label-fg-generic:              var(--ds-fg-label-default);
-  --ds-chip-label-fg-selected:             var(--ds-fg-label-inverse);
+  --ds-chip-label-fg-selected:             var(--ds-fg-label-onColor); /* corregido 11/08 — bg-selected (bg-primary) no invierte, el texto no debe invertir tampoco */
   --ds-chip-label-fg-disabled:             var(--ds-fg-label-disabled);
   --ds-chip-label-font-size:               var(--ds-fontSize-label-md);
   --ds-chip-icon-fg-generic:               var(--ds-fg-icon-primary);
-  --ds-chip-icon-fg-selected:              var(--ds-fg-icon-inverse);
+  --ds-chip-icon-fg-selected:              var(--ds-fg-icon-onColor); /* corregido 11/08 — mismo motivo que label-fg-selected */
   --ds-chip-icon-fg-disabled:              var(--ds-fg-icon-disabled);
   --ds-chip-icon-size-generic:             var(--ds-sizing-xs);
 
@@ -657,7 +649,7 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-cta-link-fg-default:              var(--ds-fg-default);
-  --ds-cta-link-fg-primary:             var(--ds-fg-onColor);
+  --ds-cta-link-fg-primary:             var(--ds-fg-label-inverse); /* corregido 11/08 — bg-primary usa bg-inverse (invierte); mismo motivo que Button default-filled */
   --ds-cta-link-fg-accent:              var(--ds-fg-primary);
   --ds-cta-link-fg-accent-primary:      var(--ds-fg-onColor);
   --ds-cta-link-fg-disabled:            var(--ds-fg-disabled);
@@ -888,10 +880,12 @@
   --ds-pagination-root-border-width-focus:   2px;                          /* borderWidth/lg */
   --ds-pagination-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-pagination-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  /* root/text/fg/selectedPage: Figma exporta fg/label/default (oscuro) pero por
-     coherencia con el resto de superficies rellenas se usa inverse (blanco).
-     DEUDA: (1) corregir el token en Figma; (2) blanco sobre teal = 2.7:1, no AA. */
-  --ds-pagination-root-text-fg-selected:     var(--ds-fg-label-inverse);
+  /* root/text/fg/selectedPage: resuelto 11/08 — Figma exportaba fg/label/default
+     (oscuro, invierte con el modo) sobre un bg que NO invierte (bg/surface/primary);
+     corregido en Figma a fg/label/onColor (blanco fijo) y aquí a juego.
+     DEUDA restante: blanco sobre teal = 2.7:1, no cumple AA — decisión de Carol de
+     dejarlo así por ahora (ver nota en tokens.css junto a selectedPage-bg-primary). */
+  --ds-pagination-root-text-fg-selected:     var(--ds-fg-label-onColor);
   --ds-pagination-root-text-fg-disabled:     var(--ds-fg-label-disabled);
 
   /* Previous — flecha izquierda */
@@ -931,7 +925,7 @@
   /* ActivePage — Link de texto subrayado (resto de páginas) */
   --ds-pagination-active-fg-primary:         var(--ds-fg-label-default);
   --ds-pagination-active-fg-secondary:       var(--ds-fg-label-secondary);
-  --ds-pagination-active-fg-hover:           var(--ds-fg-label-inverse);   /* blanco sobre relleno hover */
+  --ds-pagination-active-fg-hover:           var(--ds-fg-label-onColor);   /* blanco sobre relleno hover — corregido 11/08, bg-hover-primary/secondary no invierten */
   --ds-pagination-active-fg-disabled:        var(--ds-fg-label-disabled);
   --ds-pagination-active-bg-hover-primary:     var(--ds-bg-primary);
   --ds-pagination-active-bg-hover-secondary:   var(--ds-bg-secondary);
@@ -1016,18 +1010,47 @@
     --ds-fg-body-default:     #FFFFFF;
     --ds-fg-headline-default: #FFFFFF;
 
+    /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
+       ya corregido). Solo debe usarse cuando el fondo también invierte (bg-inverse:
+       Button default-filled, CTALink primary) — para texto sobre superficie de color
+       que NO invierte, usar *-onColor (Chip/Badge/Pagination, ya corregidos). */
+    --ds-fg-label-inverse:    #050506;
+    --ds-fg-body-inverse:     #050506;
+    --ds-fg-icon-inverse:     #050506;
+
     --ds-fg-icon-default:     #FFFFFF;
     --ds-fg-icon-primary:     #4BA9C0;
     --ds-fg-icon-secondary:   #FEF6F9;
     --ds-fg-icon-tertiary:    #F6F1F8;
     --ds-fg-icon-accent-primary: #4BA9C0;
 
-    --ds-bg-default:          #191C1F;
-    --ds-bg-page:             #050506;
-    --ds-bg-container:        #606772; /* bg/container dark, valor real de Figma — bg-default/bg-page dark aún desincronizados, ver deuda "Mode tokens dark mode" §10 */
-    --ds-bg-subtle:           #2C2F34;
-    --ds-bg-primary:          #286371;
-    --ds-bg-primary-bold:     #4BA9C0;
+    --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
+    --ds-bg-page:             #464B53; /* corregido 11/08 — antes #050506, desincronizado de Figma */
+    --ds-bg-container:        #606772;
+    --ds-bg-subtle:           #7B8490; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+    --ds-bg-disabled:         #9AA1AA; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
+    --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
+
+    /* bg marca/feedback — cerrado 11/08. bg-primary/-bold estaban INTERCAMBIADOS
+       entre sí (bug de swap, ninguno coincidía con Figma); el resto no tenía
+       override y caía al valor light. Todos los valores son la resolución real
+       en vivo desde Figma (cadena de alias, no el JSON cacheado). */
+    --ds-bg-primary:          #4BA9C0; /* corregido — antes #286371 (swap con primary-bold) */
+    --ds-bg-primary-bold:     #F7FBFC; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
+    --ds-bg-primary-medium:   #A0D1DE;
+    --ds-bg-secondary:        #EE8FB9;
+    --ds-bg-secondary-medium: #E75D9B;
+    --ds-bg-tertiary:         #CAABD7;
+    --ds-bg-error:            #F3C4C4;
+    --ds-bg-error-subtle:     #F3C4C4; /* mismo valor que bg-error en dark — así resuelve Figma */
+    --ds-bg-success:          #CBECCC;
+    --ds-bg-success-subtle:   #CBECCC; /* mismo valor que bg-success en dark — así resuelve Figma */
+    --ds-bg-hover-primary:    #016398;
+    --ds-bg-accent-primary:   #CAE6ED;
+    --ds-bg-accent-secondary: #FBE4EE;
+    --ds-bg-warning:          #FFE7B8;
+    --ds-bg-info:             #B8E6FE;
+    --ds-bg-highlight:        #016398; /* sin consumidores hoy — reservado para InlineNotification */
 
     --ds-borderColor-default: #454C56;
     --ds-borderColor-emphasis:#D8DBDE;
@@ -1070,18 +1093,47 @@
   --ds-fg-body-default:     #FFFFFF;
   --ds-fg-headline-default: #FFFFFF;
 
+  /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
+     ya corregido). Solo debe usarse cuando el fondo también invierte (bg-inverse:
+     Button default-filled, CTALink primary) — para texto sobre superficie de color
+     que NO invierte, usar *-onColor (Chip/Badge/Pagination, ya corregidos). */
+  --ds-fg-label-inverse:    #050506;
+  --ds-fg-body-inverse:     #050506;
+  --ds-fg-icon-inverse:     #050506;
+
   --ds-fg-icon-default:     #FFFFFF;
   --ds-fg-icon-primary:     #4BA9C0;
   --ds-fg-icon-secondary:   #FEF6F9;
   --ds-fg-icon-tertiary:    #F6F1F8;
   --ds-fg-icon-accent-primary: #4BA9C0;
 
-  --ds-bg-default:          #191C1F;
-  --ds-bg-page:             #050506;
-  --ds-bg-container:        #606772; /* bg/container dark, valor real de Figma — bg-default/bg-page dark aún desincronizados, ver deuda "Mode tokens dark mode" §10 */
-  --ds-bg-subtle:           #2C2F34;
-  --ds-bg-primary:          #286371;
-  --ds-bg-primary-bold:     #4BA9C0;
+  --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
+  --ds-bg-page:             #464B53; /* corregido 11/08 — antes #050506, desincronizado de Figma */
+  --ds-bg-container:        #606772;
+  --ds-bg-subtle:           #7B8490; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+  --ds-bg-disabled:         #9AA1AA; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
+  --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
+
+  /* bg marca/feedback — cerrado 11/08. bg-primary/-bold estaban INTERCAMBIADOS
+     entre sí (bug de swap, ninguno coincidía con Figma); el resto no tenía
+     override y caía al valor light. Todos los valores son la resolución real
+     en vivo desde Figma (cadena de alias, no el JSON cacheado). */
+  --ds-bg-primary:          #4BA9C0; /* corregido — antes #286371 (swap con primary-bold) */
+  --ds-bg-primary-bold:     #F7FBFC; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
+  --ds-bg-primary-medium:   #A0D1DE;
+  --ds-bg-secondary:        #EE8FB9;
+  --ds-bg-secondary-medium: #E75D9B;
+  --ds-bg-tertiary:         #CAABD7;
+  --ds-bg-error:            #F3C4C4;
+  --ds-bg-error-subtle:     #F3C4C4; /* mismo valor que bg-error en dark — así resuelve Figma */
+  --ds-bg-success:          #CBECCC;
+  --ds-bg-success-subtle:   #CBECCC; /* mismo valor que bg-success en dark — así resuelve Figma */
+  --ds-bg-hover-primary:    #016398;
+  --ds-bg-accent-primary:   #CAE6ED;
+  --ds-bg-accent-secondary: #FBE4EE;
+  --ds-bg-warning:          #FFE7B8;
+  --ds-bg-info:             #B8E6FE;
+  --ds-bg-highlight:        #016398; /* sin consumidores hoy — reservado para InlineNotification */
 
   --ds-borderColor-default: #454C56;
   --ds-borderColor-emphasis:#D8DBDE;

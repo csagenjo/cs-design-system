@@ -4981,32 +4981,6 @@
         }
       }
     },
-    "done": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          0.7960784435272217,
-          0.9254902005195618,
-          0.800000011920929
-        ],
-        "alpha": 1,
-        "hex": "#CBECCC"
-      },
-      "$extensions": {
-        "com.figma.variableId": "VariableID:17:100",
-        "com.figma.scopes": [
-          "FRAME_FILL",
-          "SHAPE_FILL"
-        ],
-        "com.figma.aliasData": {
-          "targetVariableId": "VariableID:5d19dfe93e3d7e7b264cbb8de4cbac12284f1269/-1:-1",
-          "targetVariableName": "bg/completed-dark",
-          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-          "targetVariableSetName": "Theme"
-        }
-      }
-    },
     "error": {
       "$type": "color",
       "$value": {
