@@ -186,6 +186,7 @@
   /* â”€â”€ BACKGROUND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-bg-default:          #FFFFFF;
   --ds-bg-page:             #F9FAFA;
+  --ds-bg-container:        #FFFFFF; /* superficie elevada (tarjeta/panel) — diverge de bg-default en dark, ver §10 onSurface */
   --ds-bg-subtle:           #EEEFF1;
   --ds-bg-disabled:         #EEEFF1;
   --ds-bg-inverse:          #050506;
@@ -979,7 +980,7 @@
   --ds-cell-common-text-fg:                     var(--ds-fg-label-default);    /* #050506 */
   --ds-cell-common-padding-hor:                 var(--ds-spacing-sm);          /* 6 */
   --ds-cell-common-padding-ver:                 var(--ds-spacing-xs);          /* 4 */
-  --ds-cell-common-bg-on-surface:               var(--ds-bg-default);          /* #FFFFFF — ver deuda onSurface §10 */
+  --ds-cell-common-bg-on-surface:               var(--ds-bg-container);        /* #FFFFFF — superficie de tarjeta/panel elevada, resuelto 11/08 §10 */
   --ds-cell-common-bg-zebra:                    var(--ds-bg-page);             /* #F9FAFA */
   --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #4BA9C0 — orden columna / hover */
   --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #EEEFF1 — divisor por defecto */
@@ -1023,6 +1024,7 @@
 
     --ds-bg-default:          #191C1F;
     --ds-bg-page:             #050506;
+    --ds-bg-container:        #606772; /* bg/container dark, valor real de Figma — bg-default/bg-page dark aún desincronizados, ver deuda "Mode tokens dark mode" §10 */
     --ds-bg-subtle:           #2C2F34;
     --ds-bg-primary:          #286371;
     --ds-bg-primary-bold:     #4BA9C0;
@@ -1076,6 +1078,7 @@
 
   --ds-bg-default:          #191C1F;
   --ds-bg-page:             #050506;
+  --ds-bg-container:        #606772; /* bg/container dark, valor real de Figma — bg-default/bg-page dark aún desincronizados, ver deuda "Mode tokens dark mode" §10 */
   --ds-bg-subtle:           #2C2F34;
   --ds-bg-primary:          #286371;
   --ds-bg-primary-bold:     #4BA9C0;

@@ -28,6 +28,8 @@ import { HelperText } from './components/HelperText'
 import { Headline } from './components/Headline'
 import { CellData } from './components/CellData'
 import { CellHeader } from './components/CellHeader'
+import { CellMore } from './components/CellMore'
+import { CellActions } from './organisms/CellActions'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -630,6 +632,40 @@ function App() {
           <div style={{ display: 'flex' }}>
             <CellData lastRow style={{ flex: 1 }}>Última fila (borde teal)</CellData>
             <CellData lastRow align="right" style={{ width: '120px' }}>Total</CellData>
+          </div>
+        </div>
+      </section>
+
+      {/* CellMore + CellActions (columna de acciones) */}
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL MORE (disparador overflow) + CELL ACTIONS (organismo · ≤2 acciones)</p>
+        <div style={{ width: '520px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ display: 'flex' }}>
+            <CellHeader style={{ flex: 1 }}>Cliente</CellHeader>
+            <CellHeader align="right" style={{ width: '160px' }}>Acciones</CellHeader>
+            <CellHeader align="right" style={{ width: '80px' }}>{''}</CellHeader>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData style={{ flex: 1 }}>García Fernández</CellData>
+            <CellActions style={{ width: '160px' }}>
+              <Link href="#" size="sm">Editar</Link>
+            </CellActions>
+            <CellMore style={{ width: '80px' }} onClick={() => alert('More · fila 1')} />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
+            <CellActions surface="zebra" style={{ width: '160px' }}>
+              <Button variant="ghost" size="sm">Editar</Button>
+              <Button variant="ghost" size="sm">Borrar</Button>
+            </CellActions>
+            <CellMore surface="zebra" style={{ width: '80px' }} onClick={() => alert('More · fila 2')} />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CellData lastRow style={{ flex: 1 }}>Última fila</CellData>
+            <CellActions lastRow style={{ width: '160px' }}>
+              <Link href="#" size="sm">Ver</Link>
+            </CellActions>
+            <CellMore lastRow label="" style={{ width: '80px' }} onClick={() => alert('More · icon-only')} />
           </div>
         </div>
       </section>
