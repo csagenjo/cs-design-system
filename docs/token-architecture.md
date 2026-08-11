@@ -145,14 +145,30 @@ Uso: Advanced Selector, Account Selector, Table rows.
 - `bg/error` → para fondos sólidos de estado negativo/error
 - `bg/error-subtle` → para superficies suaves de estado negativo
 
-### `fg/icon/inverse` vs `fg/icon/onColor` — trampa de dark mode ⚠️
+### `bg/default` · `bg/page` · `bg/container` — escalera de elevación (11/08/2026)
 
-Mismo valor en **light mode**, distinto en **dark mode**:
+Tres tokens neutros que en **light** son casi indistinguibles pero en **dark** revelan una escalera de elevación real — cuanto más elevada la superficie, más clara en dark mode:
 
-- `fg/icon/inverse` → se **invierte a negro** en dark mode. Pensado para icono que debe contrastar contra el fondo del modo (blanco en light, negro en dark).
-- `fg/icon/onColor` → se **mantiene blanco** en ambos modos. Pensado para icono sobre una **superficie de color** (Button relleno, AmountView solid, chips de estado…).
+| Token | Light | Dark | Rol |
+|---|---|---|---|
+| `bg/default` | `#FFFFFF` | `#050506` | lienzo base de la app (el más oscuro en dark) |
+| `bg/page` | `#F9FAFA` | `#464B53` | área de contenido, un nivel por encima |
+| `bg/container` | `#FFFFFF` | `#606772` | superficie de tarjeta/panel elevada (scope `FRAME_FILL`/`SHAPE_FILL`, el más claro en dark) |
 
-**Regla:** para icono sobre superficie de color usar SIEMPRE `fg/icon/onColor`. Usar `inverse` ahí deja el icono negro (invisible) en dark mode. Es el mismo par de trampa detectado en `fg/body/inverse` vs `fg/body/onColor`. (Ver deuda técnica de Mode dark mode — revisar si hay más pares con esta misma semántica antes de cerrar la revisión global.)
+**Origen del hallazgo:** `table/all/cellCommon/bg/onSurface` estaba aliasado a `bg/default` en vez de `bg/container` — coincidía en light (`#FFFFFF`) pero en dark habría puesto las celdas "onSurface" casi negras (el lienzo base) en vez de leerse como tarjeta elevada. Mismo patrón que la trampa `inverse`/`onColor` de arriba, pero en la familia `bg/*` en vez de `fg/*`. Corregido el alias en Figma a `bg/container`. `--ds-bg-container` no existía en absoluto en `tokens.css` — añadido al Mode layer (antes faltaba, probablemente la razón original por la que `onSurface` cayó en `bg/default` como sustituto).
+
+**De paso, auditada y corregida toda la escala neutra en dark de `tokens.css`** (estaba desincronizada de Figma, en algunos casos con el orden invertido): `bg-default` `#191C1F`→`#050506` · `bg-page` `#050506`→`#464B53` · `bg-subtle` `#2C2F34`→`#7B8490` · `bg-disabled` sin override→`#9AA1AA` (heredaba el light `#EEEFF1`, casi blanco, en todos los estados disabled del sistema).
+
+### `*/inverse` vs `*/onColor` — trampa de dark mode ⚠️ (confirmada y cerrada 11/08/2026)
+
+Mismo valor en **light mode**, distinto en **dark mode** — existe en las tres familias `fg/label/*`, `fg/body/*` y `fg/icon/*`, no solo icono:
+
+- `*/inverse` → se **invierte** con el modo (blanco en light → negro en dark, o al revés). Correcto SOLO cuando el fondo sobre el que se apoya **también invierte** — es decir, `bg/inverse` (Button default-filled, CTALink primary). Ahí ambos invierten juntos y el contraste se mantiene.
+- `*/onColor` → se **mantiene fijo** (blanco) en los dos modos. Correcto cuando el fondo es una **superficie de color de marca/feedback que NO invierte** (`bg/primary`, `bg/secondary`, `bg/error`, `bg/success`… — todas resuelven al mismo tono en light y dark, solo cambia de intensidad).
+
+**Regla de detección:** antes de fijar un color de texto/icono sobre un fondo relleno, resolver el `bg` en Light y Dark — si el hex es el mismo en los dos modos, el fg va a `onColor`; si el hex cambia entre modos, el fg va a `inverse`. Nunca decidir por el nombre del token ni por lo que "parece coherente" visualmente en un solo modo.
+
+**Auditoría completa (11/08/2026):** verificado en vivo (resolución de cadena de alias en Figma, no el JSON cacheado) que el bug era real y no solo teórico — 7 casos confirmados con `*/inverse` sentado sobre un `bg` que no invierte, todos corregidos (en Figma y en `tokens.css`): `button/all/label/fg/accent-primary`, `ctaLink/all/label/fg/accent-highEmphasis`, `chip/all/label/fg/selected`, `chip/all/icon/fg/selected`, `badgeNotification/all/label/fg/generic`, `pagination/root/text/fg/selectedPage`, `pagination/activePage/fg/hover` — todos realiasados a `*/onColor`. En paralelo, `--ds-fg-label-inverse`/`--ds-fg-body-inverse`/`--ds-fg-icon-inverse` (que sí necesitaban invertir, para Button/CTALink default-filled) no tenían override dark en `tokens.css` — añadido (`#050506`), y `--ds-button-fg-default-filled`/`--ds-cta-link-fg-primary` recableados de `fg-onColor` (no invertía, incorrecto ahí) a `fg-label-inverse`.
 
 ### Sufijos de intensidad en bg y fg
 
@@ -326,7 +342,27 @@ dots-fg-primary/secondary/disabled → fg/label/{default,secondary,disabled}
 dots-fg-hover                       → fg/icon/onColor  ({icon.fg.onColor})
 ```
 
-⚠️ **Deuda de contraste (SelectedPage).** Figma exporta `root/text/fg/selectedPage` = `fg/label/default` (oscuro), pero por coherencia con el resto de superficies rellenas (los hover de previous/next/activePage van en blanco sobre el mismo teal) el número del círculo se pone **blanco** (`fg/label/inverse`), por decisión de Carol (18/07). Pendiente: **(1)** corregir el token en Figma; **(2)** blanco sobre teal `#4BA9C0` = 2.7:1, no cumple WCAG AA — revisar (¿oscurecer el fill del círculo, o volver a texto oscuro?).
+**Deuda de contraste (SelectedPage).** ~~Figma exporta `root/text/fg/selectedPage` = `fg/label/default`~~ **(1) resuelto 11/08/2026** — era el mismo bug `inverse`/`onColor` de arriba: el token de Figma invertía con el modo sentado sobre `bg/surface/primary`, que no invierte. Corregido en Figma y en código a `fg/label/onColor` (blanco fijo, correcto en los dos modos). ⚠️ **(2) sigue pendiente:** blanco sobre teal `#4BA9C0` = 2.7:1, no cumple WCAG AA — decisión consciente de Carol de dejarlo así por ahora; revisar (¿oscurecer el fill del círculo, o volver a texto oscuro?).
+
+---
+
+## Cell family + Table (11/08/2026) — familia completa
+
+Los 4 átomos/organismos de la familia Celda (`table/all/cellCommon/*`) están construidos y ensamblados en `Table`:
+
+- **CellHeader** (átomo) · **CellData** (átomo) · **CellMore** (átomo, disparador overflow) · **CellActions** (organismo, ≤2 acciones) — comparten los 10 tokens `cellCommon` (padding, gap, borde, superficie) y solo divergen en lo específico (padding vertical `basic` de cada uno).
+- **Table** (organismo, `src/organisms/Table.jsx`) — decisión de arquitectura: **sin componente "Row" separado**. No existe uso standalone de una fila fuera de una tabla (a diferencia de CellActions, que sí vive sola dentro de una CellData), así que exponerla como organismo aparte solo añade superficie de API sin caso de uso real. `Table` exporta `Table` + `TableRow`, la fila es una pieza estructural del mismo archivo, no una entidad documentada aparte.
+- **Sin chrome propio.** No existe un componente "Table" en Figma (verificado con `search_design_system` — solo existen `Column Header`/`Column Cell`/`Column More`, la familia Cell). `Table`/`TableRow` son wrappers de layout puro (`display:flex`, sin fondo/borde/radio propios) — si se necesita una tarjeta alrededor, la envuelve el consumidor.
+- **Semántica ARIA, no `<table>` nativo.** CellHeader/CellData ya eran `<div>` con flexbox (no `<th>`/`<td>`) — mantenerlo así evita reescribir 3 átomos ya shippeados, y es el patrón estándar en tablas de datos complejas (AG Grid, MUI DataGrid, TanStack Table tampoco usan `<table>` nativo, por virtualización/columnas sticky/cell renderers custom). Roles añadidos: `role="table"` (Table) · `role="row"` (TableRow) · `role="columnheader"` (CellHeader) · `role="cell"` (CellData/CellMore/CellActions).
+- **Composición pura, sin clonar props.** Igual que CellActions/ButtonBar — `Table`/`TableRow` no inspeccionan ni clonan sus `children`; `surface="zebra"`/`lastRow` se siguen fijando a mano por celda, Table no adivina el índice de fila.
+
+### Bug de swap: `bg/primary` ↔ `bg/primary-bold` en dark (11/08/2026)
+
+Al auditar la familia bg de marca/feedback en dark mode se encontró que `--ds-bg-primary` (el token más usado de toda la familia — Button accent, Checkbox/Chip seleccionado, CTALink accent, BadgeNotification primary, 5× Pagination) y `--ds-bg-primary-bold` (0 consumidores) tenían sus valores dark **intercambiados entre sí** en `tokens.css` — ninguno coincidía con el valor real de Figma. Corregido: `bg-primary` dark `#286371`→`#4BA9C0` (el teal vivo real, no un teal casi negro); `bg-primary-bold` dark `#4BA9C0`→`#F7FBFC`. De paso se sincronizó el resto de la familia (antes sin override dark, caían al valor light): `bg-primary-medium`, `bg-secondary`, `bg-secondary-medium`, `bg-tertiary`, `bg-error`/`bg-error-subtle`, `bg-success`/`bg-success-subtle`, `bg-hover-primary`, `bg-inverse`, `bg-accent-primary/secondary`, `bg-warning`, `bg-info`, `bg-highlight` — todos con el valor real resuelto en vivo desde Figma.
+
+**Tokens huérfanos eliminados** (sin fuente en Figma bajo ningún nombre + 0 consumidores en código): `bg-quaternary` (las 4 variantes), `bg-hover-secondary`/`bg-hover-tertiary`, `bg-completed` (duplicado de `bg-success`), `bg-done` (sí era variable propia en Figma con consumidores reales — `switch/all/track/bg/on`, `stepNavigator/web/steps/bg/completed`, ambos en backlog sin construir — pero se decidió simplificar: esos dos se repuntaron a `bg/success` y `bg/done` se eliminó de Figma).
+
+**Técnica de auditoría — diff estructural, no textual.** Los re-exports de Tokens Studio reordenan claves JSON (alfabético o por orden de creación en Figma), produciendo diffs de cientos de líneas que son 100% ruido cosmético. Para auditar un re-export con confianza: aplanar ambos JSON a `path → (hex, alias)` (recorriendo hasta el nodo con `$value`+`$type`) y comparar por path, no por posición de línea — así se separa lo que cambió de verdad de lo que solo cambió de sitio.
 
 ---
 
@@ -403,6 +439,6 @@ color: #286371;
 
 ## Deuda técnica de tokens
 
-- **Mode tokens dark mode** — varios tokens rotos o sin función clara en dark mode. Revisión global pendiente (sesión aparte, no bloqueante).
+- ~~**Mode tokens dark mode** — varios tokens rotos o sin función clara en dark mode.~~ ✅ **Resuelto 11/08/2026** para la escala neutra `bg/*` (default/page/subtle/disabled/container), la familia de marca/feedback `bg/*` (primary/-bold/-medium, secondary, tertiary, error, success, hover-primary, inverse, accent, warning, info, highlight), y la trampa `*/inverse` vs `*/onColor` en `fg/label`, `fg/body` y `fg/icon` (ver secciones arriba). **Pendiente real:** `borderColor/*` dark no se ha auditado todavía contra Figma — mismo tipo de revisión, sesión aparte.
 - **Notification Count description** — campo Description del componente apunta a dominio interno de Sistema Origen. Pendiente de borrar en Figma.
 - **Placeholder/Placeholder** (node 2355:4239) — descripción del contenedor de iconos apunta a dominio interno. Pendiente de borrar en Figma.

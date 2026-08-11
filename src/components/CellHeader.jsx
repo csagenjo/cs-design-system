@@ -105,7 +105,7 @@ export function CellHeader({
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={classes} style={style}>
+    <div className={classes} style={style} role="columnheader">
       {children}
       {showSort && (
         <span className="ds-cell-header__sort">

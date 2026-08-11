@@ -90,7 +90,7 @@ export function CellData({
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={classes} style={style}>
+    <div className={classes} style={style} role="cell">
       {children}
     </div>
   );

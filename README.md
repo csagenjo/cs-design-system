@@ -51,14 +51,17 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `Headline` | h1–h6 semantic (level = tag + size) × Default/Primary/Secondary/onColor · left-only · no truncation | ✅ v1 |
 | `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow | ✅ v1 |
 | `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) | ✅ v1 |
+| `CellMore` | Cell family · overflow trigger ("More ›") · root `<button>` · icon-only when label is falsy | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
 | Component | Description | Status |
 |-----------|-------------|--------|
 | `ButtonBar` | Complex · Simple · Form · Detail · Primary/Secondary/Cancel/Negative actions | ✅ v2 |
+| `CellActions` | Cell family · hosts ≤2 actions (Button/Link/CTALink) via children · align L/R · dev-warn if >2 | ✅ v1 |
+| `Table` | Cell family · `Table` + `TableRow` · pure layout composition, no chrome of its own | ✅ v1 |
 
-> **Estado (24/07/2026):** Pagination, HelperText, Headline, CellData y CellHeader construidos. Familia Celda en curso — faltan CellMore (átomo) y CellActions (organismo); luego TableContainer.
+> **Estado (11/08/2026):** Cell family completa (CellHeader, CellData, CellMore, CellActions) y ensamblada en Table. Sprint 1 Pri 0 cerrado — ver `CLAUDE.md` §9.
 
 ---
 
@@ -97,7 +100,7 @@ Opens at `http://localhost:5173`
   --ds-link-border-bottom-default:  var(--ds-borderColor-emphasis);
   --ds-cta-link-border-radius-low:  16px;
   --ds-input-min-height:            56px;
-  --ds-checkbox-bg-selected:        var(--ds-bg-primary-bold);
+  --ds-checkbox-bg-selected:        var(--ds-bg-primary);
   --ds-amount-view-bg-positive-solid: var(--ds-bg-success);
   --ds-amount-view-fg-onColor:      var(--ds-fg-onColor);
 }
@@ -135,6 +138,8 @@ Rule: icon color is always managed via `currentColor` — never a direct token o
 **Selector + Badge + AmountView audit (01 July 2026):** Advanced Selector and Account Selector structurally complete (24+16+8 and 24+16+8 variants respectively). AmountView token naming restructured to `plain/soft/solid` convention. BadgeHighlight backgrounds corrected to subtle surfaces. `bg/negative` token eliminated from Mode — remap to `bg/error` or `bg/error-subtle` when encountered.
 
 **Token + IP sync (14–15 July 2026):** Icon color tokens consolidated to a single position-agnostic set named by contrast (Button, Icon Button, Selector, Account Selector). Theme collection reduced to Overall/Retail + Youth. Legacy-IP cleanup completed across the Figma file (naming + component documentation links). See `docs/token-architecture.md` for detail.
+
+**Dark mode audit (11 August 2026):** neutral and brand/feedback `bg/*` families resynced against live Figma resolution (not the cached JSON export) — several were desynced or, for `bg-primary`/`bg-primary-bold`, swapped between each other. The `*/inverse` vs `*/onColor` dark-mode trap — previously documented only for icons — confirmed in `fg/label`/`fg/body` too, with 7 real instances found and fixed in both Figma and code. Dead tokens removed (`bg-quaternary`, `bg-hover-secondary/tertiary`, `bg-completed`, `bg-done`). See `docs/token-architecture.md` and `docs/architecture.md` for full detail.
 
 | Component | Token violations | Status |
 |-----------|-----------------|--------|
