@@ -110,6 +110,7 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 |---|---|---|
 | ButtonBar | v2 | complex/simple/form/detail · primary/secondary/cancel/negative |
 | CellActions | v1 | familia Celda · contenedor de celda que aloja ≤2 acciones (Button/Link/CTALink) vía children · align L/R (right default) · surface neutral/onSurface/zebra · lastRow · dev-warn si >2 |
+| Table | v1 | familia Celda · `Table` + `TableRow` · wrapper de layout puro (sin chrome propio, sin componente en Figma) · composición vía children, sin clonar/inyectar props · roles ARIA table/row (columnheader/cell ya en los átomos) · surface/lastRow se siguen fijando a mano por celda |
 
 ## 7. Workflow de componentes
 
@@ -145,7 +146,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 | Pri | Componente | Dependencias |
 |---|---|---|
-| 0 | **Table + Celda (CellHeader/CellData/CellActions)** · ~~Pagination~~ ✅ | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
+| 0 | ~~Table + Celda (CellHeader/CellData/CellActions)~~ ✅ · ~~Pagination~~ ✅ | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
 | 1 | ~~Advanced Selector~~ ✅ | — |
 | — | ~~Account Selector~~ ✅ | — |
 | 2 | **Snackbar** | Button ✅ |
@@ -153,6 +154,8 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 | 4 | **Dialog** | Button ✅ |
 
 **Nota (14/07/2026):** Table + Celda + Pagination se prioriza por delante del resto de Sprint 1 — es lo que Carol está construyendo en Figma ahora mismo (Celda ya en desarrollo activo). Pendiente confirmar si Badge se adelanta también (si el toolkit necesita estados en celda desde ya) o si Table puede avanzar primero con celdas de texto plano.
+
+**Actualización (11/08/2026):** Table ✅ construido — `Table` + `TableRow` en `src/organisms/Table.jsx`. Decisión de arquitectura: sin componente "Row" separado (no tiene uso standalone fuera de una tabla) y sin chrome propio (no existe "Table" en Figma, solo la familia Cell) — wrapper de layout puro, composición vía children sin clonar props, igual que CellActions/ButtonBar. Añadidos roles ARIA (`table`/`row`/`columnheader`/`cell`) a Table/TableRow y a los 4 átomos de la familia Celda (CellHeader/CellData/CellMore/CellActions) — antes no los tenían. `App.jsx` migrado a usar `Table`/`TableRow` en vez de los `<div style={{display:'flex'}}>` manuales del banco de pruebas. Sprint 1 Pri 0 completo.
 
 **Actualización (18/07/2026):** Pagination ✅ construido y documentado (Pagination.jsx + `--ds-pagination-*` sincronizados desde Figma tras reconstruir `.Parts`). Quedan Celda + Tabla para la semana que viene.
 

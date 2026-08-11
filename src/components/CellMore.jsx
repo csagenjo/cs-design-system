@@ -105,6 +105,7 @@ export function CellMore({
       type="button"
       className={classes}
       style={style}
+      role="cell"
       onClick={onClick}
       disabled={disabled}
       aria-label={label ? undefined : 'More'}
