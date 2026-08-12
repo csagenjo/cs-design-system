@@ -52,6 +52,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow | ✅ v1 |
 | `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) | ✅ v1 |
 | `CellMore` | Cell family · overflow trigger ("More ›") · root `<button>` · icon-only when label is falsy | ✅ v1 |
+| `Snackbar` | Single/Multi line · action = direct Button instance (default sm) · bg/fg invert with mode (bg-inverse/fg-body-inverse) · `role="status"` | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -62,6 +63,8 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `Table` | Cell family · `Table` + `TableRow` · pure layout composition, no chrome of its own | ✅ v1 |
 
 > **Estado (11/08/2026):** Cell family completa (CellHeader, CellData, CellMore, CellActions) y ensamblada en Table. Sprint 1 Pri 0 cerrado — ver `CLAUDE.md` §9.
+
+> **Estado (12/08/2026):** Snackbar construido — Sprint 1 Pri 2 cerrado. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Snackbar.
 
 ---
 
