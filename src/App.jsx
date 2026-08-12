@@ -31,6 +31,7 @@ import { CellHeader } from './components/CellHeader'
 import { CellMore } from './components/CellMore'
 import { CellActions } from './organisms/CellActions'
 import { Table, TableRow } from './organisms/Table'
+import { Snackbar } from './components/Snackbar'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -672,6 +673,20 @@ function App() {
               <CellMore lastRow label="" style={{ width: '80px' }} onClick={() => alert('More · icon-only')} />
             </TableRow>
           </Table>
+        </div>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>SNACKBAR</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+          <Snackbar message="Cambios guardados" showAction={false} />
+          <Snackbar message="Elemento eliminado" actionLabel="Deshacer" onAction={() => alert('Deshacer')} />
+          <Snackbar
+            length="multi"
+            message="No se pudo completar la operación. Inténtalo de nuevo más tarde."
+            actionLabel="Reintentar"
+            onAction={() => alert('Reintentar')}
+          />
         </div>
       </section>
 

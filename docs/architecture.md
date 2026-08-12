@@ -108,6 +108,7 @@ Layer 2 — Organisms (src/organisms/)
 | `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow · `role="cell"` | `--ds-cell-*` | ✅ v1 |
 | `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) · `role="columnheader"` | `--ds-cell-*` | ✅ v1 |
 | `CellMore` | Cell family · overflow trigger ("More ›") · root `<button role="cell">` · label falsy → icon-only · surface neutral/onSurface/zebra · lastRow | `--ds-cell-*` | ✅ v1 |
+| `Snackbar` | single/multi line · action = direct `Button` instance (default sm, no tokens of its own) · bg/fg invert with mode · `role="status" aria-live="polite"` | `--ds-snackbar-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 
@@ -342,3 +343,19 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   that are pure noise. Diffing by flattened `path → (hex, alias)` instead of raw text/line position
   separates real changes from cosmetic reordering — used to verify a 428-line Theme file diff was 100%
   cosmetic before committing it.
+
+### Snackbar built + fg/body vs fg/label confirmed (12 August 2026)
+
+- **Snackbar built** (Layer 1 atom, `--ds-snackbar-*`). Sprint 1 Pri 2 closed. Two Length variants
+  (single/multi line) — layout only, same colors in both. The action ("Undo"/custom label) is a direct
+  `Button` instance (`variant="default" size="sm"`), not a re-implementation — paddings already matched
+  Figma exactly.
+- **bg/fg pairing confirmed against Figma, not assumed:** `snackbar/all/root/bg/generic` → `bg/inverse`
+  and `snackbar/all/text/fg/generic` → `fg/body/inverse` (not `fg/label/inverse` — initial assumption,
+  corrected against the actual Figma variable panel; both currently resolve to the same hex, but the
+  alias matters — Snackbar's message is body copy, not a button label). Dark-mode inversion verified
+  directly against a Figma screenshot (dark canvas → white bg / black text) before wiring the tokens.
+- **Shadow is a Figma Effect Style, not a color Variable** (`Snackbar/Shadow`) — written as a literal
+  3-layer `box-shadow` value in the Component layer, same treatment `--ds-shadow-md`/`lg` should have
+  gotten for Button's `floating` modifier but never did (pre-existing gap, unrelated to this session —
+  see *Deuda técnica* / `CLAUDE.md` §10).

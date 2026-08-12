@@ -366,6 +366,31 @@ Al auditar la familia bg de marca/feedback en dark mode se encontró que `--ds-b
 
 ---
 
+## Snackbar (12/08/2026) — construido, Sprint 1 Pri 2 cerrado
+
+Nodo EXPLORE confirmado: `3109:11663`, variante `Length` = `Single Line` / `Multi-Line`. 8 tokens `snackbar/all/*` nuevos, todos alias directos — cero valores nuevos en Base/Mode.
+
+| Token Figma | CSS | Alias Mode | Valor (light) |
+|---|---|---|---|
+| `snackbar/all/root/bg/generic` | `--ds-snackbar-root-bg-generic` | `bg/inverse` | `#050506` |
+| `snackbar/all/text/fg/generic` | `--ds-snackbar-text-fg-generic` | `fg/body/inverse` | `#FFFFFF` |
+| `snackbar/all/root/borderRadius/generic` | `--ds-snackbar-root-border-radius` | `borderRadius/md` | `8px` |
+| `snackbar/all/root/paddingHor/generic` | `--ds-snackbar-root-padding-hor` | `spacing/lg` | `12px` |
+| `snackbar/all/root/paddingVer/singleLine` | `--ds-snackbar-root-padding-ver-single` | `spacing/sm` | `6px` |
+| `snackbar/all/root/paddingVer/multiLine` | `--ds-snackbar-root-padding-ver-multi` | `spacing/lg` | `12px` |
+| `snackbar/all/root/gap/singleLine` | `--ds-snackbar-root-gap-single` | `spacing/sm` | `6px` |
+| `Snackbar/Shadow` (Effect Style) | `--ds-snackbar-root-shadow` | — (literal, no es Variable) | 3-layer drop-shadow |
+
+**`fg/body/inverse`, no `fg/label/inverse` — verificado contra el panel de variables de Figma, no asumido.** La primera hipótesis fue reutilizar `fg-label-inverse` (el mismo token que Button default-filled/CTALink primario), razonando por analogía con el par `bg-inverse`/`fg-*-inverse` ya cerrado el 11/08. Al comprobar el alias real en el panel de Component tokens de Figma, el mensaje del Snackbar resuelve contra `fg/body/inverse` — correcto semánticamente: es texto de cuerpo, no el label de un botón. Ambos tokens (`fg-label-inverse`/`fg-body-inverse`) resuelven al mismo hex en `tokens.css` hoy (`#FFFFFF` light / `#050506` dark), así que no había regresión visual posible por el error — pero el alias sí importa si algún día divergen. Regla general reafirmada: **verificar el alias real, no inferirlo por el patrón de un componente anterior**, aunque el resultado visual coincida.
+
+**Inversión de bg/fg con el modo, confirmada por captura, no por nombre de token.** Antes de cablear los tokens se pidió confirmación visual en Figma dark mode: canvas claro → Snackbar negro/texto blanco; canvas oscuro → Snackbar blanco/texto negro. Mismo patrón que Button default-filled/CTALink primario (`bg-inverse` sí invierte con el modo, a diferencia de `fg/*/onColor` que se mantiene fijo). Verificado también en el componente ya construido, en ambos modos, antes de dar la tarea por cerrada.
+
+**La acción no lleva tokens propios.** Es una instancia directa de `Button` (`variant="default" size="sm"`) — los paddings de Figma (`paddingHor/small` 8px, `paddingVer/small` 6px) ya coincidían exactamente con el tamaño `sm` existente de Button, sin necesidad de crear ni ajustar nada.
+
+**Shadow como token literal, no como alias de Mode.** `Snackbar/Shadow` es un Effect Style de Figma (no una Variable de color), así que no tiene cascada Component→Mode→Theme→Base que seguir — se escribe como valor `box-shadow` literal en la capa Component, igual que `borderRadius`/`spacing` cuando vienen de un FLOAT de Device en vez de una alias chain de color. Mismo tratamiento que debieron tener `--ds-shadow-md`/`--ds-shadow-lg` (referenciados por `Button.jsx` en `.ds-btn--floating` desde v2, pero nunca definidos en `tokens.css` — gap preexistente, detectado de pasada en esta sesión, sin relación con Snackbar).
+
+---
+
 ## Device tokens (79 × Mobile/Desk)
 
 ### Spacing
