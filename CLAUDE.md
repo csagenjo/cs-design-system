@@ -93,6 +93,7 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 | CellData | v1 | familia Celda · contenedor slot · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow |
 | CellHeader | v1 | familia Celda · contenedor slot · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) |
 | CellMore | v1 | familia Celda · disparador overflow "More ›" · raíz `<button>` · siempre right · label falsy → icon-only (ChevronRight teal) · surface neutral/onSurface/zebra · lastRow |
+| Snackbar | v1 | length single/multi · acción = instancia directa de Button (default sm, sin tokens propios) · bg/fg invierten con el modo (bg-inverse/fg-label-inverse, confirmado en Figma dark 12/08) · role="status" aria-live="polite" · sin timer/portal (fuera de scope de átomo) |
 
 **Tokens de referencia rápida — Selector:**
 - `--ds-selector-*` (advancedSelector/all/*): borderWidth 1.5px, borderRadius 8px, gap/padding 16px
@@ -110,6 +111,7 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 |---|---|---|
 | ButtonBar | v2 | complex/simple/form/detail · primary/secondary/cancel/negative |
 | CellActions | v1 | familia Celda · contenedor de celda que aloja ≤2 acciones (Button/Link/CTALink) vía children · align L/R (right default) · surface neutral/onSurface/zebra · lastRow · dev-warn si >2 |
+| Table | v1 | familia Celda · `Table` + `TableRow` · wrapper de layout puro (sin chrome propio, sin componente en Figma) · composición vía children, sin clonar/inyectar props · roles ARIA table/row (columnheader/cell ya en los átomos) · surface/lastRow se siguen fijando a mano por celda |
 
 ## 7. Workflow de componentes
 
@@ -145,14 +147,18 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 | Pri | Componente | Dependencias |
 |---|---|---|
-| 0 | **Table + Celda (CellHeader/CellData/CellActions)** · ~~Pagination~~ ✅ | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
+| 0 | ~~Table + Celda (CellHeader/CellData/CellActions)~~ ✅ · ~~Pagination~~ ✅ | Checkbox ✅ · Badge (a confirmar alcance — ver nota abajo) |
 | 1 | ~~Advanced Selector~~ ✅ | — |
 | — | ~~Account Selector~~ ✅ | — |
-| 2 | **Snackbar** | Button ✅ |
+| 2 | ~~Snackbar~~ ✅ | Button ✅ |
 | 3 | **Description List** | Link ✅ |
 | 4 | **Dialog** | Button ✅ |
 
 **Nota (14/07/2026):** Table + Celda + Pagination se prioriza por delante del resto de Sprint 1 — es lo que Carol está construyendo en Figma ahora mismo (Celda ya en desarrollo activo). Pendiente confirmar si Badge se adelanta también (si el toolkit necesita estados en celda desde ya) o si Table puede avanzar primero con celdas de texto plano.
+
+**Actualización (11/08/2026):** Table ✅ construido — `Table` + `TableRow` en `src/organisms/Table.jsx`. Decisión de arquitectura: sin componente "Row" separado (no tiene uso standalone fuera de una tabla) y sin chrome propio (no existe "Table" en Figma, solo la familia Cell) — wrapper de layout puro, composición vía children sin clonar props, igual que CellActions/ButtonBar. Añadidos roles ARIA (`table`/`row`/`columnheader`/`cell`) a Table/TableRow y a los 4 átomos de la familia Celda (CellHeader/CellData/CellMore/CellActions) — antes no los tenían. `App.jsx` migrado a usar `Table`/`TableRow` en vez de los `<div style={{display:'flex'}}>` manuales del banco de pruebas. Sprint 1 Pri 0 completo.
+
+**Actualización (12/08/2026):** Snackbar ✅ construido — `src/components/Snackbar.jsx`, átomo puro (sin timer/portal, eso es responsabilidad de La Plataforma). Nodo EXPLORE confirmado: `3109:11663` (Length=Single Line / Multi-Line). La acción "Undo" es una instancia directa de Button (`variant="default" size="sm"`) — sin tokens propios, paddings ya coincidían. bg/fg (`--ds-snackbar-root-bg-generic` / `--ds-snackbar-text-fg-generic`) reutilizan `bg-inverse` (igual que Button default-filled/CTALink primario) pero `fg-body-inverse`, no `fg-label-inverse` — alias real confirmado en el panel de variables de Figma (`snackbar/all/text/fg/generic` → `fg/body/inverse`, el mensaje es texto de cuerpo, no label de botón). Ambos tokens resuelven al mismo hex hoy, pero el alias correcto es el de body. Confirmado en Figma dark mode (12/08) que Snackbar invierte igual: negro-sobre-blanco en light, blanco-sobre-negro en dark. Shadow es Effect Style de Figma ("Snackbar/Shadow"), tratado como token literal en Component layer (mismo patrón que los `--ds-shadow-md/lg` de Button, que siguen sin definir — deuda preexistente, no de esta sesión). Sprint 1 Pri 2 completo.
 
 **Actualización (18/07/2026):** Pagination ✅ construido y documentado (Pagination.jsx + `--ds-pagination-*` sincronizados desde Figma tras reconstruir `.Parts`). Quedan Celda + Tabla para la semana que viene.
 
@@ -201,3 +207,4 @@ Calendar · Bottom Navigation · Bottom Sheet · Image · Videoplayer
 - ~~**Cell family · solo falta CÓDIGO (act. 22/07/2026).**~~ ✅ **Familia Celda completa en código 11/08/2026.** Construido: `CellData` ✅ · `CellHeader` ✅ (`showSort` + border subtle/primary) · `CellMore` ✅ (átomo, raíz `<button>`, disparador overflow "More ›", `label` falsy → icon-only ChevronRight teal) · `CellActions` ✅ (**organismo** en `src/organisms/`, ≤2 acciones Button/Link/CTALink vía children, dev-warn si >2 — NO es Column More). Todos consumen solo `--ds-cell-common-*` (sin tokens nuevos). Nodos EXPLORE confirmados: Cell `3291:24354` · More `3291:24336` (variantes `Type=Basic/Compact × Surface`; Basic = icon-only). **Pendiente**: ensamblar **Table** con estas celdas (Pri 0 Sprint 1). Nota: CellActions no existe como componente en Figma (búsqueda vacía) — es composición code-only por diseño.
 - **Sync tokens.css = reconciliación, no solo añadir (act. 22/07/2026).** Los JSON de Component se re-exportaron con limpieza de duplicados (Selector/List View, entre otros). Al sincronizar, **eliminar de tokens.css las entradas cuyo token ya no exista en el JSON**, no solo añadir lo nuevo. Ante la duda, comparar contra el JSON actual, no contra memoria de sesión.
 - **Text Styles de Figma eliminados (22/07/2026).** Todos los Text Styles se borraron ese día (0 nodos rotos tras el borrado). Ya no hay contra qué verificar la tipografía. El lineHeight de Headline se resuelve **directo de Device** (`fontLheight/headline/*`), sin capa de Componente ni Text Styles — coherente con la regla de tipografía §4. (La antigua nota "verificar lineHeight contra text styles" queda sin efecto.)
+- **`--ds-shadow-md`/`--ds-shadow-lg` no existen en tokens.css (detectado 12/08/2026, construyendo Snackbar).** `Button.jsx` los referencia en `.ds-btn--floating` desde v2 pero nunca se definieron — el modificador `floating` de Button actualmente no pinta ninguna sombra. No es deuda de esta sesión (preexistente, sin relación con Snackbar) y no bloquea nada mientras `floating` no se use en ningún consumidor real. Snackbar NO reutiliza estos tokens — su sombra (`--ds-snackbar-root-shadow`) es un Effect Style propio de Figma ("Snackbar/Shadow"), token literal en Component layer, sin relación con Device/Mode. Pendiente: si `floating` se necesita algún día, definir `--ds-shadow-md/lg` contra Figma en vez de asumir su valor.

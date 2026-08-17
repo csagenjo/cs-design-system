@@ -18019,36 +18019,6 @@
   },
   "snackbar": {
     "all": {
-      "text": {
-        "fg": {
-          "generic": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "srgb",
-              "components": [
-                1,
-                1,
-                1
-              ],
-              "alpha": 1,
-              "hex": "#FFFFFF"
-            },
-            "$extensions": {
-              "com.figma.variableId": "VariableID:3109:12565",
-              "com.figma.hiddenFromPublishing": true,
-              "com.figma.scopes": [
-                "TEXT_FILL"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:175bcf0ccf4759695df72d3f35caf3840eea652c/-1:-1",
-                "targetVariableName": "fg/body/inverse",
-                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
-                "targetVariableSetName": "Mode"
-              }
-            }
-          }
-        }
-      },
       "root": {
         "borderRadius": {
           "generic": {
@@ -18165,6 +18135,36 @@
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:75966f929c5df0252e325499967f94737f541647/-1:-1",
                 "targetVariableName": "bg/inverse",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        }
+      },
+      "text": {
+        "fg": {
+          "generic": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#FFFFFF"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:3109:12565",
+              "com.figma.hiddenFromPublishing": true,
+              "com.figma.scopes": [
+                "TEXT_FILL"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:175bcf0ccf4759695df72d3f35caf3840eea652c/-1:-1",
+                "targetVariableName": "fg/body/inverse",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
               }
