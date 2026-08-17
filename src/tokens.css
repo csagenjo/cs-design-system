@@ -984,6 +984,32 @@
   --ds-cell-header-padding-top-basic:           var(--ds-spacing-md);          /* 8 — solo Header */
   --ds-cell-header-padding-bottom-basic:        var(--ds-spacing-xs);          /* 4 — solo Header */
 
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Snackbar (snackbar/all/*)
+     Sprint 1 Pri 2. Dos variantes de Length (single/multi) — solo layout,
+     mismo color en ambas. bg/fg usan el par bg-inverse/fg-body-inverse
+     (invierte con el modo — confirmado 12/08 en Figma dark: bg pasa a blanco,
+     texto a negro — mismo patrón que Button default-filled/CTALink primary,
+     que usan fg-label-inverse por ser label de botón; aquí es fg-body-inverse
+     porque el mensaje del Snackbar es texto de cuerpo, no label — alias real
+     confirmado en Figma: snackbar/all/text/fg/generic → fg/body/inverse.
+     NO fg-onColor). El botón de acción NO lleva tokens propios — instancia
+     directa de Button variant="default" size="sm" (paddings ya coinciden).
+     Shadow es Effect Style de Figma ("Snackbar/Shadow"), no una Variable de
+     color — valor literal, mismo tratamiento que --ds-shadow-md/lg de Button.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-snackbar-root-bg-generic:          var(--ds-bg-inverse);        /* #050506 light / #FFFFFF dark */
+  --ds-snackbar-text-fg-generic:          var(--ds-fg-body-inverse);   /* #FFFFFF light / #050506 dark — snackbar/all/text/fg/generic alias real en Figma (NO fg/label) */
+  --ds-snackbar-root-border-radius:       var(--ds-border-radius-md);  /* 8 */
+  --ds-snackbar-root-padding-hor:         var(--ds-spacing-lg);        /* 12 */
+  --ds-snackbar-root-padding-ver-single:  var(--ds-spacing-sm);        /* 6 */
+  --ds-snackbar-root-padding-ver-multi:   var(--ds-spacing-lg);        /* 12 */
+  --ds-snackbar-root-gap-single:          var(--ds-spacing-sm);        /* 6 */
+  --ds-snackbar-root-shadow:              0px 3px 5px -1px rgba(0,0,0,0.2),
+                                           0px 1px 18px 0px rgba(0,0,0,0.12),
+                                           0px 6px 10px 1px rgba(0,0,0,0.14);
+
 }
 
 

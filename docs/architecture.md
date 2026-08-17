@@ -105,14 +105,18 @@ Layer 2 — Organisms (src/organisms/)
 | `Pagination` | primary · secondary · previous/next · selectedPage · activePage · dots · truncation | `--ds-pagination-*` | ✅ v1 |
 | `HelperText` | generic · disabled · Body/sm · extracted from InputCommon | `--ds-helper-text-*` | ✅ v1 |
 | `Headline` | h1–h6 (level=tag+size) × default/primary/secondary/onColor · left only · no truncation | `--ds-headline-*` | ✅ v1 |
-| `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow | `--ds-cell-*` | ✅ v1 |
-| `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) | `--ds-cell-*` | ✅ v1 |
+| `CellData` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · lastRow · `role="cell"` | `--ds-cell-*` | ✅ v1 |
+| `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) · `role="columnheader"` | `--ds-cell-*` | ✅ v1 |
+| `CellMore` | Cell family · overflow trigger ("More ›") · root `<button role="cell">` · label falsy → icon-only · surface neutral/onSurface/zebra · lastRow | `--ds-cell-*` | ✅ v1 |
+| `Snackbar` | single/multi line · action = direct `Button` instance (default sm, no tokens of its own) · bg/fg invert with mode · `role="status" aria-live="polite"` | `--ds-snackbar-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 
 | Component | Description | Status |
 |-----------|-------------|--------|
 | `ButtonBar` | complex · simple · form · detail | ✅ v2 |
+| `CellActions` | Cell family · cell container hosting ≤2 actions (Button/Link/CTALink) via children · align L/R · surface/lastRow · `role="cell"` · dev-warn if >2 | `--ds-cell-*` | ✅ v1 |
+| `Table` | Cell family · `Table` + `TableRow` · pure layout wrapper, no chrome of its own (no Figma component for it) · composition via children, no prop cloning · `role="table"`/`role="row"` | — (uses `--ds-cell-*` on children) | ✅ v1 |
 
 ---
 
@@ -209,6 +213,26 @@ Text on `solid` variants uses `fg/onColor` (white) for legibility — verified W
 - positive-solid (bg/success green): black text → ratio ~5.2:1 ✅ keep black
 - negative-solid (bg/error red): white text → ratio ~9.8:1 ✅ use onColor
 
+### Cell family + Table — composition without a Row organism (11/08/2026)
+
+`CellHeader`/`CellData`/`CellMore`/`CellActions` share the `cellCommon` tokens (padding, gap, border,
+surface) and only diverge on `basic`-density vertical padding. `Table` (`Table` + `TableRow`) assembles
+them, but deliberately **does not expose a separate `Row` organism**: a row has no standalone use case
+outside a table (unlike `CellActions`, which does live alone inside a single `CellData`), so making it
+its own exported component would only add API surface with no real consumer. `TableRow` lives in the
+same file as `Table`, documented as one organism, not two.
+
+`Table` has **no chrome of its own** (no background/border/radius) — there is no "Table" component in
+Figma, only the Cell family (`Column Header`/`Cell`/`More`), confirmed via `search_design_system` before
+assuming one existed. If a page needs Table wrapped in a card, the consumer wraps it.
+
+Semantics stay `<div>` + flexbox (not native `<table>`/`<tr>`/`<td>`) — consistent with CellHeader/CellData
+already being `<div>`s, and the same approach complex data grids use in practice (AG Grid, MUI DataGrid,
+TanStack Table skip native `<table>` too, for virtualization / sticky columns / custom cell renderers).
+ARIA roles (`table`/`row`/`columnheader`/`cell`) give the equivalent semantics. `Table`/`TableRow` never
+clone or inject props into children — `surface`/`lastRow` stay explicit per-cell, matching the
+`CellActions`/`ButtonBar` composition style used everywhere else.
+
 ---
 
 ## Icons
@@ -240,6 +264,21 @@ In React: `import { Lock, ChevronRight } from 'lucide-react'` — always with `c
 @media (prefers-color-scheme: dark) { /* system preference */ }
 [data-mode="dark"] { /* manual toggle */ }
 ```
+
+### `*/inverse` vs `*/onColor` — the rule (confirmed + closed 11/08/2026)
+
+Two token families read identically in light mode and diverge in dark — picking the wrong one is
+invisible until dark mode ships. The rule: resolve the **background** first.
+
+- Background flips with the mode (`bg/inverse`: black in light → white in dark) → pair it with
+  `*/inverse` text/icon tokens, which flip too, keeping contrast.
+- Background is a brand/feedback color that **stays the same hex in both modes** (`bg/primary`,
+  `bg/error`, `bg/success`…) → pair it with `*/onColor`, which stays fixed white in both modes.
+
+Never decide by token name or by how it looks in one mode alone — resolve the paired `bg` in both
+Light and Dark first. Full audit (7 confirmed instances, in both Figma and `tokens.css`) and the
+`bg/default`/`bg/page`/`bg/container` elevation-ladder trap of the same shape live in
+`token-architecture.md`.
 
 ---
 
@@ -283,3 +322,40 @@ In React: `import { Lock, ChevronRight } from 'lucide-react'` — always with `c
   See `token-architecture.md` §Pagination for the full map and the SelectedPage contrast debt.
 - **`bg/container` consolidation** (before Pagination): the `bg/container` / `bg/containerShape`
   / `bg/shape` families were merged into a single `bg/container` with widened scopes.
+
+### Cell family completion + Table + dark mode audit (11 August 2026)
+
+- **Cell family complete:** `CellMore` (atom) and `CellActions` (organism) built, closing the family
+  alongside `CellHeader`/`CellData`. `Table` (organism) assembles them — see *Design patterns* above
+  for why there's no separate `Row` organism and no Table chrome tokens.
+- **`table/all/cellCommon/bg/onSurface`** was aliased to `bg/default` instead of `bg/container` in
+  Figma — same value in light, wrong in dark (see *Dark mode* above). Fixed in Figma; `--ds-bg-container`
+  added to `tokens.css` (didn't exist at all before).
+- **Dark mode audit:** neutral `bg/*` scale (default/page/subtle/disabled/container) and the brand/
+  feedback `bg/*` family (primary — found swapped with primary-bold, secondary, tertiary, error,
+  success, hover-primary, inverse, accent, warning, info, highlight) resynced against live Figma
+  resolution, not the cached JSON export. The `*/inverse` vs `*/onColor` trap — previously only
+  documented for icons — confirmed present in `fg/label`/`fg/body` too, with 7 concrete instances
+  found and fixed in both Figma and code (Button, CTALink, Chip ×2, BadgeNotification, Pagination ×2).
+  Dead tokens removed: `bg-quaternary` (all variants), `bg-hover-secondary/tertiary`, `bg-completed`,
+  `bg-done`. Full detail in `token-architecture.md`.
+- **Audit technique:** Tokens Studio re-exports reorder JSON keys, producing diffs of hundreds of lines
+  that are pure noise. Diffing by flattened `path → (hex, alias)` instead of raw text/line position
+  separates real changes from cosmetic reordering — used to verify a 428-line Theme file diff was 100%
+  cosmetic before committing it.
+
+### Snackbar built + fg/body vs fg/label confirmed (12 August 2026)
+
+- **Snackbar built** (Layer 1 atom, `--ds-snackbar-*`). Sprint 1 Pri 2 closed. Two Length variants
+  (single/multi line) — layout only, same colors in both. The action ("Undo"/custom label) is a direct
+  `Button` instance (`variant="default" size="sm"`), not a re-implementation — paddings already matched
+  Figma exactly.
+- **bg/fg pairing confirmed against Figma, not assumed:** `snackbar/all/root/bg/generic` → `bg/inverse`
+  and `snackbar/all/text/fg/generic` → `fg/body/inverse` (not `fg/label/inverse` — initial assumption,
+  corrected against the actual Figma variable panel; both currently resolve to the same hex, but the
+  alias matters — Snackbar's message is body copy, not a button label). Dark-mode inversion verified
+  directly against a Figma screenshot (dark canvas → white bg / black text) before wiring the tokens.
+- **Shadow is a Figma Effect Style, not a color Variable** (`Snackbar/Shadow`) — written as a literal
+  3-layer `box-shadow` value in the Component layer, same treatment `--ds-shadow-md`/`lg` should have
+  gotten for Button's `floating` modifier but never did (pre-existing gap, unrelated to this session —
+  see *Deuda técnica* / `CLAUDE.md` §10).

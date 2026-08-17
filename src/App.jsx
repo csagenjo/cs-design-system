@@ -30,6 +30,8 @@ import { CellData } from './components/CellData'
 import { CellHeader } from './components/CellHeader'
 import { CellMore } from './components/CellMore'
 import { CellActions } from './organisms/CellActions'
+import { Table, TableRow } from './organisms/Table'
+import { Snackbar } from './components/Snackbar'
 
 function App() {
   const [choiceA, setChoiceA] = useState(false);
@@ -609,64 +611,82 @@ function App() {
         </div>
       </section>
 
-      {/* CellData */}
+      {/* CellData + Table */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL DATA (contenedor · contenido = slot)</p>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL DATA (contenedor · contenido = slot) — ensamblado con TABLE</p>
         <div style={{ width: '420px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
-          <div style={{ display: 'flex' }}>
-            <CellHeader border="primary" showSort style={{ flex: 1 }}>Cliente</CellHeader>
-            <CellHeader align="right" style={{ width: '120px' }}>Importe</CellHeader>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData style={{ flex: 1 }}>García Fernández</CellData>
-            <CellData align="right" style={{ width: '120px' }}>1.250,00 €</CellData>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
-            <CellData surface="zebra" align="right" style={{ width: '120px' }}>-80,00 €</CellData>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData density="basic" style={{ flex: 1 }}>Densidad basic</CellData>
-            <CellData density="basic" align="right" style={{ width: '120px' }}>0,00 €</CellData>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData lastRow style={{ flex: 1 }}>Última fila (borde teal)</CellData>
-            <CellData lastRow align="right" style={{ width: '120px' }}>Total</CellData>
-          </div>
+          <Table>
+            <TableRow>
+              <CellHeader border="primary" showSort style={{ flex: 1 }}>Cliente</CellHeader>
+              <CellHeader align="right" style={{ width: '120px' }}>Importe</CellHeader>
+            </TableRow>
+            <TableRow>
+              <CellData style={{ flex: 1 }}>García Fernández</CellData>
+              <CellData align="right" style={{ width: '120px' }}>1.250,00 €</CellData>
+            </TableRow>
+            <TableRow>
+              <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
+              <CellData surface="zebra" align="right" style={{ width: '120px' }}>-80,00 €</CellData>
+            </TableRow>
+            <TableRow>
+              <CellData density="basic" style={{ flex: 1 }}>Densidad basic</CellData>
+              <CellData density="basic" align="right" style={{ width: '120px' }}>0,00 €</CellData>
+            </TableRow>
+            <TableRow>
+              <CellData lastRow style={{ flex: 1 }}>Última fila (borde teal)</CellData>
+              <CellData lastRow align="right" style={{ width: '120px' }}>Total</CellData>
+            </TableRow>
+          </Table>
         </div>
       </section>
 
-      {/* CellMore + CellActions (columna de acciones) */}
+      {/* CellMore + CellActions (columna de acciones) — ensamblado con Table */}
       <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>CELL MORE (disparador overflow) + CELL ACTIONS (organismo · ≤2 acciones)</p>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>TABLE (organismo) · CELL MORE (disparador overflow) + CELL ACTIONS (organismo · ≤2 acciones)</p>
         <div style={{ width: '520px', border: '1px solid #EEEFF1', borderRadius: '4px', overflow: 'hidden' }}>
-          <div style={{ display: 'flex' }}>
-            <CellHeader style={{ flex: 1 }}>Cliente</CellHeader>
-            <CellHeader align="right" style={{ width: '160px' }}>Acciones</CellHeader>
-            <CellHeader align="right" style={{ width: '80px' }}>{''}</CellHeader>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData style={{ flex: 1 }}>García Fernández</CellData>
-            <CellActions style={{ width: '160px' }}>
-              <Link href="#" size="sm">Editar</Link>
-            </CellActions>
-            <CellMore style={{ width: '80px' }} onClick={() => alert('More · fila 1')} />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
-            <CellActions surface="zebra" style={{ width: '160px' }}>
-              <Button variant="ghost" size="sm">Editar</Button>
-              <Button variant="ghost" size="sm">Borrar</Button>
-            </CellActions>
-            <CellMore surface="zebra" style={{ width: '80px' }} onClick={() => alert('More · fila 2')} />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <CellData lastRow style={{ flex: 1 }}>Última fila</CellData>
-            <CellActions lastRow style={{ width: '160px' }}>
-              <Link href="#" size="sm">Ver</Link>
-            </CellActions>
-            <CellMore lastRow label="" style={{ width: '80px' }} onClick={() => alert('More · icon-only')} />
-          </div>
+          <Table>
+            <TableRow>
+              <CellHeader style={{ flex: 1 }}>Cliente</CellHeader>
+              <CellHeader align="right" style={{ width: '160px' }}>Acciones</CellHeader>
+              <CellHeader align="right" style={{ width: '80px' }}>{''}</CellHeader>
+            </TableRow>
+            <TableRow>
+              <CellData style={{ flex: 1 }}>García Fernández</CellData>
+              <CellActions style={{ width: '160px' }}>
+                <Link href="#" size="sm">Editar</Link>
+              </CellActions>
+              <CellMore style={{ width: '80px' }} onClick={() => alert('More · fila 1')} />
+            </TableRow>
+            <TableRow>
+              <CellData surface="zebra" style={{ flex: 1 }}>López Ruiz</CellData>
+              <CellActions surface="zebra" style={{ width: '160px' }}>
+                <Button variant="ghost" size="sm">Editar</Button>
+                <Button variant="ghost" size="sm">Borrar</Button>
+              </CellActions>
+              <CellMore surface="zebra" style={{ width: '80px' }} onClick={() => alert('More · fila 2')} />
+            </TableRow>
+            <TableRow>
+              <CellData lastRow style={{ flex: 1 }}>Última fila</CellData>
+              <CellActions lastRow style={{ width: '160px' }}>
+                <Link href="#" size="sm">Ver</Link>
+              </CellActions>
+              <CellMore lastRow label="" style={{ width: '80px' }} onClick={() => alert('More · icon-only')} />
+            </TableRow>
+          </Table>
+        </div>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ fontSize: '12px', color: '#9AA1AA', margin: 0 }}>SNACKBAR</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+          <Snackbar message="Cambios guardados" showAction={false} />
+          <Snackbar message="Elemento eliminado" actionLabel="Deshacer" onAction={() => alert('Deshacer')} />
+          <Snackbar
+            length="multi"
+            message="No se pudo completar la operación. Inténtalo de nuevo más tarde."
+            actionLabel="Reintentar"
+            onAction={() => alert('Reintentar')}
+          />
         </div>
       </section>
 
