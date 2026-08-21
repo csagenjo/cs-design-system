@@ -787,6 +787,20 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — DescriptionList (descriptionList/all/*)
+     Organismo contenedor. title/amount/iconAccount NO se replican aquí — los
+     aportan los átomos compuestos (SectionHeader / AmountView).
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-descriptionlist-label-fg-generic:      var(--ds-fg-label-default);  /* #050506 */
+  --ds-descriptionlist-valuetext-fg-generic:  var(--ds-fg-body-default);   /* #050506 */
+  --ds-descriptionlist-valuetext-fg-subtle:   var(--ds-fg-body-subtle);    /* #9AA1AA — Not Filled */
+  --ds-descriptionlist-accountname-fg-generic:var(--ds-fg-label-default);  /* #050506 */
+  --ds-descriptionlist-iban-fg-generic:       var(--ds-fg-label-subtle);   /* #9AA1AA */
+  --ds-descriptionlist-helpertext-fg-generic: var(--ds-fg-label-subtle);   /* #9AA1AA */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Selector family COMMON (compartido por Advanced + Account)
      Alineado con Figma (Selector/SelectorCommon, 07/07/2026): borderWidth y
      gap/padding pasaron a ser compartidos — Figma nunca los diferenció de verdad.
