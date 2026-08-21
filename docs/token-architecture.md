@@ -391,6 +391,84 @@ Nodo EXPLORE confirmado: `3109:11663`, variante `Length` = `Single Line` / `Mult
 
 ---
 
+## Description List + 4 dependencias (19–21/08/2026) — construido, Sprint 1 Pri 3 cerrado
+
+Description List dependía de 4 piezas que no existían todavía: `Divider`, `List`, `SectionHeader`, y una v2 de `AmountView`. Auditoría completa en Figma (varias sesiones, EXPLORE→PLAN extendido) antes de escribir una línea de código — resumen de lo que salió de ahí.
+
+### SectionHeader — consolidación de 4 copias en una
+
+El texto de título de sección (teal, bold, 19px) estaba **duplicado 4 veces** — List View, Selector, Account Selector y Description List cada uno con su propio wrapper interno `.Header`/`.Heading`, mismo estilo copiado a mano. Consolidado en un único componente `Section Header`, sacado de donde vivía escondido (dentro de List View, sin página propia) a su propia página en Figma. Verificado con barrido programático de las 52 páginas del archivo: 0 instancias del wrapper viejo antes de borrarlo, y confirmado que los 4 sitios instancian ahora el mismo componente.
+
+**No es la misma escala que `Headline`.** Coincidencia de que ambos puedan resolver a 19px en algún tamaño no significa que sean el mismo token — se verificó el `fontSize`/`lineHeight`/`fontWeight` real de cada uno antes de decidir, no se asumió por el valor en px:
+
+| | SectionHeader | Headline |
+|---|---|---|
+| Device family | `fontSize/title/*` | `fontSize/headline/*` |
+| lineHeight | `fontLheight/sm` (28.5, propio) | escala headline propia |
+| weight | siempre Bold-capable (prop `weight`) | siempre Regular |
+
+Tokens Component: `--ds-section-header-text-fg-default/primary/disabled` → Mode `fg/title/default/primary/disabled`. La nomenclatura de Figma para el color "normal" era **"Subtle"** (confuso — no es un gris apagado, resuelve al mismo `#050506`/`#FFFFFF` que cualquier texto de contraste completo) — renombrado a `default` en código, siguiendo la regla de nombrar por lo que resuelve, no por la etiqueta heredada.
+
+**Mode nuevo `fg/title/*` — valores reales, no replicados de `fg/headline/*`.** Resueltos siguiendo la cadena de alias completa en vivo (Theme → Base), no asumidos por analogía:
+
+| Mode token | light | dark |
+|---|---|---|
+| `fg/title/default` | `#050506` | `#FFFFFF` |
+| `fg/title/primary` | `#4BA9C0` | `#4BA9C0` (igual en ambos modos) |
+| `fg/title/disabled` | `#B9BEC4` | `#7B8490` |
+| `fg/title/subtle`* | `#9AA1AA` | `#EEEFF1` |
+
+*`fg/title/subtle` existe en Mode pero **SectionHeader no lo usa** — es un token distinto de `fg/title/default`, coincidencia de que ambos tengan "subtle"/"Subtle" en su nombre por caminos distintos (Figma nombró la Variant de color "Subtle", el Mode layer tiene un token real también llamado `subtle`). Confundirlos habría sido el mismo tipo de trampa que `inverse`/`onColor` — se verificó el hex real de cada uno antes de cablear.
+
+### Divider — nombrar por semántica, no por la propiedad CSS que lo pinta
+
+Implementación real en Figma: barra sólida de 1px de alto (`fill`/`background`, no `border-bottom`). Token: `--ds-divider-border-color-generic` → `var(--ds-borderColor-subtle)` (`#EEEFF1`).
+
+El nombre lleva `-border-color-` aunque el átomo lo consume como `background-color` — decisión deliberada, no descuido. Ese mismo valor de color ya se usa como `border-color`/`border-bottom-color` en el resto del codebase (filas de la familia Cell, divisores de Description List section) — nombrar el token por la propiedad CSS de un único consumidor (`-bg-`) habría creado dos nombres para el mismo concepto semántico. El nombre describe **qué es** (un color de borde/divisor), no **qué propiedad lo pinta en este átomo concreto**.
+
+### List — sin eje de tamaño, fiel a lo que expone Figma
+
+`Unordered List` / `Ordered List` / `Checkmark List` (antes hardcodeados 3 veces a mano dentro de Description List, ahora consolidados como sus propios componentes en Figma) solo exponen un tamaño (`size="16"`, un único valor, no una variante real). **No se inventó una escala** aunque la tipografía Body ya tiene pasos disponibles (`2xs/xs/sm/md/lg` = 12/14/16/19/28px) — construir `size` en código sin que exista en Figma habría sido exactamente el tipo de anticipación que el freeze de alcance del proyecto prohíbe. Si algún día hace falta un List compacto o grande, se construye en Figma primero.
+
+Tokens `--ds-list-*`: `bodytext-fg-generic` (`#050506`), `bullet-fg-generic` / `icon-checkmark-fg-generic` (`#4BA9C0`, ambos al mismo token `fg-icon-primary`), `gap-unordered` (8, reusado también por `ordered` — Figma no expone un gap propio para `ordered`), `gap-checkmark` (6), `padding-left-unordered` (2), `padding-bottom-generic` (6).
+
+### AmountView v2 — la promesa `solid/soft/plain` de CLAUDE.md, cumplida de verdad
+
+El `subtle` de la v1 (fondo con tinte de color — verde/rojo clarito, texto en el color del sentimiento) **no existía así en el `Amount View` real de Figma**. Se detectó auditando el Balance de Description List Account, que necesitaba instanciar el importe sin pastilla de color. Matriz real, verificada en Figma variable por variable (no inferida):
+
+| `highlight` × `type` | bg | fg |
+|---|---|---|
+| `neutral` + positive | (ninguno) | `fg-generic` (negro) |
+| `neutral` + negative | `bg-neutral` (`#EEEFF1`) | `fg-generic` |
+| `emphasis` + positive | `bg-positive-solid` (`#389A3D`) | `fg-onColor` (blanco) |
+| `emphasis` + negative | `bg-negative-solid` (`#D53737`) | `fg-onColor` |
+| `subtle` + positive | `bg-positive-soft` (`#F8FCF8`) | `fg-generic` (**negro, no de color**) |
+| `subtle` + negative | `bg-negative-soft` (`#FDF7F7`) | `fg-generic` |
+| `disabled` + positive | (ninguno) | `fg-disabled` (`#B9BEC4`) |
+| `disabled` + negative | `bg-disabled` (`#EEEFF1`) | `fg-disabled` |
+
+**Asimetría intencional, no un hueco sin cablear.** A bajo/nulo énfasis (`neutral`, `disabled`), positivo se queda sin marca visual — es el estado esperado, no necesita señalarse. Negativo siempre lleva un fondo, aunque sea gris neutro — lleva peso semántico que merece marcarse incluso a bajo énfasis. El patrón se repite en dos filas distintas (`neutral` y `disabled`), confirmando que es una regla de diseño, no un olvido puntual. Se verificó explícitamente en Figma antes de fijar la decisión — un fill quedó enlazado-pero-oculto en `Neutral+Positive` mientras se decidía, y se retiró una vez confirmada la asimetría.
+
+**Renombrado, no solo re-etiquetado:** `bg-positive-subtle`/`bg-negative-subtle` → `bg-positive-soft`/`bg-negative-soft` (Figma renombró el eje). **Eliminados por reconciliación** (ya no en el JSON re-exportado, eran el bug del tinte de color): `--ds-amount-view-fg-positive-subtle` / `-fg-negative-subtle`.
+
+El primitivo `.Amount` (texto sin color de estado, usado dentro de la pastilla) expone sus propios 3 ejes fieles a Figma: `size` (`xs/sm/md/lg` = 12/14/16/19), `isoPlacement` (`left`/`right`), `amountWeight` (`bold`/`regular`).
+
+### DescriptionList — contenedor tonto, nunca un enum de 8 variantes
+
+Figma modela `Description List` como 8 "Variants" (Text/Not Filled/Badge/Link+Icon/Unordered List/Ordered List/Checkmark List/Account) × 2 Orientation — inevitable en una herramienta sin slots reales, donde cada tipo de contenido necesita hornearse dentro del componente. En código es exactamente lo contrario: un contenedor tonto (`DescriptionList` + `DescriptionListItem`) que aloja `children` libres, igual que `CellData`/`Table`. Badge/Link/List/AmountView/SectionHeader/Divider se importan e instancian donde hagan falta — nunca se reimplementan dentro del organismo.
+
+Tokens `--ds-descriptionlist-*`: `label-fg-generic` (`#050506`), `valuetext-fg-generic` (`#050506`) / `-subtle` (`#9AA1AA`, estado "Not Filled"), `accountname-fg-generic` (`#050506`), `iban-fg-generic` (`#9AA1AA`), `helpertext-fg-generic` (`#9AA1AA`). El JSON también trae `descriptionList/all/{title,amount,iconAccount}/*` — **no se construyeron como tokens del organismo**: `title` lo aporta `SectionHeader` compuesto, `amount` lo aporta `AmountView` compuesto — construir tokens propios habría duplicado lo que esos átomos ya resuelven.
+
+### Fuga de IP encontrada dentro de la propia librería "CS - Design System"
+
+Dos casos, ninguno en la copia de Sistema Origen ya fichada — dentro del archivo activo, invisibles sin expandir cada variante:
+- Icono `check` (Checkmark List): enlace de documentación con el dominio real de Sistema Origen en el campo de descripción del componente.
+- Icono `Placeholder/Placeholder` (Description List, variante Account): el mismo ítem ya apuntado en la deuda técnica del 14/07, resuelto aquí para esta instancia concreta (ver `CLAUDE.md` §10 — el barrido completo de las 52 páginas buscando otras instancias sigue sin repetirse).
+
+Ambos corregidos en Figma antes de tocar código.
+
+---
+
 ## Device tokens (79 × Mobile/Desk)
 
 ### Spacing
