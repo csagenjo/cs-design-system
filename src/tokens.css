@@ -723,16 +723,22 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — AmountView (amountView/all/*)
+     COMPONENT TOKENS — AmountView v2 (amountView/all/root/*)
+     highlight (neutral|emphasis|subtle|disabled) × type (positive|negative).
+     Asimetría intencional (Figma): positivo se queda sin marca en neutral/disabled,
+     negativo siempre lleva fondo. subtle = fondo pálido + texto NEGRO (fg-generic),
+     NO texto de color (corregido 21/08, el subtle antiguo con tinte verde/rojo era bug).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-amount-view-bg-positive-solid:  var(--ds-bg-success);         /* #389A3D */
-  --ds-amount-view-bg-negative-solid:  var(--ds-bg-error);           /* #D53737, mismo rol semántico que error */
-  --ds-amount-view-bg-positive-subtle: var(--ds-bg-success-subtle);  /* patrón subtle establecido (Primary/Secondary/Tertiary/Error) */
-  --ds-amount-view-bg-negative-subtle: var(--ds-bg-error-subtle);
-  --ds-amount-view-fg-onColor:         var(--ds-fg-onColor);         /* texto sobre solid */
-  --ds-amount-view-fg-positive-subtle: var(--ds-fg-success);         /* texto sobre subtle */
-  --ds-amount-view-fg-negative-subtle: var(--ds-fg-error);
+  --ds-amount-view-bg-positive-solid:  var(--ds-bg-success);         /* #389A3D — emphasis+positive */
+  --ds-amount-view-bg-negative-solid:  var(--ds-bg-error);           /* #D53737 — emphasis+negative */
+  --ds-amount-view-bg-positive-soft:   var(--ds-bg-success-subtle);  /* #F8FCF8 — subtle+positive (Figma: bg/positive-soft) */
+  --ds-amount-view-bg-negative-soft:   var(--ds-bg-error-subtle);    /* #FDF7F7 — subtle+negative (Figma: bg/negative-soft) */
+  --ds-amount-view-bg-neutral:         var(--ds-bg-subtle);          /* #EEEFF1 — neutral+negative */
+  --ds-amount-view-bg-disabled:        var(--ds-bg-disabled);        /* #EEEFF1 — disabled+negative */
+  --ds-amount-view-fg-generic:         var(--ds-fg-body-default);    /* #050506 — texto negro (neutral/subtle) */
+  --ds-amount-view-fg-onColor:         var(--ds-fg-body-onColor);    /* #FFFFFF — texto sobre solid */
+  --ds-amount-view-fg-disabled:        var(--ds-fg-body-disabled);   /* #B9BEC4 — texto disabled */
   --ds-amount-view-border-radius:      var(--ds-border-radius-sm);   /* 4px */
   --ds-amount-view-gap:                var(--ds-spacing-xs);         /* 4px */
   --ds-amount-view-padding-hor:        var(--ds-spacing-xs);         /* 4px */
