@@ -761,6 +761,16 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Divider (divider/all/root/*)
+     Nombre semántico "border-color" (mismo valor que consumen las filas de
+     Description List / familia Cell como border-bottom). Divider.jsx lo pinta
+     internamente como background de una barra sólida de 1px — detalle de impl.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-divider-border-color-generic:    var(--ds-borderColor-subtle); /* #EEEFF1 */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Selector family COMMON (compartido por Advanced + Account)
      Alineado con Figma (Selector/SelectorCommon, 07/07/2026): borderWidth y
      gap/padding pasaron a ser compartidos — Figma nunca los diferenció de verdad.
