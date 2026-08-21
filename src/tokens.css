@@ -168,6 +168,11 @@
   --ds-fg-headline-secondary:#E02C7C;   /* Mode fg/headline/secondary — corregido de #050506 (desync) 22/07 */
   --ds-fg-headline-tertiary: #050506;
 
+  --ds-fg-title-default:    #050506;   /* familia fontSize/title/* — usada por SectionHeader (NO Headline) */
+  --ds-fg-title-primary:    #4BA9C0;
+  --ds-fg-title-subtle:     #9AA1AA;   /* token propio del Mode — SectionHeader "Subtle"→default NO lo usa */
+  --ds-fg-title-disabled:   #B9BEC4;
+
   /* fg icono */
   --ds-fg-icon-default:     #050506;
   --ds-fg-icon-subtle:      #9AA1AA;
@@ -771,6 +776,17 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — SectionHeader (sectionHeader/all/text/*)
+     Familia tipográfica fontSize/title/* (NO headline). size/weight directos de
+     Device (regla de tipografía §4). color: default | primary | disabled.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-section-header-text-fg-default:  var(--ds-fg-title-default);  /* #050506 (Figma "Subtle"→default) */
+  --ds-section-header-text-fg-primary:  var(--ds-fg-title-primary);  /* #4BA9C0 */
+  --ds-section-header-text-fg-disabled: var(--ds-fg-title-disabled); /* #B9BEC4 */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Selector family COMMON (compartido por Advanced + Account)
      Alineado con Figma (Selector/SelectorCommon, 07/07/2026): borderWidth y
      gap/padding pasaron a ser compartidos — Figma nunca los diferenció de verdad.
@@ -1066,6 +1082,9 @@
     --ds-fg-label-default:    #FFFFFF;
     --ds-fg-body-default:     #FFFFFF;
     --ds-fg-headline-default: #FFFFFF;
+    --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
+    --ds-fg-title-disabled:   #7B8490;
+    --ds-fg-title-subtle:     #EEEFF1;
 
     /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
        ya corregido). Solo debe usarse cuando el fondo también invierte (bg-inverse:
@@ -1149,6 +1168,9 @@
   --ds-fg-label-default:    #FFFFFF;
   --ds-fg-body-default:     #FFFFFF;
   --ds-fg-headline-default: #FFFFFF;
+  --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
+  --ds-fg-title-disabled:   #7B8490;
+  --ds-fg-title-subtle:     #EEEFF1;
 
   /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
      ya corregido). Solo debe usarse cuando el fondo también invierte (bg-inverse:
