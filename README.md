@@ -53,6 +53,10 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) | ✅ v1 |
 | `CellMore` | Cell family · overflow trigger ("More ›") · root `<button>` · icon-only when label is falsy | ✅ v1 |
 | `Snackbar` | Single/Multi line · action = direct Button instance (default sm) · bg/fg invert with mode (bg-inverse/fg-body-inverse) · `role="status"` | ✅ v1 |
+| `List` | Unordered/Ordered/Checkmark · real `items` array · no `size` prop (Figma exposes a single size) | ✅ v1 |
+| `AmountView` | v2 — `highlight` (neutral/emphasis/subtle/disabled) × `type` (positive/negative), replaces v1 · `.Amount` primitive axes (size/isoPlacement/amountWeight) | ✅ v2 |
+| `Divider` | Solid 1px bar · token named by semantic color role, not by the CSS property that paints it | ✅ v1 |
+| `SectionHeader` | Section-title style consolidated from 4 duplicated copies (List View, Selector, Account Selector, Description List) · `fontSize/title/*`, distinct from Headline | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -61,10 +65,13 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `ButtonBar` | Complex · Simple · Form · Detail · Primary/Secondary/Cancel/Negative actions | ✅ v2 |
 | `CellActions` | Cell family · hosts ≤2 actions (Button/Link/CTALink) via children · align L/R · dev-warn if >2 | ✅ v1 |
 | `Table` | Cell family · `Table` + `TableRow` · pure layout composition, no chrome of its own | ✅ v1 |
+| `DescriptionList` | `DescriptionList` + `DescriptionListItem` · dumb container + children, no enum of Figma's 8 baked variants · landscape/portrait orientation | ✅ v1 |
 
 > **Estado (11/08/2026):** Cell family completa (CellHeader, CellData, CellMore, CellActions) y ensamblada en Table. Sprint 1 Pri 0 cerrado — ver `CLAUDE.md` §9.
 
 > **Estado (12/08/2026):** Snackbar construido — Sprint 1 Pri 2 cerrado. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Snackbar.
+
+> **Estado (21/08/2026):** Description List construido, junto con 4 piezas nuevas que desbloqueaba (`List`, `Divider`, `SectionHeader`, `AmountView` v2). Sprint 1 Pri 3 cerrado. `SectionHeader` consolida un estilo que estaba duplicado 4 veces en Figma. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Description List.
 
 ---
 
