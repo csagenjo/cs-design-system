@@ -109,6 +109,10 @@ Layer 2 — Organisms (src/organisms/)
 | `CellHeader` | Cell family · slot container · align L/R · density compact/basic · surface neutral/onSurface/zebra · border subtle/primary · showSort (ArrowUpAZ) · `role="columnheader"` | `--ds-cell-*` | ✅ v1 |
 | `CellMore` | Cell family · overflow trigger ("More ›") · root `<button role="cell">` · label falsy → icon-only · surface neutral/onSurface/zebra · lastRow | `--ds-cell-*` | ✅ v1 |
 | `Snackbar` | single/multi line · action = direct `Button` instance (default sm, no tokens of its own) · bg/fg invert with mode · `role="status" aria-live="polite"` | `--ds-snackbar-*` | ✅ v1 |
+| `List` | unordered (teal bullet) · ordered (free-string `number` per item) · checkmark (Lucide `Check`, currentColor) · real `items` array (Figma bakes 3 by hand, not replicated) · no `size` prop — Figma exposes a single "16" | `--ds-list-*` | ✅ v1 |
+| `AmountView` | v2 — `highlight` (neutral/emphasis/subtle/disabled) × `type` (positive/negative), replaces v1 emphasis/subtle · `.Amount` primitive axes: size xs/sm/md/lg, isoPlacement left/right, amountWeight bold/regular · subtle = pale bg + black text (v1 color-tint bug fixed) | `--ds-amount-view-*` | ✅ v2 |
+| `Divider` | solid 1px bar (background, not border-bottom) matching Figma · named `-border-color-` despite the `background` implementation — the token describes the semantic color, not the one CSS property that happens to consume it here | `--ds-divider-*` | ✅ v1 |
+| `SectionHeader` | shared section-title style, extracted from a wrapper duplicated 4× (List View, Selector, Account Selector, Description List) into one atom · `fontSize/title/*` — a distinct Device family from Headline's `fontSize/headline/*`, not interchangeable · size sm/md × color default/primary/disabled × weight bold/regular | `--ds-section-header-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 
@@ -117,6 +121,7 @@ Layer 2 — Organisms (src/organisms/)
 | `ButtonBar` | complex · simple · form · detail | ✅ v2 |
 | `CellActions` | Cell family · cell container hosting ≤2 actions (Button/Link/CTALink) via children · align L/R · surface/lastRow · `role="cell"` · dev-warn if >2 | `--ds-cell-*` | ✅ v1 |
 | `Table` | Cell family · `Table` + `TableRow` · pure layout wrapper, no chrome of its own (no Figma component for it) · composition via children, no prop cloning · `role="table"`/`role="row"` | — (uses `--ds-cell-*` on children) | ✅ v1 |
+| `DescriptionList` | `DescriptionList` + `DescriptionListItem` · dumb container + children — does NOT replicate Figma's 8 "Variants" as an enum · orientation landscape (label\|value side by side) / portrait (value under label) · `dl`/`dt`/`dd` semantics · Badge/Link/List/AmountView/SectionHeader instanced by the consumer, never reimplemented | `--ds-descriptionlist-*` | ✅ v1 |
 
 ---
 
@@ -202,16 +207,29 @@ no longer depend on the old `.Icon Left` / `.Icon Right` sub-components (removed
 15/07/2026). All icons now render through the shared `Icon` atom (`src/components/Icon.jsx`):
 configurable size, color inherited from context via `currentColor`.
 
-### AmountView — solid/soft/plain naming convention
+### AmountView v2 — `highlight` × `type` (21 August 2026, replaces the old solid/soft/plain draft below)
+
+The convention originally sketched here (`plain`/`soft`/`solid`) was never actually built that way — v1 shipped with `emphasis`/`subtle` only, and `subtle` used a color-tinted background (light green/light red) that turned out not to match the real `Amount View` component in Figma at all. Audited node-by-node before writing v2:
 
 ```
-plain  → no background, text only (positive/negative color via fg token)
-soft   → subtle surface background (bg/success-subtle, bg/error-subtle)
-solid  → solid surface background (bg/success, bg/error) + onColor white text
+highlight: neutral | emphasis | subtle | disabled
+type:      positive | negative
 ```
-Text on `solid` variants uses `fg/onColor` (white) for legibility — verified WCAG AA:
-- positive-solid (bg/success green): black text → ratio ~5.2:1 ✅ keep black
-- negative-solid (bg/error red): white text → ratio ~9.8:1 ✅ use onColor
+
+| `highlight` × `type` | bg | fg |
+|---|---|---|
+| neutral + positive | none | fg-generic (black) |
+| neutral + negative | bg-neutral (`#EEEFF1`) | fg-generic |
+| emphasis + positive | bg-positive-solid (`#389A3D`) | fg-onColor (white) |
+| emphasis + negative | bg-negative-solid (`#D53737`) | fg-onColor |
+| subtle + positive | bg-positive-soft (`#F8FCF8`) | fg-generic (**black, not colored**) |
+| subtle + negative | bg-negative-soft (`#FDF7F7`) | fg-generic |
+| disabled + positive | none | fg-disabled |
+| disabled + negative | bg-disabled (`#EEEFF1`) | fg-disabled |
+
+**Intentional asymmetry, confirmed in Figma, not a gap:** at low/no emphasis (`neutral`, `disabled`), positive amounts get no visual mark — that's the expected/default state. Negative always gets at least a neutral gray flag, even at low emphasis, because it carries semantic weight worth surfacing. The pattern repeats identically across two separate rows (`neutral` and `disabled`), which is what confirmed it as a deliberate rule rather than one unwired cell.
+
+The underlying text-only primitive (`.Amount` in Figma) is exposed as its own axis set: `size` (xs/sm/md/lg = 12/14/16/19), `isoPlacement` (left/right), `amountWeight` (bold/regular) — independent of `highlight`/`type`.
 
 ### Cell family + Table — composition without a Row organism (11/08/2026)
 
@@ -359,3 +377,33 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   3-layer `box-shadow` value in the Component layer, same treatment `--ds-shadow-md`/`lg` should have
   gotten for Button's `floating` modifier but never did (pre-existing gap, unrelated to this session —
   see *Deuda técnica* / `CLAUDE.md` §10).
+
+### Description List + 4 dependencies built, SectionHeader consolidated (19–21 August 2026)
+
+- **Description List** shipped as `DescriptionList` + `DescriptionListItem` (`src/organisms/`), closing
+  Sprint 1 Pri 3. Figma models it as 8 baked "Variants" × 2 Orientation (no real slot mechanism in the
+  tool) — code deliberately does not mirror that enum. It's a dumb container + `children`, same shape as
+  `CellData`/`Table`: Badge/Link/List/AmountView/SectionHeader are instanced by whoever uses it, never
+  reimplemented inside the organism.
+- **Four new atoms unlocked by the audit, none of which existed before:** `List` (unordered/ordered/
+  checkmark, no `size` prop — Figma exposes exactly one size, inventing a scale wasn't warranted),
+  `Divider` (see naming note below), `SectionHeader` (see below), and `AmountView` v2 (see the pattern
+  entry above this one).
+- **`SectionHeader` — one atom replacing four duplicated copies.** The teal/bold section-title style
+  existed as a hand-copied local wrapper in four separate places (List View, Selector, Account Selector,
+  Description List) — no shared component, no page of its own. Consolidated into a single `Section
+  Header` component with its own Figma page; verified via a programmatic sweep of all 52 pages in the
+  file that the old wrapper had zero remaining instances before deleting it. Confirmed **not** the same
+  type ramp as `Headline` — `fontSize/title/*` is a distinct Device family from `fontSize/headline/*`,
+  with its own line-height and always Bold-capable, checked line-by-line rather than assumed from a
+  matching pixel size.
+- **`Divider` naming is deliberate, not sloppy.** Figma's actual rendering is a solid 1px-tall filled
+  bar, not a bordered element — yet the token is `--ds-divider-border-color-generic`, not `-bg-`. That
+  same color value is already consumed as `border-color`/`border-bottom-color` everywhere else in the
+  codebase (Cell family rows, Description List row separators); naming it by the one CSS property this
+  specific atom happens to use would have produced two different names for one semantic concept.
+- **IP leak found and closed inside the "CS - Design System" library itself** (not the already-flagged
+  Sistema Origen copy): the `check` icon (Checkmark List) carried a documentation link to Sistema
+  Origen's real domain in its Figma description field, and Description List's Account-variant icon was
+  the `Placeholder/Placeholder` node already flagged as tech debt on 14 July — both fixed in Figma before
+  any code was written. Neither was visible without expanding the specific variant/description field.
