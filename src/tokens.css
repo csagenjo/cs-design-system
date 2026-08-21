@@ -746,6 +746,21 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — List (list/all/*)
+     Bullet/number = label/md bold · texto = body/sm regular · sin eje size (Figma
+     expone un único "16"). ordered reusa el gap de unordered (Figma no da token propio).
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-list-bodytext-fg-generic:        var(--ds-fg-default);        /* #050506 */
+  --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* #4BA9C0 — bullet teal */
+  --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* #4BA9C0 — check teal (currentColor) */
+  --ds-list-gap-unordered:              var(--ds-spacing-md);        /* 8 — bullet/number ↔ texto */
+  --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — icono ↔ texto */
+  --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 */
+  --ds-list-padding-bottom-generic:     var(--ds-spacing-sm);        /* 6 — separación entre items */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Selector family COMMON (compartido por Advanced + Account)
      Alineado con Figma (Selector/SelectorCommon, 07/07/2026): borderWidth y
      gap/padding pasaron a ser compartidos — Figma nunca los diferenció de verdad.
