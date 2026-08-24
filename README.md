@@ -57,6 +57,10 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `AmountView` | v2 — `highlight` (neutral/emphasis/subtle/disabled) × `type` (positive/negative), replaces v1 · `.Amount` primitive axes (size/isoPlacement/amountWeight) | ✅ v2 |
 | `Divider` | Solid 1px bar · token named by semantic color role, not by the CSS property that paints it | ✅ v1 |
 | `SectionHeader` | Section-title style consolidated from 4 duplicated copies (List View, Selector, Account Selector, Description List) · `fontSize/title/*`, distinct from Headline | ✅ v1 |
+| `Dialog` | Modal · header default/primary/onPrimary/secondary/tertiary (drives Button variant) · size standard/small · width popUp (fixed 480px, shadow) / fullScreen (100%/100%) · shared `_dialogBase.jsx` header | ✅ v1 |
+| `DialogSimple` | Compact confirmation dialog · fixed Default header · variant default (280px) / expanded (480px) | ✅ v1 |
+| `ErrorAndEmptyState` | Error/empty feedback · header with close only · variant fullScreen / popUp · swappable `icon` slot (ReactNode, not the banned Image atom) | ✅ v1 |
+| `Scrim` | Trivial modal backdrop overlay · no props · bg inverts with mode | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -72,6 +76,8 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 > **Estado (12/08/2026):** Snackbar construido — Sprint 1 Pri 2 cerrado. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Snackbar.
 
 > **Estado (21/08/2026):** Description List construido, junto con 4 piezas nuevas que desbloqueaba (`List`, `Divider`, `SectionHeader`, `AmountView` v2). Sprint 1 Pri 3 cerrado. `SectionHeader` consolida un estilo que estaba duplicado 4 veces en Figma. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Description List.
+
+> **Estado (24/08/2026):** Dialog construido junto con sus 3 sub-piezas (`DialogSimple`, `ErrorAndEmptyState`, `Scrim`) — Sprint 1 completo. Namespace de Figma consolidado 34→27 tokens bajo `dialog/*`. 2 bugs reales de contraste dark-mode encontrados y corregidos en el `.Header` compartido (Tertiary y Default), mismo patrón fg/bg ya documentado en el audit del 11/08. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Dialog.
 
 ---
 

@@ -113,6 +113,10 @@ Layer 2 — Organisms (src/organisms/)
 | `AmountView` | v2 — `highlight` (neutral/emphasis/subtle/disabled) × `type` (positive/negative), replaces v1 emphasis/subtle · `.Amount` primitive axes: size xs/sm/md/lg, isoPlacement left/right, amountWeight bold/regular · subtle = pale bg + black text (v1 color-tint bug fixed) | `--ds-amount-view-*` | ✅ v2 |
 | `Divider` | solid 1px bar (background, not border-bottom) matching Figma · named `-border-color-` despite the `background` implementation — the token describes the semantic color, not the one CSS property that happens to consume it here | `--ds-divider-*` | ✅ v1 |
 | `SectionHeader` | shared section-title style, extracted from a wrapper duplicated 4× (List View, Selector, Account Selector, Description List) into one atom · `fontSize/title/*` — a distinct Device family from Headline's `fontSize/headline/*`, not interchangeable · size sm/md × color default/primary/disabled × weight bold/regular | `--ds-section-header-*` | ✅ v1 |
+| `Dialog` | modal · `header` default/primary/onPrimary/secondary/tertiary (drives Button variant: accent for primary/onPrimary, default otherwise) · `size` standard/small · `width` popUp (fixed 480px, `Dialog/DialogShadow`) / fullScreen (100%/100%, no shadow/radius) · shared header extracted to `_dialogBase.jsx` (`DialogHeader`, not exported) | `--ds-dialog-*` | ✅ v1 |
+| `DialogSimple` | compact confirmation dialog · fixed Default header (44px) · `variant` default (280px, own border+shadow) / expanded (480px, min-height 680px) | `--ds-dialog-*` | ✅ v1 |
+| `ErrorAndEmptyState` | error/empty feedback · header with close only (no arrow, no visible title) · `variant` fullScreen / popUp · `icon` is a swappable `ReactNode` slot — not the banned Image atom | `--ds-dialog-*` | ✅ v1 |
+| `Scrim` | trivial modal backdrop · no props · bg inverts with mode (black 30% light / white 30% dark) | `--ds-dialog-scrim-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 
@@ -407,3 +411,42 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   Origen's real domain in its Figma description field, and Description List's Account-variant icon was
   the `Placeholder/Placeholder` node already flagged as tech debt on 14 July — both fixed in Figma before
   any code was written. Neither was visible without expanding the specific variant/description field.
+
+### Dialog + 3 sub-pieces built, 2 dark-mode contrast bugs found and fixed (24 August 2026)
+
+- **Dialog, DialogSimple, ErrorAndEmptyState, Scrim shipped**, closing Sprint 1 Pri 4 — Sprint 1 complete.
+  Figma's token namespace was consolidated first (34 → 27 variables under a single `dialog/all/*`,
+  same Common+specific pattern as InputCommon/cellCommon) since 4 disconnected namespaces
+  (`dialog`/`dialogHeader`/`dialogSimple`/`emptyAndErrorState`) shared the same header/root/scrim
+  pieces without a single source of truth. The shared `.Header` (arrow + title + close, 5 color
+  variants) was extracted to `_dialogBase.jsx` (`DialogHeader`, not exported) — instantiated by all
+  three public components, same shape as the SectionHeader consolidation on 19 August.
+- **Two real dark-mode contrast bugs found by pairing each header color's bg against its title/icon fg
+  chain, not by assumption.** Both follow the same fg/bg-pairing trap already documented multiple times
+  in this project (Chip selected, Pagination, Button `default-filled`): a background token and its text
+  token must invert together, or one direction goes invisible.
+  - **Tertiary**, spotted by Carol from a dark-mode screenshot before any code was written:
+    `bg/surface/tertiary` lightens in dark mode (`#B185C5`→`#CAABD7`) but `title/fg/tertiary` and
+    `icon/fg/tertiary` were bound to the `fg/*/default` family, which inverts *toward* white in dark —
+    near-invisible light text on a light-purple background. Compared against Secondary (same
+    lightens-in-dark bg pattern, already correctly on `fg/*/inverse`) to confirm the diagnosis before
+    touching Figma; rebound to `fg/title/inverse` / `fg/icon/inverse`.
+  - **Default**, spotted by Carol live in the browser after the first fix shipped: `title/fg/inverse`
+    (Figma's own confusing name for the Default variant) correctly resolved to `fg/title/default`
+    (inverts, black in light) — but its sibling `icon/fg/inverse` resolved to `fg/icon/inverse` instead
+    (fixed white), invisible against the white `bg/default` in light mode, while the title right next to
+    it was fine. Rebound to `fg/icon/default` to match its title sibling.
+  Both verified by full alias-chain resolution in Figma (not by name or matching hex) before and after
+  the fix, and confirmed visually in the test bench across all 5 header colors in both light and dark.
+- **`bg/surface/primary|secondary|tertiary` resolve identically to the already-existing
+  `--ds-bg-primary/-secondary/-tertiary`** Mode tokens (same values, both modes) — reused directly
+  instead of adding a parallel "surface" token family.
+- **Code-side bug, not a Figma issue:** the fixed-width cards (`Dialog--pop-up`, `DialogSimple--default`/
+  `--expanded`) were getting compressed inside a flex row test-bench layout because `width` alone doesn't
+  stop a flex item from shrinking — `flex-shrink: 0` was missing on all three and has been added.
+- **Button's `size` scale is one step short of what Dialog needs**, found while wiring the Control Area
+  buttons: Dialog's large buttons need `fontSize/label/lg` (19px) but `Button`'s existing `size="lg"`
+  tops out at `fontSize/label/md` (16px); DialogSimple's compact buttons need `fontSize/label/sm` (14px),
+  which is `Button`'s `size="md"`, not its `size="sm"` (12px). Pre-existing gap in `Button.jsx`, unrelated
+  to this session's work — not fixed here given the blast radius (every existing `Button` consumer), left
+  as an open decision for Carol (see *Deuda técnica* / `CLAUDE.md` §10).
