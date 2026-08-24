@@ -169,6 +169,8 @@
   --ds-fg-headline-tertiary: #050506;
 
   --ds-fg-title-default:    #050506;   /* familia fontSize/title/* — usada por SectionHeader (NO Headline) */
+  --ds-fg-title-onColor:    #FFFFFF;   /* fijo ambos modos — Dialog header Primary */
+  --ds-fg-title-inverse:    #FFFFFF;   /* invierte con el modo (dark: #050506) — Dialog header Secondary/Tertiary */
   --ds-fg-title-primary:    #4BA9C0;
   --ds-fg-title-subtle:     #9AA1AA;   /* token propio del Mode — SectionHeader "Subtle"→default NO lo usa */
   --ds-fg-title-disabled:   #B9BEC4;
@@ -1071,6 +1073,87 @@
                                            0px 1px 18px 0px rgba(0,0,0,0.12),
                                            0px 6px 10px 1px rgba(0,0,0,0.14);
 
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Dialog family (dialog/all/*)
+     Sprint 1 Pri 4. Consolidado en Figma 24/08 de 4 namespaces sueltos
+     (dialog/dialogHeader/dialogSimple/emptyAndErrorState) a un único dialog/*
+     — 27 tokens. Header tiene 5 variantes de color (default/primary/onPrimary/
+     secondary/tertiary): el par bg+title+icon de cada una debe invertir (o no)
+     JUNTOS con el modo, o el texto queda ilegible. default/secondary/tertiary
+     invierten (bg y texto cambian juntos); primary/onPrimary son fijos ambos
+     modos. Tertiary corregido 24/08 — title/icon estaban en fg/*/default
+     (invierte hacia blanco en dark) sobre un fondo que se ACLARA en dark
+     (bg/surface/tertiary), dejando texto blanco sobre lila claro. Repuntado a
+     fg/*/inverse (invierte hacia negro en dark), igual que Secondary, que
+     tiene el mismo patrón bg claro-en-dark y ya estaba bien. Segundo bug
+     encontrado el mismo día: el icono de Default (header/icon/fg/inverse)
+     estaba en fg/icon/inverse (blanco en light) mientras su title hermano
+     (header/title/fg/inverse) sí estaba bien en fg/title/default (negro en
+     light) — icono invisible sobre bg-default blanco en light mode. Repuntado
+     a fg/icon/default para que icono y título inviertan juntos, como debe.
+     bg/surface/primary|secondary|tertiary del header resuelven exactamente
+     igual que --ds-bg-primary/-secondary/-tertiary ya existentes — reusados
+     sin token nuevo. Botón del Dialog no lleva tokens propios: variant se
+     deriva del header (default/secondary/tertiary → Button "default";
+     primary/onPrimary → Button "accent"), reutilizando Button.jsx tal cual.
+     Tercer bug encontrado el mismo día: las CAPAS reales de icono en Figma
+     (no solo la definición del token) tenían Primary y Default cruzados
+     entre sí (Primary apuntaba al token de Default y viceversa), y
+     DialogSimple/ErrorAndEmptyState apuntaban al de Tertiary por error —
+     eran bugs de enlace de capa, no de qué resuelve cada token. Corregido
+     capa por capa en Figma. Renombrado final de Carol (24/08): "generic"→
+     "primary" e "inverse"→"default" en las familias header/title/fg e
+     header/icon/fg, para que las 5 queden nombradas igual que su variante
+     de header (default/primary/onPrimary/secondary/tertiary), sin excepción.
+     Efecto "Dialog/DialogShadow" también resultó ser una referencia externa
+     rota (0 estilos de efecto locales en el archivo) — recreado como estilo
+     local y reasignado a las variantes PopUp de Dialog y a DialogSimple
+     Default (mismo shadow en los dos, no uno distinto de 12px como se
+     documentó al principio). Strokes en gradiente sin token (restos de
+     edición) limpiados: Dialog sin borde, DialogSimple Default con un
+     único stroke sólido en borderColor/subtle.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  --ds-dialog-body-text-fg-generic:            var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
+  --ds-dialog-empty-state-body-text-fg-generic:var(--ds-fg-body-subtle);    /* #9AA1AA */
+
+  /* Header — bg */
+  --ds-dialog-header-bg-default:               var(--ds-bg-default);       /* #FFFFFF / #050506 dark — invierte */
+  --ds-dialog-header-bg-primary:               var(--ds-bg-primary);       /* #4BA9C0 fijo */
+  --ds-dialog-header-bg-on-primary:            var(--ds-bg-onColor);       /* #FFFFFF fijo */
+  --ds-dialog-header-bg-secondary:             var(--ds-bg-secondary);     /* #E02C7C / #EE8FB9 dark */
+  --ds-dialog-header-bg-tertiary:               var(--ds-bg-tertiary);     /* #B185C5 / #CAABD7 dark */
+  /* Header — title */
+  --ds-dialog-header-title-fg-default:         var(--ds-fg-title-default); /* pairs con bg-default — invierte */
+  --ds-dialog-header-title-fg-primary:         var(--ds-fg-title-onColor); /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
+  --ds-dialog-header-title-fg-on-primary:      var(--ds-fg-title-primary); /* pairs con bg-on-primary — fijo teal */
+  --ds-dialog-header-title-fg-secondary:       var(--ds-fg-title-inverse); /* pairs con bg-secondary — invierte */
+  --ds-dialog-header-title-fg-tertiary:        var(--ds-fg-title-inverse); /* pairs con bg-tertiary — corregido 24/08, antes fg-title-default */
+  /* Header — icon */
+  --ds-dialog-header-icon-fg-default:          var(--ds-fg-icon-default);  /* pairs con bg-default — corregido 24/08, antes fg-icon-inverse (blanco sobre blanco en light); luego se descubrió además mal enlazado a la capa de Primary en Figma — ver token-architecture.md */
+  --ds-dialog-header-icon-fg-primary:          var(--ds-fg-icon-onColor);  /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
+  --ds-dialog-header-icon-fg-on-primary:       var(--ds-fg-icon-primary);  /* pairs con bg-on-primary — fijo teal */
+  --ds-dialog-header-icon-fg-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
+  --ds-dialog-header-icon-fg-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
+  /* Header — layout */
+  --ds-dialog-header-padding-hor:              6px;                        /* spacing/sm */
+  --ds-dialog-header-padding-ver:               8px;                       /* spacing/md */
+
+  /* Root / Scrim */
+  --ds-dialog-root-bg-generic:                 var(--ds-bg-default);       /* #FFFFFF / #050506 dark */
+  --ds-dialog-scrim-bg-generic:                var(--ds-bg-overlay);       /* rgba negro 30% light / blanco 30% dark */
+
+  /* DialogSimple */
+  --ds-dialog-simple-icon-fg-generic:          var(--ds-fg-icon-default);  /* invierte */
+  --ds-dialog-simple-border-color-generic:     var(--ds-borderColor-subtle); /* hairline 0.5px, verificado 24/08 — antes gradiente sin token, limpiado en Figma */
+  --ds-dialog-simple-border-radius-generic:    4px;                        /* borderRadius/sm */
+  --ds-dialog-simple-content-gap-generic:      12px;                       /* spacing/lg */
+  --ds-dialog-simple-padding-hor-generic:      12px;                       /* spacing/lg */
+  --ds-dialog-simple-padding-ver-generic:      12px;                       /* spacing/lg */
+
+  /* Título compartido (DialogSimple / ErrorAndEmptyState) */
+  --ds-dialog-title-fg-generic:                var(--ds-fg-title-default); /* invierte */
 }
 
 
@@ -1097,6 +1180,7 @@
     --ds-fg-body-default:     #FFFFFF;
     --ds-fg-headline-default: #FFFFFF;
     --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
+    --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
     --ds-fg-title-disabled:   #7B8490;
     --ds-fg-title-subtle:     #EEEFF1;
 
@@ -1120,6 +1204,7 @@
     --ds-bg-subtle:           #7B8490; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
     --ds-bg-disabled:         #9AA1AA; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
     --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
+    --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
     /* bg marca/feedback — cerrado 11/08. bg-primary/-bold estaban INTERCAMBIADOS
        entre sí (bug de swap, ninguno coincidía con Figma); el resto no tenía
@@ -1183,6 +1268,7 @@
   --ds-fg-body-default:     #FFFFFF;
   --ds-fg-headline-default: #FFFFFF;
   --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
+  --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
   --ds-fg-title-disabled:   #7B8490;
   --ds-fg-title-subtle:     #EEEFF1;
 
@@ -1206,6 +1292,7 @@
   --ds-bg-subtle:           #7B8490; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
   --ds-bg-disabled:         #9AA1AA; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
   --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
+  --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
   /* bg marca/feedback — cerrado 11/08. bg-primary/-bold estaban INTERCAMBIADOS
      entre sí (bug de swap, ninguno coincidía con Figma); el resto no tenía
