@@ -469,6 +469,35 @@ Ambos corregidos en Figma antes de tocar código.
 
 ---
 
+## Dialog + 3 sub-piezas (24/08/2026) — construido, Sprint 1 Pri 4 cerrado, Sprint 1 completo
+
+`Dialog`, `DialogSimple`, `ErrorAndEmptyState`, `Scrim` — nodos EXPLORE: Dialog `3284:6660` · DialogSimple `3284:6701` · `.Header` `3284:6720` · Scrim `3309:18518` · ErrorAndEmptyState `5036:8906`.
+
+### Consolidación de namespace (previa a CODE)
+
+Figma tenía 4 namespaces sueltos y desconectados entre sí: `dialog/*`, `dialogHeader/*`, `dialogSimple/*`, `emptyAndErrorState/*` — 34 variables con solapamiento real (header/root/scrim compartidos por las 4 piezas). Consolidado al patrón Common+específico ya usado en InputCommon/cellCommon: un único `dialog/all/*` de 27 tokens. `.Header` compartido (arrow + title + X, 5 variantes de color) queda como única fuente para Dialog Standard/Small, DialogSimple (siempre Default) y ErrorAndEmptyState (siempre Default, sin flecha ni título visible).
+
+### 2 bugs de contraste dark-mode reales — mismo patrón de pareja fg/bg ya documentado
+
+El `.Header` tiene 5 variantes de color (`default`/`primary`/`onPrimary`/`secondary`/`tertiary`). Cada una empareja un `bg` con un `title/fg` y un `icon/fg` — los 3 deben invertir (o no) **juntos** con el modo, o el texto/icono se vuelve invisible. `default`/`secondary`/`tertiary` invierten (el bg se aclara en dark); `primary`/`onPrimary` son fijos ambos modos.
+
+- **Tertiary** (detectado por captura de Carol en dark mode, antes de escribir código): `bg/surface/tertiary` se aclara en dark (`#B185C5`→`#CAABD7`, igual que Secondary), pero `title/fg/tertiary` e `icon/fg/tertiary` estaban en la familia `fg/*/default` (invierte HACIA blanco en dark) en vez de `fg/*/inverse` (invierte hacia negro) — texto/icono blanco sobre lila claro, casi invisible. Comparado contra Secondary (mismo patrón de bg, correctamente en `fg/*/inverse`) para confirmar el diagnóstico antes de tocar Figma. Repuntado a `fg/title/inverse` / `fg/icon/inverse`.
+- **Default** (detectado por Carol en vivo, tras el primer fix, comparando contra el título hermano de la misma variante): `title/fg/inverse` (nombre confuso pero correcto) resolvía a `fg/title/default` — invierte bien, negro en light. Pero `icon/fg/inverse` (mismo nombre de variante, pieza distinta) resolvía a `fg/icon/inverse` — blanco fijo en light, sobre `bg/default` que también es blanco en light → icono invisible. El title de la misma variante SÍ estaba bien; solo el icon tenía el binding equivocado. Repuntado a `fg/icon/default`, igual patrón que su title hermano.
+
+Ambos verificados por cadena de alias completa en Figma (no por nombre ni por hex coincidente) antes y después del fix, y confirmados visualmente en el banco de pruebas (light + dark, las 5 variantes de color).
+
+`bg/surface/primary|secondary|tertiary` del header resuelven exactamente igual que los `--ds-bg-primary/-secondary/-tertiary` ya existentes en Mode (mismos valores en ambos modos) — reusados directamente, sin token de Componente nuevo para esa parte.
+
+### Tokens
+
+Los 27 `--ds-dialog-*` en `tokens.css`: bodyText/emptyState (2 fg) · header bg×5 colores · header title fg×5 · header icon fg×5 · header padding×2 (layout, literal px) · root bg · scrim bg · simple (icon fg, borderRadius, content gap, padding×2, literales) · title fg compartido (DialogSimple/ErrorAndEmptyState). Sombra `Dialog/DialogShadow` (2 capas: `0 24px 24px rgba(0,0,0,.24)` + `0 0 24px rgba(0,0,0,.12)`) tratada como literal en CSS, mismo criterio que `--ds-snackbar-root-shadow` — solo aplica a `width="popUp"`. `--ds-bg-overlay` no tenía override dark hasta esta sesión (`bg/overlay` dark en Figma = negro→blanco 30%) — añadido.
+
+### Hallazgo de código (no de Figma): tamaño de Button un escalón corto
+
+Los botones grandes de Dialog piden `fontSize/label/lg` (19px), pero `Button.jsx` `size="lg"` da 16px (`fontSize/label/md`) — un escalón por debajo, preexistente a esta sesión. Ver `CLAUDE.md` §10 para la decisión pendiente. No se tocó Button.jsx sin decisión explícita, dado el radio de impacto (todos sus consumidores ya construidos).
+
+---
+
 ## Device tokens (79 × Mobile/Desk)
 
 ### Spacing
