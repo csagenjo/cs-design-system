@@ -117,6 +117,10 @@ Layer 2 — Organisms (src/organisms/)
 | `DialogSimple` | compact confirmation dialog · fixed Default header (44px) · `variant` default (280px, solid `borderColor/subtle` border + the same `Dialog/DialogShadow` as Dialog's PopUp, not a distinct shadow) / expanded (480px, min-height 680px) | `--ds-dialog-*` | ✅ v1 |
 | `ErrorAndEmptyState` | error/empty feedback · header with close only (no arrow, no visible title) · `variant` fullScreen / popUp · `icon` is a swappable `ReactNode` slot — not the banned Image atom | `--ds-dialog-*` | ✅ v1 |
 | `Scrim` | trivial modal backdrop · no props · bg inverts with mode (black 30% light / white 30% dark) | `--ds-dialog-scrim-*` | ✅ v1 |
+| `Text` | rich-text option swappable into List View/Selector's Description slot via Figma instance swap · `color` default/secondary/disabled × `size` 14/16 × `weight` bold/regular × boolean `chevron` (no variant duplication) · own Figma page, same treatment as SectionHeader | `--ds-text-*` | ✅ v1 |
+| `DescriptionText` | plain description text · `color` default/subtle/disabled × `size` 14/16 · default content of the Description slot | `--ds-description-text-*` | ✅ v1 |
+| `DetailText` | icon + detail text · consolidated from 4 duplicated inline copies across the Selector family · `color` default/secondary/tertiary/disabled × `size` 14/16 · swappable `icon` slot | `--ds-detail-text-*` | ✅ v1 |
+| `ListView` | interactive result-list row, real `<button>` · Header/Description/Detail compose SectionHeader/DescriptionText/DetailText · `rightPanelContent` is a free slot — not a ported wrapper of Figma's 10-variant Right Panel · selected ribbon · 4 `divider` options · hover/pressed/focus via native CSS pseudo-classes, only `disabled` is a real prop | `--ds-list-view-*` | ✅ v1 |
 
 ### Layer 2 — Organisms
 
@@ -450,3 +454,42 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   which is `Button`'s `size="md"`, not its `size="sm"` (12px). Pre-existing gap in `Button.jsx`, unrelated
   to this session's work — not fixed here given the blast radius (every existing `Button` consumer), left
   as an open decision for Carol (see *Deuda técnica* / `CLAUDE.md` §10).
+
+### ListView built, Selector family refactored onto 3 new shared atoms (24 August 2026)
+
+- **List View shipped**, the first piece of Sprint 2, alongside three new atoms — `Text`,
+  `DescriptionText`, `DetailText` — each given its own Figma page (same treatment as SectionHeader) and
+  a real Component-token family (`text/all/label/fg/*`, `descriptionText/all/text/fg/*`,
+  `detailText/all/{text,icon}/fg/*`).
+- **Process correction mid-session.** While exploring List View's structure, `DetailText` was found
+  missing as a properly-published shared component — before confirming this with Carol, code started
+  being written against an inferred token shape. Carol stopped the work: Figma is the source of truth,
+  and a missing atom noticed during EXPLORE gets raised with her before any code, not inferred and built
+  around. She then built `DetailText` in Figma herself (own page, `Show Icon` boolean, swappable `Icon`
+  instance) and instanced it into the real List View/Selector layouts. The already-explored token names
+  turned out to match exactly — confirming the earlier exploration was accurate, but the process gap
+  (write code from inference, let Figma catch up after) was the real issue, now corrected going forward.
+- **`SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker`, `AccountSelectorListItem`
+  refactored** to consume the new shared atoms instead of duplicated inline markup. This closed a real
+  inconsistency: `SelectorListItem` exposed no detail-text color at all (always default), while
+  `SelectorInvoker` supported secondary/tertiary — now both do, via the same `DetailText` atom.
+- **Regression introduced and caught in the same pass:** moving description/detail color to live inside
+  the new atoms broke each consumer's own `:disabled` CSS override (it targeted a wrapper `<span>` that
+  no longer carries the text color). Fixed by passing `color="disabled"` explicitly from each consumer
+  when `isDisabled` is true, and confirmed via live computed-style checks (not just reading the JSX) that
+  both `AccountSelectorInvoker` and `AccountSelectorListItem` render the correct disabled gray
+  (`rgb(185, 190, 196)` / `#B9BEC4`) before closing the loop.
+- **`ListView` itself**: real `<button>`, hover/pressed/focus resolved via native CSS pseudo-classes
+  (same convention as `SelectorInvoker`) rather than a `state` prop — only `disabled` is exposed, since
+  Figma's other four "states" (Hover/Pressed/Focus aside from Disabled) are visual-only and don't need
+  app-controlled toggling. `rightPanelContent` is a free slot, not a ported version of Figma's 10-variant
+  Right Panel component (Amount View/Checkbox/Radio/Switch/Text Button/Icon/Badge with Icon/Loading
+  Indicator/Highlight Badge) — same reasoning as `DescriptionList` not replicating Figma's baked variant
+  list: the consumer instances whichever real atom it needs directly. Two of Right Panel's ten options
+  (Switch, Loading Spinner) aren't built yet in code — not a blocker unless a consumer needs those
+  specific slots.
+- **8 missing dark-mode overrides found and fixed** while resolving tokens for the new atoms + ListView
+  (`fg/label/secondary`, `fg/label/disabled`, `fg/body/secondary`, `fg/body/tertiary`, `fg/body/subtle`,
+  `fg/body/disabled`, `fg/icon/disabled`, `borderColor/subtle`, `borderColor/disabled`) — all resolved
+  live against Figma's variable chains, not assumed. `--ds-fg-disabled` was also carrying the light value
+  in both dark blocks (no real override existed) — corrected to `#7B8490`.
