@@ -13,8 +13,10 @@
  * variant="fullScreen" — ocupa 100%/100% del contenedor (igual que Dialog
  *                         width="fullScreen"), header/contenido/botones
  *                         repartidos en los extremos.
- * variant="popUp"       — tarjeta compacta centrada, sin sombra/radio propios
- *                         (Figma no los define para esta variante).
+ * variant="popUp"       — tarjeta compacta centrada. Las dos variantes llevan
+ *                         Dialog/DialogShadow (añadida 25/08, antes ninguna la
+ *                         tenía) pero sin radio de esquina — Figma no lo define
+ *                         para este componente.
  *
  * USO:
  *   <ErrorAndEmptyState title="No hay resultados" description="Prueba a cambiar los filtros." />
@@ -34,25 +36,26 @@ const css = `
   align-items: center;
   box-sizing: border-box;
   background: var(--ds-dialog-root-bg-generic);
+  box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — añadida 25/08, antes ninguna variante llevaba sombra ni radio (sigue sin radio, cornerRadius 0 en Figma) */
 }
 .ds-error-empty-state--full-screen {
   width: 100%;
   height: 100%;
   justify-content: space-between;
-  padding: 8px 16px 16px;
+  padding: var(--ds-dialog-empty-state-padding-generic);
 }
 .ds-error-empty-state--pop-up {
   max-width: 359px;
   flex-shrink: 0;
-  gap: var(--ds-dialog-simple-padding-ver-generic);
-  padding: 16px;
+  gap: var(--ds-dialog-root-gap-generic);
+  padding: var(--ds-dialog-empty-state-padding-generic);
 }
 
 .ds-error-empty-state__content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ds-dialog-simple-padding-ver-generic);
+  gap: var(--ds-dialog-root-gap-generic);
   width: 100%;
   box-sizing: border-box;
 }
@@ -105,12 +108,12 @@ const css = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-dialog-simple-padding-ver-generic);
+  gap: var(--ds-dialog-root-gap-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
 }
-.ds-error-empty-state--full-screen .ds-error-empty-state__control-area { padding: 16px; }
+.ds-error-empty-state--full-screen .ds-error-empty-state__control-area { padding: var(--ds-dialog-control-area-padding-generic); }
 `;
 
 injectStyles('ds-error-empty-state', css);

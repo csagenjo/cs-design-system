@@ -114,7 +114,7 @@ export default function App() {
 
       <section>
         <SectionHeader color="primary">Dialog + Scrim (composición)</SectionHeader>
-        <div style={viewport}>
+        <div style={{ ...viewport, width: 560 }}>
           <Scrim />
           <div style={{ position: 'absolute', top: 12, left: '50%', transform: 'translateX(-50%)' }}>
             <Dialog header="default" size="small" width="popUp" title="Confirmar">

@@ -18,10 +18,10 @@ const css = `
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
-  padding: var(--ds-dialog-header-padding-ver) var(--ds-dialog-header-padding-hor);
+  padding: 0 var(--ds-dialog-header-padding-hor);
 }
-.ds-dialog-header--standard { height: 60px; }
-.ds-dialog-header--small    { height: 44px; }
+.ds-dialog-header--standard { height: 60px; padding-top: var(--ds-dialog-header-padding-ver-regular); padding-bottom: var(--ds-dialog-header-padding-ver-regular); }
+.ds-dialog-header--small    { height: 44px; padding-top: var(--ds-dialog-header-padding-ver-small); padding-bottom: var(--ds-dialog-header-padding-ver-small); }
 
 .ds-dialog-header--standard .ds-dialog-header__title { font-size: var(--ds-fontSize-title-lg); line-height: var(--ds-lineHeight-md); }
 .ds-dialog-header--small    .ds-dialog-header__title { font-size: var(--ds-fontSize-title-md); line-height: var(--ds-lineHeight-sm); }
