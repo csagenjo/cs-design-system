@@ -11,9 +11,10 @@
  * default/secondary/tertiary, "accent" para primary/onPrimary), reutilizando
  * Button.jsx tal cual, sin tokens propios.
  * size: "standard" (header 60px) | "small" (header 44px).
- * width: "popUp" (480px fijo, esquinas redondeadas, sombra Dialog/DialogShadow)
- *        | "fullScreen" (100%/100% del contenedor — el consumidor decide el
- *        tamaño real del overlay, sin esquinas ni sombra).
+ * width: "popUp" (480px fijo) | "fullScreen" (100%/100% del contenedor — el
+ *        consumidor decide el tamaño real del overlay). Esquinas redondeadas
+ *        y sombra Dialog/DialogShadow en las dos — actualizado 25/08, antes
+ *        fullScreen no las llevaba; Carol las añadió a las 20 variantes en Figma.
  *
  * children = "Scrollable Content" (slot libre, scroll interno si excede alto).
  *
@@ -41,14 +42,14 @@ const css = `
   align-items: center;
   box-sizing: border-box;
   background: var(--ds-dialog-root-bg-generic);
-  gap: var(--ds-dialog-simple-padding-ver-generic);
+  gap: var(--ds-dialog-root-gap-generic);
+  border-radius: var(--ds-dialog-root-border-radius-generic);
+  overflow: hidden;
+  box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — 25/08: aplicada a todas las variantes, antes solo PopUp */
 }
 .ds-dialog--pop-up {
   width: 480px;
   flex-shrink: 0;
-  border-radius: var(--ds-dialog-simple-border-radius-generic);
-  overflow: hidden;
-  box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow */
 }
 .ds-dialog--pop-up.ds-dialog--standard { height: 616px; }
 .ds-dialog--pop-up.ds-dialog--small    { height: 628px; }
@@ -67,8 +68,8 @@ const css = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-dialog-simple-padding-ver-generic);
-  padding: 16px;
+  gap: var(--ds-dialog-root-gap-generic);
+  padding: var(--ds-dialog-control-area-padding-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
