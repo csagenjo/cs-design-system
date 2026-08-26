@@ -102,6 +102,10 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 | DialogSimple | v1 | header Default fijo (44px) · `variant` default (280px, borde sólido `borderColor/subtle` + mismo Dialog/DialogShadow que el PopUp de Dialog — no una sombra distinta) / expanded (480px, min-height 680px) · botones md/lg según variant |
 | ErrorAndEmptyState | v1 | header Default sin flecha ni título (solo X) · `variant` fullScreen (100%/100%) / popUp (max-width 359px) · `icon` slot libre ReactNode (NO átomo Image, prohibido) · título+descripción centrados |
 | Scrim | v1 | overlay trivial, sin props · `--ds-dialog-scrim-bg-generic` invierte con el modo (negro 30% light / blanco 30% dark) |
+| Text | v1 | opción de texto enriquecido intercambiable en el slot Description de List View/Selector (instance swap en Figma) · `color` default/secondary/disabled × `size` 14/16 × `weight` bold(def)/regular × `chevron` booleano (icono opcional, sin duplicar variantes) · página propia en Figma, mismo criterio que SectionHeader |
+| DescriptionText | v1 | texto plano de descripción — consolidado desde el markup fijo que Selector/AccountSelector tenían embebido · `color` default/subtle(def)/disabled × `size` 14/16 · valor por defecto del slot Description de List View/Selector |
+| DetailText | v1 | icono + texto de detalle — consolidado desde 4 copias duplicadas en Selector/SelectorListItem/AccountSelectorInvoker/AccountSelectorListItem · `color` default/secondary/tertiary/disabled × `size` 14/16 · icono slot libre ReactNode, `showIcon` booleano |
+| ListView | v1 | fila interactiva de listado (`<button>` real) para Search for Results · Header→SectionHeader, Description→DescriptionText (swap por Text), Detail→DetailText · `rightPanelContent` slot libre (NO el wrapper de 10 variantes de Figma) · ribbon de selected, 4 `divider`, icono izquierdo con tamaño configurable · hover/pressed/focus vía pseudo-clases CSS, solo `disabled` es prop |
 
 **Tokens de referencia rápida — Selector:**
 - `--ds-selector-*` (advancedSelector/all/*): borderWidth 1.5px, borderRadius 8px, gap/padding 16px
@@ -189,7 +193,9 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 ### 🟠 Sprint 2
 
-List View · File Upload · Tabs
+~~List View~~ ✅ · File Upload · Tabs
+
+**Actualización (24/08/2026):** List View ✅ construido (+ `Text`, `DescriptionText`, `DetailText` — 3 átomos nuevos con página propia en Figma, mismo criterio que SectionHeader). `DescriptionText`/`DetailText` sustituyen el markup duplicado que `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` tenían embebido — los 4 refactorizados para consumir los átomos compartidos, cerrando una inconsistencia real (`SelectorListItem` no exponía color de detail text en absoluto; `AccountSelector*` no reutilizaba nada). Proceso: cuando eché en falta `DetailText` durante EXPLORE, empecé a escribir el átomo en código antes de confirmar con Carol si debía existir en Figma primero — parada a tiempo, Carol lo creó en Figma con su propia página y lo instanció en Selector/List View antes de retomar código; los tokens ya explorados coincidieron exactamente. Regla reafirmada: Figma es la fuente de verdad, un átomo echado en falta se plantea antes de escribirlo, no se infiere.
 
 ### 🟢 Sprint 3
 

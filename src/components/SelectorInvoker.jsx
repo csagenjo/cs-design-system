@@ -2,6 +2,8 @@ import React, { forwardRef } from 'react';
 import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { BadgeNotification } from './BadgeNotification';
+import { DescriptionText } from './DescriptionText';
+import { DetailText } from './DetailText';
 
 const css = `
 .ds-selector-invoker {
@@ -62,28 +64,14 @@ const css = `
   white-space: nowrap;
 }
 
-.ds-selector-invoker__description {
-  font-size:   var(--ds-fontSize-body-xs);
-  line-height: var(--ds-lineHeight-2xs);
-  color:       var(--ds-selector-description-fg-subtle);
-  overflow:    hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+.ds-selector-invoker__description,
 .ds-selector-invoker__detail {
-  display:     inline-flex;
-  align-items: center;
-  gap:         var(--ds-spacing-xs);
-  font-size:   var(--ds-fontSize-body-xs);
-  line-height: var(--ds-lineHeight-2xs);
-  color:       var(--ds-selector-detail-text-fg-default);
-  overflow:    hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
-.ds-selector-invoker__detail svg { flex-shrink: 0; width: var(--ds-selector-detail-icon-size); height: var(--ds-selector-detail-icon-size); }
-.ds-selector-invoker__detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ds-selector-invoker__detail--secondary { color: var(--ds-selector-detail-text-fg-secondary); }
-.ds-selector-invoker__detail--tertiary  { color: var(--ds-selector-detail-text-fg-tertiary); }
+.ds-selector-invoker__description p,
+.ds-selector-invoker__detail span:last-child { overflow: hidden; text-overflow: ellipsis; }
 
 .ds-selector-invoker__right {
   flex-shrink: 0;
@@ -142,8 +130,6 @@ const css = `
 .ds-selector-invoker:disabled .ds-selector-invoker__icon-left,
 .ds-selector-invoker:disabled .ds-selector-invoker__right { color: var(--ds-selector-icon-fg-disabled); }
 .ds-selector-invoker:disabled .ds-selector-invoker__header { color: var(--ds-selector-header-fg-disabled); }
-.ds-selector-invoker:disabled .ds-selector-invoker__description { color: var(--ds-selector-description-fg-disabled); }
-.ds-selector-invoker:disabled .ds-selector-invoker__detail { color: var(--ds-selector-detail-text-fg-disabled); }
 `;
 
 injectStyles('ds-selector-invoker', css);
@@ -178,11 +164,6 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
     fullWidth   ? 'ds-selector-invoker--full-width' : '',
   ].filter(Boolean).join(' ');
 
-  const detailClasses = [
-    'ds-selector-invoker__detail',
-    descriptionEmphasis ? `ds-selector-invoker__detail--${descriptionEmphasis}` : '',
-  ].filter(Boolean).join(' ');
-
   const mask = (text) => (isDataHidden ? '••••••••' : text);
 
   return (
@@ -210,13 +191,14 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
           <span className="ds-selector-invoker__header">{mask(headerText)}</span>
 
           {!isEmpty && descriptionText && (
-            <span className="ds-selector-invoker__description">{mask(descriptionText)}</span>
+            <span className="ds-selector-invoker__description">
+              <DescriptionText color={isDisabled ? 'disabled' : 'subtle'} size="14">{mask(descriptionText)}</DescriptionText>
+            </span>
           )}
 
           {!isEmpty && detailText && (
-            <span className={detailClasses}>
-              <Icon name="link" size="2xs" />
-              <span>{mask(detailText)}</span>
+            <span className="ds-selector-invoker__detail">
+              <DetailText color={isDisabled ? 'disabled' : (descriptionEmphasis || 'default')} size="14">{mask(detailText)}</DetailText>
             </span>
           )}
         </span>

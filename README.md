@@ -61,6 +61,10 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `DialogSimple` | Compact confirmation dialog · fixed Default header · variant default (280px) / expanded (480px) | ✅ v1 |
 | `ErrorAndEmptyState` | Error/empty feedback · header with close only · variant fullScreen / popUp · swappable `icon` slot (ReactNode, not the banned Image atom) | ✅ v1 |
 | `Scrim` | Trivial modal backdrop overlay · no props · bg inverts with mode | ✅ v1 |
+| `Text` | Rich-text option swappable into List View/Selector's Description slot (Figma instance swap) · color default/secondary/disabled × size 14/16 × weight bold/regular × boolean chevron · own Figma page, same treatment as SectionHeader | ✅ v1 |
+| `DescriptionText` | Plain description text · color default/subtle/disabled × size 14/16 · default content for the Description slot | ✅ v1 |
+| `DetailText` | Icon + detail text · consolidated from 4 duplicated copies in the Selector family · color default/secondary/tertiary/disabled × size 14/16 · swappable icon | ✅ v1 |
+| `ListView` | Interactive result-list row (real `<button>`) · Header/Description/Detail compose SectionHeader/DescriptionText/DetailText · `rightPanelContent` free slot (not a ported Figma variant-swap wrapper) · selected ribbon, 4 divider options | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -78,6 +82,8 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 > **Estado (21/08/2026):** Description List construido, junto con 4 piezas nuevas que desbloqueaba (`List`, `Divider`, `SectionHeader`, `AmountView` v2). Sprint 1 Pri 3 cerrado. `SectionHeader` consolida un estilo que estaba duplicado 4 veces en Figma. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Description List.
 
 > **Estado (24/08/2026):** Dialog construido junto con sus 3 sub-piezas (`DialogSimple`, `ErrorAndEmptyState`, `Scrim`) — Sprint 1 completo. Namespace de Figma consolidado 34→27 tokens bajo `dialog/*`. 2 bugs reales de contraste dark-mode encontrados y corregidos en el `.Header` compartido (Tertiary y Default), mismo patrón fg/bg ya documentado en el audit del 11/08. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Dialog.
+
+> **Estado (24/08/2026):** List View construido — primera pieza de Sprint 2 — junto con 3 átomos nuevos (`Text`, `DescriptionText`, `DetailText`) que consolidan markup que estaba duplicado en la familia Selector. `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` refactorizados para consumir los átomos compartidos. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §ListView.
 
 ---
 

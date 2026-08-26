@@ -3,6 +3,8 @@ import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { Radio } from './Radio';
 import { Checkbox } from './Checkbox';
+import { DescriptionText } from './DescriptionText';
+import { DetailText } from './DetailText';
 
 const css = `
 .ds-selector-list-item {
@@ -60,26 +62,12 @@ const css = `
   white-space: nowrap;
 }
 
-.ds-selector-list-item__description {
-  font-size:   var(--ds-fontSize-body-xs);
-  line-height: var(--ds-lineHeight-2xs);
-  color:       var(--ds-selector-description-fg-subtle);
-  overflow:    hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+.ds-selector-list-item__description,
 .ds-selector-list-item__detail {
-  display:     inline-flex;
-  align-items: center;
-  gap:         var(--ds-spacing-xs);
-  font-size:   var(--ds-fontSize-body-xs);
-  line-height: var(--ds-lineHeight-2xs);
-  color:       var(--ds-selector-detail-text-fg-default);
-  overflow:    hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
-.ds-selector-list-item__detail svg { flex-shrink: 0; width: var(--ds-selector-detail-icon-size); height: var(--ds-selector-detail-icon-size); }
-.ds-selector-list-item__detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .ds-selector-list-item__right {
   flex-shrink: 0;
@@ -128,8 +116,6 @@ const css = `
 }
 .ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-icon-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__header { color: var(--ds-selector-header-fg-disabled); }
-.ds-selector-list-item--disabled .ds-selector-list-item__description { color: var(--ds-selector-description-fg-disabled); }
-.ds-selector-list-item--disabled .ds-selector-list-item__detail { color: var(--ds-selector-detail-text-fg-disabled); }
 `;
 
 injectStyles('ds-selector-list-item', css);
@@ -140,6 +126,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
   headerText       = 'Selected Data',
   descriptionText,
   detailText,
+  descriptionEmphasis, // 'secondary' | 'tertiary' — color del detailText
   selected         = false,
   onSelectedChange,
   onClick,
@@ -185,13 +172,14 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
           <span className="ds-selector-list-item__header">{mask(headerText)}</span>
 
           {descriptionText && (
-            <span className="ds-selector-list-item__description">{mask(descriptionText)}</span>
+            <span className="ds-selector-list-item__description">
+              <DescriptionText color={isDisabled ? 'disabled' : 'subtle'} size="14">{mask(descriptionText)}</DescriptionText>
+            </span>
           )}
 
           {detailText && (
             <span className="ds-selector-list-item__detail">
-              <Icon name="link" size="2xs" />
-              <span>{mask(detailText)}</span>
+              <DetailText color={isDisabled ? 'disabled' : (descriptionEmphasis || 'default')} size="14">{mask(detailText)}</DetailText>
             </span>
           )}
         </span>

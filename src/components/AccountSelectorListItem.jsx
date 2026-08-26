@@ -4,6 +4,7 @@ import { injectStyles } from './_inputBase';
 import { Radio } from './Radio';
 import { Checkbox } from './Checkbox';
 import { AmountView } from './AmountView';
+import { DetailText } from './DetailText';
 
 const css = `
 .ds-account-selector-list-item {
@@ -62,16 +63,10 @@ const css = `
 }
 
 .ds-account-selector-list-item__detail {
-  display:     inline-flex;
-  align-items: center;
-  gap:         var(--ds-spacing-xs);
-  font-size:   var(--ds-fontSize-body-xs);
-  line-height: var(--ds-lineHeight-2xs);
-  color:       var(--ds-account-selector-detail-text-fg-default);
-  overflow:    hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
-.ds-account-selector-list-item__detail svg { flex-shrink: 0; width: var(--ds-account-selector-detail-icon-size); height: var(--ds-account-selector-detail-icon-size); }
-.ds-account-selector-list-item__detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .ds-account-selector-list-item__right {
   flex-shrink: 0;
@@ -110,7 +105,6 @@ const css = `
 }
 .ds-account-selector-list-item--disabled .ds-account-selector-list-item__icon-left { color: var(--ds-account-selector-icon-fg-disabled); }
 .ds-account-selector-list-item--disabled .ds-account-selector-list-item__header { color: var(--ds-account-selector-header-fg-disabled); }
-.ds-account-selector-list-item--disabled .ds-account-selector-list-item__detail { color: var(--ds-account-selector-detail-text-fg-disabled); }
 `;
 
 injectStyles('ds-account-selector-list-item', css);
@@ -173,8 +167,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
 
           {detailText && (
             <span className="ds-account-selector-list-item__detail">
-              <Icon name="link" size="2xs" />
-              <span>{mask(detailText)}</span>
+              <DetailText color={isDisabled ? 'disabled' : 'default'} size="14">{mask(detailText)}</DetailText>
             </span>
           )}
         </span>
