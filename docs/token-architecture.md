@@ -506,6 +506,40 @@ Los botones grandes de Dialog piden `fontSize/label/lg` (19px), pero `Button.jsx
 
 ---
 
+## ListView + 3 átomos nuevos (24/08/2026) — construido, Sprint 2 primera pieza
+
+`ListView`, `Text`, `DescriptionText`, `DetailText`. Nodo EXPLORE: List View `3209:62506`.
+
+### Corrección de proceso a mitad de sesión
+
+Durante EXPLORE de List View se detectó que `DetailText` (icono+texto duplicado 4 veces en el código de la familia Selector) no existía como componente compartido publicado en Figma. Antes de confirmarlo con Carol, se empezó a escribir el átomo en código basándose en los tokens ya inferidos de una exploración puntual anterior. Carol paró el trabajo: **Figma es la fuente de verdad — un átomo que se echa en falta durante EXPLORE se plantea antes de escribir código, no se infiere y se deja que Figma "alcance" después.** Ella construyó `DetailText` en Figma (página propia, `Show Icon` booleano, icono como instance swap) y lo instanció en las variantes reales de List View/Selector antes de retomar el código. Los nombres de token ya explorados coincidieron exactamente con lo que Carol construyó — confirma que la exploración en sí era correcta, pero el problema real era el orden del proceso, no el contenido. Corregido de cara a lo que queda de Sprint 2 en adelante.
+
+### Los 3 átomos nuevos — mismo criterio que SectionHeader (página propia, token family real)
+
+- **`Text`** (`text/all/label/fg/*`) — opción de texto enriquecido, intercambiable en el slot Description de List View/Selector vía instance swap de Figma. `color` default/secondary/disabled × `size` 14/16 × `weight` bold/regular. `Chevron` es una **propiedad de componente booleana** (no un eje de variante) que esconde/muestra una instancia de icono chevron-right — evita duplicar las 6 variantes en 12. Absorbió el eje `weight` de `.Text + Chevron` (0 instancias en las 52 páginas, confirmado antes de fusionar y borrar) sin arrastrar su color "Subtle" sin consumidor real.
+- **`DescriptionText`** (`descriptionText/all/text/fg/*`) — texto plano subtle, valor por defecto del slot Description. `color` default/subtle/disabled × `size` 14/16/14 Narrow/16 Narrow (narrow con `fontFamily/narrow`, sin consumidor real hoy — no se expone como prop v1).
+- **`DetailText`** (`detailText/all/{text,icon}/fg/*`) — icono + texto. `color` default/secondary/tertiary/disabled × `size` 14/16. Icono y texto tienen familias de token separadas (pueden divergir aunque hoy resuelven igual valor a valor).
+
+Ambos `Text` y `Description` pasaron de nombre privado (`.Text`, `.Description`) a público (`Text`, `Description`→`DescriptionText`) para poder publicarse a la librería — necesario porque `Selector List Item` (a diferencia de `.SelectorInvoker`/`List View`, ambos privados) SÍ es un componente publicado, y una alerta real de Figma ("some preferred values have not been published") solo aparecía ahí: un componente público no puede ofrecer como opción de swap algo que nunca se publica. Diagnosticado comparando el estado de publicación de los 3 componentes contenedores (`importComponentSetByKeyAsync` por clave), no asumiendo.
+
+### Refactor de la familia Selector ya construida
+
+`SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker`, `AccountSelectorListItem` — su markup de description/detail (duplicado con soporte de color inconsistente: `SelectorListItem` no exponía color de detail text en absoluto) sustituido por instancias de `DescriptionText`/`DetailText`. Regresión introducida y cazada en el mismo pase: el estado `disabled` de cada consumidor dejó de pintar el color correcto porque el CSS `:disabled` apuntaba a un `<span>` contenedor que ya no lleva el color — corregido pasando `color="disabled"` explícito desde cada consumidor, verificado con `getComputedStyle` en vivo (no solo leyendo el JSX) antes de dar el fix por cerrado.
+
+### ListView
+
+Fila interactiva real (`<button>`), no un listado pasivo — confirmado por los tokens de estado (`bg/hover`, `bg/pressed` como opacity, `borderColor/focus-inner`/`focus-outer` con radio propio) y el patrón ya establecido en `SelectorInvoker`. hover/pressed/focus se resuelven con pseudo-clases CSS nativas (`:hover`, `:active`, `:focus-visible`), no con una prop `state` — mismo criterio que Selector, donde esos 3 estados tampoco son parte del enum de `state` (que solo cubre error/disabled/readOnly/dataHidden, cosas que CSS no puede expresar solo).
+
+`rightPanelContent` es un slot libre — el componente `Right Panel` de Figma expone 10 opciones (Amount View/Amount Two/Checkbox/Radio Button/Switch/Text Button/Icon/Badge with Icon/Loading Indicator/Highlight Badge) mediante una prop `component` de tipo swap-de-variante; portarlo tal cual habría replicado en código la necesidad de Figma de no tener slots reales — mismo criterio que `DescriptionList` no reimplementando los 8 "Variants" de Figma. Dos de esas 10 opciones (`Switch`, `Loading Spinner`) no están construidas todavía en código — no bloquea List View salvo que un consumidor necesite exactamente esas.
+
+`Icon Left` expone 6 tamaños en Figma (`20/24/32/40/48/64`) que mapean 1:1 con la escala existente de `Icon.jsx` (`2xs/xs/sm/md/lg/3xl`, salta el `2xl`=56 que Figma no define) — reusada tal cual, sin inventar una escala nueva.
+
+### 8 overrides dark que faltaban, encontrados resolviendo estos tokens
+
+`fg/label/secondary`, `fg/label/disabled`, `fg/body/secondary`, `fg/body/tertiary`, `fg/body/subtle`, `fg/body/disabled`, `fg/icon/disabled`, `borderColor/subtle`, `borderColor/disabled` — ninguno tenía override real en dark (heredaban el valor de light). Además `--ds-fg-disabled` tenía el mismo valor en light y dark (`#B9BEC4`) pese a que Figma resuelve `#7B8490` en dark — corregido. Todos verificados por cadena de alias en vivo antes de escribir el valor.
+
+---
+
 ## Device tokens (79 × Mobile/Desk)
 
 ### Spacing
