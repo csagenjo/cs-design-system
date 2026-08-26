@@ -834,13 +834,14 @@
   --ds-selector-common-icon-right-size:            20px;
   --ds-selector-common-header-fg-default:          var(--ds-fg-default);
   --ds-selector-common-header-fg-disabled:         var(--ds-fg-disabled);
-  --ds-selector-common-detail-icon-size:           16px;
 
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Advanced Selector (advancedSelector/all/*)
      Usados por SelectorInvoker.jsx, SelectorListItem.jsx y Selector.jsx.
-     Comparte COMMON casi en su totalidad; propio solo: description, detailText fg genérico.
+     Comparte COMMON casi en su totalidad. Description/Detail ya no son tokens
+     propios — consumen los átomos compartidos DescriptionText/DetailText
+     (24/08, mismo criterio que SectionHeader).
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
@@ -867,21 +868,11 @@
   --ds-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
   --ds-selector-header-fg-disabled:         var(--ds-selector-common-header-fg-disabled);
 
-  --ds-selector-description-fg-subtle:      var(--ds-fg-subtle);                        /* propio */
-  --ds-selector-description-fg-default:     var(--ds-fg-default);
-  --ds-selector-description-fg-disabled:    var(--ds-fg-disabled);
-
-  --ds-selector-detail-text-fg-default:     var(--ds-fg-default);                       /* propio: fg genérico */
-  --ds-selector-detail-text-fg-disabled:    var(--ds-fg-disabled);
-  --ds-selector-detail-text-fg-secondary:   var(--ds-fg-secondary);
-  --ds-selector-detail-text-fg-tertiary:    var(--ds-fg-tertiary);
-  --ds-selector-detail-icon-size:           var(--ds-selector-common-detail-icon-size);
-
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Account Selector (accountSelector/all/*)
      Usados por AccountSelectorInvoker.jsx, AccountSelectorListItem.jsx y AccountSelector.jsx.
-     Comparte COMMON en su totalidad para root; único propio: detailText fg (fg-body).
+     Comparte COMMON en su totalidad para root.
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-account-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
@@ -907,12 +898,6 @@
 
   --ds-account-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
   --ds-account-selector-header-fg-disabled:         var(--ds-selector-common-header-fg-disabled);
-
-  --ds-account-selector-detail-text-fg-default:     var(--ds-fg-body-default);                  /* propio: fg-body */
-  --ds-account-selector-detail-text-fg-disabled:    var(--ds-fg-body-disabled);
-  --ds-account-selector-detail-text-fg-secondary:   var(--ds-fg-body-secondary);
-  --ds-account-selector-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);
-  --ds-account-selector-detail-icon-size:           var(--ds-selector-common-detail-icon-size);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1154,6 +1139,85 @@
 
   /* Título compartido (DialogSimple / ErrorAndEmptyState) */
   --ds-dialog-title-fg-generic:                var(--ds-fg-title-default); /* invierte */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Text (text/all/label/fg/*)
+     Sprint 2 (List View). Opción de texto "enriquecido" intercambiable en el
+     slot Description de List View/Selector — no se invoca directo en su
+     estructura fija, es una pieza suelta con página propia en Figma (mismo
+     criterio que SectionHeader). Ejes: color (default/secondary/disabled) ×
+     size (14/16) × style (bold/regular) × chevron (boolean, icono opcional).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-text-fg-default:     var(--ds-fg-label-default);   /* #050506 / #FFFFFF dark */
+  --ds-text-fg-secondary:   var(--ds-fg-label-secondary); /* #E02C7C / #FEF6F9 dark */
+  --ds-text-fg-disabled:    var(--ds-fg-label-disabled);  /* #B9BEC4 / #7B8490 dark */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — DetailText (detailText/all/*)
+     Sprint 2. Icono + texto — consolidado desde 4 copias duplicadas en código
+     (SelectorInvoker, SelectorListItem, AccountSelectorInvoker,
+     AccountSelectorListItem), cada una con soporte de color parcial distinto.
+     Ejes: color (default/secondary/tertiary/disabled) × size (14/16). Icono
+     y texto tienen familias de token separadas en Figma (pueden divergir),
+     aunque hoy resuelven igual value por value.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-detail-text-fg-default:     var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
+  --ds-detail-text-fg-secondary:   var(--ds-fg-body-secondary); /* #E02C7C / #FBE4EE dark */
+  --ds-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);  /* #B185C5 / #F6F1F8 dark */
+  --ds-detail-text-fg-disabled:    var(--ds-fg-body-disabled);  /* #B9BEC4 / #7B8490 dark */
+  --ds-detail-text-icon-fg-default:   var(--ds-fg-icon-default);   /* #050506 / #FFFFFF dark */
+  --ds-detail-text-icon-fg-secondary: var(--ds-fg-icon-secondary); /* #E02C7C / #FEF6F9 dark */
+  --ds-detail-text-icon-fg-tertiary:  var(--ds-fg-icon-tertiary);  /* #B185C5 / #F6F1F8 dark */
+  --ds-detail-text-icon-fg-disabled:  var(--ds-fg-icon-disabled);  /* #B9BEC4 / #7B8490 dark */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — DescriptionText (descriptionText/all/text/fg/*)
+     Sprint 2. Texto plano subtle — consolidado desde el markup fijo de
+     descripción duplicado en Selector/AccountSelector. Ejes: color
+     (default/subtle/disabled) × size (14/16/14 Narrow/16 Narrow, narrow usa
+     fontFamily/narrow — sin consumidor real hoy, no se expone como prop v1).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-description-text-fg-default:  var(--ds-fg-body-default);  /* #050506 / #FFFFFF dark */
+  --ds-description-text-fg-subtle:   var(--ds-fg-body-subtle);   /* #9AA1AA / #EEEFF1 dark */
+  --ds-description-text-fg-disabled: var(--ds-fg-body-disabled); /* #B9BEC4 / #7B8490 dark */
+
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — ListView (listView/all/*)
+     Sprint 2, primer componente. Fila interactiva (click/focus) — no un
+     listado pasivo. Header→SectionHeader, Description→DescriptionText (slot
+     swappable por Text), Detail→DetailText — los tres átomos ya compartidos
+     con Selector. Right Panel es un slot `children` (no se porta el
+     componente de 10 variantes de Figma — mismo criterio que DescriptionList,
+     el consumidor decide qué átomo instanciar). Left Panel: icono opcional,
+     tamaño configurable (escala Icon.jsx: 2xs 20/xs 24/sm 32/md 40/lg 48/3xl 64
+     — Figma expone 6 pasos que mapean 1:1, salvo el 2xl=56 que no está en Figma).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-list-view-root-bg-generic:          var(--ds-bg-default);        /* #FFFFFF / #050506 dark */
+  --ds-list-view-root-bg-hover:            var(--ds-bg-hover-primary);  /* #B8E6FE / #016398 dark */
+  --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);       /* #EEEFF1 / #9AA1AA dark */
+  --ds-list-view-root-opacity-pressed:     var(--ds-opacity-pressed);   /* 0.8 */
+  --ds-list-view-root-border-color-generic:  var(--ds-borderColor-subtle);   /* divider — #EEEFF1 / #606772 dark */
+  --ds-list-view-root-border-color-selected: var(--ds-borderColor-primary);  /* #4BA9C0 fijo */
+  --ds-list-view-root-border-color-disabled: var(--ds-borderColor-disabled); /* #B9BEC4 / #7B8490 dark */
+  --ds-list-view-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-list-view-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-list-view-root-border-width-generic:  1.5px;
+  --ds-list-view-root-border-width-focus:    2px;
+  --ds-list-view-root-border-radius-focus-inner: 8px;
+  --ds-list-view-root-border-radius-focus-outer: 10px;
+  --ds-list-view-ribbon-border-color-selected: var(--ds-borderColor-primary);  /* #4BA9C0 fijo */
+  --ds-list-view-ribbon-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-list-view-ribbon-border-width-selected: 4px;
+  --ds-list-view-icon-left-fg-generic:     var(--ds-fg-icon-primary);   /* #4BA9C0 fijo */
+  --ds-list-view-icon-left-fg-disabled:    var(--ds-fg-icon-disabled);
+  --ds-list-view-icon-chevron-fg-generic:  var(--ds-fg-icon-subtle);    /* #9AA1AA / #EEEFF1 dark */
+  --ds-list-view-icon-chevron-fg-disabled: var(--ds-fg-icon-disabled);
+  --ds-list-view-icon-right-fg-generic:    var(--ds-fg-icon-primary);   /* #4BA9C0 fijo */
+  --ds-list-view-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
 }
 
 
@@ -1166,7 +1230,7 @@
   :root {
     --ds-fg-default:          #FFFFFF;
     --ds-fg-subtle:           #9AA1AA;
-    --ds-fg-disabled:         #B9BEC4;
+    --ds-fg-disabled:         #7B8490; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
     --ds-fg-onColor:          #FFFFFF;
     --ds-fg-inverse:          #050506;
     --ds-fg-primary:          #4BA9C0;
@@ -1177,7 +1241,13 @@
        Faltaban: quedaban en #050506 (negro) → texto invisible sobre fondo oscuro
        en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
     --ds-fg-label-default:    #FFFFFF;
+    --ds-fg-label-secondary:  #FEF6F9; /* añadido 24/08 — Text atom */
+    --ds-fg-label-disabled:   #7B8490; /* añadido 24/08 — Text atom */
     --ds-fg-body-default:     #FFFFFF;
+    --ds-fg-body-subtle:      #EEEFF1; /* añadido 24/08 — DescriptionText/DetailText atoms */
+    --ds-fg-body-secondary:   #FBE4EE; /* añadido 24/08 — DetailText atom */
+    --ds-fg-body-tertiary:    #F6F1F8; /* añadido 24/08 — DetailText atom */
+    --ds-fg-body-disabled:    #7B8490; /* añadido 24/08 — DescriptionText/DetailText atoms */
     --ds-fg-headline-default: #FFFFFF;
     --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
     --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
@@ -1196,6 +1266,7 @@
     --ds-fg-icon-primary:     #4BA9C0;
     --ds-fg-icon-secondary:   #FEF6F9;
     --ds-fg-icon-tertiary:    #F6F1F8;
+    --ds-fg-icon-disabled:    #7B8490; /* añadido 24/08 — DetailText atom */
     --ds-fg-icon-accent-primary: #4BA9C0;
 
     --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
@@ -1231,6 +1302,8 @@
     --ds-borderColor-emphasis:#D8DBDE;
     --ds-borderColor-accent:  #A0D1DE;
     --ds-borderColor-primary: #4BA9C0;
+    --ds-borderColor-subtle:  #606772; /* añadido 24/08 — ListView atom */
+    --ds-borderColor-disabled: #7B8490; /* añadido 24/08 — ListView atom */
     --ds-borderColor-focus-inner: #050506;
     --ds-borderColor-focus-outer: #FFFFFF;
 
@@ -1254,7 +1327,7 @@
 [data-mode="dark"] {
   --ds-fg-default:          #FFFFFF;
   --ds-fg-subtle:           #9AA1AA;
-  --ds-fg-disabled:         #B9BEC4;
+  --ds-fg-disabled:         #7B8490; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #050506;
   --ds-fg-primary:          #4BA9C0;
@@ -1265,7 +1338,13 @@
      Faltaban: quedaban en #050506 (negro) → texto invisible sobre fondo oscuro
      en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
   --ds-fg-label-default:    #FFFFFF;
+  --ds-fg-label-secondary:  #FEF6F9; /* añadido 24/08 — Text atom */
+  --ds-fg-label-disabled:   #7B8490; /* añadido 24/08 — Text atom */
   --ds-fg-body-default:     #FFFFFF;
+  --ds-fg-body-subtle:      #EEEFF1; /* añadido 24/08 — DescriptionText/DetailText atoms */
+  --ds-fg-body-secondary:   #FBE4EE; /* añadido 24/08 — DetailText atom */
+  --ds-fg-body-tertiary:    #F6F1F8; /* añadido 24/08 — DetailText atom */
+  --ds-fg-body-disabled:    #7B8490; /* añadido 24/08 — DescriptionText/DetailText atoms */
   --ds-fg-headline-default: #FFFFFF;
   --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
   --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
@@ -1284,6 +1363,7 @@
   --ds-fg-icon-primary:     #4BA9C0;
   --ds-fg-icon-secondary:   #FEF6F9;
   --ds-fg-icon-tertiary:    #F6F1F8;
+  --ds-fg-icon-disabled:    #7B8490; /* añadido 24/08 — DetailText atom */
   --ds-fg-icon-accent-primary: #4BA9C0;
 
   --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
@@ -1319,6 +1399,8 @@
   --ds-borderColor-emphasis:#D8DBDE;
   --ds-borderColor-accent:  #A0D1DE;
   --ds-borderColor-primary: #4BA9C0;
+  --ds-borderColor-subtle:  #606772; /* añadido 24/08 — ListView atom */
+  --ds-borderColor-disabled: #7B8490; /* añadido 24/08 — ListView atom */
   --ds-borderColor-focus-inner: #050506;
   --ds-borderColor-focus-outer: #FFFFFF;
 
