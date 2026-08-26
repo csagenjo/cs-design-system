@@ -3,6 +3,7 @@ import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { BadgeNotification } from './BadgeNotification';
 import { AmountView } from './AmountView';
+import { DetailText } from './DetailText';
 
 const css = `
 .ds-account-selector-invoker {
@@ -64,16 +65,10 @@ const css = `
 }
 
 .ds-account-selector-invoker__detail {
-  display:     inline-flex;
-  align-items: center;
-  gap:         var(--ds-spacing-xs);
-  font-size:   var(--ds-fontSize-body-xs);
-  line-height: var(--ds-lineHeight-2xs);
-  color:       var(--ds-account-selector-detail-text-fg-default);
-  overflow:    hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
-.ds-account-selector-invoker__detail svg { flex-shrink: 0; width: var(--ds-account-selector-detail-icon-size); height: var(--ds-account-selector-detail-icon-size); }
-.ds-account-selector-invoker__detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .ds-account-selector-invoker__right {
   flex-shrink: 0;
@@ -118,7 +113,6 @@ const css = `
 .ds-account-selector-invoker:disabled .ds-account-selector-invoker__icon-left,
 .ds-account-selector-invoker:disabled .ds-account-selector-invoker__right { color: var(--ds-account-selector-icon-fg-disabled); }
 .ds-account-selector-invoker:disabled .ds-account-selector-invoker__header { color: var(--ds-account-selector-header-fg-disabled); }
-.ds-account-selector-invoker:disabled .ds-account-selector-invoker__detail { color: var(--ds-account-selector-detail-text-fg-disabled); }
 `;
 
 injectStyles('ds-account-selector-invoker', css);
@@ -186,8 +180,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
 
           {!isEmpty && detailText && (
             <span className="ds-account-selector-invoker__detail">
-              <Icon name="link" size="2xs" />
-              <span>{mask(detailText)}</span>
+              <DetailText color={isDisabled ? 'disabled' : 'default'} size="14">{mask(detailText)}</DetailText>
             </span>
           )}
         </span>

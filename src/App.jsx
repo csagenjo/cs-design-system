@@ -9,6 +9,14 @@ import { Dialog } from './components/Dialog'
 import { DialogSimple } from './components/DialogSimple'
 import { ErrorAndEmptyState } from './components/ErrorAndEmptyState'
 import { Scrim } from './components/Scrim'
+import { Selector } from './components/Selector'
+import { SelectorListItem } from './components/SelectorListItem'
+import { AccountSelector } from './components/AccountSelector'
+import { AccountSelectorListItem } from './components/AccountSelectorListItem'
+import { Text } from './components/Text'
+import { DescriptionText } from './components/DescriptionText'
+import { DetailText } from './components/DetailText'
+import { ListView } from './components/ListView'
 
 const box = { padding: 24, display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 640 }
 const row = { display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }
@@ -149,6 +157,101 @@ export default function App() {
             description="Prueba a cambiar los filtros."
             secondaryButton={false}
             primaryButtonLabel="Reintentar"
+          />
+        </div>
+      </section>
+
+      <Divider />
+
+      <section>
+        <SectionHeader color="primary">Selector — refactor DescriptionText/DetailText</SectionHeader>
+        <Selector
+          label="Cuenta origen"
+          headerText="Cuenta corriente"
+          descriptionText="Descripción de la cuenta"
+          detailText="Here is some detail text"
+          helperText="Texto de ayuda"
+        />
+        <div style={{ ...row, marginTop: 12 }}>
+          <SelectorListItem headerText="Selected data" descriptionText="Description" detailText="Here is some detail text" selected />
+          <SelectorListItem headerText="Selected data" descriptionText="Description" detailText="Ver más" descriptionEmphasis="secondary" />
+          <SelectorListItem headerText="Selected data" descriptionText="Description" detailText="Deshabilitado" disabled />
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader color="primary">AccountSelector — refactor DetailText</SectionHeader>
+        <AccountSelector
+          label="Cuenta destino"
+          headerText="Cuenta ahorro"
+          amount="1.250,00"
+          currency="€"
+          detailText="ES00 0000 0000 0000 0000"
+        />
+        <AccountSelector
+          label="Cuenta destino (disabled)"
+          state="disabled"
+          headerText="Cuenta ahorro"
+          amount="1.250,00"
+          currency="€"
+          detailText="ES00 0000 0000 0000 0000"
+        />
+        <div style={{ ...row, marginTop: 12 }}>
+          <AccountSelectorListItem headerText="Cuenta" amount="99,00" currency="USD" detailText="Here is some detail text" selected />
+          <AccountSelectorListItem headerText="Cuenta" amount="-40,00" currency="€" amountType="negative" detailText="Deshabilitado" disabled />
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader color="primary">Text / DescriptionText / DetailText — átomos nuevos</SectionHeader>
+        <div style={row}>
+          <Text>Texto</Text>
+          <Text color="secondary" weight="regular">Ver más</Text>
+          <Text color="disabled">Deshabilitado</Text>
+          <Text chevron>Con chevron</Text>
+        </div>
+        <div style={{ ...row, marginTop: 12 }}>
+          <DescriptionText>Description</DescriptionText>
+          <DescriptionText color="default">Default</DescriptionText>
+          <DescriptionText color="disabled">Disabled</DescriptionText>
+        </div>
+        <div style={{ ...row, marginTop: 12 }}>
+          <DetailText>Here is some detail text</DetailText>
+          <DetailText color="secondary">Secondary</DetailText>
+          <DetailText color="tertiary">Tertiary</DetailText>
+          <DetailText color="disabled">Disabled</DetailText>
+        </div>
+      </section>
+
+      <Divider />
+
+      <section>
+        <SectionHeader color="primary">ListView</SectionHeader>
+        <div style={{ maxWidth: 480, border: `1px solid var(--ds-borderColor-subtle)` }}>
+          <ListView
+            header="García Fernández"
+            descriptionText="Cliente nº 4521"
+            detailText="Alta: 12/03/2026"
+            divider="fullBottom"
+          />
+          <ListView
+            header="Cuenta corriente"
+            descriptionText="ES00 0000 0000 0000 0000"
+            rightPanelContent={<AmountView amount="1.250,00" currency="€" />}
+            divider="fullBottom"
+            selected
+          />
+          <ListView
+            header="Fila con chevron"
+            swapDescription={<Text chevron>Ver más</Text>}
+            detail={false}
+            divider="fullBottom"
+          />
+          <ListView
+            header="Deshabilitada"
+            descriptionText="Sin acceso"
+            detailText="Contacta con soporte"
+            disabled
           />
         </div>
       </section>
