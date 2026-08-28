@@ -17,6 +17,11 @@ import { Text } from './components/Text'
 import { DescriptionText } from './components/DescriptionText'
 import { DetailText } from './components/DetailText'
 import { ListView } from './components/ListView'
+import { ListItem } from './components/ListItem'
+import { DropZone } from './components/DropZone'
+import { LabelDescription } from './components/LabelDescription'
+import { FileSelector } from './organisms/FileSelector'
+import { FileUpload } from './organisms/FileUpload'
 
 const box = { padding: 24, display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 640 }
 const row = { display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }
@@ -252,6 +257,79 @@ export default function App() {
             descriptionText="Sin acceso"
             detailText="Contacta con soporte"
             disabled
+          />
+        </div>
+      </section>
+
+      <Divider />
+
+      <section>
+        <SectionHeader color="primary">ListItem</SectionHeader>
+        <div style={{ maxWidth: 400, border: `1px solid var(--ds-borderColor-subtle)` }}>
+          <ListItem status="uploading" documentName="factura.pdf" />
+          <ListItem status="uploaded" documentName="contrato.pdf" onNameChange={() => {}} onRemove={() => {}} />
+          <ListItem status="error" documentName="nomina.pdf" errorMessage="Formato no soportado" onRemove={() => {}} />
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader color="primary">DropZone</SectionHeader>
+        <div style={{ ...row, alignItems: 'flex-start' }}>
+          <div style={{ width: 260 }}><DropZone onButtonClick={() => {}} /></div>
+          <div style={{ width: 260 }}><DropZone disabled /></div>
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader color="primary">LabelDescription</SectionHeader>
+        <div style={row}>
+          <LabelDescription label="Documentos" description="Formatos: PDF, JPG" />
+          <LabelDescription align="right" label="Factura" description="Sube el justificante en PDF" />
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader color="primary">FileSelector</SectionHeader>
+        <div style={{ maxWidth: 320 }}>
+          <FileSelector
+            files={[
+              { id: '1', name: 'factura.pdf', status: 'uploaded' },
+              { id: '2', name: 'contrato.pdf', status: 'uploading' },
+              { id: '3', name: 'nomina.pdf', status: 'error', errorMessage: 'Formato no soportado' },
+            ]}
+            onButtonClick={() => {}}
+          />
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader color="primary">FileUpload — wide / stacked / compact</SectionHeader>
+        <FileUpload
+          layout="wide"
+          label="Documentos"
+          description="Formatos: PDF, JPG"
+          files={[{ id: '1', name: 'factura.pdf', status: 'uploaded' }]}
+          onButtonClick={() => {}}
+        />
+        <div style={{ marginTop: 24, maxWidth: 320 }}>
+          <FileUpload
+            layout="stacked"
+            label="Documentos"
+            description="Formatos: PDF, JPG"
+            files={[
+              { id: '1', name: 'factura.pdf', status: 'uploaded' },
+              { id: '2', name: 'contrato.pdf', status: 'error', errorMessage: 'Formato no soportado' },
+            ]}
+            onButtonClick={() => {}}
+          />
+        </div>
+        <div style={{ marginTop: 24, maxWidth: 320 }}>
+          <FileUpload
+            layout="compact"
+            label="Factura"
+            description="Sube el PDF"
+            files={[{ id: '1', name: 'factura.pdf', status: 'uploaded' }]}
+            onButtonClick={() => {}}
           />
         </div>
       </section>
