@@ -1223,6 +1223,45 @@
   --ds-list-view-icon-chevron-fg-disabled: var(--ds-fg-icon-disabled);
   --ds-list-view-icon-right-fg-generic:    var(--ds-fg-icon-primary);   /* #4BA9C0 fijo */
   --ds-list-view-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — File Upload (fileUpload/*)
+     Sprint 2. Familia de 5 piezas: ListItem (fila de fichero — 9 variantes
+     Status×State), DropZone, LabelDescription (reutiliza Label + HelperText
+     ya existentes, sin tokens propios), FileSelector (DropZone + N×ListItem,
+     wrapper puro sin chrome) y FileUpload (compone LabelDescription +
+     FileSelector, 3 Layout × 2 State — Wide/Compact/Stacked × Initial/Active).
+     common/* = valores compartidos DE VERDAD entre ListItem y DropZone (mismo
+     token, mismo valor en los dos) — list-item/* y drop-zone/* son
+     específicos de cada uno aunque compartan nombre de propiedad (paddingHor,
+     gap...) con valores distintos; no fusionar solo porque coincida el nombre.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-file-upload-common-gap-generic:           12px;                       /* spacing/lg — gap interno icono-texto-cierre dentro de una fila */
+  --ds-file-upload-common-stack-gap-generic:     8px;                        /* spacing/md — gap vertical entre bloques apilados (ListItem root↔Validation Message; FileSelector: DropZone↔lista) */
+  --ds-file-upload-common-border-radius-generic: 4px;                        /* borderRadius/sm */
+  --ds-file-upload-common-bg-hover:              var(--ds-bg-hover-primary); /* #B8E6FE / #016398 dark */
+  --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* #4BA9C0 fijo */
+
+  /* ListItem */
+  --ds-file-upload-list-item-border-color-generic: var(--ds-borderColor-subtle); /* divisor de fila — #EEEFF1 / #606772 dark */
+  --ds-file-upload-list-item-border-color-error:   var(--ds-borderColor-error);  /* #AD2525 fijo */
+  --ds-file-upload-list-item-border-width-generic: 1px;                         /* borderWidth/sm-desk — valor asumido, pendiente de confirmar en Figma (el token propio se borró en la limpieza) */
+  --ds-file-upload-list-item-padding-ver-generic:  4px;                         /* spacing/xs */
+  --ds-file-upload-list-item-padding-hor-generic:  4px;                         /* spacing/xs */
+  --ds-file-upload-list-item-text-fg-generic:      var(--ds-fg-label-default);  /* invierte — Uploaded y Error comparten a propósito, el error se marca con el borde, no con el texto */
+  --ds-file-upload-list-item-text-fg-uploading:    var(--ds-fg-label-subtle);   /* #9AA1AA fijo */
+  --ds-file-upload-list-item-focus-ring-border-color-outer: var(--ds-borderColor-focus-outer);
+  --ds-file-upload-list-item-focus-ring-border-color-inner: var(--ds-borderColor-focus-inner);
+
+  /* DropZone */
+  --ds-file-upload-drop-zone-border-color-generic:  var(--ds-borderColor-default);  /* #9AA1AA / #454C56 dark */
+  --ds-file-upload-drop-zone-border-color-disabled: var(--ds-borderColor-disabled); /* #B9BEC4 / #7B8490 dark */
+  --ds-file-upload-drop-zone-border-width-generic:  1.5px;                          /* borderWidth/md */
+  --ds-file-upload-drop-zone-padding-ver-generic:   16px;                          /* spacing/xl */
+  --ds-file-upload-drop-zone-padding-hor-generic:   12px;                          /* spacing/lg */
+  --ds-file-upload-drop-zone-gap-generic:           6px;                           /* spacing/sm */
+  --ds-file-upload-drop-zone-text-fg-generic:       var(--ds-fg-default);          /* invierte */
+  --ds-file-upload-drop-zone-text-fg-disabled:      var(--ds-fg-label-disabled);   /* #B9BEC4 / #7B8490 dark */
 }
 
 
