@@ -1262,6 +1262,27 @@
   --ds-file-upload-drop-zone-gap-generic:           6px;                           /* spacing/sm */
   --ds-file-upload-drop-zone-text-fg-generic:       var(--ds-fg-default);          /* invierte */
   --ds-file-upload-drop-zone-text-fg-disabled:      var(--ds-fg-label-disabled);   /* #B9BEC4 / #7B8490 dark */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Tabs (tabs/*)
+     Sprint 3. `Tab` (item individual) + `Tabs` (contenedor, N×Tab). Device
+     mobile/tablet — Desktop reutiliza los valores de tablet, sin variante
+     propia (mismo criterio que el resto de la librería: Mobile/Desk casi
+     nunca difieren, ver device-tokens-mobile-desk-review). Focus resuelto
+     con un único stroke real en la raíz del propio Tab (no doble anillo) —
+     decisión de Carol tras encontrar que el anillo interior blanco competía
+     con la cinta de selección; más simple y se redimensiona solo, sin
+     necesitar constraints especiales.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-tabs-root-bg-generic:              var(--ds-bg-default);          /* #FFFFFF / #050506 dark */
+  --ds-tabs-root-bg-hover:                var(--ds-bg-hover-primary);    /* #B8E6FE / #016398 dark */
+  --ds-tabs-root-opacity-pressed:         var(--ds-opacity-pressed);     /* 0.8 */
+  --ds-tabs-root-border-bottom-color-generic: var(--ds-borderColor-subtle); /* línea bajo la barra completa — #EEEFF1 / #606772 dark */
+  --ds-tabs-root-border-color-focus:      var(--ds-borderColor-focus-outer);
+  --ds-tabs-root-border-width-focus:      2px;
+  --ds-tabs-text-fg-generic:              var(--ds-fg-default);          /* invierte */
+  --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #4BA9C0 fijo */
+  --ds-tabs-ribbon-border-width-selected: 4px;                           /* Figma dibuja el rectángulo Ribbon a 3px — desajuste menor detectado, token real es 4 */
 }
 
 
