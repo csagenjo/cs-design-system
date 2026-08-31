@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './tokens.css'
 import { List } from './components/List'
 import { AmountView } from './components/AmountView'
@@ -22,13 +23,24 @@ import { DropZone } from './components/DropZone'
 import { LabelDescription } from './components/LabelDescription'
 import { FileSelector } from './organisms/FileSelector'
 import { FileUpload } from './organisms/FileUpload'
+import { Tabs } from './organisms/Tabs'
 
 const box = { padding: 24, display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 640 }
 const row = { display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }
 const scrollRow = { display: 'flex', gap: 16, overflowX: 'auto', paddingBottom: 8 }
 const viewport = { position: 'relative', width: 400, height: 640, border: `1px solid var(--ds-borderColor-subtle)`, overflow: 'hidden', flexShrink: 0 }
 
+const manyTabs = [
+  { id: '1', label: 'Enero' }, { id: '2', label: 'Febrero' }, { id: '3', label: 'Marzo' },
+  { id: '4', label: 'Abril' }, { id: '5', label: 'Mayo' }, { id: '6', label: 'Junio' },
+  { id: '7', label: 'Julio' }, { id: '8', label: 'Agosto' },
+]
+
 export default function App() {
+  const [fixedTab, setFixedTab] = useState('a')
+  const [scrollTab, setScrollTab] = useState('1')
+  const [mobileTab, setMobileTab] = useState('1')
+
   return (
     <div style={box}>
       <section>
@@ -331,6 +343,25 @@ export default function App() {
             files={[{ id: '1', name: 'factura.pdf', status: 'uploaded' }]}
             onButtonClick={() => {}}
           />
+        </div>
+      </section>
+
+      <Divider />
+
+      <section>
+        <SectionHeader color="primary">Tabs — fixed / scrollable</SectionHeader>
+        <div style={{ maxWidth: 480 }}>
+          <Tabs
+            items={[{ id: 'a', label: 'Resumen' }, { id: 'b', label: 'Movimientos' }, { id: 'c', label: 'Tarjetas' }]}
+            selectedId={fixedTab}
+            onChange={setFixedTab}
+          />
+        </div>
+        <div style={{ maxWidth: 480, marginTop: 24 }}>
+          <Tabs type="scrollable" items={manyTabs} selectedId={scrollTab} onChange={setScrollTab} />
+        </div>
+        <div style={{ maxWidth: 320, marginTop: 24 }}>
+          <Tabs type="scrollable" device="mobile" items={manyTabs} selectedId={mobileTab} onChange={setMobileTab} />
         </div>
       </section>
     </div>
