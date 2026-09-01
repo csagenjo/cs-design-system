@@ -108,7 +108,13 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 | DescriptionText | v1 | texto plano de descripción — consolidado desde el markup fijo que Selector/AccountSelector tenían embebido · `color` default/subtle(def)/disabled × `size` 14/16 · valor por defecto del slot Description de List View/Selector |
 | DetailText | v1 | icono + texto de detalle — consolidado desde 4 copias duplicadas en Selector/SelectorListItem/AccountSelectorInvoker/AccountSelectorListItem · `color` default/secondary/tertiary/disabled × `size` 14/16 · icono slot libre ReactNode, `showIcon` booleano |
 | ListView | v1 | fila interactiva de listado (`<button>` real) para Search for Results · Header→SectionHeader, Description→DescriptionText (swap por Text), Detail→DetailText · `rightPanelContent` slot libre (NO el wrapper de 10 variantes de Figma) · ribbon de selected, 4 `divider`, icono izquierdo con tamaño configurable · hover/pressed/focus vía pseudo-clases CSS, solo `disabled` es prop |
+| ListItem | v1 | fila de fichero en File Upload — icono + nombre editable (`<input type="text">` real, también en `status="uploading"` deshabilitado ahí) + botón de cierre · `status` uploading/uploaded/error, único eje real como prop · mensaje de error mismo patrón que InputText.jsx (icono + texto, tokens de validación de Input reutilizados) |
+| DropZone | v1 | área drag-and-drop de File Upload — borde discontinuo + texto + botón de selección manual · hover: el botón se queda visible pero pasa a Disabled real (mismo tamaño de caja, nunca se colapsa) y el texto cambia a "Drag & drop your files here" · `disabled` prop de estado real independiente del hover, usa `useState` (única del family que no resuelve todo con pseudo-clases puras) |
+| LabelDescription | v1 | Label+HelperText apilados para el encabezado de File Upload · sin tokens propios — reutiliza `--ds-input-fg-label` y el átomo HelperText.jsx tal cual · `align` left/right (solo text-align) |
+| TabItem | v1 | item individual dentro de Tabs · `<button>` real, hover/pressed/focus vía pseudo-clases CSS nativas (mismo criterio que Checkbox/ListView) · `selected` única prop de estado real · focus: un único stroke real en la raíz (se redimensiona con el tab, sin rectángulos hermanos que puedan desfasarse) · `device` mobile/tablet — solo cambia el padding vertical |
 | IconButton | v1 | botón circular icon-only + `label` opcional debajo (`with Label=Yes`) · `type` default/accent × `variant` primary(relleno)/secondary(contorno)/tertiary(ghost) × `size` small/medium/large · icono vía átomo `Icon` (nunca reimplementado) · color de icono por contraste (`on-color`/`on-outline`), no por Variant (regla §4) · hover/pressed/focus vía pseudo-clases CSS, solo `disabled` es prop · focus ring con geometría real de Figma (doble anillo, criterio Checkbox): círculo sin label / rectángulo redondeado con label |
+| Collapsible | v1 | trigger con label ("Expand"/"Collapse") + chevron · instancia `Button` (`variant="default" outline"`) sin reimplementar — re-tematiza color redefiniendo localmente las CSS custom properties de Button (`--ds-button-border-default`, `--ds-button-fg-default-outline`), mismo mecanismo que el rebind de variables en Figma · `variant` default(negro)/secondary(rosa) × `size` sm/md/lg · `expanded` decide label+icono, sin gestionar el propio estado |
+| CollapsibleIconButton | v1 | variante icon-only de Collapsible, con tooltip "Expand"/"Collapse" en hover/focus · instancia `IconButton` (`type="default" variant="secondary"`) mismo mecanismo de re-tematización que Collapsible · **deuda:** el átomo `Tooltip` compartido no existe aún (backlog) — el tooltip es una implementación CSS mínima local, migrar cuando se construya `Tooltip` |
 
 **Tokens de referencia rápida — Selector:**
 - `--ds-selector-*` (advancedSelector/all/*): borderWidth 1.5px, borderRadius 8px, gap/padding 16px
@@ -130,6 +136,9 @@ Base (157) → Theme (873×7) → Mode (364×2) → Component (1038) → Device 
 | CellActions | v1 | familia Celda · contenedor de celda que aloja ≤2 acciones (Button/Link/CTALink) vía children · align L/R (right default) · surface neutral/onSurface/zebra · lastRow · dev-warn si >2 |
 | Table | v1 | familia Celda · `Table` + `TableRow` · wrapper de layout puro (sin chrome propio, sin componente en Figma) · composición vía children, sin clonar/inyectar props · roles ARIA table/row (columnheader/cell ya en los átomos) · surface/lastRow se siguen fijando a mano por celda |
 | DescriptionList | v1 | `DescriptionList` + `DescriptionListItem` · contenedor tonto + children (NO replica los 8 Variants de Figma como enum) · orientation landscape (label\|valor) / portrait (valor bajo label) · item: labelWeight regular/bold, emptyText (Not Filled → valuetext-fg-subtle), showEdit/onEdit (Link real) · divisores = átomo Divider entre items · dl/dt/dd semántico · valores = slot libre (BadgeHighlight/List/AmountView instanciados por el consumidor, nunca reimplementados) · title/amount/iconAccount NO se replican (los aportan SectionHeader/AmountView compuestos) |
+| FileSelector | v1 | wrapper puro: DropZone + N × ListItem en columna · sin chrome propio (no existe "File Selector" como componente visual en Figma, solo la composición) — mismo criterio que CellActions/ButtonBar/Table · nº de ficheros = `files.length`, sin replicar las 6 variantes "1-5 Files" de Figma como enum |
+| FileUpload | v1 | compone LabelDescription + FileSelector · 3 layouts: `wide` (lado a lado, Figma original), `stacked` (columna única con Drop Zone visible — pedido de Carol 26/08, no existía en Sistema Origen), `compact` (máx. 1 fichero, sin Drop Zone real — botón con chevron a cada lado tal cual Figma, sin simplificar) |
+| Tabs | v1 | `Tabs` + N × `TabItem` · `type` fixed (reparte ancho a partes iguales) / scrollable (ancho natural + scroll horizontal, nº de items sin límite a diferencia de Figma) · `device` mobile/tablet (Desktop reutiliza tablet) |
 
 ## 7. Workflow de componentes
 
@@ -196,13 +205,17 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 ### 🟠 Sprint 2
 
-~~List View~~ ✅ · File Upload · Tabs
+~~List View~~ ✅ · ~~File Upload~~ ✅ · ~~Tabs~~ ✅
+
+**Sprint 2 completo.** Las tablas §6 no se habían actualizado con File Upload (`ListItem`, `DropZone`, `LabelDescription`, `FileSelector`, `FileUpload`) ni Tabs (`TabItem`, `Tabs`) pese a estar mergeados — corregido 01/09/2026.
 
 **Actualización (24/08/2026):** List View ✅ construido (+ `Text`, `DescriptionText`, `DetailText` — 3 átomos nuevos con página propia en Figma, mismo criterio que SectionHeader). `DescriptionText`/`DetailText` sustituyen el markup duplicado que `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` tenían embebido — los 4 refactorizados para consumir los átomos compartidos, cerrando una inconsistencia real (`SelectorListItem` no exponía color de detail text en absoluto; `AccountSelector*` no reutilizaba nada). Proceso: cuando eché en falta `DetailText` durante EXPLORE, empecé a escribir el átomo en código antes de confirmar con Carol si debía existir en Figma primero — parada a tiempo, Carol lo creó en Figma con su propia página y lo instanció en Selector/List View antes de retomar código; los tokens ya explorados coincidieron exactamente. Regla reafirmada: Figma es la fuente de verdad, un átomo echado en falta se plantea antes de escribirlo, no se infiere.
 
 ### 🟢 Sprint 3
 
-~~Icon Button~~ ✅ · Collapsible · Inline Notification
+~~Icon Button~~ ✅ · ~~Collapsible~~ ✅ · Inline Notification
+
+**Actualización (01/09/2026 — Collapsible construido.)** `Collapsible` y `CollapsibleIconButton` en código (v1) — instancian Button/IconButton sin reimplementar, re-tematizados por CSS custom properties. Antes de CODE se encontró que el componente en Figma tenía 15 tokens propios (`collapsible/all/*`) completamente sin usar — label/icono/borde heredaban directo de Button/IconButton en vez de los tokens de Collapsible, y el color "secondary" (rosa) definido nunca se aplicaba en ningún sitio. Corregido en Figma (bindings reales + geometría de root real con borde visible, antes inexistente) antes de construir el átomo. Ver `docs/architecture.md` para el detalle completo de la sesión.
 
 **Actualización (01/09/2026 — Icon Button, solo Figma por ahora, CODE pendiente):** auditoría y saneamiento del component set completo (210 variantes: Type Default/Accent × Variant Primary/Secondary/Tertiary × Size Small/Medium/Large × State Enabled/Disabled/Hover/Pressed/Focus/Hover Focus/Focus Pressed × with Label None/Yes) — motivado por EXPLORE de Collapsible (Icon Button es la base de su variante icon-only).
 

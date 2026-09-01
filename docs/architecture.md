@@ -493,3 +493,92 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   `fg/body/disabled`, `fg/icon/disabled`, `borderColor/subtle`, `borderColor/disabled`) — all resolved
   live against Figma's variable chains, not assumed. `--ds-fg-disabled` was also carrying the light value
   in both dark blocks (no real override existed) — corrected to `#7B8490`.
+
+> **Note on the gap below:** File Upload, Dialog's padding/gap consolidation fix, and Tabs all shipped
+> between this entry and the next (see `CLAUDE.md` §6 for what was built) but weren't narrated here at
+> the time — this file fell behind the actual git history for those three. Not backfilled retroactively
+> to avoid inventing detail neither of us has direct record of; picking back up below with the session
+> that *is* fully documented.
+
+### Icon Button built, Collapsible's unused token layer found and wired up (1 September 2026)
+
+**Icon Button — Figma audit before CODE.** The full 210-variant component set had never had real
+auto-layout: every variant was `layoutMode: NONE` with hand-set pixel sizes, which is why the resize
+panel never offered "Hug contents." Applied real Hug to the 60 variants without a focus ring
+(Enabled/Disabled, with and without Label) — the 150 with `Focus outer`/`Focus inner` were left alone;
+a first attempt to Hug all 210 at once corrupted the rings' size and position (recovered via Figma
+Version History, not a manual patch). Root cause, learned the hard way: those two rectangles carry
+`constraints` of type *stretch* — resizing a parent frame with `.resize()` reflows stretch-constrained
+children by margin, so any resize of the root must happen **before** their exact geometry is set, never
+after, or the resize undoes the fix.
+
+Real bugs caught in the same pass, all confirmed by data before being called bugs:
+- `Tertiary, Size=Medium` (both Default and Accent) had `cornerRadius: 0` — square instead of circle,
+  invisible in a screenshot because Tertiary paints no stroke (`strokes: []`, ghost style) and was only
+  caught by comparing the raw property against the other 16 Enabled combinations.
+- The icon inside all three Icon Button sizes was bound to the *same* size token
+  (`iconButton/all/icon/size/medium`, 20px) regardless of the button's own Size — a leftover from a
+  manual edit. Rebound per size (16/20/24) and the node's `layoutSizingHorizontal/Vertical` flipped from
+  `HUG` to `FIXED` so the binding actually took visual effect (HUG on that node computes from its own
+  swapped `Icon Size` sub-variant, ignoring any width/height binding entirely). This correctly cascaded
+  the whole button's footprint (Small 36→32, Large 52→56) since the content frame hugs icon+padding.
+- `iconButton/all/icon/fg/accent-primary` was aliased to `fg/icon/inverse` (flips in dark mode) while its
+  paired background (`bg/surface/primary`, teal) does not — same fg/bg-pairing bug pattern already fixed
+  elsewhere in Button/Chip/CTALink/BadgeNotification. Realiased to `fg/icon/onColor` (fixed white in both
+  modes) and confirmed live in the built component (dark mode: icon stays white on teal).
+- After Carol manually adjusted the ring-state variants' `Icon Size` to match the corrected per-size
+  values, the `Focus outer`/`Focus inner` rings were left calibrated for the old uniform 20px icon —
+  visibly off-center. Recalculated `inner = bbox(content [+ Label])`, `outer = inner ± 2px` per variant
+  from the *current* geometry (a formula confirmed against the original, un-touched baseline first). Two
+  further bugs found while doing this: content wasn't re-centered horizontally under its Label after the
+  icon shrank (fixed by recomputing `content.x` from the Label's own bounds), and the 18 Large
+  Focus-family root frames didn't grow to contain the now-bigger ring (fixed by resizing root to
+  `2×outer.offset + outer.size` — a formula verified against the untouched baseline, which already
+  matched it exactly).
+
+**Icon Button — CODE**, `IconButton.jsx`: `type` (default/accent) × `variant` (primary=filled,
+secondary=outline, tertiary=ghost) × `size` × `disabled`, icon via the shared `Icon` atom. Focus ring
+implemented in CSS to match the real Figma geometry: a circle (pill radius) when there's no label, a
+rounded rectangle (`--ds-icon-button-focus-radius-with-label-outer`, 4px, Figma's
+`iconWithLabel-focus-outer` token) wrapping icon+label when there is one — CSS can't give outline and
+box-shadow two different radii on the same element, so the inner ring shares the outer's radius (Figma
+differentiates them by 2px, imperceptible on a decorative focus detail).
+
+**Collapsible — the token layer existed but nothing consumed it.** Both `Collapsible` (Button-based) and
+`Collapsible Icon Button` had a `Variant=Primary/Secondary` property, and Figma had 15 dedicated
+Component-layer tokens for it (`collapsible/all/root/borderColor/*`, `label/fg/*`, `icon/fg/*`, plus
+root geometry: borderWidth/borderRadius/gap/padding/focus-ring). None of it was wired up: the label text
+and chevron in *both* Primary and Secondary read colors straight from the nested Button/Icon Button
+instance's own default token, and the outer wrapper frame itself was completely bare — no stroke, no
+radius, no padding, `strokes: []`. Practical effect: Secondary looked identical to Primary, and the pink
+(`#E02C7C`) defined for it was dead weight.
+
+First attempt at the fix put a new stroke on the *outer* Collapsible frame — wrong: Carol's correction
+was that the outer frame **is** the container, and the visible border already comes from the nested
+Button's own `Root` frame, so adding one on the wrapper doubled it. Reverted, then rebound the *existing*
+border on the Button's `Root` (color only — geometry stayed on Button's own tokens after a second
+over-correction attempt changed the pill radius to Collapsible's 8px value, which Carol also caught:
+she'd asked to rebind colors, not geometry). Label and icon fg were similarly rebound directly on the
+`TEXT` fill and chevron `VECTOR` stroke inside the nested instance — several manually-bound variants
+turned out to have the wrong token (label and icon sharing one color, or both borrowing the border's
+token) and were corrected by re-reading every binding by ID before trusting the visual.
+
+**Naming convention fixed, now documented in `CLAUDE.md` §5:** the color axis was originally named
+`primary`/`secondary`, which reads as brand-teal — but the real values are black/pink. Renamed to
+`default`/`secondary`, reserving `generic` strictly for properties that don't vary by variant
+(borderRadius, borderWidth, gap, padding). One residual mismatch (`icon/fg/primary` vs `label/fg/default`
+for the same role) found and fixed the same way.
+
+**Known Figma limitation, mitigated not solved:** nothing prevents someone with edit access from
+double-clicking into the nested Button/Icon Button instance and changing its own Type/Variant/Size/
+State/Icon/Label — exposing or not the property as an instance-swap only blocks the swap from the
+*parent's* properties panel, not direct entry into the child layer. Mitigation applied: the nested
+instance is locked (padlock) in all 24 Collapsible variants, and each variant's Figma `description` now
+carries the warning. Not foolproof — locking is reversible — but real friction against the accidental
+break Carol had reproduced.
+
+**CODE**, `Collapsible.jsx` / `CollapsibleIconButton.jsx`: both instance Button/IconButton unmodified and
+re-theme purely via CSS custom-property overrides scoped to a wrapper class — the same mechanism as
+Figma's own variable rebind, applied at the CSS layer instead of the Figma layer. Tooltip on
+`CollapsibleIconButton` is a small local CSS implementation, not the shared `Tooltip` atom (doesn't exist
+yet, backlog) — noted as a migration TODO in the component's own docstring.
