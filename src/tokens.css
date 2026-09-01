@@ -406,6 +406,63 @@
        on-outline-default → --ds-button-fg-default-outline (fg/default)
        disabled           → --ds-button-fg-disabled */
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- IconButton
+     ========================================================================== */
+
+  /* Geometría (iconButton/all/root/*) */
+  --ds-icon-button-border-radius:          80px;  /* pill → círculo */
+  --ds-icon-button-border-width-primary:   1px;
+  --ds-icon-button-border-width-secondary: 2px;   /* Secondary y Tertiary comparten grosor */
+  --ds-icon-button-opacity-pressed:        0.8;
+
+  /* Padding por tamaño (iconButton/all/icon/padding/*) */
+  --ds-icon-button-padding-small:  8px;
+  --ds-icon-button-padding-medium: 12px;
+  --ds-icon-button-padding-large:  16px;
+  --ds-icon-button-label-padding-hor: 4px;
+
+  /* Icono — tamaño (iconButton/all/icon/size/*), misma escala que Button */
+  --ds-icon-button-icon-size-small:  var(--ds-sizing-2xs);  /* 16px */
+  --ds-icon-button-icon-size-medium: var(--ds-sizing-xs);   /* 20px */
+  --ds-icon-button-icon-size-large:  var(--ds-sizing-sm);   /* 24px */
+
+  /* Fondos (iconButton/all/root/bg/*, Variant=Primary/filled) */
+  --ds-icon-button-bg-default-primary:  var(--ds-bg-inverse);
+  --ds-icon-button-bg-accent-primary:   var(--ds-bg-primary);
+  --ds-icon-button-bg-disabled:         var(--ds-bg-disabled);
+  --ds-icon-button-bg-mix-default-hover: var(--ds-opacity-hover-inverse);
+  --ds-icon-button-bg-mix-accent-hover:  var(--ds-opacity-hover-default);
+
+  /* Bordes (iconButton/all/root/borderColor/*, Variant=Secondary/Tertiary/outline) */
+  --ds-icon-button-border-color-default:     var(--ds-borderColor-emphasis);
+  --ds-icon-button-border-color-accent:      var(--ds-borderColor-primary);
+  --ds-icon-button-border-color-disabled:    var(--ds-borderColor-disabled);
+  --ds-icon-button-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-icon-button-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  /* Anillo de foco: círculo (sin label) usa border-radius/generic (pill, ya
+     definido arriba); con label el anillo envuelve icono+label y usa un
+     radio propio, más discreto (iconWithLabel-focus-outer/inner). */
+  --ds-icon-button-focus-radius-with-label-outer: 4px;
+  --ds-icon-button-focus-radius-with-label-inner: 2px;
+
+  /* Icono — color (iconButton/all/icon/fg/*). Por contraste, no por Variant
+     (regla CLAUDE.md §4): on-color = filled, on-outline = Secondary/Tertiary.
+     fg-onColor-accent corregido 01/09/2026: estaba alias a fg/icon/inverse en
+     Figma (se invertía en dark aunque bg/surface/primary no invierte → icono
+     negro sobre teal) — realiasado a fg/icon/onColor, mismo bug ya cazado en
+     Button/Chip/CTALink/BadgeNotification. */
+  --ds-icon-button-icon-fg-on-color-default:   var(--ds-fg-icon-inverse); /* bg-inverse también invierte: contraste se mantiene en ambos modos */
+  --ds-icon-button-icon-fg-on-color-accent:    var(--ds-fg-icon-onColor);
+  --ds-icon-button-icon-fg-on-outline-default: var(--ds-fg-icon-default);
+  --ds-icon-button-icon-fg-on-outline-accent:  var(--ds-fg-icon-primary);
+  --ds-icon-button-icon-fg-disabled:           var(--ds-fg-icon-disabled);
+
+  /* Label — color (iconButton/all/label/fg/*, with Label=Yes) */
+  --ds-icon-button-label-fg-default:  var(--ds-fg-label-default);
+  --ds-icon-button-label-fg-accent:   var(--ds-fg-label-primary);
+  --ds-icon-button-label-fg-disabled: var(--ds-fg-label-disabled);
+
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
