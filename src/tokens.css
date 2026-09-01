@@ -464,6 +464,23 @@
   --ds-icon-button-label-fg-disabled: var(--ds-fg-label-disabled);
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Collapsible
+     ========================================================================== */
+  /* Collapsible reutiliza Button (con label) e IconButton (icon-only + tooltip)
+     tal cual — sin reimplementar su lógica (regla CLAUDE.md §5). Solo se
+     re-tematizan color de borde/label/icono, redefiniendo localmente las CSS
+     custom properties que Button/IconButton ya consumen (mismo mecanismo que
+     el rebind de variables en Figma). Geometría (radio pill, padding, tamaño
+     de icono por Size) se hereda sin tocar de Button/IconButton. */
+  --ds-collapsible-border-color-default:  var(--ds-borderColor-emphasis);
+  --ds-collapsible-border-color-secondary: var(--ds-borderColor-secondary);
+  --ds-collapsible-label-fg-default:      var(--ds-fg-label-default);
+  --ds-collapsible-label-fg-secondary:    var(--ds-fg-label-secondary);
+  --ds-collapsible-icon-fg-default:       var(--ds-fg-icon-default);
+  --ds-collapsible-icon-fg-secondary:     var(--ds-fg-icon-secondary);
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
