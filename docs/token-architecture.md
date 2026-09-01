@@ -237,6 +237,21 @@ La posición (left/right) **nunca** determina el color. El criterio es el contra
 ```
 Left y right comparten color; solo el tamaño (`--ds-selector-icon-left/right-size`, ambos 20px) sigue separado por posición — candidato a la misma consolidación en una pasada futura.
 
+### Nomenclatura `default`/`secondary` vs `generic` — eje de color por Variant (01/09/2026, Collapsible)
+
+Al construir `Collapsible` se encontró un family de 15 tokens (`collapsible/all/*`) definido en Figma pero completamente sin usar en el componente real (ver `architecture.md`, sesión 1 sept). Al rebindear, salió a la luz una nomenclatura confusa que se corrigió ahí mismo:
+
+```
+Antes: collapsible/all/{root/borderColor,label/fg}/primary   → negro
+       collapsible/all/icon/fg/primary                        → negro (mismo rol, nombre distinto)
+       collapsible/all/icon/fg/generic                        → rosa  (mal nombrado: no es "genérico", es el color secondary)
+Ahora: collapsible/all/{root/borderColor,label/fg,icon/fg}/default    → negro, consistente en las 3 familias
+       collapsible/all/{root/borderColor,label/fg,icon/fg}/secondary → rosa,  consistente en las 3 familias
+       collapsible/all/root/{borderRadius,borderWidth,gap,paddingHor,paddingVer}/generic → sin cambio, comparten valor entre default y secondary
+```
+
+**Regla fijada (CLAUDE.md §5):** en el eje de color que varía por Variant de un componente, usar **`default`** (sin color de marca) y **`secondary`** (con color de marca) — nunca `primary`, que induce a pensar en el teal de marca aunque el valor real sea negro/rosa. Reservar **`generic`** solo para propiedades que valen igual en las dos variantes (radio, grosor, gap, padding). Si un token `generic` en realidad diverge por variante, está mal nombrado.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):

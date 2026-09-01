@@ -65,6 +65,13 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `DescriptionText` | Plain description text · color default/subtle/disabled × size 14/16 · default content for the Description slot | ✅ v1 |
 | `DetailText` | Icon + detail text · consolidated from 4 duplicated copies in the Selector family · color default/secondary/tertiary/disabled × size 14/16 · swappable icon | ✅ v1 |
 | `ListView` | Interactive result-list row (real `<button>`) · Header/Description/Detail compose SectionHeader/DescriptionText/DetailText · `rightPanelContent` free slot (not a ported Figma variant-swap wrapper) · selected ribbon, 4 divider options | ✅ v1 |
+| `ListItem` | File Upload's file row · icon + editable name (real `<input>`, disabled while `status="uploading"`) + close button · `status` uploading/uploaded/error | ✅ v1 |
+| `DropZone` | File Upload's drag-and-drop area · dashed border + text + manual-select button · hover keeps the button's box reserved (never collapses) | ✅ v1 |
+| `LabelDescription` | Label + HelperText stack for File Upload's header · no tokens of its own, reuses `--ds-input-fg-label` + HelperText atom | ✅ v1 |
+| `TabItem` | Single tab inside Tabs · real `<button>` · hover/pressed/focus via native CSS pseudo-classes · `device` mobile/tablet | ✅ v1 |
+| `IconButton` | Circular icon-only button + optional label below · type default/accent × variant primary/secondary/tertiary × size small/medium/large · icon color by contrast, not by Variant | ✅ v1 |
+| `Collapsible` | Expand/Collapse trigger with label + chevron · instances Button, re-themed via CSS custom-property overrides (same mechanism as Figma's variable rebind) | ✅ v1 |
+| `CollapsibleIconButton` | Icon-only Collapsible trigger with hover/focus tooltip · instances IconButton · tooltip is a local CSS implementation, not the shared Tooltip atom (doesn't exist yet) | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -74,6 +81,9 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `CellActions` | Cell family · hosts ≤2 actions (Button/Link/CTALink) via children · align L/R · dev-warn if >2 | ✅ v1 |
 | `Table` | Cell family · `Table` + `TableRow` · pure layout composition, no chrome of its own | ✅ v1 |
 | `DescriptionList` | `DescriptionList` + `DescriptionListItem` · dumb container + children, no enum of Figma's 8 baked variants · landscape/portrait orientation | ✅ v1 |
+| `FileSelector` | Pure wrapper: DropZone + N × ListItem in a column · no chrome of its own (no "File Selector" visual component in Figma, only the composition) | ✅ v1 |
+| `FileUpload` | Composes LabelDescription + FileSelector · 3 layouts: wide (side by side), stacked (single column with a real Drop Zone), compact (max 1 file, no Drop Zone) | ✅ v1 |
+| `Tabs` | `Tabs` + N × `TabItem` · type fixed (equal widths) / scrollable (natural width + horizontal scroll) · device mobile/tablet | ✅ v1 |
 
 > **Estado (11/08/2026):** Cell family completa (CellHeader, CellData, CellMore, CellActions) y ensamblada en Table. Sprint 1 Pri 0 cerrado — ver `CLAUDE.md` §9.
 
@@ -84,6 +94,8 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 > **Estado (24/08/2026):** Dialog construido junto con sus 3 sub-piezas (`DialogSimple`, `ErrorAndEmptyState`, `Scrim`) — Sprint 1 completo. Namespace de Figma consolidado 34→27 tokens bajo `dialog/*`. 2 bugs reales de contraste dark-mode encontrados y corregidos en el `.Header` compartido (Tertiary y Default), mismo patrón fg/bg ya documentado en el audit del 11/08. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §Dialog.
 
 > **Estado (24/08/2026):** List View construido — primera pieza de Sprint 2 — junto con 3 átomos nuevos (`Text`, `DescriptionText`, `DetailText`) que consolidan markup que estaba duplicado en la familia Selector. `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` refactorizados para consumir los átomos compartidos. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §ListView.
+
+> **Estado (01/09/2026):** Sprint 2 cerrado (File Upload + Tabs, mergeados previamente pero no reflejados aquí hasta ahora) y Sprint 3 en marcha — `IconButton` y `Collapsible`/`CollapsibleIconButton` construidos. Ver `CLAUDE.md` §9 y `docs/architecture.md` para el detalle completo de ambas sesiones.
 
 ---
 
