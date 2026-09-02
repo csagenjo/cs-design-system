@@ -66,6 +66,7 @@ const css = `
 
 .ds-inline-notification__content {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--ds-inline-notification-content-gap);
   min-width: 0;
@@ -80,6 +81,10 @@ const css = `
   font-size: var(--ds-fontSize-body-sm);
   color: var(--ds-inline-notification-text-fg);
   text-align: left;
+}
+.ds-inline-notification__button {
+  display: flex;
+  justify-content: flex-end;
 }
 `;
 
@@ -114,7 +119,7 @@ export function InlineNotification({
         {showTitle && <span className="ds-inline-notification__title">{title}</span>}
         {showMessage && <span className="ds-inline-notification__message">{message}</span>}
         {showButton && (
-          <div>
+          <div className="ds-inline-notification__button">
             <Button variant="default" outline size="sm" onClick={onButtonClick}>
               {buttonLabel}
             </Button>
