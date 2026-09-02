@@ -271,6 +271,27 @@ al de Collapsible: cuando el propio archivo de Figma ya está bien construido, E
 por dato (ver todas las variantes, no una muestra) antes de asumir que hace falta trabajo de rebind — no
 todo componente nuevo arrastra la misma deuda.
 
+### Tooltip — 8 tokens, la pareja fg/bg SÍ invierte junta (02/09/2026)
+
+```
+tooltip/all/root/bg/generic          → bg/inverse         (negro light / blanco dark)
+tooltip/all/text/fg/generic          → fg/label/inverse    (blanco light / negro dark)
+tooltip/all/root/{gap,paddingHor,paddingVer,borderRadius}/generic → literales de geometría
+```
+
+Comprobado explícitamente vía cadena de alias en vivo (`use_figma`, no el hex resuelto de un solo modo
+que devuelve `get_variable_defs`) antes de escribir `tokens.css` — este proyecto ha cazado varias veces
+el patrón contrario (un lado de la pareja fg/bg invierte con el modo y el otro se queda fijo: Chip,
+Pagination, Button default-filled, CTALink primary — ver §10 de CLAUDE.md). Aquí **no** es ese bug: `bg` y
+`fg` usan el par `*-inverse` los dos, así que invierten juntos y el contraste se mantiene en ambos modos
+— negro-sobre-blanco en light, blanco-sobre-negro en dark, sea cual sea el tema de la app. `--ds-bg-inverse`
+y `--ds-fg-label-inverse` ya llevaban overrides dark correctos desde el audit del 11/08 (Snackbar y Button
+default-filled los usan igual) — no hizo falta tocar la capa Mode.
+
+La flecha (vector `arrow`, 8×6 en Top/Bottom · 6×8 en Left/Right) no tiene Variable propia en Figma —
+geometría literal leída de `get_metadata` por variante, tratada como token literal de Componente
+(`--ds-tooltip-arrow-base`/`-arrow-length`), mismo criterio que `--ds-snackbar-root-shadow`.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):

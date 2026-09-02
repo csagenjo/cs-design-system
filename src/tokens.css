@@ -507,6 +507,31 @@
   --ds-inline-notification-text-fg:  var(--ds-fg-body-default);
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Tooltip
+     Sprint 4 Pri 1. Paga deuda real: CollapsibleIconButton usaba una
+     implementación CSS local mínima a la espera de este átomo (ver CLAUDE.md
+     §9/§10) — mismos valores confirmados ahora contra Figma, sin sorpresas.
+     bg/fg (tooltip/all/root/bg/generic, tooltip/all/text/fg/generic) usan el
+     par bg-inverse/fg-label-inverse — resuelto en vivo vía cadena de alias
+     (Component tokens de Tooltip solo tiene 1 modo; el invert real ocurre en
+     Mode). Ambos invierten JUNTOS (no es el bug fg/bg ya cazado en Chip/
+     Pagination/Button — aquí la pareja es correcta desde origen en Figma).
+     `arrow-base`/`arrow-length` no son Variables de Figma (el vector "arrow"
+     no tiene token propio) — literales de geometría del nodo (8×6 en Top/
+     Bottom, 6×8 en Left/Right — mismo par rotado), tratados como token
+     literal de Componente, mismo criterio que --ds-snackbar-root-shadow.
+     ========================================================================== */
+  --ds-tooltip-bg:            var(--ds-bg-inverse);
+  --ds-tooltip-fg:            var(--ds-fg-label-inverse);
+  --ds-tooltip-border-radius: 4px;
+  --ds-tooltip-padding-hor:   6px;
+  --ds-tooltip-padding-ver:   2px;
+  --ds-tooltip-gap:           6px;  /* sin efecto visible hoy — un solo hijo, mismo caso que IconButton gap */
+  --ds-tooltip-arrow-base:    8px;  /* ancho de la base del triángulo */
+  --ds-tooltip-arrow-length:  6px;  /* profundidad — también offset burbuja↔trigger */
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */

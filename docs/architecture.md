@@ -621,3 +621,44 @@ default placeholder text), the content happened to already be wide enough that t
 short message let the whole column shrink to content-width, leaving the button with no real space to
 shift into. Fixed by adding `flex: 1` to the content column — a reminder that "it works for the sample
 data" isn't the same as "it works," especially for anything measured relative to a flex sibling's width.
+
+### Tooltip built — opens Sprint 4 (2 September 2026)
+
+**EXPLORE.** Node search: `2570:39` (from Carol's node-id) didn't resolve — same class of typo seen before
+with Dialog and Inline Notification — found instead by walking the file's page tree to the actual
+component set, `2570:396`, containing 4 `Placement` variants (Top/Bottom/Left/Right). `get_variable_defs`
+returned a clean, small set — 8 tokens under `tooltip/all/*`, all `generic` (no color-varying axis):
+`root/bg`, `text/fg`, `root/gap`, `root/paddingHor`, `root/paddingVer`, `root/borderRadius`, plus Device
+typography (`fontSize/label/xs`, `fontWeight/regular`, `fontLheight/3xs`). Same favorable case as Inline
+Notification — no rebind pass needed.
+
+**The recurring fg/bg inversion bug, checked proactively this time.** Given how many times this project has
+caught a token pair where one side inverts with dark mode and its partner doesn't (Chip, Pagination, Button
+default-filled, CTALink primary — see CLAUDE.md §10), Tooltip's bg/fg were checked *before* writing
+`tokens.css`, not after a visual bug report. Used `use_figma` to resolve the actual variable bindings and
+alias chains on the component's fill properties (not the single resolved hex `get_variable_defs` returns
+for the current mode) — `tooltip/all/root/bg/generic` → `bg/inverse`, `tooltip/all/text/fg/generic` →
+`fg/label/inverse`. Both sides of the pair invert together, so this is *not* an instance of the bug: light
+mode renders black-on-white, dark mode renders white-on-black, self-consistent regardless of the app's
+theme (an intentional "OS tooltip" look, matching what `CollapsibleIconButton`'s local implementation had
+already guessed correctly). `--ds-bg-inverse` and `--ds-fg-label-inverse` already carry correct dark
+overrides from the 11 August audit, so no new Mode-layer tokens were needed.
+
+**Arrow geometry has no Figma Variable** — the vector node's dimensions (8×6 for Top/Bottom, 6×8 for
+Left/Right, same pair rotated) are literal shape geometry, not a bound token. Read from each variant's
+`get_metadata` output directly (container + arrow child positions) rather than guessed, then added to
+`tokens.css` as literal Component-layer values (`--ds-tooltip-arrow-base`, `--ds-tooltip-arrow-length`),
+same treatment already established for `--ds-snackbar-root-shadow`.
+
+**CODE.** `Tooltip.jsx` wraps a `children` trigger (`React.cloneElement` to add `aria-describedby`,
+pointing at a `React.useId()`-generated id on the bubble) and shows/hides the bubble purely via
+`:hover`/`:focus-within` CSS — no JS state, no timer/portal (same scope boundary as Snackbar/Inline
+Notification). Arrow is a CSS border-triangle, sized off the two new tokens via `calc()`, rotated per
+`placement` with 4 modifier classes. Verified live in the test bench: all 4 placements point the arrow at
+the trigger correctly, both mouse hover and keyboard focus show the bubble (confirms `:focus-within` works
+without any extra JS), dark mode inverts bg/fg together as predicted, and the mechanism works identically
+with an icon-only trigger (`IconButton`) and a text trigger (`Button`).
+
+**Deliberately left undone:** `CollapsibleIconButton` still uses its own local tooltip markup instead of
+instancing this new atom — migrating it is real, tracked debt (CLAUDE.md §10), kept out of this session's
+scope so closing that debt doesn't get mixed with landing the new Sprint 4 piece.
