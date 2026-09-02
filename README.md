@@ -73,6 +73,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 | `Collapsible` | Expand/Collapse trigger with label + chevron · instances Button, re-themed via CSS custom-property overrides (same mechanism as Figma's variable rebind) | ✅ v1 |
 | `CollapsibleIconButton` | Icon-only Collapsible trigger with hover/focus tooltip · instances IconButton · tooltip is a local CSS implementation, not the shared Tooltip atom (doesn't exist yet) | ✅ v1 |
 | `InlineNotification` | Inline contextual alert · type error/success/information/warning (icon + border color) × style default/borderless/simple (root chrome only, never text color) · showTitle/showMessage/showButton booleans, matching Figma · instances Icon + Button, no timer/portal (same scope boundary as Snackbar) | ✅ v1 |
+| `Tooltip` | Wraps a trigger, shows a bubble + arrow on hover/focus · placement top/bottom/left/right (arrow always points at the trigger) · bg/fg pair inverts together with the theme (bg-inverse/fg-label-inverse) · pure CSS `:hover`/`:focus-within`, no JS state, no timer/portal · closes the debt CollapsibleIconButton left behind (local minimal tooltip, not yet migrated) | ✅ v1 |
 
 ### Components — Capa 2 (Organisms)
 
@@ -97,6 +98,8 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 > **Estado (24/08/2026):** List View construido — primera pieza de Sprint 2 — junto con 3 átomos nuevos (`Text`, `DescriptionText`, `DetailText`) que consolidan markup que estaba duplicado en la familia Selector. `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` refactorizados para consumir los átomos compartidos. Ver `CLAUDE.md` §9 y `docs/token-architecture.md` §ListView.
 
 > **Estado (01/09/2026):** Sprint 3 completo — `IconButton`, `Collapsible`/`CollapsibleIconButton` e `InlineNotification` construidos (Sprint 2 cerrado ese mismo día: File Upload + Tabs, mergeados previamente pero no reflejados aquí hasta entonces). A diferencia de Icon Button y Collapsible, los 19 tokens `inlineNotification/all/*` ya estaban correctamente enlazados en Figma — sin rebind necesario. Ver `CLAUDE.md` §9 y `docs/architecture.md` para el detalle completo de las 3 sesiones.
+
+> **Estado (02/09/2026):** `Tooltip` construido — primera pieza de Sprint 4. Tokens limpios en Figma (mismo caso favorable que Inline Notification). Verificado explícitamente que el par bg/fg (`bg-inverse`/`fg-label-inverse`) invierte correctamente en conjunto — no es el bug fg/bg ya cazado antes en Chip/Pagination/Button. Cierra la deuda documentada desde `CollapsibleIconButton`, aunque la migración de ese componente al átomo compartido queda pendiente para otra sesión. Ver `CLAUDE.md` §9/§10 y `docs/token-architecture.md` §Tooltip.
 
 ---
 
