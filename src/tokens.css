@@ -481,6 +481,32 @@
   --ds-collapsible-icon-fg-secondary:     var(--ds-fg-icon-secondary);
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- InlineNotification
+     ========================================================================== */
+  /* Geometría (inlineNotification/all/root/*, content/*) */
+  --ds-inline-notification-border-radius: 4px;
+  --ds-inline-notification-border-width:  1.5px;
+  --ds-inline-notification-gap:           4px;   /* icono ↔ content, root */
+  --ds-inline-notification-padding-hor:   6px;
+  --ds-inline-notification-padding-ver:   6px;
+  --ds-inline-notification-content-gap:   6px;   /* title/message/button, vertical */
+  --ds-inline-notification-icon-size:     var(--ds-sizing-sm); /* 24px */
+
+  /* Fondos (inlineNotification/all/root/bg/*) — default y borderless comparten valor */
+  --ds-inline-notification-bg: var(--ds-bg-default);
+
+  /* Borde e icono — color por Type (inlineNotification/all/root/borderColor/*, icon/fg/*) */
+  --ds-inline-notification-color-error:       var(--ds-borderColor-error);
+  --ds-inline-notification-color-success:     var(--ds-borderColor-success);
+  --ds-inline-notification-color-information: var(--ds-borderColor-info);
+  --ds-inline-notification-color-warning:     var(--ds-borderColor-warning);
+
+  /* Texto (inlineNotification/all/{title,text}/fg/generic) — fijo, no varía por Type */
+  --ds-inline-notification-title-fg: var(--ds-fg-title-default);
+  --ds-inline-notification-text-fg:  var(--ds-fg-body-default);
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
