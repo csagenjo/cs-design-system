@@ -233,7 +233,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 ### 🔵 Sprint 4 — pagar deuda + baja complejidad
 
-**Planificado 02/09/2026.** Con Icon Button construido, las 11 piezas de Tier 3 ya no tienen ninguna dependencia sin resolver — se reparten en 2 sprints por complejidad e impacto real, mismo criterio que priorizó Sprint 1 (lo que desbloquea algo ya construido va primero, no solo lo más simple).
+**Planificado 02/09/2026.** Con Icon Button construido, las 11 piezas de Sprint 4+5 ya no tienen ninguna dependencia sin resolver — se reparten en 2 sprints por complejidad e impacto real, mismo criterio que priorizó Sprint 1 (lo que desbloquea algo ya construido va primero, no solo lo más simple).
 
 | Pri | Componente | Dependencias | Por qué va aquí |
 |---|---|---|---|
