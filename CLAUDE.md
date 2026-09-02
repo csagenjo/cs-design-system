@@ -171,7 +171,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 ## 9. Próximos componentes — Sprint activo
 
-### 🔴 Sprint 1 (en curso)
+### 🔴 Sprint 1 — ✅ Completo (24/08/2026)
 
 | Pri | Componente | Dependencias |
 |---|---|---|
@@ -204,7 +204,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 **Actualización (18/07/2026):** Pagination ✅ construido y documentado (Pagination.jsx + `--ds-pagination-*` sincronizados desde Figma tras reconstruir `.Parts`). Quedan Celda + Tabla para la semana que viene.
 
-### 🟠 Sprint 2
+### 🟠 Sprint 2 — ✅ Completo (31/08/2026)
 
 ~~List View~~ ✅ · ~~File Upload~~ ✅ · ~~Tabs~~ ✅
 
@@ -212,9 +212,9 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 **Actualización (24/08/2026):** List View ✅ construido (+ `Text`, `DescriptionText`, `DetailText` — 3 átomos nuevos con página propia en Figma, mismo criterio que SectionHeader). `DescriptionText`/`DetailText` sustituyen el markup duplicado que `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` tenían embebido — los 4 refactorizados para consumir los átomos compartidos, cerrando una inconsistencia real (`SelectorListItem` no exponía color de detail text en absoluto; `AccountSelector*` no reutilizaba nada). Proceso: cuando eché en falta `DetailText` durante EXPLORE, empecé a escribir el átomo en código antes de confirmar con Carol si debía existir en Figma primero — parada a tiempo, Carol lo creó en Figma con su propia página y lo instanció en Selector/List View antes de retomar código; los tokens ya explorados coincidieron exactamente. Regla reafirmada: Figma es la fuente de verdad, un átomo echado en falta se plantea antes de escribirlo, no se infiere.
 
-### 🟢 Sprint 3
+### 🟢 Sprint 3 — ✅ Completo (01/09/2026)
 
-~~Icon Button~~ ✅ · ~~Collapsible~~ ✅ · ~~Inline Notification~~ ✅
+~~Icon Button~~ ✅ (no estaba en el plan original) · ~~Collapsible~~ ✅ (+ CollapsibleIconButton) · ~~Inline Notification~~ ✅
 
 **Sprint 3 completo (01/09/2026).** `InlineNotification.jsx` construido — a diferencia de Icon Button/Collapsible, los 19 tokens `inlineNotification/all/*` ya estaban correctamente enlazados en Figma (verificado en las 12 variantes: borde/icono por Type, sin rebind necesario). Reutiliza `Icon` (circle-x/info/circle-check/alert-circle, los 3 primeros añadidos a `icons.js`) y `Button` (`variant="default" outline" size="sm"`, bloqueado en las 12 variantes de Figma igual que en Collapsible) sin reimplementar. `type` fija color de icono+borde; `style` default/borderless/simple solo cambia el chrome del root, nunca el color del texto (título/mensaje siempre negro fijo). Se investigó de paso una variante Regular del átomo `.Title` compartido — descartada por Carol: innecesaria, ya que ocultar el título y usar el mensaje cubre ese caso.
 
@@ -231,9 +231,28 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 - **Decisión: "with Label" se queda como eje de variante, no pasa a propiedad booleana.** Motivo de Carol: el anillo de foco cambia de *forma* según haya label o no (círculo alrededor del icono solo / rectángulo envolviendo icono+label), no es un simple show/hide de capa — forzarlo a booleano duplicaría los anillos igualmente sin simplificar nada real. Además `Type=Accent` no tiene variante con Label en absoluto en Small/Medium (solo Large) — la matriz ya tiene huecos legítimos, no es 1:1.
 - **CODE ✅ (mismo día, sin deuda).** `IconButton.jsx` construido y verificado en el banco de pruebas (light + dark, las 3 Variant × 2 Type × 3 Size + disabled + con Label). Confirmado en vivo que el fix del bug fg/bg de `icon-fg-accent-primary` se propaga correctamente: icono blanco fijo sobre teal en ambos modos. Focus ring con geometría real de Figma portada al CSS: círculo (radio pill) sin label, rectángulo redondeado (`--ds-icon-button-focus-radius-with-label-outer`, 4px, token `iconWithLabel-focus-outer`) envolviendo icono+label cuando hay label — verificado con Tab real en el banco de pruebas, ambas formas correctas. Única simplificación consciente: CSS no admite dos radios distintos para outline vs. box-shadow en el mismo elemento, así que el anillo interior comparte el radio del exterior (Figma los diferencia en 2px, imperceptible en un detalle decorativo de foco).
 
-### ⚪ Backlog
+### 🔵 Sprint 4 — pagar deuda + baja complejidad
 
-Accordion · Tooltip · Combobox · Segmented Controls · Slider · Step Navigator · Progress Bar · Loading Spinner · Top Navigation · Popover Sheet · Drawer
+**Planificado 02/09/2026.** Con Icon Button construido, las 11 piezas de Tier 3 ya no tienen ninguna dependencia sin resolver — se reparten en 2 sprints por complejidad e impacto real, mismo criterio que priorizó Sprint 1 (lo que desbloquea algo ya construido va primero, no solo lo más simple).
+
+| Pri | Componente | Dependencias | Por qué va aquí |
+|---|---|---|---|
+| 1 | Tooltip | — | Paga deuda real: `CollapsibleIconButton` usa un tooltip CSS local a la espera de este átomo (ver §6, nota de deuda) |
+| 2 | Loading Spinner | — | Baja complejidad · estado de carga que ya se mencionó como pendiente en File Upload |
+| 3 | Progress Bar | — | Baja complejidad, sin dependencias |
+| 4 | Segmented Controls | — | Baja complejidad · alternativa a Tabs (ya construido, mismo criterio de referencia) |
+
+### 🟣 Sprint 5 — media/alta complejidad, organismos
+
+| Pri | Componente | Dependencias | Notas |
+|---|---|---|---|
+| 5 | Accordion | Link ✅ · Divider ✅ | Alternativa a Collapsible (ya construido) |
+| 6 | Slider | — | Media complejidad |
+| 7 | Step Navigator | Button ✅ | Wizard/procesos en pasos |
+| 8 | Popover Sheet | Button ✅ | Contenido contextual flotante |
+| 9 | Drawer | Button ✅ · Link ✅ | Panel lateral de detalle |
+| 10 | Combobox | InputText ✅ · Chip ✅ | Alta complejidad — búsqueda con autocompletado |
+| 11 | Top Navigation | Button ✅ · Link ✅ · Icon Button ✅ | Alta complejidad — el más compuesto de los 11, último a propósito |
 
 ### ⛔ No construir
 
