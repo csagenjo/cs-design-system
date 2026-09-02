@@ -8,6 +8,7 @@ import {
   MoreHorizontal, Phone, Lock,
   FileText, Link as LinkIcon,
   ArrowUpAZ, Loader2,
+  CircleX, Info, CircleCheck,
 } from 'lucide-react';
 
 /**
@@ -51,4 +52,7 @@ export const ICONS = {
   LinkIcon, 'link': LinkIcon,
   ArrowUpAZ, 'arrow-up-az': ArrowUpAZ,
   Loader2, 'loader': Loader2,
+  CircleX, 'circle-x': CircleX,
+  Info, 'info': Info,
+  CircleCheck, 'circle-check': CircleCheck,
 };
