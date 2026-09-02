@@ -208,7 +208,7 @@ SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_f
 
 ~~List View~~ ✅ · ~~File Upload~~ ✅ · ~~Tabs~~ ✅
 
-**Sprint 2 completo.** Las tablas §6 no se habían actualizado con File Upload (`ListItem`, `DropZone`, `LabelDescription`, `FileSelector`, `FileUpload`) ni Tabs (`TabItem`, `Tabs`) pese a estar mergeados — corregido 01/09/2026.
+**Sprint 2 completo (31/08/2026 — Tabs, última pieza).** List View 26/08, File Upload 28/08, Tabs 31/08 (fechas reales de merge en git). Las tablas §6 no se habían actualizado con File Upload (`ListItem`, `DropZone`, `LabelDescription`, `FileSelector`, `FileUpload`) ni Tabs (`TabItem`, `Tabs`) pese a estar mergeados — corregido 01/09/2026.
 
 **Actualización (24/08/2026):** List View ✅ construido (+ `Text`, `DescriptionText`, `DetailText` — 3 átomos nuevos con página propia en Figma, mismo criterio que SectionHeader). `DescriptionText`/`DetailText` sustituyen el markup duplicado que `SelectorInvoker`, `SelectorListItem`, `AccountSelectorInvoker` y `AccountSelectorListItem` tenían embebido — los 4 refactorizados para consumir los átomos compartidos, cerrando una inconsistencia real (`SelectorListItem` no exponía color de detail text en absoluto; `AccountSelector*` no reutilizaba nada). Proceso: cuando eché en falta `DetailText` durante EXPLORE, empecé a escribir el átomo en código antes de confirmar con Carol si debía existir en Figma primero — parada a tiempo, Carol lo creó en Figma con su propia página y lo instanció en Selector/List View antes de retomar código; los tokens ya explorados coincidieron exactamente. Regla reafirmada: Figma es la fuente de verdad, un átomo echado en falta se plantea antes de escribirlo, no se infiere.
 
