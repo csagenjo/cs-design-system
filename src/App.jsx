@@ -1,93 +1,35 @@
-import { useState } from 'react'
 import './tokens.css'
-import { Collapsible } from './components/Collapsible'
-import { CollapsibleIconButton } from './components/CollapsibleIconButton'
+import { InlineNotification } from './components/InlineNotification'
 
-const box = { padding: 24, display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 900 }
-const row = { display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }
-const label = { fontSize: 12, color: '#7B8490', width: 90 }
+const box = { padding: 24, display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 500 }
+const row = { display: 'flex', flexDirection: 'column', gap: 12 }
 
-const sizes = ['sm', 'md', 'lg']
-const iconSizes = ['small', 'medium', 'large']
+const types = ['error', 'success', 'information', 'warning']
+const styles = ['default', 'borderless', 'simple']
 
 export default function App() {
-  const [open1, setOpen1] = useState(false)
-  const [open2, setOpen2] = useState(true)
-  const [openIcon1, setOpenIcon1] = useState(false)
-  const [openIcon2, setOpenIcon2] = useState(true)
-
   return (
     <div style={box}>
-      <h2>Collapsible — Default</h2>
-      <div style={row}>
-        <span style={label}>collapsed</span>
-        {sizes.map((size) => (
-          <Collapsible key={size} size={size} expanded={false} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>expanded</span>
-        {sizes.map((size) => (
-          <Collapsible key={size} size={size} expanded={true} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>interactive</span>
-        <Collapsible expanded={open1} onToggle={() => setOpen1(!open1)} />
-      </div>
+      {styles.map((style) => (
+        <div key={style} style={row}>
+          <h2 style={{ margin: 0, fontSize: 14 }}>InlineNotification — {style}</h2>
+          {types.map((type) => (
+            <InlineNotification
+              key={type}
+              type={type}
+              style={style}
+              title={type[0].toUpperCase() + type.slice(1)}
+              onButtonClick={() => {}}
+            />
+          ))}
+        </div>
+      ))}
 
-      <h2>Collapsible — Secondary</h2>
       <div style={row}>
-        <span style={label}>collapsed</span>
-        {sizes.map((size) => (
-          <Collapsible key={size} variant="secondary" size={size} expanded={false} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>expanded</span>
-        {sizes.map((size) => (
-          <Collapsible key={size} variant="secondary" size={size} expanded={true} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>interactive</span>
-        <Collapsible variant="secondary" expanded={open2} onToggle={() => setOpen2(!open2)} />
-      </div>
-
-      <h2>CollapsibleIconButton — Default</h2>
-      <div style={row}>
-        <span style={label}>collapsed</span>
-        {iconSizes.map((size) => (
-          <CollapsibleIconButton key={size} size={size} expanded={false} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>expanded</span>
-        {iconSizes.map((size) => (
-          <CollapsibleIconButton key={size} size={size} expanded={true} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>interactive</span>
-        <CollapsibleIconButton expanded={openIcon1} onToggle={() => setOpenIcon1(!openIcon1)} />
-      </div>
-
-      <h2>CollapsibleIconButton — Secondary</h2>
-      <div style={row}>
-        <span style={label}>collapsed</span>
-        {iconSizes.map((size) => (
-          <CollapsibleIconButton key={size} variant="secondary" size={size} expanded={false} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>expanded</span>
-        {iconSizes.map((size) => (
-          <CollapsibleIconButton key={size} variant="secondary" size={size} expanded={true} />
-        ))}
-      </div>
-      <div style={row}>
-        <span style={label}>interactive</span>
-        <CollapsibleIconButton variant="secondary" expanded={openIcon2} onToggle={() => setOpenIcon2(!openIcon2)} />
+        <h2 style={{ margin: 0, fontSize: 14 }}>Variantes de visibilidad</h2>
+        <InlineNotification type="success" showButton={false} title="Sin botón" message="Guardado correctamente" />
+        <InlineNotification type="warning" showTitle={false} message="Sin título, solo mensaje" />
+        <InlineNotification type="information" showMessage={false} title="Solo título, sin mensaje" showButton={false} />
       </div>
     </div>
   )
