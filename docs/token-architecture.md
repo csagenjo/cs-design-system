@@ -252,6 +252,25 @@ Ahora: collapsible/all/{root/borderColor,label/fg,icon/fg}/default    → negro,
 
 **Regla fijada (CLAUDE.md §5):** en el eje de color que varía por Variant de un componente, usar **`default`** (sin color de marca) y **`secondary`** (con color de marca) — nunca `primary`, que induce a pensar en el teal de marca aunque el valor real sea negro/rosa. Reservar **`generic`** solo para propiedades que valen igual en las dos variantes (radio, grosor, gap, padding). Si un token `generic` en realidad diverge por variante, está mal nombrado.
 
+### InlineNotification — 19 tokens, cero rebind (01/09/2026)
+
+A diferencia de Collapsible (arriba) e Icon Button, aquí no hubo nada que corregir: los 19 tokens
+`inlineNotification/all/*` ya estaban bien enlazados en las 12 variantes antes de escribir código.
+
+```
+inlineNotification/all/root/borderColor/{error,success,information,warning} → color de borde por Type
+inlineNotification/all/icon/fg/{error,success,information,warning}          → mismo color, en el icono
+inlineNotification/all/root/bg/{default,borderless}                         → ambos blancos — Simple no
+                                                                                tiene token bg (sin fondo)
+inlineNotification/all/{title,text}/fg/generic                              → negro fijo, NO varía por Type
+```
+
+El color de `type` tiñe **solo** icono y borde — título y mensaje se quedan siempre en negro, en las 3
+variantes de `style` (Default/Borderless/Simple) y los 4 `Type`. Sirve como caso de referencia contrario
+al de Collapsible: cuando el propio archivo de Figma ya está bien construido, EXPLORE debe confirmarlo
+por dato (ver todas las variantes, no una muestra) antes de asumir que hace falta trabajo de rebind — no
+todo componente nuevo arrastra la misma deuda.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):

@@ -582,3 +582,42 @@ re-theme purely via CSS custom-property overrides scoped to a wrapper class — 
 Figma's own variable rebind, applied at the CSS layer instead of the Figma layer. Tooltip on
 `CollapsibleIconButton` is a small local CSS implementation, not the shared `Tooltip` atom (doesn't exist
 yet, backlog) — noted as a migration TODO in the component's own docstring.
+
+### InlineNotification built — closes Sprint 3 (1 September 2026, same day)
+
+**Figma was clean this time.** Unlike Icon Button and Collapsible, all 19 `inlineNotification/all/*`
+tokens were already correctly bound across the 12 variants (Type: Error/Success/Information/Warning ×
+Style: Default/Borderless/Simple) before any code was written — border and icon color per Type, fixed
+black title/message text regardless of Type, no rebind pass needed. The nested `Button` trigger was
+already locked by Carol before EXPLORE started, same mitigation as Collapsible's nested instance.
+
+One real gap found: 3 of the 4 status icons (`circle-x`, `info`, `circle-check`) weren't in the shared
+`icons.js` map yet — only `alert-circle` (Warning) existed. Added all three, matching Figma's exact icon
+names as map keys.
+
+A parallel, unrelated question came up mid-EXPLORE: Carol had tried adding a Regular-weight variant to
+the shared `.Title` atom (used here for the notification title) and found the weight wouldn't change.
+Root cause, confirmed by inspecting the text node directly: `fontStyle` was bound to a real variable
+(`fontWeight/bold`), not a loose override — and a single component's variable binding can't conditionally
+switch by variant property in Figma; each Variant in a set is an independent component with its own
+bindings, so a working Bold/Regular axis would need two separate `.Title` components combined into a set.
+Turned out moot: none of the 12 Inline Notification variants use anything but Bold, and Carol's actual
+need (a regular-weight option) is already covered by hiding the title and using the message text instead
+— nothing built, nothing changed on `.Title`.
+
+**Bug found after first CODE pass, from a live screenshot Carol sent:** the action button rendered
+left-aligned instead of matching Figma's `Button Container` frame, which Carol had just set to
+`layoutSizingHorizontal: FILL` with `counterAxisAlignItems: MAX` (push the button to the container's
+right edge). Fixed by wrapping the button in a `flex; justify-content: flex-end` div — sizing-terminology
+note for future sessions: Carol's "le acabo de dar un fill" meant Figma's FILL *sizing mode* on the
+container, not a background paint (the container's `fills` array is empty).
+
+**Second bug, caught by Carol from a screenshot after that first fix landed:** the button was right-
+aligned everywhere *except* the one variant combination with a short message and no title
+(`showTitle={false}`) — reproduced independently in the agent's own browser too, so not a caching
+artifact. Root cause: `.ds-inline-notification__content` had no `flex: 1`, so it sized to its own longest
+child's natural width instead of filling the notification's actual width. With a long message (the
+default placeholder text), the content happened to already be wide enough that the bug was invisible; a
+short message let the whole column shrink to content-width, leaving the button with no real space to
+shift into. Fixed by adding `flex: 1` to the content column — a reminder that "it works for the sample
+data" isn't the same as "it works," especially for anything measured relative to a flex sibling's width.
