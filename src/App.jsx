@@ -1,38 +1,38 @@
 import './tokens.css'
-import { Tooltip } from './components/Tooltip'
-import { IconButton } from './components/IconButton'
-import { Button } from './components/Button'
+import { LoadingSpinner } from './components/LoadingSpinner'
 
 const page = { padding: 80, display: 'flex', flexDirection: 'column', gap: 64, alignItems: 'flex-start' }
 const row = { display: 'flex', flexDirection: 'column', gap: 12 }
-const grid = { display: 'flex', gap: 48, flexWrap: 'wrap', paddingTop: 24 }
+const grid = { display: 'flex', gap: 48, alignItems: 'center', paddingTop: 12 }
 const cell = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }
+const darkBox = { display: 'flex', gap: 48, alignItems: 'center', padding: 24, background: '#050506', borderRadius: 8 }
 
-const placements = ['top', 'bottom', 'left', 'right']
+const sizes = ['extraSmall', 'small', 'medium', 'large']
 
 export default function App() {
   return (
     <div style={page}>
       <div style={row}>
-        <h2 style={{ margin: 0, fontSize: 14 }}>Tooltip — 4 placements (icon button trigger)</h2>
+        <h2 style={{ margin: 0, fontSize: 14 }}>LoadingSpinner — color="primary" (4 tamaños)</h2>
         <div style={grid}>
-          {placements.map((p) => (
-            <div key={p} style={cell}>
-              <Tooltip label={`Placement ${p}`} placement={p}>
-                <IconButton icon="info" ariaLabel={`Info (${p})`} type="default" variant="tertiary" size="medium" />
-              </Tooltip>
-              <span style={{ fontSize: 11, color: '#7B8490' }}>{p}</span>
+          {sizes.map((s) => (
+            <div key={s} style={cell}>
+              <LoadingSpinner size={s} color="primary" />
+              <span style={{ fontSize: 11, color: '#7B8490' }}>{s}</span>
             </div>
           ))}
         </div>
       </div>
 
       <div style={row}>
-        <h2 style={{ margin: 0, fontSize: 14 }}>Tooltip — trigger de texto (Button)</h2>
-        <div style={{ paddingTop: 24 }}>
-          <Tooltip label="Esta acción es permanente" placement="top">
-            <Button variant="negative">Eliminar cuenta</Button>
-          </Tooltip>
+        <h2 style={{ margin: 0, fontSize: 14 }}>LoadingSpinner — color="inverted" sobre superficie oscura</h2>
+        <div style={darkBox}>
+          {sizes.map((s) => (
+            <div key={s} style={cell}>
+              <LoadingSpinner size={s} color="inverted" />
+              <span style={{ fontSize: 11, color: '#9AA1AA' }}>{s}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

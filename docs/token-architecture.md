@@ -292,6 +292,35 @@ La flecha (vector `arrow`, 8×6 en Top/Bottom · 6×8 en Left/Right) no tiene Va
 geometría literal leída de `get_metadata` por variante, tratada como token literal de Componente
 (`--ds-tooltip-arrow-base`/`-arrow-length`), mismo criterio que `--ds-snackbar-root-shadow`.
 
+### LoadingSpinner — bug real: "inverted" apuntaba al fondo de página, no a blanco fijo (02/09/2026)
+
+```
+loadingSpinner/all/root/borderColor/primary   → bg/surface/primary  (teal, NO invierte — mismo alias
+                                                                       que --ds-bg-primary, reusado)
+loadingSpinner/all/root/borderColor/inverted  → bg/default          (❌ invierte: blanco light / casi
+                                                                       negro dark — MAL para un color
+                                                                       que debe verse sobre superficie
+                                                                       de color en los dos modos)
+                                               → fg/icon/onColor    (✅ corregido — blanco fijo, mismo
+                                                                       criterio que la regla de §5)
+```
+
+A diferencia de Tooltip (arriba), aquí sí había bug — y de un tipo nuevo: no es la pareja fg/bg de un
+componente (bg y su propio texto), sino un color de icono/glifo que necesita quedarse fijo porque se
+renderiza SOBRE otra superficie que no es la del propio spinner. El nombre `borderColor/inverted` sugería
+"el color opuesto al primary", pero estaba resuelto contra `bg/default` — el fondo de la página, que sí
+cambia con el modo — en vez de un blanco fijo tipo `fg/icon/onColor`. Sin corregir, un `LoadingSpinner
+color="inverted"` dentro de un elemento de fondo oscuro (el caso de uso real: dentro de un `Button` en
+`loading`) se habría vuelto casi invisible en dark mode. Reenlazado en Figma a `fg/icon/onColor`
+(confirmado blanco en Light y Dark vía cadena de alias) antes de escribir código — no se trabajó alrededor
+del bug en CSS, se corrigió en origen, mismo criterio que todos los bugs anteriores de este tipo.
+
+El vector `Progress (Stroke)` de Figma es un path RELLENO (ring con hueco vía `windingRule: EVENODD`), no
+un stroke real pese al nombre — confirmado con `strokes: []` vacío y un `fills` real. Un path relleno
+estático no puede animarse como un spinner de verdad, así que en código se reconstruye como un `<circle>`
+con stroke real y `stroke-dasharray` — el `strokeWeight` de Figma (2/3/4/6 en xs/sm/md/lg) sí es un dato
+real y coincide exacto con `size/8` en las 4 variantes, así que se usó tal cual para el grosor del trazo.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):
