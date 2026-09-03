@@ -25,11 +25,11 @@ export default function App() {
       </div>
 
       <div style={row}>
-        <h2 style={{ margin: 0, fontSize: 14 }}>LoadingSpinner — color="inverted" sobre superficie oscura</h2>
+        <h2 style={{ margin: 0, fontSize: 14 }}>LoadingSpinner — color="onColor" sobre superficie oscura</h2>
         <div style={darkBox}>
           {sizes.map((s) => (
             <div key={s} style={cell}>
-              <LoadingSpinner size={s} color="inverted" />
+              <LoadingSpinner size={s} color="onColor" />
               <span style={{ fontSize: 11, color: '#9AA1AA' }}>{s}</span>
             </div>
           ))}

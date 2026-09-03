@@ -319,6 +319,12 @@ color="inverted"` dentro de un elemento de fondo oscuro (el caso de uso real: de
 (confirmado blanco en Light y Dark vía cadena de alias) antes de escribir código — no se trabajó alrededor
 del bug en CSS, se corrigió en origen, mismo criterio que todos los bugs anteriores de este tipo.
 
+**Actualización (03/09/2026):** variante y token renombrados de `Inverted`/`borderColor/inverted` a
+`onColor`/`borderColor/onColor` — mismo criterio de nomenclatura fijado al construir Progress Bar el mismo
+día ("onColor" describe mejor "color fijo para cualquier superficie de color" que "Inverted"). `Primary` no
+cambió — es un color de marca real, no un eje de superficie. Cambio de API pública en `LoadingSpinner.jsx`
+(`color="inverted"` → `color="onColor"`) sobre un átomo ya mergeado en `main`.
+
 El vector `Progress (Stroke)` de Figma es un path RELLENO (ring con hueco vía `windingRule: EVENODD`), no
 un stroke real pese al nombre — confirmado con `strokes: []` vacío y un `fills` real. Un path relleno
 estático no puede animarse como un spinner de verdad, así que en código se reconstruye como un `<circle>`
