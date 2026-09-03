@@ -662,3 +662,59 @@ with an icon-only trigger (`IconButton`) and a text trigger (`Button`).
 **Deliberately left undone:** `CollapsibleIconButton` still uses its own local tooltip markup instead of
 instancing this new atom — migrating it is real, tracked debt (CLAUDE.md §10), kept out of this session's
 scope so closing that debt doesn't get mixed with landing the new Sprint 4 piece.
+
+### Loading Spinner built — second Sprint 4 piece (2 September 2026)
+
+**EXPLORE.** Node `2455:6028` resolved cleanly this time — a component set on axes `Color` (Primary/
+Inverted) × `Size` (Extra-small/Small/Medium/Large, 16/24/32/48px). `get_variable_defs` returned 6 tokens:
+4 literal sizes plus `borderColor/primary` (`#4ba9c0`) and `borderColor/inverted` (`#ffffff`) — despite the
+"borderColor" name, the actual node is a filled vector ("Progress (Stroke)"), not a stroke; that name is a
+leftover from how the shape was presumably authored before being flattened. `get_metadata` showed a single
+`VECTOR` child per variant; `use_figma` confirmed it has an empty `strokes` array and a real `fills` binding
+instead — a closed, evenodd-wound annulus-with-a-gap path, not an open stroked arc.
+
+**A vector can't spin.** Figma's shape is one static frame of what is, by definition, a continuously
+rotating element — there's no way to CSS-animate a filled path's "gap position" without either duplicating
+the exact path as a mask or switching representations. Rebuilt as a real SVG `<circle>` with `fill: none`,
+`stroke-linecap: round`, and `stroke-dasharray` covering ~75% of the circumference — the standard technique
+for this exact UI pattern, and it reads as the same shape Figma shows. Fidelity was kept where it mattered:
+`strokeWeight` per size (2/3/4/6, read via `use_figma`, not guessed) turned out to divide `size` by exactly
+8 in all four variants — confirmed by data, then encoded directly as `radius = (size − stroke) / 2` per
+size and precomputed `stroke-dasharray` values (both literal Component-layer tokens, same treatment as
+Tooltip's arrow geometry and Snackbar's shadow — Figma has no Variable for either).
+
+**A real bug, checked proactively rather than found by accident.** Given how many times this project has
+caught one side of an fg/bg (or here, "the icon color and what it sits on") pairing inverting with dark
+mode while the other side doesn't, `borderColor/inverted`'s actual binding was resolved via `use_figma`
+before writing any code — and it was wrong: bound to `bg/default` (the app's page-canvas background),
+which is white in light mode but near-black in dark mode. "Inverted" here means "use this spinner on a
+colored surface" (the obvious use case being a `Button` in its `loading` state, where the button's fill
+doesn't change with the app theme) — so the color needs to stay a fixed white in both modes, not track the
+page background. Re-bound the Figma variable directly to `fg/icon/onColor` (confirmed via the same
+alias-chain-resolution technique to be white in both Light and Dark) — the exact fix CLAUDE.md §5 already
+prescribes for "icon color on top of a colored surface," just not yet applied here. Carol applied the same
+reasoning in parallel to `borderColor/primary`, mid-session: it pointed at `bg/surface/primary` — the same
+value, doesn't invert either — but it's still a `bg`-family token backing what is conceptually an icon
+glyph. Re-bound it to `fg/icon/primary` instead (already present in `tokens.css` as `--ds-fg-icon-primary`,
+used by 15+ other components), so both spinner colors now come from the `fg/icon/*` family rather than one
+from `fg/icon/*` and one borrowed from `bg/*`.
+
+**CODE.** `LoadingSpinner.jsx` renders one generic `<svg><circle /></svg>` — no per-size JS branching for
+geometry at all. `cx`/`cy` are literal `"50%"` (SVG natively resolves percentages against the viewport, so
+no viewBox or numeric center calculation is needed), and every other geometric property (`r`, `stroke-width`,
+`stroke-dasharray`, plus the container's `width`/`height`) is driven purely by CSS custom properties behind
+`.ds-loading-spinner--{size}` modifier classes — modern browsers support `r`/`cx`/`cy`/`stroke-width` as
+styleable CSS properties on SVG geometry elements, so this needed no JS size-lookup table at all (a step
+cleaner than IconButton's icon-name lookup). Rotation is a single `@keyframes` transform, timed at the same
+`0.7s` Button's own pre-existing local spinner already uses, for a consistent spin speed system-wide.
+Verified live: all 4 sizes at both colors, confirmed actually rotating (two screenshots a beat apart show
+the gap in a different position), and confirmed `inverted` stays clearly visible on a dark surface in both
+light and dark app theme — the exact scenario that would have silently broken without the Figma fix.
+
+**New debt, not migrated here:** `Button.jsx` already had its own local `.ds-btn__spinner` (a CSS
+border-trick using `currentColor`, square-cut ends, no rounded caps) predating this shared atom — same
+class of duplication as `CollapsibleIconButton`'s local tooltip. Not migrated in this session: Button's
+spinner leans on `currentColor` to automatically match whatever text/icon color each `variant`/`state`
+combination already resolves to, while `LoadingSpinner` takes an explicit `color` prop — migrating cleanly
+would need mapping every Button variant/outline combination to `primary` or `inverted` first, which is its
+own piece of work, tracked in CLAUDE.md §10.

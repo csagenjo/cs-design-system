@@ -532,6 +532,50 @@
   --ds-tooltip-arrow-length:  6px;  /* profundidad — también offset burbuja↔trigger */
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Loading Spinner
+     Sprint 4 Pri 2. Vector "Progress (Stroke)" en Figma es un path relleno
+     (ring con hueco), no un stroke real — radius/dasharray de abajo son la
+     traducción a un <circle> con stroke real (permite animar con CSS puro,
+     el vector estático de Figma no puede). strokeWeight de Figma (2/3/4/6)
+     SÍ es real y coincide con size/8 exacto en las 4 variantes — confirmado
+     por dato, no asumido.
+     Bug real encontrado y corregido en Figma (02/09/2026): `borderColor/
+     inverted` estaba enlazado a `bg/default` (invierte con el modo — blanco
+     en light, casi negro en dark) en vez de a un blanco fijo. "Inverted" es
+     para usar el spinner SOBRE una superficie de color (p.ej. dentro de un
+     Button en loading), así que necesita quedarse blanco en los dos modos —
+     mismo criterio ya fijado en CLAUDE.md §5 para iconos sobre color. Re-
+     enlazado a `fg/icon/onColor` (blanco fijo, confirmado en cadena de alias
+     real, values Light=Dark=#FFFFFF). Carol aplicó el mismo criterio en
+     paralelo a `borderColor/primary`: apuntaba a `bg/surface/primary` (un
+     token de la familia bg, aunque no invertía) y lo reenlazó a `fg/icon/
+     primary` — semánticamente correcto para un glifo/icono, no solo "un bg
+     que da la casualidad de que no invierte". Mismo valor teal en los dos
+     modos (confirmado en cadena de alias), reusa --ds-fg-icon-primary ya
+     existente, sin token nuevo.
+     ========================================================================== */
+  --ds-loading-spinner-size-xs:  16px;
+  --ds-loading-spinner-size-sm:  24px;
+  --ds-loading-spinner-size-md:  32px;
+  --ds-loading-spinner-size-lg:  48px;
+  --ds-loading-spinner-stroke-xs: 2px;
+  --ds-loading-spinner-stroke-sm: 3px;
+  --ds-loading-spinner-stroke-md: 4px;
+  --ds-loading-spinner-stroke-lg: 6px;
+  --ds-loading-spinner-radius-xs: 7px;    /* (16-2)/2 */
+  --ds-loading-spinner-radius-sm: 10.5px; /* (24-3)/2 */
+  --ds-loading-spinner-radius-md: 14px;   /* (32-4)/2 */
+  --ds-loading-spinner-radius-lg: 21px;   /* (48-6)/2 */
+  --ds-loading-spinner-dasharray-xs: 32.99 10.99; /* 75%/25% de 2·π·7 */
+  --ds-loading-spinner-dasharray-sm: 49.48 16.49; /* 75%/25% de 2·π·10.5 */
+  --ds-loading-spinner-dasharray-md: 65.97 21.99; /* 75%/25% de 2·π·14 */
+  --ds-loading-spinner-dasharray-lg: 98.96 32.99; /* 75%/25% de 2·π·21 */
+  --ds-loading-spinner-color-primary:  var(--ds-fg-icon-primary); /* teal, no invierte */
+  --ds-loading-spinner-color-inverted: var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
+  --ds-loading-spinner-duration: 0.7s; /* misma velocidad que el spinner local ya existente en Button.jsx */
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
