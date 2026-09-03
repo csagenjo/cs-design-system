@@ -325,6 +325,47 @@ estático no puede animarse como un spinner de verdad, así que en código se re
 con stroke real y `stroke-dasharray` — el `strokeWeight` de Figma (2/3/4/6 en xs/sm/md/lg) sí es un dato
 real y coincide exacto con `size/8` en las 4 variantes, así que se usó tal cual para el grosor del trazo.
 
+### ProgressBar — el indicator no era un bug, el track sí (03/09/2026)
+
+```
+progressBar/all/indicator/bg/generic  → bg/surface/secondary  (mismo color en Default Y onColor —
+                                                                  A PROPÓSITO, confirmado contra
+                                                                  Sistema Origen, no un bug)
+progressBar/all/root/bg/default       → bg/page   (❌ era esto)  → bg/subtle   (✅ corregido)
+progressBar/all/root/bg/onColor       → bg/default (❌ era esto — invierte) → bg/onColor (✅ fijo)
+progressBar/all/text/fg/generic       → fg/default  (Label Y Helper text comparten el mismo color)
+```
+
+**El hallazgo que cambió el diagnóstico:** el archivo real de Sistema Origen (no la copia limpia de IP)
+muestra que la propiedad de variante se llama literalmente `Secondary` en el panel de Variants, pero la
+documentación de esa misma página la describe como `onPrimary` — una inconsistencia que ya existía en el
+sistema de referencia, no introducida al limpiarlo. Con ese dato, el indicator compartido entre variantes
+dejó de parecer un bug: Sistema Origen renderiza el mismo color de indicator en las dos columnas, a
+propósito — el eje real siempre fue "¿sobre qué superficie va este progress bar?", no un color de marca
+alternativo. Carol renombró la variante a `onColor` (mejor que `onPrimary`: sirve para cualquier superficie
+de color, no solo teal — mismo criterio que `fg/icon/onColor`, §5).
+
+**El track sí tenía un bug real**, y de un tipo distinto a los anteriores de esta sesión: no era un binding
+apuntando a la variable equivocada por accidente — apuntaba a tokens de fondo de **página** (`bg/page`,
+`bg/default`) en vez de a un color de superficie propio del componente, así que por definición el track
+resultaba invisible justo en el escenario donde se esperaría que se viera mejor (`Default` sobre `bg/page`,
+`onColor` sobre `bg/default`). Confirmado con **cálculo real de contraste WCAG** sobre los valores hex
+resueltos de cada candidato, no a ojo:
+
+| Candidato | Light vs bg/page | Light vs bg/default | Dark vs bg/page | Dark vs bg/default |
+|---|---|---|---|---|
+| `bg/subtle` (#EEEFF1) | ~1.1:1 ❌ | ~1.15:1 ❌ | 3.4:1 | 8.7:1 |
+| `borderColor/default` (#9AA1AA) | ~2.5:1 ❌ | ~2.6:1 ❌ | 4.5:1 | 10.5:1 |
+| `borderColor/emphasis` (#2C2F34) | 12.9:1 | 13.5:1 | 8.8:1 | 20.4:1 |
+
+Ningún gris de la paleta actual da un contraste "correcto pero sutil" (~3:1) contra fondos casi blancos en
+light mode — o es casi invisible o es tan fuerte como un texto de máximo énfasis. Dado que el track solo
+necesita verse bien en su PROPIO contexto de uso (Default sobre `bg/page`, onColor sobre una superficie de
+color real, nunca al revés), la solución no fue perseguir un gris universal sino corregir el binding para
+que cada variante apunte a un token que sí resuelve bien en su escenario real: `bg/subtle` para Default,
+`bg/onColor` (blanco FIJO en los dos modos, no `bg/default` que invierte) para onColor. Verificado con las
+mismas 4 combinaciones tras el fix — contraste correcto en las cuatro.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):

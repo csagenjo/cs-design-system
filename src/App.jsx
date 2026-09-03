@@ -1,39 +1,33 @@
 import './tokens.css'
-import { LoadingSpinner } from './components/LoadingSpinner'
+import { ProgressBar } from './components/ProgressBar'
 
 const page = { padding: 80, display: 'flex', flexDirection: 'column', gap: 64, alignItems: 'flex-start' }
-const row = { display: 'flex', flexDirection: 'column', gap: 12 }
-const grid = { display: 'flex', gap: 48, alignItems: 'center', paddingTop: 12 }
-const cell = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }
-const darkBox = { display: 'flex', gap: 48, alignItems: 'center', padding: 24, background: '#050506', borderRadius: 8 }
+const row = { display: 'flex', flexDirection: 'column', gap: 20, width: 380 }
+const colored = { background: '#4BA9C0', padding: 24, borderRadius: 8, display: 'flex', flexDirection: 'column', gap: 20, width: 380 }
 
-const sizes = ['extraSmall', 'small', 'medium', 'large']
+const values = [0, 20, 50, 80, 100]
 
 export default function App() {
   return (
     <div style={page}>
       <div style={row}>
-        <h2 style={{ margin: 0, fontSize: 14 }}>LoadingSpinner — color="primary" (4 tamaños)</h2>
-        <div style={grid}>
-          {sizes.map((s) => (
-            <div key={s} style={cell}>
-              <LoadingSpinner size={s} color="primary" />
-              <span style={{ fontSize: 11, color: '#7B8490' }}>{s}</span>
-            </div>
-          ))}
-        </div>
+        <h2 style={{ margin: 0, fontSize: 14 }}>ProgressBar — variant="default" (sobre bg/page)</h2>
+        {values.map((v) => (
+          <ProgressBar key={v} value={v} label="Label" helperText={`${v}%`} />
+        ))}
+      </div>
+
+      <div style={colored}>
+        <h2 style={{ margin: 0, fontSize: 14, color: '#fff' }}>ProgressBar — variant="onColor" (sobre superficie teal)</h2>
+        {values.map((v) => (
+          <ProgressBar key={v} value={v} variant="onColor" label="Label" helperText={`${v}%`} />
+        ))}
       </div>
 
       <div style={row}>
-        <h2 style={{ margin: 0, fontSize: 14 }}>LoadingSpinner — color="inverted" sobre superficie oscura</h2>
-        <div style={darkBox}>
-          {sizes.map((s) => (
-            <div key={s} style={cell}>
-              <LoadingSpinner size={s} color="inverted" />
-              <span style={{ fontSize: 11, color: '#9AA1AA' }}>{s}</span>
-            </div>
-          ))}
-        </div>
+        <h2 style={{ margin: 0, fontSize: 14 }}>Variantes de visibilidad</h2>
+        <ProgressBar value={65} showHelperText={false} label="Solo label" />
+        <ProgressBar value={65} showLabel={false} helperText="Solo helper text" />
       </div>
     </div>
   )
