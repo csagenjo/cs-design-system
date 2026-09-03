@@ -295,8 +295,12 @@ geometría literal leída de `get_metadata` por variante, tratada como token lit
 ### LoadingSpinner — bug real: "inverted" apuntaba al fondo de página, no a blanco fijo (02/09/2026)
 
 ```
-loadingSpinner/all/root/borderColor/primary   → bg/surface/primary  (teal, NO invierte — mismo alias
-                                                                       que --ds-bg-primary, reusado)
+loadingSpinner/all/root/borderColor/primary   → bg/surface/primary  (teal, NO invierte, pero es de la
+                                                                       familia bg para un glifo)
+                                               → fg/icon/primary    (✅ Carol lo corrigió en paralelo —
+                                                                       mismo valor, familia semántica
+                                                                       correcta: --ds-fg-icon-primary,
+                                                                       ya usado por 15+ componentes)
 loadingSpinner/all/root/borderColor/inverted  → bg/default          (❌ invierte: blanco light / casi
                                                                        negro dark — MAL para un color
                                                                        que debe verse sobre superficie

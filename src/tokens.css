@@ -547,9 +547,13 @@
      Button en loading), así que necesita quedarse blanco en los dos modos —
      mismo criterio ya fijado en CLAUDE.md §5 para iconos sobre color. Re-
      enlazado a `fg/icon/onColor` (blanco fijo, confirmado en cadena de alias
-     real, values Light=Dark=#FFFFFF). `borderColor/primary` → `bg/surface/
-     primary`, mismo alias ya reusado sin token nuevo en el header de Dialog
-     — no invierte (teal en los dos modos), reusa --ds-bg-primary tal cual.
+     real, values Light=Dark=#FFFFFF). Carol aplicó el mismo criterio en
+     paralelo a `borderColor/primary`: apuntaba a `bg/surface/primary` (un
+     token de la familia bg, aunque no invertía) y lo reenlazó a `fg/icon/
+     primary` — semánticamente correcto para un glifo/icono, no solo "un bg
+     que da la casualidad de que no invierte". Mismo valor teal en los dos
+     modos (confirmado en cadena de alias), reusa --ds-fg-icon-primary ya
+     existente, sin token nuevo.
      ========================================================================== */
   --ds-loading-spinner-size-xs:  16px;
   --ds-loading-spinner-size-sm:  24px;
@@ -567,7 +571,7 @@
   --ds-loading-spinner-dasharray-sm: 49.48 16.49; /* 75%/25% de 2·π·10.5 */
   --ds-loading-spinner-dasharray-md: 65.97 21.99; /* 75%/25% de 2·π·14 */
   --ds-loading-spinner-dasharray-lg: 98.96 32.99; /* 75%/25% de 2·π·21 */
-  --ds-loading-spinner-color-primary:  var(--ds-bg-primary);      /* teal, no invierte */
+  --ds-loading-spinner-color-primary:  var(--ds-fg-icon-primary); /* teal, no invierte */
   --ds-loading-spinner-color-inverted: var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
   --ds-loading-spinner-duration: 0.7s; /* misma velocidad que el spinner local ya existente en Button.jsx */
 

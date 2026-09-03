@@ -692,10 +692,12 @@ colored surface" (the obvious use case being a `Button` in its `loading` state, 
 doesn't change with the app theme) — so the color needs to stay a fixed white in both modes, not track the
 page background. Re-bound the Figma variable directly to `fg/icon/onColor` (confirmed via the same
 alias-chain-resolution technique to be white in both Light and Dark) — the exact fix CLAUDE.md §5 already
-prescribes for "icon color on top of a colored surface," just not yet applied here. `borderColor/primary`
-turned out to already alias to `bg/surface/primary`, the same Mode variable the Dialog header session
-established resolves identically to the existing `--ds-bg-primary` (teal, doesn't invert) — reused as-is,
-no new token.
+prescribes for "icon color on top of a colored surface," just not yet applied here. Carol applied the same
+reasoning in parallel to `borderColor/primary`, mid-session: it pointed at `bg/surface/primary` — the same
+value, doesn't invert either — but it's still a `bg`-family token backing what is conceptually an icon
+glyph. Re-bound it to `fg/icon/primary` instead (already present in `tokens.css` as `--ds-fg-icon-primary`,
+used by 15+ other components), so both spinner colors now come from the `fg/icon/*` family rather than one
+from `fg/icon/*` and one borrowed from `bg/*`.
 
 **CODE.** `LoadingSpinner.jsx` renders one generic `<svg><circle /></svg>` — no per-size JS branching for
 geometry at all. `cx`/`cy` are literal `"50%"` (SVG natively resolves percentages against the viewport, so
