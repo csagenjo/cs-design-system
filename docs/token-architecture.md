@@ -366,6 +366,15 @@ que cada variante apunte a un token que sí resuelve bien en su escenario real: 
 `bg/onColor` (blanco FIJO en los dos modos, no `bg/default` que invierte) para onColor. Verificado con las
 mismas 4 combinaciones tras el fix — contraste correcto en las cuatro.
 
+**Límite de uso real, encontrado probando contra 7 superficies (no 1) a petición de Carol.** El fix de
+contraste de arriba resuelve el track, pero no cubre todo: sobre `bg/surface/secondary` (rosa) el indicator
+—siempre `bg/surface/secondary`, el mismo valor en las dos variantes— se funde con el fondo, porque ahí
+fondo e indicator son literalmente el mismo rosa. Y el texto (`text/fg` = `fg/default`, fijo casi negro en
+las dos variantes) no tiene versión para `onColor`, así que sobre una superficie oscura de verdad como
+`bg/inverse` se vuelve ilegible, aunque track e indicator sigan funcionando ahí. Decisión de Carol: no
+rediseñar el componente — documentar el límite. `onColor` se usa sobre `bg/surface/*` de saturación media o
+subtle, EXCEPTO `bg/surface/secondary`.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):
