@@ -583,6 +583,57 @@
   --ds-loading-spinner-duration: 0.7s; /* misma velocidad que el spinner local ya existente en Button.jsx */
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Progress Bar
+     Sprint 4 Pri 3. Variant real: `default` / `onColor` — el eje decide sobre
+     qué SUPERFICIE va el progress bar, no un color de marca alternativo (el
+     indicator es siempre el mismo color en las dos variantes, a propósito,
+     confirmado contra Sistema Origen). En Figma la propiedad se llamaba
+     `Secondary` (heredado sin corregir de Sistema Origen, que ya tenía esa
+     misma inconsistencia entre el nombre de la variante y su documentación,
+     que sí decía "onPrimary") — Carol la renombró a `onColor` en esta sesión,
+     más preciso que "onPrimary" (sirve para CUALQUIER superficie de color,
+     no solo teal — mismo criterio que fg/icon/onColor).
+     3 rondas de fix reales, todas en Figma, antes de CODE:
+     (1) root/bg/default apuntaba a `bg/page` y root/bg/onColor a `bg/default`
+         — ambos son tokens de fondo de PÁGINA, no de "track" — el resultado
+         era un track invisible por definición allí donde debía verse mejor
+         (Default sobre bg/page, onColor sobre bg/default). Confirmado con
+         captura real en las 4 combinaciones modo×superficie.
+     (2) Reenlazados a `bg/subtle` (gris real, visible en las 4 combinaciones)
+         y `bg/onColor` (blanco FIJO en los dos modos — bg/default sí invertía
+         y habría dejado el track casi negro en dark mode, mismo patrón de bug
+         que Loading Spinner).
+     (3) Sin bug en indicator/text — indicator siempre `bg/surface/secondary`
+         (mismo valor que --ds-bg-secondary, ya usado por BadgeNotification/
+         Dialog) y text siempre `fg/default`, confirmado que Label Y Helper
+         text comparten literalmente la misma variable de Figma.
+     Recomendación de uso — probado a mano contra 7 superficies reales
+     (03/09/2026) tras construir el átomo. Track + indicator funcionan bien
+     en las 6 superficies bg/primary, bg/tertiary, bg/error, bg/success,
+     bg/info y bg/inverse — pero eso no significa que las 6 sean "seguras"
+     sin más, hay 2 fallos reales aparte de bg/page/bg/default:
+       (a) sobre bg/surface/secondary (rosa) el indicator se funde con el
+           fondo — es el mismo rosa de marca en los dos. Track+indicator
+           SÍ fallan aquí.
+       (b) el texto (`text/fg` = fg/default, fijo casi negro) desaparece
+           sobre bg/inverse específicamente — el texto no tiene variante
+           propia para onColor, solo track e indicator la tienen resuelta.
+           Track+indicator siguen bien ahí; es solo el texto el que falla.
+     Regla de uso fijada por Carol: `onColor` se usa sobre superficies
+     `bg/surface/*` de saturación media o subtle — EXCEPTO
+     `bg/surface/secondary`, el único caso real donde falla por el motivo
+     (a). Nunca sobre bg/page o bg/default directamente tampoco (bajo
+     contraste del track, ~1.1–2.6:1 en light mode, confirmado con captura).
+     ========================================================================== */
+  --ds-progress-bar-root-bg-default:    var(--ds-bg-subtle);
+  --ds-progress-bar-root-bg-on-color:   var(--ds-bg-onColor);
+  --ds-progress-bar-root-border-radius: 80px;
+  --ds-progress-bar-indicator-bg:       var(--ds-bg-secondary);
+  --ds-progress-bar-text-fg:            var(--ds-fg-default);
+  --ds-progress-bar-gap:                4px;
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
