@@ -381,6 +381,50 @@ las dos variantes) no tiene versión para `onColor`, así que sobre una superfic
 rediseñar el componente — documentar el límite. `onColor` se usa sobre `bg/surface/*` de saturación media o
 subtle, EXCEPTO `bg/surface/secondary`.
 
+### SegmentedControl — tokens limpios, pero cero estados construidos antes de esta sesión (03/09/2026)
+
+```
+segmentedControl/all/root/bg/generic          → bg/subtle       (track, igual que rootSegment/bg/generic)
+segmentedControl/all/rootSegment/bg/generic   → bg/subtle       (unselected — mismo valor que root, a
+                                                                   propósito: el segmento se funde con el
+                                                                   track cuando no está seleccionado)
+segmentedControl/all/rootSegment/bg/selected  → bg/inverse      (negro light / blanco dark)
+segmentedControl/all/label/fg/generic         → fg/label/default
+segmentedControl/all/label/fg/selected        → fg/label/inverse (pareja correcta con bg/selected —
+                                                                    invierten JUNTOS, no es el bug fg/bg
+                                                                    ya cazado en Chip/Pagination/Button)
+segmentedControl/all/rootSegment/bgMix/hover           → opacity/hover/default  (10% negro light / 10%
+                                                                                   blanco dark)
+segmentedControl/all/rootSegment/bgMix/hover-selected  → opacity/hover/default-inverse (10% blanco light /
+                                                                                          10% negro dark —
+                                                                                          opuesto a propósito,
+                                                                                          aclara lo oscuro)
+segmentedControl/all/rootSegment/bgMix/pressed         → opacity/pressed = 80  (NO es un color-mix como
+                                                                                 hover — es un opacity plano
+                                                                                 sobre todo el segmento,
+                                                                                 mismo mecanismo que
+                                                                                 --ds-icon-button-opacity-pressed)
+segmentedControl/all/rootSegment/borderColor/focus-inner/-outer, borderWidth/focus → mismos tokens de foco
+                                                                                       ya usados en otros
+                                                                                       componentes
+```
+
+A diferencia de todos los componentes anteriores de Sprint 4, aquí el problema no estaba en los BINDINGS
+(los tokens de `.Segment` ya resolvían correctamente, incluida la pareja fg/bg de `selected` — invierten
+juntos, sin bug) sino en que **el componente no tenía ningún estado de interacción construido todavía**:
+Figma solo exponía un eje `Size`, y la composición de arriba (`Number×Selected`) enumeraba combinaciones en
+vez de resolverse por composición — mismo antipatrón ya evitado en Table/CellActions/FileSelector, ignorado
+por completo en código (`SegmentedControl.jsx` compone N segmentos libremente, sin el límite de 5 de Figma).
+
+Construir los estados (Hover/Focus/Pressed × Size × Behavior = 24 variantes reales) fue un trabajo conjunto
+con Carol en Figma, con 3 bugs reales encontrados sobre la marcha: el `cornerRadius` del wrapper exterior del
+foco en `0` en vez de `radio interior + padding` (dejaba un hueco irregular en la curva); `primaryAxisAlignItems`/
+`counterAxisAlignItems` sin copiar al crear el wrapper (el label perdía el centrado); y las 3 variantes
+Hover+Selected usando `bgMix/hover` en vez de `bgMix/hover-selected` sin el fill base `bg/selected` (el hover
+se veía como un gris casi transparente en vez de un negro aclarado). El anillo de foco en sí replica la
+técnica real de Checkbox (2 capas con auto-layout+hug, sin posiciones fijas) — el primer intento se hizo por
+error en un nodo huérfano fuera del component set real, detectado por Carol y corregido.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):

@@ -802,3 +802,61 @@ and `borderColor/inverted` became `borderColor/onColor` (`Primary` stayed as-is 
 choice, not a surface-placement axis). Updated in `tokens.css` and `LoadingSpinner.jsx`. Worth flagging
 explicitly: this is a public API change (`color="inverted"` → `color="onColor"`) on an atom that was already
 merged into `main`, not just a documentation touch-up.
+
+### Segmented Control built — closes Sprint 4 (3 September 2026)
+
+**Carol flagged this one before EXPLORE even started**: she'd never used this component pattern in her
+career at Sistema Origen, and the Figma component "está muy mal construido." That turned out to be an
+understatement, and it's why this "low complexity" sprint item ended up being the longest session of the
+four.
+
+**The composition problem.** Node `18913:10366` — a set enumerating `Number=2..5 Step` × `Selected=1st..5th`
+as 14 fixed variants, each with a hand-placed count of `.Segment` instances. No axis represents "N segments,
+none selected," nothing composes past 5, and the underlying `.Segment` atom itself (`19052:3459`) had only a
+`Size` axis — no Hover, Focus, or Pressed states existed yet. Exactly the enumerate-instead-of-compose
+antipattern this project already avoids in Table, CellActions, and FileSelector — so the call, confirmed
+with Carol, was to ignore Figma's `Number×Selected` structure in code entirely: `SegmentedControl.jsx`
+composes an arbitrary-length array, no ceiling at 5.
+
+**Two smaller real bugs on `.Segment` itself, found while reading its tokens**: a stray `Behavior=New value`
+variant (×3, one per size) — dead Figma cruft, never renamed after a duplicate — and Large's internal gap
+bound to a different token namespace (`segment/gap/generic`) than Small/Medium's (`rootSegment/gap/generic`)
+for the identical concept.
+
+**Carol built the missing states herself in Figma, in parallel with EXPLORE** — the pattern for this whole
+session. For the focus ring, the real technique came from Checkbox, not Icon Button's original (fragile,
+fixed-position) approach: two frames with auto-layout + hug, one stroke (`focus-inner`) on the inner content
+frame, another (`focus-outer`) on the outer wrapper — no absolute positioning, no geometry to keep in sync
+if content changes size later.
+
+**First attempt at the ring landed on the wrong node** — an orphaned `.States/Focus/Unselected` component
+sitting outside the real `.Segment` set, left over from an earlier exploration pass. Carol caught it
+("creo que lo has hecho donde no debías!!!") and pointed at the real set (`19052:3459`). Redone correctly
+across the 6 real Focus variants; the orphan was deleted once confirmed unused elsewhere.
+
+**Three real bugs surfaced while building those 6 variants:**
+1. The outer wrapper's `cornerRadius` was `0` instead of `inner radius + padding` (`10`, not `0`) — with a
+   rounded inner shape sitting inside a square-cornered outer ring, the gap between the two rings was uneven,
+   visibly wider right at the curve. Carol's screenshot made this obvious at a glance.
+2. Creating the new wrapper frame copied padding, fill, and corner radius from the original — but not
+   `primaryAxisAlignItems`/`counterAxisAlignItems` — so the label lost its centering in all 6 Focus variants.
+3. The three size-scoped Hover+Selected variants used `bgMix/hover` (the token meant for the *unselected*
+   background) instead of `bgMix/hover-selected`, and were missing the base `bg/selected` fill entirely —
+   without it, "hover while selected" rendered as a near-transparent gray wash instead of a lightened black.
+
+**A structural-consistency rule, stated by Carol, that reshaped the whole approach:** every variant of a
+component should share the same layer structure — the new wrapper had only been added to the 6 Focus
+variants, leaving them structurally different from the other 18 and breaking cross-variant multi-select (a
+real Figma workflow, not just an aesthetic preference). The same wrapper — invisible except where focus
+paints a stroke — was extended to all 24 real variants. Carol then simplified further, removing the `.Label`
+sub-frame that wrapped each segment's text now that multi-select confirmed the structure was sound; plain
+text directly inside `segment` was enough.
+
+**CODE.** `SegmentedControl.jsx` takes `segments` (array), `selectedIndex`, `onChange`, and `size`. Real
+`<button role="radio">` elements per segment, states handled entirely through native pseudo-classes: `:hover`
+via a `::before` overlay (same mechanism as Chip), `:active` via `opacity` (same mechanism as Icon Button —
+Figma's `bgMix/pressed` turned out to be a flat 80% opacity, not a color-mix overlay like hover), and
+`:focus-visible` via a combined `outline` + `box-shadow` double ring (same CSS trick Icon Button already
+uses — no need for Figma's two-frame technique once it's just CSS). Verified live: three sizes, hover,
+keyboard focus, `:active`, dark mode, and a 7-segment case specifically to confirm there's no hidden ceiling
+at 5.
