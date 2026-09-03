@@ -718,3 +718,63 @@ spinner leans on `currentColor` to automatically match whatever text/icon color 
 combination already resolves to, while `LoadingSpinner` takes an explicit `color` prop — migrating cleanly
 would need mapping every Button variant/outline combination to `primary` or `inverted` first, which is its
 own piece of work, tracked in CLAUDE.md §10.
+
+### Progress Bar built — third Sprint 4 piece, the most collaborative session yet (3 September 2026)
+
+**Carol came in with two suspicions already, from the component's own Figma documentation page**: the
+`Default` and `Secondary` variants barely looked different, and the track's background used tokens that
+looked wrong on sight. EXPLORE confirmed both with data rather than assuming from the screenshot. Node
+`2893:8512` — a set on `Variant` (Default/Secondary) × `Percentage` (0/20/50/80/100%, used only as Figma's
+own preview steps, not a real constraint). `get_variable_defs` plus a direct `use_figma` inspection of both
+variants' actual fill bindings showed:
+
+- `indicator/bg/generic` resolved to `bg/surface/secondary` — and, critically, it was the **only** token for
+  indicator color: both `Default`'s and `Secondary`'s Indicator instances were bound to the exact same
+  variable ID. Same historically-fixed anti-pattern as Collapsible's `icon/fg/generic` (a "generic" token
+  that actually only ever held one variant's real color).
+- `root/bg/default` resolved to `bg/page`, and `root/bg/onPrimary` (used by the `Secondary` variant) resolved
+  to `bg/default` — both are page-canvas background tokens, not anything scoped to "this component's own
+  track surface."
+
+**First read: assumed the shared indicator was a bug and proposed fixes for both.** Before touching Figma,
+this was raised with Carol rather than acted on — matching the project's standing rule to confirm before
+inventing missing pieces. Her answer reframed the whole problem: she pulled up the actual Sistema Origen
+file (not the cleaned CS Design System copy) and pointed at something neither of us had considered — in
+Sistema Origen's own Variants panel, the property is literally named `Secondary`, but the documentation
+text on that same page describes it as `onPrimary`. That mismatch predates CS Design System entirely; it's
+baked into the reference system itself. With that context, the shared indicator color turned out to be
+intentional, not a bug — Sistema Origen's own reference renders the same indicator color in both columns.
+The real axis was never "which brand color" — it's "what surface does this progress bar sit on."
+
+**Carol renamed the Figma variant from `Secondary` to `onColor`** — a better name than either `Secondary` or
+`onPrimary`, since the actual need is a track that reads on *any* colored surface, not just the app's teal.
+Same naming principle CLAUDE.md §5 already establishes for `fg/icon/onColor` (name by the contrast being
+solved, not by where the value happens to come from). She then built out a 4-quadrant test — `bg/default` ×
+`bg/page`, each in Light and Dark — with real component instances to check the track's actual visibility,
+and shared screenshots. The result: `Default`'s track was invisible on `bg/page` in both modes, `onColor`'s
+was invisible on `bg/default` in both modes, and even the best case for `onColor` on `bg/page` in light mode
+had weak contrast. This was verified with real WCAG contrast-ratio math (relative luminance computed from
+each token's resolved hex), not just eyeballing: most gray candidates in the palette landed between ~1.1:1
+and ~2.6:1 against near-white surfaces — well under the 3:1 minimum for graphical objects — while the one
+token strong enough to clear it (`borderColor/emphasis`, near-black/white) was too heavy for a subtle track.
+A third, unrelated bug turned up in the same pass: the renamed `onColor` token still pointed at `bg/default`,
+which inverts with the theme — in dark mode it would have gone nearly black, exactly the Loading Spinner
+bug pattern, just not yet caught here.
+
+**Carol fixed both track bindings herself in Figma**, re-verified with the same 4-quadrant screenshots:
+`root/bg/default` → `bg/subtle` (a real, visible gray) and `root/bg/onColor` → `bg/onColor` (fixed white in
+both modes, not the inverting `bg/default`). All four quadrants read correctly after the fix.
+
+**CODE.** `ProgressBar.jsx` exposes `variant="default"|"onColor"` (never `"secondary"` — reintroducing that
+name would reintroduce the exact confusion this session untangled), a free-form `value` 0–100 (Figma's
+0/20/50/80/100 are just preview steps, not a real constraint), and `showLabel`/`showHelperText` booleans
+matching Figma's own properties panel. Label and Helper text turned out to share the literal same fill
+variable in Figma (`fg/default`) — checked directly rather than assumed, since a dimmer helper-text color
+would have been the more common pattern. Helper text also turned out to use its own smaller type scale
+(`fontSize/body/2xs` = 12, vs. the shared `HelperText.jsx` atom's `fontSize/body/sm` = 16) — so it renders as
+plain local text rather than instancing that atom, since it isn't actually the same visual spec. Verified
+live: 5 values × both variants, `onColor` placed on a real teal surface, light and dark — all four
+previously-broken combinations now read with real contrast. The recommended usage (`onColor` only for
+progress bars placed on an actual colored surface, never bare on `bg/page` or `bg/default`) is written
+directly into the `tokens.css` block as the durable record, since it isn't obvious from the token names
+alone.
