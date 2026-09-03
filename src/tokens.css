@@ -634,6 +634,55 @@
   --ds-progress-bar-gap:                4px;
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Segmented Control
+     Sprint 4 Pri 4, última pieza. Sesión larga y muy colaborativa con Carol
+     directamente en Figma — el componente original estaba mal construido:
+     ninguna interacción real (solo Size, sin states), y la composición
+     "Number=2..5 Step × Selected=1st..5th" enumeraba cada combinación como
+     variante fija en vez de resolverse por composición — mismo antipatrón ya
+     evitado en Table/CellActions/FileSelector, así que en CÓDIGO se ignora
+     esa enumeración por completo: `SegmentedControl` compone N `Segment` a
+     partir de un array + índice seleccionado, sin límite de 5.
+     El átomo real reconstruido en Figma es `.Segment` (Size small/medium/
+     large × Behavior selected/unselected × States initial/hover/pressed/
+     focus) — todas las 24 variantes tienen ahora la MISMA estructura de 2
+     capas (wrapper exterior + `segment` interior) para poder multi-
+     seleccionar entre variantes, norma del proyecto. El wrapper exterior
+     solo pinta stroke visible en los estados de foco (`focus-inner`/
+     `focus-outer`, técnica ya establecida en Checkbox: doble stroke en dos
+     capas con auto-layout + hug, SIN posiciones fijas — a diferencia del
+     primer intento de Icon Button). indicator/bg/selected usa `bg/inverse`
+     y label/fg/selected usa `fg/label/inverse` — pareja correcta, invierten
+     juntos (no es el bug fg/bg ya cazado varias veces). `bgMix/hover` y
+     `bgMix/hover-selected` son opuestos a propósito (10% negro/blanco y
+     10% blanco/negro) para aclarar la superficie oscura seleccionada y
+     oscurecer la clara sin seleccionar, en los dos modos. `bgMix/pressed`
+     NO es un color-mix como hover — es un `opacity` plano (80%) aplicado a
+     todo el segmento, mismo mecanismo que `--ds-icon-button-opacity-pressed`.
+     ========================================================================== */
+  --ds-segmented-control-root-bg:              var(--ds-bg-subtle);
+  --ds-segmented-control-root-gap:             4px;
+  --ds-segmented-control-root-border-radius:   8px;
+  --ds-segmented-control-segment-bg:           var(--ds-bg-subtle);
+  --ds-segmented-control-segment-bg-selected:  var(--ds-bg-inverse);
+  --ds-segmented-control-segment-border-radius: 8px;
+  --ds-segmented-control-segment-padding-hor-sm: 12px; /* Small y Medium comparten */
+  --ds-segmented-control-segment-padding-hor-lg: 16px; /* Large */
+  --ds-segmented-control-segment-padding-ver-sm: 4px;
+  --ds-segmented-control-segment-padding-ver-md: 6px;
+  --ds-segmented-control-segment-padding-ver-lg: 8px;
+  --ds-segmented-control-label-fg:             var(--ds-fg-label-default);
+  --ds-segmented-control-label-fg-selected:    var(--ds-fg-label-inverse);
+  --ds-segmented-control-bgmix-hover:          var(--ds-opacity-hover-default);
+  --ds-segmented-control-bgmix-hover-selected: var(--ds-opacity-hover-inverse);
+  --ds-segmented-control-opacity-pressed:      var(--ds-opacity-pressed);
+  --ds-segmented-control-focus-inner:          var(--ds-borderColor-focus-inner);
+  --ds-segmented-control-focus-outer:          var(--ds-borderColor-focus-outer);
+  --ds-segmented-control-focus-width:          2px;
+  --ds-segmented-control-focus-gap:            2px; /* hueco entre los dos anillos */
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
