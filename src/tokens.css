@@ -602,15 +602,17 @@
          Dialog) y text siempre `fg/default`, confirmado que Label Y Helper
          text comparten literalmente la misma variable de Figma.
      Recomendación de uso — probado a mano contra 7 superficies reales
-     (03/09/2026) tras construir el átomo: `onColor` funciona bien sobre
-     bg/primary, bg/tertiary, bg/error, bg/success, bg/info e bg/inverse —
-     falla en 2 casos reales, no solo en bg/page/bg/default:
+     (03/09/2026) tras construir el átomo. Track + indicator funcionan bien
+     en las 6 superficies bg/primary, bg/tertiary, bg/error, bg/success,
+     bg/info y bg/inverse — pero eso no significa que las 6 sean "seguras"
+     sin más, hay 2 fallos reales aparte de bg/page/bg/default:
        (a) sobre bg/surface/secondary (rosa) el indicator se funde con el
-           fondo — es el mismo rosa de marca en los dos.
+           fondo — es el mismo rosa de marca en los dos. Track+indicator
+           SÍ fallan aquí.
        (b) el texto (`text/fg` = fg/default, fijo casi negro) desaparece
-           sobre cualquier superficie oscura (confirmado en bg/inverse) —
-           el texto no tiene variante propia para onColor, solo track e
-           indicator la tienen resuelta.
+           sobre bg/inverse específicamente — el texto no tiene variante
+           propia para onColor, solo track e indicator la tienen resuelta.
+           Track+indicator siguen bien ahí; es solo el texto el que falla.
      Regla de uso fijada por Carol: `onColor` se usa sobre superficies
      `bg/surface/*` de saturación media o subtle — EXCEPTO
      `bg/surface/secondary`, el único caso real donde falla por el motivo
