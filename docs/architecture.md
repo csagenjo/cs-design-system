@@ -774,7 +774,21 @@ would have been the more common pattern. Helper text also turned out to use its 
 (`fontSize/body/2xs` = 12, vs. the shared `HelperText.jsx` atom's `fontSize/body/sm` = 16) — so it renders as
 plain local text rather than instancing that atom, since it isn't actually the same visual spec. Verified
 live: 5 values × both variants, `onColor` placed on a real teal surface, light and dark — all four
-previously-broken combinations now read with real contrast. The recommended usage (`onColor` only for
-progress bars placed on an actual colored surface, never bare on `bg/page` or `bg/default`) is written
-directly into the `tokens.css` block as the durable record, since it isn't obvious from the token names
-alone.
+previously-broken combinations now read with real contrast.
+
+**Carol asked to stress-test `onColor` against more than just teal**, right after the branch was pushed.
+The test bench grew to 7 real surfaces (`bg/primary`, `bg/secondary`, `bg/tertiary`, `bg/error`,
+`bg/success`, `bg/info`, `bg/inverse`). Two real limits surfaced that the earlier track-contrast fix didn't
+touch:
+
+1. On `bg/surface/secondary` (pink), the indicator all but disappears — it's the same brand pink as the
+   surface it sits on. The other six surfaces all read fine.
+2. Neither Label nor Helper text has an `onColor`-specific color — both use the fixed near-black `fg/default`
+   regardless of variant. On a genuinely dark surface like `bg/inverse`, the text goes effectively invisible
+   even though the track and indicator still read perfectly there.
+
+**Carol's call: document the boundary, don't redesign the component.** `onColor` is scoped to medium- or
+subtle-saturation `bg/surface/*` surfaces — *except* `bg/surface/secondary`, the one case that actually
+fails. That rule now lives in both `ProgressBar.jsx`'s docstring and the `tokens.css` Component block, since
+neither the token names nor the component's props make it self-evident. Nothing in the token bindings or
+the component itself changed — this was a scope note, not a new bug to fix.

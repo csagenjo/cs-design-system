@@ -601,10 +601,21 @@
          (mismo valor que --ds-bg-secondary, ya usado por BadgeNotification/
          Dialog) y text siempre `fg/default`, confirmado que Label Y Helper
          text comparten literalmente la misma variable de Figma.
-     Recomendación de uso (documentar en consumidores): `onColor` es SOLO
-     para progress bars colocados sobre una superficie de color — nunca sobre
-     bg/page o bg/default directamente, donde vuelve a quedar con bajo
-     contraste (confirmado con captura, ~1.1–2.6:1 en light mode).
+     Recomendación de uso — probado a mano contra 7 superficies reales
+     (03/09/2026) tras construir el átomo: `onColor` funciona bien sobre
+     bg/primary, bg/tertiary, bg/error, bg/success, bg/info e bg/inverse —
+     falla en 2 casos reales, no solo en bg/page/bg/default:
+       (a) sobre bg/surface/secondary (rosa) el indicator se funde con el
+           fondo — es el mismo rosa de marca en los dos.
+       (b) el texto (`text/fg` = fg/default, fijo casi negro) desaparece
+           sobre cualquier superficie oscura (confirmado en bg/inverse) —
+           el texto no tiene variante propia para onColor, solo track e
+           indicator la tienen resuelta.
+     Regla de uso fijada por Carol: `onColor` se usa sobre superficies
+     `bg/surface/*` de saturación media o subtle — EXCEPTO
+     `bg/surface/secondary`, el único caso real donde falla por el motivo
+     (a). Nunca sobre bg/page o bg/default directamente tampoco (bajo
+     contraste del track, ~1.1–2.6:1 en light mode, confirmado con captura).
      ========================================================================== */
   --ds-progress-bar-root-bg-default:    var(--ds-bg-subtle);
   --ds-progress-bar-root-bg-on-color:   var(--ds-bg-onColor);
