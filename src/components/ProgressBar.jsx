@@ -8,14 +8,16 @@
  * Sistema Origen, donde ambas columnas de referencia usan el mismo color de
  * indicator).
  *
- * `onColor` — probado a mano contra 7 superficies reales: usar SOLO sobre
- * superficies `bg/surface/*` de saturación media o subtle (primary, tertiary,
- * error, success, info, inverse) — EXCEPTO `bg/surface/secondary` (rosa): el
- * indicator es ese mismo rosa de marca y se funde con el fondo. Nunca sobre
- * `bg/page` o `bg/default` directamente tampoco (bajo contraste del track).
- * Nota real: el texto (Label/Helper text) NO tiene una variante propia para
- * onColor — sobre una superficie oscura como `bg/inverse` el texto (fijo
- * casi negro) puede volverse ilegible; verificar caso a caso.
+ * `onColor` — probado a mano contra 7 superficies reales: track + indicator
+ * funcionan sobre `bg/surface/*` de saturación media o subtle (primary,
+ * tertiary, error, success, info, inverse) — EXCEPTO `bg/surface/secondary`
+ * (rosa), donde el indicator es ese mismo rosa de marca y se funde con el
+ * fondo. Nunca sobre `bg/page` o `bg/default` directamente tampoco (bajo
+ * contraste del track).
+ * Nota real, aparte: el texto (Label/Helper text) NO tiene una variante
+ * propia para onColor — sobre `bg/inverse` específicamente el texto (fijo
+ * casi negro) se vuelve ilegible, aunque ahí track e indicator sigan bien;
+ * verificar caso a caso.
  *
  * `value` es un número 0-100 libre (no los saltos discretos 0/20/50/80/100
  * de Figma) — el ancho del indicator es simplemente `value%`.
