@@ -716,5 +716,15 @@ border-trick using `currentColor`, square-cut ends, no rounded caps) predating t
 class of duplication as `CollapsibleIconButton`'s local tooltip. Not migrated in this session: Button's
 spinner leans on `currentColor` to automatically match whatever text/icon color each `variant`/`state`
 combination already resolves to, while `LoadingSpinner` takes an explicit `color` prop — migrating cleanly
-would need mapping every Button variant/outline combination to `primary` or `inverted` first, which is its
+would need mapping every Button variant/outline combination to `primary` or `onColor` first, which is its
 own piece of work, tracked in CLAUDE.md §10.
+
+### LoadingSpinner's `inverted` renamed to `onColor` (3 September 2026)
+
+While building Progress Bar the same day, "onColor" was settled on as the clearer name for this exact
+pattern — a color that stays fixed regardless of theme, meant for placement on any colored surface (see
+CLAUDE.md §5). Carol applied the same rename here: Figma's `Color=Inverted` variant became `Color=onColor`,
+and `borderColor/inverted` became `borderColor/onColor` (`Primary` stayed as-is — it's a real brand color
+choice, not a surface-placement axis). Updated in `tokens.css` and `LoadingSpinner.jsx`. Worth flagging
+explicitly: this is a public API change (`color="inverted"` → `color="onColor"`) on an atom that was already
+merged into `main`, not just a documentation touch-up.

@@ -8,13 +8,13 @@
  * se traduce a un stroke real (mismo radio/grosor por tamaño, confirmados
  * por dato: strokeWeight de Figma = size/8 exacto en las 4 variantes).
  *
- * `color="inverted"` es para usar sobre una superficie de color (p.ej.
+ * `color="onColor"` es para usar sobre una superficie de color (p.ej.
  * dentro de un Button en `loading` — ver deuda en CLAUDE.md §10) — blanco
  * fijo en los dos modos, nunca el fondo de página.
  *
  * USO:
  *   <LoadingSpinner />
- *   <LoadingSpinner size="large" color="inverted" label="Guardando" />
+ *   <LoadingSpinner size="large" color="onColor" label="Guardando" />
  */
 
 import React from 'react';
@@ -74,8 +74,8 @@ const css = `
 .ds-loading-spinner--primary .ds-loading-spinner__track {
   stroke: var(--ds-loading-spinner-color-primary);
 }
-.ds-loading-spinner--inverted .ds-loading-spinner__track {
-  stroke: var(--ds-loading-spinner-color-inverted);
+.ds-loading-spinner--onColor .ds-loading-spinner__track {
+  stroke: var(--ds-loading-spinner-color-on-color);
 }
 
 @keyframes ds-loading-spinner-spin {
@@ -87,7 +87,7 @@ injectStyles('ds-loading-spinner', css);
 
 export function LoadingSpinner({
   size  = 'medium', // 'extraSmall' | 'small' | 'medium' | 'large'
-  color = 'primary', // 'primary' | 'inverted'
+  color = 'primary', // 'primary' | 'onColor'
   label = 'Loading',
   id,
   className,
@@ -113,5 +113,5 @@ export default LoadingSpinner;
 
 <LoadingSpinner />
 <LoadingSpinner size="extraSmall" />
-<LoadingSpinner size="large" color="inverted" label="Guardando" />
+<LoadingSpinner size="large" color="onColor" label="Guardando" />
 */
