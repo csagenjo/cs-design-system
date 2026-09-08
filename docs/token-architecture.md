@@ -488,14 +488,18 @@ borrar los tokens viejos aparecieron 3 capas más de bindings de ancho de stroke
 (`Title + Action` y el frame raíz de cada variante) — vestigios sin efecto visual, limpiados antes de poder
 completar el borrado.
 
-**Actualización, mismo día — `border/width/generic` pasa a aplicarse en 2 lados, no 1.** Carol cambió el
-trigger en Figma de borde solo-arriba a arriba-Y-abajo en el frame `Title`. Consecuencia directa: el prop
-`isLast` (y el rectángulo `Border` que dependía de él) deja de hacer falta — en una lista apilada, el borde
-inferior de un item y el superior del siguiente caen en el mismo píxel con el mismo color y grosor, se leen
-como una sola línea, y el último item de verdad cierra solo con su propio inferior. Eliminado de
-`Accordion.jsx`. El organismo `AccordionGroup` (`src/organisms/`) es ahora quien compone varios `Accordion`
-— gap `0` fijo en el propio organismo, con `multiple` decidiendo si se permite más de un item abierto a la
-vez.
+**Actualización, mismo día — `border/width/generic` probó aplicarse en 2 lados, luego revertido a 1.** Carol
+probó cambiar el trigger en Figma de borde solo-arriba a arriba-Y-abajo en el frame `Title`. Consecuencia
+directa asumida en ese momento: el prop `isLast` (y el rectángulo `Border` que dependía de él) dejaría de
+hacer falta — en una lista apilada, el borde inferior de un item y el superior del siguiente caerían en el
+mismo píxel con el mismo color y grosor. Se eliminó de `Accordion.jsx` sobre esa base. **Carol revirtió el
+cambio en Figma poco después** — el rectángulo `Border`/propiedad `Last` seguía haciendo falta, así que
+`Title` volvió a borde solo-arriba ("había ignorado el border, pero como es necesario he aplicado los strokes
+de nuevo, así que revisa de nuevo"). Reconfirmado el estado real en Figma: `Title` de nuevo solo-arriba,
+`Border` sigue presente y visible con su propio stroke inferior. `isLast` restaurado en `Accordion.jsx`,
+mecanismo original intacto. El organismo `AccordionGroup` (`src/organisms/`) compone varios `Accordion` con
+gap `0` fijo en el propio organismo y aplica `isLast` automáticamente al último item — `multiple` decide si
+se permite más de un item abierto a la vez.
 
 ### AmountView — convención plain/soft/solid (01/07/2026)
 

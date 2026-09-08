@@ -949,7 +949,7 @@ for their own pressed states. Verified with a screenshot after each phase: zero 
 all eight variants. `tokens.css` and `Accordion.jsx` updated to match (`--ds-accordion-fg-text`,
 `--ds-accordion-fg-icon`).
 
-### isLast removed, AccordionGroup born (8 September 2026, same day)
+### isLast briefly removed, then restored; AccordionGroup born (8 September 2026, same day)
 
 **Two more manual fixes landed in Figma while this was in progress, both found by Carol working directly in
 the file.** First: a real bug in her own "Accordion setup" documentation demo — the auto-layout frame
@@ -959,12 +959,17 @@ re-verified with a fresh screenshot showing the four items flush against each ot
 on `Title + Action` only had its left/right sides at the focus stroke weight — she corrected it to all four
 sides.
 
-**A third change had a bigger consequence than a visual tweak.** Carol switched the trigger's border from
-top-only to top-*and*-bottom on the `Title` frame. Once every item paints both edges, the whole `isLast`
-mechanism becomes redundant: in a stacked list, one item's bottom border and the next item's top border
-land on the exact same pixel with the exact same color and weight — they read as a single line — and the
-actual last item in a list closes correctly using nothing but its own bottom border. `isLast` was removed
-from `Accordion.jsx` entirely; nothing needs to know its position in a list anymore.
+**A third change had a bigger consequence than a visual tweak — and it turned out to be temporary.** Carol
+tried switching the trigger's border from top-only to top-*and*-bottom on the `Title` frame. With every item
+painting both edges, the `isLast` mechanism looked redundant: in a stacked list, one item's bottom border and
+the next item's top border would land on the exact same pixel with the exact same color and weight. `isLast`
+was removed from `Accordion.jsx` on that basis. Carol reverted the Figma change shortly after, though — the
+separate `Border` rectangle gated by the `Last` component property was still needed, so `Title` went back to
+top-only. She flagged it directly: "había ignorado el border, pero como es necesario he aplicado los strokes
+de nuevo, así que revisa de nuevo." Re-checking the live Figma state confirmed it: `Title` is top-only stroke
+again, `Border` still exists and still carries its own bottom stroke. `isLast` was restored to
+`Accordion.jsx`, matching the original two-part mechanism. Lesson: confirm the *current* Figma state before
+trusting an earlier observation, especially in a session where Carol is editing in parallel.
 
 **A real bug also surfaced in code, prompted by a direct question**: "¿por qué el texto del content no hace
 fill horizontal?" `.ds-accordion__content` is a `flex-direction: column` container, and `{children}` as a
@@ -978,6 +983,7 @@ organism, the same way Table wraps the Cell family? The itemSpacing bug above is
 it — if assembling a list depends on every designer or developer remembering "0 gap, only mark the last
 item," someone will eventually get it wrong, exactly as just happened in Carol's own demo. `AccordionGroup`
 takes an `items` array and renders N `Accordion` atoms with `gap: 0` hard-coded on the organism itself, not
-left as something a consumer could mis-set. `multiple` (Carol's explicit ask) controls whether more than one
-item can stay open: `false` is the classic single-open accordion, `true` lets each item toggle
-independently. Verified live: both modes, toggling, hover, light and dark mode.
+left as something a consumer could mis-set, and applies `isLast` automatically to the last item — the
+consumer never sets it by hand. `multiple` (Carol's explicit ask) controls whether more than one item can
+stay open: `false` is the classic single-open accordion, `true` lets each item toggle independently.
+Verified live, with the `isLast` mechanism back in place: both modes, toggling, hover, light and dark mode.

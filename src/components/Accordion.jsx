@@ -2,11 +2,17 @@
  * Accordion — Componente atómico
  * CS Design System · v1.0
  *
- * Un solo item expandible/colapsable. El trigger pinta borde arriba Y abajo
- * siempre — en una lista apilada, el borde inferior de un item y el
- * superior del siguiente coinciden exactamente (misma línea), y el último
- * item de la lista cierra solo con su propio borde inferior. No hace falta
- * ningún prop de "es el último" — la composición ya lo resuelve sola.
+ * Un solo item expandible/colapsable. El trigger pinta borde superior
+ * siempre — separador natural entre items apilados en una lista (el de
+ * arriba aporta su propio borde inferior visualmente al de abajo) — y
+ * `isLast` decide si pinta también el de cierre inferior, para el último
+ * item de la lista. Mismo criterio que `lastRow` en CellData/CellHeader,
+ * y mismo mecanismo que Figma: `Title` solo con stroke arriba, el
+ * rectángulo `Border` (controlado por la propiedad `Last`) aparte para el
+ * cierre. (Hubo un vaivén real el 08/09/2026 — Carol probó brevemente
+ * aplicar el borde a los dos lados de `Title`, lo revirtió porque el
+ * mecanismo de `Border`/`Last` seguía haciendo falta — este es el estado
+ * final, confirmado en vivo, no asumido.)
  *
  * Sesión de limpieza real de Figma antes de escribir este átomo — 2 fugas
  * de IP encontradas y corregidas (fuente literal filtrada en el título,
@@ -55,7 +61,6 @@ const css = `
   box-sizing: border-box;
   border: none;
   border-top: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
-  border-bottom: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
   background: transparent;
   padding: var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-right) var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-left);
   color: var(--ds-accordion-fg-text);
@@ -101,6 +106,12 @@ const css = `
                    anónima de flexbox que por defecto no hace fill (min-width:
                    auto) — este wrapper real da algo a lo que aplicarle 100% */
 }
+.ds-accordion--last {
+  /* el cierre inferior cuelga de la raíz, no de __content — el último item
+     puede estar colapsado (sin __content en absoluto), mismo caso que el
+     rectángulo Border en Figma, que cuelga de Title + Action, no de Content */
+  border-bottom: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
+}
 `;
 
 injectStyles('ds-accordion', css);
@@ -110,10 +121,13 @@ export function Accordion({
   children,
   expanded = false,
   onToggle,
+  isLast = false,
   id,
   className,
 }) {
-  const classes = ['ds-accordion', className || ''].filter(Boolean).join(' ');
+  const classes = ['ds-accordion', isLast ? 'ds-accordion--last' : '', className || '']
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div id={id} className={classes}>
@@ -149,7 +163,7 @@ export default Accordion;
   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 </Accordion>
 
-<Accordion title="Otro item" expanded={false} onToggle={fn}>
+<Accordion title="Último item" expanded={false} onToggle={fn} isLast>
   Contenido...
 </Accordion>
 */

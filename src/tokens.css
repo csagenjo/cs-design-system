@@ -713,13 +713,17 @@
      consume como `opacity` (80%) sobre todo el bloque título+acción —
      mismo patrón ya visto en Icon Button/Segmented Control, tratado igual
      aquí (CSS `:active { opacity }`, no un color-mix).
-     Estructura simplificada en código: el trigger pinta borde arriba Y
-     abajo siempre — en una lista apilada, el inferior de un item coincide
-     exactamente con el superior del siguiente (misma línea), y el último
-     item cierra solo con su propio inferior. Sin prop `isLast` (rectificado
-     08/09/2026, tras un cambio manual de Carol en Figma aplicando el borde
-     a los dos lados de `Title` en vez de solo arriba) — el organismo
-     `AccordionGroup` (src/organisms/) es quien compone varios `Accordion`.
+     Estructura en código, confirmada contra el estado final de Figma
+     (08/09/2026 — hubo un vaivén real: Carol probó brevemente aplicar el
+     borde a los dos lados de `Title`, lo revirtió porque el rectángulo
+     `Border`/prop `Last` seguía haciendo falta): el trigger pinta borde
+     SOLO arriba siempre (separador natural entre items apilados), y
+     `isLast` decide si pinta también el de cierre inferior — mismo
+     mecanismo que Figma (`Title` con stroke arriba, rectángulo `Border`
+     aparte, controlado por la propiedad `Last`). El organismo
+     `AccordionGroup` (src/organisms/) compone varios `Accordion` y aplica
+     `isLast` automáticamente al último, para que el consumidor no tenga
+     que hacerlo a mano.
 
      Actualización (08/09/2026) — simplificación real de tokens, no solo
      bindings corregidos, a petición explícita de Carol. Antes de este pase
