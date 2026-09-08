@@ -717,10 +717,29 @@
      (separador natural entre items apilados en una lista), el inferior
      — el rectángulo `Border` de Figma — solo cuando `isLast`, para cerrar
      la lista. Mismo criterio que `lastRow` en CellData/CellHeader.
+
+     Actualización (08/09/2026) — simplificación real de tokens, no solo
+     bindings corregidos, a petición explícita de Carol. Antes de este pase
+     había 6 tokens de borde fragmentados (title/borderTopColor, title/
+     borderBottomColor, title/borderTopWidth, title/borderBottomWidth,
+     content/borderBottomWidth, content/borderBottomColor) para un único
+     concepto (una línea de 1px, un solo color) — colapsados a 2:
+     `border/color/generic` y `border/width/generic`. `content/
+     borderBottomColor/generic` (#eeeff1) resultó ser un color DISTINTO del
+     resto, usado en un stroke suelto que solo aparecía en 1 de las 8
+     variantes — cruft, eliminado junto con el stroke. Color de texto:
+     Carol corrigió la propuesta inicial (colapsar título+cuerpo+icono en
+     un único token) — el icono se queda separado, siguiendo la norma real
+     del proyecto: los grupos padre son `bg`/`fg`/`border`, y dentro de
+     `fg` se distingue `text` (título+cuerpo, sí comparten un único token
+     real) de `icon` (con scope `STROKE_COLOR` en Figma, porque los iconos
+     son vectores con stroke, no fill — confirmado ya correctamente
+     configurado así en Figma). `button/bg/pressed` renombrado a `opacity/
+     pressed` — ya era de tipo FLOAT en Figma y ya se aplicaba como
+     `opacity` real sobre el nodo, el nombre viejo era el único problema.
      ========================================================================== */
-  --ds-accordion-title-fg:            var(--ds-fg-default);
-  --ds-accordion-body-fg:             var(--ds-fg-default);
-  --ds-accordion-icon-fg:             var(--ds-fg-default);
+  --ds-accordion-fg-text:              var(--ds-fg-default);
+  --ds-accordion-fg-icon:              var(--ds-fg-default);
   --ds-accordion-border-color:        var(--ds-borderColor-default);
   --ds-accordion-border-width:        1px;
   --ds-accordion-title-padding-left:  8px;

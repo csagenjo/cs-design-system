@@ -909,3 +909,42 @@ border always paints. One real bug surfaced in CODE, not Figma: content text ren
 of Vite's global boilerplate `text-align: center` — the exact same bug already hit once on Inline
 Notification — fixed with an explicit `text-align: left`. Verified live: a real 3-item stacked list with
 `isLast` on the last one, toggle, hover, keyboard focus, and dark mode.
+
+### Accordion tokens actually simplified, not just re-bound (8 September 2026, same day)
+
+**Carol's response after seeing the fixed-but-not-simplified result was direct:** she'd explicitly asked for
+the component tokens to be simplified, not just correctly bound. She'd also improved the Figma
+documentation page in the meantime — removed the "Not last" demonstration rows (they only showed a
+composition effect, not a real variant) and added an "Accordion setup" section for designers: build a
+vertical auto-layout with 0 gap, mark only the last item "Last" — confirming the exact same mental model
+`isLast` already encodes in code.
+
+**First pass at consolidation, then a real correction.** The initial proposal collapsed title, body, *and*
+icon color into one token. Carol pushed back: "recuerda que distinguimos entre textos e iconos... los
+padres del grupo deben ser bg, fg, border" — the project's actual convention nests `text`/`icon` one level
+inside `fg`, it doesn't collapse them together just because today's value happens to match. Corrected:
+title and body (both genuinely text) now share one `accordion/all/fg/text/generic`; the icon keeps its own
+`accordion/all/fg/icon/generic`, already correctly scoped to `STROKE_COLOR` in Figma — confirmed by
+checking the variable's actual `scopes` property before assuming it needed fixing, since this system's
+icons render via stroke, not fill.
+
+**Border tokens**: six fragmented entries (`title/borderTopColor`, `title/borderBottomColor`,
+`title/borderTopWidth`, `title/borderBottomWidth`, `content/borderBottomWidth`, `content/borderBottomColor`)
+for what was conceptually one 1px line in one color. `content/borderBottomColor/generic` (`#eeeff1`) turned
+out to be a genuinely different color from the rest, feeding a stray stroke that existed on only one of the
+eight variants — real cruft, removed along with that stroke. Collapsed to two:
+`accordion/all/border/color/generic` and `accordion/all/border/width/generic`, re-bound across all eight
+variants.
+
+**Deleting the old variables surfaced three more layers of vestigial bindings** — `Title + Action` and each
+variant's own top-level frame both carried leftover `strokeTopWeight`/`strokeBottomWeight` variable
+bindings with no actual stroke paint attached, blocking deletion of the old width tokens until cleared.
+None of it had any visual effect; all of it was real clutter once found.
+
+`accordion/all/text/fg/generic` (the orphaned token from the earlier leak-fixing pass) was deleted from
+Figma outright this time, not just left unused in code. `button/bg/pressed` was renamed to
+`accordion/all/opacity/pressed` — it was already a `FLOAT` variable already applied as real node `opacity`,
+so the rename was the only actual fix needed; same mechanism Icon Button and Segmented Control already use
+for their own pressed states. Verified with a screenshot after each phase: zero visual regression across
+all eight variants. `tokens.css` and `Accordion.jsx` updated to match (`--ds-accordion-fg-text`,
+`--ds-accordion-fg-icon`).
