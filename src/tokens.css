@@ -683,6 +683,88 @@
   --ds-segmented-control-focus-gap:            2px; /* hueco entre los dos anillos */
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Accordion
+     Sprint 5 Pri 5. Primera pieza — sesión de limpieza real de Figma antes de
+     tocar tokens.css, a petición de Carol ("está mal hecho o se quedaron a
+     medias simplificando").
+     2 fugas de IP reales encontradas y corregidas en Figma (no solo tokens
+     mal nombrados, esta vez datos reales de Sistema Origen filtrados):
+     (1) el texto "Title" tenía la fuente literal `ING Me` (nombre real de
+         una tipografía de una empresa real) pese a tener la Variable
+         `fontFamily/default` enlazada — Figma permite sobreescribir la
+         fuente renderizada aunque el binding siga apuntando al token
+         correcto; solo 1 de los 12 nodos de texto del componente estaba
+         afectado, confirmado por dato barriendo los 12. Corregido a Nunito.
+     (2) el color del borde superior (`title/borderTopColor/generic`) estaba
+         enlazado a un ID de variable con formato de librería EXTERNA, ya
+         irresoluble (`getVariableByIdAsync` devuelve null) — el valor
+         cacheado que se seguía viendo (`#0d0804`) no coincide con el negro
+         estándar del sistema (`#050506`). Reenlazado a `borderColor/default`
+         (`#9AA1AA`), el mismo token que ya usa el rectángulo `Border`
+         inferior — unifica los dos mecanismos de separador en un solo color.
+     Inconsistencia real encontrada y corregida: el stroke superior solo
+     estaba presente en los 4 estados Expanded y en `Focus, Collapsed` — los
+     otros 3 Collapsed (Initial/Hover/Pressed) no lo tenían. Añadido a los 8.
+     `accordion/all/text/fg/generic` resultó ser un token huérfano — ya no
+     resuelve a ninguna Variable local y no lo consume ningún nodo real
+     (confirmado por dato) — ignorado, no se porta a código.
+     `button/bg/pressed` está nombrado como color pero en realidad se
+     consume como `opacity` (80%) sobre todo el bloque título+acción —
+     mismo patrón ya visto en Icon Button/Segmented Control, tratado igual
+     aquí (CSS `:active { opacity }`, no un color-mix).
+     Estructura en código, confirmada contra el estado final de Figma
+     (08/09/2026 — hubo un vaivén real: Carol probó brevemente aplicar el
+     borde a los dos lados de `Title`, lo revirtió porque el rectángulo
+     `Border`/prop `Last` seguía haciendo falta): el trigger pinta borde
+     SOLO arriba siempre (separador natural entre items apilados), y
+     `isLast` decide si pinta también el de cierre inferior — mismo
+     mecanismo que Figma (`Title` con stroke arriba, rectángulo `Border`
+     aparte, controlado por la propiedad `Last`). El organismo
+     `AccordionGroup` (src/organisms/) compone varios `Accordion` y aplica
+     `isLast` automáticamente al último, para que el consumidor no tenga
+     que hacerlo a mano.
+
+     Actualización (08/09/2026) — simplificación real de tokens, no solo
+     bindings corregidos, a petición explícita de Carol. Antes de este pase
+     había 6 tokens de borde fragmentados (title/borderTopColor, title/
+     borderBottomColor, title/borderTopWidth, title/borderBottomWidth,
+     content/borderBottomWidth, content/borderBottomColor) para un único
+     concepto (una línea de 1px, un solo color) — colapsados a 2:
+     `border/color/generic` y `border/width/generic`. `content/
+     borderBottomColor/generic` (#eeeff1) resultó ser un color DISTINTO del
+     resto, usado en un stroke suelto que solo aparecía en 1 de las 8
+     variantes — cruft, eliminado junto con el stroke. Color de texto:
+     Carol corrigió la propuesta inicial (colapsar título+cuerpo+icono en
+     un único token) — el icono se queda separado, siguiendo la norma real
+     del proyecto: los grupos padre son `bg`/`fg`/`border`, y dentro de
+     `fg` se distingue `text` (título+cuerpo, sí comparten un único token
+     real) de `icon` (con scope `STROKE_COLOR` en Figma, porque los iconos
+     son vectores con stroke, no fill — confirmado ya correctamente
+     configurado así en Figma). `button/bg/pressed` renombrado a `opacity/
+     pressed` — ya era de tipo FLOAT en Figma y ya se aplicaba como
+     `opacity` real sobre el nodo, el nombre viejo era el único problema.
+     ========================================================================== */
+  --ds-accordion-fg-text:              var(--ds-fg-default);
+  --ds-accordion-fg-icon:              var(--ds-fg-default);
+  --ds-accordion-border-color:        var(--ds-borderColor-default);
+  --ds-accordion-border-width:        1px;
+  --ds-accordion-title-padding-left:  8px;
+  --ds-accordion-title-padding-ver:   8px;
+  --ds-accordion-title-padding-right: 16px;
+  --ds-accordion-title-gap:           8px;
+  --ds-accordion-content-gap:         6px;
+  --ds-accordion-content-padding-left:  8px;
+  --ds-accordion-content-padding-top:   12px;
+  --ds-accordion-content-padding-right: 12px;
+  --ds-accordion-content-padding-bottom: 6px; /* gapBottom/generic en Figma */
+  --ds-accordion-bg-hover:            var(--ds-bg-hover-primary);
+  --ds-accordion-opacity-pressed:     var(--ds-opacity-pressed);
+  --ds-accordion-focus-inner:         var(--ds-borderColor-focus-inner);
+  --ds-accordion-focus-outer:         var(--ds-borderColor-focus-outer);
+  --ds-accordion-focus-width:         2px;
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */

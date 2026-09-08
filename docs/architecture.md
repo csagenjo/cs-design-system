@@ -860,3 +860,130 @@ Figma's `bgMix/pressed` turned out to be a flat 80% opacity, not a color-mix ove
 uses — no need for Figma's two-frame technique once it's just CSS). Verified live: three sizes, hover,
 keyboard focus, `:active`, dark mode, and a 7-segment case specifically to confirm there's no hidden ceiling
 at 5.
+
+### Accordion built — opens Sprint 5, two real IP leaks found (8 September 2026)
+
+**Carol asked for a real cleanup pass before any code, not just a token sync.** Her words starting EXPLORE:
+"está mal hecho o se quedaron a medias simplificando" (badly built, or someone stopped halfway through
+simplifying it). That turned out to be accurate, and worse than the usual mis-bound-token pattern this
+project has caught repeatedly — this time it was actual leaked source data, not just confusing names.
+
+**Leak #1 — a literal real typeface name, hiding behind a correctly-bound token.** `get_variable_defs`
+reported the title's `fontFamily/default` as `"ING Me"` — the real name of a real company's typeface. The
+suspicious part: the text node's Variable binding for `fontFamily` *did* correctly point to the project's
+own `fontFamily/default` (which resolves to Nunito everywhere else in the file, confirmed by walking its
+full alias chain). Figma allows a text node's rendered font to be manually overridden after a Variable is
+bound, without breaking the binding metadata — so the token *looked* fine from the binding alone. Only
+checking the node's actual `fontName` property directly (`{family: "ING Me", style: "Bold"}`) surfaced it.
+Swept all 12 text nodes across the 8 variants by data — exactly one was affected. Fixed by setting the real
+`fontName` to Nunito Bold; the binding itself needed no change.
+
+**Leak #2 — a border color bound to an unresolvable external-library variable ID.** The title's top-border
+stroke (the separator between stacked accordion items) carried a `boundVariables` reference in a long-hash
+external-library ID format, not the short local-ID format every other variable in this file uses.
+`getVariableByIdAsync` returned `null` for it — a dead reference to a library that isn't available in this
+context, most likely Sistema Origen's own live file. The cached color that kept rendering (`#0d0804`) didn't
+match the system's real black (`#050506`) anywhere else. Re-bound to `borderColor/default` (`#9AA1AA`) — the
+same local token the bottom `Border` rectangle already used correctly, which also unifies what had been two
+different color values doing the same conceptual job.
+
+**A real inconsistency surfaced in the same pass**: checked whether that top stroke was present across all 8
+`State × Version` variants, by data rather than by eye — it was on all 4 `Expanded` variants and on `Focus,
+Collapsed`, but missing from the other three Collapsed states (`Initial`/`Hover`/`Pressed`). Added to all 8
+so the separator no longer depends on interaction state.
+
+**The component's real shape, confirmed rather than assumed.** The actual component set only has a
+`State × Version(Expanded/Collapsed)` axis. The "Open/Closed × Last/Not-last" rows on Figma's documentation
+page aren't real variants at all — they're several real component instances stacked to demonstrate how the
+top-border-as-separator mechanism reads in an actual list (a middle item's top border does double duty as
+the item above it), which needed inspecting the node tree to confirm rather than infer from the doc page.
+One more orphaned token turned up while tracing this: `accordion/all/text/fg/generic` no longer resolves to
+any local variable and nothing in the component consumes it (confirmed by searching every node's bound
+variables) — left out of the code entirely rather than guessed into a token. `button/bg/pressed` is named
+like a color but is actually consumed as a plain `opacity` (80%) applied to the whole title+action row, not
+a color-mix — same mechanism already used by Icon Button and Segmented Control's pressed state.
+
+**CODE.** `Accordion.jsx` renders one item per instance — it doesn't own a list or track which item is open,
+same boundary as Tabs/TabItem. `isLast` is the only prop controlling the closing bottom border; the top
+border always paints. One real bug surfaced in CODE, not Figma: content text rendered center-aligned because
+of Vite's global boilerplate `text-align: center` — the exact same bug already hit once on Inline
+Notification — fixed with an explicit `text-align: left`. Verified live: a real 3-item stacked list with
+`isLast` on the last one, toggle, hover, keyboard focus, and dark mode.
+
+### Accordion tokens actually simplified, not just re-bound (8 September 2026, same day)
+
+**Carol's response after seeing the fixed-but-not-simplified result was direct:** she'd explicitly asked for
+the component tokens to be simplified, not just correctly bound. She'd also improved the Figma
+documentation page in the meantime — removed the "Not last" demonstration rows (they only showed a
+composition effect, not a real variant) and added an "Accordion setup" section for designers: build a
+vertical auto-layout with 0 gap, mark only the last item "Last" — confirming the exact same mental model
+`isLast` already encodes in code.
+
+**First pass at consolidation, then a real correction.** The initial proposal collapsed title, body, *and*
+icon color into one token. Carol pushed back: "recuerda que distinguimos entre textos e iconos... los
+padres del grupo deben ser bg, fg, border" — the project's actual convention nests `text`/`icon` one level
+inside `fg`, it doesn't collapse them together just because today's value happens to match. Corrected:
+title and body (both genuinely text) now share one `accordion/all/fg/text/generic`; the icon keeps its own
+`accordion/all/fg/icon/generic`, already correctly scoped to `STROKE_COLOR` in Figma — confirmed by
+checking the variable's actual `scopes` property before assuming it needed fixing, since this system's
+icons render via stroke, not fill.
+
+**Border tokens**: six fragmented entries (`title/borderTopColor`, `title/borderBottomColor`,
+`title/borderTopWidth`, `title/borderBottomWidth`, `content/borderBottomWidth`, `content/borderBottomColor`)
+for what was conceptually one 1px line in one color. `content/borderBottomColor/generic` (`#eeeff1`) turned
+out to be a genuinely different color from the rest, feeding a stray stroke that existed on only one of the
+eight variants — real cruft, removed along with that stroke. Collapsed to two:
+`accordion/all/border/color/generic` and `accordion/all/border/width/generic`, re-bound across all eight
+variants.
+
+**Deleting the old variables surfaced three more layers of vestigial bindings** — `Title + Action` and each
+variant's own top-level frame both carried leftover `strokeTopWeight`/`strokeBottomWeight` variable
+bindings with no actual stroke paint attached, blocking deletion of the old width tokens until cleared.
+None of it had any visual effect; all of it was real clutter once found.
+
+`accordion/all/text/fg/generic` (the orphaned token from the earlier leak-fixing pass) was deleted from
+Figma outright this time, not just left unused in code. `button/bg/pressed` was renamed to
+`accordion/all/opacity/pressed` — it was already a `FLOAT` variable already applied as real node `opacity`,
+so the rename was the only actual fix needed; same mechanism Icon Button and Segmented Control already use
+for their own pressed states. Verified with a screenshot after each phase: zero visual regression across
+all eight variants. `tokens.css` and `Accordion.jsx` updated to match (`--ds-accordion-fg-text`,
+`--ds-accordion-fg-icon`).
+
+### isLast briefly removed, then restored; AccordionGroup born (8 September 2026, same day)
+
+**Two more manual fixes landed in Figma while this was in progress, both found by Carol working directly in
+the file.** First: a real bug in her own "Accordion setup" documentation demo — the auto-layout frame
+wrapping the "Expanded" column had `itemSpacing: 114` instead of `0` (the "Collapsed" column's wrapper was
+correctly `0`), confirmed by reading the property directly rather than eyeballing the screenshot. Fixed, and
+re-verified with a fresh screenshot showing the four items flush against each other. Second: the focus ring
+on `Title + Action` only had its left/right sides at the focus stroke weight — she corrected it to all four
+sides.
+
+**A third change had a bigger consequence than a visual tweak — and it turned out to be temporary.** Carol
+tried switching the trigger's border from top-only to top-*and*-bottom on the `Title` frame. With every item
+painting both edges, the `isLast` mechanism looked redundant: in a stacked list, one item's bottom border and
+the next item's top border would land on the exact same pixel with the exact same color and weight. `isLast`
+was removed from `Accordion.jsx` on that basis. Carol reverted the Figma change shortly after, though — the
+separate `Border` rectangle gated by the `Last` component property was still needed, so `Title` went back to
+top-only. She flagged it directly: "había ignorado el border, pero como es necesario he aplicado los strokes
+de nuevo, así que revisa de nuevo." Re-checking the live Figma state confirmed it: `Title` is top-only stroke
+again, `Border` still exists and still carries its own bottom stroke. `isLast` was restored to
+`Accordion.jsx`, matching the original two-part mechanism. Lesson: confirm the *current* Figma state before
+trusting an earlier observation, especially in a session where Carol is editing in parallel.
+
+**A real bug also surfaced in code, prompted by a direct question**: "¿por qué el texto del content no hace
+fill horizontal?" `.ds-accordion__content` is a `flex-direction: column` container, and `{children}` as a
+bare string renders as an anonymous flex item — which browsers don't stretch to fill the cross axis the same
+reliable way a real block element does (the classic flexbox `min-width: auto` gotcha). Fixed by wrapping
+`children` in an explicit `.ds-accordion__content-inner` div, giving the fill behavior something real to
+target.
+
+**`AccordionGroup` organism, `src/organisms/`.** Carol asked directly: shouldn't there be an Accordion
+organism, the same way Table wraps the Cell family? The itemSpacing bug above is the concrete argument for
+it — if assembling a list depends on every designer or developer remembering "0 gap, only mark the last
+item," someone will eventually get it wrong, exactly as just happened in Carol's own demo. `AccordionGroup`
+takes an `items` array and renders N `Accordion` atoms with `gap: 0` hard-coded on the organism itself, not
+left as something a consumer could mis-set, and applies `isLast` automatically to the last item — the
+consumer never sets it by hand. `multiple` (Carol's explicit ask) controls whether more than one item can
+stay open: `false` is the classic single-open accordion, `true` lets each item toggle independently.
+Verified live, with the `isLast` mechanism back in place: both modes, toggling, hover, light and dark mode.

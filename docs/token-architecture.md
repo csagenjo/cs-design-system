@@ -425,6 +425,82 @@ se veía como un gris casi transparente en vez de un negro aclarado). El anillo 
 técnica real de Checkbox (2 capas con auto-layout+hug, sin posiciones fijas) — el primer intento se hizo por
 error en un nodo huérfano fuera del component set real, detectado por Carol y corregido.
 
+### Accordion — 2 fugas de IP reales, no solo tokens mal nombrados (08/09/2026)
+
+```
+accordion/all/title/fg/generic      → fg/default   (#050506) — título, correcto
+accordion/all/body/fg/generic       → fg/default   (#050506) — contenido, correcto
+accordion/all/icon/fg/generic       → fg/default   (#050506) — chevron, correcto
+accordion/all/title/borderTopColor/generic     → ❌ ID de variable con formato de
+                                                    librería EXTERNA, ya irresoluble
+                                                    (getVariableByIdAsync → null).
+                                                    Valor cacheado #0d0804, no coincide
+                                                    con el negro estándar del sistema
+                                                → ✅ reenlazado a borderColor/default
+                                                    (#9AA1AA) — mismo token que ya usa
+                                                    el rectángulo Border inferior
+accordion/all/text/fg/generic       → huérfano, ya no resuelve a ninguna Variable local
+                                        y ningún nodo real lo consume — ignorado
+accordion/all/button/bg/pressed     → nombrado como color, se consume como opacity (80%)
+                                        sobre todo el bloque — mismo patrón que Icon
+                                        Button/Segmented Control, no es un color-mix
+```
+
+A diferencia de todos los componentes anteriores de esta sesión, aquí no bastaba con revisar a qué Variable
+apunta cada binding — el `fontFamily/default` del texto del título SÍ tenía la Variable correcta enlazada
+(confirmado siguiendo su cadena de alias completa hasta `Nunito`), pero el `fontName` REAL renderizado en el
+nodo era `{family: "ING Me", style: "Bold"}` — el nombre real de una tipografía de una empresa real. Figma
+permite sobreescribir manualmente la fuente de un nodo de texto sin romper el binding de su Variable, así
+que el token "parece" correcto mirando solo el panel de Variables — hace falta comprobar la propiedad
+`fontName` real del nodo, no solo su binding. Barrido completo de los 12 nodos de texto del componente por
+dato: solo 1 estaba afectado (el resto ya usaba Nunito correctamente). Corregido sin tocar el binding, solo
+el `fontName` real.
+
+El segundo hallazgo (`borderTopColor`) es la primera vez en el proyecto que una referencia de Variable
+resulta ser directamente irresoluble — no un valor equivocado, sino un ID con formato de librería externa
+(hash largo, no el formato corto de IDs locales de este archivo) que ya no apunta a nada. Mismo criterio que
+los fixes fg/bg anteriores: se corrige en origen (reenlazar a un token local real), no se trabaja alrededor
+en CSS.
+
+**Actualización, mismo día — simplificación real, no solo bindings corregidos.** Carol lo dejó explícito:
+había pedido simplificar los tokens de Componente, no solo enlazarlos bien. Resultado final:
+
+```
+accordion/all/fg/text/generic     → fg/default   (#050506) — título Y cuerpo, un solo token
+accordion/all/fg/icon/generic     → fg/default   (#050506) — icono, scope STROKE_COLOR propio
+accordion/all/border/color/generic → borderColor/default (#9AA1AA) — línea superior E inferior
+accordion/all/border/width/generic → 1 (FLOAT)
+accordion/all/opacity/pressed      → opacity/pressed (80, FLOAT) — antes "button/bg/pressed"
+accordion/all/button/bg/hover      → bg/hover-primary (sin cambios, ya era real)
+```
+
+De 15 tokens de color/ancho fragmentados a 6. La primera propuesta de simplificación fusionaba título,
+cuerpo E icono en un único color — Carol corrigió: "recuerda que distinguimos entre textos e iconos... los
+padres del grupo deben ser bg, fg, border" — la norma real de nomenclatura del proyecto anida `text`/`icon`
+**dentro** de `fg` (no los junta solo porque hoy coincidan en valor), y el icono necesita su propio scope
+`STROKE_COLOR` en Figma porque los iconos de este sistema son vectores con stroke, no fill — ya estaba así
+de correctamente configurado, confirmado por dato (`variable.scopes`) antes de asumir que hacía falta
+arreglarlo. Los 6 tokens de borde fragmentados (`title/borderTopColor`/`-BottomColor`/`-TopWidth`/
+`-BottomWidth`, `content/borderBottomWidth`/`-BottomColor`) resultaron ser un único concepto repetido —
+`content/borderBottomColor/generic` (`#eeeff1`) era además un color genuinamente distinto, alimentando un
+stroke suelto que solo existía en 1 de las 8 variantes — cruft real, no una excepción de diseño. Al intentar
+borrar los tokens viejos aparecieron 3 capas más de bindings de ancho de stroke sin pintura real asociada
+(`Title + Action` y el frame raíz de cada variante) — vestigios sin efecto visual, limpiados antes de poder
+completar el borrado.
+
+**Actualización, mismo día — `border/width/generic` probó aplicarse en 2 lados, luego revertido a 1.** Carol
+probó cambiar el trigger en Figma de borde solo-arriba a arriba-Y-abajo en el frame `Title`. Consecuencia
+directa asumida en ese momento: el prop `isLast` (y el rectángulo `Border` que dependía de él) dejaría de
+hacer falta — en una lista apilada, el borde inferior de un item y el superior del siguiente caerían en el
+mismo píxel con el mismo color y grosor. Se eliminó de `Accordion.jsx` sobre esa base. **Carol revirtió el
+cambio en Figma poco después** — el rectángulo `Border`/propiedad `Last` seguía haciendo falta, así que
+`Title` volvió a borde solo-arriba ("había ignorado el border, pero como es necesario he aplicado los strokes
+de nuevo, así que revisa de nuevo"). Reconfirmado el estado real en Figma: `Title` de nuevo solo-arriba,
+`Border` sigue presente y visible con su propio stroke inferior. `isLast` restaurado en `Accordion.jsx`,
+mecanismo original intacto. El organismo `AccordionGroup` (`src/organisms/`) compone varios `Accordion` con
+gap `0` fijo en el propio organismo y aplica `isLast` automáticamente al último item — `multiple` decide si
+se permite más de un item abierto a la vez.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):
