@@ -7,14 +7,12 @@
  * acordeón clásico, un solo item abierto a la vez; `true` permite varios
  * abiertos de forma independiente.
  *
- * Gap 0 fijo en el propio organismo — el borde arriba+abajo de cada
- * `Accordion` ya resuelve la separación visual entre items apilados por sí
- * solo (el borde inferior de un item coincide con el superior del
- * siguiente). No depende de que el consumidor monte el auto-layout bien a
- * mano: el bug real encontrado en la propia documentación de Figma de
- * Accordion (un gap de 114px en vez de 0 en la lista de ejemplo) es
- * exactamente la clase de error que este organismo hace estructuralmente
- * imposible.
+ * Gap 0 fijo en el propio organismo, y `isLast` aplicado automáticamente
+ * al último item — el consumidor nunca lo toca a mano. No depende de que
+ * cada lista se monte bien: el bug real encontrado en la propia
+ * documentación de Figma de Accordion (un gap de 114px en vez de 0 en la
+ * lista de ejemplo) es exactamente la clase de error que este organismo
+ * hace estructuralmente imposible.
  *
  * USO:
  *   <AccordionGroup items={[
@@ -77,7 +75,13 @@ export function AccordionGroup({
   return (
     <div id={id} className={classes}>
       {items.map((item, i) => (
-        <Accordion key={i} title={item.title} expanded={isOpen(i)} onToggle={() => toggle(i)}>
+        <Accordion
+          key={i}
+          title={item.title}
+          expanded={isOpen(i)}
+          onToggle={() => toggle(i)}
+          isLast={i === items.length - 1}
+        >
           {item.content}
         </Accordion>
       ))}
