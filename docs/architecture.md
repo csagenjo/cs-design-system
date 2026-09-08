@@ -948,3 +948,36 @@ so the rename was the only actual fix needed; same mechanism Icon Button and Seg
 for their own pressed states. Verified with a screenshot after each phase: zero visual regression across
 all eight variants. `tokens.css` and `Accordion.jsx` updated to match (`--ds-accordion-fg-text`,
 `--ds-accordion-fg-icon`).
+
+### isLast removed, AccordionGroup born (8 September 2026, same day)
+
+**Two more manual fixes landed in Figma while this was in progress, both found by Carol working directly in
+the file.** First: a real bug in her own "Accordion setup" documentation demo — the auto-layout frame
+wrapping the "Expanded" column had `itemSpacing: 114` instead of `0` (the "Collapsed" column's wrapper was
+correctly `0`), confirmed by reading the property directly rather than eyeballing the screenshot. Fixed, and
+re-verified with a fresh screenshot showing the four items flush against each other. Second: the focus ring
+on `Title + Action` only had its left/right sides at the focus stroke weight — she corrected it to all four
+sides.
+
+**A third change had a bigger consequence than a visual tweak.** Carol switched the trigger's border from
+top-only to top-*and*-bottom on the `Title` frame. Once every item paints both edges, the whole `isLast`
+mechanism becomes redundant: in a stacked list, one item's bottom border and the next item's top border
+land on the exact same pixel with the exact same color and weight — they read as a single line — and the
+actual last item in a list closes correctly using nothing but its own bottom border. `isLast` was removed
+from `Accordion.jsx` entirely; nothing needs to know its position in a list anymore.
+
+**A real bug also surfaced in code, prompted by a direct question**: "¿por qué el texto del content no hace
+fill horizontal?" `.ds-accordion__content` is a `flex-direction: column` container, and `{children}` as a
+bare string renders as an anonymous flex item — which browsers don't stretch to fill the cross axis the same
+reliable way a real block element does (the classic flexbox `min-width: auto` gotcha). Fixed by wrapping
+`children` in an explicit `.ds-accordion__content-inner` div, giving the fill behavior something real to
+target.
+
+**`AccordionGroup` organism, `src/organisms/`.** Carol asked directly: shouldn't there be an Accordion
+organism, the same way Table wraps the Cell family? The itemSpacing bug above is the concrete argument for
+it — if assembling a list depends on every designer or developer remembering "0 gap, only mark the last
+item," someone will eventually get it wrong, exactly as just happened in Carol's own demo. `AccordionGroup`
+takes an `items` array and renders N `Accordion` atoms with `gap: 0` hard-coded on the organism itself, not
+left as something a consumer could mis-set. `multiple` (Carol's explicit ask) controls whether more than one
+item can stay open: `false` is the classic single-open accordion, `true` lets each item toggle
+independently. Verified live: both modes, toggling, hover, light and dark mode.

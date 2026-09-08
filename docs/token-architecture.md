@@ -488,6 +488,15 @@ borrar los tokens viejos aparecieron 3 capas más de bindings de ancho de stroke
 (`Title + Action` y el frame raíz de cada variante) — vestigios sin efecto visual, limpiados antes de poder
 completar el borrado.
 
+**Actualización, mismo día — `border/width/generic` pasa a aplicarse en 2 lados, no 1.** Carol cambió el
+trigger en Figma de borde solo-arriba a arriba-Y-abajo en el frame `Title`. Consecuencia directa: el prop
+`isLast` (y el rectángulo `Border` que dependía de él) deja de hacer falta — en una lista apilada, el borde
+inferior de un item y el superior del siguiente caen en el mismo píxel con el mismo color y grosor, se leen
+como una sola línea, y el último item de verdad cierra solo con su propio inferior. Eliminado de
+`Accordion.jsx`. El organismo `AccordionGroup` (`src/organisms/`) es ahora quien compone varios `Accordion`
+— gap `0` fijo en el propio organismo, con `multiple` decidiendo si se permite más de un item abierto a la
+vez.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):
