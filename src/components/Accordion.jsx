@@ -2,17 +2,18 @@
  * Accordion — Componente atómico
  * CS Design System · v1.0
  *
- * Un solo item expandible/colapsable. El borde superior se pinta siempre —
- * es el separador natural entre items apilados en una lista (el de arriba
- * aporta su propio borde inferior visualmente al de abajo) — y el inferior
- * (`isLast`) solo se pinta en el último item de la lista, para cerrarla.
- * Mismo criterio que `lastRow` en CellData/CellHeader.
+ * Un solo item expandible/colapsable. El trigger pinta borde arriba Y abajo
+ * siempre — en una lista apilada, el borde inferior de un item y el
+ * superior del siguiente coinciden exactamente (misma línea), y el último
+ * item de la lista cierra solo con su propio borde inferior. No hace falta
+ * ningún prop de "es el último" — la composición ya lo resuelve sola.
  *
  * Sesión de limpieza real de Figma antes de escribir este átomo — 2 fugas
  * de IP encontradas y corregidas (fuente literal filtrada en el título,
- * color de borde enlazado a una librería externa ya irresoluble) y una
- * inconsistencia real (el borde superior faltaba en 3 de los 8 estados).
- * Ver CLAUDE.md §9 para el detalle completo.
+ * color de borde enlazado a una librería externa ya irresoluble), una
+ * inconsistencia real (el borde superior faltaba en 3 de los 8 estados),
+ * y una simplificación real de tokens (no solo bindings corregidos, a
+ * petición de Carol). Ver CLAUDE.md §9 para el detalle completo.
  *
  * Estados vía pseudo-clases nativas sobre `<button>` real: `:hover` con
  * background (mismo azul claro que Checkbox/Radio/Selector hover),
@@ -21,18 +22,19 @@
  * `:focus-visible` con anillo doble `outline`+`box-shadow` (mismo mecanismo
  * CSS que Icon Button/Segmented Control).
  *
+ * `children` se envuelve en un div interno propio (`__content-inner`) —
+ * texto plano como children directo de un contenedor flex-column se envuelve
+ * en una caja anónima que por defecto NO hace fill horizontal (min-width:
+ * auto de flexbox); el wrapper da un elemento real al que aplicarle 100%.
+ *
+ * Para listas reales de varios items, usar el organismo `AccordionGroup`
+ * (src/organisms/) — gestiona qué item(s) está(n) abierto(s) y agrupa con
+ * gap 0 real, sin depender de que el consumidor lo monte bien a mano.
+ *
  * USO:
  *   <Accordion title="Título" expanded={open} onToggle={() => setOpen(!open)}>
  *     Contenido...
  *   </Accordion>
- *
- *   {items.map((item, i) => (
- *     <Accordion key={i} title={item.title} expanded={openIndex === i}
- *       onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
- *       isLast={i === items.length - 1}>
- *       {item.content}
- *     </Accordion>
- *   ))}
  */
 
 import React from 'react';
@@ -53,6 +55,7 @@ const css = `
   box-sizing: border-box;
   border: none;
   border-top: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
+  border-bottom: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
   background: transparent;
   padding: var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-right) var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-left);
   color: var(--ds-accordion-fg-text);
@@ -92,8 +95,11 @@ const css = `
   line-height: var(--ds-lineHeight-xs);        /* 24 */
   text-align: left;
 }
-.ds-accordion--last {
-  border-bottom: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
+.ds-accordion__content-inner {
+  width: 100%;
+  min-width: 0; /* texto plano como children directo se envuelve en una caja
+                   anónima de flexbox que por defecto no hace fill (min-width:
+                   auto) — este wrapper real da algo a lo que aplicarle 100% */
 }
 `;
 
@@ -104,13 +110,10 @@ export function Accordion({
   children,
   expanded = false,
   onToggle,
-  isLast = false,
   id,
   className,
 }) {
-  const classes = ['ds-accordion', isLast ? 'ds-accordion--last' : '', className || '']
-    .filter(Boolean)
-    .join(' ');
+  const classes = ['ds-accordion', className || ''].filter(Boolean).join(' ');
 
   return (
     <div id={id} className={classes}>
@@ -128,7 +131,11 @@ export function Accordion({
           strokeWidth={2}
         />
       </button>
-      {expanded && <div className="ds-accordion__content">{children}</div>}
+      {expanded && (
+        <div className="ds-accordion__content">
+          <div className="ds-accordion__content-inner">{children}</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -142,7 +149,7 @@ export default Accordion;
   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 </Accordion>
 
-<Accordion title="Último item" expanded={false} onToggle={fn} isLast>
+<Accordion title="Otro item" expanded={false} onToggle={fn}>
   Contenido...
 </Accordion>
 */
