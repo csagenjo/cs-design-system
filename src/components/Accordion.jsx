@@ -55,7 +55,7 @@ const css = `
   border-top: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
   background: transparent;
   padding: var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-right) var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-left);
-  color: var(--ds-accordion-title-fg);
+  color: var(--ds-accordion-fg-text);
   font-family: inherit;                       /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-title-md);      /* 19 */
   font-weight: var(--ds-font-weight-bold);
@@ -76,7 +76,7 @@ const css = `
 }
 .ds-accordion__icon {
   flex-shrink: 0;
-  color: var(--ds-accordion-icon-fg);
+  color: var(--ds-accordion-fg-icon);
 }
 .ds-accordion__content {
   display: flex;
@@ -85,7 +85,7 @@ const css = `
   box-sizing: border-box;
   padding: var(--ds-accordion-content-padding-top) var(--ds-accordion-content-padding-right) var(--ds-accordion-content-padding-bottom) var(--ds-accordion-content-padding-left);
   margin: 0;
-  color: var(--ds-accordion-body-fg);
+  color: var(--ds-accordion-fg-text);
   font-family: inherit;
   font-size: var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);

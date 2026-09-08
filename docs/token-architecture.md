@@ -462,6 +462,32 @@ resulta ser directamente irresoluble — no un valor equivocado, sino un ID con 
 los fixes fg/bg anteriores: se corrige en origen (reenlazar a un token local real), no se trabaja alrededor
 en CSS.
 
+**Actualización, mismo día — simplificación real, no solo bindings corregidos.** Carol lo dejó explícito:
+había pedido simplificar los tokens de Componente, no solo enlazarlos bien. Resultado final:
+
+```
+accordion/all/fg/text/generic     → fg/default   (#050506) — título Y cuerpo, un solo token
+accordion/all/fg/icon/generic     → fg/default   (#050506) — icono, scope STROKE_COLOR propio
+accordion/all/border/color/generic → borderColor/default (#9AA1AA) — línea superior E inferior
+accordion/all/border/width/generic → 1 (FLOAT)
+accordion/all/opacity/pressed      → opacity/pressed (80, FLOAT) — antes "button/bg/pressed"
+accordion/all/button/bg/hover      → bg/hover-primary (sin cambios, ya era real)
+```
+
+De 15 tokens de color/ancho fragmentados a 6. La primera propuesta de simplificación fusionaba título,
+cuerpo E icono en un único color — Carol corrigió: "recuerda que distinguimos entre textos e iconos... los
+padres del grupo deben ser bg, fg, border" — la norma real de nomenclatura del proyecto anida `text`/`icon`
+**dentro** de `fg` (no los junta solo porque hoy coincidan en valor), y el icono necesita su propio scope
+`STROKE_COLOR` en Figma porque los iconos de este sistema son vectores con stroke, no fill — ya estaba así
+de correctamente configurado, confirmado por dato (`variable.scopes`) antes de asumir que hacía falta
+arreglarlo. Los 6 tokens de borde fragmentados (`title/borderTopColor`/`-BottomColor`/`-TopWidth`/
+`-BottomWidth`, `content/borderBottomWidth`/`-BottomColor`) resultaron ser un único concepto repetido —
+`content/borderBottomColor/generic` (`#eeeff1`) era además un color genuinamente distinto, alimentando un
+stroke suelto que solo existía en 1 de las 8 variantes — cruft real, no una excepción de diseño. Al intentar
+borrar los tokens viejos aparecieron 3 capas más de bindings de ancho de stroke sin pintura real asociada
+(`Title + Action` y el frame raíz de cada variante) — vestigios sin efecto visual, limpiados antes de poder
+completar el borrado.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):
