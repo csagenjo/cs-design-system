@@ -860,3 +860,52 @@ Figma's `bgMix/pressed` turned out to be a flat 80% opacity, not a color-mix ove
 uses — no need for Figma's two-frame technique once it's just CSS). Verified live: three sizes, hover,
 keyboard focus, `:active`, dark mode, and a 7-segment case specifically to confirm there's no hidden ceiling
 at 5.
+
+### Accordion built — opens Sprint 5, two real IP leaks found (8 September 2026)
+
+**Carol asked for a real cleanup pass before any code, not just a token sync.** Her words starting EXPLORE:
+"está mal hecho o se quedaron a medias simplificando" (badly built, or someone stopped halfway through
+simplifying it). That turned out to be accurate, and worse than the usual mis-bound-token pattern this
+project has caught repeatedly — this time it was actual leaked source data, not just confusing names.
+
+**Leak #1 — a literal real typeface name, hiding behind a correctly-bound token.** `get_variable_defs`
+reported the title's `fontFamily/default` as `"ING Me"` — the real name of a real company's typeface. The
+suspicious part: the text node's Variable binding for `fontFamily` *did* correctly point to the project's
+own `fontFamily/default` (which resolves to Nunito everywhere else in the file, confirmed by walking its
+full alias chain). Figma allows a text node's rendered font to be manually overridden after a Variable is
+bound, without breaking the binding metadata — so the token *looked* fine from the binding alone. Only
+checking the node's actual `fontName` property directly (`{family: "ING Me", style: "Bold"}`) surfaced it.
+Swept all 12 text nodes across the 8 variants by data — exactly one was affected. Fixed by setting the real
+`fontName` to Nunito Bold; the binding itself needed no change.
+
+**Leak #2 — a border color bound to an unresolvable external-library variable ID.** The title's top-border
+stroke (the separator between stacked accordion items) carried a `boundVariables` reference in a long-hash
+external-library ID format, not the short local-ID format every other variable in this file uses.
+`getVariableByIdAsync` returned `null` for it — a dead reference to a library that isn't available in this
+context, most likely Sistema Origen's own live file. The cached color that kept rendering (`#0d0804`) didn't
+match the system's real black (`#050506`) anywhere else. Re-bound to `borderColor/default` (`#9AA1AA`) — the
+same local token the bottom `Border` rectangle already used correctly, which also unifies what had been two
+different color values doing the same conceptual job.
+
+**A real inconsistency surfaced in the same pass**: checked whether that top stroke was present across all 8
+`State × Version` variants, by data rather than by eye — it was on all 4 `Expanded` variants and on `Focus,
+Collapsed`, but missing from the other three Collapsed states (`Initial`/`Hover`/`Pressed`). Added to all 8
+so the separator no longer depends on interaction state.
+
+**The component's real shape, confirmed rather than assumed.** The actual component set only has a
+`State × Version(Expanded/Collapsed)` axis. The "Open/Closed × Last/Not-last" rows on Figma's documentation
+page aren't real variants at all — they're several real component instances stacked to demonstrate how the
+top-border-as-separator mechanism reads in an actual list (a middle item's top border does double duty as
+the item above it), which needed inspecting the node tree to confirm rather than infer from the doc page.
+One more orphaned token turned up while tracing this: `accordion/all/text/fg/generic` no longer resolves to
+any local variable and nothing in the component consumes it (confirmed by searching every node's bound
+variables) — left out of the code entirely rather than guessed into a token. `button/bg/pressed` is named
+like a color but is actually consumed as a plain `opacity` (80%) applied to the whole title+action row, not
+a color-mix — same mechanism already used by Icon Button and Segmented Control's pressed state.
+
+**CODE.** `Accordion.jsx` renders one item per instance — it doesn't own a list or track which item is open,
+same boundary as Tabs/TabItem. `isLast` is the only prop controlling the closing bottom border; the top
+border always paints. One real bug surfaced in CODE, not Figma: content text rendered center-aligned because
+of Vite's global boilerplate `text-align: center` — the exact same bug already hit once on Inline
+Notification — fixed with an explicit `text-align: left`. Verified live: a real 3-item stacked list with
+`isLast` on the last one, toggle, hover, keyboard focus, and dark mode.

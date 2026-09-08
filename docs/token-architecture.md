@@ -425,6 +425,43 @@ se veía como un gris casi transparente en vez de un negro aclarado). El anillo 
 técnica real de Checkbox (2 capas con auto-layout+hug, sin posiciones fijas) — el primer intento se hizo por
 error en un nodo huérfano fuera del component set real, detectado por Carol y corregido.
 
+### Accordion — 2 fugas de IP reales, no solo tokens mal nombrados (08/09/2026)
+
+```
+accordion/all/title/fg/generic      → fg/default   (#050506) — título, correcto
+accordion/all/body/fg/generic       → fg/default   (#050506) — contenido, correcto
+accordion/all/icon/fg/generic       → fg/default   (#050506) — chevron, correcto
+accordion/all/title/borderTopColor/generic     → ❌ ID de variable con formato de
+                                                    librería EXTERNA, ya irresoluble
+                                                    (getVariableByIdAsync → null).
+                                                    Valor cacheado #0d0804, no coincide
+                                                    con el negro estándar del sistema
+                                                → ✅ reenlazado a borderColor/default
+                                                    (#9AA1AA) — mismo token que ya usa
+                                                    el rectángulo Border inferior
+accordion/all/text/fg/generic       → huérfano, ya no resuelve a ninguna Variable local
+                                        y ningún nodo real lo consume — ignorado
+accordion/all/button/bg/pressed     → nombrado como color, se consume como opacity (80%)
+                                        sobre todo el bloque — mismo patrón que Icon
+                                        Button/Segmented Control, no es un color-mix
+```
+
+A diferencia de todos los componentes anteriores de esta sesión, aquí no bastaba con revisar a qué Variable
+apunta cada binding — el `fontFamily/default` del texto del título SÍ tenía la Variable correcta enlazada
+(confirmado siguiendo su cadena de alias completa hasta `Nunito`), pero el `fontName` REAL renderizado en el
+nodo era `{family: "ING Me", style: "Bold"}` — el nombre real de una tipografía de una empresa real. Figma
+permite sobreescribir manualmente la fuente de un nodo de texto sin romper el binding de su Variable, así
+que el token "parece" correcto mirando solo el panel de Variables — hace falta comprobar la propiedad
+`fontName` real del nodo, no solo su binding. Barrido completo de los 12 nodos de texto del componente por
+dato: solo 1 estaba afectado (el resto ya usaba Nunito correctamente). Corregido sin tocar el binding, solo
+el `fontName` real.
+
+El segundo hallazgo (`borderTopColor`) es la primera vez en el proyecto que una referencia de Variable
+resulta ser directamente irresoluble — no un valor equivocado, sino un ID con formato de librería externa
+(hash largo, no el formato corto de IDs locales de este archivo) que ya no apunta a nada. Mismo criterio que
+los fixes fg/bg anteriores: se corrige en origen (reenlazar a un token local real), no se trabaja alrededor
+en CSS.
+
 ### AmountView — convención plain/soft/solid (01/07/2026)
 
 Sustituyó la nomenclatura anterior (`positiveHighEmphasis`, `negativeHighEmphasis`, `negative`):

@@ -683,6 +683,62 @@
   --ds-segmented-control-focus-gap:            2px; /* hueco entre los dos anillos */
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Accordion
+     Sprint 5 Pri 5. Primera pieza — sesión de limpieza real de Figma antes de
+     tocar tokens.css, a petición de Carol ("está mal hecho o se quedaron a
+     medias simplificando").
+     2 fugas de IP reales encontradas y corregidas en Figma (no solo tokens
+     mal nombrados, esta vez datos reales de Sistema Origen filtrados):
+     (1) el texto "Title" tenía la fuente literal `ING Me` (nombre real de
+         una tipografía de una empresa real) pese a tener la Variable
+         `fontFamily/default` enlazada — Figma permite sobreescribir la
+         fuente renderizada aunque el binding siga apuntando al token
+         correcto; solo 1 de los 12 nodos de texto del componente estaba
+         afectado, confirmado por dato barriendo los 12. Corregido a Nunito.
+     (2) el color del borde superior (`title/borderTopColor/generic`) estaba
+         enlazado a un ID de variable con formato de librería EXTERNA, ya
+         irresoluble (`getVariableByIdAsync` devuelve null) — el valor
+         cacheado que se seguía viendo (`#0d0804`) no coincide con el negro
+         estándar del sistema (`#050506`). Reenlazado a `borderColor/default`
+         (`#9AA1AA`), el mismo token que ya usa el rectángulo `Border`
+         inferior — unifica los dos mecanismos de separador en un solo color.
+     Inconsistencia real encontrada y corregida: el stroke superior solo
+     estaba presente en los 4 estados Expanded y en `Focus, Collapsed` — los
+     otros 3 Collapsed (Initial/Hover/Pressed) no lo tenían. Añadido a los 8.
+     `accordion/all/text/fg/generic` resultó ser un token huérfano — ya no
+     resuelve a ninguna Variable local y no lo consume ningún nodo real
+     (confirmado por dato) — ignorado, no se porta a código.
+     `button/bg/pressed` está nombrado como color pero en realidad se
+     consume como `opacity` (80%) sobre todo el bloque título+acción —
+     mismo patrón ya visto en Icon Button/Segmented Control, tratado igual
+     aquí (CSS `:active { opacity }`, no un color-mix).
+     Estructura simplificada en código: el borde superior se pinta siempre
+     (separador natural entre items apilados en una lista), el inferior
+     — el rectángulo `Border` de Figma — solo cuando `isLast`, para cerrar
+     la lista. Mismo criterio que `lastRow` en CellData/CellHeader.
+     ========================================================================== */
+  --ds-accordion-title-fg:            var(--ds-fg-default);
+  --ds-accordion-body-fg:             var(--ds-fg-default);
+  --ds-accordion-icon-fg:             var(--ds-fg-default);
+  --ds-accordion-border-color:        var(--ds-borderColor-default);
+  --ds-accordion-border-width:        1px;
+  --ds-accordion-title-padding-left:  8px;
+  --ds-accordion-title-padding-ver:   8px;
+  --ds-accordion-title-padding-right: 16px;
+  --ds-accordion-title-gap:           8px;
+  --ds-accordion-content-gap:         6px;
+  --ds-accordion-content-padding-left:  8px;
+  --ds-accordion-content-padding-top:   12px;
+  --ds-accordion-content-padding-right: 12px;
+  --ds-accordion-content-padding-bottom: 6px; /* gapBottom/generic en Figma */
+  --ds-accordion-bg-hover:            var(--ds-bg-hover-primary);
+  --ds-accordion-opacity-pressed:     var(--ds-opacity-pressed);
+  --ds-accordion-focus-inner:         var(--ds-borderColor-focus-inner);
+  --ds-accordion-focus-outer:         var(--ds-borderColor-focus-outer);
+  --ds-accordion-focus-width:         2px;
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
