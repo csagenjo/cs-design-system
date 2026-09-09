@@ -64,6 +64,14 @@ const css = `
   position: relative;
   width: 100%;
   height: var(--ds-slider-track-height);
+}
+.ds-stepped-slider__line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: calc(var(--ds-slider-track-height) / 2);
+  transform: translateY(-50%);
   border-radius: var(--ds-slider-track-border-radius);
   background: var(--ds-slider-track-bg);
   overflow: hidden;
@@ -121,7 +129,7 @@ export function SteppedSlider({
   onChange,
   disabled = false,
   variant = 'primary', // 'primary' | 'secondary'
-  formatValue = (v) => `${v}%`,
+  formatValue = (v) => `${Math.round(v)}%`, // steps no siempre divide min-max en enteros exactos (p.ej. steps=4 → 33.33/66.66) — se redondea solo la burbuja, el snapping interno sigue con el valor real
   ariaLabel,
   id,
   className,
@@ -205,10 +213,12 @@ export function SteppedSlider({
         onPointerUp={handlePointerUp}
       >
         <div className="ds-stepped-slider__track">
-          <div
-            className={['ds-stepped-slider__indicator', isSecondary ? 'ds-stepped-slider__indicator--secondary' : ''].filter(Boolean).join(' ')}
-            style={{ width: `${percent}%` }}
-          />
+          <div className="ds-stepped-slider__line">
+            <div
+              className={['ds-stepped-slider__indicator', isSecondary ? 'ds-stepped-slider__indicator--secondary' : ''].filter(Boolean).join(' ')}
+              style={{ width: `${percent}%` }}
+            />
+          </div>
           <div className="ds-stepped-slider__dots">
             {stepValues.map((v) => (
               <span
