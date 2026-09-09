@@ -765,6 +765,82 @@
   --ds-accordion-focus-width:         2px;
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Slider
+     Sprint 5 Pri 6. `.Knob` es un sub-atomo compartido real en Figma --
+     instancia el atomo `Tooltip` para la burbuja de valor -- reutilizado por
+     Continuous, Range y Segmented. En codigo, el mismo criterio: un helper
+     interno no exportado (`_sliderKnob.jsx`), NO un atomo publico, mismo
+     patron que `_dialogBase.jsx`/`_inputBase.js`.
+     Sesion de saneamiento real antes de tocar tokens.css:
+     - 4 variantes (`Primary`+`With Icon`+`Progress=0%`) tenian el texto del
+       tooltip literalmente "%" (sin el "0") -- el frame del knob hace HUG
+       sobre el contenido, asi que el texto vacio estrechaba el frame y
+       descuadraba la posicion absoluta del knob. Corregido en las 4
+       (Initial/Disabled/Hover/Focus).
+     - Bug de capa saltada real: 16 variantes (`Primary`x Hover/Focus) tenian
+       el relleno de color enlazado directo a `color/primary` (capa BASE),
+       saltandose Component y Mode -- mismo tipo de infraccion ya cazada
+       varias veces en el proyecto. Reenlazado a `slider/all/indicator/
+       fg/primary`.
+     - Capas mal nombradas: la capa que pinta el relleno de color completo
+       se llamaba `Slider (adjustable)` y la mascara gris que tapa la parte
+       no recorrida se llamaba `Base` -- ninguna coincidia con su grupo de
+       token real. Renombradas a `.Indicator` (exterior, color) / `.Track`
+       (interior, mascara gris con `paddingLeft` variable) en Continuous;
+       en Range el mecanismo es el inverso (`.Track` exterior gris real,
+       `.Indicator` el tramo coloreado entre los dos knobs) -- confirmado
+       capa por capa antes de renombrar, no asumido por analogia.
+     - `.Segment` (Point+Tail, usado por el slider de pasos) se habia
+       borrado por error y Carol lo restauro. El maestro restaurado no
+       tenia eje `Variant` (solo pintaba rosa, `bg/secondary`/`fg/secondary`
+       de Mode, saltandose Component igual que el bug de arriba) -- anadido
+       el eje `Variant` Primary/Secondary real, reenlazado a los mismos
+       tokens de `indicator`/`track` que el resto de la familia (sin tokens
+       nuevos). Carol corrigio a mano un hueco real de ~3.7px entre Point y
+       Tail (Tail no llegaba al borde del segmento) con auto-layout+fill.
+     Decision de arquitectura (confirmada con Carol tras varios intentos
+     reales de fusionar Continuous+Segmented en Figma, que rompieron el
+     posicionamiento del knob y expusieron el bug de `.Segment` de arriba):
+     Continuous y Segmented se quedan como DOS componentes separados, tanto
+     en Figma como en codigo -- el mecanismo interno es realmente distinto
+     (relleno+mascara vs. cadena de instancias `.Segment`), no una simple
+     variacion visual. Comparten tokens, no componente. `.Segment` reutiliza
+     literalmente los mismos tokens de `indicator`/`track` de abajo.
+     ========================================================================== */
+  --ds-slider-root-bg:                  var(--ds-bg-default);
+  --ds-slider-root-bg-hover:            var(--ds-bg-hover-primary);
+  --ds-slider-root-border-color:        var(--ds-borderColor-subtle);
+  --ds-slider-root-border-width:        1px;
+  --ds-slider-root-border-width-focus:  2px;
+  --ds-slider-root-border-radius:       8px;
+  --ds-slider-root-gap:                 12px;
+  --ds-slider-root-padding-ver:         12px;
+  --ds-slider-root-padding-ver-with-icon: 6px;
+
+  --ds-slider-track-bg:                 var(--ds-bg-subtle);   /* tambien disabled -- mismo valor, sin token propio (rectificado por Carol) */
+  --ds-slider-track-bg-hover:           var(--ds-bg-default);
+  --ds-slider-track-border-radius:      8px;
+  --ds-slider-track-height:             8px;
+
+  --ds-slider-indicator-bg-primary:     var(--ds-bg-primary);
+  --ds-slider-indicator-bg-secondary:   var(--ds-bg-secondary);
+  --ds-slider-indicator-bg-disabled:    var(--ds-fg-disabled);
+  --ds-slider-indicator-border-radius:  8px;
+
+  --ds-slider-knob-bg:                  var(--ds-bg-default);
+  --ds-slider-knob-bg-disabled:         var(--ds-bg-subtle);
+  --ds-slider-knob-border-color:        var(--ds-fg-subtle);
+  --ds-slider-knob-border-color-disabled: var(--ds-fg-disabled);
+  --ds-slider-knob-border-radius:       80px;
+  --ds-slider-knob-size:                24px;
+  --ds-slider-knob-focus-inner:         var(--ds-borderColor-focus-inner);
+  --ds-slider-knob-focus-outer:         var(--ds-borderColor-focus-outer);
+
+  --ds-slider-icon-fg:                  var(--ds-fg-subtle);
+  --ds-slider-icon-fg-disabled:         var(--ds-fg-disabled);
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
