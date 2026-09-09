@@ -17,6 +17,12 @@
  * `placement` decide en qué lado aparece la burbuja respecto al trigger — la
  * flecha siempre apunta HACIA el trigger, en el lado opuesto a `placement`.
  *
+ * `forceVisible` fuerza la burbuja a mostrarse aunque no haya hover/foco --
+ * lo usa el helper interno de Slider (`_sliderKnob.jsx`) para mantener el
+ * valor visible mientras se arrastra el knob con el ratón (el puntero puede
+ * salir del área del elemento durante un drag rápido, y ahí :hover deja de
+ * aplicar aunque el drag siga activo).
+ *
  * USO:
  *   <Tooltip label="Expand"><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
  *   <Tooltip label="Eliminar" placement="right"><Button variant="negative">Eliminar</Button></Tooltip>
@@ -51,7 +57,8 @@ const css = `
   z-index: 10;
 }
 .ds-tooltip:hover .ds-tooltip__bubble,
-.ds-tooltip:focus-within .ds-tooltip__bubble {
+.ds-tooltip:focus-within .ds-tooltip__bubble,
+.ds-tooltip__bubble--force-visible {
   opacity: 1;
 }
 .ds-tooltip__arrow {
@@ -122,9 +129,11 @@ injectStyles('ds-tooltip', css);
 export function Tooltip({
   label,
   placement = 'top', // 'top' | 'bottom' | 'left' | 'right'
+  forceVisible = false,
   children,
   id,
   className,
+  style,
 }) {
   const generatedId = React.useId();
   const tooltipId = id || generatedId;
@@ -134,15 +143,16 @@ export function Tooltip({
     : children;
 
   const classes = ['ds-tooltip', className || ''].filter(Boolean).join(' ');
+  const bubbleClasses = [
+    'ds-tooltip__bubble',
+    `ds-tooltip__bubble--${placement}`,
+    forceVisible ? 'ds-tooltip__bubble--force-visible' : '',
+  ].filter(Boolean).join(' ');
 
   return (
-    <span className={classes}>
+    <span className={classes} style={style}>
       {trigger}
-      <span
-        className={`ds-tooltip__bubble ds-tooltip__bubble--${placement}`}
-        role="tooltip"
-        id={tooltipId}
-      >
+      <span className={bubbleClasses} role="tooltip" id={tooltipId}>
         {label}
         <span className="ds-tooltip__arrow" />
       </span>
