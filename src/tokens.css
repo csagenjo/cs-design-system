@@ -841,6 +841,54 @@
   --ds-slider-icon-fg-disabled:         var(--ds-fg-disabled);
 
 
+  /* ==========================================================================
+     COMPONENT TOKENS -- Combobox
+     Sprint 5 Pri 10. Simplificacion real de tokens ANTES de tocar codigo, a
+     peticion de Carol -- mismo criterio ya aplicado en Accordion/Slider.
+     Grupos fragmentados originales: `inputIconLeft` y `iconDropdown` eran dos
+     tokens SEPARADOS con el mismo valor (#4ba9c0, un icono generico) --
+     fusionados en un unico `icon/fg`. `valueText` renombrado a `text/fg`
+     (nombre generico, mismo criterio que `icon`). `caret` se queda CON SU
+     PROPIO token aposta: no es un icono, es el vector del cursor de texto
+     parpadeante (un trazo de 30x0, confirmado inspeccionando la capa) --
+     coincide en valor hoy por casualidad, pero es un elemento conceptualmente
+     distinto (mismo criterio que Carol fijo en Accordion: no fusionar colores
+     de elementos distintos aunque coincidan). `iconDelete` y `autoSuggestText`
+     tampoco se fusionan -- valores realmente distintos (gris vs negro/teal).
+     Bug real encontrado de paso: `Selection Cells` (usado por el Picker)
+     fingia el estado "seleccionado" con un borde manual de 4 lados
+     (`borderColor/primary`, capa Mode, saltandose Component) en vez de usar
+     la property `Selected` real que `ListView` ya tiene desde Sprint 2 (el
+     ribbon del borde izquierdo) -- la instancia tenia `Selected=false` puesto
+     a mano con el borde postizo encima. Corregido: `Selected=true` real +
+     borde postizo eliminado.
+     Sin popover/positioning compartido todavia (misma deuda que Country/
+     Currency Picker de Selector) -- Combobox usa un posicionamiento local
+     minimo (panel absolute bajo el input), decision explicita de Carol para
+     no bloquear en construir antes un mecanismo compartido (eso le toca a
+     Popover Sheet, Sprint 5 Pri 8, cuando llegue su turno).
+     ========================================================================== */
+  --ds-combobox-icon-fg:                var(--ds-fg-primary);
+  --ds-combobox-icon-fg-disabled:       var(--ds-fg-disabled);
+  --ds-combobox-text-fg:                var(--ds-fg-default);
+  --ds-combobox-text-fg-disabled:       var(--ds-fg-disabled);
+  --ds-combobox-caret-color:            var(--ds-fg-primary);
+  --ds-combobox-autosuggest-fg:         var(--ds-fg-subtle);
+  --ds-combobox-icondelete-fg:          var(--ds-fg-subtle);
+  --ds-combobox-root-bg:                var(--ds-bg-default);
+  --ds-combobox-root-bg-disabled:       var(--ds-bg-disabled);
+  --ds-combobox-root-border-color:      var(--ds-fg-subtle);
+  --ds-combobox-root-border-color-error: var(--ds-borderColor-error);
+  --ds-combobox-root-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-combobox-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-combobox-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-combobox-root-border-width:      1.5px;
+  --ds-combobox-root-border-width-focus: 2px;
+  --ds-combobox-picker-bg:              var(--ds-bg-default);
+  --ds-combobox-picker-border-radius:   8px;
+  --ds-combobox-picker-shadow:          0 4px 4px rgba(0, 0, 0, 0.25);
+
+
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Input (familia completa)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
