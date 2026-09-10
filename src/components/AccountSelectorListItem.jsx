@@ -15,7 +15,10 @@ const css = `
   gap:            var(--ds-account-selector-root-gap);
   padding-left:   var(--ds-account-selector-root-padding);
   background:     var(--ds-account-selector-root-bg-generic);
-  border:         var(--ds-account-selector-root-border-width-generic) solid var(--ds-account-selector-root-border-color-generic);
+  /* Unselected/Disabled sin borde real en Figma (mismo criterio aplicado por
+     Carol que en Selector List Item, 10/09/2026) — base transparente del
+     mismo ancho que Error (1px) para no desplazar el layout al activarlo. */
+  border:         var(--ds-account-selector-root-border-width-generic) solid transparent;
   border-radius:  var(--ds-account-selector-root-border-radius-generic);
   font-family:    inherit;
   text-align:     left;
@@ -83,12 +86,13 @@ const css = `
   opacity: var(--ds-account-selector-root-opacity-pressed);
 }
 
+/* Selected — 2px real (mismo ancho que el foco, a propósito) */
 .ds-account-selector-list-item--selected {
   border-width: var(--ds-account-selector-root-border-width-focus);
   border-color: var(--ds-account-selector-root-border-color-selected);
 }
+/* Error — 1px, distinto de Selected a propósito */
 .ds-account-selector-list-item--error {
-  border-width: var(--ds-account-selector-root-border-width-focus);
   border-color: var(--ds-account-selector-root-border-color-error);
 }
 
@@ -98,10 +102,10 @@ const css = `
 
 .ds-account-selector-list-item--dataHidden { cursor: default; }
 
+/* Disabled — sin borde, igual que Unselected (confirmado en Figma) */
 .ds-account-selector-list-item--disabled {
-  background:   var(--ds-account-selector-root-bg-disabled);
-  border-color: var(--ds-account-selector-root-border-color-disabled);
-  cursor:       not-allowed;
+  background: var(--ds-account-selector-root-bg-disabled);
+  cursor:     not-allowed;
 }
 .ds-account-selector-list-item--disabled .ds-account-selector-list-item__icon-left { color: var(--ds-account-selector-icon-fg-disabled); }
 .ds-account-selector-list-item--disabled .ds-account-selector-list-item__header { color: var(--ds-account-selector-header-fg-disabled); }
