@@ -15,7 +15,11 @@ const css = `
   gap:            var(--ds-selector-root-gap);
   padding-left:   var(--ds-selector-root-padding);
   background:     var(--ds-selector-root-bg-generic);
-  border:         var(--ds-selector-root-border-width-generic) solid var(--ds-selector-root-border-color-generic);
+  /* Unselected/Disabled no llevan borde real en Figma (corregido por Carol,
+     10/09/2026 — antes había un borde gris de fondo aplicado siempre). Base
+     transparente del mismo ancho que Selected/Error (1px) para que activar
+     esos estados no desplace el layout 1px. */
+  border:         var(--ds-selector-root-border-width-generic) solid transparent;
   border-radius:  var(--ds-selector-root-border-radius-generic);
   font-family:    inherit;
   text-align:     left;
@@ -87,15 +91,15 @@ const css = `
   opacity: var(--ds-selector-root-opacity-pressed);
 }
 
-/* Selected */
+/* Selected — 2px real (Carol lo ajustó a propósito al ancho de foco, se ve
+   mejor que el 1px inicial) */
 .ds-selector-list-item--selected {
   border-width: var(--ds-selector-root-border-width-focus);
   border-color: var(--ds-selector-root-border-color-selected);
 }
 
-/* Error */
+/* Error — 1px, distinto de Selected a propósito */
 .ds-selector-list-item--error {
-  border-width: var(--ds-selector-root-border-width-focus);
   border-color: var(--ds-selector-root-border-color-error);
 }
 
@@ -108,11 +112,10 @@ const css = `
 /* Data hidden */
 .ds-selector-list-item--dataHidden { cursor: default; }
 
-/* Disabled */
+/* Disabled — sin borde, igual que Unselected (confirmado en Figma) */
 .ds-selector-list-item--disabled {
-  background:   var(--ds-selector-root-bg-disabled);
-  border-color: var(--ds-selector-root-border-color-disabled);
-  cursor:       not-allowed;
+  background: var(--ds-selector-root-bg-disabled);
+  cursor:     not-allowed;
 }
 .ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-icon-fg-disabled); }
 .ds-selector-list-item--disabled .ds-selector-list-item__header { color: var(--ds-selector-header-fg-disabled); }
