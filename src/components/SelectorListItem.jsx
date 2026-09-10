@@ -91,12 +91,14 @@ const css = `
   opacity: var(--ds-selector-root-opacity-pressed);
 }
 
-/* Selected — 1px real en Figma, no el ancho de foco (2px); corregido de paso */
+/* Selected — 2px real (Carol lo ajustó a propósito al ancho de foco, se ve
+   mejor que el 1px inicial) */
 .ds-selector-list-item--selected {
+  border-width: var(--ds-selector-root-border-width-focus);
   border-color: var(--ds-selector-root-border-color-selected);
 }
 
-/* Error — mismo ancho que Selected, 1px */
+/* Error — 1px, distinto de Selected a propósito */
 .ds-selector-list-item--error {
   border-color: var(--ds-selector-root-border-color-error);
 }
