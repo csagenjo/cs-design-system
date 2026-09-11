@@ -134,6 +134,8 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
   onSelectedChange,
   onClick,
   disabled         = false,
+  icon             = <Icon name="file-text" size="xs" />, // slot libre — refleja "Left Panel" de Figma, con el mismo icono de antes por defecto
+  showControl      = true, // oculta el Radio/Checkbox — refleja "Right Panel" de Figma (p. ej. Country Picker, donde el borde ya es la selección)
   id,
 }, forwardedRef) {
 
@@ -167,7 +169,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
       onClick={handleRowClick}
     >
       <span className="ds-selector-list-item__icon-left">
-        <Icon name="file-text" size="xs" />
+        {icon}
       </span>
 
       <span className="ds-selector-list-item__content">
@@ -187,17 +189,19 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
           )}
         </span>
 
-        <span className="ds-selector-list-item__right">
-          {/* Radio/Checkbox real — es el único control nativo enfocable de la fila.
-              Su propio onChange no hace nada: el click de la fila (arriba) es la fuente de verdad;
-              se deja como no-op para que React no marque el input como "uncontrolled". */}
-          <SelectionControl
-            checked={selected}
-            state={isDisabled ? 'disabled' : 'default'}
-            ariaLabel={headerText}
-            onChange={() => {}}
-          />
-        </span>
+        {showControl && (
+          <span className="ds-selector-list-item__right">
+            {/* Radio/Checkbox real — es el único control nativo enfocable de la fila.
+                Su propio onChange no hace nada: el click de la fila (arriba) es la fuente de verdad;
+                se deja como no-op para que React no marque el input como "uncontrolled". */}
+            <SelectionControl
+              checked={selected}
+              state={isDisabled ? 'disabled' : 'default'}
+              ariaLabel={headerText}
+              onChange={() => {}}
+            />
+          </span>
+        )}
       </span>
     </div>
   );

@@ -251,6 +251,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
   state            = 'default',
   countryVariant   = 'selectable',
   flagEmoji        = '🇪🇸',
+  flag, // slot opcional (p. ej. <CountryFlag country="spain" />) — sustituye a flagEmoji cuando se pasa, para poder mostrar la bandera real seleccionada en un Country Picker en vez de un emoji fijo
   countryCode      = '+34',
   onCountryClick,
   helperText,
@@ -314,7 +315,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
           tabIndex={isSelectable ? 0 : -1}
         >
           <span className="ds-input-telephone__flag" aria-hidden="true">
-            {flagEmoji}
+            {flag ?? flagEmoji}
           </span>
           <span className="ds-input-telephone__code">
             {countryCode}
