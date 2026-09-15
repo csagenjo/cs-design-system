@@ -884,9 +884,35 @@
   --ds-combobox-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-combobox-root-border-width:      1.5px;
   --ds-combobox-root-border-width-focus: 2px;
-  --ds-combobox-picker-bg:              var(--ds-bg-default);
+  --ds-combobox-picker-bg:              var(--ds-bg-container); /* corregido 14/09 — era bg-default (tono más oscuro en dark), el panel flotante es superficie elevada */
   --ds-combobox-picker-border-radius:   8px;
   --ds-combobox-picker-shadow:          0 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Popover Sheet (popoverSheet/all/*)
+     Sprint 5. Contenedor flotante de contenido libre — mismo criterio que
+     Dialog: sin `open` propio, sin trigger ni outside-click (el consumidor
+     decide cuándo montarlo y dónde posicionarlo). `placement` (top/bottom/
+     left/right) + `pointer` (left/center/right) resuelven en CSS puro, sin
+     JS de geometría — mismo mecanismo de flecha que Tooltip, pero con
+     tokens propios (tamaño y color distintos, componente separado en
+     Figma, no se reutilizan --ds-tooltip-arrow-*).
+     root/pointer bg usan bg/container, no bg/default (mismo fix aplicado a
+     Combobox el mismo día, ver --ds-combobox-picker-bg arriba y debt Cell
+     §10 en CLAUDE.md). Efecto "Popover Sheet/Shadow" recreado como estilo
+     LOCAL en Figma el 14/09 — a diferencia de Dialog/DialogShadow (que
+     estaba roto), este seguía enlazado EN VIVO a la librería real de
+     La Empresa.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-popover-sheet-root-bg:            var(--ds-bg-container);
+  --ds-popover-sheet-root-border-radius: 4px;   /* literal, Figma cornerRadius=4 */
+  --ds-popover-sheet-root-padding:       8px;   /* spacing/md — consolidado 14/09 desde 6 tokens fragmentados sin enlazar (popoverSheet/web/root/padding*) */
+  --ds-popover-sheet-root-shadow:        0 5px 5px -3px rgba(0, 0, 0, 0.20), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
+  --ds-popover-sheet-pointer-bg:         var(--ds-bg-container);
+  --ds-popover-sheet-pointer-width:      24px;  /* literal, Figma .Pointer 24×12 */
+  --ds-popover-sheet-pointer-height:     12px;
+  --ds-popover-sheet-close-fg:           var(--ds-fg-subtle);
+
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1292,7 +1318,7 @@
      estos y solo redefinen detailText fg (única diferencia real, por el formato IBAN).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-selector-common-root-bg-generic:            var(--ds-bg-default);         /* #FFFFFF */
+  --ds-selector-common-root-bg-generic:            var(--ds-bg-container);       /* #FFFFFF / #606772 dark — corregido 15/09: era bg-default, quedaba más oscuro que el panel flotante (bg-container) que lo contiene en Combobox/Country Picker */
   --ds-selector-common-root-bg-disabled:           var(--ds-bg-disabled);        /* #EEEFF1 */
   --ds-selector-common-root-bg-hover:              var(--ds-bg-hover-primary);   /* #B8E6FE */
   --ds-selector-common-root-border-color-generic:  var(--ds-borderColor-default);/* #9AA1AA */

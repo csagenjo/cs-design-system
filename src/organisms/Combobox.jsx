@@ -58,6 +58,7 @@
 
 import React, { useState, useRef, useEffect, useId } from 'react';
 import { injectStyles } from '../components/_inputBase';
+import { usePopoverDismiss } from '../components/_popoverDismiss';
 import { InputCombobox } from '../components/InputCombobox';
 import { SelectorListItem } from '../components/SelectorListItem';
 
@@ -124,15 +125,11 @@ export function Combobox({
     }
   }, [value, multiple, open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    function handleOutsideClick(e) {
-      if (rootRef.current && !rootRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, []);
+  // Click-fuera extraído a _popoverDismiss.js (antes duplicado a mano aquí y
+  // en CountryPicker, 15/09) — el Escape-en-el-input de handleKeyDown se
+  // queda tal cual (cierra Y resetea el texto tecleado, más específico que
+  // el Escape genérico del hook).
+  usePopoverDismiss({ open, onClose: () => setOpen(false), refs: [rootRef], closeOnEscape: false });
 
   const availableOptions = multiple
     ? options.filter(o => !selectedValues.includes(o.value))
