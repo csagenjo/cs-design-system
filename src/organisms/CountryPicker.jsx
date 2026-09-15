@@ -43,8 +43,9 @@
  *   </div>
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { injectStyles } from '../components/_inputBase';
+import { usePopoverDismiss } from '../components/_popoverDismiss';
 import { SelectorListItem } from '../components/SelectorListItem';
 import { CountryFlag } from '../components/CountryFlag';
 
@@ -81,16 +82,10 @@ export function CountryPicker({
 }) {
   const rootRef = useRef(null);
 
-  useEffect(() => {
-    if (!open) return;
-    function handleOutsideClick(e) {
-      if (rootRef.current && !rootRef.current.contains(e.target)) {
-        onClose?.();
-      }
-    }
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, [open, onClose]);
+  // Cierre por click-fuera + Escape (antes duplicado a mano aquí y en
+  // Combobox — extraído a _popoverDismiss.js el 15/09; de paso cierra el
+  // hueco real de Escape, que CountryPicker no tenía).
+  usePopoverDismiss({ open, onClose, refs: [rootRef] });
 
   if (!open) return null;
 
