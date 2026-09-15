@@ -127,7 +127,7 @@ const css = `
   gap:             var(--ds-input-telephone-country-gap);
   padding:         var(--ds-input-telephone-country-padding-ver)
                    var(--ds-input-telephone-country-padding-hor);
-  background:      var(--ds-input-telephone-country-bg);
+  background:      var(--ds-input-bg-default);
   border:          none;
   cursor:          default;
   font-family:     inherit;
@@ -141,15 +141,15 @@ const css = `
   cursor: pointer;
 }
 .ds-input-telephone__country--selectable:hover {
-  background: color-mix(in srgb, var(--ds-input-telephone-country-bg), #000 4%);
+  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
 }
 .ds-input-telephone__country--selectable:focus-visible {
-  background: color-mix(in srgb, var(--ds-input-telephone-country-bg), #000 4%);
+  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
 }
 
 /* Disabled */
 .ds-input-telephone--disabled .ds-input-telephone__country {
-  background: var(--ds-input-telephone-country-bg-disabled);
+  background: var(--ds-input-bg-disabled);
   cursor:     not-allowed;
 }
 
@@ -206,7 +206,7 @@ const css = `
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-xs);
   color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-telephone-field-bg);
+  background:         var(--ds-input-bg-default);
   border:             none;
   outline:            none;
   -webkit-appearance: none;
@@ -214,7 +214,7 @@ const css = `
 .ds-input-telephone__phone::placeholder { color: var(--ds-input-fg-placeholder); }
 
 .ds-input-telephone--disabled .ds-input-telephone__phone {
-  background: var(--ds-input-telephone-field-bg-disabled);
+  background: var(--ds-input-bg-disabled);
   color:      var(--ds-input-fg-disabled);
   cursor:     not-allowed;
 }
