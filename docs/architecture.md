@@ -987,3 +987,86 @@ left as something a consumer could mis-set, and applies `isLast` automatically t
 consumer never sets it by hand. `multiple` (Carol's explicit ask) controls whether more than one item can
 stay open: `false` is the classic single-open accordion, `true` lets each item toggle independently.
 Verified live, with the `isLast` mechanism back in place: both modes, toggling, hover, light and dark mode.
+
+### Drawer built, `SidebarMenu` organism born from it (15–17 September 2026)
+
+**Drawer turned out to be a simple collapsible rail, not a full content drawer** — Carol's own description:
+"un simple contenedor," something La Empresa wanted for the beta catalog. Before code, the 30-variant
+component set got audited the same way Accordion did: 16 position-based icon color tokens
+(`iconLeftTop`/`iconTopLeft`/etc.) turned out to be 12 orphans never bound to any real node, plus an empty
+`web` namespace — collapsed to 4 real tokens (`root/bg-primary`/`-secondary`, `border/color`/`width`) plus one
+new one, `icon/fg/generic`, since none existed despite 12 icons needing a color. The real property axes
+(`Color`, `Style` dismissable/standard, sparse `State`, `Anchor` left/top, `Icon Placement`, `Show Divider`)
+were confirmed by inspecting real variant data, not assumed from the property panel — several were fixed live
+by Carol mid-session (missing border/radius on specific variants, icon layers renamed from position-based to
+state-based, then reverted to a plain `Icon` for `Style=Standard` since that slot has no expand/collapse
+semantics at all — "la standar no se expande ni colapsa, y el usuario puede meter cualquier icono").
+
+**`Drawer.jsx`** — icon is keyed to STATE, not a fixed position: `icon` shows collapsed, `expandedIcon` shows
+expanded (falls back to `icon`), always pointing toward the anchor edge — a real v0 Figma bug fixed alongside
+Carol. Two CSS bugs found in the test bench, not in Figma: the border was missing on Collapsed (moved
+background/border/radius to the unconditional base rule once confirmed identical in both states by data), and
+the icon rendered centered instead of respecting `iconPlacement` — the real offset is a FIXED pixel value (20px
+anchor=left, 16px anchor=top), which only *looks* like centering in the narrow Collapsed state.
+
+**`SidebarMenu.jsx` (new organism)** composes Drawer (the shell) + `Headline` (`level={6}`, the title) +
+`ListView` (each row) — zero new atoms, same reuse discipline as Country Picker/Combobox instancing
+`SelectorListItem`. `items` is a real recursive tree up to 3 levels (Parent/Child/Grand son, a 4th level
+renders like the 3rd rather than failing silently), and branch expand/collapse is internal state that
+auto-expands the branch containing `selectedId` on mount. The Right Panel chevron only appears on rows that
+have children, and — this is an explicit a11y rule documented on the Figma page, not just a styling choice —
+a chevron row never navigates, it only shows or hides its own children.
+
+**Built in Figma too, deliberately as a reference composition rather than a single locked component.** Carol's
+first attempt (`node 32090-92873`) was a real Figma `COMPONENT` with nested List View instances and the Drawer
+manually set to absolute position ("el drawer queda en posición absoluta, he tenido que ajustarlo a mano") — a
+lot of manual work, and too rigid to support an arbitrary number of parents/children. Abandoned on purpose,
+same reasoning already applied to Table/CellActions/ButtonBar/FileSelector: no monolithic Figma component,
+just a composition guide built from pieces that are already real components. A full documentation page was
+built instead (`node 32090-91349`: Header bar / Intro / Instanced components / "How to compose a Sidebar
+Menu" / "Usage limits"), with two live examples side by side — a 3-level hierarchy, and an "8 Parent max"
+pair (Initial-on-page-load vs. Expanded).
+
+**Real spacing tokens, not just color ones.** `sidebarMenu/all/title/padding/horizontal-top-bottom` (16/16/8,
+formalizing the `padding: 16px 16px 8px` the CSS already had by hand) and `sidebarMenu/all/indent/step`
+(16px per level). The indent step could NOT be bound as a position variable in Figma — `setBoundVariable`
+rejects the `x` field outright — so the real fix was nesting nested frames with `paddingLeft` bound to that
+same token instead of loose x-coordinates (Grand son = two levels of nesting = 2×step). The JS side never had
+that problem: it already read the token through `calc()`.
+
+**Max 8 Parent items, enforced with a dev-warn** (same pattern as CellActions' `>2`, doesn't block render) —
+justified by a real visual constraint: the collapsed rail shows every icon at once, with no comfortable
+scroll. Child/Grand son were deliberately left WITHOUT a fixed number — information-architecture
+recommendations instead (group by task not by org chart, keep sibling branches balanced, order by frequency
+of use, avoid a lone child, reserve Grand son for genuinely distinct sub-views) — Carol's own call after being
+offered the choice between a number and UX/IA guidance.
+
+**Two more real bugs, both found by Carol working directly in Figma, both matching a pattern this project has
+hit before (a value silently inheriting from the wrong place instead of carrying its own token).** First: the
+Drawer `Container`'s stroke was `strokeAlign: INSIDE` across all 30 variants — any full-width `children` (the
+Parent-level rows in SidebarMenu) painted right over the inside-aligned border by construction, since the
+border lived inside the exact area the content was allowed to paint. Fixed to `OUTSIDE` on the master
+component, all 30 variants — not a patch on the reference composition — so the border now paints outside the
+declared box, where no content can ever cover it again. No code change needed: `box-sizing: border-box` on
+`.ds-drawer` already keeps the border in its own layer outside the content area, so this bug only ever existed
+in Figma's manual composition, which has no real box model. Second: the Right Panel chevron had no `color` set
+at all in `.ds-sidebar-menu__chevron`, so it inherited black from the row's text via `currentColor` instead of
+teal — `Icon.jsx` never sets its own color by design. Fixed with a new token,
+`--ds-sidebar-menu-chevron-fg-primary` (aliased to the same fixed teal the Drawer's own icon already uses).
+
+**A third bug, caught by Carol comparing code and Figma side by side with two screenshots.** The chevron used
+`ChevronRight` rotated 90° when expanded — the right mechanism (a single icon plus a CSS rotation, not two
+swapped icons — Carol asked directly whether that was intentional; it is, `InputCombobox` already does the
+same thing with `ChevronDown`/180°) but pointing the wrong way relative to Figma: Collapsed ended up pointing
+right and Expanded ended up pointing down, which is exactly what "collapsed" means in Figma's own convention
+(chevron-down = collapsed, chevron-up = expanded). Fixed to `ChevronDown` + `rotate(180deg)` on expand, the
+same mechanism `InputCombobox` already uses, now with the right icon: Collapsed points down, Expanded points
+up, matching Figma.
+
+**A fix added to the same branch after PR review, at Carol's request: clicking outside SidebarMenu collapses
+it.** There was no real dismiss mechanism — clicking elsewhere in the app while the menu was expanded left it
+open. Fixed by reusing `usePopoverDismiss` (the same helper PopoverSheet, Combobox and Country Picker already
+share) over a real ref to the underlying `Drawer` — which gained `forwardRef` on its root `<div>` for exactly
+this (non-invasive: every existing usage without a `ref` keeps working unchanged). The effect is only active
+while the Drawer is expanded, so it can only ever collapse it, never auto-expand it. Escape does the same,
+free from the same hook. Documented in Figma too ("Usage limits").
