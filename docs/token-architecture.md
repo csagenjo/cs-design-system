@@ -875,6 +875,16 @@ color: #286371;
 
 ---
 
+## Drawer + Sidebar Menu (15–17/09/2026)
+
+**Drawer** — 16 tokens de icono por posición (`iconLeftTop`/`iconTopLeft`/etc.) resultaron ser 12 orphans sin `boundVariables` en ningún nodo real, más un namespace `web` vacío. Colapsados a 4 tokens reales (`drawer/all/root/bg-primary/-secondary`, `border/color`/`width`) + 1 nuevo (`icon/fg/generic`, no existía pese a que 12 iconos lo necesitaban). Radio de esquina (8px) se quedó literal — confirmado por dato que solo pinta en el borde opuesto al anclaje, no es una Variable en Figma.
+
+**Sidebar Menu** — primer organismo con tokens de ESPACIADO propios, no de color: `sidebarMenu/all/title/padding/horizontal-top-bottom` (16/16/8) y `sidebarMenu/all/indent/step` (16px). Sin tokens de color propios a propósito — Drawer/Headline/ListView ya aportan los suyos, añadir uno propio habría sido duplicar sin necesidad.
+
+**Lección real de la API de Figma:** `setBoundVariable('x', variable)` falla (`Unknown field: 'x'`) — Figma no permite enlazar la posición de un nodo a una variable, solo propiedades como padding/gap/tamaño/radio. El indent por nivel del árbol (Parent/Child/Gran son) no se pudo aplicar como token sobre coordenadas sueltas — la solución real fue anidar frames por nivel con `paddingLeft` enlazado al mismo token (`Gran son` = 2 niveles de nesting = 2×step). Aplica a cualquier futuro componente que necesite "indentación por profundidad" como token real, no solo a Sidebar Menu.
+
+---
+
 ## Deuda técnica de tokens
 
 - ~~**Mode tokens dark mode** — varios tokens rotos o sin función clara en dark mode.~~ ✅ **Resuelto 11/08/2026** para la escala neutra `bg/*` (default/page/subtle/disabled/container), la familia de marca/feedback `bg/*` (primary/-bold/-medium, secondary, tertiary, error, success, hover-primary, inverse, accent, warning, info, highlight), y la trampa `*/inverse` vs `*/onColor` en `fg/label`, `fg/body` y `fg/icon` (ver secciones arriba). **Pendiente real:** `borderColor/*` dark no se ha auditado todavía contra Figma — mismo tipo de revisión, sesión aparte.

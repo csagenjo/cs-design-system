@@ -1792,6 +1792,48 @@
   --ds-tabs-text-fg-generic:              var(--ds-fg-default);          /* invierte */
   --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #4BA9C0 fijo */
   --ds-tabs-ribbon-border-width-selected: 4px;                           /* Figma dibuja el rectángulo Ribbon a 3px — desajuste menor detectado, token real es 4 */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Drawer (drawer/all/*)
+     Sprint 5, Pri 9. Riel lateral/superior colapsable — contenedor simple,
+     sin header/contenido propios (los aporta el consumidor vía `children`,
+     mismo criterio que Dialog/Popover Sheet). `Style=Standard` (sin toggle,
+     icono siempre visible — el "holder" de Figma es a propósito un slot
+     libre, no un placeholder roto) vs `Style=Dismissable` (Collapsed↔Expanded
+     real, icono distinto por estado: `icon` al colapsar, `expandedIcon` al
+     expandir — apunta hacia el borde de anclaje, mismo criterio que "flecha
+     que cierra"). 16 tokens de icono por posición (fragmentados, sin enlazar
+     a ningún nodo real) y `web` como namespace vacío, ambos limpiados en
+     Figma 15-16/09 junto con Carol — ver CLAUDE.md §9.
+     Radio de esquina (8px, literal) solo en el borde OPUESTO al anclaje —
+     confirmado por dato en Figma (Anchor=Default(Left): 0 a la izquierda,
+     8 a la derecha; Anchor=Top: 0 arriba, 8 abajo) — el riel queda a ras del
+     borde de pantalla al que se ancla.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-drawer-root-bg-primary:            var(--ds-bg-default); /* #FFFFFF / #050506 dark */
+  --ds-drawer-root-bg-secondary:          var(--ds-bg-page);    /* #F9FAFA / #464B53 dark */
+  --ds-drawer-root-border-color-generic:  var(--ds-borderColor-subtle);
+  --ds-drawer-root-border-width-generic:  1.5px;                /* borderWidth/md */
+  --ds-drawer-root-border-radius-generic: 8px;                  /* literal, Figma — solo en el borde opuesto al anclaje */
+  --ds-drawer-icon-fg-generic:            var(--ds-fg-icon-primary); /* #4BA9C0 fijo */
+  --ds-drawer-collapsed-size:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — sobreescribible por el consumidor */
+  --ds-drawer-expanded-size:              240px; /* ídem en Expanded/Standard */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Sidebar Menu (sidebarMenu/all/*)
+     Sprint 5, deuda numerada aparte. Organismo que compone Drawer + Headline
+     (h6, Default) + ListView — cero átomo nuevo. Sin tokens de color propios
+     (Drawer/Headline/ListView ya aportan los suyos) — solo espaciado: padding
+     del título y paso de indentación por nivel del árbol (Parent/Child/Gran
+     son). Máximo recomendado 8 items en el nivel Parent — ver dev-warn en
+     SidebarMenu.jsx — sin límite duro en Child/Gran son (recomendaciones de
+     arquitectura de información, no un número, ver CLAUDE.md §9).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-sidebar-menu-title-padding-horizontal: 16px;
+  --ds-sidebar-menu-title-padding-top:        16px;
+  --ds-sidebar-menu-title-padding-bottom:     8px;
+  --ds-sidebar-menu-indent-step:              16px; /* por nivel: Parent=0, Child=1×step, Gran son=2×step */
+  --ds-sidebar-menu-chevron-fg-primary:       var(--ds-fg-icon-primary); /* teal #4BA9C0 fijo — pedido explícito de Carol 17/09, el chevron heredaba negro del texto de la fila */
 }
 
 
