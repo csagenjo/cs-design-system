@@ -50,6 +50,14 @@
  * rama que contiene `selectedId`, para que la fila seleccionada sea visible
  * de entrada sin que el consumidor tenga que calcularlo.
  *
+ * Click fuera COLAPSA el propio Drawer (llama a `onToggleCollapse`) cuando
+ * está expandido — vía `usePopoverDismiss` (mismo helper que PopoverSheet/
+ * Combobox/CountryPicker), sobre un ref al `Drawer` real (`forwardRef`
+ * añadido en `Drawer.jsx` para esto). Solo activo si NO está colapsado —
+ * nunca puede auto-expandirse solo, solo colapsarse. Escape hace lo mismo
+ * (gratis, mismo hook). Si no se pasa `onToggleCollapse`, no pasa nada
+ * (mismo comportamiento que si el consumidor no gestiona el estado).
+ *
  * USO:
  *   <SidebarMenu
  *     title="Gestión de cuentas"
@@ -60,12 +68,13 @@
  *     onToggleCollapse={() => setCollapsed(c => !c)}
  *   />
  */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Drawer } from '../components/Drawer';
 import { ListView } from '../components/ListView';
 import { Headline } from '../components/Headline';
 import { Icon } from '../components/Icon';
+import { usePopoverDismiss } from '../components/_popoverDismiss';
 
 const css = `
 .ds-sidebar-menu__title {
@@ -156,6 +165,13 @@ export function SidebarMenu({
 
   const [expandedIds, setExpandedIds] = useState(initialExpanded);
 
+  const rootRef = useRef(null);
+  usePopoverDismiss({
+    open: !collapsed,
+    onClose: () => onToggleCollapse?.(),
+    refs: [rootRef],
+  });
+
   if (process.env.NODE_ENV !== 'production' && items.length > 8) {
     console.warn('[DS SidebarMenu] Máximo recomendado 8 Parent items — se recibieron ' + items.length + '.');
   }
@@ -171,6 +187,7 @@ export function SidebarMenu({
 
   return (
     <Drawer
+      ref={rootRef}
       id={id}
       className={className}
       anchor="left"

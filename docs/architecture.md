@@ -1062,3 +1062,11 @@ right and Expanded ended up pointing down, which is exactly what "collapsed" mea
 (chevron-down = collapsed, chevron-up = expanded). Fixed to `ChevronDown` + `rotate(180deg)` on expand, the
 same mechanism `InputCombobox` already uses, now with the right icon: Collapsed points down, Expanded points
 up, matching Figma.
+
+**A fix added to the same branch after PR review, at Carol's request: clicking outside SidebarMenu collapses
+it.** There was no real dismiss mechanism — clicking elsewhere in the app while the menu was expanded left it
+open. Fixed by reusing `usePopoverDismiss` (the same helper PopoverSheet, Combobox and Country Picker already
+share) over a real ref to the underlying `Drawer` — which gained `forwardRef` on its root `<div>` for exactly
+this (non-invasive: every existing usage without a `ref` keeps working unchanged). The effect is only active
+while the Drawer is expanded, so it can only ever collapse it, never auto-expand it. Escape does the same,
+free from the same hook. Documented in Figma too ("Usage limits").
