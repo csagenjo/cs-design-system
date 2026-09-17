@@ -1,37 +1,40 @@
 import { useState } from 'react'
 import './tokens.css'
-import { SidebarMenu } from './organisms/SidebarMenu'
+import { InputAmount } from './components/InputAmount'
+import { CurrencyPicker } from './organisms/CurrencyPicker'
 
-const items = [
-  {
-    id: 'p1', label: 'Parent 1', children: [
-      { id: 'c1', label: 'Child 1', children: [{ id: 'g1', label: 'Gran son 1' }, { id: 'g2', label: 'Gran son 2 seleccionado' }] },
-      { id: 'c2', label: 'Child 2' },
-    ]
-  },
-  { id: 'p2', label: 'Parent 2' },
-  { id: 'p3', label: 'Parent 3', children: [{ id: 'c3', label: 'Child 3' }] },
-  { id: 'p4', label: 'Parent 4' },
+const currencies = [
+  { code: 'USD', name: 'US Dollar' },
+  { code: 'EUR', name: 'Euro' },
+  { code: 'GBP', name: 'British Pound' },
+  { code: 'JPY', name: 'Japanese Yen' },
+  { code: 'CHF', name: 'Swiss Franc' },
 ]
 
 export default function App() {
-  const [collapsed, setCollapsed] = useState(false)
-  const [selectedId, setSelectedId] = useState('g2')
+  const [currency, setCurrency] = useState('EUR')
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const [amount, setAmount] = useState('1.234,56')
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <SidebarMenu
-        title="Gestión de cuentas"
-        items={items}
-        selectedId={selectedId}
-        onSelect={setSelectedId}
-        collapsed={collapsed}
-        onToggleCollapse={() => setCollapsed(c => !c)}
-      />
-      <div style={{ flex: 1, padding: 24, fontSize: 13 }}>
-        <p>Seleccionado: <b>{selectedId}</b></p>
-        <p style={{ color: '#999' }}>resto de La Plataforma</p>
+    <div style={{ padding: 40, maxWidth: 360 }}>
+      <div style={{ position: 'relative' }}>
+        <InputAmount
+          label="Importe"
+          currency={currency}
+          value={amount}
+          onChange={setAmount}
+          onCurrencyClick={() => setPickerOpen((o) => !o)}
+        />
+        <CurrencyPicker
+          open={pickerOpen}
+          currencies={currencies}
+          value={currency}
+          onChange={setCurrency}
+          onClose={() => setPickerOpen(false)}
+        />
       </div>
+      <p style={{ marginTop: 16, fontSize: 13, color: '#999' }}>Moneda seleccionada: <b>{currency}</b></p>
     </div>
   )
 }
