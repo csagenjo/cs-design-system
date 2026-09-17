@@ -69,6 +69,11 @@
  *   <Drawer dismissable={false} icon={<Icon name="ShoppingCart" />}>
  *     Contenido siempre visible
  *   </Drawer>
+ *
+ * `forwardRef` sobre el `<div>` raíz — necesario para que un consumidor
+ * (p. ej. `SidebarMenu`) pueda detectar clicks fuera del Drawer y colapsarlo,
+ * mismo mecanismo (`usePopoverDismiss`) que ya usan PopoverSheet/Combobox/
+ * CountryPicker.
  */
 import React from 'react';
 import { injectStyles } from './_inputBase';
@@ -139,7 +144,7 @@ const css = `
 
 injectStyles('ds-drawer', css);
 
-export function Drawer({
+export const Drawer = React.forwardRef(function Drawer({
   anchor           = 'left',    // 'left' | 'top'
   color            = 'primary', // 'primary' | 'secondary'
   dismissable      = true,
@@ -154,7 +159,7 @@ export function Drawer({
   id,
   className,
   style,
-}) {
+}, ref) {
   const isCollapsed = dismissable && collapsed;
   const currentIcon = iconPlacement === 'none' ? null : (isCollapsed ? icon : (expandedIcon ?? icon));
 
@@ -186,12 +191,12 @@ export function Drawer({
   );
 
   return (
-    <div id={id} className={classes} style={style}>
+    <div ref={ref} id={id} className={classes} style={style}>
       {iconRow}
       {showDivider && currentIcon && anchor === 'left' && <Divider />}
       <div className="ds-drawer__content">{children}</div>
     </div>
   );
-}
+});
 
 export default Drawer;
