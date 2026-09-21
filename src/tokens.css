@@ -1834,6 +1834,62 @@
   --ds-sidebar-menu-title-padding-bottom:     8px;
   --ds-sidebar-menu-indent-step:              16px; /* por nivel: Parent=0, Child=1×step, Gran son=2×step */
   --ds-sidebar-menu-chevron-fg-primary:       var(--ds-fg-icon-primary); /* teal #4BA9C0 fijo — pedido explícito de Carol 17/09, el chevron heredaba negro del texto de la fila */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Steps Common (steps/common/all/*)
+     Sprint 5, Pri 7. Compartidos de verdad entre Step Navigator/Substep
+     Navigator y Step Indicator (Large/Small) — confirmado por dato (mismo
+     token, mismo valor, en los 4). `Node` (círculo+número/icono) no lleva
+     bg en Incomplete (outline sin relleno, Figma fills=[]) — solo Active/
+     Completed rellenan, por eso no hay `--ds-steps-node-bg-incomplete`.
+     `border-width` único: fusionado 17/09 desde 3 variables idénticas
+     (círculo, conector de .StepHor/.StepVer, subStepConnector) — todas
+     resolvían al mismo valor. `root/bg-*` es el fondo de FILA seleccionable/
+     hover — vive aquí y no en Navigator porque Step Indicator Small también
+     lo consume tal cual. `root/opacity-pressed` es opacidad (0.8), no color
+     — mismo patrón ya usado en Accordion/Icon Button/Segmented Control.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-steps-node-bg-active:                    var(--ds-bg-primary);      /* #4BA9C0 */
+  --ds-steps-node-bg-completed:                  var(--ds-bg-success);      /* #389A3D */
+  --ds-steps-node-fg-incomplete:                 var(--ds-fg-default);      /* #050506 */
+  --ds-steps-node-fg-active:                     var(--ds-fg-onColor);      /* #FFFFFF */
+  --ds-steps-node-fg-completed:                  var(--ds-fg-onColor);      /* #FFFFFF */
+  --ds-steps-node-border-color-incomplete:       var(--ds-borderColor-emphasis); /* #2C2F34 */
+  --ds-steps-node-border-color-active:           var(--ds-borderColor-primary);  /* #4BA9C0 — mismo valor que el bg, el borde no aporta contraste extra aquí */
+  --ds-steps-node-border-color-completed:        var(--ds-borderColor-success);  /* #389A3D — ídem */
+  --ds-steps-border-width:                       2px;
+  --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* #2C2F34, mismo gris que el borde Incomplete */
+
+  --ds-steps-root-bg-primary-incomplete:         var(--ds-bg-default);      /* #FFFFFF */
+  --ds-steps-root-bg-primary-active:             var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-primary-completed:          var(--ds-bg-default);      /* #FFFFFF */
+  --ds-steps-root-bg-primary-completed-selected: var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-secondary-incomplete:       var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-secondary-active:           var(--ds-bg-default);      /* #FFFFFF */
+  --ds-steps-root-bg-secondary-completed:        var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-secondary-completed-selected: var(--ds-bg-default);    /* #FFFFFF */
+  --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);/* #B8E6FE */
+  --ds-steps-root-opacity-pressed:               0.8;
+  --ds-steps-root-border-width-focus:            2px;
+  --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner); /* #FFFFFF */
+  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer); /* #050506 */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Steps Navigator (steps/navigator/all/*)
+     Exclusivo de la jerarquía de menú/wizard vertical — nada de esto lo
+     consume Step Indicator. `root/fg-label` es el texto de fila de Substep
+     Navigator: tenía un binding heredado real de `node/fg/incomplete` (el
+     color del NÚMERO del círculo, coincidía en negro por casualidad) —
+     separado en su propio token 17/09 para no depender de un valor que en
+     realidad describe otra cosa.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-steps-navigator-root-gap:                 16px; /* spacing/xl */
+  --ds-steps-navigator-root-padding-horizontal:  16px; /* spacing/xl */
+  --ds-steps-navigator-root-fg-label:            var(--ds-fg-default); /* #050506 */
+  --ds-steps-navigator-substep-icon-fg-incomplete: var(--ds-fg-default);  /* #050506 */
+  --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* #4BA9C0 */
+  --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-success);      /* #389A3D */
+  --ds-steps-navigator-substep-icon-size:        20px;
 }
 
 
