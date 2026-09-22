@@ -14,13 +14,26 @@
  * anillo) — se redimensiona solo con el tab, sin rectángulos hermanos que
  * puedan quedarse desfasados si el ancho cambia.
  *
- * `device`: 'mobile' | 'tablet' — Desktop reutiliza 'tablet', no existe un
- * tercer valor (ver nota en tokens.css). Solo cambia el padding vertical
- * (14px / 18px); el horizontal es igual en los dos.
+ * `device`: 'mobile' | 'tablet' | 'desktop' — escala tipográfica progresiva
+ * real, ajustada varias veces por Carol directamente en Figma (3284:18450)
+ * tras ver que 14px fijo en los tres se quedaba corto para una navegación
+ * PRIMARIA (Top Navigation, toda la plataforma) — y que 19px en desktop se
+ * veía excesivo probado en vivo contra localhost. Escala final (22/09):
+ *   mobile  → `fontSize/label/xs` (12px)
+ *   tablet  → `fontSize/label/sm` (14px)
+ *   desktop → `fontSize/label/md` (16px)
+ * Nunca se sobreescribe por instancia (regla del proyecto de no reconfigurar
+ * un átomo compartido ad-hoc) — es una variante real, en Figma y aquí.
+ *
+ * Peso de fuente por ESTADO, no por device (confirmado en Figma, mismos 3
+ * device): Regular en Initial/Hover/Focus, Bold SOLO en Selected/Pressed/
+ * Focus Selected — bug real corregido en código: antes `.ds-tab-item` era
+ * bold siempre, sin distinguir estado.
  *
  * USO:
  *   <TabItem selected>Resumen</TabItem>
  *   <TabItem device="mobile" onClick={fn}>Movimientos</TabItem>
+ *   <TabItem device="desktop" selected>Clientes</TabItem>
  */
 
 import React from 'react';
@@ -39,15 +52,34 @@ const css = `
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-weight: var(--ds-font-weight-bold);
+  font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-label-sm);
   line-height: var(--ds-lineHeight-2xs);
   color: var(--ds-tabs-text-fg-generic);
   white-space: nowrap;
   flex-shrink: 0;
 }
-.ds-tab-item--mobile { padding-top: 14px; padding-bottom: 14px; }
-.ds-tab-item--tablet { padding-top: 18px; padding-bottom: 18px; }
+/* Bold SOLO en Selected/Pressed/Focus Selected — Initial/Hover/Focus es Regular
+   (confirmado en Figma, 3284:18450) — antes el bold se aplicaba siempre. */
+.ds-tab-item[aria-selected="true"],
+.ds-tab-item:active:not(:disabled) {
+  font-weight: var(--ds-font-weight-bold);
+}
+.ds-tab-item--mobile {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  font-size: var(--ds-fontSize-label-xs);
+}
+.ds-tab-item--tablet {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  font-size: var(--ds-fontSize-label-sm);
+}
+.ds-tab-item--desktop {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  font-size: var(--ds-fontSize-label-md);
+}
 
 .ds-tab-item:hover:not(:disabled) { background: var(--ds-tabs-root-bg-hover); }
 .ds-tab-item:active:not(:disabled) { opacity: var(--ds-tabs-root-opacity-pressed); }

@@ -4,6 +4,23 @@ import { StepIndicatorLarge } from './organisms/StepIndicatorLarge'
 import { StepIndicatorSmall } from './organisms/StepIndicatorSmall'
 import { StepNavigator } from './organisms/StepNavigator'
 import { SubstepNavigator } from './organisms/SubstepNavigator'
+import { TabItem } from './components/TabItem'
+import { TopNavigation } from './organisms/TopNavigation'
+import { Headline } from './components/Headline'
+import { Tabs } from './organisms/Tabs'
+
+const navItems = [
+  { id: 'clientes', label: 'Clientes' },
+  {
+    id: 'facturacion', label: 'Facturación y servicios',
+    flydown: [
+      { groupTitle: 'Facturación', links: [{ label: 'Facturas' }, { label: 'Presupuestos' }] },
+      { groupTitle: 'Sistemas de pago', links: [{ label: 'Cobros' }, { label: 'Domiciliaciones' }] },
+    ],
+  },
+  { id: 'organismos', label: 'Organismos Públicos' },
+  { id: 'configuracion', label: 'Configuración e informes' },
+]
 
 const largeSteps = [
   { state: 'completed', label: 'Datos personales' },
@@ -17,7 +34,45 @@ export default function App() {
   const [chapterOpen, setChapterOpen] = useState(true)
 
   return (
-    <div style={{ padding: 40, maxWidth: 700, display: 'flex', flexDirection: 'column', gap: 40 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <div>
+        <h3 style={{ padding: '0 40px' }}>TopNavigation — resize the window to see it collapse</h3>
+        <TopNavigation
+          logo={<div style={{ fontWeight: 700 }}>Logo</div>}
+          menuItems={navItems}
+          onExit={() => alert('exit')}
+        />
+      </div>
+
+      <div style={{ padding: '0 40px', display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <div>
+        <h3>Headline level=1 (responsive — 32px below 1024px, 48px above; always &lt;h1&gt;)</h3>
+        <Headline level={1}>Título de página</Headline>
+      </div>
+
+      <div>
+        <h3>Tabs organism, device="desktop"</h3>
+        <Tabs
+          device="desktop"
+          items={[
+            { id: 'a', label: 'Clientes' },
+            { id: 'b', label: 'Facturación' },
+            { id: 'c', label: 'Organismos Públicos' },
+          ]}
+          selectedId="b"
+          onChange={() => {}}
+        />
+      </div>
+
+      <div>
+        <h3>TabItem device="desktop" (Top Navigation, 16px)</h3>
+        <div style={{ display: 'flex' }}>
+          <TabItem device="desktop">Clientes</TabItem>
+          <TabItem device="desktop" selected>Facturación y servicios</TabItem>
+          <TabItem device="desktop">Sistemas de pago</TabItem>
+        </div>
+      </div>
+
       <div>
         <h3>StepIndicatorLarge</h3>
         <StepIndicatorLarge steps={largeSteps} />
@@ -61,6 +116,7 @@ export default function App() {
           )}
           <StepNavigator state="incomplete" number="3" title="Confirmación" showBottomConnector={false} />
         </div>
+      </div>
       </div>
     </div>
   )

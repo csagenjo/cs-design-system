@@ -338,6 +338,7 @@
   --ds-fontSize-headline-lg:    32px;
   --ds-fontSize-headline-xl:    36px;
   --ds-fontSize-headline-2xl:   48px;
+  --ds-fontSize-headline-2xl-mobile: 32px; /* h1 responsive — Device/Mobile en Figma, coincide con headline-lg hoy pero es un token distinto (mismo criterio que el caret de Combobox: valor igual, concepto distinto) */
 
   --ds-font-weight-regular: 400;
   --ds-font-weight-medium:  500;
@@ -1890,6 +1891,40 @@
   --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* #4BA9C0 */
   --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-success);      /* #389A3D */
   --ds-steps-navigator-substep-icon-size:        20px;
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Card (basic variant, cards/all/*)
+     Sprint 5, Pri 11 (Top Navigation). Nace como contenedor del panel
+     flydown — sombra reutilizada literal de Popover Sheet (mismos 3 valores
+     de radius/offset/spread, confirmado por dato en Figma, Carol la aplicó
+     a mano) — aliasada, no duplicada.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-card-root-bg:             var(--ds-bg-default); /* #FFFFFF */
+  --ds-card-root-border-radius:  4px;
+  --ds-card-root-shadow:         var(--ds-popover-sheet-root-shadow);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Top Navigation (topNavigation/all/*)
+     Sprint 5, Pri 11, última pieza. Reemplaza los 576 variantes combinatorias
+     de la librería de origen (iOS/Android × Device × Left/Right Panel) —
+     Sistema Origen nunca construyó una versión Web. Responsive real vía CSS
+     (media query, no un componente por breakpoint): por encima del
+     breakpoint, Logo + fila de `TabItem` (`device="desktop"`) + Exit; por
+     debajo, Logo + `IconButton` (Menu) + Exit, el IconButton abre un
+     `Drawer` que reutiliza `SidebarMenu` con el mismo árbol de datos (item
+     de menú = Parent, link del flydown = Child) — mismo criterio que
+     StepIndicatorLarge/Small: arquitecturas distintas a propósito según el
+     contexto, no una única variante rígida.
+     El link del panel flydown re-tematiza `Link` localmente (subrayado
+     permanente → solo hover/focus) sin tocar el átomo compartido, mismo
+     mecanismo que Collapsible con Button — el subrayado permanente de
+     `Link` "manchaba" el panel flotante con muchos enlaces densos en
+     columna (hallazgo real de Carol, confirmado visualmente).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-top-navigation-root-bg-generic:  var(--ds-bg-default); /* #FFFFFF — topNavigation/root/bg/generic */
+  --ds-top-navigation-root-padding-horizontal: 24px;
+  --ds-top-navigation-breakpoint:       1024px;
+  --ds-top-navigation-flydown-gap:      32px;
 }
 
 
