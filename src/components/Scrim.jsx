@@ -12,6 +12,11 @@
  * en un layer-opacity separado (bug de doble-opacidad corregido en Figma
  * 24/08 — ver CLAUDE.md §10).
  *
+ * `onClick` (añadido 22/09, Top Navigation) — opcional, para el patrón
+ * click-fuera-cierra sobre el propio Scrim (el cierre accesible real sigue
+ * siendo Escape, gestionado por el consumidor; esto es solo comodidad de
+ * ratón). Sin `onClick`, se comporta exactamente igual que antes.
+ *
  * USO:
  *   <div style={{ position: 'fixed', inset: 0 }}>
  *     <Scrim />
@@ -32,9 +37,9 @@ const css = `
 
 injectStyles('ds-scrim', css);
 
-export function Scrim({ id, className }) {
+export function Scrim({ id, className, onClick }) {
   const classes = ['ds-scrim', className || ''].filter(Boolean).join(' ');
-  return <div id={id} className={classes} aria-hidden="true" />;
+  return <div id={id} className={classes} onClick={onClick} aria-hidden="true" />;
 }
 
 export default Scrim;
