@@ -7,9 +7,16 @@
  * Navigation, pero es un slot libre (`children`), reutilizable donde haga
  * falta una superficie elevada simple.
  *
- * Sombra reutilizada literal de Popover Sheet (`--ds-card-root-shadow`
- * alias `--ds-popover-sheet-root-shadow`) — Carol confirmó en Figma que es
- * la misma, no una nueva.
+ * Sombra propia (`--ds-card-root-shadow`, Effect Style real "Card/Shadow" en
+ * Figma) — hasta el 23/09 aliasaba a Popover Sheet (mismo valor por
+ * coincidencia); Carol decidió desacoplarla en Figma para que Card no
+ * dependa de otro componente.
+ *
+ * NOTA (23/09, Carol) — solo en FIGMA: el Flydown de Top Navigation ahí NO
+ * instancia el componente `Cards` (es rígido, `ABSOLUTE`, no se ajusta al
+ * contenido real) — su root simula el mismo fill/radius/shadow a mano. En
+ * CÓDIGO no aplica ese problema (`Card.jsx` no tiene esa rigidez, es un CSS
+ * normal) — `TopNavigation.jsx` sigue instanciando este átomo tal cual.
  *
  * USO:
  *   <Card>{children}</Card>
