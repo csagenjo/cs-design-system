@@ -8,8 +8,15 @@
  * número de items no está limitado (a diferencia de Figma, que solo
  * documenta 2-6 como ejemplos: aquí acepta cualquier `items.length`).
  *
- * `device`: 'mobile' | 'tablet' — Desktop reutiliza 'tablet' (ver nota en
- * Tab.jsx y en tokens.css).
+ * `device`: 'mobile' | 'tablet' | 'desktop' — cada uno con su propio tamaño
+ * real en `TabItem` (14/16/19px). Actualizado 22/09: `desktop` YA NO reutiliza
+ * 'tablet' (nota vieja, quedó obsoleta en cuanto TabItem ganó su propio
+ * escalón) — coincide con las variantes `Device=Desktop, Type=Fixed` reales
+ * añadidas al component set de Figma (Number=2-8 Items).
+ *
+ * `type="scrollable"` con `device="desktop"` no tiene variante real en Figma
+ * (Desktop es Fixed-only, decisión explícita de Carol: en desktop no se
+ * permite scroll horizontal de tabs) — dev-warn en consola, no bloquea.
  *
  * USO:
  *   <Tabs items={[{id:'a',label:'Resumen'},{id:'b',label:'Movimientos'}]}
@@ -17,6 +24,8 @@
  *
  *   <Tabs type="scrollable" device="mobile"
  *     items={manyItems} selectedId={id} onChange={fn} />
+ *
+ *   <Tabs device="desktop" items={manyItems} selectedId={id} onChange={fn} />
  */
 
 import React from 'react';
@@ -44,10 +53,14 @@ export function Tabs({
   selectedId,
   onChange,
   type = 'fixed', // 'fixed' | 'scrollable'
-  device = 'tablet', // 'mobile' | 'tablet'
+  device = 'tablet', // 'mobile' | 'tablet' | 'desktop'
   id,
   className,
 }) {
+  if (process.env.NODE_ENV !== 'production' && device === 'desktop' && type === 'scrollable') {
+    console.warn('[DS Tabs] device="desktop" no tiene variante "scrollable" en Figma (Desktop es Fixed-only) — revisa si es intencional.');
+  }
+
   const classes = [
     'ds-tabs',
     `ds-tabs--${type}`,

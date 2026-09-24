@@ -38,47 +38,7 @@
  */
 
 import React from 'react';
-import {
-  Search, ChevronRight, ChevronLeft, ChevronUp, ChevronDown,
-  ArrowRight, ArrowLeft, ArrowUp, ArrowDown,
-  Copy, Save, Trash2 as Delete, Edit2, Filter, Download,
-  Percent, Coins, Wallet, CreditCard,
-  Check, X, Plus, Upload, Eye, MoreHorizontal,
-} from 'lucide-react';
-
-/* ─── Mapa de iconos ───────────────────────────────────────────────────────── */
-
-const ICONS = {
-  // Navegación
-  'ChevronRight': ChevronRight, 'chevron-right': ChevronRight,
-  'ChevronLeft':  ChevronLeft,  'chevron-left':  ChevronLeft,
-  'ChevronUp':    ChevronUp,    'chevron-up':    ChevronUp,
-  'ChevronDown':  ChevronDown,  'chevron-down':  ChevronDown,
-  'ArrowRight':   ArrowRight,   'arrow-right':   ArrowRight,
-  'ArrowLeft':    ArrowLeft,    'arrow-left':    ArrowLeft,
-  'ArrowUp':      ArrowUp,      'arrow-up':      ArrowUp,
-  'ArrowDown':    ArrowDown,    'arrow-down':    ArrowDown,
-  // Acciones
-  'Search':   Search,   'search':   Search,
-  'Copy':     Copy,     'copy':     Copy,
-  'Save':     Save,     'save':     Save,
-  'Delete':   Delete,   'delete':   Delete,   'trash': Delete,
-  'Edit2':    Edit2,    'edit2':    Edit2,    'edit':  Edit2,
-  'Filter':   Filter,   'filter':   Filter,
-  'Download': Download, 'download': Download,
-  'Upload':   Upload,   'upload':   Upload,
-  'Plus':     Plus,     'plus':     Plus,
-  'Check':    Check,    'check':    Check,
-  'X':        X,        'x':        X,
-  // Finanzas
-  'Percent':    Percent,    'percent':    Percent,
-  'Coins':      Coins,      'coins':      Coins,
-  'Wallet':     Wallet,     'wallet':     Wallet,
-  'CreditCard': CreditCard, 'credit-card': CreditCard,
-  // Misc
-  'Eye':           Eye,           'eye':  Eye,
-  'MoreHorizontal': MoreHorizontal, 'more': MoreHorizontal,
-};
+import { Icon } from './Icon';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -202,14 +162,6 @@ function injectStyles() {
   injected = true;
 }
 
-/* ─── Componente Icon ──────────────────────────────────────────────────────── */
-
-function Icon({ name, size }) {
-  const IconComponent = ICONS[name];
-  if (!IconComponent) return null;
-  return <IconComponent size={parseInt(size)} strokeWidth={1.75} aria-hidden="true" />;
-}
-
 /* ─── Button ───────────────────────────────────────────────────────────────── */
 
 export function Button({
@@ -230,9 +182,11 @@ export function Button({
 }) {
   injectStyles();
 
-  // Tamaño intrínseco del SVG; el tamaño visual final lo fija --_icon (CSS) vía
-  // --ds-button-icon-size-*. Alineado con Figma button/all/icon/size (16/20/24).
-  const iconSize   = { sm: '16', md: '20', lg: '24' }[size];
+  // Instancia el átomo Icon compartido (nunca reimplementado) — keywords de su
+  // escala --ds-sizing-* (2xs=16/xs=20/sm=24), alineado con Figma button/all/
+  // icon/size (16/20/24). Confirmado en Figma: Button ya instancia el wrapper
+  // Icon compartido, nunca un icono suelto — el código debía hacer lo mismo.
+  const iconSize   = { sm: '2xs', md: 'xs', lg: 'sm' }[size];
   const isDisabled = disabled || loading;
 
   const classes = [
