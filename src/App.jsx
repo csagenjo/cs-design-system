@@ -12,13 +12,25 @@ import { Tabs } from './organisms/Tabs'
 const navItems = [
   { id: 'clientes', label: 'Clientes' },
   {
-    id: 'facturacion', label: 'Facturación y servicios',
+    id: 'productos', label: 'Productos y servicios',
     flydown: [
-      { groupTitle: 'Facturación', links: [{ label: 'Facturas' }, { label: 'Presupuestos' }] },
-      { groupTitle: 'Sistemas de pago', links: [{ label: 'Cobros' }, { label: 'Domiciliaciones' }] },
+      { groupTitle: 'Ahorro', links: [{ label: 'Cuentas y depósitos' }] },
+      { groupTitle: 'Financiación', links: [{ label: 'Hipotecas' }, { label: 'Líneas de crédito' }, { label: 'Préstamos' }] },
+      { groupTitle: 'Inversión', links: [{ label: 'Asesoramiento' }, { label: 'Broker' }, { label: 'Catálogo productos' }, { label: 'Fondos de inversión' }, { label: 'Planes de pensión' }] },
+      { groupTitle: 'Protección', links: [{ label: 'Seguros de Auto' }] },
+      { groupTitle: 'Servicios', links: [{ label: 'Anticipo nómina' }, { label: 'Avales' }, { label: 'Domiciliaciones' }, { label: 'Overdraft' }, { label: 'Portabilidad' }] },
+      { groupTitle: 'Transversales', links: [{ label: 'Cambios titularidad' }, { label: 'Dual control' }, { label: 'Impagos' }, { label: 'Motor de precios' }] },
     ],
   },
-  { id: 'organismos', label: 'Organismos Públicos' },
+  {
+    id: 'organismos', label: 'Organismos Públicos',
+    flydown: [
+      { links: [
+        { label: 'AEAT Impuestos' }, { label: 'AEAT Modelos' }, { label: 'CGPJ Requerimientos' },
+        { label: 'Embargos' }, { label: 'Oficios' }, { label: 'Organismos' }, { label: 'Seguridad Social' },
+      ] },
+    ],
+  },
   { id: 'configuracion', label: 'Configuración e informes' },
 ]
 
