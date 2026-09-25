@@ -40,15 +40,12 @@
  * (Component token nuevo — antes de esta sesión el texto de Figma saltaba
  * directo a `headline/fg/default`, Mode, sin capa de Componente).
  *
- * **Deuda pendiente, NO construida en código:** Figma (24/09) añadió una
- * segunda variante de Flydown, `Featured`, donde la última columna se
- * sustituye por `.Featured` (imagen(es) promocional + caption, renombrado
- * desde `.FlydownImage` el 24/09) en vez de
- * una columna de links. Ese componente instancia el átomo `Image` de
- * Sistema Origen — que este proyecto NUNCA construyó (sigue en el backlog
- * de §9 de CLAUDE.md junto a Calendar/Bottom Navigation/Bottom Sheet/
- * Videoplayer) — así que `Featured` no tiene equivalente en `TopNavigation.jsx`
- * todavía. `flydown` solo admite el layout `Default` (columnas de links).
+ * Cierre de deuda (25/09): un grupo puede llevar `featured` en vez de
+ * `links` — `{ groupTitle?, featured: { size, variant, src, alt, caption,
+ * showCaption } }` — para la columna promocional (`Variant=Featured` en
+ * Figma, antes `.Featured`/`.FlydownImage`). Instancia el átomo `Image`
+ * (nuevo, ver `components/Image.jsx`) tal cual, sin reimplementar el
+ * recorte de imagen ni la aspect-ratio.
  *
  * Ancho SIEMPRE el de la barra (= el de la página, `left/right:0` contra el
  * `<nav>` raíz, nunca una `width` propia) — sin esto, hubo 4 intentos reales
@@ -98,6 +95,7 @@ import { TabItem } from '../components/TabItem';
 import { IconButton } from '../components/IconButton';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
+import { Image } from '../components/Image';
 import { Link } from '../components/Link';
 import { Scrim } from '../components/Scrim';
 import { SidebarMenu } from './SidebarMenu';
@@ -229,13 +227,17 @@ injectStyles('ds-top-navigation', css);
 
 function flydownToSidebarChildren(flydown, onSelectLeaf, parentId) {
   if (!flydown) return undefined;
-  return flydown.flatMap((group, groupIndex) =>
-    group.links.map((link, i) => {
-      const id = `${parentId}-${groupIndex}-${i}`;
-      onSelectLeaf[id] = link.onClick;
-      return { id, label: link.label };
-    })
-  );
+  // grupos "featured" (imagen promocional) se omiten aquí — es contenido
+  // decorativo, no navegable, SidebarMenu solo aplana links reales.
+  return flydown
+    .filter((group) => !group.featured)
+    .flatMap((group, groupIndex) =>
+      group.links.map((link, i) => {
+        const id = `${parentId}-${groupIndex}-${i}`;
+        onSelectLeaf[id] = link.onClick;
+        return { id, label: link.label };
+      })
+    );
 }
 
 export function TopNavigation({
@@ -305,13 +307,17 @@ export function TopNavigation({
                       {group.groupTitle && (
                         <span className="ds-top-navigation__group-title">{group.groupTitle}</span>
                       )}
-                      <div className="ds-top-navigation__group-links">
-                        {group.links.map((link) => (
-                          <Link key={link.label} size="xs" emphasis="low" rightIcon={false} onClick={link.onClick}>
-                            {link.label}
-                          </Link>
-                        ))}
-                      </div>
+                      {group.featured ? (
+                        <Image {...group.featured} />
+                      ) : (
+                        <div className="ds-top-navigation__group-links">
+                          {group.links.map((link) => (
+                            <Link key={link.label} size="xs" emphasis="low" rightIcon={false} onClick={link.onClick}>
+                              {link.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
