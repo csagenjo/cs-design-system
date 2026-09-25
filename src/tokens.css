@@ -1907,6 +1907,17 @@
   --ds-card-root-shadow:         0 5px 5px -3px rgba(0, 0, 0, 0.20), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
 
   /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Image (image/all/*)
+     Sprint 5. Nace fusionando `.Container` (5 combinaciones Size×Variant)
+     dentro del component set `Image` real (24/09). El borderRadius de las
+     variantes "Rounded Corners" reusa literalmente --ds-card-root-border-
+     radius (mismo token en Figma, cards/all/root/borderRadius/basic) — sin
+     token propio. objectFit siempre "cover" (Figma scaleMode=FILL en las 5
+     variantes, corregido desde FIT el mismo día).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #9AA1AA — image/all/caption/fg/generic */
+
+  /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Top Navigation (topNavigation/all/*)
      Sprint 5, Pri 11, última pieza. Reemplaza los 576 variantes combinatorias
      de la librería de origen (iOS/Android × Device × Left/Right Panel) —
