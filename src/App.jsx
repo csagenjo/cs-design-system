@@ -20,6 +20,7 @@ const navItems = [
       { groupTitle: 'Protección', links: [{ label: 'Seguros de Auto' }] },
       { groupTitle: 'Servicios', links: [{ label: 'Anticipo nómina' }, { label: 'Avales' }, { label: 'Domiciliaciones' }, { label: 'Overdraft' }, { label: 'Portabilidad' }] },
       { groupTitle: 'Transversales', links: [{ label: 'Cambios titularidad' }, { label: 'Dual control' }, { label: 'Impagos' }, { label: 'Motor de precios' }] },
+      { groupTitle: 'Destacado', featured: { size: '4:3', caption: 'Nueva hipoteca a tipo fijo' } },
     ],
   },
   {
