@@ -1070,3 +1070,333 @@ share) over a real ref to the underlying `Drawer` — which gained `forwardRef` 
 this (non-invasive: every existing usage without a `ref` keeps working unchanged). The effect is only active
 while the Drawer is expanded, so it can only ever collapse it, never auto-expand it. Escape does the same,
 free from the same hook. Documented in Figma too ("Usage limits").
+
+### Slider family built — first component with real drag interaction (9 September 2026)
+
+Carol handed over four starting node-ids (`.Knob`, `Continuous`, `Range`, and "Segmented" — the last one
+turned out to be a text paragraph listing node-ids, not the component itself; the real one, `4620-1532`,
+surfaced later). Before code, several real Figma bugs surfaced: four variants of the value tooltip had their
+text literally set to `"%"` with no leading digit, which shrank the knob's HUG frame and threw its absolute
+position 10px outside the track, overlapping the icon — a content bug cascading into a position bug, not a
+position bug on its own; 16 Continuous variants had their fill bound directly to `color/primary` (Base layer),
+skipping Component and Mode entirely, re-bound to `slider/all/indicator/fg/primary`; and a first bulk rename of
+`Slider (adjustable)`→`.Track` / `Base`→`.Indicator` across 74 instances, done by analogy without checking the
+real binding first, turned out to be backwards for Continuous (the OUTER layer paints the full color, the
+INNER one is a gray mask with variable `paddingLeft` covering the untraveled part) and the opposite mechanism
+again for Range — fixed layer by layer against the real bound variable, never by analogy again. `.Segment`
+(the stepped-slider point+tail piece) had been accidentally deleted earlier and was restored from Figma's
+version history; the restored master had no `Variant` axis at all and painted pink unconditionally
+(`bg/secondary` from Mode, skipping Component the same way) — an 8-variant axis was added and re-bound to the
+same `indicator`/`track` tokens the rest of the family already used, no new tokens.
+
+**Architectural call: Continuous and Segmented stay separate, in Figma and in code.** A real attempt was made
+to merge them — add a `With Steps` property to Continuous and transplant `.Segment`'s content into its
+`.Track` — and it broke knob positioning twice (the track's fixed 8px height had no room for a 58px knob;
+then the old mask's inherited `paddingLeft` pushed the points into the right half of the track), which is what
+exposed the layer-naming bug above. Carol reverted the experiment by hand. Conclusion, confirmed explicitly:
+the internal mechanism really is different (fill+mask vs. a chain of `.Segment` instances), not a visual
+variation — forcing one component (in Figma or in React) would just move the same complexity into an `if`,
+not simplify anything real. They share tokens (`--ds-slider-*`), not a component.
+
+**Code** — three atoms (`Slider.jsx` continuous, `RangeSlider.jsx` two values, `SteppedSlider.jsx` discrete
+stops) share a non-exported helper, `_sliderKnob.jsx` (same pattern as `_dialogBase.jsx`), which instances the
+`Tooltip` atom for the value bubble instead of reimplementing it — `Tooltip.jsx` gained a `forceVisible` prop
+and a `style` prop for this, since its original `:hover`/`:focus-within` mechanism doesn't cover a mouse drag
+that leaves the knob's hit area while still active. First component in the system with real Pointer Events
+drag (`setPointerCapture`/`onPointerMove`/`onPointerUp`) plus keyboard (arrows ±step, Home/End) — everything
+before this resolved entirely with native `<button>` pseudo-classes. A real code bug, not a Figma one: clicking
+the TRACK (not directly on the knob) moved the value but never moved DOM focus to the knob, breaking immediate
+keyboard navigation afterward — `.focus()` called inside `pointerdown` can be overridden by the browser's
+default focus behavior firing right after; fixed with `e.preventDefault()` on `pointerdown` before calling
+`.focus()`, the standard pattern for custom sliders.
+
+### Combobox built — jumped ahead in priority order at Carol's request (10 September 2026)
+
+Four starting node-ids: `.Combobox`, `Input combobox`, `Selection cells` (derived from `List View`) and
+`Picker`. Carol asked to simplify tokens before touching code, same discipline as Accordion/Slider:
+`inputIconLeft` + `iconDropdown` (same teal value, same generic-icon concept) merged into
+`combobox/all/icon/fg/generic`; `valueText` renamed to `combobox/all/text/fg/generic`. `caret` deliberately
+kept its own separate token — it isn't an icon, it's the blinking text-cursor vector (a 30×0 stroke, confirmed
+by inspecting the layer, not assumed), coinciding in value today by coincidence, same reasoning already fixed
+for Accordion's text-vs-icon split.
+
+A real bug was found in `List View` along the way: its two direct children (`.Left Panel` /
+`Center + Right Content`) were `layoutPositioning: ABSOLUTE` inside a parent that WAS auto-layout — the
+auto-layout existed but was completely inert, nothing reflowed when elements were shown or hidden, exactly the
+symptom Carol had reported. Fixed across all 20 variants by setting both to `AUTO`; a positive side effect was
+fixing a pre-existing 2–4px misalignment between the 24px and 20px (Disabled) icon sizes.
+
+**A real back-and-forth on the Picker's architecture — from `ListView` to `SelectorListItem`.** First finding:
+"Selection Cells" faked its `Selected` state with a manual 4-side border (`borderColor/primary`, a Mode-layer
+color, skipping Component) laid on top of an instance that actually had `Selected=false` — the real `ListView`
+selection mechanism (the left-edge ribbon, built in Sprint 2) was never being used. Fixed to real
+`Selected=true` plus the fake border removed. But reviewing the result, Carol preferred to pivot the Picker to
+`SelectorListItem` (already built, Sprint 1) instead of `ListView`: `data="single"|"multiple"` maps 1:1 to the
+organism's `multiple` prop, giving a real Radio/Checkbox, and the full 4-side border IS `SelectorListItem`'s
+legitimate selection mechanism (not a hack) — more legible in an N-result dropdown than `ListView`'s thin
+ribbon. The `ListView` fix stays (correct for its normal Search-for-Results use); Combobox's Picker simply
+reuses a different existing atom.
+
+**Code.** `InputCombobox.jsx` (atom) borrows `--ds-input-*` the same way InputText/InputDropdown do for
+Label+Helper+Field+Validation. `multiple` decides plain text vs. real chips (`Chip type="input"`, already
+built). The text cursor is never hand-built — a real `<input>` already ships one, all that's needed is
+`caret-color`. `autoSuggestText` (gray autocomplete-style suggestion) uses the classic overlay technique: an
+invisible layer with the typed text plus the remaining suggestion in gray, sitting behind a transparent-
+background input. `Combobox.jsx` (organism) owns all real state: open/close, filtering, keyboard-highlighted
+index, click-outside close, single/multiple selection. Four real code bugs found and fixed: a stray delete
+button floated with no clear purpose once chips already had their own X (removed for `multiple` mode);
+autosuggest failed on a case mismatch ("fr" typed vs. "Francia" — comparison made case-insensitive); clicking
+empty space in the field (not directly on the `<input>`) didn't focus it (fixed with click-to-focus on the
+whole field); and that fix in turn exposed a fourth bug — selecting an option re-focused the input, which
+fired `onFocus` and reopened the picker with the just-picked option as the only filtered result — fixed with
+the standard `onMouseDown` + `preventDefault()` pattern on the Picker panel, so a click there never steals
+focus from the input in the first place. The Picker's positioning is local `absolute` — no shared
+popover/positioning system yet, the same debt Country/Currency Picker already carried, deliberately left for
+Popover Sheet's turn.
+
+### Country Flag + Country Picker built — closes real technical debt (11 September 2026)
+
+Not on the numbered sprint list — `InputTelephone` had fired `onCountryClick` for a while with nothing to
+handle it. Node-ids: `Selection cells` (22974-9064), `Country Picker` (22974-9071). EXPLORE confirmed the same
+architectural pivot Combobox had just landed on, already real in Figma: the Picker's rows are literal
+instances of `Selector List Item` (the same component set `SelectorListItem.jsx` already uses) with
+`Right Panel=false`, so the full border is already the only selection signal in the design. The root panel
+reuses `combobox/all/root/bg/generic` literally — same token as Combobox's Picker, not a new one. Unlike
+Combobox, there's no search field here, matching Figma's own `Country Picker` (no search field there either).
+
+**Code gap, not a Figma one.** `SelectorListItem.jsx` had no way to (1) replace its fixed `file-text` icon with
+a flag, or (2) hide the Radio/Checkbox. Two props were added — `icon` (a free `ReactNode` slot) and
+`showControl` (boolean) — mirroring `Left Panel`/`Right Panel`, real Figma properties the atom simply hadn't
+exposed yet.
+
+**A real architecture bottleneck, resolved with a bulk export from Figma.** Carol wanted real flags, not the
+emoji `InputTelephone` already used — Figma's `CountryFlag` component set (node `30831:2867`) already had all
+201 real flags, each with its own vector, nothing to build there. The real work was in code: `Icon.jsx` is a
+lucide-react-only wrapper (one color via `currentColor`), incompatible with real multicolor art. All 201 were
+exported via `node.exportAsync({format:'SVG_STRING'})` into `flags.js` (slug → raw SVG) — verified
+programmatically, 201/201 present, none malformed. **A real operational lesson:** requesting SVGs in batches
+of ~23 silently truncates the response around ~20KB with no warning — batches of 5 or fewer are needed, and
+flags with very complex vectors (`sri-lanka`, `saudi-arabia`) had to be requested alone; `saudi-arabia`
+exceeded the limit even alone and was resolved with `download_assets` (URL + direct download) instead of
+inlining the SVG in the plugin response. An attempt to hand-write `sri-lanka` from memory instead of copying
+the already-received data produced wrong content — caught by diffing against the real fetch; lesson: never
+reconstruct already-fetched data from memory, only reuse the literal.
+
+`CountryFlag.jsx` injects the SVG via a data URI inside an `<img>` — never `dangerouslySetInnerHTML`. The
+corner radius (2px) lives on the wrapper rather than depending on each SVG bringing its own crop, so all 201
+stay visually consistent even though `saudi-arabia` (exported through the alternate path) doesn't include one
+on its own. `CountryPicker.jsx` composes `SelectorListItem` (`icon`=`CountryFlag`, `showControl={false}`) plus
+the same panel chrome as Combobox. A real code bug, caught live by Carol: the test bench passed a fixed
+`flagEmoji` to `InputTelephone` that never updated on picker selection — the dial code changed but the flag
+didn't, because `InputTelephone.jsx` only ever accepted a static `flagEmoji` with no mechanism to reflect a
+real selection. Fixed by adding a `flag` slot (`ReactNode`, defaults to `undefined` so it falls back to
+`flagEmoji` — no breaking change for existing consumers).
+
+### Popover Sheet built, rewritten as v1.1 the same week after its first review (14–15 September 2026)
+
+Node-ids: `Popover Sheet` (3291-16275), `Pointer` (3291-16348) — a real `COMPONENT_SET` with `Placement`
+(Top/Bottom/Right/Left) × `Pointer` (Left/Center/Right) + `Close Button` (boolean). No predefined content in
+Figma (`Cross Frame` only holds the close icon) — same slot-based pattern as Dialog/ErrorAndEmptyState.
+
+Two Figma cleanups before code, both at Carol's request: six fragmented, unbound padding tokens
+(`paddingHor/top-generic`, `paddingTop/top-generic`, etc., all worth 8) with no real `boundVariables` on the
+`Cross Frame` (padding was hardcoded 8/0/0/8) consolidated into one real `popoverSheet/all/root/padding/generic`
+token, properly bound this time — a seventh orphan (`paddingHor/bottom-generic`) surfaced only on a second
+sweep and was removed too; and a pointless `web` namespace, renamed to `all` (same convention as
+Button/Combobox/Tooltip/Accordion: `all` means "identical across every variant," not an empty grouping).
+
+**A real IP leak, worse than the padding orphans — a shadow LIVE-linked to La Empresa's real library.** The
+`Elevation/Light Mode/Level02` effect on `Shadow Frame` wasn't broken (unlike `Dialog/DialogShadow` back in
+Sprint 1) — `getStyleByIdAsync` resolved it fine, because it was still genuinely CONNECTED to a real external
+file, which is worse than a dangling reference. A new local style, `Popover Sheet/Shadow`, was created
+(3 layers: radius 5/14/10, y-offsets 5/3/8, spread -3/2/1 — a distinct, more subtle shadow than
+`Dialog/DialogShadow`, not merged with it) and reassigned to all 12 `Shadow Frame`s, verified by data
+(`remote: false`) and by screenshot.
+
+The same day, `root`/`pointer` background moved from `bg/default` to `bg/container` — the same elevated-surface
+bug already fixed for the Cell family back in August turned out to affect Combobox/Country Picker's floating
+panel too (`bg/default` is the darkest tone in the whole palette in dark mode, the opposite of an elevated
+surface); fixed in Figma and in `tokens.css` for all three components at once.
+
+**v1.1, rewritten the same week after the first `code-review` + verification pass found two real bugs in v1.0**
+(a pure atom with no trigger concept at all): (1) the `pointer="center"` arrow centered against the card's own
+width (`min-width:200px`), not against the trigger — with a realistically narrow trigger (a 35px `Button
+size="sm"` in the test bench) it landed dozens of pixels off; (2) there was no Escape or click-outside dismiss,
+only the close button — inaccessible to anyone who can't use a mouse with precision. Carol asked for both fixed
+and, in the same pass, to pay off the shared popover/positioning debt this component had owed since Combobox's
+build ("le toca a Popover Sheet cuando llegue su turno").
+
+`PopoverSheet` now wraps its `trigger` (a new prop, replacing the earlier pattern where the consumer supplied
+its own `position:relative`) — it measures the real trigger with `ResizeObserver` and exposes
+`--ds-popover-anchor-width/-height`, which the centered arrow consumes via `calc()` instead of its own `%`
+(measured misalignment: ~82px in v1.0 → 0.08px in v1.1, same 35px trigger). `_popoverDismiss.js` was extracted
+as an internal helper (same pattern as `_dialogBase.jsx`/`_sliderKnob.jsx`) with the click-outside + Escape
+mechanism — a real consolidation: Combobox and CountryPicker each had their own near-identical `mousedown`
+listener; CountryPicker gains Escape (it never had it), Combobox keeps its own more specific Escape-in-the-
+input behavior (closes AND resets typed text) via a `closeOnEscape={false}` flag on the shared hook. A real
+attempt to annotate the trigger with `aria-expanded`/`aria-haspopup` via `React.cloneElement` — the same
+mechanism `Tooltip.jsx` already uses for `aria-describedby` — was tried and confirmed dead on arrival: neither
+`Button.jsx` nor `IconButton.jsx` forward unknown props to the real DOM node (no rest-spread), so the ARIA
+injection never shipped. This means `Tooltip.jsx` has had the same gap since Sprint 4 — its own documented
+usage example never actually wired `aria-describedby` to the DOM. Logged as its own debt entry rather than
+fixed here, to avoid mixing debt-closing with this build. The "flip near a viewport edge" part of shared
+positioning remains open too — no real consumer needs it yet.
+
+### Step Elements, Step Navigator and Step Indicator built (17–21 September 2026)
+
+Carol shared a real mockup from internal apps and several Figma node-ids already worked on in parallel on her
+side — a long, highly collaborative session with several of her own fixes landing mid-exploration, the same
+pattern already seen with Collapsible and Slider.
+
+**Early architectural call: Step Navigator (vertical) and Step Indicator (horizontal) split into two
+documentation families while sharing real atoms.** Carol made this call explicitly after noticing both use
+the same circle with a different connector — instead of duplicating the circle per orientation, a shared
+`Node` atom (the circle + number/icon) was created, wrapped by `StepVer` (vertical connectors, for Step
+Navigator) and `StepHor` (horizontal connectors, for Step Indicator). The documentation settled into three
+frames on one Figma page ("Step Elements", "Step Navigator", "Step Indicator") after a real back-and-forth
+about splitting across separate Figma pages instead.
+
+**A real centering bug found and fixed in the vertical atom before the renaming pass — constraint vs.
+auto-layout divergence.** A child with `layoutPositioning: ABSOLUTE` and `SCALE`/`STRETCH` constraints computes
+its position as a percentage of the parent frame, completely decoupled from a sibling positioned by
+auto-layout (the connector lines, pushed by `FILL`). Stretching the parent frame beyond its original width let
+the two systems diverge — the number/icon spilled out of the ellipse with two digits. Fixed by wrapping the
+auto-layout-positioned element (the ellipse) and the constraint-positioned one (the text/icon) inside a single
+fixed-size sub-frame that participates as one atomic unit in the outer auto-layout — guaranteeing they can
+never diverge regardless of the outer width.
+
+**Naming unification, 21/09 — the circle stopped being triplicated.** Three nearly identical circle+number/icon
+structures existed: the new `.Part` atom, and a duplicate structure inside the old `.Indicator` atom (which
+never instanced `.Part`, it had its own Ellipse+Text). Carol unified the name to `.Node` and — after explicitly
+asking "couldn't we just instance `.Node`?" inside `.navigatorPart` (her rename of `.Indicator`) — the
+duplicated structure was replaced with a real `.Node` instance, closing the last duplication. `.Step` (the
+horizontal wrapper) was renamed to `.StepHor` and `.navigatorPart` (the vertical wrapper) to `.StepVer`,
+applied to all real instances, not just the masters.
+
+**The same repositioning bug, found TWICE, once per orientation, same root cause.** The `Show
+Top/Bottom connector` and `Left/Right connector` booleans were bound to `visible` in Figma — an invisible
+child drops out of auto-layout's calculation, so hiding a connector shrank the atom and REPOSITIONED `Node`.
+Vertical fix: connectors moved to `layoutPositioning: ABSOLUTE` with a fixed position — geometry immune to
+visibility, at the cost of not being able to stretch (acceptable, `StepVer` only ever lives in fixed-width
+rows). Horizontal fix, more involved because `StepHor` genuinely needs to stretch (`StepIndicatorLarge` must
+fit any page width): normal `FILL` connectors on each side of `Node`, symmetric, so `Node` stays centered as it
+grows, and hiding one side naturally and correctly collapses just that side (exactly what's wanted at the
+first/last step of a chain, unlike the vertical case). A side effect of the same fix: the label text below
+stayed centered against the step's TOTAL width, not against where `Node` actually landed after one side
+collapsed — resolved not by manually syncing the text gap to the connector gap (tried, left a ~26px residue),
+but by wrapping each connector line in a spacer that is ALWAYS visible and ALWAYS symmetric — the boolean only
+turns off painting the line inside the spacer, never the spacer itself, so `Node` (above) and the label's
+center (below) line up mathematically without any syncing.
+
+**`Step Indicator Large` — a deliberate choice to have two different architectures, one in Figma, one in
+code.** Carol wanted a Figma component with fixed `Number of steps=2..7` variants — the exact pattern this
+project has avoided since Sprint 1 (Table/CellActions/FileSelector/SegmentedControl) because code doesn't need
+it (`array.map()` with no limit). Here it's justified in Figma: real convenience for designers plus a real
+screen-width limit (not every step count fits). Confirmed explicitly that CODE still follows the usual
+composition pattern with no limit — `StepIndicatorLarge.jsx` is plain `array.map()` with a dev-warn past 7,
+never a hard block.
+
+**Two rounds of real Figma token reorganization.** First round: the 34 existing `steps/all/*` tokens were split
+into `steps/common/*` (genuinely shared between Navigator and Indicator, confirmed component by component) and
+`steps/navigator/*` (exclusive to the menu hierarchy) — no "Indicator" bucket, since nothing exclusive to it
+survived the split (Carol's explicit rule: "if a group ends up empty, don't make a group"). Three real
+simplifications along the way: `fg/text` and `fg/icon` resolved to the same color in all 3 states, merged into
+one `fg`; `borderWidth` was tripled across circle/connector/substep-connector, all the same value, merged into
+one; and `Substep Navigator`'s label was bound to `node/fg/incomplete` (the circle NUMBER's color, matching
+black by coincidence) — given its own `root/fg/label` token. Second round, a correction from Carol: `root/bg`
+and the three focus tokens turned out to be genuinely shared too (`Step Indicator Small` consumes them as
+well) — moved from `navigator` to `common`, and the whole hierarchy nested under one `steps` parent, reflecting
+that "Steps" is the Figma page that contains both families.
+
+**Code — 7 files**, verified in the live test bench, not just built: `Node.jsx`, `StepHor.jsx`, `StepVer.jsx`
+(atoms) plus `StepIndicatorLarge.jsx`, `StepIndicatorSmall.jsx`, `StepNavigator.jsx`, `SubstepNavigator.jsx`
+(organisms). Tokens in `tokens.css` reuse existing Mode-layer values where they already matched
+(`--ds-bg-primary`, `--ds-fg-success`, `--ds-borderColor-emphasis`) instead of duplicating hex — only
+`--ds-steps-border-width` and the padding/gap/icon-size literals are new, with a direct Figma precedent
+(`spacing/xl`).
+
+### Top Navigation, Card and Image built (22–25 September 2026)
+
+Top Navigation is the most composite piece of Sprint 4+5 — genuinely responsive (`__desktop`/`__collapsed`
+both render always, a 1024px media query decides which shows, the same mechanism already used for
+TabItem/Page Title). Desktop: Logo + `TabItem`×N + an exit Button; a menu item with `flydown` opens a
+full-width mega-menu on hover. The mega-menu shape itself only landed after four failed attempts at a compact,
+hand-measured dropdown — anchoring it to 100% of the root `<nav>` (`left/right: 0` against the nav, never its
+own `width`) is what finally closed all four failure modes at once, following Carol's own reference
+(mollie.com/es). Menu height is resolved with CSS columns (`column-width`/`max-height`/`column-fill: auto`),
+never scroll, deliberately approximate ("de un vistazo"). Collapsed (<1024px): Logo + a Menu `IconButton` opens
+`SidebarMenu` over a `Scrim` — Exit is the last entry inside that menu, not a separate button.
+
+**`Card` (new atom)** is born as the Flydown panel's shell — a generic surface with background/radius/shadow,
+only the `basic` Figma variant, but a free `children` slot reusable anywhere a simple elevated surface is
+needed. Its shadow (`--ds-card-root-shadow`, a real Effect Style, "Card/Shadow") aliased to Popover Sheet's
+shadow purely by coincidence until 23/09, when it was decoupled into its own token so Card doesn't depend on
+another unrelated component. In Figma the Flydown itself doesn't instance `Cards` — it's a rigid, `ABSOLUTE`
+frame that hand-simulates the same fill/radius/shadow — a problem that never exists in code, where
+`TopNavigation.jsx` instances the real `Card` atom directly.
+
+**A flydown group can carry `featured: {...}` instead of `links`** (25/09), closing what had been an open Image
+debt — it instances the `Image` atom as-is. `flydownToSidebarChildren` (the tree `SidebarMenu` builds for
+mobile) filters `featured` groups out before flattening, since they're decorative content, not navigation —
+without the filter, `group.links.map` crashed on `undefined` for a group with no `links`, a real bug found and
+fixed while verifying.
+
+**`Image` (new atom)** closes a real Figma-only debt — the component existed in Figma with no code yet.
+`size` (1:1/3:2/4:3/16:9) × `variant` (roundedCorners/circle, circle only valid with 1:1) mirrors the same axis
+`.Container` had before merging into the real `Image` component set on 24/09. `objectFit: cover` is fixed,
+matching Figma's `scaleMode=FILL` across all 5 variants — fixed the same day from `FIT`, which had been leaving
+letterbox gaps with real photos. `borderRadius` literally reuses `--ds-card-root-border-radius` (the same
+token Figma itself aliases to, `cards/all/root/borderRadius/basic`) rather than getting its own. The fallback
+background (`--ds-bg-subtle`, shown when there's no `src`) is a code-only decision, not a pixel-for-pixel port
+of Figma's mountain-and-sun placeholder graphic, which represents "no image yet" purely as documentation
+artwork.
+
+### Page Title built, Headline extended to a real 3-tier responsive h1 (22–28 September 2026)
+
+Node-id `32244:18450`, 15 Figma variants (`Layout` Horizontal/Vertical/Desktop × `Nav`
+Close/Chevron/Link/Text/TextBold/TextDisabled/None/Breadcrumb). Before code, 5 legacy Android/iOS/`.System nav`
+component sets were deleted after confirming zero external consumers, and a real "ghost variable" bug was
+found and fixed: the nav/action icons were bound to `topNavigation/android/iconLeft|iconRight/fg|size/generic`
+— variables that resolved fine by ID and reported `remote:false` (genuinely local) yet were absent from their
+own collection's `variableIds` listing, invisible to any collection-scanning search while still actively bound
+to 274+623 real nodes. The only reliable fix was scanning every node's own `boundVariables` directly rather
+than trusting a collection listing — new `pageTitle/nav/icon/fg|size/generic` tokens were created, the affected
+nodes re-bound, and the four ghosts deleted once nothing referenced them.
+
+**A real structural overflow, found by measurement, not by eye.** Headline text (202px) plus action buttons
+(112px) needed 314px of room inside a `Content` box that only had 256–288px on the narrowest device. Carol
+rejected both the obvious fixes outright — truncating the title ("nunca truncar, no es accesible") and dropping
+elements ("nada de quitar elementos") — and rebuilt one reference variant herself in Figma using a different
+structure entirely: a top row (nav icon + actions, `space-between`) with the full-width Headline below it, root
+height set to auto (hug). That structure was then propagated to the other Horizontal variants, and all 7
+`Vertical` variants were deleted outright — Carol's own call: "la vertical carece de sentido," it only moved
+the `nav` zone relative to `Content`, it never solved the overflow. Real text wrap (`textAutoResize: 'HEIGHT'`,
+`layoutSizingHorizontal: 'FILL'`) was enabled on every Headline instance afterward.
+
+**The `Layout` property became a real `Device` axis (Mobile/Tablet/Desktop)**, with Carol building the Tablet
+variants herself and initially swapping the Headline instance's `Variant` per device (Mobile=h6, Tablet=h4,
+Desktop=h1) for proportional sizing. That raised a real accessibility question during PLAN: should the
+semantic heading level actually change per device (needing JS), or should the level stay fixed with only the
+visual size responding to CSS? **Carol's answer: the semantic level stays fixed at `h1`, always — only the
+font-size changes** — a page has exactly one real `<h1>`, and swapping it to `<h6>`/`<h4>` on smaller screens
+would break that regardless of how it looks. This was implemented at the Figma layer by reverting every
+Mobile/Tablet Headline instance back to `Variant=h1` and binding two new tokens per device
+(`pageTitle/headline/fontSize|lineHeight/{mobile,tablet,desktop}`) directly onto each text node's instance-level
+Typography override, aliased to the values Mobile=h6(19)/Tablet=h4(28)/Desktop=h1(48) already used — the
+`level` never moves, only the rendered size does.
+
+**Code simplified the final approach further.** `Headline.jsx` already had a 2-tier h1-responsive CSS mechanism
+from an earlier session (`<1024px`→32px, `≥1024px`→48px) — extended to 3 real tiers
+(`<768px`→19px, `768–1023px`→28px, `≥1024px`→48px, the 768px cutoff being a new, unprecedented-in-this-repo
+Mobile↔Tablet breakpoint, confirmed with Carol as the industry-standard iPad-portrait width). Because that
+mechanism already lives inside `Headline.jsx` itself, `PageTitle.jsx` never needed to re-theme font-size
+locally the way the original PLAN assumed — it simply instances `<Headline level={1}>` and the sizing resolves
+on its own, benefiting every other `level={1}` consumer in the repo too, not just Page Title.
+
+`PageTitle.jsx` (organism) collapses Figma's 8 `Nav` axes into 4 real types plus `undefined`: `icon` (Close and
+Back are the same free-icon mechanism, not two fixed variants), `link`, `text` (Text/TextBold/TextDisabled are
+the same `Text` atom with a different `weight`/`disabled` prop, not three variants), and `breadcrumb`
+(Desktop-only, last item non-clickable plain text — the current page). `actions` is a free array with no fixed
+limit (Figma only shows 3 as an example) — a bare clickable icon in `__compact`, a real `Button` (icon+label)
+in `__wide`. `nav`/`actions` icon sizing in `__compact` responds via a CSS class keyed to three device-specific
+tokens (`--ds-page-title-nav-icon-size-{mobile,tablet,desktop}` = 20/24/32px) rather than a React device prop.

@@ -885,6 +885,84 @@ color: #286371;
 
 ---
 
+## Slider family (09/09/2026) — primer componente con arrastre real
+
+4 bugs reales en Figma antes de CODE, todos encontrados por dato: (1) 4 variantes del tooltip de valor tenían el texto literal `"%"` sin el `"0"` — el frame del knob hace HUG sobre burbuja+círculo, así que el texto vacío estrechaba el frame y descuadraba la posición absoluta del knob 10px fuera del track; (2) 16 variantes de Continuous (`Primary`×Hover/Focus) tenían el relleno enlazado directo a `color/primary` (capa Base), saltándose Component y Mode — reenlazado a `slider/all/indicator/fg/primary`; (3) un renombrado en bloque inicial (`Slider (adjustable)`→`.Track`, `Base`→`.Indicator`) hecho por analogía sin comprobar el bind real salió AL REVÉS en Continuous — la capa exterior es la que pinta el color completo, la interior es una máscara gris con `paddingLeft` variable; en Range el mecanismo es el opuesto. Corregido capa por capa verificando el bind real, no por analogía; (4) `.Segment` (Point+Tail del slider de pasos) se había borrado por error en una sesión anterior — restaurado desde el historial de Figma, sin eje `Variant` (solo pintaba rosa, saltándose Component igual que el bug 2) — añadido el eje `Primary`/`Secondary` real, reenlazado a los mismos tokens `indicator`/`track` del resto de la familia, sin tokens nuevos.
+
+**Continuous y Segmented se quedan como componentes separados a propósito**, en Figma y en código — un intento real de fusionarlos (`With Steps` en Continuous) rompió el posicionamiento del knob dos veces y fue lo que expuso el bug 3 de arriba. El mecanismo interno es realmente distinto (relleno+máscara vs. cadena de instancias `.Segment`), no una variación visual — comparten tokens (`--ds-slider-*`), no componente.
+
+`_sliderKnob.jsx` (helper interno no exportado, compartido por `Slider`/`RangeSlider`/`SteppedSlider`) instancia `Tooltip` para la burbuja de valor — que ganó `forceVisible` y `style` para cubrir el caso de arrastre con ratón, que el mecanismo `:hover`/`:focus-within` original de `Tooltip` no cubre.
+
+---
+
+## Combobox (10/09/2026) — saltado de orden a petición de Carol
+
+Tokens simplificados antes de CODE, mismo criterio que Accordion/Slider: `inputIconLeft`+`iconDropdown` (mismo valor teal, mismo concepto de icono genérico) fusionados en `combobox/all/icon/fg/generic`; `valueText` renombrado a `combobox/all/text/fg/generic`. `caret` se queda con SU PROPIO token a propósito — no es un icono, es el vector del cursor de texto parpadeante (un trazo de 30×0, confirmado inspeccionando la capa), coincide en valor hoy por casualidad pero es un elemento distinto.
+
+**Bug real en `List View`, encontrado de paso:** sus dos hijos directos (`.Left Panel`/`Center + Right Content`) estaban en `layoutPositioning: ABSOLUTE` dentro de un padre que SÍ es auto-layout — el auto-layout existía pero estaba completamente inerte. Corregido en las 20 variantes pasando ambos a `AUTO`.
+
+**Vaivén real de arquitectura del Picker.** Primer hallazgo: "Selection Cells" fingía su estado `Selected` con un borde manual de 4 lados (`borderColor/primary`, capa Mode, saltándose Component) en vez de usar la property `Selected` real de `ListView` — corregido, pero Carol prefirió pivotar el Picker a `SelectorListItem` (Sprint 1) en vez de `ListView`: el borde completo es su mecanismo legítimo de selección, más evidente en un desplegable que el ribbon fino de `ListView`.
+
+---
+
+## Country Flag + Country Picker (11/09/2026) — cierra deuda técnica
+
+Confirmado que `Selector List Item` (component set `3347:7310`) ya soportaba `Right Panel=false` — el gap real era de código, no de Figma: `SelectorListItem.jsx` no exponía `icon` (slot) ni `showControl` (booleano) para sustituir el `file-text` fijo por una bandera y ocultar el Radio/Checkbox. Añadidos ambos.
+
+**Bandera real vía export masivo, no vía Icon.jsx.** El component set `CountryFlag` de Figma (node `30831:2867`) ya tenía las 201 banderas reales con vector propio — el bloqueo real era que `Icon.jsx` es un wrapper exclusivo de lucide-react (un color vía `currentColor`), incompatible con arte multicolor. Exportadas las 201 vía `node.exportAsync({format:'SVG_STRING'})` a `flags.js` (slug→SVG crudo). **Lección operativa:** pedir SVGs en lotes de ~23 trunca silenciosamente la respuesta a los ~20KB sin avisar — lotes de 5 o menos; banderas muy complejas (`sri-lanka`, `saudi-arabia`) hay que pedirlas solas, y `saudi-arabia` superaba el límite incluso sola (resuelta con `download_assets`). Un intento de reconstruir `sri-lanka` de memoria produjo contenido incorrecto — nunca reconstruir de memoria un dato ya obtenido.
+
+`CountryFlag.jsx` inyecta el SVG vía data URI en `<img>` (nunca `dangerouslySetInnerHTML`); el radio de esquina vive en el wrapper, no depende del propio SVG. `CountryPicker.jsx` compone `SelectorListItem` (`icon`=`CountryFlag`, `showControl={false}`) + mismo chrome de panel que Combobox (`combobox/all/root/bg/generic`, sin token nuevo).
+
+---
+
+## Popover Sheet (14–15/09/2026) — v1.1, reescrito tras el primer review
+
+**Dos limpiezas de Figma antes de CODE:** 6 tokens de padding fragmentados y sin `boundVariables` real (`paddingHor/top-generic`, etc., los 6 valen 8) consolidados en un único `popoverSheet/all/root/padding/generic` — un séptimo huérfano (`paddingHor/bottom-generic`) apareció solo en un segundo barrido; y un namespace `web` sin sentido (el componente no tiene ningún eje Device real), renombrado a `all`.
+
+**Fuga de IP real, más seria que las de padding — sombra enlazada EN VIVO a la librería real de La Empresa** (no una referencia rota, como `Dialog/DialogShadow` — `getStyleByIdAsync` la resolvía con normalidad porque seguía conectada de verdad a un archivo externo). Creado un estilo local nuevo, `Popover Sheet/Shadow`, reasignado a las 12 `Shadow Frame`, verificado por dato (`remote: false`).
+
+**`root`/`pointer` bg pasaron de `bg/default` a `bg/container`** — mismo bug de superficie elevada ya cazado en la familia Cell (agosto), esta vez en el panel flotante de Combobox/Country Picker también — corregido en Figma y en `tokens.css` para los tres a la vez.
+
+**v1.1 tras el primer `code-review` + verificación: 2 bugs reales.** (1) la flecha `pointer="center"` centraba contra el ancho de la propia tarjeta, no del trigger — corregido envolviendo el `trigger` real (`ResizeObserver`, nuevos `--ds-popover-anchor-width/-height`, la flecha consume `calc()` en vez de `%` de sí misma); desalineación real medida: ~82px en v1.0 → 0.08px en v1.1. (2) sin cierre por Escape/click-fuera — extraído `_popoverDismiss.js` (helper interno compartido con Combobox/CountryPicker, que antes duplicaban el mismo listener `mousedown` a mano; CountryPicker gana Escape).
+
+**Deuda nueva, no resuelta aquí:** `Button.jsx`/`IconButton.jsx` no reenvían props desconocidas al DOM (sin rest-spread) — un intento de anotar `aria-expanded`/`aria-haspopup` en el `trigger` vía `cloneElement` confirmó por dato que no llega al `<button>` real. Mismo hueco ya existe en `Tooltip.jsx` desde Sprint 4 (`aria-describedby` nunca conectado de verdad). Anotada como deuda separada, no arreglada en esta sesión.
+
+---
+
+## Step Elements, Step Navigator, Step Indicator (17–21/09/2026)
+
+**Dos rondas de reorganización real de tokens.** Primera ronda: los 34 tokens `steps/all/*` existentes se repartieron en `steps/common/*` (compartido de verdad entre Navigator e Indicator, confirmado componente a componente) y `steps/navigator/*` (exclusivo de la jerarquía de menú) — sin bucket "Indicator" porque no quedó ningún token exclusivo suyo tras el reparto (regla explícita de Carol: "si un grupo queda vacío, no se hace grupo"). De paso, 3 simplificaciones reales: `fg/text` y `fg/icon` resolvían al mismo color en los 3 estados → fusionados en un único `fg`; `borderWidth` estaba triplicado (círculo/conector/subStepConnector) → fusionado en 1; el label de `Substep Navigator` estaba enlazado a `node/fg/incomplete` (el color del NÚMERO, coincidía en negro por casualidad) → token propio `root/fg/label` creado. Segunda ronda, corrección de Carol: `root/bg` y los 3 tokens de foco SÍ son comunes (`Step Indicator Small` también los consume) — movidos de `navigator` a `common`, y la jerarquía anidada bajo un único padre `steps`.
+
+**Bug de re-colocación al ocultar un conector, encontrado DOS VECES (vertical y horizontal) por el mismo patrón** — los booleanos `Show */* connector` estaban enlazados a `visible` en Figma, y un hijo invisible se saca del cálculo de auto-layout, recolocando el `Node`. Fix vertical: conectores a `layoutPositioning: ABSOLUTE` con posición fija (geometría inmune a la visibilidad, `StepVer` no necesita estirarse). Fix horizontal, más elaborado porque `StepHor` SÍ necesita estirarse: conectores `FILL` simétricos a cada lado de `Node`, con el hueco del texto resuelto envolviendo cada línea en un spacer siempre visible y siempre simétrico (el booleano solo apaga el pintado de la línea, nunca el spacer).
+
+**`Step Indicator Large` — dos arquitecturas a propósito.** Figma tiene un componente con variantes fijas `Number of steps=2..7` (comodidad real para diseñadoras + límite real de ancho de pantalla); código sigue el patrón de composición sin límite ya usado en Table/CellActions/SegmentedControl (`array.map()` + dev-warn a partir de 7, nunca bloqueo).
+
+Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width` y los literales de padding/gap/iconSize (con precedente directo en Figma, `spacing/xl`) — el resto reusa Mode-layer existente (`--ds-bg-primary`, `--ds-fg-success`, `--ds-borderColor-emphasis`).
+
+---
+
+## Top Navigation, Card, Image (22–25/09/2026)
+
+**`Card` (átomo nuevo)** — carcasa del panel Flydown de Top Navigation. Sombra propia (`--ds-card-root-shadow`, Effect Style real "Card/Shadow") — hasta el 23/09 aliasaba a Popover Sheet por coincidencia de valor, desacoplada para no depender de otro componente sin motivo real.
+
+**Un grupo del flydown puede llevar `featured: {...}` en vez de `links`** (25/09) — instancia `Image` tal cual. `flydownToSidebarChildren` filtra esos grupos antes de aplanar el árbol de `SidebarMenu` móvil (contenido decorativo, no navegable) — sin el filtro, `group.links.map` crasheaba con `undefined`, bug real encontrado al verificar.
+
+**`Image` (átomo nuevo)** — `size`(1:1/3:2/4:3/16:9)×`variant`(roundedCorners/circle) mismo eje que `.Container` en Figma antes de fusionarse en el component set real (24/09). `objectFit: cover` fijo, corregido en Figma el mismo día desde `scaleMode=FIT` (dejaba huecos de letterbox con fotos reales). `borderRadius` reusa literalmente `--ds-card-root-border-radius` (mismo token que Figma, `cards/all/root/borderRadius/basic`) — sin token propio nuevo. Fondo de fallback (`--ds-bg-subtle`) cuando no hay `src` es decisión de código, no réplica del placeholder gráfico de Figma.
+
+---
+
+## Page Title (22–28/09/2026) — nace el 3er tier responsive de Headline
+
+**Bug de "variable fantasma" real, encontrado antes de CODE.** Los iconos de nav/acciones estaban enlazados a `topNavigation/android/iconLeft|iconRight/fg|size/generic` — variables que resuelven bien por ID y reportan `remote:false` (genuinamente locales) pero están ausentes del listado `variableIds` de su propia colección, invisibles a cualquier barrido por colección aunque sigan enlazadas a 274+623 nodos reales. Único fix fiable: escanear `boundVariables` de cada nodo directamente, nunca fiarse de un listado de colección. Creados `pageTitle/nav/icon/fg|size/generic`, re-enlazados los nodos afectados, borradas las 4 variables fantasma. De paso se eliminaron 5 component sets legacy Android/iOS/`.System nav` (0 consumidores externos confirmado).
+
+**Desborde real medido, no intuido:** título (202px) + botones de acción (112px) pedían 314px dentro de un `Content` de 256-288px en el dispositivo más estrecho. Carol rechazó truncar ("no es accesible") y quitar elementos — la propiedad `Layout` se convirtió en `Device` real (Mobile/Tablet/Desktop), `Vertical` se eliminó (7 variantes, "carece de sentido" — solo movía la zona `nav`, no resolvía el desborde), y el componente se reconstruyó con nav+acciones en fila superior y el Headline a ancho completo debajo, root en alto automático (hug).
+
+**Decisión de accesibilidad de Carol, con consecuencia directa en tokens:** el nivel semántico del Headline se queda fijo en `h1` en los 3 devices — solo cambia el tamaño visual. Implementado en Figma vinculando `fontSize`/`lineHeight` por instancia (Typography panel, sin tocar el binding de `Variant`) vía 6 tokens nuevos (`pageTitle/headline/fontSize|lineHeight/{mobile,tablet,desktop}`), aliasados a los valores que Mobile=h6(19)/Tablet=h4(28)/Desktop=h1(48) ya usaban.
+
+**En código, la solución se simplificó de verdad respecto al plan inicial.** `Headline.jsx` ya tenía un mecanismo responsive de 2 tiers para `h1` desde una sesión anterior — extendido a 3 tiers reales (`<768px`→19px, `768-1023px`→28px, `≥1024px`→48px, corte a 768px nuevo en el repo, confirmado con Carol como estándar de industria/ancho de iPad portrait). Como el mecanismo ya vive dentro de `Headline.jsx`, los 6 tokens `pageTitle/headline/*` creados en Figma NO se portaron a `tokens.css` como variables propias — `PageTitle.jsx` simplemente instancia `<Headline level={1}>` y el tamaño se resuelve solo, beneficiando también a cualquier otro consumidor de `level={1}` del repo, no solo a Page Title. Tokens nuevos reales en `tokens.css`: `--ds-page-title-root-padding-*`/`-gap`/`-buttons-gap` y 3 tamaños de icono por device (`--ds-page-title-nav-icon-size-{mobile,tablet,desktop}` = 20/24/32px, aliasados a `sizing/xs|sm|md`).
+
+---
+
 ## Deuda técnica de tokens
 
 - ~~**Mode tokens dark mode** — varios tokens rotos o sin función clara en dark mode.~~ ✅ **Resuelto 11/08/2026** para la escala neutra `bg/*` (default/page/subtle/disabled/container), la familia de marca/feedback `bg/*` (primary/-bold/-medium, secondary, tertiary, error, success, hover-primary, inverse, accent, warning, info, highlight), y la trampa `*/inverse` vs `*/onColor` en `fg/label`, `fg/body` y `fg/icon` (ver secciones arriba). **Pendiente real:** `borderColor/*` dark no se ha auditado todavía contra Figma — mismo tipo de revisión, sesión aparte.
