@@ -8,6 +8,7 @@ import { TabItem } from './components/TabItem'
 import { TopNavigation } from './organisms/TopNavigation'
 import { Headline } from './components/Headline'
 import { Tabs } from './organisms/Tabs'
+import { PageTitle } from './organisms/PageTitle'
 
 const navItems = [
   { id: 'clientes', label: 'Clientes' },
@@ -59,8 +60,60 @@ export default function App() {
 
       <div style={{ padding: '0 40px', display: 'flex', flexDirection: 'column', gap: 40 }}>
       <div>
-        <h3>Headline level=1 (responsive — 32px below 1024px, 48px above; always &lt;h1&gt;)</h3>
+        <h3>Headline level=1 (responsive — 19px &lt;768px, 28px 768-1023px, 48px ≥1024px; always &lt;h1&gt;)</h3>
         <Headline level={1}>Título de página</Headline>
+      </div>
+
+      <div>
+        <h3>PageTitle — nav=icon (resize window to see mobile/tablet/desktop)</h3>
+        <PageTitle
+          nav={{ type: 'icon', icon: 'X', ariaLabel: 'Cerrar', onClick: () => alert('cerrar') }}
+          title="Título de página"
+          actions={[
+            { icon: 'Share2', ariaLabel: 'Compartir', onClick: () => alert('compartir') },
+            { icon: 'Heart', ariaLabel: 'Favorito', onClick: () => alert('favorito') },
+            { icon: 'Search', ariaLabel: 'Buscar', onClick: () => alert('buscar') },
+          ]}
+        />
+      </div>
+
+      <div>
+        <h3>PageTitle — nav=breadcrumb (solo visible en Desktop, ≥1024px)</h3>
+        <PageTitle
+          nav={{ type: 'breadcrumb', items: [
+            { label: 'Nivel 1', onClick: () => {} },
+            { label: 'Nivel 2', onClick: () => {} },
+            { label: 'Nivel 3', onClick: () => {} },
+            { label: 'Página actual' },
+          ] }}
+          title="Título de página"
+          actions={[
+            { icon: 'Share2', ariaLabel: 'Compartir', onClick: () => {} },
+            { icon: 'Heart', ariaLabel: 'Favorito', onClick: () => {} },
+            { icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} },
+          ]}
+        />
+      </div>
+
+      <div>
+        <h3>PageTitle — nav=link, título largo (wrap real, nunca truncado)</h3>
+        <PageTitle
+          nav={{ type: 'link', label: 'Volver', onClick: () => {} }}
+          title="Modificación de datos personales y de contacto"
+          actions={[{ icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} }]}
+        />
+      </div>
+
+      <div>
+        <h3>PageTitle — nav=text (weight bold) y sin nav</h3>
+        <PageTitle
+          nav={{ type: 'text', label: 'Sección', weight: 'bold' }}
+          title="Título de página"
+          actions={[{ icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} }]}
+        />
+        <div style={{ marginTop: 16 }}>
+          <PageTitle title="Sin nav" actions={[{ icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} }]} />
+        </div>
       </div>
 
       <div>

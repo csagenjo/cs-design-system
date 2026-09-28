@@ -10,18 +10,22 @@
  * las 24 variantes (h1-h6 × 4 colores), no solo h1 — cambiado 22/09.
  *
  * `level` fija a la vez la etiqueta HTML y el tamaño (van bloqueados):
- *   level 1 → h1 · 2xl (48, 32 en mobile/tablet — ver responsive abajo)
+ *   level 1 → h1 · 2xl (48 desktop, 28 tablet, 19 mobile — ver responsive abajo)
  *   level 2 → h2 · xl (36)    level 5 → h5 · sm (24)
  *   level 3 → h3 · lg (32)    level 6 → h6 · xs (19)
  *
- * h1 RESPONSIVE (añadido 22/09, Page Title) — 48px se veía desproporcionado
- * en Layout=Horizontal/Vertical de Page Title (Content de 24px de alto).
- * Carol: la etiqueta debe seguir siendo h1 siempre (es el título real de la
- * página — bajar a level=5/6 rompería la semántica, solo debe haber un h1
- * por página), así que el tamaño se resuelve por CSS (media query 1023px,
- * mismo corte que TopNavigation/Page Title) en vez de por prop — 32px por
- * debajo, 48px por encima. Mismo patrón que Device Mobile/Desk ya resuelve
- * en Figma (fontSize/headline/2xl-mobile=32 / -desk=48, antes id��nticos).
+ * h1 RESPONSIVE (añadido 22/09, Page Title; 3 tiers reales desde 28/09) —
+ * 48px se veía desproporcionado en el Page Title compacto. Carol: la
+ * etiqueta debe seguir siendo h1 siempre (es el título real de la página —
+ * bajar a level=5/6 rompería la semántica, solo debe haber un h1 por
+ * página), así que el TAMAÑO se resuelve por CSS en vez de por prop. Corte
+ * a 1024px (mismo que TopNavigation/Page Title) y a 768px (Mobile↔Tablet,
+ * estándar de industria — ancho de iPad portrait, sin precedente previo en
+ * el repo). Los 3 valores no son arbitrarios: Page Title en Figma usa
+ * Mobile=h6(19)/Tablet=h4(28)/Desktop=h1(48) como Device real — el level
+ * del componente se queda en h1 en los tres, solo el tamaño se toma
+ * prestado de esas variantes (fontSize/headline/2xl-mobile=19 ahora, antes
+ * 32 con mobile+tablet unificados; fontSize/headline/2xl-tablet=28, nuevo).
  *
  * Reglas de uso (no solo de estilo):
  *   · Alineación SOLO a la izquierda — son h1–h3 semánticos, no se centran.
@@ -63,13 +67,16 @@ const css = `
 
 /* h1 responsive — la ETIQUETA se queda h1 siempre (sigue siendo el título real
    de la página, level nunca cambia por device), solo el TAMAÑO se adapta.
-   Mismo corte que TopNavigation/Page Title (1024px) y mismo mecanismo (CSS
-   decide, no una prop de nivel) — Device/Mobile en Figma ya lo resuelve a 32
-   (headline/2xl-mobile), Desk se queda en 48. Pedido explícito de Carol: no
-   bajar a h5/h6 visualmente aunque el tamaño se reduzca, eso rompería la
-   semántica del documento (solo debe existir un h1 real por página). */
-@media (max-width: 1023px) {
-  .ds-headline--1 { font-size: var(--ds-fontSize-headline-2xl-mobile); line-height: var(--ds-lineHeight-md); } /* 32/36 mobile/tablet */
+   3 tiers reales (28/09): <768 Mobile, 768-1023 Tablet, ≥1024 Desktop — igual
+   que Page Title en Figma resuelve Mobile=h6(19)/Tablet=h4(28)/Desktop=h1(48)
+   sin tocar el level. Pedido explícito de Carol: no bajar a h5/h6 visualmente
+   aunque el tamaño se reduzca, eso rompería la semántica del documento (solo
+   debe existir un h1 real por página). */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ds-headline--1 { font-size: var(--ds-fontSize-headline-2xl-tablet); line-height: var(--ds-lineHeight-md); } /* 28/36 tablet */
+}
+@media (max-width: 767px) {
+  .ds-headline--1 { font-size: var(--ds-fontSize-headline-2xl-mobile); line-height: var(--ds-lineHeight-xs); } /* 19/24 mobile */
 }
 
 /* Color */
