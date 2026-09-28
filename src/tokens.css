@@ -338,7 +338,8 @@
   --ds-fontSize-headline-lg:    32px;
   --ds-fontSize-headline-xl:    36px;
   --ds-fontSize-headline-2xl:   48px;
-  --ds-fontSize-headline-2xl-mobile: 32px; /* h1 responsive — Device/Mobile en Figma, coincide con headline-lg hoy pero es un token distinto (mismo criterio que el caret de Combobox: valor igual, concepto distinto) */
+  --ds-fontSize-headline-2xl-mobile: 19px; /* h1 responsive — 28/09, 3er tier real: antes 32 (mobile+tablet unificados), Page Title en Figma confirma Mobile=h6(19)/Tablet=h4(28)/Desktop=h1(48) como fuente real, level se queda h1 siempre */
+  --ds-fontSize-headline-2xl-tablet: 28px; /* nuevo 28/09 — coincide con headline-md hoy pero es un token distinto (mismo criterio que el caret de Combobox) */
 
   --ds-font-weight-regular: 400;
   --ds-font-weight-medium:  500;
@@ -1916,6 +1917,22 @@
      variantes, corregido desde FIT el mismo día).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #9AA1AA — image/all/caption/fg/generic */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — PageTitle (pageTitle/*)
+     Sprint 5. Device real (Mobile/Tablet/Desktop) — el nivel semántico del
+     Headline se queda en h1 siempre (Carol, accesibilidad); el tamaño
+     responsive ya lo resuelve Headline.jsx por CSS, no hace falta token
+     propio aquí. Iconos y gaps sí escalan por device.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-page-title-root-padding-hor:  8px;  /* pageTitle/root/paddingHor — spacing/md */
+  --ds-page-title-root-padding-ver:  4px;  /* pageTitle/root/paddingVer — spacing/xs */
+  --ds-page-title-root-gap:          12px; /* pageTitle/root/gap — spacing/lg, antes spacing/md(8) — Carol lo subió el 28/09: en local se veía todo muy pegado, la línea de título necesitaba más aire */
+  --ds-page-title-buttons-gap:       20px; /* pageTitle/buttons/gap — sin equivalente en la escala, token propio */
+  --ds-page-title-nav-icon-fg:       var(--ds-fg-icon-primary); /* pageTitle/nav/icon/fg */
+  --ds-page-title-nav-icon-size-mobile:  20px; /* pageTitle/nav/icon/size/mobile — sizing/xs */
+  --ds-page-title-nav-icon-size-tablet:  24px; /* pageTitle/nav/icon/size/tablet — sizing/sm */
+  --ds-page-title-nav-icon-size-desktop: 32px; /* pageTitle/nav/icon/size/desktop — sizing/md */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Top Navigation (topNavigation/all/*)
