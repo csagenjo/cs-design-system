@@ -1804,24 +1804,37 @@
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs (tabs/*)
-     Sprint 3. `Tab` (item individual) + `Tabs` (contenedor, N×Tab). Device
-     mobile/tablet — Desktop reutiliza los valores de tablet, sin variante
-     propia (mismo criterio que el resto de la librería: Mobile/Desk casi
-     nunca difieren, ver device-tokens-mobile-desk-review). Focus resuelto
-     con un único stroke real en la raíz del propio Tab (no doble anillo) —
-     decisión de Carol tras encontrar que el anillo interior blanco competía
-     con la cinta de selección; más simple y se redimensiona solo, sin
-     necesitar constraints especiales.
+     `TabItem` (átomo, usable suelto) + `Tabs` (organismo, N × TabItem).
+     29/09: `Device` sustituido por `Size` S/M/L (40/48/56) — tamaño FIJO,
+     independiente del device (Device es ahora un modo responsive, no una
+     variante). Los paddings apuntan a Base directo, no a spacing/* (spacing/xl
+     es responsive y S/M/L no deben encogerse): excepción documentada, mismo
+     criterio que doc/*. + `Style` Line / Contained (ref. Carbon "contained
+     tabs": pestañas dentro de un contenedor, pegadas a su panel).
+     Focus: un único anillo en la raíz del propio Tab (no doble anillo).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-tabs-root-bg-generic:              var(--ds-bg-default);          /* #FFFFFF / #050506 dark */
   --ds-tabs-root-bg-hover:                var(--ds-bg-hover-primary);    /* #B8E6FE / #016398 dark */
-  --ds-tabs-root-opacity-pressed:         var(--ds-opacity-pressed);     /* 0.8 */
-  --ds-tabs-root-border-bottom-color-generic: var(--ds-borderColor-subtle); /* línea bajo la barra completa — #EEEFF1 / #606772 dark */
+  --ds-tabs-root-bg-pressed:              var(--ds-bg-subtle);           /* gris — Pressed en Line y Contained (29/09: sustituye a la opacidad 0.8) */
+  --ds-tabs-root-border-bottom-color-generic: var(--ds-borderColor-subtle); /* línea bajo la barra (Line) */
   --ds-tabs-root-border-color-focus:      var(--ds-borderColor-focus-outer);
   --ds-tabs-root-border-width-focus:      2px;
   --ds-tabs-text-fg-generic:              var(--ds-fg-default);          /* invierte */
   --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #4BA9C0 fijo */
-  --ds-tabs-ribbon-border-width-selected: 4px;                           /* Figma dibuja el rectángulo Ribbon a 3px — desajuste menor detectado, token real es 4 */
+  --ds-tabs-ribbon-border-width-selected: 4px;                           /* borderWidth/xl — Figma ya enlazado (29/09) */
+
+  /* Size S/M/L — fijos (Base dimension/150|175|200), texto label xs/sm/md:
+     S 12+16+12 = 40 · M 14+20+14 = 48 · L 16+24+16 = 56 */
+  --ds-tabs-root-padding-ver-s:           12px;
+  --ds-tabs-root-padding-ver-m:           14px;
+  --ds-tabs-root-padding-ver-l:           16px;
+  --ds-tabs-root-padding-hor-generic:     16px;
+
+  /* Style Contained (tabs/contained/*) */
+  --ds-tabs-contained-root-bg-generic:    var(--ds-bg-default);          /* pestaña no seleccionada: blanca con contorno */
+  --ds-tabs-contained-root-bg-selected:   var(--ds-bg-default);          /* se funde con el panel */
+  --ds-tabs-contained-root-border-color-generic: var(--ds-borderColor-subtle);
+  --ds-tabs-contained-root-border-width-generic: var(--ds-border-width-sm);
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Drawer (drawer/all/*)
@@ -1968,7 +1981,7 @@
      de la librería de origen (iOS/Android × Device × Left/Right Panel) —
      Sistema Origen nunca construyó una versión Web. Responsive real vía CSS
      (media query, no un componente por breakpoint): por encima del
-     breakpoint, Logo + fila de `TabItem` (`device="desktop"`) + Exit; por
+     breakpoint, Logo + fila de `TabItem` (`size="l"`) + Exit; por
      debajo, Logo + `IconButton` (Menu) + Exit, el IconButton abre un
      `Drawer` que reutiliza `SidebarMenu` con el mismo árbol de datos (item
      de menú = Parent, link del flydown = Child) — mismo criterio que

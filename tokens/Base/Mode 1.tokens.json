@@ -1841,6 +1841,14 @@
         "com.figma.hiddenFromPublishing": true
       }
     },
+    "175": {
+      "$type": "number",
+      "$value": 14,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32414:67",
+        "com.figma.hiddenFromPublishing": true
+      }
+    },
     "200": {
       "$type": "number",
       "$value": 16,
@@ -2006,7 +2014,7 @@
       },
       "annotation": {
         "$type": "string",
-        "$value": "Courier New",
+        "$value": "JetBrains Mono",
         "$extensions": {
           "com.figma.variableId": "VariableID:63:485",
           "com.figma.hiddenFromPublishing": true,
@@ -2015,7 +2023,7 @@
       },
       "code": {
         "$type": "string",
-        "$value": "Courier",
+        "$value": "JetBrains Mono",
         "$extensions": {
           "com.figma.variableId": "VariableID:63:486",
           "com.figma.hiddenFromPublishing": true,
