@@ -1,64 +1,56 @@
+import { useState } from 'react'
 import './tokens.css'
+import { Tabs } from './organisms/Tabs'
+import { TabItem } from './components/TabItem'
 import { Headline } from './components/Headline'
-import { SectionHeader } from './components/SectionHeader'
-import { Text } from './components/Text'
-import { Button } from './components/Button'
-import { InputText } from './components/InputText'
-import { Dialog } from './components/Dialog'
-import { List } from './components/List'
 import { InlineNotification } from './components/InlineNotification'
-import { AccordionGroup } from './organisms/AccordionGroup'
 
-/* Banco de pruebas — Device responsive (29/09/2026).
-   Mobile-first: <768 Mobile · 768–1023 Tablet · ≥1024 Desktop (tokens.css). */
+/* Banco de pruebas — Tabs v2 (29/09/2026): Size S/M/L × Type × Variant Line/Contained. */
 
-const mono = { fontFamily: 'monospace', fontSize: 12, color: 'var(--ds-fg-subtle, #7B8490)' }
+const items = [
+  { id: 't1', label: 'Tab 1' }, { id: 't2', label: 'Tab 2' }, { id: 't3', label: 'Tab 3' },
+  { id: 't4', label: 'Tab 4' }, { id: 't5', label: 'Tab 5' },
+]
+const many = Array.from({ length: 12 }, (_, i) => ({ id: 'm' + i, label: 'Pestaña ' + (i + 1) }))
 
-function Readout() {
-  // lee los valores computados reales para verificar por dato, no por vista
-  const cs = typeof window !== 'undefined' ? getComputedStyle(document.documentElement) : null
-  const v = (n) => (cs ? cs.getPropertyValue(n).trim() : '')
-  return (
-    <p style={mono} data-testid="readout">
-      width={typeof window !== 'undefined' ? window.innerWidth : ''} · h1 {v('--ds-fontSize-headline-2xl')}/{v('--ds-lineHeight-headline-2xl')} · spacing xl/2xl/3xl {v('--ds-spacing-xl')}/{v('--ds-spacing-2xl')}/{v('--ds-spacing-3xl')}
-    </p>
-  )
-}
+const label = { fontFamily: 'monospace', fontSize: 12, color: 'var(--ds-fg-default)', margin: '0 0 8px' }
 
 export default function App() {
+  const [sel, setSel] = useState('t1')
+  const [card, setCard] = useState('t1')
   return (
-    <main style={{ padding: 'var(--ds-spacing-3xl)', display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-2xl)', background: 'var(--ds-bg-default)', minHeight: '100vh' }}>
-      <Readout />
+    <main style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 32, background: 'var(--ds-bg-page)', minHeight: '100vh' }}>
+      {['s', 'm', 'l'].map((size) => (
+        <section key={size} data-testid={'line-' + size}>
+          <p style={label}>Line · size={size} · fixed</p>
+          <Tabs size={size} items={items} selectedId={sel} onChange={setSel} />
+        </section>
+      ))}
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-md)' }}>
-        {[1, 2, 3, 4, 5, 6].map((l) => (
-          <Headline key={l} level={l}>h{l} Título de página responsive</Headline>
-        ))}
+      <section data-testid="scroll" style={{ maxWidth: 420 }}>
+        <p style={label}>Line · m · scrollable (12 items)</p>
+        <Tabs size="m" type="scrollable" items={many} selectedId="m0" onChange={() => {}} />
       </section>
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-xl)', maxWidth: 560 }}>
-        <SectionHeader size="md">Section header md</SectionHeader>
-        <Text size={16}>Texto de lectura 16/24 — constante en los tres devices, solo headline, subheadline, title lg/xl y body lg cambian de tamaño.</Text>
-        <InputText label="Nombre" placeholder="Escribe aquí" helperText="Helper text" />
-        <div style={{ display: 'flex', gap: 'var(--ds-spacing-xl)' }}>
-          <Button variant="accent">Guardar</Button>
-          <Button variant="default" outline>Cancelar</Button>
+      <section data-testid="standalone">
+        <p style={label}>TabItem suelto</p>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+          <TabItem size="s" selected>S seleccionado</TabItem>
+          <TabItem size="m" variant="contained">M contained</TabItem>
+          <TabItem size="l" variant="contained" selected>L contained sel.</TabItem>
         </div>
       </section>
 
-      <section data-testid="grid" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-xl)', maxWidth: 480 }}>
-        <AccordionGroup items={[
-          { title: 'Accordion colapsado', content: 'Contenido' },
-          { title: 'Último item', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.' },
-        ]} defaultOpenIndex={1} />
-        <List variant="unordered" items={['Primer ítem', 'Segundo ítem', 'Tercer ítem']} />
-        <List variant="checkmark" items={['Primer ítem', 'Segundo ítem']} />
-        <InlineNotification message="Mensaje de una línea" />
+      {/* Composición tipo "tarjeta con pestañas" (captura de Carol) */}
+      <section data-testid="card" style={{ background: 'var(--ds-bg-default)', borderRadius: 8, padding: 16, maxWidth: 820, boxShadow: '0 1px 4px rgba(0,0,0,0.12)' }}>
+        <Headline level={2} color="primary">H2 Headline text</Headline>
+        <p style={{ ...label, fontFamily: 'inherit', margin: '4px 0 16px' }}>Helper text</p>
+        <Tabs size="m" type="scrollable" variant="contained" items={items} selectedId={card} onChange={setCard} />
+        <div data-testid="panel" style={{ border: '1px solid var(--ds-borderColor-subtle)', padding: 16, minHeight: 120, background: 'var(--ds-bg-default)', color: 'var(--ds-fg-default)' }}>
+          Contenido de {card}
+        </div>
+        <div style={{ marginTop: 16 }}><InlineNotification showTitle={false} showButton={false} message="This is an example of an inline message for notification" /></div>
       </section>
-
-      <Dialog header="primary" title="Dialog title" onClose={() => {}} onBack={() => {}}>
-        <Text size={16}>El título del header usa title/lg: 22 mobile · 24 tablet/desktop.</Text>
-      </Dialog>
     </main>
   )
 }
