@@ -15,7 +15,7 @@
  * (imposible hacer responsive de verdad con esa arquitectura de variantes).
  *
  * Por encima del breakpoint: Logo (slot libre) + fila de `TabItem`
- * (`device="desktop"`, sin límite de items) + `Button` de salir. Un item
+ * (`size="l"`, sin límite de items) + `Button` de salir. Un item
  * con `flydown` abre un MEGA-MENÚ (`Card`, ancho completo de la barra —
  * ref. real de Carol: mollie.com/es, 25/09) al hacer hover/focus, con los
  * links agrupados por columna — cada link es un `Link` re-tematizado
@@ -295,7 +295,7 @@ export function TopNavigation({
                 // "Clientes" con "Productos y servicios" ya desplegado).
                 onMouseEnter={() => setOpenFlydownId(item.flydown ? item.id : null)}
               >
-                <TabItem device="desktop" onClick={item.onClick}>{item.label}</TabItem>
+                <TabItem size="l" onClick={item.onClick}>{item.label}</TabItem>
               </div>
             ))}
             {openFlydownItem && (

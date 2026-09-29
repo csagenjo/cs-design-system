@@ -1,39 +1,36 @@
 /**
  * TabItem — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2.0
  *
- * Item individual dentro de Tabs. `<button>` real — Hover/Pressed/Focus se
+ * Pestaña individual. `<button role="tab">` real — Hover/Pressed/Focus se
  * resuelven vía pseudo-clases CSS nativas (mismo criterio que Checkbox/
- * ListView), no hay props de estado para ellos. `selected` es la única prop
- * de estado real, ya que no existe un pseudo-selector nativo para eso.
+ * ListView); `selected` es la única prop de estado real. Se puede usar
+ * SUELTA (p. ej. dentro de una tarjeta) o dentro del organismo `Tabs`.
  *
- * Nombre "TabItem" (no "Tab") para no colisionar con el organismo "Tabs" —
- * coincide además con el nombre que ya tenía la capa de texto en Figma.
+ * `size`: 's' | 'm' | 'l' — 40 / 48 / 56 px (29/09, sustituye a `device`).
+ * FIJO, independiente del device: quien lo usa elige el tamaño según el
+ * contexto (un Tab M dentro de una tarjeta en desktop, por ejemplo).
+ *   s → label/xs (12/16) + padding 12
+ *   m → label/sm (14/20) + padding 14
+ *   l → label/md (16/24) + padding 16
  *
- * Focus: un único stroke real en la raíz del propio TabItem (no doble
- * anillo) — se redimensiona solo con el tab, sin rectángulos hermanos que
- * puedan quedarse desfasados si el ancho cambia.
+ * `variant`: 'line' | 'contained' (Figma `Style`; `style` es prop reservada
+ * en React).
+ *   line      → ribbon inferior al seleccionar; navegación de página.
+ *   contained → pestaña con fondo y contorno que se une a un panel de
+ *               contenido (ref. Carbon "contained tabs"); la seleccionada
+ *               toma el fondo del panel, pierde el borde inferior y lleva el
+ *               ribbon ARRIBA. Esquinas rectas (29/09, Carol: como Line y
+ *               como Carbon — un radio superior no casa con un panel recto).
  *
- * `device`: 'mobile' | 'tablet' | 'desktop' — escala tipográfica progresiva
- * real, ajustada varias veces por Carol directamente en Figma (3284:18450)
- * tras ver que 14px fijo en los tres se quedaba corto para una navegación
- * PRIMARIA (Top Navigation, toda la plataforma) — y que 19px en desktop se
- * veía excesivo probado en vivo contra localhost. Escala final (22/09):
- *   mobile  → `fontSize/label/xs` (12px)
- *   tablet  → `fontSize/label/sm` (14px)
- *   desktop → `fontSize/label/md` (16px)
- * Nunca se sobreescribe por instancia (regla del proyecto de no reconfigurar
- * un átomo compartido ad-hoc) — es una variante real, en Figma y aquí.
- *
- * Peso de fuente por ESTADO, no por device (confirmado en Figma, mismos 3
- * device): Regular en Initial/Hover/Focus, Bold SOLO en Selected/Pressed/
- * Focus Selected — bug real corregido en código: antes `.ds-tab-item` era
- * bold siempre, sin distinguir estado.
+ * Peso por ESTADO: Regular en Initial/Hover/Focus, Bold en Selected/Pressed.
+ * Fondo por estado (ambos estilos): Initial blanco · Hover azul · Pressed gris.
+ * Bordes y foco pintados por dentro (box-shadow inset / outline con offset
+ * negativo) — nunca suman altura: 40/48/56 exactos, igual que Figma.
  *
  * USO:
- *   <TabItem selected>Resumen</TabItem>
- *   <TabItem device="mobile" onClick={fn}>Movimientos</TabItem>
- *   <TabItem device="desktop" selected>Clientes</TabItem>
+ *   <TabItem size="m" selected>Resumen</TabItem>
+ *   <TabItem size="s" variant="contained" onClick={fn}>Movimientos</TabItem>
  */
 
 import React from 'react';
@@ -44,49 +41,37 @@ const css = `
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   position: relative;
   box-sizing: border-box;
-  padding: 0 16px;
+  padding: var(--_pv) var(--ds-tabs-root-padding-hor-generic);
   background: var(--ds-tabs-root-bg-generic);
   border: none;
+  margin: 0;
   cursor: pointer;
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
-  font-size: var(--ds-fontSize-label-sm);
-  line-height: var(--ds-lineHeight-label-sm);
+  font-size: var(--_fs);
+  line-height: var(--_lh);
   color: var(--ds-tabs-text-fg-generic);
   white-space: nowrap;
   flex-shrink: 0;
 }
-/* Bold SOLO en Selected/Pressed/Focus Selected — Initial/Hover/Focus es Regular
-   (confirmado en Figma, 3284:18450) — antes el bold se aplicaba siempre. */
+.ds-tab-item--s { --_pv: var(--ds-tabs-root-padding-ver-s); --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); }
+.ds-tab-item--m { --_pv: var(--ds-tabs-root-padding-ver-m); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); }
+.ds-tab-item--l { --_pv: var(--ds-tabs-root-padding-ver-l); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); }
+
 .ds-tab-item[aria-selected="true"],
 .ds-tab-item:active:not(:disabled) {
   font-weight: var(--ds-font-weight-bold);
 }
-.ds-tab-item--mobile {
-  padding-top: 14px;
-  padding-bottom: 14px;
-  font-size: var(--ds-fontSize-label-xs);
-}
-.ds-tab-item--tablet {
-  padding-top: 18px;
-  padding-bottom: 18px;
-  font-size: var(--ds-fontSize-label-sm);
-}
-.ds-tab-item--desktop {
-  padding-top: 22px;
-  padding-bottom: 22px;
-  font-size: var(--ds-fontSize-label-md);
-}
 
 .ds-tab-item:hover:not(:disabled) { background: var(--ds-tabs-root-bg-hover); }
-.ds-tab-item:active:not(:disabled) { opacity: var(--ds-tabs-root-opacity-pressed); }
+.ds-tab-item:active:not(:disabled) { background: var(--ds-tabs-root-bg-pressed); }
 .ds-tab-item:focus-visible {
-  outline: none;
-  border: var(--ds-tabs-root-border-width-focus) solid var(--ds-tabs-root-border-color-focus);
+  outline: var(--ds-tabs-root-border-width-focus) solid var(--ds-tabs-root-border-color-focus);
+  outline-offset: calc(-1 * var(--ds-tabs-root-border-width-focus));
 }
+.ds-tab-item:disabled { cursor: default; }
 
 .ds-tab-item__ribbon {
   position: absolute;
@@ -96,12 +81,32 @@ const css = `
   height: var(--ds-tabs-ribbon-border-width-selected);
   background: var(--ds-tabs-ribbon-border-color-selected);
 }
+
+/* ── Contained ── */
+.ds-tab-item--contained {
+  --_bw: var(--ds-tabs-contained-root-border-width-generic);
+  --_bc: var(--ds-tabs-contained-root-border-color-generic);
+  background: var(--ds-tabs-contained-root-bg-generic);
+  box-shadow: inset 0 0 0 var(--_bw) var(--_bc);
+}
+.ds-tab-item--contained[aria-selected="true"] {
+  background: var(--ds-tabs-contained-root-bg-selected);
+  /* sin borde inferior: se une al panel */
+  box-shadow: inset var(--_bw) 0 0 var(--_bc), inset calc(-1 * var(--_bw)) 0 0 var(--_bc), inset 0 var(--_bw) 0 var(--_bc);
+}
+.ds-tab-item--contained:hover:not(:disabled) { background: var(--ds-tabs-root-bg-hover); }
+.ds-tab-item--contained:active:not(:disabled) { background: var(--ds-tabs-root-bg-pressed); }
+.ds-tab-item--contained .ds-tab-item__ribbon {
+  top: 0;
+  bottom: auto;
+}
 `;
 
 injectStyles('ds-tab-item', css);
 
 export function TabItem({
-  device = 'tablet', // 'mobile' | 'tablet'
+  size = 'm',          // 's' | 'm' | 'l'
+  variant = 'line',    // 'line' | 'contained'
   selected = false,
   disabled = false,
   onClick,
@@ -111,7 +116,8 @@ export function TabItem({
 }) {
   const classes = [
     'ds-tab-item',
-    `ds-tab-item--${device}`,
+    `ds-tab-item--${size}`,
+    `ds-tab-item--${variant}`,
     className || '',
   ].filter(Boolean).join(' ');
 
@@ -136,7 +142,7 @@ export default TabItem;
 
 /* ─── Ejemplos de uso ──────────────────────────────────────────────────────
 
-<TabItem selected>Resumen</TabItem>
+<TabItem size="m" selected>Resumen</TabItem>
 
-<TabItem device="mobile" onClick={() => {}}>Movimientos</TabItem>
+<TabItem size="s" variant="contained" onClick={() => {}}>Movimientos</TabItem>
 */
