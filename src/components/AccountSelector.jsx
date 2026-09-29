@@ -16,7 +16,7 @@ const css = `
   font-weight:   var(--ds-font-weight-bold);
   color:         var(--ds-input-fg-label);
   cursor:        pointer;
-  line-height:   var(--ds-lineHeight-xs);
+  line-height:   var(--ds-lineHeight-label-md);
   margin-bottom: var(--ds-input-label-gap);
 }
 .ds-account-selector--disabled .ds-account-selector__label { color: var(--ds-input-label-fg-disabled); cursor: default; }
@@ -25,7 +25,7 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-fg-helper);
   margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
 }
 .ds-account-selector--disabled .ds-account-selector__helper { color: var(--ds-input-helper-fg-disabled); }
 
@@ -36,7 +36,7 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-validation-fg-text);
   margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
 }
 .ds-account-selector__message-icon {
   color:       var(--ds-input-fg-error);

@@ -90,7 +90,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
   font-size: var(--ds-fontSize-title-md);
-  line-height: var(--ds-lineHeight-sm);
+  line-height: var(--ds-lineHeight-title-md);
   color: var(--ds-dialog-title-fg-generic);
 }
 .ds-error-empty-state__description {
@@ -99,7 +99,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-body-sm);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
   color: var(--ds-dialog-empty-state-body-text-fg-generic);
 }
 

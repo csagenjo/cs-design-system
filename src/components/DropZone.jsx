@@ -51,7 +51,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-label-md);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-label-md);
   color: var(--ds-file-upload-drop-zone-text-fg-generic);
 }
 .ds-drop-zone--disabled .ds-drop-zone__text { color: var(--ds-file-upload-drop-zone-text-fg-disabled); }

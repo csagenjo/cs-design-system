@@ -32,7 +32,7 @@ const css = `
   font-family: inherit;                          /* Nunito (fontFamily/default) */
   font-size:   var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);    /* 400 */
-  line-height: var(--ds-lineHeight-xs);          /* 24 */
+  line-height: var(--ds-lineHeight-body-sm);          /* 24 */
   color:       var(--ds-helper-text-fg-generic); /* #9AA1AA */
 }
 .ds-helper-text--disabled { color: var(--ds-helper-text-fg-disabled); }  /* #B9BEC4 */

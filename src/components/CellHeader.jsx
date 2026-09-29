@@ -42,7 +42,7 @@ const css = `
   font-family:   inherit;
   font-size:     var(--ds-fontSize-title-sm);        /* 16 */
   font-weight:   var(--ds-font-weight-regular);      /* 400 */
-  line-height:   var(--ds-lineHeight-xs);            /* 24 */
+  line-height:   var(--ds-lineHeight-title-sm);            /* 24 */
   color:         var(--ds-cell-common-text-fg);      /* #050506 */
   border-bottom: var(--ds-cell-common-border-bottom-width) solid var(--ds-cell-common-border-bottom-color-subtle);
 }

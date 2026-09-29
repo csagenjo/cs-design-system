@@ -119,7 +119,7 @@ const css = `
   font-size:   var(--ds-fontSize-label-sm);
   font-weight: var(--ds-font-weight-medium);
   color:       var(--ds-radio-label-fg-generic);
-  line-height: var(--ds-lineHeight-2xs);
+  line-height: var(--ds-lineHeight-label-sm);
   user-select: none;
 }
 .ds-radio--disabled .ds-radio__label { color: var(--ds-radio-label-fg-disabled); }
@@ -128,14 +128,14 @@ const css = `
 .ds-radio__description {
   font-size:   var(--ds-fontSize-annotation-sm);
   color:       var(--ds-radio-description-fg);
-  line-height: var(--ds-lineHeight-3xs);
+  line-height: var(--ds-lineHeight-annotation-sm);
   margin:      0;
 }
 
 /* Validation message */
 .ds-radio__message {
   font-size:   var(--ds-fontSize-annotation-sm);
-  line-height: var(--ds-lineHeight-3xs);
+  line-height: var(--ds-lineHeight-annotation-sm);
   margin:      0;
 }
 .ds-radio__message--error { color: var(--ds-radio-validation-fg); }
