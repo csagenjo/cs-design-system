@@ -13,7 +13,7 @@ const css = `
   border-radius:  var(--ds-badge-highlight-border-radius);
   font-family:    inherit;
   font-size:      var(--ds-fontSize-label-xs);
-  line-height:    var(--ds-lineHeight-3xs);
+  line-height:    var(--ds-lineHeight-label-xs);
   color:          var(--ds-badge-highlight-label-fg);
   white-space:    nowrap;
 }

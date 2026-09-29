@@ -50,7 +50,7 @@ const css = `
   font-family: inherit;
   font-size:   var(--ds-fontSize-label-sm);
   font-weight: var(--ds-font-weight-regular);
-  line-height: var(--ds-lineHeight-2xs);
+  line-height: var(--ds-lineHeight-label-sm);
   color:       var(--ds-fg-default);
   text-align:  center;
 }

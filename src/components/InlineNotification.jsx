@@ -46,17 +46,19 @@ const css = `
   gap: var(--ds-inline-notification-gap);
   padding: var(--ds-inline-notification-padding-ver) var(--ds-inline-notification-padding-hor);
   border-radius: var(--ds-inline-notification-border-radius);
-  border: var(--ds-inline-notification-border-width) solid transparent;
+  /* borde pintado por dentro (inset), sin sumar altura — igual que el stroke
+     INSIDE de Figma (29/09): así 8 + contenido + 8 cae en rejilla */
+  box-shadow: inset 0 0 0 var(--ds-inline-notification-border-width) var(--_border, transparent);
   box-sizing: border-box;
 }
 .ds-inline-notification--default,
 .ds-inline-notification--borderless {
   background: var(--ds-inline-notification-bg);
 }
-.ds-inline-notification--default.ds-inline-notification--error       { border-color: var(--ds-inline-notification-color-error); }
-.ds-inline-notification--default.ds-inline-notification--success     { border-color: var(--ds-inline-notification-color-success); }
-.ds-inline-notification--default.ds-inline-notification--information { border-color: var(--ds-inline-notification-color-information); }
-.ds-inline-notification--default.ds-inline-notification--warning     { border-color: var(--ds-inline-notification-color-warning); }
+.ds-inline-notification--default.ds-inline-notification--error       { --_border: var(--ds-inline-notification-color-error); }
+.ds-inline-notification--default.ds-inline-notification--success     { --_border: var(--ds-inline-notification-color-success); }
+.ds-inline-notification--default.ds-inline-notification--information { --_border: var(--ds-inline-notification-color-information); }
+.ds-inline-notification--default.ds-inline-notification--warning     { --_border: var(--ds-inline-notification-color-warning); }
 
 .ds-inline-notification__icon--error       { color: var(--ds-inline-notification-color-error); }
 .ds-inline-notification__icon--success     { color: var(--ds-inline-notification-color-success); }
@@ -71,14 +73,22 @@ const css = `
   gap: var(--ds-inline-notification-content-gap);
   min-width: 0;
 }
+.ds-inline-notification__text {
+  /* título + mensaje juntos, sin gap — "Label + Message" en Figma; el gap de
+     __content solo separa este bloque del botón (29/09) */
+  display: flex;
+  flex-direction: column;
+}
 .ds-inline-notification__title {
   font-size: var(--ds-fontSize-title-sm);
+  line-height: var(--ds-lineHeight-title-sm);  /* 24 — faltaba: heredaba 23.2 de index.css (29/09) */
   font-weight: var(--ds-font-weight-bold);
   color: var(--ds-inline-notification-title-fg);
   text-align: left;
 }
 .ds-inline-notification__message {
   font-size: var(--ds-fontSize-body-sm);
+  line-height: var(--ds-lineHeight-body-sm);   /* 24 — faltaba (29/09) */
   color: var(--ds-inline-notification-text-fg);
   text-align: left;
 }
@@ -116,8 +126,12 @@ export function InlineNotification({
     <div id={id} className={classes} role="status">
       <Icon name={ICON_BY_TYPE[type]} size="sm" className={iconClasses} />
       <div className="ds-inline-notification__content">
-        {showTitle && <span className="ds-inline-notification__title">{title}</span>}
-        {showMessage && <span className="ds-inline-notification__message">{message}</span>}
+        {(showTitle || showMessage) && (
+          <div className="ds-inline-notification__text">
+            {showTitle && <span className="ds-inline-notification__title">{title}</span>}
+            {showMessage && <span className="ds-inline-notification__message">{message}</span>}
+          </div>
+        )}
         {showButton && (
           <div className="ds-inline-notification__button">
             <Button variant="default" outline size="sm" onClick={onButtonClick}>

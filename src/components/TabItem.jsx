@@ -54,7 +54,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-label-sm);
-  line-height: var(--ds-lineHeight-2xs);
+  line-height: var(--ds-lineHeight-label-sm);
   color: var(--ds-tabs-text-fg-generic);
   white-space: nowrap;
   flex-shrink: 0;
