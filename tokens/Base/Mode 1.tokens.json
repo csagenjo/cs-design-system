@@ -2159,6 +2159,22 @@
           "com.figma.variableId": "VariableID:2390:680",
           "com.figma.hiddenFromPublishing": true
         }
+      },
+      "64": {
+        "$type": "number",
+        "$value": 64,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32398:67",
+          "com.figma.hiddenFromPublishing": true
+        }
+      },
+      "128": {
+        "$type": "number",
+        "$value": 128,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32398:68",
+          "com.figma.hiddenFromPublishing": true
+        }
       }
     },
     "fontLheight": {
@@ -2239,6 +2255,22 @@
         "$value": 60,
         "$extensions": {
           "com.figma.variableId": "VariableID:32388:74",
+          "com.figma.hiddenFromPublishing": true
+        }
+      },
+      "80": {
+        "$type": "number",
+        "$value": 80,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32398:69",
+          "com.figma.hiddenFromPublishing": true
+        }
+      },
+      "160": {
+        "$type": "number",
+        "$value": 160,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32398:70",
           "com.figma.hiddenFromPublishing": true
         }
       }
