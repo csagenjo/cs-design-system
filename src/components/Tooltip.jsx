@@ -49,7 +49,7 @@ const css = `
   font-family: inherit;                        /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-label-xs);       /* 12 */
   font-weight: var(--ds-font-weight-regular);   /* 400 */
-  line-height: var(--ds-lineHeight-3xs);        /* 18 */
+  line-height: var(--ds-lineHeight-label-xs);        /* 16 */
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;

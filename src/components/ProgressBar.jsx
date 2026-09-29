@@ -42,7 +42,7 @@ const css = `
   font-family: inherit;                        /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-label-md);       /* 16 */
   font-weight: var(--ds-font-weight-regular);   /* 400 */
-  line-height: var(--ds-lineHeight-xs);         /* 24 */
+  line-height: var(--ds-lineHeight-label-md);         /* 24 */
   color: var(--ds-progress-bar-text-fg);
 }
 .ds-progress-bar__track {
@@ -68,7 +68,7 @@ const css = `
   font-family: inherit;
   font-size: var(--ds-fontSize-body-2xs);       /* 12 */
   font-weight: var(--ds-font-weight-regular);   /* 400 */
-  line-height: var(--ds-lineHeight-3xs);        /* 18 */
+  line-height: var(--ds-lineHeight-body-2xs);        /* 16 */
   color: var(--ds-progress-bar-text-fg);
 }
 `;

@@ -143,7 +143,7 @@ const css = `
   font-size:   var(--ds-fontSize-label-sm);
   font-weight: var(--ds-font-weight-medium);
   color:       var(--ds-checkbox-label-fg);
-  line-height: var(--ds-lineHeight-2xs);
+  line-height: var(--ds-lineHeight-label-sm);
   user-select: none;
 }
 .ds-checkbox--disabled .ds-checkbox__label { color: var(--ds-checkbox-label-disabled); }
@@ -152,14 +152,14 @@ const css = `
 .ds-checkbox__description {
   font-size:   var(--ds-fontSize-annotation-sm);
   color:       var(--ds-checkbox-description-fg);
-  line-height: var(--ds-lineHeight-3xs);
+  line-height: var(--ds-lineHeight-annotation-sm);
   margin:      0;
 }
 
 /* Validation message */
 .ds-checkbox__message {
   font-size:   var(--ds-fontSize-annotation-sm);
-  line-height: var(--ds-lineHeight-3xs);
+  line-height: var(--ds-lineHeight-annotation-sm);
   margin:      0;
 }
 .ds-checkbox__message--error { color: var(--ds-checkbox-validation-fg); }

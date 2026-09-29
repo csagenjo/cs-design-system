@@ -13,7 +13,7 @@ const css = `
   font-family:     inherit;
   font-size:       var(--ds-fontSize-label-xs);
   font-weight:     var(--ds-font-weight-bold);
-  line-height:     var(--ds-lineHeight-3xs);
+  line-height:     var(--ds-lineHeight-label-xs);
   color:            var(--ds-badge-notification-fg-label);
   white-space:     nowrap;
 }

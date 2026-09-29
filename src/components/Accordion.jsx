@@ -49,6 +49,7 @@ import { Icon } from './Icon';
 
 const css = `
 .ds-accordion {
+  position: relative;
   width: 100%;
   box-sizing: border-box;
 }
@@ -60,14 +61,16 @@ const css = `
   width: 100%;
   box-sizing: border-box;
   border: none;
-  border-top: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
+  /* separador superior sin sumar altura (29/09) — mismo efecto que el stroke
+     INSIDE de Figma: 6+28+6 = 40 exacto, en rejilla */
+  box-shadow: inset 0 var(--ds-accordion-border-width) 0 var(--ds-accordion-border-color);
   background: transparent;
   padding: var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-right) var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-left);
   color: var(--ds-accordion-fg-text);
   font-family: inherit;                       /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-title-md);      /* 19 */
   font-weight: var(--ds-font-weight-bold);
-  line-height: var(--ds-lineHeight-sm);        /* 28.5 */
+  line-height: var(--ds-lineHeight-title-md);        /* 28 */
   cursor: pointer;
   text-align: left;
 }
@@ -80,7 +83,8 @@ const css = `
 .ds-accordion__trigger:focus-visible {
   outline: var(--ds-accordion-focus-width) solid var(--ds-accordion-focus-outer);
   outline-offset: -2px;
-  box-shadow: inset 0 0 0 4px var(--ds-accordion-focus-inner);
+  box-shadow: inset 0 0 0 4px var(--ds-accordion-focus-inner),
+              inset 0 var(--ds-accordion-border-width) 0 var(--ds-accordion-border-color);
 }
 .ds-accordion__icon {
   flex-shrink: 0;
@@ -97,7 +101,7 @@ const css = `
   font-family: inherit;
   font-size: var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);
-  line-height: var(--ds-lineHeight-xs);        /* 24 */
+  line-height: var(--ds-lineHeight-body-sm);        /* 24 */
   text-align: left;
 }
 .ds-accordion__content-inner {
@@ -110,7 +114,18 @@ const css = `
   /* el cierre inferior cuelga de la raíz, no de __content — el último item
      puede estar colapsado (sin __content en absoluto), mismo caso que el
      rectángulo Border en Figma, que cuelga de Title + Action, no de Content */
-  border-bottom: var(--ds-accordion-border-width) solid var(--ds-accordion-border-color);
+  /* (sigue) pintado con ::after absoluto, no con border-bottom: no suma altura,
+     igual que el rectángulo Border en Figma (absoluto, anclado abajo, 29/09) */
+}
+.ds-accordion--last::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--ds-accordion-border-width);
+  background: var(--ds-accordion-border-color);
+  pointer-events: none;
 }
 `;
 

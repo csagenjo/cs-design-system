@@ -57,7 +57,7 @@ const css = `
 .ds-selector-invoker__header {
   font-size:   var(--ds-fontSize-title-sm);
   font-weight: var(--ds-font-weight-bold);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-title-sm);
   color:       var(--ds-selector-header-fg-default);
   overflow:    hidden;
   text-overflow: ellipsis;

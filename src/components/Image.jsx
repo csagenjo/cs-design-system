@@ -56,7 +56,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-body-sm);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
   color: var(--ds-image-caption-fg-generic);
 }
 `;

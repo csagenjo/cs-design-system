@@ -54,7 +54,7 @@ const css = `
 .ds-dl-item__label {
   flex-shrink: 0;
   font-size:   var(--ds-fontSize-label-md);    /* 16 */
-  line-height: var(--ds-lineHeight-xs);        /* 24 */
+  line-height: var(--ds-lineHeight-label-md);        /* 24 */
   font-weight: var(--ds-font-weight-regular);  /* 400 */
   color:       var(--ds-descriptionlist-label-fg-generic);
 }
@@ -66,7 +66,7 @@ const css = `
   flex:        1 1 auto;
   min-width:   0;
   font-size:   var(--ds-fontSize-body-sm);     /* 16 */
-  line-height: var(--ds-lineHeight-xs);        /* 24 */
+  line-height: var(--ds-lineHeight-body-sm);        /* 24 */
   font-weight: var(--ds-font-weight-regular);  /* 400 */
   color:       var(--ds-descriptionlist-valuetext-fg-generic);
 }

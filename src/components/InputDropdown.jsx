@@ -15,7 +15,7 @@ const css = `
   font-weight:   var(--ds-font-weight-bold);
   color:         var(--ds-input-fg-label);
   cursor:        pointer;
-  line-height:   var(--ds-lineHeight-xs);
+  line-height:   var(--ds-lineHeight-label-md);
   margin-bottom: var(--ds-input-label-gap);
 }
 .ds-input-dropdown--disabled .ds-input-dropdown__label {
@@ -28,7 +28,7 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-fg-helper);
   margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
 }
 .ds-input-dropdown--disabled .ds-input-dropdown__helper { color: var(--ds-input-helper-fg-disabled); }
 
@@ -46,7 +46,7 @@ const css = `
   padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-dropdown-icon-right-size) + var(--ds-input-field-icon-gap));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
-  line-height:        var(--ds-lineHeight-xs);
+  line-height:        var(--ds-lineHeight-body-sm);
   color:              var(--ds-input-fg-default);
   background:         var(--ds-input-bg-default);
   border:             var(--ds-input-border-width) solid var(--ds-input-border-default);
@@ -118,7 +118,7 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-validation-fg-text);
   margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
 }
 .ds-input-dropdown__message-icon {
   color:       var(--ds-input-fg-error);

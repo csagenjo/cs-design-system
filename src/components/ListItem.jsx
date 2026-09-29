@@ -71,7 +71,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-label-md);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-label-md);
   padding: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -111,7 +111,7 @@ const css = `
   margin: 0;
   padding: 0 var(--ds-file-upload-list-item-padding-hor-generic);
   font-size: var(--ds-fontSize-body-sm);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
   color: var(--ds-input-validation-fg-text);
 }
 .ds-list-item__validation-icon {

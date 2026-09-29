@@ -50,7 +50,7 @@ const css = `
   font-family: inherit;                       /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-label-sm);      /* 14 */
   font-weight: var(--ds-font-weight-regular);  /* 400 */
-  line-height: var(--ds-lineHeight-2xs);       /* 21 */
+  line-height: var(--ds-lineHeight-label-sm);       /* 20 */
   cursor: pointer;
   box-sizing: border-box;
   white-space: nowrap;
