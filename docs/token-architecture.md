@@ -898,6 +898,23 @@ En código, además: Accordion pinta sus separadores sin sumar altura (`box-shad
 
 ---
 
+## Tokens de documentación `doc/*` (29/09/2026)
+
+Grupo propio en Component tokens para los frames de documentación de Figma — **fijos, NO responsive** (la doc se lee siempre igual, no debe encogerse con el modo Device, que en Auto = Mobile) y **ocultos de publicación** (solo existen en este archivo).
+
+| Token | Valor | Uso |
+|---|---|---|
+| `doc/all/fontSize|lineHeight/display-xl` | 128 / 160 | título de portada |
+| `doc/all/fontSize|lineHeight/display-lg` | 64 / 80 | título de Intro |
+| `doc/all/fontSize|lineHeight/title-lg` | 40 / 48 | subtítulo de portada |
+| `doc/all/fontSize|lineHeight/title-md` | 28 / 36 | Title component (título de sección) |
+| `doc/all/fontSize|lineHeight/title-sm` | 24 / 28 | etiquetas de portada (.Status, .Kind of file, Bottom row) |
+| `doc/all/fg/text/default` | → Mode `fg/default` | color de esos títulos (dark mode) |
+
+Tipografía → Base directo (misma regla de line-height de titulares: 1.25× en rejilla de 4). Primitivos nuevos en Base: `typography/fontSize/64`, `/128`, `typography/fontLheight/80`, `/160`. El texto corriente de la doc (cuerpo 14/16, etiquetas 12) usa los tokens Device constantes (`body/xs`, `body/sm`, `label/xs`), que no cambian por device.
+
+---
+
 ## Estado de temas
 
 | Tema | Estado |
