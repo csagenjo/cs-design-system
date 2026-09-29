@@ -9,6 +9,10 @@
  * aunque el puntero salga del área del knob (ver `forceVisible` en
  * Tooltip.jsx). El foco por teclado ya la muestra vía `:focus-within` nativo
  * del propio Tooltip, sin necesitar `dragging` para eso.
+ *
+ * Sombra de elevación (`--ds-slider-knob-shadow`, Effect Style "Slider/Knob
+ * Shadow") en reposo, hover y arrastre; en :focus-visible la sustituye el
+ * anillo de foco y en disabled no hay — igual que Figma (29/09).
  */
 
 import React from 'react';
@@ -23,6 +27,7 @@ const css = `
   border-radius: var(--ds-slider-knob-border-radius);
   background: var(--ds-slider-knob-bg);
   border: 1px solid var(--ds-slider-knob-border-color);
+  box-shadow: var(--ds-slider-knob-shadow);
   cursor: grab;
   touch-action: none;
   display: block;
@@ -38,6 +43,7 @@ const css = `
 .ds-slider__knob--disabled {
   background: var(--ds-slider-knob-bg-disabled);
   border-color: var(--ds-slider-knob-border-color-disabled);
+  box-shadow: none;
   cursor: not-allowed;
 }
 `;
