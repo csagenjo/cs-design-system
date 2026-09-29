@@ -864,6 +864,10 @@
   --ds-slider-knob-border-color-disabled: var(--ds-fg-disabled);
   --ds-slider-knob-border-radius:       80px;
   --ds-slider-knob-size:                24px;
+  /* Effect Style "Slider/Knob Shadow" (local, 28/09 — antes era el estilo remoto "Switch/Thumb Shadow"),
+     literal de Componente — mismo criterio que --ds-snackbar-root-shadow. Solo Initial/Hover:
+     Figma no la pinta en Focus (el anillo sustituye a la elevación) ni en Disabled. */
+  --ds-slider-knob-shadow:              0 1px 3px 0 rgba(0,0,0,0.2), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.14);
   --ds-slider-knob-focus-inner:         var(--ds-borderColor-focus-inner);
   --ds-slider-knob-focus-outer:         var(--ds-borderColor-focus-outer);
 
