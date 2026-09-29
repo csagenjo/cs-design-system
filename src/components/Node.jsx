@@ -45,7 +45,7 @@ const css = `
   font-family: inherit;
   font-size: var(--ds-fontSize-label-lg);
   font-weight: var(--ds-font-weight-bold);
-  line-height: var(--ds-lineHeight-sm);
+  line-height: var(--ds-lineHeight-label-lg);
 }
 .ds-node--active .ds-node__circle {
   background:  var(--ds-steps-node-bg-active);

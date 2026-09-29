@@ -25,8 +25,8 @@ Component (1038 · 41 accent/visited visibles · 997 hidden)
   └─ tokens por componente, referencian SOLO Mode
   └─ convenio: {componente}/{dispositivo}/{parte}/{propiedad}/{estado}
 
-Device (79 × 2: Mobile/Desk)
-  └─ tipografía y espaciados responsivos
+Device (99 × 3: Mobile/Tablet/Desktop — mobile-first, Mobile = default)
+  └─ tipografía y espaciados responsivos · hereda de Theme {rol}-mobile|-tablet|-desktop
   └─ capa paralela — no interviene en cascada de color
 ```
 
@@ -804,38 +804,97 @@ Fila interactiva real (`<button>`), no un listado pasivo — confirmado por los 
 
 ---
 
-## Device tokens (79 × Mobile/Desk)
+## Device tokens (99 × Mobile/Tablet/Desktop) — responsive real desde 28/09/2026
 
-### Spacing
+**Cadena:** `Device` (modo Mobile · Tablet · Desktop) → `Theme` (`{rol}-mobile|-tablet|-desktop`, mismo patrón que `{rol}-light|-dark` para Mode) → `Base`. Las variables sufijadas de Theme son la arquitectura, no redundancia — igual que las de color, están **ocultas y sin scope** (solo Device aparece en los pickers de Figma; enlazar Theme directo era lo que causó 75 saltos de capa).
 
-| Token | Mobile | Desk |
+- **Orden mobile-first**: Mobile es la 1ª columna = modo por defecto (Figma no permite otro default que el primero). Desktop = valores históricos del sistema (back-office).
+- **Cada modo tiene su propia variable en Theme**, aunque hoy valga lo mismo que otro modo — cambiar un valor por device nunca obliga a tocar la estructura.
+- **Una sola librería, device = modo**: nada de librerías por dispositivo (el problema que tenía La Empresa con 3 librerías separadas).
+
+**Antes (auditoría 28/09):** 80 de 81 tokens valían lo mismo en Mobile y Desk; `Generic` era copia literal de `Desk`; con Mobile por defecto, la variante Desktop de Page Title renderizaba el h1 a 32 en vez de 48.
+
+### Tipografía — escala responsive (px, M / T / D)
+
+| Rol | Mobile | Tablet | Desktop |
+|---|---|---|---|
+| headline 2xl (h1) | 32 | 40 | 48 |
+| headline xl (h2) | 28 | 32 | 36 |
+| headline lg (h3) | 24 | 28 | 32 |
+| headline md (h4) | 22 | 24 | 28 |
+| headline sm (h5) | 19 | 22 | 24 |
+| headline xs (h6) | 16 | 19 | 19 |
+| subheadline xl / lg / md | 28 / 24 / 22 | 32 / 28 / 24 | 36 / 32 / 28 |
+| title xl / lg | 24 / 22 | 28 / 24 | 32 / 24 |
+| body lg | 22 | 24 | 28 |
+| body 2xs–md · label · annotation · subheadline xs/sm · title sm/md | constantes | | |
+
+Primitivos nuevos en Base: `typography/fontSize/22`, `typography/fontSize/40`.
+
+### Line-height emparejado por rol (`fontLheight/{familia}/{tamaño}`)
+
+Un token de line-height **por cada** `fontSize/*` (27), no una escala genérica: si el tamaño cambia por device, su line-height cambia con él. Los 9 genéricos `fontLheight/3xs…3xl` se retiraron (y sus 27 variables Theme).
+
+- **Texto de lectura** (body, label, annotation, title): 1.5 × tamaño.
+- **Headline / subheadline**: 1.25 × tamaño (regla única de titulares, 29/09 — antes cada nivel tenía una proporción distinta, de 1.13 a 1.33, ajustada a mano).
+- **Ambos redondeados al múltiplo de 4 más cercano (empate → abajo), sin decimales** (29/09). Rejilla de 4 para tipografía dentro de la de 8 del layout — mismo criterio que Material/Carbon/Atlassian: dos líneas siempre suman múltiplo de 8, y 4 evita el aire excesivo que daría 8 en textos pequeños. Elimina el 28.5 (subpíxel: renderiza a 28 o 29 según posición) y los 18/21/33/42 fuera de rejilla.
+
+| Tamaño | Lectura | Titulares |
 |---|---|---|
-| spacing/2xs | 2px | — |
-| spacing/xs | 4px | — |
-| spacing/sm | 6px | — |
-| spacing/md | 8px | — |
-| spacing/lg | 12px | — |
-| spacing/xl | 16px | — |
-| spacing/2xl | 24px | — |
-| spacing/3xl | 32px | — |
+| 12 | 16 | — |
+| 14 | 20 | — |
+| 16 | 24 | 20 |
+| 19 | 28 | 24 |
+| 22 | 32 | 28 |
+| 24 | 36 | 28 |
+| 28 | 40 | 36 |
+| 32 | 48 | 40 |
+| 36 | — | 44 |
+| 40 | — | 48 |
+| 48 | — | 60 |
 
-### Sizing
+Primitivos de line-height en Base **nombrados por valor** (`typography/fontLheight/24`), igual que `typography/fontSize/*` — antes eran escalones (`50`=18 … `800`=72) sin relación con el valor. Escala final: 16 · 20 · 24 · 28 · 32 · 36 · 40 · 44 · 48 · 60 (todos múltiplos de 4).
 
-| Token | Valor |
-|---|---|
-| sizing/2xs | 16px |
-| sizing/xs | 20px |
-| sizing/sm | 24px |
-| sizing/md | 32px |
-| sizing/lg | 40px |
-| sizing/xl | 48px |
-| sizing/2xl | 64px |
+Re-enlace en Figma: ~1.600 nodos de texto + 121 overrides de instancia. **Lección real:** `setBoundVariable('lineHeight')` a nivel de nodo NO sustituye un binding de rango ya existente (el nodo queda con 2 entradas y el segmento sigue usando la vieja) — usar `setRangeBoundVariable(start, end, …)` por segmento.
 
-`sizing/2xs` añadido el 01/07/2026 para BadgeHighlight icon size (16px).
+### Spacing (M / T / D)
 
-### Border radius
+| Token | Mobile | Tablet | Desktop |
+|---|---|---|---|
+| 2xs · xs · sm · md · lg | 2 · 4 · 6 · 8 · 12 | = | = |
+| xl | 12 | 16 | 16 |
+| 2xl | 16 | 20 | 24 |
+| 3xl | 24 | 28 | 32 |
 
-`xs · sm · md · lg · xl · 2xl · 3xl · circle`
+2xs–lg constantes a propósito: son padding/gap interno de componentes — reducirlos en mobile quitaría área táctil justo donde más falta. Nuevo primitivo `dimension/350` (=28).
+
+**Rejilla: se valida en el TAMAÑO EXTERIOR del componente, no en cada padding (29/09).** `2xs`=2 y `sm`=6 se mantienen a propósito como **pasos de compensación**: son los que hacen que el total caiga en rejilla — Button md 6+20+6 = 32, celda de Table 6+20+6 = 32, Tooltip 2+16+2 = 20, título de Accordion 6+28+6 = 40. Mismo criterio que Atlassian (`space.025`/`space.075` = 2/6) y Carbon (`spacing-01` = 2). Un 2 o un 6 que NO compensa nada (separación entre ítems, padding de un contenedor con contenido variable) es un error y se corrige a 4/8/12.
+
+Auditoría del 29/09 — componentes cuyo tamaño exterior no caía en rejilla, y causa real (ninguna era el spacing de compensación):
+
+| Componente | Antes | Causa | Ahora |
+|---|---|---|---|
+| Button *Full width* S/L | 33/45 | frame `Label` con alto fijo 21 (line-height viejo); 4 variantes Large con `Root` fijo a 45 + anillo de foco a mano | 32/44 |
+| Segmented Control | 33/49 | frame `segment` 1px mayor que su contenido | 32/40/48 |
+| CTA Link | 41/29 | frame `Link` 1px mayor que su contenido | 40/28 |
+| Button anidado (Inline Notification, Collapsible, File Upload, List View) | 33/45 | override de alto viejo en la instancia | 32/44 |
+| List | 30/34 | separación entre ítems 6 (`list/all/root/paddingBottom/*`) | 8 → 24/28/32/36 |
+| Inline Notification | 122 | padding 6 + gap 6; `gapVer` enlazado a `counterAxisSpacing` (sin efecto) y el gap real sin token; padding derecho enlazado directo a `spacing/lg` | padding/gap 8 → 104 (1 línea) / 128 |
+| Accordion | 41/131 | rectángulo `Border` de 1px sumando altura; frame `Title` fijo a 40 con contenido de 44; padding inferior de contenido 6 | `Border` absoluto, título 6+28+6, contenido 12/12 → 40/136 |
+
+En código, además: Accordion pinta sus separadores sin sumar altura (`box-shadow` inset arriba, `::after` absoluto abajo); InlineNotification pinta el borde por dentro, agrupa título+mensaje sin gap (como `Label + Message` en Figma) y declara el line-height que le faltaba (heredaba 23.2 de `index.css`).
+
+### Constantes en los 3 modos (con variable propia por modo)
+
+`sizing/*` (8/16/20/24/32/40/48/56/64) · `borderWidth/*` · `borderRadius/*` · `fontFamily/*` · `fontWeight/*` · `fontStyle` · `fontDecor`. `opacity/*` no depende del device (sin sufijo).
+
+### Breakpoints ≠ anchos de frame
+
+| Token (Base) | Valor | Qué es |
+|---|---|---|
+| `breakpoint/tablet` | 768 | corte Mobile→Tablet (código: `@media (min-width: 768px)`) |
+| `breakpoint/desktop` | 1024 | corte Tablet→Desktop — mayoría de sistemas: Tailwind/Atlassian `lg`=1024, Polaris 1040, Carbon 1056, Bootstrap 992 |
+| `frame/mobile` · `frame/tablet` · `frame/desktop` | 375 · 768 · 1280 | ancho de frame de diseño en Figma (antes `dimension/mobile…`), no un breakpoint |
 
 ---
 

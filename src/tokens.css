@@ -270,7 +270,7 @@
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     DEVICE / SPACING â€” Generic (Mobile base)
+     DEVICE / SPACING — mobile-first (28/09/2026): :root = modo Mobile de Figma, Tablet/Desktop en @media al final. 2xs–lg constantes (densidad táctil)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   --ds-spacing-2xs: 2px;
@@ -278,9 +278,15 @@
   --ds-spacing-sm:  6px;
   --ds-spacing-md:  8px;
   --ds-spacing-lg:  12px;
-  --ds-spacing-xl:  16px;
-  --ds-spacing-2xl: 24px;
-  --ds-spacing-3xl: 32px;
+  --ds-spacing-xl:  12px;  /* T 16 · D 16 */
+  --ds-spacing-2xl: 16px;  /* T 20 · D 24 */
+  --ds-spacing-3xl: 24px;  /* T 28 · D 32 */
+
+  /* Breakpoints (Base breakpoint/*) — referencia: CSS no admite var() dentro de
+     @media, los valores van literales en los @media de Device al final del archivo.
+     ≠ anchos de frame de Figma (frame/mobile|tablet|desktop = 375/768/1280). */
+  --ds-breakpoint-tablet:  768px;
+  --ds-breakpoint-desktop: 1024px;
 
   /* ── Border Width ── */
   --ds-border-width-sm:     1px;
@@ -310,7 +316,8 @@
      TYPOGRAPHY â€” Device tokens
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* fontSize — escala Figma (Device/Desk-desk), fuente de verdad. NO editar valores a mano. */
+  /* fontSize — Device (Figma fontSize/*), mobile-first 28/09/2026: :root = Mobile;
+     Tablet/Desktop en los @media al final del archivo. Figma es la fuente de verdad. */
   --ds-fontSize-annotation-sm:  12px;
   --ds-fontSize-annotation-md:  14px;
   --ds-fontSize-annotation-lg:  16px;
@@ -322,38 +329,59 @@
   --ds-fontSize-body-xs:        14px;
   --ds-fontSize-body-sm:        16px;
   --ds-fontSize-body-md:        19px;
-  --ds-fontSize-body-lg:        28px;
+  --ds-fontSize-body-lg:        22px;  /* T 24 · D 28 */
   --ds-fontSize-title-sm:       16px;
   --ds-fontSize-title-md:       19px;
-  --ds-fontSize-title-lg:       24px;
-  --ds-fontSize-title-xl:       32px;
+  --ds-fontSize-title-lg:       22px;  /* T 24 · D 24 */
+  --ds-fontSize-title-xl:       24px;  /* T 28 · D 32 */
   --ds-fontSize-subheadline-xs: 16px;
   --ds-fontSize-subheadline-sm: 19px;
-  --ds-fontSize-subheadline-md: 28px;
-  --ds-fontSize-subheadline-lg: 32px;
-  --ds-fontSize-subheadline-xl: 36px;
-  --ds-fontSize-headline-xs:    19px;
-  --ds-fontSize-headline-sm:    24px;
-  --ds-fontSize-headline-md:    28px;
-  --ds-fontSize-headline-lg:    32px;
-  --ds-fontSize-headline-xl:    36px;
-  --ds-fontSize-headline-2xl:   48px;
-  --ds-fontSize-headline-2xl-mobile: 19px; /* h1 responsive — 28/09, 3er tier real: antes 32 (mobile+tablet unificados), Page Title en Figma confirma Mobile=h6(19)/Tablet=h4(28)/Desktop=h1(48) como fuente real, level se queda h1 siempre */
-  --ds-fontSize-headline-2xl-tablet: 28px; /* nuevo 28/09 — coincide con headline-md hoy pero es un token distinto (mismo criterio que el caret de Combobox) */
+  --ds-fontSize-subheadline-md: 22px;  /* T 24 · D 28 */
+  --ds-fontSize-subheadline-lg: 24px;  /* T 28 · D 32 */
+  --ds-fontSize-subheadline-xl: 28px;  /* T 32 · D 36 */
+  --ds-fontSize-headline-xs:    16px;  /* T 19 · D 19 */
+  --ds-fontSize-headline-sm:    19px;  /* T 22 · D 24 */
+  --ds-fontSize-headline-md:    22px;  /* T 24 · D 28 */
+  --ds-fontSize-headline-lg:    24px;  /* T 28 · D 32 */
+  --ds-fontSize-headline-xl:    28px;  /* T 32 · D 36 */
+  --ds-fontSize-headline-2xl:   32px;  /* T 40 · D 48 */
 
   --ds-font-weight-regular: 400;
   --ds-font-weight-medium:  500;
   --ds-font-weight-bold:    700;
 
-  /* lineHeight — escala Figma (Device/Desk), valores absolutos px. fontLheight/* en la colección. */
-  --ds-lineHeight-3xs: 18px;
-  --ds-lineHeight-2xs: 21px;
-  --ds-lineHeight-xs:  24px;
-  --ds-lineHeight-sm:  28.5px;
-  --ds-lineHeight-md:  36px;
-  --ds-lineHeight-lg:  42px;
-  --ds-lineHeight-xl:  48px;
-  --ds-lineHeight-2xl: 54px;
+  /* lineHeight — emparejado por ROL (Figma fontLheight/{familia}/{tamaño}), uno por cada fontSize:
+     si el tamaño cambia por device, su line-height cambia con él. Lectura (body/label/annotation/title)
+     = 1.5×; headline/subheadline = 1.25× — ambos redondeados al múltiplo de 4 más cercano
+     (empate → abajo), sin decimales (29/09, rejilla de 4 de tipografía dentro de la de 8). Sustituye a la escala genérica --ds-lineHeight-xs…2xl
+     (retirada en Figma el 28/09). */
+  --ds-lineHeight-annotation-sm:  16px;
+  --ds-lineHeight-annotation-md:  20px;
+  --ds-lineHeight-annotation-lg:  24px;
+  --ds-lineHeight-label-xs:       16px;
+  --ds-lineHeight-label-sm:       20px;
+  --ds-lineHeight-label-md:       24px;
+  --ds-lineHeight-label-lg:       28px;
+  --ds-lineHeight-body-2xs:       16px;
+  --ds-lineHeight-body-xs:        20px;
+  --ds-lineHeight-body-sm:        24px;
+  --ds-lineHeight-body-md:        28px;
+  --ds-lineHeight-body-lg:        32px;  /* T 36px · D 40px */
+  --ds-lineHeight-title-sm:       24px;
+  --ds-lineHeight-title-md:       28px;
+  --ds-lineHeight-title-lg:       32px;  /* T 36px · D 36px */
+  --ds-lineHeight-title-xl:       36px;  /* T 40px · D 48px */
+  --ds-lineHeight-subheadline-xs: 20px;
+  --ds-lineHeight-subheadline-sm: 24px;
+  --ds-lineHeight-subheadline-md: 28px;  /* T 28px · D 36px */
+  --ds-lineHeight-subheadline-lg: 28px;  /* T 36px · D 40px */
+  --ds-lineHeight-subheadline-xl: 36px;  /* T 40px · D 44px */
+  --ds-lineHeight-headline-xs:    20px;  /* T 24px · D 24px */
+  --ds-lineHeight-headline-sm:    24px;  /* T 28px · D 28px */
+  --ds-lineHeight-headline-md:    28px;  /* T 28px · D 36px */
+  --ds-lineHeight-headline-lg:    28px;  /* T 36px · D 40px */
+  --ds-lineHeight-headline-xl:    36px;  /* T 40px · D 44px */
+  --ds-lineHeight-headline-2xl:   40px;  /* T 48px · D 60px */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -490,9 +518,9 @@
   --ds-inline-notification-border-radius: 4px;
   --ds-inline-notification-border-width:  1.5px;
   --ds-inline-notification-gap:           4px;   /* icono ↔ content, root */
-  --ds-inline-notification-padding-hor:   6px;
-  --ds-inline-notification-padding-ver:   6px;
-  --ds-inline-notification-content-gap:   6px;   /* title/message/button, vertical */
+  --ds-inline-notification-padding-hor:   var(--ds-spacing-md); /* 8 — 29/09 (antes 6 literal; Figma: izq 6 token + der 12 directo a spacing/lg, unificado) */
+  --ds-inline-notification-padding-ver:   var(--ds-spacing-md); /* 8 — 29/09 */
+  --ds-inline-notification-content-gap:   var(--ds-spacing-md);   /* title/message/button, vertical */
   --ds-inline-notification-icon-size:     var(--ds-sizing-sm); /* 24px */
 
   /* Fondos (inlineNotification/all/root/bg/*) — default y borderless comparten valor */
@@ -752,14 +780,14 @@
   --ds-accordion-border-color:        var(--ds-borderColor-default);
   --ds-accordion-border-width:        1px;
   --ds-accordion-title-padding-left:  8px;
-  --ds-accordion-title-padding-ver:   8px;
+  --ds-accordion-title-padding-ver:   var(--ds-spacing-sm); /* 6 — paso de compensación: 6+28+6 = 40 (29/09) */
   --ds-accordion-title-padding-right: 16px;
   --ds-accordion-title-gap:           8px;
-  --ds-accordion-content-gap:         6px;
+  --ds-accordion-content-gap:         var(--ds-spacing-md); /* 8 — 29/09 */
   --ds-accordion-content-padding-left:  8px;
   --ds-accordion-content-padding-top:   12px;
   --ds-accordion-content-padding-right: 12px;
-  --ds-accordion-content-padding-bottom: 6px; /* gapBottom/generic en Figma */
+  --ds-accordion-content-padding-bottom: var(--ds-spacing-lg); /* 12 — gapBottom/generic en Figma, simétrico con top (29/09): 12+texto+12 */
   --ds-accordion-bg-hover:            var(--ds-bg-hover-primary);
   --ds-accordion-opacity-pressed:     var(--ds-opacity-pressed);
   --ds-accordion-focus-inner:         var(--ds-borderColor-focus-inner);
@@ -1275,7 +1303,7 @@
   --ds-list-gap-unordered:              var(--ds-spacing-md);        /* 8 — bullet/number ↔ texto */
   --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — icono ↔ texto */
   --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 */
-  --ds-list-padding-bottom-generic:     var(--ds-spacing-sm);        /* 6 — separación entre items */
+  --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — separación entre items (29/09: 6→8, filas de 24/28 caen en rejilla de 4/8) */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1578,10 +1606,10 @@
      secondary/tertiary): el par bg+title+icon de cada una debe invertir (o no)
      JUNTOS con el modo, o el texto queda ilegible. default/secondary/tertiary
      invierten (bg y texto cambian juntos); primary/onPrimary son fijos ambos
-     modos. Tertiary corregido 24/08 — title/icon estaban en fg/*/default
+     modos. Tertiary corregido 24/08 — title/icon estaban en fg/…/default
      (invierte hacia blanco en dark) sobre un fondo que se ACLARA en dark
      (bg/surface/tertiary), dejando texto blanco sobre lila claro. Repuntado a
-     fg/*/inverse (invierte hacia negro en dark), igual que Secondary, que
+     fg/…/inverse (invierte hacia negro en dark), igual que Secondary, que
      tiene el mismo patrón bg claro-en-dark y ya estaba bien. Segundo bug
      encontrado el mismo día: el icono de Default (header/icon/fg/inverse)
      estaba en fg/icon/inverse (blanco en light) mientras su title hermano
@@ -2164,4 +2192,70 @@
   --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
   --ds-link-focus-inner:             #050506;
   --ds-link-focus-outer:             #FFFFFF;
+}
+
+/* ════ DEVICE — Tablet (Figma modo Tablet) · ≥768px ════ */
+@media (min-width: 768px) {
+  :root {
+    --ds-spacing-xl:    16px;
+    --ds-spacing-2xl:   20px;
+    --ds-spacing-3xl:   28px;
+    --ds-fontSize-body-lg:        24px;
+    --ds-fontSize-title-lg:       24px;
+    --ds-fontSize-title-xl:       28px;
+    --ds-fontSize-subheadline-md: 24px;
+    --ds-fontSize-subheadline-lg: 28px;
+    --ds-fontSize-subheadline-xl: 32px;
+    --ds-fontSize-headline-xs:    19px;
+    --ds-fontSize-headline-sm:    22px;
+    --ds-fontSize-headline-md:    24px;
+    --ds-fontSize-headline-lg:    28px;
+    --ds-fontSize-headline-xl:    32px;
+    --ds-fontSize-headline-2xl:   40px;
+    --ds-lineHeight-body-lg:        36px;
+    --ds-lineHeight-title-lg:       36px;
+    --ds-lineHeight-title-xl:       40px;
+    --ds-lineHeight-subheadline-md: 28px;
+    --ds-lineHeight-subheadline-lg: 36px;
+    --ds-lineHeight-subheadline-xl: 40px;
+    --ds-lineHeight-headline-xs:    24px;
+    --ds-lineHeight-headline-sm:    28px;
+    --ds-lineHeight-headline-md:    28px;
+    --ds-lineHeight-headline-lg:    36px;
+    --ds-lineHeight-headline-xl:    40px;
+    --ds-lineHeight-headline-2xl:   48px;
+  }
+}
+
+/* ════ DEVICE — Desktop (Figma modo Desktop) · ≥1024px ════ */
+@media (min-width: 1024px) {
+  :root {
+    --ds-spacing-xl:    16px;
+    --ds-spacing-2xl:   24px;
+    --ds-spacing-3xl:   32px;
+    --ds-fontSize-body-lg:        28px;
+    --ds-fontSize-title-lg:       24px;
+    --ds-fontSize-title-xl:       32px;
+    --ds-fontSize-subheadline-md: 28px;
+    --ds-fontSize-subheadline-lg: 32px;
+    --ds-fontSize-subheadline-xl: 36px;
+    --ds-fontSize-headline-xs:    19px;
+    --ds-fontSize-headline-sm:    24px;
+    --ds-fontSize-headline-md:    28px;
+    --ds-fontSize-headline-lg:    32px;
+    --ds-fontSize-headline-xl:    36px;
+    --ds-fontSize-headline-2xl:   48px;
+    --ds-lineHeight-body-lg:        40px;
+    --ds-lineHeight-title-lg:       36px;
+    --ds-lineHeight-title-xl:       48px;
+    --ds-lineHeight-subheadline-md: 36px;
+    --ds-lineHeight-subheadline-lg: 40px;
+    --ds-lineHeight-subheadline-xl: 44px;
+    --ds-lineHeight-headline-xs:    24px;
+    --ds-lineHeight-headline-sm:    28px;
+    --ds-lineHeight-headline-md:    36px;
+    --ds-lineHeight-headline-lg:    40px;
+    --ds-lineHeight-headline-xl:    44px;
+    --ds-lineHeight-headline-2xl:   60px;
+  }
 }

@@ -14,7 +14,7 @@ const css = `
   font-size:     var(--ds-fontSize-label-md);
   font-weight:   var(--ds-font-weight-bold);
   color:         var(--ds-input-fg-label);
-  line-height:   var(--ds-lineHeight-xs);
+  line-height:   var(--ds-lineHeight-label-md);
   margin-bottom: var(--ds-input-label-gap);
 }
 .ds-input-stepper--disabled .ds-input-stepper__label { color: var(--ds-input-label-fg-disabled); }
@@ -24,7 +24,7 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-fg-helper);
   margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
 }
 .ds-input-stepper--disabled .ds-input-stepper__helper { color: var(--ds-input-helper-fg-disabled); }
 
@@ -112,7 +112,7 @@ const css = `
   align-items:     center;
   justify-content: center;
   font-size:       var(--ds-fontSize-body-sm);
-  line-height:     var(--ds-lineHeight-xs);
+  line-height:     var(--ds-lineHeight-body-sm);
   color:           var(--ds-input-fg-default);
   user-select:     none;
   font-family:     inherit;
@@ -127,7 +127,7 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);
   color:       var(--ds-input-validation-fg-text);
   margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-body-sm);
 }
 .ds-input-stepper__message-icon {
   color:       var(--ds-input-fg-error);

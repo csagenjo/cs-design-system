@@ -32,7 +32,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
   font-size: var(--ds-fontSize-label-md);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-label-md);
   color: var(--ds-input-fg-label);
 }
 `;

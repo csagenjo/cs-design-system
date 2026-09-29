@@ -1,189 +1,64 @@
-import { useState } from 'react'
 import './tokens.css'
-import { StepIndicatorLarge } from './organisms/StepIndicatorLarge'
-import { StepIndicatorSmall } from './organisms/StepIndicatorSmall'
-import { StepNavigator } from './organisms/StepNavigator'
-import { SubstepNavigator } from './organisms/SubstepNavigator'
-import { TabItem } from './components/TabItem'
-import { TopNavigation } from './organisms/TopNavigation'
 import { Headline } from './components/Headline'
-import { Tabs } from './organisms/Tabs'
-import { PageTitle } from './organisms/PageTitle'
+import { SectionHeader } from './components/SectionHeader'
+import { Text } from './components/Text'
+import { Button } from './components/Button'
+import { InputText } from './components/InputText'
+import { Dialog } from './components/Dialog'
+import { List } from './components/List'
+import { InlineNotification } from './components/InlineNotification'
+import { AccordionGroup } from './organisms/AccordionGroup'
 
-const navItems = [
-  { id: 'clientes', label: 'Clientes' },
-  {
-    id: 'productos', label: 'Productos y servicios',
-    flydown: [
-      { groupTitle: 'Ahorro', links: [{ label: 'Cuentas y depósitos' }] },
-      { groupTitle: 'Financiación', links: [{ label: 'Hipotecas' }, { label: 'Líneas de crédito' }, { label: 'Préstamos' }] },
-      { groupTitle: 'Inversión', links: [{ label: 'Asesoramiento' }, { label: 'Broker' }, { label: 'Catálogo productos' }, { label: 'Fondos de inversión' }, { label: 'Planes de pensión' }] },
-      { groupTitle: 'Protección', links: [{ label: 'Seguros de Auto' }] },
-      { groupTitle: 'Servicios', links: [{ label: 'Anticipo nómina' }, { label: 'Avales' }, { label: 'Domiciliaciones' }, { label: 'Overdraft' }, { label: 'Portabilidad' }] },
-      { groupTitle: 'Transversales', links: [{ label: 'Cambios titularidad' }, { label: 'Dual control' }, { label: 'Impagos' }, { label: 'Motor de precios' }] },
-      { groupTitle: 'Destacado', featured: { size: '4:3', caption: 'Nueva hipoteca a tipo fijo' } },
-    ],
-  },
-  {
-    id: 'organismos', label: 'Organismos Públicos',
-    flydown: [
-      { links: [
-        { label: 'AEAT Impuestos' }, { label: 'AEAT Modelos' }, { label: 'CGPJ Requerimientos' },
-        { label: 'Embargos' }, { label: 'Oficios' }, { label: 'Organismos' }, { label: 'Seguridad Social' },
-      ] },
-    ],
-  },
-  { id: 'configuracion', label: 'Configuración e informes' },
-]
+/* Banco de pruebas — Device responsive (29/09/2026).
+   Mobile-first: <768 Mobile · 768–1023 Tablet · ≥1024 Desktop (tokens.css). */
 
-const largeSteps = [
-  { state: 'completed', label: 'Datos personales' },
-  { state: 'active', number: '2', label: 'Dirección' },
-  { state: 'incomplete', number: '3', label: 'Documentación' },
-  { state: 'incomplete', number: '4', label: 'Confirmación' },
-]
+const mono = { fontFamily: 'monospace', fontSize: 12, color: 'var(--ds-fg-subtle, #7B8490)' }
+
+function Readout() {
+  // lee los valores computados reales para verificar por dato, no por vista
+  const cs = typeof window !== 'undefined' ? getComputedStyle(document.documentElement) : null
+  const v = (n) => (cs ? cs.getPropertyValue(n).trim() : '')
+  return (
+    <p style={mono} data-testid="readout">
+      width={typeof window !== 'undefined' ? window.innerWidth : ''} · h1 {v('--ds-fontSize-headline-2xl')}/{v('--ds-lineHeight-headline-2xl')} · spacing xl/2xl/3xl {v('--ds-spacing-xl')}/{v('--ds-spacing-2xl')}/{v('--ds-spacing-3xl')}
+    </p>
+  )
+}
 
 export default function App() {
-  const [selectedStep, setSelectedStep] = useState(2)
-  const [chapterOpen, setChapterOpen] = useState(true)
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-      <div>
-        <h3 style={{ padding: '0 40px' }}>TopNavigation — resize the window to see it collapse</h3>
-        <TopNavigation
-          logo={<div style={{ fontWeight: 700 }}>Logo</div>}
-          menuItems={navItems}
-          onExit={() => alert('exit')}
-        />
-      </div>
+    <main style={{ padding: 'var(--ds-spacing-3xl)', display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-2xl)', background: 'var(--ds-bg-default)', minHeight: '100vh' }}>
+      <Readout />
 
-      <div style={{ padding: '0 40px', display: 'flex', flexDirection: 'column', gap: 40 }}>
-      <div>
-        <h3>Headline level=1 (responsive — 19px &lt;768px, 28px 768-1023px, 48px ≥1024px; always &lt;h1&gt;)</h3>
-        <Headline level={1}>Título de página</Headline>
-      </div>
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-md)' }}>
+        {[1, 2, 3, 4, 5, 6].map((l) => (
+          <Headline key={l} level={l}>h{l} Título de página responsive</Headline>
+        ))}
+      </section>
 
-      <div>
-        <h3>PageTitle — nav=icon (resize window to see mobile/tablet/desktop)</h3>
-        <PageTitle
-          nav={{ type: 'icon', icon: 'X', ariaLabel: 'Cerrar', onClick: () => alert('cerrar') }}
-          title="Título de página"
-          actions={[
-            { icon: 'Share2', ariaLabel: 'Compartir', onClick: () => alert('compartir') },
-            { icon: 'Heart', ariaLabel: 'Favorito', onClick: () => alert('favorito') },
-            { icon: 'Search', ariaLabel: 'Buscar', onClick: () => alert('buscar') },
-          ]}
-        />
-      </div>
-
-      <div>
-        <h3>PageTitle — nav=breadcrumb (solo visible en Desktop, ≥1024px)</h3>
-        <PageTitle
-          nav={{ type: 'breadcrumb', items: [
-            { label: 'Nivel 1', onClick: () => {} },
-            { label: 'Nivel 2', onClick: () => {} },
-            { label: 'Nivel 3', onClick: () => {} },
-            { label: 'Página actual' },
-          ] }}
-          title="Título de página"
-          actions={[
-            { icon: 'Share2', ariaLabel: 'Compartir', onClick: () => {} },
-            { icon: 'Heart', ariaLabel: 'Favorito', onClick: () => {} },
-            { icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} },
-          ]}
-        />
-      </div>
-
-      <div>
-        <h3>PageTitle — nav=link, título largo (wrap real, nunca truncado)</h3>
-        <PageTitle
-          nav={{ type: 'link', label: 'Volver', onClick: () => {} }}
-          title="Modificación de datos personales y de contacto"
-          actions={[{ icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} }]}
-        />
-      </div>
-
-      <div>
-        <h3>PageTitle — nav=text (weight bold) y sin nav</h3>
-        <PageTitle
-          nav={{ type: 'text', label: 'Sección', weight: 'bold' }}
-          title="Título de página"
-          actions={[{ icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} }]}
-        />
-        <div style={{ marginTop: 16 }}>
-          <PageTitle title="Sin nav" actions={[{ icon: 'Search', ariaLabel: 'Buscar', onClick: () => {} }]} />
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-xl)', maxWidth: 560 }}>
+        <SectionHeader size="md">Section header md</SectionHeader>
+        <Text size={16}>Texto de lectura 16/24 — constante en los tres devices, solo headline, subheadline, title lg/xl y body lg cambian de tamaño.</Text>
+        <InputText label="Nombre" placeholder="Escribe aquí" helperText="Helper text" />
+        <div style={{ display: 'flex', gap: 'var(--ds-spacing-xl)' }}>
+          <Button variant="accent">Guardar</Button>
+          <Button variant="default" outline>Cancelar</Button>
         </div>
-      </div>
+      </section>
 
-      <div>
-        <h3>Tabs organism, device="desktop"</h3>
-        <Tabs
-          device="desktop"
-          items={[
-            { id: 'a', label: 'Clientes' },
-            { id: 'b', label: 'Facturación' },
-            { id: 'c', label: 'Organismos Públicos' },
-          ]}
-          selectedId="b"
-          onChange={() => {}}
-        />
-      </div>
+      <section data-testid="grid" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-xl)', maxWidth: 480 }}>
+        <AccordionGroup items={[
+          { title: 'Accordion colapsado', content: 'Contenido' },
+          { title: 'Último item', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.' },
+        ]} defaultOpenIndex={1} />
+        <List variant="unordered" items={['Primer ítem', 'Segundo ítem', 'Tercer ítem']} />
+        <List variant="checkmark" items={['Primer ítem', 'Segundo ítem']} />
+        <InlineNotification message="Mensaje de una línea" />
+      </section>
 
-      <div>
-        <h3>TabItem device="desktop" (Top Navigation, 16px)</h3>
-        <div style={{ display: 'flex' }}>
-          <TabItem device="desktop">Clientes</TabItem>
-          <TabItem device="desktop" selected>Facturación y servicios</TabItem>
-          <TabItem device="desktop">Sistemas de pago</TabItem>
-        </div>
-      </div>
-
-      <div>
-        <h3>StepIndicatorLarge</h3>
-        <StepIndicatorLarge steps={largeSteps} />
-      </div>
-
-      <div>
-        <h3>StepIndicatorSmall</h3>
-        <div style={{ border: '1px solid #eee', borderRadius: 8 }}>
-          {largeSteps.map((s, i) => (
-            <StepIndicatorSmall
-              key={i}
-              state={s.state}
-              number={s.number ?? String(i + 1)}
-              step={i + 1}
-              total={largeSteps.length}
-              label={s.label}
-              selected={selectedStep === i + 1}
-              onClick={() => setSelectedStep(i + 1)}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h3>StepNavigator + SubstepNavigator</h3>
-        <div style={{ border: '1px solid #eee', borderRadius: 8, maxWidth: 320 }}>
-          <StepNavigator state="completed" number="1" title="Datos personales" showTopConnector={false} />
-          <StepNavigator
-            variation="chapter"
-            state="active"
-            number="2"
-            title="Documentación"
-            expanded={chapterOpen}
-            onToggleExpand={() => setChapterOpen((o) => !o)}
-          />
-          {chapterOpen && (
-            <>
-              <SubstepNavigator state="completed" label="DNI / NIE" />
-              <SubstepNavigator state="active" label="Justificante de domicilio" />
-            </>
-          )}
-          <StepNavigator state="incomplete" number="3" title="Confirmación" showBottomConnector={false} />
-        </div>
-      </div>
-      </div>
-    </div>
+      <Dialog header="primary" title="Dialog title" onClose={() => {}} onBack={() => {}}>
+        <Text size={16}>El título del header usa title/lg: 22 mobile · 24 tablet/desktop.</Text>
+      </Dialog>
+    </main>
   )
 }

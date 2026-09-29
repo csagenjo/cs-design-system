@@ -36,8 +36,8 @@ const css = `
 }
 
 /* Tamaño (fontSize + lineHeight bloqueados) */
-.ds-section-header--sm { font-size: var(--ds-fontSize-title-sm); line-height: var(--ds-lineHeight-xs); } /* 16/24 */
-.ds-section-header--md { font-size: var(--ds-fontSize-title-md); line-height: var(--ds-lineHeight-sm); } /* 19/28.5 */
+.ds-section-header--sm { font-size: var(--ds-fontSize-title-sm); line-height: var(--ds-lineHeight-title-sm); } /* 16/24 */
+.ds-section-header--md { font-size: var(--ds-fontSize-title-md); line-height: var(--ds-lineHeight-title-md); } /* 19/28 */
 
 /* Peso */
 .ds-section-header--regular { font-weight: var(--ds-font-weight-regular); } /* 400 */

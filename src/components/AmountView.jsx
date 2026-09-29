@@ -40,10 +40,10 @@ const SIZE_FONT = {
   lg: 'var(--ds-fontSize-label-lg)',  // 19
 };
 const SIZE_LH = {
-  xs: 'var(--ds-lineHeight-3xs)',     // 18
-  sm: 'var(--ds-lineHeight-2xs)',     // 21
-  md: 'var(--ds-lineHeight-xs)',      // 24
-  lg: 'var(--ds-lineHeight-sm)',      // 28.5
+  xs: 'var(--ds-lineHeight-label-xs)',  // 16
+  sm: 'var(--ds-lineHeight-label-sm)',  // 20
+  md: 'var(--ds-lineHeight-label-md)',  // 24
+  lg: 'var(--ds-lineHeight-label-lg)',  // 28
 };
 
 const css = `

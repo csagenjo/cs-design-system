@@ -26,8 +26,8 @@ const css = `
   color: var(--ds-description-text-fg-subtle);
 }
 
-.ds-description-text--14 { font-size: var(--ds-fontSize-body-xs); line-height: var(--ds-lineHeight-2xs); } /* 14/21 */
-.ds-description-text--16 { font-size: var(--ds-fontSize-body-sm); line-height: var(--ds-lineHeight-xs);  } /* 16/24 */
+.ds-description-text--14 { font-size: var(--ds-fontSize-body-xs); line-height: var(--ds-lineHeight-body-xs); } /* 14/20 */
+.ds-description-text--16 { font-size: var(--ds-fontSize-body-sm); line-height: var(--ds-lineHeight-body-sm);  } /* 16/24 */
 
 .ds-description-text--default  { color: var(--ds-description-text-fg-default); }
 .ds-description-text--disabled { color: var(--ds-description-text-fg-disabled); }

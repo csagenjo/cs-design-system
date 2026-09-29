@@ -54,7 +54,7 @@ const css = `
   font-family: inherit;                         /* Nunito (fontFamily/default) */
   font-size:   var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);    /* 400 */
-  line-height: var(--ds-lineHeight-xs);          /* 24 */
+  line-height: var(--ds-lineHeight-body-sm);          /* 24 */
   color:       var(--ds-snackbar-text-fg-generic);
   word-break:  break-word;
 }

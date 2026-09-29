@@ -38,8 +38,8 @@ const css = `
 }
 .ds-text--clickable { cursor: pointer; }
 
-.ds-text--14 { font-size: var(--ds-fontSize-label-sm); line-height: var(--ds-lineHeight-2xs); } /* 14/21 */
-.ds-text--16 { font-size: var(--ds-fontSize-label-md); line-height: var(--ds-lineHeight-xs);  } /* 16/24 */
+.ds-text--14 { font-size: var(--ds-fontSize-label-sm); line-height: var(--ds-lineHeight-label-sm); } /* 14/20 */
+.ds-text--16 { font-size: var(--ds-fontSize-label-md); line-height: var(--ds-lineHeight-label-md);  } /* 16/24 */
 
 .ds-text--regular { font-weight: var(--ds-font-weight-regular); }
 

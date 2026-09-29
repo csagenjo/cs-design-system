@@ -160,7 +160,7 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
   font-size: var(--ds-fontSize-headline-xs);
-  line-height: var(--ds-lineHeight-xs);
+  line-height: var(--ds-lineHeight-headline-xs);
   color: var(--ds-top-navigation-flydown-tab-title-fg-generic);
 }
 .ds-top-navigation__flydown-columns {
