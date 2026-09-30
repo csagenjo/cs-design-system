@@ -179,6 +179,7 @@ export function Button({
   ariaLabel,
   htmlType  = 'button',
   children,
+  ...rest   // aria-*/data-*/title/handlers de wrappers (Tooltip, PopoverSheet) llegan al <button> real
 }) {
   injectStyles();
 
@@ -202,11 +203,12 @@ export function Button({
 
   return (
     <button
+      {...rest}
       type={htmlType}
       className={classes}
       onClick={onClick}
       disabled={isDisabled}
-      aria-label={iconOnly ? ariaLabel : undefined}
+      aria-label={(iconOnly && ariaLabel) || rest['aria-label']}
       aria-busy={loading}
     >
       {loading  && <span className="ds-btn__spinner" />}
