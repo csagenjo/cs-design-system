@@ -30,15 +30,12 @@
  * del trigger. No es un focus-trap completo (Dialog/DialogSimple tampoco lo
  * tienen) — alcance consciente, no una regresión respecto al resto del catálogo.
  *
- * `trigger` se renderiza tal cual, SIN `cloneElement` para inyectarle
- * `aria-expanded`/`aria-haspopup` — se probó, pero `Button.jsx`/`IconButton.jsx`
- * no reenvían props desconocidas a su `<button>` real (lista de props fija,
- * sin rest-spread), así que la inyección quedaba silenciosamente sin efecto
- * con los triggers más comunes del catálogo. Mismo hueco ya existente hoy en
- * `Tooltip.jsx` (su `aria-describedby` vía `cloneElement` tiene el mismo
- * problema con su propio ejemplo de uso, `<Tooltip><IconButton/></Tooltip>`).
- * Deuda nueva anotada en CLAUDE.md §10: añadir rest-spread a Button/IconButton
- * antes de que Tooltip o PopoverSheet puedan anotar el trigger de verdad.
+ * `trigger` se clona con `aria-haspopup="dialog"`, `aria-expanded` y (abierto)
+ * `aria-controls` apuntando al panel — un lector de pantalla anuncia que el
+ * botón abre un panel y si está abierto. Posible desde el 30/09/2026, cuando
+ * `Button.jsx`/`IconButton.jsx` ganaron rest-spread (antes descartaban en
+ * silencio cualquier prop que no estuviera en su lista, y la inyección quedaba
+ * sin efecto — mismo hueco que tenía el `aria-describedby` de `Tooltip.jsx`).
  *
  * `placement` decide en qué lado del trigger aparece la tarjeta.
  * `pointer` decide dónde, a lo largo del borde perpendicular, se dibuja la
@@ -264,7 +261,13 @@ export function PopoverSheet({
 
   return (
     <div ref={wrapperRef} className="ds-popover-sheet-wrapper">
-      {trigger}
+      {React.isValidElement(trigger)
+        ? React.cloneElement(trigger, {
+            'aria-haspopup': 'dialog',
+            'aria-expanded': open,
+            'aria-controls': open ? panelId : undefined,
+          })
+        : trigger}
       {open && (
         <div
           ref={panelRef}

@@ -179,6 +179,7 @@ export function IconButton({
   htmlType  = 'button',
   id,
   className,
+  ...rest   // aria-*/data-*/title/handlers de wrappers (Tooltip, PopoverSheet) llegan al <button> real
 }) {
   const classes = [
     'ds-icon-btn',
@@ -191,12 +192,13 @@ export function IconButton({
 
   return (
     <button
+      {...rest}
       id={id}
       type={htmlType}
       className={classes}
       onClick={onClick}
       disabled={disabled}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? rest['aria-label']}
     >
       <span className="ds-icon-btn__circle">
         <Icon name={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />
