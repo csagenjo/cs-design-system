@@ -82,7 +82,7 @@
     },
     "xl": {
       "$type": "number",
-      "$value": 12,
+      "$value": 16,
       "$extensions": {
         "com.figma.variableId": "VariableID:45:559",
         "com.figma.scopes": [
@@ -98,7 +98,7 @@
     },
     "2xl": {
       "$type": "number",
-      "$value": 16,
+      "$value": 24,
       "$extensions": {
         "com.figma.variableId": "VariableID:3103:7118",
         "com.figma.scopes": [
@@ -114,7 +114,7 @@
     },
     "3xl": {
       "$type": "number",
-      "$value": 24,
+      "$value": 32,
       "$extensions": {
         "com.figma.variableId": "VariableID:10264:18361",
         "com.figma.scopes": [
@@ -682,7 +682,7 @@
     },
     "annotation": {
       "$type": "string",
-      "$value": "Courier New",
+      "$value": "JetBrains Mono",
       "$extensions": {
         "com.figma.variableId": "VariableID:2385:642",
         "com.figma.scopes": [
@@ -699,7 +699,7 @@
     },
     "code": {
       "$type": "string",
-      "$value": "Courier",
+      "$value": "JetBrains Mono",
       "$extensions": {
         "com.figma.variableId": "VariableID:2385:643",
         "com.figma.scopes": [
@@ -1634,6 +1634,40 @@
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }
+        }
+      }
+    }
+  },
+  "layout": {
+    "margin": {
+      "$type": "number",
+      "$value": 16,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32439:446",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:d2ccc27adedbda410e9a0669538bf729e8bc71fd/-1:-1",
+          "targetVariableName": "layout/margin-mobile",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
+    "gutter": {
+      "$type": "number",
+      "$value": 24,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32439:447",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:afc1e312156cd0776ae18acca8ed6efe6893d2e7/-1:-1",
+          "targetVariableName": "layout/gutter-mobile",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
         }
       }
     }
