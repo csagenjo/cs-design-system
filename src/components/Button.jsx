@@ -67,9 +67,14 @@ const css = `
   box-sizing:      border-box;
 }
 .ds-btn--full-width { width: 100%; }
+/* Foco por DENTRO del botón (01/10/2026, igual que Figma): ningún contenedor
+   con overflow:hidden lo recorta y el botón no cambia de tamaño. Exterior =
+   color de foco del sistema (outline hacia dentro, pinta encima del borde);
+   interior = hueco blanco (inset desde el borde del padding). */
 .ds-btn:focus-visible {
-  outline:        var(--ds-button-border-width) solid var(--ds-button-border-focus-outer);
-  outline-offset: 2px;
+  outline:        var(--ds-button-focus-width) solid var(--ds-button-border-focus-outer);
+  outline-offset: calc(-1 * var(--ds-button-focus-width));
+  box-shadow:     inset 0 0 0 calc(var(--ds-button-focus-width) * 2 - var(--ds-button-border-width)) var(--ds-button-border-focus-inner);
 }
 .ds-btn:active:not(:disabled) { opacity: 0.8; transform: scale(0.98); }
 .ds-btn:disabled,

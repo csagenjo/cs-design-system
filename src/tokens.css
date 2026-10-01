@@ -256,9 +256,9 @@
 
   /* bordes focus */
   --ds-borderColor-focus-inner:        #FFFFFF;
-  --ds-borderColor-focus-outer:        #050506;
+  --ds-borderColor-focus-outer:        #016398; /* color/info/700 — color de foco del sistema (01/10/2026, antes negro) */
   --ds-borderColor-focus-inner-inverse:#050506;
-  --ds-borderColor-focus-outer-inverse:#FFFFFF;
+  --ds-borderColor-focus-outer-inverse:#B8E6FE; /* color/info/200 */
 
   /* â”€â”€ OPACITY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-opacity-hover-default:      rgba(5,5,6,0.1);
@@ -428,6 +428,8 @@
   --ds-button-border-default:       var(--ds-borderColor-emphasis);
   --ds-button-border-disabled:      var(--ds-borderColor-disabled);
   --ds-button-border-focus-outer:   var(--ds-borderColor-focus-outer);
+  --ds-button-border-focus-inner:   var(--ds-borderColor-focus-inner);
+  --ds-button-focus-width:          2px;   /* button/all/root/borderWidth/focus — anillo por DENTRO del botón (01/10/2026) */
 
   /* Negative */
   --ds-button-fg-negative:          var(--ds-fg-error);
@@ -481,11 +483,9 @@
   --ds-icon-button-border-color-disabled:    var(--ds-borderColor-disabled);
   --ds-icon-button-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-icon-button-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  /* Anillo de foco: círculo (sin label) usa border-radius/generic (pill, ya
-     definido arriba); con label el anillo envuelve icono+label y usa un
-     radio propio, más discreto (iconWithLabel-focus-outer/inner). */
-  --ds-icon-button-focus-radius-with-label-outer: 4px;
-  --ds-icon-button-focus-radius-with-label-inner: 2px;
+  --ds-icon-button-focus-width:             2px;   /* iconButton/all/root/borderWidth/focus */
+  /* Anillo de foco: SIEMPRE alrededor del círculo, por DENTRO (01/10/2026) —
+     también con label (antes envolvía icono+label con radio propio 4/2). */
 
   /* Icono — color (iconButton/all/icon/fg/*). Por contraste, no por Variant
      (regla CLAUDE.md §4): on-color = filled, on-outline = Secondary/Tertiary.
@@ -1918,7 +1918,7 @@
   --ds-steps-root-opacity-pressed:               0.8;
   --ds-steps-root-border-width-focus:            2px;
   --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner); /* #FFFFFF */
-  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer); /* #050506 */
+  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer); /* #016398 light / #B8E6FE dark */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Steps Navigator (steps/navigator/all/*)
@@ -2096,7 +2096,8 @@
     --ds-borderColor-subtle:  #606772; /* añadido 24/08 — ListView atom */
     --ds-borderColor-disabled: #7B8490; /* añadido 24/08 — ListView atom */
     --ds-borderColor-focus-inner: #050506;
-    --ds-borderColor-focus-outer: #FFFFFF;
+    --ds-borderColor-focus-outer: #B8E6FE;
+    --ds-borderColor-focus-outer-inverse: #016398;
 
     --ds-opacity-hover-default: rgba(255,255,255,0.1);
     --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
@@ -2110,8 +2111,6 @@
     --ds-link-border-bottom-default:   #A0D1DE;
     --ds-link-border-bottom-accent:    #A0D1DE;
     --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
-    --ds-link-focus-inner:             #050506;
-    --ds-link-focus-outer:             #FFFFFF;
   }
 }
 
@@ -2193,7 +2192,8 @@
   --ds-borderColor-subtle:  #606772; /* añadido 24/08 — ListView atom */
   --ds-borderColor-disabled: #7B8490; /* añadido 24/08 — ListView atom */
   --ds-borderColor-focus-inner: #050506;
-  --ds-borderColor-focus-outer: #FFFFFF;
+  --ds-borderColor-focus-outer: #B8E6FE;
+  --ds-borderColor-focus-outer-inverse: #016398;
 
   --ds-opacity-hover-default: rgba(255,255,255,0.1);
   --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
@@ -2206,8 +2206,6 @@
   --ds-link-border-bottom-default:   #A0D1DE;
   --ds-link-border-bottom-accent:    #A0D1DE;
   --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
-  --ds-link-focus-inner:             #050506;
-  --ds-link-focus-outer:             #FFFFFF;
 }
 
 /* ════ DEVICE — Tablet (Figma modo Tablet) · ≥768px ════ */

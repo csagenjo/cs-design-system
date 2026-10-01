@@ -19,7 +19,7 @@
  * ESTADOS:
  *   Initial  → estilos base
  *   Hover    → overlay bgMix rgba(5,5,6,0.1)
- *   Focus    → doble focus ring (inner blanco + outer negro)
+ *   Focus    → doble focus ring (inner blanco + outer color de foco del sistema, azul)
  *   Active   → opacity 0.8 + SemiBold
  *   Visited  → lavanda (solo variant accent)
  *
