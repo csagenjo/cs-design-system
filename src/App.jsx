@@ -1,25 +1,28 @@
 import './tokens.css'
+import { TopNavigation } from './organisms/TopNavigation'
 import { IconButton } from './components/IconButton'
+import { Button } from './components/Button'
+import { LinkList } from './components/LinkList'
 
-/* Banco de pruebas — IconButton: borde por dentro, tamaño = Figma (01/10/2026). */
+/* Banco de pruebas — spacing fijo + layout responsive (01/10/2026). */
 
 const label = { fontFamily: 'monospace', fontSize: 12, color: 'var(--ds-fg-default)', margin: '0 0 8px' }
 
 export default function App() {
   return (
-    <main style={{ padding: 48, display: 'flex', flexDirection: 'column', gap: 32, background: 'var(--ds-bg-default)', minHeight: '100vh' }}>
-      {['default', 'accent'].map(t => ['primary', 'secondary', 'tertiary'].map(v => (
-        <section key={t + v}><p style={label}>{t} · {v}</p>
-          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
-            {['small', 'medium', 'large'].map(s => (
-              <IconButton key={s} type={t} variant={v} size={s} icon="Search" ariaLabel="Buscar" data-testid={`${t}-${v}-${s}`} />
-            ))}
-            {['small', 'medium', 'large'].map(s => (
-              <IconButton key={s + 'l'} type={t} variant={v} size={s} icon="Search" label="Buscar" />
-            ))}
+    <main style={{ background: 'var(--ds-bg-default)', minHeight: '100vh' }}>
+      <TopNavigation menuItems={[{ id: 'a', label: 'Inicio', selected: true }, { id: 'b', label: 'Cuentas' }]} />
+      <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 32 }}>
+        <section><p style={label}>IconButton large · Button lg</p>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <IconButton size="large" icon="Search" ariaLabel="Buscar" data-testid="ib-large" />
+            <Button size="lg" data-testid="btn-lg">Guardar</Button>
           </div>
         </section>
-      )))}
+        <section><p style={label}>LinkList gap lg (spacing-xl)</p>
+          <LinkList gap="lg" items={[{ label: 'Uno', href: '#' }, { label: 'Dos', href: '#' }]} />
+        </section>
+      </div>
     </main>
   )
 }

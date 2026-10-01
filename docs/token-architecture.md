@@ -857,16 +857,18 @@ Primitivos de line-height en Base **nombrados por valor** (`typography/fontLheig
 
 Re-enlace en Figma: ~1.600 nodos de texto + 121 overrides de instancia. **Lección real:** `setBoundVariable('lineHeight')` a nivel de nodo NO sustituye un binding de rango ya existente (el nodo queda con 2 entradas y el segmento sigue usando la vieja) — usar `setRangeBoundVariable(start, end, …)` por segmento.
 
-### Spacing (M / T / D)
+### Spacing (fijo) y Layout (responsive) — 01/10/2026
 
-| Token | Mobile | Tablet | Desktop |
-|---|---|---|---|
-| 2xs · xs · sm · md · lg | 2 · 4 · 6 · 8 · 12 | = | = |
-| xl | 12 | 16 | 16 |
-| 2xl | 16 | 20 | 24 |
-| 3xl | 24 | 28 | 32 |
+| Token | Mobile | Tablet | Desktop | Uso |
+|---|---|---|---|---|
+| `spacing/2xs · xs · sm · md · lg` | 2 · 4 · 6 · 8 · 12 | = | = | padding/gap de componentes |
+| `spacing/xl · 2xl · 3xl` | 16 · 24 · 32 | = | = | padding/gap de componentes |
+| `layout/margin` | 16 | 24 | 32 | margen de página: padding horizontal de Top/Bottom Navigation, padding del flydown |
+| `layout/gutter` | 24 | 32 | 32 | separación entre bloques grandes: gap Logo↔Tabs, gap entre columnas del flydown |
 
-2xs–lg constantes a propósito: son padding/gap interno de componentes — reducirlos en mobile quitaría área táctil justo donde más falta. Nuevo primitivo `dimension/350` (=28).
+**Regla: un componente mide lo mismo en los tres dispositivos; lo que se adapta es el layout** (márgenes, gutters, tipografía de titulares). Mismo criterio que Carbon, Atlassian, Polaris y Material: botones e inputs de 40–48 px son además el tamaño táctil mínimo, reducirlos en mobile quita área táctil justo donde más falta.
+
+**Por qué se separó (01/10).** El 28/09 `spacing/xl/2xl/3xl` se hicieron responsive (12/16/16 · 16/20/24 · 24/28/32) pensando en layout, pero 18 Component tokens de controles apuntaban a `spacing/xl` (Button/Icon Button/Segmented Large, InputCommon, Telephone, Accordion, Dialog…). Con Mobile como modo por defecto, esos controles encogían en Figma (Icon Button Large 56 → 48, con los anillos de foco descolocados) mientras el código seguía en valores fijos. Convertirlos en excepciones a Base habría hecho de la excepción la regla — se separó la escala en dos familias. Los valores responsive pasan a `layout/*`, ajustados a múltiplos de 8 (Carol, 01/10: los 20/28 de Tablet del 28/09 rompían la regla del 8). Cadena igual que el resto de Device: `layout/margin` → Theme `layout/margin-mobile|-tablet|-desktop` → Base `dimension/*`. `dimension/250` (=20) y `dimension/350` (=28) quedan sin uso en spacing/layout.
 
 **Rejilla: se valida en el TAMAÑO EXTERIOR del componente, no en cada padding (29/09).** `2xs`=2 y `sm`=6 se mantienen a propósito como **pasos de compensación**: son los que hacen que el total caiga en rejilla — Button md 6+20+6 = 32, celda de Table 6+20+6 = 32, Tooltip 2+16+2 = 20, título de Accordion 6+28+6 = 40. Mismo criterio que Atlassian (`space.025`/`space.075` = 2/6) y Carbon (`spacing-01` = 2). Un 2 o un 6 que NO compensa nada (separación entre ítems, padding de un contenedor con contenido variable) es un error y se corrige a 4/8/12.
 

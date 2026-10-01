@@ -168,7 +168,7 @@
         "paddingRight": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:18665:2161",
               "com.figma.hiddenFromPublishing": true,
@@ -1630,8 +1630,8 @@
                 "GAP"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:f1567ece0943b2bd45be26f413636d3beae6884a/-1:-1",
-                "targetVariableName": "spacing/2xl",
+                "targetVariableId": "VariableID:d97d1056a2635f530eddd32285fee38fcca45acb/-1:-1",
+                "targetVariableName": "layout/margin",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
@@ -2271,7 +2271,7 @@
           },
           "large": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:10264:21047",
               "com.figma.hiddenFromPublishing": true,
@@ -3328,7 +3328,7 @@
         "paddingTop": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:24714:1123",
               "com.figma.hiddenFromPublishing": true,
@@ -4264,7 +4264,7 @@
         "paddingHor": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:24722:1702",
               "com.figma.hiddenFromPublishing": true,
@@ -8320,7 +8320,7 @@
         "padding": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:31517:67",
               "com.figma.scopes": [
@@ -8370,7 +8370,7 @@
         "padding": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:31514:68",
               "com.figma.scopes": [
@@ -9031,7 +9031,7 @@
       "paddingVer": {
         "generic": {
           "$type": "number",
-          "$value": 12,
+          "$value": 16,
           "$extensions": {
             "com.figma.variableId": "VariableID:31539:77",
             "com.figma.scopes": [
@@ -10279,7 +10279,7 @@
           },
           "large": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:10823:4705",
               "com.figma.hiddenFromPublishing": true,
@@ -11082,7 +11082,7 @@
         "paddingHor": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:30530:79",
               "com.figma.scopes": [
@@ -11100,7 +11100,7 @@
         "paddingVer": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:30530:80",
               "com.figma.scopes": [
@@ -11798,7 +11798,7 @@
         "paddingHor": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:24860:4634",
               "com.figma.scopes": [
@@ -11872,7 +11872,7 @@
         "paddingHor": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:26011:4851",
               "com.figma.scopes": [
@@ -11908,7 +11908,7 @@
         "paddingVer": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:26011:4852",
               "com.figma.scopes": [
@@ -16767,7 +16767,7 @@
           },
           "large": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:19758:1008",
               "com.figma.hiddenFromPublishing": true,
@@ -18883,7 +18883,7 @@
           "paddingHor": {
             "generic": {
               "$type": "number",
-              "$value": 12,
+              "$value": 16,
               "$extensions": {
                 "com.figma.variableId": "VariableID:5654:1288",
                 "com.figma.hiddenFromPublishing": true,
@@ -18902,7 +18902,7 @@
           "gap": {
             "generic": {
               "$type": "number",
-              "$value": 12,
+              "$value": 16,
               "$extensions": {
                 "com.figma.variableId": "VariableID:5654:1289",
                 "com.figma.hiddenFromPublishing": true,
@@ -20506,8 +20506,8 @@
               "GAP"
             ],
             "com.figma.aliasData": {
-              "targetVariableId": "VariableID:071c7253ab22f7332dc15d3fab168321f073d686/-1:-1",
-              "targetVariableName": "spacing/3xl",
+              "targetVariableId": "VariableID:927b3682e716a4769e7db0e1f7ae724ef0bc4c49/-1:-1",
+              "targetVariableName": "layout/gutter",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }
@@ -20524,8 +20524,8 @@
               "GAP"
             ],
             "com.figma.aliasData": {
-              "targetVariableId": "VariableID:f1567ece0943b2bd45be26f413636d3beae6884a/-1:-1",
-              "targetVariableName": "spacing/2xl",
+              "targetVariableId": "VariableID:d97d1056a2635f530eddd32285fee38fcca45acb/-1:-1",
+              "targetVariableName": "layout/margin",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }
@@ -20588,8 +20588,8 @@
                 "GAP"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:f1567ece0943b2bd45be26f413636d3beae6884a/-1:-1",
-                "targetVariableName": "spacing/2xl",
+                "targetVariableId": "VariableID:d97d1056a2635f530eddd32285fee38fcca45acb/-1:-1",
+                "targetVariableName": "layout/margin",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
@@ -20599,7 +20599,7 @@
         "gap": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:32306:805",
               "com.figma.scopes": [
@@ -20626,8 +20626,8 @@
                 "GAP"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:071c7253ab22f7332dc15d3fab168321f073d686/-1:-1",
-                "targetVariableName": "spacing/3xl",
+                "targetVariableId": "VariableID:927b3682e716a4769e7db0e1f7ae724ef0bc4c49/-1:-1",
+                "targetVariableName": "layout/gutter",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
@@ -20657,7 +20657,7 @@
         "gap": {
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
             "$extensions": {
               "com.figma.variableId": "VariableID:32306:808",
               "com.figma.scopes": [
