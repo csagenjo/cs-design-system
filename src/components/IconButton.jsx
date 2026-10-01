@@ -56,13 +56,19 @@ const css = `
   align-items: center;
   justify-content: center;
   border-radius: var(--ds-icon-button-border-radius);
-  border-style: solid;
-  border-color: transparent;
+  border: 0 solid transparent; /* sin grosor explícito el navegador aplica 3px (medium) invisibles */
   box-sizing: border-box;
 }
-.ds-icon-btn--small .ds-icon-btn__circle  { padding: var(--ds-icon-button-padding-small); }
-.ds-icon-btn--medium .ds-icon-btn__circle { padding: var(--ds-icon-button-padding-medium); }
-.ds-icon-btn--large .ds-icon-btn__circle  { padding: var(--ds-icon-button-padding-large); }
+.ds-icon-btn--small  { --_pad: var(--ds-icon-button-padding-small); }
+.ds-icon-btn--medium { --_pad: var(--ds-icon-button-padding-medium); }
+.ds-icon-btn--large  { --_pad: var(--ds-icon-button-padding-large); }
+.ds-icon-btn__circle { padding: var(--_pad); }
+/* Borde por dentro, como Figma (strokeAlign INSIDE): el padding descuenta el
+   borde para que Secondary mida lo mismo que Primary/Tertiary (32/44/56). */
+.ds-icon-btn--default-secondary .ds-icon-btn__circle,
+.ds-icon-btn--accent-secondary .ds-icon-btn__circle {
+  padding: calc(var(--_pad) - var(--ds-icon-button-border-width-secondary));
+}
 
 .ds-icon-btn__label {
   padding: 0 var(--ds-icon-button-label-padding-hor);
