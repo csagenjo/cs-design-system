@@ -26,57 +26,25 @@ const css = `
   animation: ds-loading-spinner-spin var(--ds-loading-spinner-duration) linear infinite;
   flex-shrink: 0;
 }
+/* viewBox 16×16, r=7, trazo 2 → el grosor es siempre tamaño/8 (2/3/4/6 en
+   16/24/32/48, igual que Figma) a cualquier tamaño, sin radio ni dasharray
+   por tamaño. pathLength=100 → 75% trazo / 25% hueco. */
 .ds-loading-spinner__track {
   fill: none;
+  stroke-width: 2;
   stroke-linecap: round;
+  stroke-dasharray: 75 25;
 }
+.ds-loading-spinner--extraSmall { width: var(--ds-loading-spinner-size-xs); height: var(--ds-loading-spinner-size-xs); }
+.ds-loading-spinner--small      { width: var(--ds-loading-spinner-size-sm); height: var(--ds-loading-spinner-size-sm); }
+.ds-loading-spinner--medium     { width: var(--ds-loading-spinner-size-md); height: var(--ds-loading-spinner-size-md); }
+.ds-loading-spinner--large      { width: var(--ds-loading-spinner-size-lg); height: var(--ds-loading-spinner-size-lg); }
 
-.ds-loading-spinner--extraSmall {
-  width: var(--ds-loading-spinner-size-xs);
-  height: var(--ds-loading-spinner-size-xs);
-}
-.ds-loading-spinner--extraSmall .ds-loading-spinner__track {
-  r: var(--ds-loading-spinner-radius-xs);
-  stroke-width: var(--ds-loading-spinner-stroke-xs);
-  stroke-dasharray: var(--ds-loading-spinner-dasharray-xs);
-}
-
-.ds-loading-spinner--small {
-  width: var(--ds-loading-spinner-size-sm);
-  height: var(--ds-loading-spinner-size-sm);
-}
-.ds-loading-spinner--small .ds-loading-spinner__track {
-  r: var(--ds-loading-spinner-radius-sm);
-  stroke-width: var(--ds-loading-spinner-stroke-sm);
-  stroke-dasharray: var(--ds-loading-spinner-dasharray-sm);
-}
-
-.ds-loading-spinner--medium {
-  width: var(--ds-loading-spinner-size-md);
-  height: var(--ds-loading-spinner-size-md);
-}
-.ds-loading-spinner--medium .ds-loading-spinner__track {
-  r: var(--ds-loading-spinner-radius-md);
-  stroke-width: var(--ds-loading-spinner-stroke-md);
-  stroke-dasharray: var(--ds-loading-spinner-dasharray-md);
-}
-
-.ds-loading-spinner--large {
-  width: var(--ds-loading-spinner-size-lg);
-  height: var(--ds-loading-spinner-size-lg);
-}
-.ds-loading-spinner--large .ds-loading-spinner__track {
-  r: var(--ds-loading-spinner-radius-lg);
-  stroke-width: var(--ds-loading-spinner-stroke-lg);
-  stroke-dasharray: var(--ds-loading-spinner-dasharray-lg);
-}
-
-.ds-loading-spinner--primary .ds-loading-spinner__track {
-  stroke: var(--ds-loading-spinner-color-primary);
-}
-.ds-loading-spinner--onColor .ds-loading-spinner__track {
-  stroke: var(--ds-loading-spinner-color-on-color);
-}
+.ds-loading-spinner--primary .ds-loading-spinner__track { stroke: var(--ds-loading-spinner-color-primary); }
+.ds-loading-spinner--onColor .ds-loading-spinner__track { stroke: var(--ds-loading-spinner-color-on-color); }
+/* current: hereda el color del texto del padre (Button lo usa así: el
+   spinner toma el color de icono por contraste de cada variante, como en Figma). */
+.ds-loading-spinner--current .ds-loading-spinner__track { stroke: currentColor; }
 
 @keyframes ds-loading-spinner-spin {
   to { transform: rotate(360deg); }
@@ -87,7 +55,7 @@ injectStyles('ds-loading-spinner', css);
 
 export function LoadingSpinner({
   size  = 'medium', // 'extraSmall' | 'small' | 'medium' | 'large'
-  color = 'primary', // 'primary' | 'onColor'
+  color = 'primary', // 'primary' | 'onColor' | 'current' (hereda el color del texto)
   label = 'Loading',
   id,
   className,
@@ -100,8 +68,8 @@ export function LoadingSpinner({
   ].filter(Boolean).join(' ');
 
   return (
-    <svg id={id} className={classes} role="status" aria-label={label}>
-      <circle className="ds-loading-spinner__track" cx="50%" cy="50%" />
+    <svg id={id} className={classes} viewBox="0 0 16 16" role="status" aria-label={label}>
+      <circle className="ds-loading-spinner__track" cx="8" cy="8" r="7" pathLength="100" />
     </svg>
   );
 }

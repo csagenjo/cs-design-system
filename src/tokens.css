@@ -404,9 +404,12 @@
   --ds-button-px-sm: 8px;
   --ds-button-px-md: 12px;
   --ds-button-px-lg: 16px;
-  --ds-button-py-sm: 6px;
-  --ds-button-py-md: 6px;
-  --ds-button-py-lg: 8px;
+  /* Alto fijo por token (01/10/2026): 32/40/48 en rejilla de 8 aunque cambie
+     el line-height del label — antes salía de padding+line-height (Figma
+     daba 32/36/44). button/all/root/height/* → sizing/md|lg|xl. */
+  --ds-button-height-small:  var(--ds-sizing-md);  /* 32px */
+  --ds-button-height-medium: var(--ds-sizing-lg);  /* 40px */
+  --ds-button-height-large:  var(--ds-sizing-xl);  /* 48px */
 
   /* Fondos */
   --ds-button-bg-accent-filled:   var(--ds-bg-primary);
@@ -604,21 +607,9 @@
   --ds-loading-spinner-size-sm:  24px;
   --ds-loading-spinner-size-md:  32px;
   --ds-loading-spinner-size-lg:  48px;
-  --ds-loading-spinner-stroke-xs: 2px;
-  --ds-loading-spinner-stroke-sm: 3px;
-  --ds-loading-spinner-stroke-md: 4px;
-  --ds-loading-spinner-stroke-lg: 6px;
-  --ds-loading-spinner-radius-xs: 7px;    /* (16-2)/2 */
-  --ds-loading-spinner-radius-sm: 10.5px; /* (24-3)/2 */
-  --ds-loading-spinner-radius-md: 14px;   /* (32-4)/2 */
-  --ds-loading-spinner-radius-lg: 21px;   /* (48-6)/2 */
-  --ds-loading-spinner-dasharray-xs: 32.99 10.99; /* 75%/25% de 2·π·7 */
-  --ds-loading-spinner-dasharray-sm: 49.48 16.49; /* 75%/25% de 2·π·10.5 */
-  --ds-loading-spinner-dasharray-md: 65.97 21.99; /* 75%/25% de 2·π·14 */
-  --ds-loading-spinner-dasharray-lg: 98.96 32.99; /* 75%/25% de 2·π·21 */
   --ds-loading-spinner-color-primary:   var(--ds-fg-icon-primary); /* teal, no invierte */
   --ds-loading-spinner-color-on-color:  var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
-  --ds-loading-spinner-duration: 0.7s; /* misma velocidad que el spinner local ya existente en Button.jsx */
+  --ds-loading-spinner-duration: 0.7s;
 
 
   /* ==========================================================================

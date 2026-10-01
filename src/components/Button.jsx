@@ -39,21 +39,21 @@
 
 import React from 'react';
 import { Icon } from './Icon';
+import { LoadingSpinner } from './LoadingSpinner';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-btn--sm { --_h: 32px; --_px: var(--ds-button-px-sm); --_py: var(--ds-button-py-sm); --_fs: var(--ds-fontSize-label-xs); --_icon: var(--ds-button-icon-size-small);  --_gap: 4px; }
-.ds-btn--md { --_h: 40px; --_px: var(--ds-button-px-md); --_py: var(--ds-button-py-md); --_fs: var(--ds-fontSize-label-sm); --_icon: var(--ds-button-icon-size-medium); --_gap: 6px; }
-.ds-btn--lg { --_h: 48px; --_px: var(--ds-button-px-lg); --_py: var(--ds-button-py-lg); --_fs: var(--ds-fontSize-label-md); --_icon: var(--ds-button-icon-size-large);  --_gap: 8px; }
-
+.ds-btn--sm { --_h: var(--ds-button-height-small);  --_px: var(--ds-button-px-sm); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-button-icon-size-small);  --_gap: 4px; }
+.ds-btn--md { --_h: var(--ds-button-height-medium); --_px: var(--ds-button-px-md); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-button-icon-size-medium); --_gap: 6px; }
+.ds-btn--lg { --_h: var(--ds-button-height-large);  --_px: var(--ds-button-px-lg); --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-button-icon-size-large);  --_gap: 8px; }
 .ds-btn {
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
   gap:             var(--_gap);
   height:          var(--_h);
-  padding:         var(--_py) var(--_px);
+  padding:         0 var(--_px);
   font-size:       var(--_fs);
   font-weight:     var(--ds-font-weight-medium);
   border-radius:   var(--ds-button-radius);
@@ -62,7 +62,7 @@ const css = `
   transition:      background 0.12s, border-color 0.12s, color 0.12s, opacity 0.12s;
   white-space:     nowrap;
   font-family:     inherit;
-  line-height:     1;
+  line-height:     var(--_lh);
   text-decoration: none;
   box-sizing:      border-box;
 }
@@ -79,6 +79,9 @@ const css = `
   pointer-events: none;
 }
 .ds-btn--icon-only { padding: 0; width: var(--_h); }
+/* Loading: no clicable (disabled nativo) pero con el aspecto de Enabled, como
+   en Figma — no es un botón deshabilitado, es una acción en curso. */
+.ds-btn--loading:disabled { opacity: 1; cursor: progress; }
 
 /* Accent filled */
 .ds-btn--accent {
@@ -140,17 +143,10 @@ const css = `
 .ds-btn--floating { box-shadow: var(--ds-shadow-md); }
 .ds-btn--floating:hover:not(:disabled) { box-shadow: var(--ds-shadow-lg); }
 
-/* Spinner */
-.ds-btn__spinner {
-  width:         var(--_icon);
-  height:        var(--_icon);
-  border:        2px solid currentColor;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation:     ds-spin 0.7s linear infinite;
-  flex-shrink:   0;
-}
-@keyframes ds-spin { to { transform: rotate(360deg); } }
+/* Loading: el átomo LoadingSpinner en el sitio del icono izquierdo, mismo
+   tamaño que el icono (16/20/24) y color del texto del botón (currentColor =
+   color de icono por contraste de cada variante, igual que Figma). */
+.ds-btn .ds-btn__spinner { width: var(--_icon); height: var(--_icon); }
 `;
 
 let injected = false;
@@ -198,7 +194,8 @@ export function Button({
     iconOnly   ? 'ds-btn--icon-only'  : '',
     floating   ? 'ds-btn--floating'   : '',
     fullWidth  ? 'ds-btn--full-width' : '',
-    isDisabled ? 'ds-btn--disabled'   : '',
+    disabled   ? 'ds-btn--disabled'   : '',
+    loading    ? 'ds-btn--loading'    : '',
   ].filter(Boolean).join(' ');
 
   return (
@@ -211,7 +208,7 @@ export function Button({
       aria-label={(iconOnly && ariaLabel) || rest['aria-label']}
       aria-busy={loading}
     >
-      {loading  && <span className="ds-btn__spinner" />}
+      {loading  && <LoadingSpinner color="current" label="Cargando" className="ds-btn__spinner" />}
       {!loading && iconLeft  && <Icon name={iconLeft}  size={iconSize} />}
       {!iconOnly && children}
       {!loading && iconRight && <Icon name={iconRight} size={iconSize} />}

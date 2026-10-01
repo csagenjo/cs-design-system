@@ -18,12 +18,9 @@
  *
  * children = "Scrollable Content" (slot libre, scroll interno si excede alto).
  *
- * NOTA (24/08/2026): Dialog/DialogSimple Expanded piden fontSize/label/lg=19px
- * en sus botones grandes, pero el size="lg" actual de Button.jsx solo llega a
- * 16px (fontSize/label/md) — desajuste de un escalón preexistente en Button,
- * no de Dialog. Se usa size="lg" como aproximación más cercana sin tocar
- * Button.jsx (afecta a todos sus consumidores ya construidos). Pendiente
- * decisión: ¿añadir un escalón a Button, o token propio en Dialog?
+ * Botones: Button size="lg", igual que Figma (Size=Large). Desde el 01/10/2026
+ * la escala de Button coincide con Figma (label 14/16/19), así que ya no es
+ * una aproximación.
  *
  * USO:
  *   <Dialog header="default" width="popUp">Contenido…</Dialog>

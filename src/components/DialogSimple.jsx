@@ -110,7 +110,7 @@ export function DialogSimple({
   className,
 }) {
   const isExpanded = variant === 'expanded';
-  const btnSize = isExpanded ? 'lg' : 'md'; /* 'md' = fontSize/label/sm 14px, el tamaño real que pide "default" — ver nota Dialog.jsx */
+  const btnSize = isExpanded ? 'lg' : 'sm'; /* igual que Figma: Default → Button Small, Expanded → Large */
 
   const classes = [
     'ds-dialog-simple',
