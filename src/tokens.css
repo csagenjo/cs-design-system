@@ -287,8 +287,8 @@
      layout/* es lo responsive: márgenes de página y separación entre bloques
      grandes. Hasta el 01/10/2026 spacing xl/2xl/3xl eran responsive y
      encogían Button/Icon Button/Segmented Large e Inputs en Mobile. */
-  --ds-layout-margin: 16px;  /* T 20 · D 24 */
-  --ds-layout-gutter: 24px;  /* T 28 · D 32 */
+  --ds-layout-margin: 16px;  /* T 24 · D 32 */
+  --ds-layout-gutter: 24px;  /* T 32 · D 32 */
 
   /* Breakpoints (Base breakpoint/*) — referencia: CSS no admite var() dentro de
      @media, los valores van literales en los @media de Device al final del archivo.
@@ -2222,8 +2222,8 @@
 /* ════ DEVICE — Tablet (Figma modo Tablet) · ≥768px ════ */
 @media (min-width: 768px) {
   :root {
-    --ds-layout-margin: 20px;
-    --ds-layout-gutter: 28px;
+    --ds-layout-margin: 24px;
+    --ds-layout-gutter: 32px;
     --ds-fontSize-body-lg:        24px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       28px;
@@ -2254,7 +2254,7 @@
 /* ════ DEVICE — Desktop (Figma modo Desktop) · ≥1024px ════ */
 @media (min-width: 1024px) {
   :root {
-    --ds-layout-margin: 24px;
+    --ds-layout-margin: 32px;
     --ds-layout-gutter: 32px;
     --ds-fontSize-body-lg:        28px;
     --ds-fontSize-title-lg:       24px;
