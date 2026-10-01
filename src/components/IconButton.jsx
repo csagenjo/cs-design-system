@@ -15,13 +15,9 @@
  * se resuelve por contraste real (on-color relleno / on-outline contorno),
  * nunca por Variant de origen (regla CLAUDE.md §4).
  *
- * Focus ring: doble anillo (mismo criterio que Checkbox) que replica la
- * geometría real de Figma — círculo (radio pill) sin label, rectángulo
- * redondeado (radio `iconWithLabel-focus-outer`, 4px) envolviendo icono+label
- * cuando `label` está presente. CSS no permite dos radios distintos para
- * outline vs. box-shadow en el mismo elemento, así que el anillo interior
- * usa el mismo radio que el exterior (Figma los diferencia en 2px, gap
- * imperceptible en un detalle decorativo de foco).
+ * Focus ring: doble anillo POR DENTRO del círculo, con o sin label (01/10/2026,
+ * igual que Figma) — exterior en el color de foco del sistema, interior como
+ * hueco. Nunca se recorta con overflow:hidden y no cambia el tamaño.
  *
  * USO:
  *   <IconButton icon="search" ariaLabel="Buscar" />
@@ -65,9 +61,11 @@ const css = `
 .ds-icon-btn__circle { padding: var(--_pad); }
 /* Borde por dentro, como Figma (strokeAlign INSIDE): el padding descuenta el
    borde para que Secondary mida lo mismo que Primary/Tertiary (32/44/56). */
+.ds-icon-btn--default-secondary,
+.ds-icon-btn--accent-secondary { --_bw: var(--ds-icon-button-border-width-secondary); }
 .ds-icon-btn--default-secondary .ds-icon-btn__circle,
 .ds-icon-btn--accent-secondary .ds-icon-btn__circle {
-  padding: calc(var(--_pad) - var(--ds-icon-button-border-width-secondary));
+  padding: calc(var(--_pad) - var(--_bw));
 }
 
 .ds-icon-btn__label {
@@ -82,20 +80,14 @@ const css = `
 .ds-icon-btn:focus-visible {
   outline: none;
 }
-/* Sin label: el anillo envuelve solo el círculo del icono (radio pill,
-   heredado de .ds-icon-btn__circle). Con label: el anillo envuelve icono +
-   label juntos, en el botón raíz, con el radio más discreto de Figma
-   (iconWithLabel-focus-outer/inner) en vez del pill. */
-.ds-icon-btn:not(.ds-icon-btn--has-label):focus-visible .ds-icon-btn__circle {
-  outline:        2px solid var(--ds-icon-button-border-color-focus-outer);
-  outline-offset: 1px;
-  box-shadow:     0 0 0 4px var(--ds-icon-button-border-color-focus-inner);
-}
-.ds-icon-btn--has-label:focus-visible {
-  outline:        2px solid var(--ds-icon-button-border-color-focus-outer);
-  outline-offset: 1px;
-  border-radius:  var(--ds-icon-button-focus-radius-with-label-outer);
-  box-shadow:     0 0 0 4px var(--ds-icon-button-border-color-focus-inner);
+/* Foco por DENTRO del círculo, con o sin label (01/10/2026, igual que Figma):
+   ningún contenedor con overflow:hidden lo recorta. Exterior = color de foco
+   del sistema (outline hacia dentro, encima del borde); interior = hueco
+   (inset desde el borde del padding, descontando el borde de Secondary). */
+.ds-icon-btn:focus-visible .ds-icon-btn__circle {
+  outline:        var(--ds-icon-button-focus-width) solid var(--ds-icon-button-border-color-focus-outer);
+  outline-offset: calc(-1 * var(--ds-icon-button-focus-width));
+  box-shadow:     inset 0 0 0 calc(var(--ds-icon-button-focus-width) * 2 - var(--_bw, 0px)) var(--ds-icon-button-border-color-focus-inner);
 }
 .ds-icon-btn:active:not(:disabled) .ds-icon-btn__circle {
   opacity: var(--ds-icon-button-opacity-pressed);
