@@ -15,9 +15,11 @@
  * se resuelve por contraste real (on-color relleno / on-outline contorno),
  * nunca por Variant de origen (regla CLAUDE.md §4).
  *
- * Focus ring: doble anillo POR DENTRO del círculo, con o sin label (01/10/2026,
- * igual que Figma) — exterior en el color de foco del sistema, interior como
- * hueco. Nunca se recorta con overflow:hidden y no cambia el tamaño.
+ * Focus ring: doble anillo POR FUERA del círculo, con o sin label (08/10/2026,
+ * igual que Figma) — hueco de 2px pegado al borde y anillo exterior de 2px
+ * en el color de foco del sistema. El borde del círculo queda intacto. El
+ * componente reserva 4px de área de foco (padding) para que el anillo quede
+ * dentro de su caja, igual que en Figma.
  *
  * USO:
  *   <IconButton icon="search" ariaLabel="Buscar" />
@@ -39,6 +41,9 @@ const css = `
   align-items: center;
   justify-content: center;
   gap: 0;
+  /* Área de foco (08/10/2026, igual que Figma): padding del frame del
+     componente para que el anillo quede DENTRO de su caja (Large = 56 + 2×4). */
+  padding: var(--ds-icon-button-focus-area-padding);
   border-radius: var(--ds-icon-button-border-radius);
   border: 0 solid transparent;
   background: transparent;
@@ -80,14 +85,14 @@ const css = `
 .ds-icon-btn:focus-visible {
   outline: none;
 }
-/* Foco por DENTRO del círculo, con o sin label (01/10/2026, igual que Figma):
-   ningún contenedor con overflow:hidden lo recorta. Exterior = color de foco
-   del sistema (outline hacia dentro, encima del borde); interior = hueco
-   (inset desde el borde del padding, descontando el borde de Secondary). */
+/* Foco POR FUERA del círculo, con o sin label (08/10/2026, igual que Figma):
+   hueco de 2px pegado al borde (box-shadow sin blur) + anillo exterior de 2px
+   en el color de foco del sistema (outline con offset). El borde de Secondary
+   queda intacto. Cabe entero en el padding del área de foco, sin cortarse. */
 .ds-icon-btn:focus-visible .ds-icon-btn__circle {
   outline:        var(--ds-icon-button-focus-width) solid var(--ds-icon-button-border-color-focus-outer);
-  outline-offset: calc(-1 * var(--ds-icon-button-focus-width));
-  box-shadow:     inset 0 0 0 calc(var(--ds-icon-button-focus-width) * 2 - var(--_bw, 0px)) var(--ds-icon-button-border-color-focus-inner);
+  outline-offset: var(--ds-icon-button-focus-width);
+  box-shadow:     0 0 0 var(--ds-icon-button-focus-width) var(--ds-icon-button-border-color-focus-inner);
 }
 .ds-icon-btn:active:not(:disabled) .ds-icon-btn__circle {
   opacity: var(--ds-icon-button-opacity-pressed);

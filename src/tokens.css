@@ -429,7 +429,8 @@
   --ds-button-border-disabled:      var(--ds-borderColor-disabled);
   --ds-button-border-focus-outer:   var(--ds-borderColor-focus-outer);
   --ds-button-border-focus-inner:   var(--ds-borderColor-focus-inner);
-  --ds-button-focus-width:          2px;   /* button/all/root/borderWidth/focus — anillo por DENTRO del botón (01/10/2026) */
+  --ds-button-focus-width:          2px;   /* button/all/root/borderWidth/focus — anillo por FUERA del botón (08/10/2026) */
+  --ds-button-focus-area-padding:   var(--ds-spacing-xs);   /* button/all/root/focusArea/padding — espacio del anillo de foco DENTRO del componente (08/10/2026) */
 
   /* Negative */
   --ds-button-fg-negative:          var(--ds-fg-error);
@@ -484,6 +485,7 @@
   --ds-icon-button-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-icon-button-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-icon-button-focus-width:             2px;   /* iconButton/all/root/borderWidth/focus */
+  --ds-icon-button-focus-area-padding:      var(--ds-spacing-xs);   /* iconButton/all/root/focusArea/padding — espacio del anillo de foco DENTRO del componente (08/10/2026) */
   /* Anillo de foco: SIEMPRE alrededor del círculo, por DENTRO (01/10/2026) —
      también con label (antes envolvía icono+label con radio propio 4/2). */
 

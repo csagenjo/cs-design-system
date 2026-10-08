@@ -1041,6 +1041,25 @@ Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width` y los literales de
 
 ---
 
+## Foco: color único y área de foco (01/10 – 08/10/2026)
+
+**Color.** `borderColor/focus-outer` (Mode) = `color/info/700` en light / `color/info/200` en dark, vía Theme. Es el mismo azul para los 22 componentes con foco; `borderColor/focus-inner` sigue siendo el hueco (blanco en light, negro en dark).
+
+**Área de foco — 2 tokens nuevos de Componente (08/10/2026):**
+
+| Figma (Component tokens) | CSS | Valor |
+|---|---|---|
+| `button/all/root/focusArea/padding` | `--ds-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
+| `iconButton/all/root/focusArea/padding` | `--ds-icon-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
+
+Scope `GAP`, ocultos en la publicación (internos del componente, como el resto de geometría). Son geometría, así que viven en Component sin equivalente en Mode (regla de la cascada). 4px = hueco `focus-inner` (2px) + anillo `focus-outer` (2px), los dos ligados a `*/root/borderWidth/focus`.
+
+**Dónde se aplican.** Figma: padding (los 4 lados) del frame del componente en las 431 variantes de Button + Icon Button, en todos los estados. Código: `margin` de `.ds-btn` y `padding` de `.ds-icon-btn`. El fondo y el borde del control no crecen; la caja del componente sí (+8px), igual en Figma y en código.
+
+**Por qué un token propio y no `spacing/xs` directo.** El JSX solo consume tokens de Componente (`--ds-{componente}-*`); si el anillo cambia de grosor, el área cambia en un solo sitio por componente.
+
+---
+
 ## Deuda técnica de tokens
 
 - ~~**Mode tokens dark mode** — varios tokens rotos o sin función clara en dark mode.~~ ✅ **Resuelto 11/08/2026** para la escala neutra `bg/*` (default/page/subtle/disabled/container), la familia de marca/feedback `bg/*` (primary/-bold/-medium, secondary, tertiary, error, success, hover-primary, inverse, accent, warning, info, highlight), y la trampa `*/inverse` vs `*/onColor` en `fg/label`, `fg/body` y `fg/icon` (ver secciones arriba). **Pendiente real:** `borderColor/*` dark no se ha auditado todavía contra Figma — mismo tipo de revisión, sesión aparte.

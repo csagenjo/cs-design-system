@@ -151,6 +151,20 @@ box-shadow: 0 0 0 4px var(--ds-*-focus-inner)   /* inner ring */
 ```
 The dual wrapper scopes hover background inside the outer ring, preventing color bleed.
 
+**Focus area (Button, IconButton) — 8 October 2026:**
+```css
+.ds-btn      { margin:  var(--ds-button-focus-area-padding); }       /* 4px, spacing/xs */
+.ds-icon-btn { padding: var(--ds-icon-button-focus-area-padding); }  /* 4px, spacing/xs */
+:focus-visible {
+  outline:        2px solid var(--ds-*-focus-outer);   /* blue ring, 2px beyond the gap */
+  outline-offset: 2px;
+  box-shadow:     0 0 0 2px var(--ds-*-focus-inner);   /* 2px gap on the control border */
+}
+```
+The ring sits outside the control (its border stays untouched) but inside the component box: each component reserves a 4px focus area on every side, in every state, so its size never changes with focus. In Figma the area is the padding of the component frame (background and border live in the child frame `Root` / `Icon Button`, which does not grow); in code it is the margin of `<button>` (Button) or the padding of the transparent root (IconButton). Figma and code measure the same box (Button Large = 48 + 2×4 = 56), and no `overflow: hidden` / Clip content parent can clip the ring. `fullWidth` subtracts the area: `calc(100% - 2 × area)`.
+
+History: 1 Oct the ring was moved inside the control (outline with negative offset) — on a black outline button it only looked like a colour change. 8 Oct, first attempt: ring outside overflowing the frame — rejected, the ring must stay inside the component frame. Final: outside the control + focus area.
+
 ### bgMix pattern for hover overlays
 
 Hover over transparent surfaces uses a `rgba` overlay token, never a solid color.
