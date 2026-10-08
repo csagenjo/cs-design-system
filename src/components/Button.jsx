@@ -47,7 +47,13 @@ const css = `
 .ds-btn--sm { --_h: var(--ds-button-height-small);  --_px: var(--ds-button-px-sm); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-button-icon-size-small);  --_gap: 4px; }
 .ds-btn--md { --_h: var(--ds-button-height-medium); --_px: var(--ds-button-px-md); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-button-icon-size-medium); --_gap: 6px; }
 .ds-btn--lg { --_h: var(--ds-button-height-large);  --_px: var(--ds-button-px-lg); --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-button-icon-size-large);  --_gap: 8px; }
+/* Área de foco (08/10/2026, igual que Figma): el componente reserva 4px
+   alrededor para que el anillo de foco quede DENTRO de su caja. En Figma es
+   el padding del frame del componente; aquí, margin del <button>. Mide igual
+   en Figma y en código (Large = 48 + 2×4 = 56) y ningún overflow:hidden corta
+   el anillo. */
 .ds-btn {
+  margin:          var(--ds-button-focus-area-padding);
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
@@ -66,15 +72,15 @@ const css = `
   text-decoration: none;
   box-sizing:      border-box;
 }
-.ds-btn--full-width { width: 100%; }
-/* Foco por DENTRO del botón (01/10/2026, igual que Figma): ningún contenedor
-   con overflow:hidden lo recorta y el botón no cambia de tamaño. Exterior =
-   color de foco del sistema (outline hacia dentro, pinta encima del borde);
-   interior = hueco blanco (inset desde el borde del padding). */
+.ds-btn--full-width { width: calc(100% - 2 * var(--ds-button-focus-area-padding)); }
+/* Foco POR FUERA del botón (08/10/2026, igual que Figma): el borde del botón
+   queda intacto. Interior = hueco de 2px pegado al borde (box-shadow sin
+   blur); exterior = color de foco del sistema 2px más allá (outline con
+   offset). Cabe entero en el área de foco (margin), sin cortarse nunca. */
 .ds-btn:focus-visible {
   outline:        var(--ds-button-focus-width) solid var(--ds-button-border-focus-outer);
-  outline-offset: calc(-1 * var(--ds-button-focus-width));
-  box-shadow:     inset 0 0 0 calc(var(--ds-button-focus-width) * 2 - var(--ds-button-border-width)) var(--ds-button-border-focus-inner);
+  outline-offset: var(--ds-button-focus-width);
+  box-shadow:     0 0 0 var(--ds-button-focus-width) var(--ds-button-border-focus-inner);
 }
 .ds-btn:active:not(:disabled) { opacity: 0.8; transform: scale(0.98); }
 .ds-btn:disabled,
