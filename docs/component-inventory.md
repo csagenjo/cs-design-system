@@ -20,7 +20,7 @@ written for the same three audiences, plus the token prefix:
 | **Designers · Figma** | Designers | When to use it, which properties to set, how to build it in a layout |
 | **Developers · React** | Developers | Import path, props with types and defaults, usage notes |
 | **AI agents · Claude Code** | Agents | Pick it when / don't pick it when (and what to pick instead), composition rules |
-| **Accessibility** (same three audiences) | Everyone | What's built in, what the designer / developer / agent still has to do, known gaps |
+| **Accessibility** (same three audiences) | Everyone | What's built in, what the designer / developer / agent still has to do, known gaps (tracked in `docs/accessibility-audit.md`) |
 | **Tokens** | Everyone | The `--ds-{component}-*` prefix it consumes |
 
 Rules that apply to every entry:
@@ -177,7 +177,7 @@ import { AccordionGroup } from './organisms/AccordionGroup';
 - Tab / Shift + Tab move between triggers · Enter or Space toggles.
 - Focus ring comes from `:focus-visible` — don't override or remove it.
 
-**Known gaps** (CLAUDE.md §10)
+**Known gaps** (`docs/accessibility-audit.md`, sprint A11y-3 / A11y-5)
 - No `aria-controls` / `id` linking the trigger to its content yet.
 - The trigger isn't wrapped in a heading (h2–h4), as the WAI-ARIA
   accordion pattern recommends.
