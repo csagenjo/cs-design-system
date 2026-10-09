@@ -36,10 +36,10 @@ import { ChevronRight } from 'lucide-react';
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-fontLheight-3xs); --_icon: 12; }
-.ds-link--sm { --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-fontLheight-2xs); --_icon: 14; }
-.ds-link--md { --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-fontLheight-xs);  --_icon: 16; }
-.ds-link--lg { --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-fontLheight-sm);  --_icon: 18; }
+.ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); --_icon: 12; }
+.ds-link--sm { --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: 14; }
+.ds-link--md { --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md);  --_icon: 16; }
+.ds-link--lg { --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg);  --_icon: 18; }
 
 .ds-link {
   display:         inline-flex;
@@ -47,8 +47,8 @@ const css = `
   gap:             4px;
   font-size:       var(--_fs);
   line-height:     var(--_lh);
-  font-weight:     var(--ds-fontWeight-regular);
-  font-family:     var(--ds-fontFamily-default);
+  font-weight:     var(--ds-font-weight-regular);
+  font-family:     inherit;
   text-decoration: none;
   cursor:          pointer;
   border-radius:   2px;
@@ -75,7 +75,7 @@ const css = `
 .ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-fg-icon-visited); }
 
 /* ── Emphasis ── */
-.ds-link--emphasis-medium { font-weight: var(--ds-fontWeight-bold); }
+.ds-link--emphasis-medium { font-weight: var(--ds-font-weight-bold); }
 
 /* ── Hover ── */
 .ds-link:hover { background: var(--ds-link-bg-mix-hover); }
@@ -90,7 +90,7 @@ const css = `
 /* ── Active — opacity + SemiBold ── */
 .ds-link:active {
   opacity:     var(--ds-link-opacity-pressed);
-  font-weight: var(--ds-fontWeight-semibold);
+  font-weight: var(--ds-font-weight-semibold);
 }
 
 /* ── SR-only (enlace externo) ── */

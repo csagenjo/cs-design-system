@@ -111,7 +111,7 @@ const css = `
 
 .ds-input-combobox__value-wrap {
   position: relative;
-  flex:     1 1 auto;
+  flex:     1 1 0;   /* base 0: el texto ocupa solo el hueco libre, los botones no bajan de línea */
   min-width: 60px;
   display:  flex;
   align-items: center;

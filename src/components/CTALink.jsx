@@ -37,10 +37,10 @@ const css = `
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  font-family:     var(--ds-fontFamily-default);
-  font-size:       var(--ds-fontSize-label-sm);
-  line-height:     var(--ds-fontLheight-2xs);
-  font-weight:     var(--ds-fontWeight-regular);
+  font-family:     inherit;
+  font-size:       var(--ds-fontSize-label-lg);    /* Figma: fontSize/label/lg en las 24 variantes */
+  line-height:     var(--ds-lineHeight-label-lg);  /* Figma: fontLheight/label/lg */
+  font-weight:     var(--ds-font-weight-bold);     /* Figma: fontWeight/bold */
   text-decoration: none;
   cursor:          pointer;
   border:          1px solid transparent;

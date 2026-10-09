@@ -77,7 +77,7 @@ const css = `
   display:       flex;
   align-items:   stretch;
   width:         100%;
-  min-height:    var(--ds-input-min-height);
+  min-height:    var(--ds-input-subfield-height);   /* campo compuesto: mide lo que un subcampo (Figma subField/height) */
   border:        var(--ds-input-border-width) solid var(--ds-input-border-default);
   border-radius: var(--ds-input-border-radius);
   overflow:      hidden;
