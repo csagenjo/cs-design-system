@@ -2069,6 +2069,17 @@
           ],
           "com.figma.type": "string"
         }
+      },
+      "semibold": {
+        "$type": "string",
+        "$value": "SemiBold",
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32507:985",
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.type": "string"
+        }
       }
     },
     "fontSize": {

@@ -12695,12 +12695,12 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.019607843831181526,
-          0.019607843831181526,
-          0.0235294122248888
+          0.003921568859368563,
+          0.38823530077934265,
+          0.5960784554481506
         ],
         "alpha": 1,
-        "hex": "#050506"
+        "hex": "#016398"
       },
       "$extensions": {
         "com.figma.variableId": "VariableID:2151:57258",
@@ -12709,8 +12709,8 @@
           "STROKE"
         ],
         "com.figma.aliasData": {
-          "targetVariableId": "VariableID:b34c65c992f57e56c2f2c2c816855e9044b14947/-1:-1",
-          "targetVariableName": "color/black",
+          "targetVariableId": "VariableID:dc5183355b69a7c1f9129737b66a45f520815680/-1:-1",
+          "targetVariableName": "color/info/700",
           "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
           "targetVariableSetName": "Base tokens"
         }
@@ -12721,12 +12721,12 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          1,
-          1,
-          1
+          0.7215686440467834,
+          0.9019607901573181,
+          0.9960784316062927
         ],
         "alpha": 1,
-        "hex": "#FFFFFF"
+        "hex": "#B8E6FE"
       },
       "$extensions": {
         "com.figma.variableId": "VariableID:2151:57259",
@@ -12735,8 +12735,8 @@
           "STROKE"
         ],
         "com.figma.aliasData": {
-          "targetVariableId": "VariableID:054e249c43b15b3a88d22bf3d5178dbc4c20904f/-1:-1",
-          "targetVariableName": "color/white",
+          "targetVariableId": "VariableID:4cbc8d211e03b07e6643a1f1ba07b1c234b35083/-1:-1",
+          "targetVariableName": "color/info/200",
           "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
           "targetVariableSetName": "Base tokens"
         }
@@ -12799,12 +12799,12 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          1,
-          1,
-          1
+          0.7215686440467834,
+          0.9019607901573181,
+          0.9960784316062927
         ],
         "alpha": 1,
-        "hex": "#FFFFFF"
+        "hex": "#B8E6FE"
       },
       "$extensions": {
         "com.figma.variableId": "VariableID:10264:6686",
@@ -12813,8 +12813,8 @@
           "STROKE"
         ],
         "com.figma.aliasData": {
-          "targetVariableId": "VariableID:054e249c43b15b3a88d22bf3d5178dbc4c20904f/-1:-1",
-          "targetVariableName": "color/white",
+          "targetVariableId": "VariableID:4cbc8d211e03b07e6643a1f1ba07b1c234b35083/-1:-1",
+          "targetVariableName": "color/info/200",
           "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
           "targetVariableSetName": "Base tokens"
         }
@@ -12825,12 +12825,12 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.019607843831181526,
-          0.019607843831181526,
-          0.0235294122248888
+          0.003921568859368563,
+          0.38823530077934265,
+          0.5960784554481506
         ],
         "alpha": 1,
-        "hex": "#050506"
+        "hex": "#016398"
       },
       "$extensions": {
         "com.figma.variableId": "VariableID:10264:6687",
@@ -12839,8 +12839,8 @@
           "STROKE"
         ],
         "com.figma.aliasData": {
-          "targetVariableId": "VariableID:b34c65c992f57e56c2f2c2c816855e9044b14947/-1:-1",
-          "targetVariableName": "color/black",
+          "targetVariableId": "VariableID:dc5183355b69a7c1f9129737b66a45f520815680/-1:-1",
+          "targetVariableName": "color/info/700",
           "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
           "targetVariableSetName": "Base tokens"
         }
@@ -15910,6 +15910,51 @@
         "com.figma.aliasData": {
           "targetVariableId": "VariableID:57ebcda2cfbad8ff174ef29d924206eb56b90bde/-1:-1",
           "targetVariableName": "typography/fontWeight/medium",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base tokens"
+        }
+      }
+    },
+    "semibold-mobile": {
+      "$type": "string",
+      "$value": "SemiBold",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32507:986",
+        "com.figma.hiddenFromPublishing": true,
+        "com.figma.type": "string",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f511697f334d6964fe15db17f0ba48e4a703e2b0/-1:-1",
+          "targetVariableName": "typography/fontWeight/semibold",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base tokens"
+        }
+      }
+    },
+    "semibold-tablet": {
+      "$type": "string",
+      "$value": "SemiBold",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32507:987",
+        "com.figma.hiddenFromPublishing": true,
+        "com.figma.type": "string",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f511697f334d6964fe15db17f0ba48e4a703e2b0/-1:-1",
+          "targetVariableName": "typography/fontWeight/semibold",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base tokens"
+        }
+      }
+    },
+    "semibold-desktop": {
+      "$type": "string",
+      "$value": "SemiBold",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32507:988",
+        "com.figma.hiddenFromPublishing": true,
+        "com.figma.type": "string",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f511697f334d6964fe15db17f0ba48e4a703e2b0/-1:-1",
+          "targetVariableName": "typography/fontWeight/semibold",
           "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
           "targetVariableSetName": "Base tokens"
         }

@@ -7,6 +7,8 @@ import { InputStepper } from './components/InputStepper'
 import { InputTelephone } from './components/InputTelephone'
 import { InputAmount } from './components/InputAmount'
 import { InputCombobox } from './components/InputCombobox'
+import { Link } from './components/Link'
+import { CTALink } from './components/CTALink'
 
 /* Banco de pruebas — tokens InputCommon + átomo Icon en todos los inputs (09/10/2026).
    Cada fila: Default · Error · Disabled. Toggle dark arriba. */
@@ -28,6 +30,13 @@ export default function App() {
         {states.map(s => <InputTelephone key={'p' + s} label="Teléfono" state={s} defaultValue="600 000 000" errorMessage="Error" />)}
         {states.map(s => <InputAmount key={'a' + s} label="Importe" state={s} defaultValue="12,50" errorMessage="Error" />)}
         {states.map(s => <InputCombobox key={'c' + s} label="Buscar" state={s} value="Mad" onValueChange={() => {}} errorMessage="Error" />)}
+      </div>
+      <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
+        {['xs', 'sm', 'md', 'lg'].map(sz => <Link key={sz} href="#" size={sz}>Link {sz}</Link>)}
+        <Link href="#" variant="accent">Link accent</Link>
+        <Link href="#" emphasis="medium">Link medium</Link>
+        {['low', 'medium', 'high'].map(e => <CTALink key={e} href="#" emphasis={e}>CTA {e}</CTALink>)}
+        {['low', 'medium', 'high'].map(e => <CTALink key={'a' + e} href="#" emphasis={e} variant="accent">CTA {e}</CTALink>)}
       </div>
     </main>
   )
