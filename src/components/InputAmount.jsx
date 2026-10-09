@@ -3,7 +3,7 @@
  * CS Design System · v1.0
  *
  * Tokens: --ds-input-* + --ds-input-amount-* (tokens.css)
- * Iconos: lucide-react — ChevronDown (dropdown moneda) · AlertCircle (error)
+ * Iconos: átomo Icon — chevron-down (dropdown moneda) · circle-x (error)
  * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
  *
  * ESTRUCTURA:
@@ -29,7 +29,7 @@
  */
 
 import React, { forwardRef, useId } from 'react';
-import { ChevronDown, AlertCircle } from 'lucide-react';
+import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -118,10 +118,10 @@ const css = `
 .ds-input-amount__currency {
   display:     flex;
   align-items: center;
-  gap:         var(--ds-input-amount-currency-field-gap-hor-generic);
-  padding:     var(--ds-input-amount-currency-field-padding-ver-generic)
-               var(--ds-input-amount-currency-field-padding-hor-generic);
-  background:  var(--ds-input-amount-currency-field-bg-generic, var(--ds-input-bg-default));
+  gap:         var(--ds-input-subfield-gap);
+  padding:     var(--ds-input-padding-ver)
+               var(--ds-input-padding-hor);
+  background:  var(--ds-input-bg-default);
   border:      none;
   cursor:      default;
   font-family: inherit;
@@ -134,14 +134,14 @@ const css = `
   cursor: pointer;
 }
 .ds-input-amount__currency--selectable:hover {
-  background: color-mix(in srgb, var(--ds-input-amount-currency-field-bg-generic, var(--ds-input-bg-default)), #000 4%);
+  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
 }
 .ds-input-amount__currency--selectable:focus-visible {
-  background: color-mix(in srgb, var(--ds-input-amount-currency-field-bg-generic, var(--ds-input-bg-default)), #000 4%);
+  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
 }
 
 .ds-input-amount--disabled .ds-input-amount__currency {
-  background: var(--ds-input-amount-currency-field-bg-disabled, var(--ds-input-bg-disabled));
+  background: var(--ds-input-bg-disabled);
   cursor:     not-allowed;
 }
 
@@ -149,21 +149,21 @@ const css = `
 .ds-input-amount__currency-text {
   font-size:   var(--ds-fontSize-label-sm);
   font-weight: var(--ds-font-weight-medium);
-  color:       var(--ds-input-amount-currency-text-fg-generic, var(--ds-input-fg-default));
+  color:       var(--ds-input-fg-default);
   line-height: 1;
 }
 .ds-input-amount--disabled .ds-input-amount__currency-text {
-  color: var(--ds-input-amount-currency-text-fg-disabled, var(--ds-input-fg-disabled));
+  color: var(--ds-input-fg-disabled);
 }
 
 /* Chevron dropdown — solo en selectable */
 .ds-input-amount__chevron {
   display:     flex;
   align-items: center;
-  color:       var(--ds-input-amount-icon-dropdown-fg-generic);
+  color:       var(--ds-input-icon-fg-primary);
 }
 .ds-input-amount--disabled .ds-input-amount__chevron {
-  color: var(--ds-input-amount-icon-dropdown-fg-disabled);
+  color: var(--ds-input-icon-fg-disabled);
 }
 
 /* ── Divider ── */
@@ -181,13 +181,13 @@ const css = `
 .ds-input-amount__amount {
   flex:               1;
   min-width:          0;
-  padding:            var(--ds-input-amount-amount-field-padding-ver-generic)
-                      var(--ds-input-amount-amount-field-padding-hor-generic);
+  padding:            var(--ds-input-padding-ver)
+                      var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
   color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-amount-amount-field-bg-generic, var(--ds-input-bg-default));
+  background:         var(--ds-input-bg-default);
   border:             none;
   outline:            none;
   -webkit-appearance: none;
@@ -195,7 +195,7 @@ const css = `
 .ds-input-amount__amount::placeholder { color: var(--ds-input-fg-placeholder); }
 
 .ds-input-amount--disabled .ds-input-amount__amount {
-  background: var(--ds-input-amount-amount-field-bg-disabled, var(--ds-input-bg-disabled));
+  background: var(--ds-input-bg-disabled);
   color:      var(--ds-input-fg-disabled);
   cursor:     not-allowed;
 }
@@ -301,11 +301,7 @@ export const InputAmount = forwardRef(function InputAmount({
           </span>
           {isSelectable && (
             <span className="ds-input-amount__chevron" aria-hidden="true">
-              <ChevronDown
-                size={parseInt(getComputedStyle(document?.documentElement || {})
-                  .getPropertyValue('--ds-input-amount-icon-dropdown-size-generic') || '24')}
-                strokeWidth={1.75}
-              />
+              <Icon name="chevron-down" size="sm" />
             </span>
           )}
         </CurrencyTag>
@@ -339,7 +335,7 @@ export const InputAmount = forwardRef(function InputAmount({
       {state === 'error' && errorMessage && (
         <p className="ds-input-amount__message" id={messageId} aria-live="polite">
           <span className="ds-input-amount__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>

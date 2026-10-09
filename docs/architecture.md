@@ -184,10 +184,9 @@ Shared tokens live in a `{Family}Common/` group. Specific tokens live in `{Compo
 
 ```
 Input/
-  InputCommon/   ← 27 shared tokens (root, label, helper, validation, valueText)
-  InputText/     ← only iconLeft, iconRight
-  InputTelephone/ ← countryField, telephoneField, divider, etc.
-  ...
+  InputCommon/   ← 31 shared tokens (root, label, helper, validation, valueText, icon, subField)
+  InputTelephone/ ← only what is really its own: iconFlag, countryField/paddingVer, divider
+  (InputText, Date, Dropdown, Stepper, Amount have no specific tokens since 9 Oct 2026)
 
 advancedSelector/all/   ← selector-specific tokens
 accountSelector/all/    ← account-selector-specific tokens
@@ -196,6 +195,8 @@ accountSelector/all/    ← account-selector-specific tokens
 ```
 
 ### Icon color — currentColor pattern
+
+All inputs render their icons through the `Icon` atom (9 Oct 2026): `<Icon name="chevron-down" size="sm" />` — never a direct `lucide-react` import. Same in Figma: every icon inside an input is an instance of the `Icon` wrapper (size variant 16/20/24), never a raw Lucide glyph. Validation message icon = `circle-x` 16 (`size="2xs"`), as in Figma.
 
 Icons from lucide-react inherit color from their parent via `currentColor`.
 The parent component sets the color via its own Component token:

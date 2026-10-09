@@ -3,7 +3,7 @@
  * CS Design System · v1.0
  *
  * Tokens: --ds-input-* + --ds-input-telephone-* (tokens.css)
- * Iconos: lucide-react — ChevronDown (dropdown país) · AlertCircle (error)
+ * Iconos: átomo Icon — chevron-down (dropdown país) · circle-x (error)
  * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
  *
  * ESTRUCTURA:
@@ -35,7 +35,7 @@
  */
 
 import React, { forwardRef, useId } from 'react';
-import { ChevronDown, AlertCircle } from 'lucide-react';
+import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -124,9 +124,9 @@ const css = `
 .ds-input-telephone__country {
   display:         flex;
   align-items:     center;
-  gap:             var(--ds-input-telephone-country-gap);
+  gap:             var(--ds-input-subfield-gap);
   padding:         var(--ds-input-telephone-country-padding-ver)
-                   var(--ds-input-telephone-country-padding-hor);
+                   var(--ds-input-padding-hor);
   background:      var(--ds-input-bg-default);
   border:          none;
   cursor:          default;
@@ -168,21 +168,21 @@ const css = `
 .ds-input-telephone__code {
   font-size:   var(--ds-fontSize-label-sm);
   font-weight: var(--ds-font-weight-medium);
-  color:       var(--ds-input-telephone-country-text-fg);
+  color:       var(--ds-input-fg-default);
   line-height: 1;
 }
 .ds-input-telephone--disabled .ds-input-telephone__code {
-  color: var(--ds-input-telephone-country-text-fg-disabled);
+  color: var(--ds-input-fg-disabled);
 }
 
 /* Chevron dropdown — solo en selectable */
 .ds-input-telephone__chevron {
   display:    flex;
   align-items: center;
-  color:      var(--ds-input-telephone-icon-dropdown-fg);
+  color:      var(--ds-input-icon-fg-primary);
 }
 .ds-input-telephone--disabled .ds-input-telephone__chevron {
-  color: var(--ds-input-telephone-icon-dropdown-fg-disabled);
+  color: var(--ds-input-icon-fg-disabled);
 }
 
 /* ── Divider ── */
@@ -200,8 +200,8 @@ const css = `
 .ds-input-telephone__phone {
   flex:               1;
   min-width:          0;
-  padding:            var(--ds-input-telephone-field-padding-ver)
-                      var(--ds-input-telephone-field-padding-hor);
+  padding:            var(--ds-input-padding-ver)
+                      var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
@@ -322,11 +322,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
           </span>
           {isSelectable && (
             <span className="ds-input-telephone__chevron" aria-hidden="true">
-              <ChevronDown
-                size={parseInt(getComputedStyle(document?.documentElement || {})
-                  .getPropertyValue('--ds-input-telephone-icon-dropdown-size') || '24')}
-                strokeWidth={1.75}
-              />
+              <Icon name="chevron-down" size="sm" />
             </span>
           )}
         </CountryTag>
@@ -359,7 +355,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
       {state === 'error' && errorMessage && (
         <p className="ds-input-telephone__message" id={messageId} aria-live="polite">
           <span className="ds-input-telephone__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>

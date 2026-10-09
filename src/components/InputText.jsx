@@ -5,8 +5,8 @@ import React, {
   forwardRef,
   useId,
 } from 'react';
-import { AlertCircle } from 'lucide-react';
-import { ICONS, mergeRefs, injectStyles } from './_inputBase';
+import { Icon } from './Icon';
+import { mergeRefs, injectStyles } from './_inputBase';
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -123,16 +123,16 @@ const css = `
 }
 .ds-input-text__icon--left  {
   left:  var(--ds-input-padding-hor);
-  color: var(--ds-input-text-icon-left-fg);
+  color: var(--ds-input-icon-fg);
 }
 .ds-input-text__icon--right {
   right: var(--ds-input-padding-hor);
-  color: var(--ds-input-text-icon-right-fg);
+  color: var(--ds-input-icon-fg);
 }
-.ds-input-text__icon--left.ds-input-text__icon--primary  { color: var(--ds-input-text-icon-left-fg-primary); }
-.ds-input-text__icon--right.ds-input-text__icon--primary { color: var(--ds-input-text-icon-right-fg-primary); }
-.ds-input-text--disabled .ds-input-text__icon--left      { color: var(--ds-input-text-icon-left-fg-disabled); }
-.ds-input-text--disabled .ds-input-text__icon--right     { color: var(--ds-input-text-icon-right-fg-disabled); }
+.ds-input-text__icon--left.ds-input-text__icon--primary  { color: var(--ds-input-icon-fg-primary); }
+.ds-input-text__icon--right.ds-input-text__icon--primary { color: var(--ds-input-icon-fg-primary); }
+.ds-input-text--disabled .ds-input-text__icon--left      { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-text--disabled .ds-input-text__icon--right     { color: var(--ds-input-icon-fg-disabled); }
 
 /* En adaptive el icono se ancla al borde superior del texto */
 .ds-input-text--adaptive .ds-input-text__icon {
@@ -142,10 +142,10 @@ const css = `
 
 /* Padding compensado cuando hay iconos */
 .ds-input-text__field-wrap--icon-left .ds-input-text__control {
-  padding-left: calc(var(--ds-input-padding-hor) + var(--ds-input-text-icon-left-size) + var(--ds-input-field-icon-gap));
+  padding-left: calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
 }
 .ds-input-text__field-wrap--icon-right .ds-input-text__control {
-  padding-right: calc(var(--ds-input-padding-hor) + var(--ds-input-text-icon-right-size) + var(--ds-input-field-icon-gap));
+  padding-right: calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
 }
 
 /* Helper text — aparece ENCIMA del campo */
@@ -177,11 +177,6 @@ const css = `
 
 injectStyles('ds-input-text', css);
 
-function Icon({ name, size = 24 }) {
-  const C = ICONS[name];
-  if (!C) return null;
-  return <C size={size} strokeWidth={1.75} aria-hidden="true" />;
-}
 
 export const InputText = forwardRef(function InputText({
   label,
@@ -289,7 +284,7 @@ export const InputText = forwardRef(function InputText({
             'ds-input-text__icon ds-input-text__icon--left',
             iconLeftPrimary ? 'ds-input-text__icon--primary' : '',
           ].filter(Boolean).join(' ')}>
-            <Icon name={iconLeft} size={24} />
+            <Icon name={iconLeft} size="sm" />
           </span>
         )}
 
@@ -303,7 +298,7 @@ export const InputText = forwardRef(function InputText({
             'ds-input-text__icon ds-input-text__icon--right',
             iconRightPrimary ? 'ds-input-text__icon--primary' : '',
           ].filter(Boolean).join(' ')}>
-            <Icon name={iconRight} size={24} />
+            <Icon name={iconRight} size="sm" />
           </span>
         )}
       </div>
@@ -311,7 +306,7 @@ export const InputText = forwardRef(function InputText({
       {state === 'error' && errorMessage && (
         <p className="ds-input-text__message" id={messageId} aria-live="polite">
           <span className="ds-input-text__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>

@@ -1,5 +1,5 @@
 import React, { forwardRef, useId } from 'react';
-import { AlertCircle, Calendar } from 'lucide-react';
+import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 
 const css = `
@@ -35,7 +35,7 @@ const css = `
   min-height:         var(--ds-input-min-height);
   /* padding-right siempre compensado por el icono calendario */
   padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
-  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-date-icon-right-size) + var(--ds-input-field-icon-gap));
+  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
@@ -94,9 +94,9 @@ const css = `
   display:        flex;
   align-items:    center;
   pointer-events: none;
-  color:          var(--ds-input-date-icon-right-fg);
+  color:          var(--ds-input-icon-fg-primary);
 }
-.ds-input-date--disabled .ds-input-date__icon { color: var(--ds-input-date-icon-right-fg-disabled); }
+.ds-input-date--disabled .ds-input-date__icon { color: var(--ds-input-icon-fg-disabled); }
 
 /* Helper — aparece ENCIMA del campo */
 .ds-input-date__helper {
@@ -196,14 +196,14 @@ export const InputDate = forwardRef(function InputDate({
           {...nativeProps}
         />
         <span className="ds-input-date__icon" aria-hidden="true">
-          <Calendar size={24} strokeWidth={1.75} />
+          <Icon name="calendar-days" size="sm" />
         </span>
       </div>
 
       {state === 'error' && errorMessage && (
         <p className="ds-input-date__message" id={messageId} aria-live="polite">
           <span className="ds-input-date__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>
