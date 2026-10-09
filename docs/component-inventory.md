@@ -4,19 +4,23 @@ The catalogue of every piece in the CS Design System, written for three
 readers at once: designers working in Figma, developers working in React,
 and AI agents (Claude Code) that assemble interfaces from requirements.
 
-Figma is the source of truth. Each entry here mirrors the **How to use**
-section at the end of the component's page in the Figma library — same
-content, plain text, so an agent can read it without opening Figma.
+Figma is the source of truth. Each component page in the Figma library has
+two doc frames side by side: the component spec (`{Component}`) and
+`{Component} — How to use & Accessibility`. Each entry here mirrors the
+second frame — same content, plain text, so an agent can read it without
+opening Figma.
 
 ## How to read an entry
 
-Every entry has the same four blocks:
+Every entry has two sections, **How to use** and **Accessibility**, each
+written for the same three audiences, plus the token prefix:
 
 | Block | Audience | What it answers |
 |---|---|---|
 | **Designers · Figma** | Designers | When to use it, which properties to set, how to build it in a layout |
 | **Developers · React** | Developers | Import path, props with types and defaults, usage notes |
 | **AI agents · Claude Code** | Agents | Pick it when / don't pick it when (and what to pick instead), composition rules |
+| **Accessibility** (same three audiences) | Everyone | What's built in, what the designer / developer / agent still has to do, known gaps |
 | **Tokens** | Everyone | The `--ds-{component}-*` prefix it consumes |
 
 Rules that apply to every entry:
@@ -45,35 +49,37 @@ Rules that apply to every entry:
 ## Accordion · AccordionGroup
 
 **Group:** Page structure
-**Figma:** Accordion page → section *How to use*
+**Figma:** 🟢 Accordion page → frame *Accordion — How to use & Accessibility*
 **Code:** `src/components/Accordion.jsx` (atom), `src/organisms/AccordionGroup.jsx` (organism)
 **Tokens:** `--ds-accordion-*`
 
 A vertical list of items whose content expands and collapses under a
 clickable title.
 
+## How to use
+
 ### Designers · Figma
 
 **When to use**
-- To show secondary or long content without overwhelming the page
-  (FAQs, details, grouped form sections).
-- When the user only needs one or a few sections at a time.
-- When titles alone are enough for the user to find the right section.
+- Long pages with several independent sections the user scans before
+  going into detail: FAQs, groups of settings, record details.
+- One block that shows or hides extra content with an Expand / Collapse
+  button → use **Collapsible** instead.
+- Content the user must see at once, or a process in steps (use Step
+  Navigator) → don't use an accordion.
 
 **Properties**
-- `Version` — Collapsed / Expanded.
-- `State` — Enabled / Hover / Pressed / Focus. Use Enabled in layouts;
-  the others are for specs and prototypes.
-- `Title` / `Content` — text overrides. Swap Content for a nested
-  instance when you need richer content.
-- `Last` — turns on the bottom closing border. On only for the last item
-  of a group.
+- `Variant` → Expanded · Collapsed.
+- `State` → Initial · Hover · Focus · Pressed (documentation only — in
+  screens keep Initial).
+- `Title`, `Content` → text properties.
+- `Last` → on only in the last item of a group: it draws the closing
+  bottom border.
 
 **Building a group**
-- Stack items in an auto-layout frame, vertical, gap 0.
+- Vertical auto layout with gap 0.
 - Turn `Last` on only in the last item.
-- Don't add Dividers between items: each item already draws its own top
-  border.
+- Don't add Dividers between items — each item brings its own top border.
 
 ### Developers · React
 
@@ -140,3 +146,49 @@ import { AccordionGroup } from './organisms/AccordionGroup';
 - `title` is plain text: no icons, links or buttons inside it.
 - Content can hold text or other components (forms, lists, tables).
 - Typical layouts: *Basic — Details*, *Basic — Forms*.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus state with the system ring (2px gap + 2px outer ring in
+  focus-outer blue) — use it in specs and prototypes.
+- Trigger height 40px — above the 24 × 24 px minimum target (WCAG 2.5.8).
+- Title, content and chevron on `fg/default` — check contrast if you
+  place it on a non-default surface.
+
+**Your job**
+- Write titles that make sense on their own: screen readers list them out
+  of context.
+- Keep the title as text only — no links, buttons or icons inside it.
+- The chevron is decorative: the open / closed state is announced by the
+  trigger, don't add a text label for it.
+
+### Developers · React
+
+**Semantics**
+- The trigger is a native `<button type="button">` with `aria-expanded`.
+- Collapsed content is removed from the DOM, so Tab and screen readers
+  skip it.
+
+**Keyboard**
+- Tab / Shift + Tab move between triggers · Enter or Space toggles.
+- Focus ring comes from `:focus-visible` — don't override or remove it.
+
+**Known gaps** (CLAUDE.md §10)
+- No `aria-controls` / `id` linking the trigger to its content yet.
+- The trigger isn't wrapped in a heading (h2–h4), as the WAI-ARIA
+  accordion pattern recommends.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every title is unique within its group and describes the content.
+- Required fields and error messages are never hidden inside a collapsed
+  item.
+- No AccordionGroup nested inside another one.
+
+**Don't**
+- Put interactive elements in the title.
+- Hide content every user must read (legal text, errors, key amounts).
