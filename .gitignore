@@ -2,3 +2,6 @@ node_modules/
 dist/
 .DS_Store
 .env
+
+# Claude Code — configuración local de cada usuario
+.claude/settings.local.json
