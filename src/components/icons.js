@@ -1,5 +1,5 @@
 import {
-  Search, Eye, EyeOff, AlertCircle, Calendar,
+  Search, Eye, EyeOff, AlertCircle, Calendar, CalendarDays,
   ChevronRight, ChevronLeft, ChevronUp, ChevronDown,
   ArrowRight, ArrowLeft, ArrowUp, ArrowDown,
   Plus, Minus, X, Check,
@@ -23,6 +23,7 @@ export const ICONS = {
   EyeOff, 'eye-off': EyeOff,
   AlertCircle, 'alert-circle': AlertCircle,
   Calendar, 'calendar': Calendar,
+  CalendarDays, 'calendar-days': CalendarDays,
   ChevronRight, 'chevron-right': ChevronRight,
   ChevronLeft,  'chevron-left':  ChevronLeft,
   ChevronUp,    'chevron-up':    ChevronUp,

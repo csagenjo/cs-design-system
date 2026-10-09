@@ -188,13 +188,29 @@ Cuando una familia de componentes comparte estructura, los tokens compartidos vi
 
 ```
 Input/
-  InputCommon/   ← 27 tokens compartidos (root/label/helper/validation/valueText)
-  InputText/     ← iconLeft, iconRight
-  InputTelephone/ InputAmount/ InputDate/ InputDropdown/ InputStepper/
+  InputCommon/   ← 31 tokens compartidos (root/label/helper/validation/valueText/icon/subField)
+  InputTelephone/ ← solo lo propio de verdad: iconFlag (size, fg/disabled), countryField/paddingVer, divider
+  (InputText, InputDate, InputDropdown, InputStepper, InputAmount ya no tienen tokens propios)
 
 advancedSelector/all/   ← tokens propios del Advanced Selector
 accountSelector/all/    ← tokens propios del Account Selector
 ```
+
+**Consolidación de InputCommon (09/10/2026).** De 68 tokens `Input/*` a 35: 39 específicos repetían el mismo alias en varios inputs y se fusionaron en Common (reenlazados en Figma en todas las páginas, 0 referencias antes de borrar). Origen: el chevron de Telephone tiraba del token del divisor, el de Amount de un token de InputText, y el icono de Date en Disabled enlazaba contra InputText.
+
+| InputCommon | Alias | Uso | CSS |
+|---|---|---|---|
+| `icon/fg/generic` | `fg/icon/subtle` | icono informativo/decorativo (gris) — antes InputText `…/generic` (subtle) | `--ds-input-icon-fg` |
+| `icon/fg/primary` | `fg/icon/primary` | icono accionable: chevron, calendario, +/−, desplegable de país/divisa | `--ds-input-icon-fg-primary` |
+| `icon/fg/disabled` | `fg/icon/disabled` | cualquier icono del campo en Disabled | `--ds-input-icon-fg-disabled` |
+| `icon/size/generic` | `sizing/sm` (24) | tamaño de los iconos del campo | `--ds-input-icon-size` |
+| `subField/height/generic` | `sizing/2xl` | alto FIJO de cada subcampo de un campo compuesto (país/teléfono, divisa/importe) | `--ds-input-subfield-height` |
+| `subField/gap/generic` | `spacing/xs` | bandera/texto ↔ chevron dentro del subcampo selector | `--ds-input-subfield-gap` |
+| *(ya existían)* `valueText/fg/*`, `root/paddingHor`, `root/paddingVer` | — | absorben `countryText`/`currencyText`, los paddings de `telephoneField`/`countryField` | `--ds-input-fg-*`, `--ds-input-padding-*` |
+
+**`root/minheight` vs `subField/height` — mismo valor hoy, distinto motivo de cambio.** `root/minheight` es el alto MÍNIMO del campo entero y puede crecer (InputText multilínea, Combobox con chips en varias filas). `subField/height` es el alto FIJO de cada segmento de un campo compuesto, que nunca crece. Si mañana el campo base sube a 64, los subcampos no tienen por qué seguirle.
+
+**Sin `subtle` en el nombre (Carol, 09/10):** la escala de icono de los inputs es `generic` / `primary` / `disabled`. `generic` = el gris informativo (alias `fg/icon/subtle`), `primary` = el teal accionable.
 
 **Borrowing intencional de InputCommon hacia Selector:** los tokens de `label/fg`, `helper/fg` y `validation/fg/*` son compartidos entre la familia Input y ambos Selectors. Es una decisión de arquitectura — todos son componentes de formulario y deben tener un único punto de mantenimiento para esos tokens.
 

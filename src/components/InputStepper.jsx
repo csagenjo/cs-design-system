@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useId } from 'react';
-import { AlertCircle, Plus, Minus } from 'lucide-react';
+import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 
 const css = `
@@ -83,15 +83,15 @@ const css = `
   align-items:     center;
   justify-content: center;
   flex-shrink:     0;
-  width:           calc(var(--ds-input-padding-hor) * 2 + var(--ds-input-stepper-icon-left-size));
+  width:           calc(var(--ds-input-padding-hor) * 2 + var(--ds-input-icon-size));
   border:          none;
   background:      transparent;
   cursor:          pointer;
-  color:           var(--ds-input-stepper-icon-left-fg);
+  color:           var(--ds-input-icon-fg-primary);
   padding:         0;
   transition:      color 0.12s, background 0.12s;
 }
-.ds-input-stepper__btn--right { color: var(--ds-input-stepper-icon-right-fg); }
+.ds-input-stepper__btn--right { color: var(--ds-input-icon-fg-primary); }
 
 .ds-input-stepper__btn:focus  { outline: none; }
 
@@ -100,10 +100,10 @@ const css = `
 }
 
 .ds-input-stepper__btn:disabled {
-  color:  var(--ds-input-stepper-icon-left-fg-disabled);
+  color:  var(--ds-input-icon-fg-disabled);
   cursor: not-allowed;
 }
-.ds-input-stepper__btn--right:disabled { color: var(--ds-input-stepper-icon-right-fg-disabled); }
+.ds-input-stepper__btn--right:disabled { color: var(--ds-input-icon-fg-disabled); }
 
 /* Valor central */
 .ds-input-stepper__value {
@@ -211,7 +211,7 @@ export const InputStepper = forwardRef(function InputStepper({
           disabled={isDisabled || atMin}
           aria-label="Decrementar"
         >
-          <Minus size={24} strokeWidth={1.75} aria-hidden="true" />
+          <Icon name="minus" size="sm" />
         </button>
 
         <output
@@ -230,14 +230,14 @@ export const InputStepper = forwardRef(function InputStepper({
           disabled={isDisabled || atMax}
           aria-label="Incrementar"
         >
-          <Plus size={24} strokeWidth={1.75} aria-hidden="true" />
+          <Icon name="plus" size="sm" />
         </button>
       </div>
 
       {state === 'error' && errorMessage && (
         <p className="ds-input-stepper__message" id={messageId} aria-live="polite">
           <span className="ds-input-stepper__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>

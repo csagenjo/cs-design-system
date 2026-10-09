@@ -905,6 +905,7 @@
      ========================================================================== */
   --ds-combobox-icon-fg:                var(--ds-fg-primary);
   --ds-combobox-icon-fg-disabled:       var(--ds-fg-disabled);
+  --ds-combobox-buttons-gap:            var(--ds-spacing-xs);   /* combobox/all/buttons/gap — x ↔ chevron (09/10/2026) */
   --ds-combobox-text-fg:                var(--ds-fg-default);
   --ds-combobox-text-fg-disabled:       var(--ds-fg-disabled);
   --ds-combobox-caret-color:            var(--ds-fg-primary);
@@ -988,26 +989,19 @@
   --ds-input-fg-placeholder:               var(--ds-fg-subtle);
   --ds-input-border-hover:                 var(--ds-borderColor-emphasis);
   --ds-input-bg-readonly:                  var(--ds-bg-page);
+  /* Input/InputCommon — comunes a TODOS los inputs (09/10/2026, igual que Figma) */
+  --ds-input-icon-fg:                      var(--ds-fg-icon-subtle);    /* icon/fg/generic — icono informativo (gris) */
+  --ds-input-icon-fg-primary:              var(--ds-fg-icon-primary);   /* icon/fg/primary — icono accionable (chevron, calendario, +/−) */
+  --ds-input-icon-fg-disabled:             var(--ds-fg-icon-disabled);  /* icon/fg/disabled */
+  --ds-input-icon-size:                    var(--ds-sizing-sm);         /* icon/size/generic — 24 */
+  --ds-input-subfield-height:              var(--ds-sizing-2xl);        /* subField/height/generic — alto FIJO de cada subcampo (país/teléfono, divisa/importe) */
+  --ds-input-subfield-gap:                 var(--ds-spacing-xs);        /* subField/gap/generic — bandera/texto ↔ chevron en el subcampo selector */
 
   /* â”€â”€ InputText â€” iconos opcionales left/right â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-text-icon-left-fg:             var(--ds-fg-icon-subtle);
-  --ds-input-text-icon-left-fg-primary:     var(--ds-fg-icon-primary);
-  --ds-input-text-icon-left-fg-disabled:    var(--ds-fg-icon-disabled);
-  --ds-input-text-icon-left-size:           24px;
-  --ds-input-text-icon-right-fg:            var(--ds-fg-icon-subtle);
-  --ds-input-text-icon-right-fg-primary:    var(--ds-fg-icon-primary);
-  --ds-input-text-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
-  --ds-input-text-icon-right-size:          24px;
 
   /* â”€â”€ InputDate â€” icono calendario fijo teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-date-icon-right-fg:            var(--ds-fg-icon-primary);
-  --ds-input-date-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
-  --ds-input-date-icon-right-size:          24px;
 
   /* â”€â”€ InputDropdown â€” icono chevron fijo teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-dropdown-icon-right-fg:        var(--ds-fg-icon-primary);
-  --ds-input-dropdown-icon-right-fg-disabled:var(--ds-fg-icon-disabled);
-  --ds-input-dropdown-icon-right-size:      24px;
 
   /* â”€â”€ InputTelephone â€” dos sub-campos + flag + divider â”€â”€â”€â”€â”€â”€â”€ */
   /* bg: sin token propio a partir del 15/09 — Figma nunca las tuvo enlazadas
@@ -1015,51 +1009,18 @@
      root/bg/*), eran 2 pares huérfanos en el archivo. JSX consume
      --ds-input-bg-default/-disabled directamente, igual que el resto de la
      familia Input. */
-  --ds-input-telephone-country-height:             56px;
-  --ds-input-telephone-country-padding-hor:        16px;
-  --ds-input-telephone-country-padding-ver:        12px;
-  --ds-input-telephone-country-gap:                4px;
-  --ds-input-telephone-country-text-fg:            var(--ds-fg-default);
-  --ds-input-telephone-country-text-fg-disabled:   var(--ds-fg-disabled);
-  --ds-input-telephone-field-height:               56px;
-  --ds-input-telephone-field-padding-hor:          16px;
-  --ds-input-telephone-field-padding-ver:          16px;
-  --ds-input-telephone-icon-dropdown-fg:           var(--ds-fg-icon-primary);
-  --ds-input-telephone-icon-dropdown-fg-disabled:  var(--ds-fg-icon-disabled);
-  --ds-input-telephone-icon-dropdown-size:         24px;
-  --ds-input-telephone-icon-flag-size:             32px;
+  --ds-input-telephone-country-padding-ver:        var(--ds-spacing-lg);
+  --ds-input-telephone-icon-flag-size:             var(--ds-sizing-md);
   --ds-input-telephone-icon-flag-opacity-disabled: 0.4;
   --ds-input-telephone-divider-color:              var(--ds-borderColor-accent);
 
   /* â”€â”€ InputAmount â€” importe + moneda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-amount-currency-field-height-generic:    var(--ds-input-common-root-minheight-generic);
-  --ds-input-amount-currency-field-gap-hor-generic:   4px;
-  --ds-input-amount-currency-field-padding-hor-generic: 16px;
-  --ds-input-amount-currency-field-padding-ver-generic: 16px;
-  --ds-input-amount-currency-field-bg-generic:        var(--ds-input-common-root-bg-generic);
-  --ds-input-amount-currency-field-bg-disabled:       var(--ds-input-common-root-bg-disabled);
 
-  --ds-input-amount-amount-field-height-generic:      var(--ds-input-common-root-minheight-generic);
-  --ds-input-amount-amount-field-padding-hor-generic: 16px;
-  --ds-input-amount-amount-field-padding-ver-generic: 16px;
-  --ds-input-amount-amount-field-bg-generic:          var(--ds-input-common-root-bg-generic);
-  --ds-input-amount-amount-field-bg-disabled:         var(--ds-input-common-root-bg-disabled);
 
-  --ds-input-amount-currency-text-fg-generic:         var(--ds-input-common-valuetext-fg-generic);
-  --ds-input-amount-currency-text-fg-disabled:        var(--ds-input-common-valuetext-fg-disabled);
 
-  --ds-input-amount-icon-dropdown-fg-generic:         var(--ds-fg-icon-primary);
-  --ds-input-amount-icon-dropdown-fg-disabled:        var(--ds-fg-icon-disabled);
-  --ds-input-amount-icon-dropdown-size-generic:       24px;
   --ds-input-amount-divider-color:                    var(--ds-borderColor-accent);
 
   /* â”€â”€ InputStepper â€” botones âˆ’ / + teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-stepper-icon-left-fg:                  var(--ds-fg-icon-primary);
-  --ds-input-stepper-icon-left-fg-disabled:         var(--ds-fg-icon-disabled);
-  --ds-input-stepper-icon-left-size:                24px;
-  --ds-input-stepper-icon-right-fg:                 var(--ds-fg-icon-primary);
-  --ds-input-stepper-icon-right-fg-disabled:        var(--ds-fg-icon-disabled);
-  --ds-input-stepper-icon-right-size:               24px;
   --ds-input-stepper-btn-bg-hover:                  var(--ds-opacity-hover-default);
 
 

@@ -34,7 +34,7 @@
  */
 
 import React, { forwardRef, useId, useRef } from 'react';
-import { AlertCircle, ChevronDown, X } from 'lucide-react';
+import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { Chip } from './Chip';
 
@@ -158,7 +158,7 @@ const css = `
   flex-shrink: 0;
   display:     flex;
   align-items: center;
-  gap:         4px;
+  gap:         var(--ds-combobox-buttons-gap);
 }
 .ds-input-combobox__delete {
   display:        flex;
@@ -341,7 +341,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
                 aria-label="Borrar"
                 onClick={onClear}
               >
-                <X size={16} strokeWidth={1.75} aria-hidden="true" />
+                <Icon name="x" size="xs" />
               </button>
             )}
             <button
@@ -352,7 +352,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
               onClick={onToggleOpen}
               tabIndex={-1}
             >
-              <ChevronDown size={20} strokeWidth={1.75} aria-hidden="true" />
+              <Icon name="chevron-down" size="xs" />
             </button>
           </div>
         </div>
@@ -361,7 +361,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
       {state === 'error' && errorMessage && (
         <p className="ds-input-combobox__message" id={messageId} aria-live="polite">
           <span className="ds-input-combobox__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>

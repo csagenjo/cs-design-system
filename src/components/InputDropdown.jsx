@@ -1,5 +1,5 @@
 import React, { forwardRef, useId } from 'react';
-import { AlertCircle, ChevronDown } from 'lucide-react';
+import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 
 const css = `
@@ -43,7 +43,7 @@ const css = `
   width:              100%;
   min-height:         var(--ds-input-min-height);
   padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
-  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-dropdown-icon-right-size) + var(--ds-input-field-icon-gap));
+  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
@@ -106,9 +106,9 @@ const css = `
   display:        flex;
   align-items:    center;
   pointer-events: none;
-  color:          var(--ds-input-dropdown-icon-right-fg);
+  color:          var(--ds-input-icon-fg-primary);
 }
-.ds-input-dropdown--disabled .ds-input-dropdown__icon { color: var(--ds-input-dropdown-icon-right-fg-disabled); }
+.ds-input-dropdown--disabled .ds-input-dropdown__icon { color: var(--ds-input-icon-fg-disabled); }
 
 /* Validation message — debajo del campo */
 .ds-input-dropdown__message {
@@ -212,14 +212,14 @@ export const InputDropdown = forwardRef(function InputDropdown({
         </select>
 
         <span className="ds-input-dropdown__icon" aria-hidden="true">
-          <ChevronDown size={24} strokeWidth={1.75} />
+          <Icon name="chevron-down" size="sm" />
         </span>
       </div>
 
       {state === 'error' && errorMessage && (
         <p className="ds-input-dropdown__message" id={messageId} aria-live="polite">
           <span className="ds-input-dropdown__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            <Icon name="circle-x" size="2xs" />
           </span>
           {errorMessage}
         </p>
