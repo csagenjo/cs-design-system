@@ -18,7 +18,7 @@ export default function App() {
   const [dark, setDark] = useState(false)
   useEffect(() => { document.documentElement.dataset.mode = dark ? 'dark' : 'light' }, [dark])
   return (
-    <main style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 16, background: 'var(--ds-bg-default)', minHeight: '100vh' }}>
+    <main style={{ padding: 24, textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 16, background: 'var(--ds-bg-default)', minHeight: '100vh' }}>
       <label style={label}><input type="checkbox" checked={dark} onChange={e => setDark(e.target.checked)} /> dark</label>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 300px)', gap: 16 }}>
         {states.map(s => <InputText key={'t' + s} label="Texto" state={s} iconLeft="search" iconRight="eye" iconRightPrimary defaultValue="Valor" errorMessage="Error" />)}
