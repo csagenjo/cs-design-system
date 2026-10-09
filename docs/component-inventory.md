@@ -70,8 +70,9 @@ clickable title.
 
 **Properties**
 - `Variant` → Expanded · Collapsed.
-- `State` → Initial · Hover · Focus · Pressed (documentation only — in
-  screens keep Initial).
+- `State` → Initial · Hover · Focus · Pressed. Hover, Focus and Pressed
+  are interaction states for specs and prototypes; in static screens use
+  Initial. In code they come from `:hover`, `:focus-visible` and `:active`.
 - `Title`, `Content` → text properties.
 - `Last` → on only in the last item of a group: it draws the closing
   bottom border.
