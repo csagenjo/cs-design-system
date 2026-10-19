@@ -12,6 +12,8 @@ const css = `
   flex-direction: column;
 }
 
+.ds-link-list__title { margin: 0; color: var(--ds-link-list-title-fg); }
+
 .ds-link-list--gap-sm { gap: var(--ds-spacing-xs); }
 .ds-link-list--gap-md { gap: var(--ds-spacing-md); }
 .ds-link-list--gap-lg { gap: var(--ds-spacing-xl); }
@@ -38,7 +40,7 @@ export function LinkList({
 }) {
   return (
     <nav aria-label={ariaLabel} style={fullWidth ? { width: '100%' } : undefined}>
-      {title && <h2>{title}</h2>}
+      {title && <h2 className="ds-link-list__title">{title}</h2>}
       <ul
         role="list"
         className={[
