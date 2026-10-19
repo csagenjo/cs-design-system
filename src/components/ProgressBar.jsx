@@ -14,10 +14,10 @@
  * (rosa), donde el indicator es ese mismo rosa de marca y se funde con el
  * fondo. Nunca sobre `bg/page` o `bg/default` directamente tampoco (bajo
  * contraste del track).
- * Nota real, aparte: el texto (Label/Helper text) NO tiene una variante
- * propia para onColor — sobre `bg/inverse` específicamente el texto (fijo
- * casi negro) se vuelve ilegible, aunque ahí track e indicator sigan bien;
- * verificar caso a caso.
+ * Texto en onColor: desde 19/10 (A11y-2) Label/Helper usan
+ * `progressBar/all/text/fg/onColor` (→ fg/onColor, blanco) — los rellenos
+ * de color pasan 4.5:1 con blanco tras la paleta por contraste. Excepción:
+ * sobre `bg/inverse` en dark (blanco) no usar onColor.
  *
  * `value` es un número 0-100 libre (no los saltos discretos 0/20/50/80/100
  * de Figma) — el ancho del indicator es simplemente `value%`.
@@ -53,6 +53,10 @@ const css = `
 }
 .ds-progress-bar--default .ds-progress-bar__track {
   background: var(--ds-progress-bar-root-bg-default);
+}
+.ds-progress-bar--onColor .ds-progress-bar__label,
+.ds-progress-bar--onColor .ds-progress-bar__helper-text {
+  color: var(--ds-progress-bar-text-fg-on-color);
 }
 .ds-progress-bar--onColor .ds-progress-bar__track {
   background: var(--ds-progress-bar-root-bg-on-color);

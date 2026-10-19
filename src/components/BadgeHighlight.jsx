@@ -42,12 +42,14 @@ const css = `
 .ds-badge-highlight--positive {
   background:   var(--ds-badge-highlight-bg-positive);
   border-color: var(--ds-badge-highlight-icon-fg-positive);
+  color:        var(--ds-badge-highlight-label-fg-positive);
 }
 .ds-badge-highlight--positive .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-positive); }
 
 .ds-badge-highlight--negative {
   background:   var(--ds-badge-highlight-bg-negative);
   border-color: var(--ds-badge-highlight-icon-fg-negative);
+  color:        var(--ds-badge-highlight-label-fg-negative);
 }
 .ds-badge-highlight--negative .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-negative); }
 

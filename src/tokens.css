@@ -12,101 +12,101 @@
 :root {
 
   /* â”€â”€ PALETA BASE (solo para referencia â€” no usar en componentes) â”€â”€â”€ */
-  --ds-color-primary-50:    #F7FBFC;
-  --ds-color-primary-100:   #EDF7FA;
-  --ds-color-primary-200:   #CAE6ED;
-  --ds-color-primary-300:   #A0D1DE;
-  --ds-color-primary-400:   #75BDCF;
-  --ds-color-primary-500:   #4BA9C0;
-  --ds-color-primary-600:   #36879C;
-  --ds-color-primary-700:   #286371;
-  --ds-color-primary-800:   #1A404A;
-  --ds-color-primary-900:   #0D2025;
-  --ds-color-primary-950:   #030708;
+  --ds-color-primary-50:    #F6FAFB;
+  --ds-color-primary-100:   #E8F4F7;
+  --ds-color-primary-200:   #CBE7EE;
+  --ds-color-primary-300:   #A3D4E2;
+  --ds-color-primary-400:   #66AEC0;
+  --ds-color-primary-500:   #0A7C92;
+  --ds-color-primary-600:   #06677B;
+  --ds-color-primary-700:   #13525F;
+  --ds-color-primary-800:   #163B44;
+  --ds-color-primary-900:   #152428;
+  --ds-color-primary-950:   #0B1113;
 
-  --ds-color-secondary-50:  #FEF6F9;
-  --ds-color-secondary-100: #FBE4EE;
-  --ds-color-secondary-200: #F6C1D8;
-  --ds-color-secondary-300: #EE8FB9;
-  --ds-color-secondary-400: #E75D9B;
-  --ds-color-secondary-500: #E02C7C;
-  --ds-color-secondary-600: #B71B60;
-  --ds-color-secondary-700: #851446;
-  --ds-color-secondary-800: #530C2C;
-  --ds-color-secondary-900: #280615;
-  --ds-color-secondary-950: #090105;
+  --ds-color-secondary-50:  #FFF8FA;
+  --ds-color-secondary-100: #FFEEF5;
+  --ds-color-secondary-200: #FED8E8;
+  --ds-color-secondary-300: #FEB9D6;
+  --ds-color-secondary-400: #FC77B0;
+  --ds-color-secondary-500: #D61E74;
+  --ds-color-secondary-600: #B4175E;
+  --ds-color-secondary-700: #8C1C4C;
+  --ds-color-secondary-800: #631C39;
+  --ds-color-secondary-900: #371724;
+  --ds-color-secondary-950: #1B0B14;
 
-  --ds-color-tertiary-50:   #F6F1F8;
-  --ds-color-tertiary-100:  #EDE3F3;
-  --ds-color-tertiary-200:  #DDCAE6;
-  --ds-color-tertiary-300:  #CAABD7;
-  --ds-color-tertiary-400:  #B890CA;
-  --ds-color-tertiary-500:  #B185C5;
-  --ds-color-tertiary-600:  #9558B0;
-  --ds-color-tertiary-700:  #703F87;
-  --ds-color-tertiary-800:  #4E2C5D;
-  --ds-color-tertiary-900:  #2C1835;
-  --ds-color-tertiary-950:  #170D1B;
+  --ds-color-tertiary-50:   #FDF8FF;
+  --ds-color-tertiary-100:  #F9EFFD;
+  --ds-color-tertiary-200:  #EEDBF8;
+  --ds-color-tertiary-300:  #E1C2EE;
+  --ds-color-tertiary-400:  #BD95D0;
+  --ds-color-tertiary-500:  #8B619E;
+  --ds-color-tertiary-600:  #81449B;
+  --ds-color-tertiary-700:  #66367D;
+  --ds-color-tertiary-800:  #4A2959;
+  --ds-color-tertiary-900:  #2D1A36;
+  --ds-color-tertiary-950:  #160C1A;
 
-  --ds-color-neutral-50:    #F9FAFA;
-  --ds-color-neutral-100:   #EEEFF1;
-  --ds-color-neutral-200:   #D8DBDE;
-  --ds-color-neutral-300:   #B9BEC4;
-  --ds-color-neutral-400:   #9AA1AA;
-  --ds-color-neutral-500:   #7B8390;
-  --ds-color-neutral-600:   #5D6470;
-  --ds-color-neutral-700:   #454C56;
-  --ds-color-neutral-800:   #2C2F34;
-  --ds-color-neutral-900:   #191C1F;
+  --ds-color-neutral-50:    #FAFBFB;
+  --ds-color-neutral-100:   #F1F2F4;
+  --ds-color-neutral-200:   #DBDEE1;
+  --ds-color-neutral-300:   #AAAFB5;
+  --ds-color-neutral-400:   #676D76;
+  --ds-color-neutral-500:   #5E6672;
+  --ds-color-neutral-600:   #4C535D;
+  --ds-color-neutral-700:   #3B4047;
+  --ds-color-neutral-800:   #292C31;
+  --ds-color-neutral-900:   #161719;
   --ds-color-neutral-950:   #050506;
 
-  --ds-color-info-50:       #F5FBFF;
-  --ds-color-info-100:      #E5F5FF;
-  --ds-color-info-200:      #B8E6FE;
-  --ds-color-info-300:      #80D1FE;
-  --ds-color-info-400:      #42ACEA;
-  --ds-color-info-500:      #0287D0;
-  --ds-color-info-600:      #016FB0;
-  --ds-color-info-700:      #016398;
-  --ds-color-info-800:      #013E5F;
-  --ds-color-info-900:      #001626;
-  --ds-color-info-950:      #00090D;
+  --ds-color-info-50:       #F4FAFE;
+  --ds-color-info-100:      #E4F5FF;
+  --ds-color-info-200:      #BDE8FF;
+  --ds-color-info-300:      #8DD5FE;
+  --ds-color-info-400:      #34AEED;
+  --ds-color-info-500:      #0777B4;
+  --ds-color-info-600:      #0B6298;
+  --ds-color-info-700:      #094F78;
+  --ds-color-info-800:      #023A59;
+  --ds-color-info-900:      #092432;
+  --ds-color-info-950:      #041217;
 
-  --ds-color-error-50:      #FDF7F7;
-  --ds-color-error-100:     #FBE6E6;
-  --ds-color-error-200:     #F5BABA;
-  --ds-color-error-300:     #E98888;
-  --ds-color-error-400:     #DC5555;
-  --ds-color-error-500:     #D53737;
-  --ds-color-error-600:     #AD2525;
-  --ds-color-error-700:     #821A1A;
-  --ds-color-error-800:     #571010;
-  --ds-color-error-900:     #2B0808;
-  --ds-color-error-950:     #150404;
+  --ds-color-error-50:      #FEF8F8;
+  --ds-color-error-100:     #FFEEEE;
+  --ds-color-error-200:     #FED9D9;
+  --ds-color-error-300:     #FDBCBB;
+  --ds-color-error-400:     #FB7F7D;
+  --ds-color-error-500:     #D23435;
+  --ds-color-error-600:     #B12A29;
+  --ds-color-error-700:     #892725;
+  --ds-color-error-800:     #61221F;
+  --ds-color-error-900:     #351A19;
+  --ds-color-error-950:     #2A0102;
 
-  --ds-color-success-50:    #F8FCF8;
-  --ds-color-success-100:   #E8F5E9;
-  --ds-color-success-200:   #CBECCC;
-  --ds-color-success-300:   #A3D9A5;
-  --ds-color-success-400:   #77C57A;
-  --ds-color-success-500:   #4CAF50;
-  --ds-color-success-600:   #389A3D;
-  --ds-color-success-700:   #27692B;
-  --ds-color-success-800:   #1A461C;
-  --ds-color-success-900:   #0D230E;
-  --ds-color-success-950:   #051106;
+  --ds-color-success-50:    #F6FAF6;
+  --ds-color-success-100:   #E8F6E8;
+  --ds-color-success-200:   #C9EACA;
+  --ds-color-success-300:   #9FDBA2;
+  --ds-color-success-400:   #60B666;
+  --ds-color-success-500:   #01831B;
+  --ds-color-success-600:   #0E6D1A;
+  --ds-color-success-700:   #075713;
+  --ds-color-success-800:   #123F15;
+  --ds-color-success-900:   #132614;
+  --ds-color-success-950:   #0B120B;
 
-  --ds-color-warning-50:    #FFFCF5;
-  --ds-color-warning-100:   #FFF3D6;
-  --ds-color-warning-200:   #FFE299;
-  --ds-color-warning-300:   #FFCA47;
-  --ds-color-warning-400:   #FFAE0C;
-  --ds-color-warning-500:   #CC8A00;
-  --ds-color-warning-600:   #996600;
-  --ds-color-warning-700:   #664400;
-  --ds-color-warning-800:   #604000;
-  --ds-color-warning-900:   #332200;
-  --ds-color-warning-950:   #0A0600;
+  --ds-color-warning-50:    #FCF9F2;
+  --ds-color-warning-100:   #FBF1DC;
+  --ds-color-warning-200:   #F7DFB0;
+  --ds-color-warning-300:   #F1C771;
+  --ds-color-warning-400:   #D39A18;
+  --ds-color-warning-500:   #98670E;
+  --ds-color-warning-600:   #815501;
+  --ds-color-warning-700:   #664404;
+  --ds-color-warning-800:   #4B3203;
+  --ds-color-warning-900:   #2D1F03;
+  --ds-color-warning-950:   #151004;
 
   --ds-color-annotation-50: #D6B7FF;
   --ds-color-annotation-100:#9747FF;
@@ -131,134 +131,136 @@
 
   /* â”€â”€ FOREGROUND â€” texto â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-fg-default:          #050506;
-  --ds-fg-subtle:           #9AA1AA;
-  --ds-fg-disabled:         #B9BEC4;
+  --ds-fg-subtle:           #676D76;
+  --ds-fg-disabled:         #AAAFB5;
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #FFFFFF;
-  --ds-fg-primary:          #4BA9C0;   /* primary/500 — reducción profundidad 15/07 (era 700 #286371) */
-  --ds-fg-secondary:        #E02C7C;   /* secondary/500 — reducción profundidad 15/07 (era 600 #B71B60) */
-  --ds-fg-tertiary:         #B185C5;
-  --ds-fg-info:             #016398;
-  --ds-fg-success:          #389A3D;
-  --ds-fg-warning:          #FFAE0C;
-  --ds-fg-error:            #AD2525;
+  --ds-fg-primary:          #0A7C92;   /* primary/500 — reducción profundidad 15/07 (era 700 #286371) */
+  --ds-fg-title-onSurface-static-primary: #0A7C92; /* teal fijo en los dos modos (Figma fg/{title,icon}/onSurface/static-primary) — 19/10 */
+  --ds-fg-icon-onSurface-static-primary:  #0A7C92; /* idem */
+  --ds-fg-secondary:        #D61E74;   /* secondary/500 — reducción profundidad 15/07 (era 600 #B71B60) */
+  --ds-fg-tertiary:         #8B619E;
+  --ds-fg-info:             #094F78;
+  --ds-fg-success:          #0E6D1A;
+  --ds-fg-warning:          #98670E;
+  --ds-fg-error:            #B12A29;
 
   /* fg por tipo de elemento */
   --ds-fg-label-default:    #050506;
-  --ds-fg-label-subtle:     #9AA1AA;
-  --ds-fg-label-disabled:   #B9BEC4;
+  --ds-fg-label-subtle:     #676D76;
+  --ds-fg-label-disabled:   #AAAFB5;
   --ds-fg-label-inverse:    #FFFFFF;
   --ds-fg-label-onColor:    #FFFFFF;
-  --ds-fg-label-primary:    #4BA9C0;   /* primary/500 (era 700) */
-  --ds-fg-label-secondary:  #E02C7C;   /* secondary/500 (era 600) */
-  --ds-fg-label-tertiary:   #B185C5;
+  --ds-fg-label-primary:    #0A7C92;   /* primary/500 (era 700) */
+  --ds-fg-label-secondary:  #D61E74;   /* secondary/500 (era 600) */
+  --ds-fg-label-tertiary:   #8B619E;
 
   --ds-fg-body-default:     #050506;
-  --ds-fg-body-subtle:      #9AA1AA;
-  --ds-fg-body-disabled:    #B9BEC4;
+  --ds-fg-body-subtle:      #676D76;
+  --ds-fg-body-disabled:    #AAAFB5;
   --ds-fg-body-inverse:     #FFFFFF;
   --ds-fg-body-onColor:     #FFFFFF;
-  --ds-fg-body-secondary:   #E02C7C;   /* secondary/500 (era 600) */
-  --ds-fg-body-tertiary:    #B185C5;
+  --ds-fg-body-secondary:   #D61E74;   /* secondary/500 (era 600) */
+  --ds-fg-body-tertiary:    #8B619E;
 
   --ds-fg-headline-default: #050506;
-  --ds-fg-headline-subtle:  #9AA1AA;
+  --ds-fg-headline-subtle:  #676D76;
   --ds-fg-headline-onColor: #FFFFFF;
-  --ds-fg-headline-primary: #4BA9C0;   /* primary/500 (era 700) */
-  --ds-fg-headline-secondary:#E02C7C;   /* Mode fg/headline/secondary — corregido de #050506 (desync) 22/07 */
-  --ds-fg-headline-tertiary: #050506;
+  --ds-fg-headline-primary: #0A7C92;   /* primary/500 (era 700) */
+  --ds-fg-headline-secondary:#D61E74;   /* Mode fg/headline/secondary — corregido de #050506 (desync) 22/07 */
+  --ds-fg-headline-tertiary: #8B619E;
 
   --ds-fg-title-default:    #050506;   /* familia fontSize/title/* — usada por SectionHeader (NO Headline) */
   --ds-fg-title-onColor:    #FFFFFF;   /* fijo ambos modos — Dialog header Primary */
   --ds-fg-title-inverse:    #FFFFFF;   /* invierte con el modo (dark: #050506) — Dialog header Secondary/Tertiary */
-  --ds-fg-title-primary:    #4BA9C0;
-  --ds-fg-title-subtle:     #9AA1AA;   /* token propio del Mode — SectionHeader "Subtle"→default NO lo usa */
-  --ds-fg-title-disabled:   #B9BEC4;
+  --ds-fg-title-primary:    #0A7C92;
+  --ds-fg-title-subtle:     #676D76;   /* token propio del Mode — SectionHeader "Subtle"→default NO lo usa */
+  --ds-fg-title-disabled:   #AAAFB5;
 
   /* fg icono */
   --ds-fg-icon-default:     #050506;
-  --ds-fg-icon-subtle:      #9AA1AA;
-  --ds-fg-icon-disabled:    #B9BEC4;
+  --ds-fg-icon-subtle:      #676D76;
+  --ds-fg-icon-disabled:    #AAAFB5;
   --ds-fg-icon-inverse:     #FFFFFF;
   --ds-fg-icon-onColor:     #FFFFFF;
-  --ds-fg-icon-primary:     #4BA9C0;   /* primary/500 (era 700) */
-  --ds-fg-icon-secondary:   #E02C7C;   /* secondary/500 (era 600) */
-  --ds-fg-icon-tertiary:    #B185C5;
-  --ds-fg-icon-accent-primary: #286371;/* accent/primary/700 — movido al 700 el 15/07 (era 500) */
-  --ds-fg-icon-info:        #016398;
-  --ds-fg-icon-success:     #389A3D;
-  --ds-fg-icon-warning:     #996600;
-  --ds-fg-icon-error:       #D53737;
+  --ds-fg-icon-primary:     #0A7C92;   /* primary/500 (era 700) */
+  --ds-fg-icon-secondary:   #D61E74;   /* secondary/500 (era 600) */
+  --ds-fg-icon-tertiary:    #8B619E;
+  --ds-fg-icon-accent-primary: #13525F;/* accent/primary/700 — movido al 700 el 15/07 (era 500) */
+  --ds-fg-icon-info:        #094F78;
+  --ds-fg-icon-success:     #0E6D1A;
+  --ds-fg-icon-warning:     #98670E;
+  --ds-fg-icon-error:       #D23435;
 
   /* â”€â”€ BACKGROUND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-bg-default:          #FFFFFF;
-  --ds-bg-page:             #F9FAFA;
+  --ds-bg-page:             #FAFBFB;
   --ds-bg-container:        #FFFFFF; /* superficie elevada (tarjeta/panel) — diverge de bg-default en dark, ver §10 onSurface */
-  --ds-bg-subtle:           #EEEFF1;
-  --ds-bg-disabled:         #EEEFF1;
+  --ds-bg-subtle:           #F1F2F4;
+  --ds-bg-disabled:         #F1F2F4;
   --ds-bg-inverse:          #050506;
   --ds-bg-onColor:          #FFFFFF;
   --ds-bg-overlay:          rgba(5,5,6,0.3);
 
   /* bg marca */
-  --ds-bg-primary:          #4BA9C0;
-  --ds-bg-primary-bold:     #286371; /* corregido 11/08 — antes #36879C, desincronizado de Figma bg/surface/primary-bold (sin consumidores hoy) */
-  --ds-bg-primary-medium:   #CAE6ED;
-  --ds-bg-primary-subtle:   #F7FBFC;
-  --ds-bg-secondary:        #E02C7C;
-  --ds-bg-secondary-bold:   #B71B60;
-  --ds-bg-secondary-medium: #FBE4EE;
-  --ds-bg-secondary-subtle: #FEF6F9;
-  --ds-bg-tertiary:         #B185C5;
-  --ds-bg-tertiary-bold:    #703F87;
-  --ds-bg-tertiary-medium:  #CAABD7;
-  --ds-bg-tertiary-subtle:  #F6F1F8;
+  --ds-bg-primary:          #0A7C92;
+  --ds-bg-primary-bold:     #13525F; /* corregido 11/08 — antes #36879C, desincronizado de Figma bg/surface/primary-bold (sin consumidores hoy) */
+  --ds-bg-primary-medium:   #CBE7EE;
+  --ds-bg-primary-subtle:   #F6FAFB;
+  --ds-bg-secondary:        #D61E74;
+  --ds-bg-secondary-bold:   #B4175E;
+  --ds-bg-secondary-medium: #FFEEF5;
+  --ds-bg-secondary-subtle: #FFF8FA;
+  --ds-bg-tertiary:         #8B619E;
+  --ds-bg-tertiary-bold:    #66367D;
+  --ds-bg-tertiary-medium:  #E1C2EE;
+  --ds-bg-tertiary-subtle:  #FDF8FF;
 
   /* bg accent (para usar como bg de chips, badges...) */
-  --ds-bg-accent-primary:   #A0D1DE;
-  --ds-bg-accent-secondary: #EE8FB9;
+  --ds-bg-accent-primary:   #A3D4E2;
+  --ds-bg-accent-secondary: #FEB9D6;
 
   /* bg feedback */
-  --ds-bg-error:            #D53737;
-  --ds-bg-error-subtle:     #FDF7F7;
-  --ds-bg-success:          #389A3D;
-  --ds-bg-success-subtle:   #F8FCF8;
-  --ds-bg-warning:          #FFFCF5;
-  --ds-bg-info:             #0287D0;
-  --ds-bg-highlight:        #F5FBFF;
+  --ds-bg-error:            #D23435;
+  --ds-bg-error-subtle:     #FEF8F8;
+  --ds-bg-success:          #0E6D1A;
+  --ds-bg-success-subtle:   #F6FAF6;
+  --ds-bg-warning:          #FCF9F2;
+  --ds-bg-info:             #0B6298;
+  --ds-bg-highlight:        #F4FAFE;
 
   /* bg hover — un único hover aplicado igual en todos los themes, no hay variante por color */
-  --ds-bg-hover-primary:    #B8E6FE;
+  --ds-bg-hover-primary:    #BDE8FF;
 
   /* â”€â”€ BORDER COLOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-borderColor-default:        #9AA1AA;
-  --ds-borderColor-emphasis:       #2C2F34;
-  --ds-borderColor-subtle:         #EEEFF1;
-  --ds-borderColor-disabled:       #B9BEC4;
+  --ds-borderColor-default:        #676D76;
+  --ds-borderColor-emphasis:       #292C31;
+  --ds-borderColor-subtle:         #F1F2F4;
+  --ds-borderColor-disabled:       #AAAFB5;
   --ds-borderColor-inverse:        #FFFFFF;
   --ds-borderColor-onColor:        #FFFFFF;
 
   /* bordes de marca */
-  --ds-borderColor-primary:        #4BA9C0;   /* primary/500 (era 700) */
-  --ds-borderColor-accent:         #286371;   /* accent-light — sin cambio (ya en 700) */
-  --ds-borderColor-accent-primary: #286371;   /* accent/primary/700 — movido al 700 el 15/07 (era 500) */
-  --ds-borderColor-accent-inverse: #A0D1DE;
-  --ds-borderColor-secondary:      #E02C7C;
-  --ds-borderColor-tertiary:       #B185C5;
-  --ds-borderColor-tertiary-inverse:#CAABD7;
+  --ds-borderColor-primary:        #0A7C92;   /* primary/500 (era 700) */
+  --ds-borderColor-accent:         #13525F;   /* accent-light — sin cambio (ya en 700) */
+  --ds-borderColor-accent-primary: #13525F;   /* accent/primary/700 — movido al 700 el 15/07 (era 500) */
+  --ds-borderColor-accent-inverse: #A3D4E2;
+  --ds-borderColor-secondary:      #D61E74;
+  --ds-borderColor-tertiary:       #8B619E;
+  --ds-borderColor-tertiary-inverse:#E1C2EE;
 
   /* bordes feedback */
-  --ds-borderColor-error:          #AD2525;
-  --ds-borderColor-success:        #389A3D;
-  --ds-borderColor-warning:        #FFAE0C;
-  --ds-borderColor-info:           #016398;
-  --ds-borderColor-info-inverse:   #B8E6FE;
+  --ds-borderColor-error:          #B12A29;
+  --ds-borderColor-success:        #0E6D1A;
+  --ds-borderColor-warning:        #98670E;
+  --ds-borderColor-info:           #094F78;
+  --ds-borderColor-info-inverse:   #BDE8FF;
 
   /* bordes focus */
   --ds-borderColor-focus-inner:        #FFFFFF;
-  --ds-borderColor-focus-outer:        #016398; /* color/info/700 — color de foco del sistema (01/10/2026, antes negro) */
+  --ds-borderColor-focus-outer:        #094F78; /* color/info/700 — color de foco del sistema (01/10/2026, antes negro) */
   --ds-borderColor-focus-inner-inverse:#050506;
-  --ds-borderColor-focus-outer-inverse:#B8E6FE; /* color/info/200 */
+  --ds-borderColor-focus-outer-inverse:#BDE8FF; /* color/info/200 */
 
   /* â”€â”€ OPACITY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-opacity-hover-default:      rgba(5,5,6,0.1);
@@ -665,6 +667,7 @@
   --ds-progress-bar-root-border-radius: 80px;
   --ds-progress-bar-indicator-bg:       var(--ds-bg-secondary);
   --ds-progress-bar-text-fg:            var(--ds-fg-default);
+  --ds-progress-bar-text-fg-on-color:   var(--ds-fg-onColor);   /* Figma progressBar/all/text/fg/onColor — 19/10 A11y-2 */
   --ds-progress-bar-gap:                4px;
 
 
@@ -1130,6 +1133,7 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* fg/label (link/all/fg/label/*) */
+  --ds-link-list-title-fg:              var(--ds-fg-title-default); /* 19/10 — el título heredaba el color de index.css (1.01:1 en dark) */
   --ds-link-fg-label-default:          var(--ds-fg-label-default);   /* default-generic */
   --ds-link-fg-label-accent:           var(--ds-fg-label-primary);   /* accent-generic */
   --ds-link-fg-label-accent-visited:   var(--ds-fg-tertiary);        /* accent-visited */
@@ -1196,13 +1200,13 @@
      COMPONENT TOKENS — BadgeNotification (badgeNotification/all/*)
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-badge-notification-bg-default:            var(--ds-bg-error);      /* #D53737 */
-  --ds-badge-notification-bg-primary:            var(--ds-bg-primary);    /* #4BA9C0 */
-  --ds-badge-notification-bg-secondary:          var(--ds-bg-secondary);  /* #E02C7C */
-  --ds-badge-notification-bg-tertiary:           var(--ds-bg-tertiary);   /* #B185C5 */
-  --ds-badge-notification-bg-disabled:           var(--ds-bg-disabled);   /* #EEEFF1 */
+  --ds-badge-notification-bg-default:            var(--ds-bg-error);      /* #D23435 */
+  --ds-badge-notification-bg-primary:            var(--ds-bg-primary);    /* #0A7C92 */
+  --ds-badge-notification-bg-secondary:          var(--ds-bg-secondary);  /* #D61E74 */
+  --ds-badge-notification-bg-tertiary:           var(--ds-bg-tertiary);   /* #8B619E */
+  --ds-badge-notification-bg-disabled:           var(--ds-bg-disabled);   /* #F1F2F4 */
   --ds-badge-notification-fg-label:              var(--ds-fg-onColor);
-  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-disabled);   /* #B9BEC4 */
+  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-disabled);   /* #AAAFB5 */
   --ds-badge-notification-border-radius:         var(--ds-border-radius-circle);
   --ds-badge-notification-gap:                   var(--ds-spacing-sm);    /* 6px — reservado para variante con icono, sin uso actual */
   --ds-badge-notification-padding-hor-default:   var(--ds-spacing-xs);   /* 4px */
@@ -1215,11 +1219,11 @@
      COMPONENT TOKENS — BadgeHighlight (badgeHighlight/all/*)
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-badge-highlight-bg-emphasis:        var(--ds-bg-secondary-medium);  /* #FBE4EE */
-  --ds-badge-highlight-bg-neutral:         var(--ds-bg-subtle);            /* #EEEFF1 */
-  --ds-badge-highlight-bg-positive:        var(--ds-bg-success-subtle);    /* #F8FCF8 */
-  --ds-badge-highlight-bg-negative:        var(--ds-bg-error-subtle);      /* #FDF7F7 */
-  --ds-badge-highlight-bg-disabled:        var(--ds-bg-disabled);          /* #EEEFF1 */
+  --ds-badge-highlight-bg-emphasis:        var(--ds-bg-secondary-medium);  /* #FFEEF5 */
+  --ds-badge-highlight-bg-neutral:         var(--ds-bg-subtle);            /* #F1F2F4 */
+  --ds-badge-highlight-bg-positive:        var(--ds-bg-success-subtle);    /* #F6FAF6 */
+  --ds-badge-highlight-bg-negative:        var(--ds-bg-error-subtle);      /* #FEF8F8 */
+  --ds-badge-highlight-bg-disabled:        var(--ds-bg-disabled);          /* #F1F2F4 */
   --ds-badge-highlight-border-radius:      var(--ds-border-radius-sm);     /* 4px */
   --ds-badge-highlight-height:             24px;
   --ds-badge-highlight-gap:                var(--ds-spacing-xs);           /* 4px */
@@ -1227,14 +1231,16 @@
   --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
 
   --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16px — reducido en Figma (sizing/xs -> sizing/2xs) */
-  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #E02C7C */
-  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #9AA1AA */
-  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #389A3D */
-  --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D53737 */
-  --ds-badge-highlight-icon-fg-disabled:   var(--ds-fg-icon-disabled);     /* #B9BEC4 */
+  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #D61E74 */
+  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #676D76 */
+  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #0E6D1A */
+  --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D23435 */
+  --ds-badge-highlight-icon-fg-disabled:   var(--ds-fg-icon-disabled);     /* #AAAFB5 */
 
   --ds-badge-highlight-label-fg:           var(--ds-fg-default);
-  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-disabled);          /* #B9BEC4 */
+  --ds-badge-highlight-label-fg-positive:  var(--ds-fg-success);           /* Figma badgeHighlight/all/label/fg/positive — 19/10 A11y-2 */
+  --ds-badge-highlight-label-fg-negative:  var(--ds-fg-error);             /* Figma badgeHighlight/all/label/fg/negative — 19/10 A11y-2 */
+  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-disabled);          /* #AAAFB5 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1245,15 +1251,15 @@
      NO texto de color (corregido 21/08, el subtle antiguo con tinte verde/rojo era bug).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-amount-view-bg-positive-solid:  var(--ds-bg-success);         /* #389A3D — emphasis+positive */
-  --ds-amount-view-bg-negative-solid:  var(--ds-bg-error);           /* #D53737 — emphasis+negative */
-  --ds-amount-view-bg-positive-soft:   var(--ds-bg-success-subtle);  /* #F8FCF8 — subtle+positive (Figma: bg/positive-soft) */
-  --ds-amount-view-bg-negative-soft:   var(--ds-bg-error-subtle);    /* #FDF7F7 — subtle+negative (Figma: bg/negative-soft) */
-  --ds-amount-view-bg-neutral:         var(--ds-bg-subtle);          /* #EEEFF1 — neutral+negative */
-  --ds-amount-view-bg-disabled:        var(--ds-bg-disabled);        /* #EEEFF1 — disabled+negative */
+  --ds-amount-view-bg-positive-solid:  var(--ds-bg-success);         /* #0E6D1A — emphasis+positive */
+  --ds-amount-view-bg-negative-solid:  var(--ds-bg-error);           /* #D23435 — emphasis+negative */
+  --ds-amount-view-bg-positive-soft:   var(--ds-bg-success-subtle);  /* #F6FAF6 — subtle+positive (Figma: bg/positive-soft) */
+  --ds-amount-view-bg-negative-soft:   var(--ds-bg-error-subtle);    /* #FEF8F8 — subtle+negative (Figma: bg/negative-soft) */
+  --ds-amount-view-bg-neutral:         var(--ds-bg-subtle);          /* #F1F2F4 — neutral+negative */
+  --ds-amount-view-bg-disabled:        var(--ds-bg-disabled);        /* #F1F2F4 — disabled+negative */
   --ds-amount-view-fg-generic:         var(--ds-fg-body-default);    /* #050506 — texto negro (neutral/subtle) */
   --ds-amount-view-fg-onColor:         var(--ds-fg-body-onColor);    /* #FFFFFF — texto sobre solid */
-  --ds-amount-view-fg-disabled:        var(--ds-fg-body-disabled);   /* #B9BEC4 — texto disabled */
+  --ds-amount-view-fg-disabled:        var(--ds-fg-body-disabled);   /* #AAAFB5 — texto disabled */
   --ds-amount-view-border-radius:      var(--ds-border-radius-sm);   /* 4px */
   --ds-amount-view-gap:                var(--ds-spacing-xs);         /* 4px */
   --ds-amount-view-padding-hor:        var(--ds-spacing-xs);         /* 4px */
@@ -1267,8 +1273,8 @@
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-list-bodytext-fg-generic:        var(--ds-fg-default);        /* #050506 */
-  --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* #4BA9C0 — bullet teal */
-  --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* #4BA9C0 — check teal (currentColor) */
+  --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* #0A7C92 — bullet teal */
+  --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* #0A7C92 — check teal (currentColor) */
   --ds-list-gap-unordered:              var(--ds-spacing-md);        /* 8 — bullet/number ↔ texto */
   --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — icono ↔ texto */
   --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 */
@@ -1282,7 +1288,7 @@
      internamente como background de una barra sólida de 1px — detalle de impl.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-divider-border-color-generic:    var(--ds-borderColor-subtle); /* #EEEFF1 */
+  --ds-divider-border-color-generic:    var(--ds-borderColor-subtle); /* #F1F2F4 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1292,8 +1298,8 @@
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-section-header-text-fg-default:  var(--ds-fg-title-default);  /* #050506 (Figma "Subtle"→default) */
-  --ds-section-header-text-fg-primary:  var(--ds-fg-title-primary);  /* #4BA9C0 */
-  --ds-section-header-text-fg-disabled: var(--ds-fg-title-disabled); /* #B9BEC4 */
+  --ds-section-header-text-fg-primary:  var(--ds-fg-title-primary);  /* #0A7C92 */
+  --ds-section-header-text-fg-disabled: var(--ds-fg-title-disabled); /* #AAAFB5 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1304,10 +1310,10 @@
 
   --ds-descriptionlist-label-fg-generic:      var(--ds-fg-label-default);  /* #050506 */
   --ds-descriptionlist-valuetext-fg-generic:  var(--ds-fg-body-default);   /* #050506 */
-  --ds-descriptionlist-valuetext-fg-subtle:   var(--ds-fg-body-subtle);    /* #9AA1AA — Not Filled */
+  --ds-descriptionlist-valuetext-fg-subtle:   var(--ds-fg-body-subtle);    /* #676D76 — Not Filled */
   --ds-descriptionlist-accountname-fg-generic:var(--ds-fg-label-default);  /* #050506 */
-  --ds-descriptionlist-iban-fg-generic:       var(--ds-fg-label-subtle);   /* #9AA1AA */
-  --ds-descriptionlist-helpertext-fg-generic: var(--ds-fg-label-subtle);   /* #9AA1AA */
+  --ds-descriptionlist-iban-fg-generic:       var(--ds-fg-label-subtle);   /* #676D76 */
+  --ds-descriptionlist-helpertext-fg-generic: var(--ds-fg-label-subtle);   /* #676D76 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1319,12 +1325,12 @@
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-selector-common-root-bg-generic:            var(--ds-bg-container);       /* #FFFFFF / #606772 dark — corregido 15/09: era bg-default, quedaba más oscuro que el panel flotante (bg-container) que lo contiene en Combobox/Country Picker */
-  --ds-selector-common-root-bg-disabled:           var(--ds-bg-disabled);        /* #EEEFF1 */
-  --ds-selector-common-root-bg-hover:              var(--ds-bg-hover-primary);   /* #B8E6FE */
-  --ds-selector-common-root-border-color-generic:  var(--ds-borderColor-default);/* #9AA1AA */
+  --ds-selector-common-root-bg-disabled:           var(--ds-bg-disabled);        /* #F1F2F4 */
+  --ds-selector-common-root-bg-hover:              var(--ds-bg-hover-primary);   /* #BDE8FF */
+  --ds-selector-common-root-border-color-generic:  var(--ds-borderColor-default);/* #676D76 */
   --ds-selector-common-root-border-color-disabled: var(--ds-borderColor-disabled);
   --ds-selector-common-root-border-color-error:    var(--ds-borderColor-error);
-  --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #4BA9C0 */
+  --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #0A7C92 */
   --ds-selector-common-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-selector-common-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-selector-common-root-border-width-generic:  var(--ds-border-width-sm);    /* 1px — unificado con Figma */
@@ -1499,8 +1505,8 @@
      Segundo consumidor: contador de resultados de TableContainer.
      El `gap` NO vive aquí — sigue en Input (--ds-input-helper-gap).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-helper-text-fg-generic:   var(--ds-fg-body-subtle);    /* #9AA1AA */
-  --ds-helper-text-fg-disabled:  var(--ds-fg-body-disabled);  /* #B9BEC4 */
+  --ds-helper-text-fg-generic:   var(--ds-fg-body-subtle);    /* #676D76 */
+  --ds-helper-text-fg-disabled:  var(--ds-fg-body-disabled);  /* #AAAFB5 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1510,8 +1516,8 @@
      directa de Device — sin capa de Componente (regla tipografía, 22/07).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-headline-fg-default:   var(--ds-fg-headline-default);   /* #050506 */
-  --ds-headline-fg-primary:   var(--ds-fg-headline-primary);   /* #4BA9C0 */
-  --ds-headline-fg-secondary: var(--ds-fg-headline-secondary); /* #E02C7C */
+  --ds-headline-fg-primary:   var(--ds-fg-headline-primary);   /* #0A7C92 */
+  --ds-headline-fg-secondary: var(--ds-fg-headline-secondary); /* #D61E74 */
   --ds-headline-fg-onColor:   var(--ds-fg-headline-onColor);   /* #FFFFFF */
 
 
@@ -1526,14 +1532,14 @@
   /* CellCommon — compartido Header/Cell/More */
   --ds-cell-common-gap:                         var(--ds-spacing-xs);          /* 4 */
   --ds-cell-common-icon-size:                   var(--ds-sizing-2xs);          /* 16 — icono de orden */
-  --ds-cell-common-icon-fg:                     var(--ds-borderColor-primary); /* #4BA9C0 */
+  --ds-cell-common-icon-fg:                     var(--ds-borderColor-primary); /* #0A7C92 */
   --ds-cell-common-text-fg:                     var(--ds-fg-label-default);    /* #050506 */
   --ds-cell-common-padding-hor:                 var(--ds-spacing-sm);          /* 6 */
   --ds-cell-common-padding-ver:                 var(--ds-spacing-xs);          /* 4 */
   --ds-cell-common-bg-on-surface:               var(--ds-bg-container);        /* #FFFFFF — superficie de tarjeta/panel elevada, resuelto 11/08 §10 */
-  --ds-cell-common-bg-zebra:                    var(--ds-bg-page);             /* #F9FAFA */
-  --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #4BA9C0 — orden columna / hover */
-  --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #EEEFF1 — divisor por defecto */
+  --ds-cell-common-bg-zebra:                    var(--ds-bg-page);             /* #FAFBFB */
+  --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #0A7C92 — orden columna / hover */
+  --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #F1F2F4 — divisor por defecto */
   --ds-cell-common-border-bottom-width:         1px;                           /* borderWidth/sm */
   /* Específico — NO fusionar con Common */
   --ds-cell-data-padding-ver-basic:             var(--ds-spacing-sm);          /* 6 — solo Cell */
@@ -1609,25 +1615,25 @@
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-dialog-body-text-fg-generic:            var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
-  --ds-dialog-empty-state-body-text-fg-generic:var(--ds-fg-body-subtle);    /* #9AA1AA */
+  --ds-dialog-empty-state-body-text-fg-generic:var(--ds-fg-body-subtle);    /* #676D76 */
   --ds-dialog-empty-state-padding-generic:     16px;                       /* spacing/xl — nuevo 26/08: padding propio de la tarjeta de ErrorAndEmptyState (PopUp y FullScreen, 16px simétrico en las 2 — FullScreen tenía 8px arriba sin token, igualado a 16px por decisión de Carol). NO es el mismo concepto que --ds-dialog-control-area-padding-generic (aunque coincida en valor) ni que --ds-dialog-root-padding-hor/ver-generic de DialogSimple (esos son 12px, valor distinto) */
 
   /* Header — bg */
   --ds-dialog-header-bg-default:               var(--ds-bg-default);       /* #FFFFFF / #050506 dark — invierte */
-  --ds-dialog-header-bg-primary:               var(--ds-bg-primary);       /* #4BA9C0 fijo */
+  --ds-dialog-header-bg-primary:               var(--ds-bg-primary);       /* #0A7C92 fijo */
   --ds-dialog-header-bg-on-primary:            var(--ds-bg-onColor);       /* #FFFFFF fijo */
-  --ds-dialog-header-bg-secondary:             var(--ds-bg-secondary);     /* #E02C7C / #EE8FB9 dark */
-  --ds-dialog-header-bg-tertiary:               var(--ds-bg-tertiary);     /* #B185C5 / #CAABD7 dark */
+  --ds-dialog-header-bg-secondary:             var(--ds-bg-secondary);     /* #D61E74 / #EE8FB9 dark */
+  --ds-dialog-header-bg-tertiary:               var(--ds-bg-tertiary);     /* #8B619E / #CAABD7 dark */
   /* Header — title */
   --ds-dialog-header-title-fg-default:         var(--ds-fg-title-default); /* pairs con bg-default — invierte */
   --ds-dialog-header-title-fg-primary:         var(--ds-fg-title-onColor); /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-title-fg-on-primary:      var(--ds-fg-title-primary); /* pairs con bg-on-primary — fijo teal */
+  --ds-dialog-header-title-fg-on-primary:      var(--ds-fg-title-onSurface-static-primary); /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
   --ds-dialog-header-title-fg-secondary:       var(--ds-fg-title-inverse); /* pairs con bg-secondary — invierte */
   --ds-dialog-header-title-fg-tertiary:        var(--ds-fg-title-inverse); /* pairs con bg-tertiary — corregido 24/08, antes fg-title-default */
   /* Header — icon */
   --ds-dialog-header-icon-fg-default:          var(--ds-fg-icon-default);  /* pairs con bg-default — corregido 24/08, antes fg-icon-inverse (blanco sobre blanco en light); luego se descubrió además mal enlazado a la capa de Primary en Figma — ver token-architecture.md */
   --ds-dialog-header-icon-fg-primary:          var(--ds-fg-icon-onColor);  /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-icon-fg-on-primary:       var(--ds-fg-icon-primary);  /* pairs con bg-on-primary — fijo teal */
+  --ds-dialog-header-icon-fg-on-primary:       var(--ds-fg-icon-onSurface-static-primary);  /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
   --ds-dialog-header-icon-fg-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
   --ds-dialog-header-icon-fg-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
   /* Header — layout */
@@ -1663,8 +1669,8 @@
      size (14/16) × style (bold/regular) × chevron (boolean, icono opcional).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-text-fg-default:     var(--ds-fg-label-default);   /* #050506 / #FFFFFF dark */
-  --ds-text-fg-secondary:   var(--ds-fg-label-secondary); /* #E02C7C / #FEF6F9 dark */
-  --ds-text-fg-disabled:    var(--ds-fg-label-disabled);  /* #B9BEC4 / #7B8490 dark */
+  --ds-text-fg-secondary:   var(--ds-fg-label-secondary); /* #D61E74 / #FEF6F9 dark */
+  --ds-text-fg-disabled:    var(--ds-fg-label-disabled);  /* #AAAFB5 / #7B8490 dark */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1677,13 +1683,13 @@
      aunque hoy resuelven igual value por value.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-detail-text-fg-default:     var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
-  --ds-detail-text-fg-secondary:   var(--ds-fg-body-secondary); /* #E02C7C / #FBE4EE dark */
-  --ds-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);  /* #B185C5 / #F6F1F8 dark */
-  --ds-detail-text-fg-disabled:    var(--ds-fg-body-disabled);  /* #B9BEC4 / #7B8490 dark */
+  --ds-detail-text-fg-secondary:   var(--ds-fg-body-secondary); /* #D61E74 / #FBE4EE dark */
+  --ds-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);  /* #8B619E / #F6F1F8 dark */
+  --ds-detail-text-fg-disabled:    var(--ds-fg-body-disabled);  /* #AAAFB5 / #7B8490 dark */
   --ds-detail-text-icon-fg-default:   var(--ds-fg-icon-default);   /* #050506 / #FFFFFF dark */
-  --ds-detail-text-icon-fg-secondary: var(--ds-fg-icon-secondary); /* #E02C7C / #FEF6F9 dark */
-  --ds-detail-text-icon-fg-tertiary:  var(--ds-fg-icon-tertiary);  /* #B185C5 / #F6F1F8 dark */
-  --ds-detail-text-icon-fg-disabled:  var(--ds-fg-icon-disabled);  /* #B9BEC4 / #7B8490 dark */
+  --ds-detail-text-icon-fg-secondary: var(--ds-fg-icon-secondary); /* #D61E74 / #FEF6F9 dark */
+  --ds-detail-text-icon-fg-tertiary:  var(--ds-fg-icon-tertiary);  /* #8B619E / #F6F1F8 dark */
+  --ds-detail-text-icon-fg-disabled:  var(--ds-fg-icon-disabled);  /* #AAAFB5 / #7B8490 dark */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1694,8 +1700,8 @@
      fontFamily/narrow — sin consumidor real hoy, no se expone como prop v1).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-description-text-fg-default:  var(--ds-fg-body-default);  /* #050506 / #FFFFFF dark */
-  --ds-description-text-fg-subtle:   var(--ds-fg-body-subtle);   /* #9AA1AA / #EEEFF1 dark */
-  --ds-description-text-fg-disabled: var(--ds-fg-body-disabled); /* #B9BEC4 / #7B8490 dark */
+  --ds-description-text-fg-subtle:   var(--ds-fg-body-subtle);   /* #676D76 / #EEEFF1 dark */
+  --ds-description-text-fg-disabled: var(--ds-fg-body-disabled); /* #AAAFB5 / #7B8490 dark */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1710,26 +1716,26 @@
      — Figma expone 6 pasos que mapean 1:1, salvo el 2xl=56 que no está en Figma).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-list-view-root-bg-generic:          var(--ds-bg-default);        /* #FFFFFF / #050506 dark */
-  --ds-list-view-root-bg-hover:            var(--ds-bg-hover-primary);  /* #B8E6FE / #016398 dark */
-  --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);       /* #EEEFF1 / #9AA1AA dark */
+  --ds-list-view-root-bg-hover:            var(--ds-bg-hover-primary);  /* #BDE8FF / #016398 dark */
+  --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);       /* #F1F2F4 / #9AA1AA dark */
   --ds-list-view-root-opacity-pressed:     var(--ds-opacity-pressed);   /* 0.8 */
   --ds-list-view-root-border-color-generic:  var(--ds-borderColor-subtle);   /* divider — #EEEFF1 / #606772 dark */
-  --ds-list-view-root-border-color-selected: var(--ds-borderColor-primary);  /* #4BA9C0 fijo */
-  --ds-list-view-root-border-color-disabled: var(--ds-borderColor-disabled); /* #B9BEC4 / #7B8490 dark */
+  --ds-list-view-root-border-color-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
+  --ds-list-view-root-border-color-disabled: var(--ds-borderColor-disabled); /* #AAAFB5 / #7B8490 dark */
   --ds-list-view-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-list-view-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-list-view-root-border-width-generic:  1.5px;
   --ds-list-view-root-border-width-focus:    2px;
   --ds-list-view-root-border-radius-focus-inner: 8px;
   --ds-list-view-root-border-radius-focus-outer: 10px;
-  --ds-list-view-ribbon-border-color-selected: var(--ds-borderColor-primary);  /* #4BA9C0 fijo */
+  --ds-list-view-ribbon-border-color-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
   --ds-list-view-ribbon-border-color-disabled: var(--ds-borderColor-disabled);
   --ds-list-view-ribbon-border-width-selected: 4px;
-  --ds-list-view-icon-left-fg-generic:     var(--ds-fg-icon-primary);   /* #4BA9C0 fijo */
+  --ds-list-view-icon-left-fg-generic:     var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
   --ds-list-view-icon-left-fg-disabled:    var(--ds-fg-icon-disabled);
-  --ds-list-view-icon-chevron-fg-generic:  var(--ds-fg-icon-subtle);    /* #9AA1AA / #EEEFF1 dark */
+  --ds-list-view-icon-chevron-fg-generic:  var(--ds-fg-icon-subtle);    /* #676D76 / #EEEFF1 dark */
   --ds-list-view-icon-chevron-fg-disabled: var(--ds-fg-icon-disabled);
-  --ds-list-view-icon-right-fg-generic:    var(--ds-fg-icon-primary);   /* #4BA9C0 fijo */
+  --ds-list-view-icon-right-fg-generic:    var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
   --ds-list-view-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1747,29 +1753,29 @@
   --ds-file-upload-common-gap-generic:           12px;                       /* spacing/lg — gap interno icono-texto-cierre dentro de una fila */
   --ds-file-upload-common-stack-gap-generic:     8px;                        /* spacing/md — gap vertical entre bloques apilados (ListItem root↔Validation Message; FileSelector: DropZone↔lista) */
   --ds-file-upload-common-border-radius-generic: 4px;                        /* borderRadius/sm */
-  --ds-file-upload-common-bg-hover:              var(--ds-bg-hover-primary); /* #B8E6FE / #016398 dark */
-  --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* #4BA9C0 fijo */
+  --ds-file-upload-common-bg-hover:              var(--ds-bg-hover-primary); /* #BDE8FF / #016398 dark */
+  --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* #0A7C92 fijo */
 
   /* ListItem */
   --ds-file-upload-list-item-border-color-generic: var(--ds-borderColor-subtle); /* divisor de fila — #EEEFF1 / #606772 dark */
-  --ds-file-upload-list-item-border-color-error:   var(--ds-borderColor-error);  /* #AD2525 fijo */
+  --ds-file-upload-list-item-border-color-error:   var(--ds-borderColor-error);  /* #B12A29 fijo */
   --ds-file-upload-list-item-border-width-generic: 1px;                         /* borderWidth/sm-desk — valor asumido, pendiente de confirmar en Figma (el token propio se borró en la limpieza) */
   --ds-file-upload-list-item-padding-ver-generic:  4px;                         /* spacing/xs */
   --ds-file-upload-list-item-padding-hor-generic:  4px;                         /* spacing/xs */
   --ds-file-upload-list-item-text-fg-generic:      var(--ds-fg-label-default);  /* invierte — Uploaded y Error comparten a propósito, el error se marca con el borde, no con el texto */
-  --ds-file-upload-list-item-text-fg-uploading:    var(--ds-fg-label-subtle);   /* #9AA1AA fijo */
+  --ds-file-upload-list-item-text-fg-uploading:    var(--ds-fg-label-subtle);   /* #676D76 fijo */
   --ds-file-upload-list-item-focus-ring-border-color-outer: var(--ds-borderColor-focus-outer);
   --ds-file-upload-list-item-focus-ring-border-color-inner: var(--ds-borderColor-focus-inner);
 
   /* DropZone */
-  --ds-file-upload-drop-zone-border-color-generic:  var(--ds-borderColor-default);  /* #9AA1AA / #454C56 dark */
-  --ds-file-upload-drop-zone-border-color-disabled: var(--ds-borderColor-disabled); /* #B9BEC4 / #7B8490 dark */
+  --ds-file-upload-drop-zone-border-color-generic:  var(--ds-borderColor-default);  /* #676D76 / #454C56 dark */
+  --ds-file-upload-drop-zone-border-color-disabled: var(--ds-borderColor-disabled); /* #AAAFB5 / #7B8490 dark */
   --ds-file-upload-drop-zone-border-width-generic:  1.5px;                          /* borderWidth/md */
   --ds-file-upload-drop-zone-padding-ver-generic:   16px;                          /* spacing/xl */
   --ds-file-upload-drop-zone-padding-hor-generic:   12px;                          /* spacing/lg */
   --ds-file-upload-drop-zone-gap-generic:           6px;                           /* spacing/sm */
   --ds-file-upload-drop-zone-text-fg-generic:       var(--ds-fg-default);          /* invierte */
-  --ds-file-upload-drop-zone-text-fg-disabled:      var(--ds-fg-label-disabled);   /* #B9BEC4 / #7B8490 dark */
+  --ds-file-upload-drop-zone-text-fg-disabled:      var(--ds-fg-label-disabled);   /* #AAAFB5 / #7B8490 dark */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs (tabs/*)
@@ -1783,13 +1789,13 @@
      Focus: un único anillo en la raíz del propio Tab (no doble anillo).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-tabs-root-bg-generic:              var(--ds-bg-default);          /* #FFFFFF / #050506 dark */
-  --ds-tabs-root-bg-hover:                var(--ds-bg-hover-primary);    /* #B8E6FE / #016398 dark */
+  --ds-tabs-root-bg-hover:                var(--ds-bg-hover-primary);    /* #BDE8FF / #016398 dark */
   --ds-tabs-root-bg-pressed:              var(--ds-bg-subtle);           /* gris — Pressed en Line y Contained (29/09: sustituye a la opacidad 0.8) */
   --ds-tabs-root-border-bottom-color-generic: var(--ds-borderColor-subtle); /* línea bajo la barra (Line) */
   --ds-tabs-root-border-color-focus:      var(--ds-borderColor-focus-outer);
   --ds-tabs-root-border-width-focus:      2px;
   --ds-tabs-text-fg-generic:              var(--ds-fg-default);          /* invierte */
-  --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #4BA9C0 fijo */
+  --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #0A7C92 fijo */
   --ds-tabs-ribbon-border-width-selected: 4px;                           /* borderWidth/xl — Figma ya enlazado (29/09) */
 
   /* Size S/M/L — fijos (Base dimension/150|175|200), texto label xs/sm/md:
@@ -1823,11 +1829,11 @@
      borde de pantalla al que se ancla.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-drawer-root-bg-primary:            var(--ds-bg-default); /* #FFFFFF / #050506 dark */
-  --ds-drawer-root-bg-secondary:          var(--ds-bg-page);    /* #F9FAFA / #464B53 dark */
+  --ds-drawer-root-bg-secondary:          var(--ds-bg-page);    /* #FAFBFB / #464B53 dark */
   --ds-drawer-root-border-color-generic:  var(--ds-borderColor-subtle);
   --ds-drawer-root-border-width-generic:  1.5px;                /* borderWidth/md */
   --ds-drawer-root-border-radius-generic: 8px;                  /* literal, Figma — solo en el borde opuesto al anclaje */
-  --ds-drawer-icon-fg-generic:            var(--ds-fg-icon-primary); /* #4BA9C0 fijo */
+  --ds-drawer-icon-fg-generic:            var(--ds-fg-icon-primary); /* #0A7C92 fijo */
   --ds-drawer-collapsed-size:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — sobreescribible por el consumidor */
   --ds-drawer-expanded-size:              240px; /* ídem en Expanded/Standard */
 
@@ -1861,30 +1867,30 @@
      lo consume tal cual. `root/opacity-pressed` es opacidad (0.8), no color
      — mismo patrón ya usado en Accordion/Icon Button/Segmented Control.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-steps-node-bg-active:                    var(--ds-bg-primary);      /* #4BA9C0 */
-  --ds-steps-node-bg-completed:                  var(--ds-bg-success);      /* #389A3D */
+  --ds-steps-node-bg-active:                    var(--ds-bg-primary);      /* #0A7C92 */
+  --ds-steps-node-bg-completed:                  var(--ds-bg-success);      /* #0E6D1A */
   --ds-steps-node-fg-incomplete:                 var(--ds-fg-default);      /* #050506 */
   --ds-steps-node-fg-active:                     var(--ds-fg-onColor);      /* #FFFFFF */
   --ds-steps-node-fg-completed:                  var(--ds-fg-onColor);      /* #FFFFFF */
-  --ds-steps-node-border-color-incomplete:       var(--ds-borderColor-emphasis); /* #2C2F34 */
-  --ds-steps-node-border-color-active:           var(--ds-borderColor-primary);  /* #4BA9C0 — mismo valor que el bg, el borde no aporta contraste extra aquí */
-  --ds-steps-node-border-color-completed:        var(--ds-borderColor-success);  /* #389A3D — ídem */
+  --ds-steps-node-border-color-incomplete:       var(--ds-borderColor-emphasis); /* #292C31 */
+  --ds-steps-node-border-color-active:           var(--ds-borderColor-primary);  /* #0A7C92 — mismo valor que el bg, el borde no aporta contraste extra aquí */
+  --ds-steps-node-border-color-completed:        var(--ds-borderColor-success);  /* #0E6D1A — ídem */
   --ds-steps-border-width:                       2px;
-  --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* #2C2F34, mismo gris que el borde Incomplete */
+  --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* #292C31, mismo gris que el borde Incomplete */
 
   --ds-steps-root-bg-primary-incomplete:         var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-primary-active:             var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-primary-active:             var(--ds-bg-page);         /* #FAFBFB */
   --ds-steps-root-bg-primary-completed:          var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-primary-completed-selected: var(--ds-bg-page);         /* #F9FAFA */
-  --ds-steps-root-bg-secondary-incomplete:       var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-primary-completed-selected: var(--ds-bg-page);         /* #FAFBFB */
+  --ds-steps-root-bg-secondary-incomplete:       var(--ds-bg-page);         /* #FAFBFB */
   --ds-steps-root-bg-secondary-active:           var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-secondary-completed:        var(--ds-bg-page);         /* #F9FAFA */
+  --ds-steps-root-bg-secondary-completed:        var(--ds-bg-page);         /* #FAFBFB */
   --ds-steps-root-bg-secondary-completed-selected: var(--ds-bg-default);    /* #FFFFFF */
-  --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);/* #B8E6FE */
+  --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);/* #BDE8FF */
   --ds-steps-root-opacity-pressed:               0.8;
   --ds-steps-root-border-width-focus:            2px;
   --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner); /* #FFFFFF */
-  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer); /* #016398 light / #B8E6FE dark */
+  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer); /* #094F78 light / #B8E6FE dark */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Steps Navigator (steps/navigator/all/*)
@@ -1899,8 +1905,8 @@
   --ds-steps-navigator-root-padding-horizontal:  16px; /* spacing/xl */
   --ds-steps-navigator-root-fg-label:            var(--ds-fg-default); /* #050506 */
   --ds-steps-navigator-substep-icon-fg-incomplete: var(--ds-fg-default);  /* #050506 */
-  --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* #4BA9C0 */
-  --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-success);      /* #389A3D */
+  --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* #0A7C92 */
+  --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-success);      /* #0E6D1A */
   --ds-steps-navigator-substep-icon-size:        20px;
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1926,7 +1932,7 @@
      token propio. objectFit siempre "cover" (Figma scaleMode=FILL en las 5
      variantes, corregido desde FIT el mismo día).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #9AA1AA — image/all/caption/fg/generic */
+  --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #676D76 — image/all/caption/fg/generic */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — PageTitle (pageTitle/*)
@@ -1986,51 +1992,51 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --ds-fg-default:          #FFFFFF;
-    --ds-fg-subtle:           #9AA1AA;
-    --ds-fg-disabled:         #7B8490; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
+    --ds-fg-subtle:           #F1F2F4;
+    --ds-fg-disabled:         #5E6672; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
     --ds-fg-onColor:          #FFFFFF;
     --ds-fg-inverse:          #050506;
-    --ds-fg-primary:          #4BA9C0;
-    --ds-fg-secondary:        #FEF6F9;
-    --ds-fg-tertiary:         #F6F1F8;
+    --ds-fg-primary:          #A3D4E2;
+    --ds-fg-secondary:        #FFEEF5;
+    --ds-fg-tertiary:         #F9EFFD;
 
     /* fg por tipo de elemento — el "default" debe voltear a claro en dark.
        Faltaban: quedaban en #050506 (negro) → texto invisible sobre fondo oscuro
        en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
     --ds-fg-label-default:    #FFFFFF;
-    --ds-fg-label-secondary:  #FEF6F9; /* añadido 24/08 — Text atom */
-    --ds-fg-label-disabled:   #7B8490; /* añadido 24/08 — Text atom */
+    --ds-fg-label-secondary:  #FFF8FA; /* añadido 24/08 — Text atom */
+    --ds-fg-label-disabled:   #5E6672; /* añadido 24/08 — Text atom */
     --ds-fg-body-default:     #FFFFFF;
-    --ds-fg-body-subtle:      #EEEFF1; /* añadido 24/08 — DescriptionText/DetailText atoms */
-    --ds-fg-body-secondary:   #FBE4EE; /* añadido 24/08 — DetailText atom */
-    --ds-fg-body-tertiary:    #F6F1F8; /* añadido 24/08 — DetailText atom */
-    --ds-fg-body-disabled:    #7B8490; /* añadido 24/08 — DescriptionText/DetailText atoms */
+    --ds-fg-body-subtle:      #F1F2F4; /* añadido 24/08 — DescriptionText/DetailText atoms */
+    --ds-fg-body-secondary:   #FFEEF5; /* añadido 24/08 — DetailText atom */
+    --ds-fg-body-tertiary:    #FDF8FF; /* añadido 24/08 — DetailText atom */
+    --ds-fg-body-disabled:    #5E6672; /* añadido 24/08 — DescriptionText/DetailText atoms */
     --ds-fg-headline-default: #FFFFFF;
     --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
     --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
-    --ds-fg-title-disabled:   #7B8490;
-    --ds-fg-title-subtle:     #EEEFF1;
+    --ds-fg-title-disabled:   #5E6672;
+    --ds-fg-title-subtle:     #F1F2F4;
 
     /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
        ya corregido). Solo debe usarse cuando el fondo también invierte (bg-inverse:
        Button default-filled, CTALink primary) — para texto sobre superficie de color
        que NO invierte, usar *-onColor (Chip/Badge/Pagination, ya corregidos). */
     --ds-fg-label-inverse:    #050506;
-    --ds-fg-body-inverse:     #050506;
+    --ds-fg-body-inverse:     #292C31;
     --ds-fg-icon-inverse:     #050506;
 
     --ds-fg-icon-default:     #FFFFFF;
-    --ds-fg-icon-primary:     #4BA9C0;
-    --ds-fg-icon-secondary:   #FEF6F9;
-    --ds-fg-icon-tertiary:    #F6F1F8;
-    --ds-fg-icon-disabled:    #7B8490; /* añadido 24/08 — DetailText atom */
-    --ds-fg-icon-accent-primary: #4BA9C0;
+    --ds-fg-icon-primary:     #66AEC0;
+    --ds-fg-icon-secondary:   #FFF8FA;
+    --ds-fg-icon-tertiary:    #FDF8FF;
+    --ds-fg-icon-disabled:    #5E6672; /* añadido 24/08 — DetailText atom */
+    --ds-fg-icon-accent-primary: #66AEC0;
 
     --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
-    --ds-bg-page:             #464B53; /* corregido 11/08 — antes #050506, desincronizado de Figma */
-    --ds-bg-container:        #606772;
-    --ds-bg-subtle:           #7B8490; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
-    --ds-bg-disabled:         #9AA1AA; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
+    --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
+    --ds-bg-container:        #4C535D;
+    --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+    --ds-bg-disabled:         #676D76; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
     --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
     --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
@@ -2038,95 +2044,127 @@
        entre sí (bug de swap, ninguno coincidía con Figma); el resto no tenía
        override y caía al valor light. Todos los valores son la resolución real
        en vivo desde Figma (cadena de alias, no el JSON cacheado). */
-    --ds-bg-primary:          #4BA9C0; /* corregido — antes #286371 (swap con primary-bold) */
-    --ds-bg-primary-bold:     #F7FBFC; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
-    --ds-bg-primary-medium:   #A0D1DE;
-    --ds-bg-secondary:        #EE8FB9;
-    --ds-bg-secondary-medium: #E75D9B;
-    --ds-bg-tertiary:         #CAABD7;
-    --ds-bg-error:            #F3C4C4;
-    --ds-bg-error-subtle:     #F3C4C4; /* mismo valor que bg-error en dark — así resuelve Figma */
-    --ds-bg-success:          #CBECCC;
-    --ds-bg-success-subtle:   #CBECCC; /* mismo valor que bg-success en dark — así resuelve Figma */
-    --ds-bg-hover-primary:    #016398;
-    --ds-bg-accent-primary:   #CAE6ED;
-    --ds-bg-accent-secondary: #FBE4EE;
-    --ds-bg-warning:          #FFE7B8;
-    --ds-bg-info:             #B8E6FE;
-    --ds-bg-highlight:        #016398; /* sin consumidores hoy — reservado para InlineNotification */
+    --ds-bg-primary:          #0A7C92; /* corregido — antes #286371 (swap con primary-bold) */
+    --ds-bg-primary-bold:     #F6FAFB; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
+    --ds-bg-primary-medium:   #163B44;
+    --ds-bg-secondary:        #D61E74;
+    --ds-bg-secondary-medium: #631C39;
+    --ds-bg-tertiary:         #8B619E;
+    --ds-bg-error:            #D23435;
+    --ds-bg-error-subtle:     #61221F; /* mismo valor que bg-error en dark — así resuelve Figma */
+    --ds-bg-success:          #01831B;
+    --ds-bg-success-subtle:   #123F15; /* mismo valor que bg-success en dark — así resuelve Figma */
+    --ds-bg-hover-primary:    #094F78;
+    --ds-bg-accent-primary:   #163B44;
+    --ds-bg-accent-secondary: #631C39;
+    --ds-bg-warning:          #4B3203;
+    --ds-bg-info:             #0777B4;
+    --ds-bg-highlight:        #094F78; /* sin consumidores hoy — reservado para InlineNotification */
 
-    --ds-borderColor-default: #454C56;
-    --ds-borderColor-emphasis:#D8DBDE;
-    --ds-borderColor-accent:  #A0D1DE;
-    --ds-borderColor-primary: #4BA9C0;
-    --ds-borderColor-subtle:  #606772; /* añadido 24/08 — ListView atom */
-    --ds-borderColor-disabled: #7B8490; /* añadido 24/08 — ListView atom */
+    --ds-borderColor-default: #AAAFB5;
+    --ds-borderColor-emphasis:#FFFFFF;
+    --ds-borderColor-accent:  #A3D4E2;
+    --ds-borderColor-primary: #66AEC0;
+    --ds-borderColor-subtle:  #4C535D; /* añadido 24/08 — ListView atom */
+    --ds-borderColor-disabled: #5E6672; /* añadido 24/08 — ListView atom */
     --ds-borderColor-focus-inner: #050506;
-    --ds-borderColor-focus-outer: #B8E6FE;
-    --ds-borderColor-focus-outer-inverse: #016398;
+    --ds-borderColor-focus-outer: #BDE8FF;
+    --ds-borderColor-focus-outer-inverse: #094F78;
 
     --ds-opacity-hover-default: rgba(255,255,255,0.1);
     --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
-    --ds-opacity-overlay:       rgba(5,5,6,0.3);
+    --ds-opacity-overlay:       rgba(255,255,255,0.3);
 
     /* Link dark */
     --ds-link-fg-label-default:        #FFFFFF;
-    --ds-link-fg-label-accent:         #4BA9C0;
+    --ds-link-fg-label-accent:         #A3D4E2;
     --ds-link-fg-icon-default:         #FFFFFF;
-    --ds-link-fg-icon-accent:          #4BA9C0;
-    --ds-link-border-bottom-default:   #A0D1DE;
-    --ds-link-border-bottom-accent:    #A0D1DE;
+    --ds-link-fg-icon-accent:          #66AEC0;
+    --ds-link-border-bottom-default:   #A3D4E2;
+    --ds-link-border-bottom-accent:    #A3D4E2;
     --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
+    /* añadidos 19/10 (A11y-2): tokens de Mode que faltaban en dark y heredaban el valor light */
+    --ds-borderColor-accent-inverse: #13525F;
+    --ds-borderColor-accent-primary: #66AEC0;
+    --ds-borderColor-error: #FB7F7D;
+    --ds-borderColor-focus-inner-inverse: #FFFFFF;
+    --ds-borderColor-info: #BDE8FF;
+    --ds-borderColor-info-inverse: #8DD5FE;
+    --ds-borderColor-inverse: #050506;
+    --ds-borderColor-secondary: #FEB9D6;
+    --ds-borderColor-success: #60B666;
+    --ds-borderColor-tertiary: #E1C2EE;
+    --ds-borderColor-tertiary-inverse: #8B619E;
+    --ds-borderColor-warning: #F1C771;
+    --ds-fg-error: #FDBCBB;
+    --ds-fg-headline-primary: #A3D4E2;
+    --ds-fg-headline-secondary: #FFEEF5;
+    --ds-fg-headline-subtle: #F1F2F4;
+    --ds-fg-headline-tertiary: #F9EFFD;
+    --ds-fg-icon-error: #FB7F7D;
+    --ds-fg-icon-info: #F4FAFE;
+    --ds-fg-icon-subtle: #F1F2F4;
+    --ds-fg-icon-success: #60B666;
+    --ds-fg-icon-warning: #F1C771;
+    --ds-fg-info: #BDE8FF;
+    --ds-fg-label-primary: #A3D4E2;
+    --ds-fg-label-subtle: #F1F2F4;
+    --ds-fg-label-tertiary: #E1C2EE;
+    --ds-fg-success: #9FDBA2;
+    --ds-fg-title-primary: #A3D4E2;
+    --ds-fg-warning: #F1C771;
+    --ds-opacity-hover-subtle: rgba(255,255,255,0.1);
+    --ds-opacity-hover-subtle-inverse: rgba(5,5,6,0.1);
   }
 }
 
 [data-mode="dark"] {
   --ds-fg-default:          #FFFFFF;
-  --ds-fg-subtle:           #9AA1AA;
-  --ds-fg-disabled:         #7B8490; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
+  --ds-fg-subtle:           #F1F2F4;
+  --ds-fg-disabled:         #5E6672; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #050506;
-  --ds-fg-primary:          #4BA9C0;
-  --ds-fg-secondary:        #FEF6F9;
-  --ds-fg-tertiary:         #F6F1F8;
+  --ds-fg-primary:          #A3D4E2;
+  --ds-fg-secondary:        #FFEEF5;
+  --ds-fg-tertiary:         #F9EFFD;
 
   /* fg por tipo de elemento — el "default" debe voltear a claro en dark.
      Faltaban: quedaban en #050506 (negro) → texto invisible sobre fondo oscuro
      en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
   --ds-fg-label-default:    #FFFFFF;
-  --ds-fg-label-secondary:  #FEF6F9; /* añadido 24/08 — Text atom */
-  --ds-fg-label-disabled:   #7B8490; /* añadido 24/08 — Text atom */
+  --ds-fg-label-secondary:  #FFF8FA; /* añadido 24/08 — Text atom */
+  --ds-fg-label-disabled:   #5E6672; /* añadido 24/08 — Text atom */
   --ds-fg-body-default:     #FFFFFF;
-  --ds-fg-body-subtle:      #EEEFF1; /* añadido 24/08 — DescriptionText/DetailText atoms */
-  --ds-fg-body-secondary:   #FBE4EE; /* añadido 24/08 — DetailText atom */
-  --ds-fg-body-tertiary:    #F6F1F8; /* añadido 24/08 — DetailText atom */
-  --ds-fg-body-disabled:    #7B8490; /* añadido 24/08 — DescriptionText/DetailText atoms */
+  --ds-fg-body-subtle:      #F1F2F4; /* añadido 24/08 — DescriptionText/DetailText atoms */
+  --ds-fg-body-secondary:   #FFEEF5; /* añadido 24/08 — DetailText atom */
+  --ds-fg-body-tertiary:    #FDF8FF; /* añadido 24/08 — DetailText atom */
+  --ds-fg-body-disabled:    #5E6672; /* añadido 24/08 — DescriptionText/DetailText atoms */
   --ds-fg-headline-default: #FFFFFF;
   --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
   --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
-  --ds-fg-title-disabled:   #7B8490;
-  --ds-fg-title-subtle:     #EEEFF1;
+  --ds-fg-title-disabled:   #5E6672;
+  --ds-fg-title-subtle:     #F1F2F4;
 
   /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
      ya corregido). Solo debe usarse cuando el fondo también invierte (bg-inverse:
      Button default-filled, CTALink primary) — para texto sobre superficie de color
      que NO invierte, usar *-onColor (Chip/Badge/Pagination, ya corregidos). */
   --ds-fg-label-inverse:    #050506;
-  --ds-fg-body-inverse:     #050506;
+  --ds-fg-body-inverse:     #292C31;
   --ds-fg-icon-inverse:     #050506;
 
   --ds-fg-icon-default:     #FFFFFF;
-  --ds-fg-icon-primary:     #4BA9C0;
-  --ds-fg-icon-secondary:   #FEF6F9;
-  --ds-fg-icon-tertiary:    #F6F1F8;
-  --ds-fg-icon-disabled:    #7B8490; /* añadido 24/08 — DetailText atom */
-  --ds-fg-icon-accent-primary: #4BA9C0;
+  --ds-fg-icon-primary:     #66AEC0;
+  --ds-fg-icon-secondary:   #FFF8FA;
+  --ds-fg-icon-tertiary:    #FDF8FF;
+  --ds-fg-icon-disabled:    #5E6672; /* añadido 24/08 — DetailText atom */
+  --ds-fg-icon-accent-primary: #66AEC0;
 
   --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
-  --ds-bg-page:             #464B53; /* corregido 11/08 — antes #050506, desincronizado de Figma */
-  --ds-bg-container:        #606772;
-  --ds-bg-subtle:           #7B8490; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
-  --ds-bg-disabled:         #9AA1AA; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
+  --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
+  --ds-bg-container:        #4C535D;
+  --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+  --ds-bg-disabled:         #676D76; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
   --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
   --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
@@ -2134,44 +2172,76 @@
      entre sí (bug de swap, ninguno coincidía con Figma); el resto no tenía
      override y caía al valor light. Todos los valores son la resolución real
      en vivo desde Figma (cadena de alias, no el JSON cacheado). */
-  --ds-bg-primary:          #4BA9C0; /* corregido — antes #286371 (swap con primary-bold) */
-  --ds-bg-primary-bold:     #F7FBFC; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
-  --ds-bg-primary-medium:   #A0D1DE;
-  --ds-bg-secondary:        #EE8FB9;
-  --ds-bg-secondary-medium: #E75D9B;
-  --ds-bg-tertiary:         #CAABD7;
-  --ds-bg-error:            #F3C4C4;
-  --ds-bg-error-subtle:     #F3C4C4; /* mismo valor que bg-error en dark — así resuelve Figma */
-  --ds-bg-success:          #CBECCC;
-  --ds-bg-success-subtle:   #CBECCC; /* mismo valor que bg-success en dark — así resuelve Figma */
-  --ds-bg-hover-primary:    #016398;
-  --ds-bg-accent-primary:   #CAE6ED;
-  --ds-bg-accent-secondary: #FBE4EE;
-  --ds-bg-warning:          #FFE7B8;
-  --ds-bg-info:             #B8E6FE;
-  --ds-bg-highlight:        #016398; /* sin consumidores hoy — reservado para InlineNotification */
+  --ds-bg-primary:          #0A7C92; /* corregido — antes #286371 (swap con primary-bold) */
+  --ds-bg-primary-bold:     #F6FAFB; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
+  --ds-bg-primary-medium:   #163B44;
+  --ds-bg-secondary:        #D61E74;
+  --ds-bg-secondary-medium: #631C39;
+  --ds-bg-tertiary:         #8B619E;
+  --ds-bg-error:            #D23435;
+  --ds-bg-error-subtle:     #61221F; /* mismo valor que bg-error en dark — así resuelve Figma */
+  --ds-bg-success:          #01831B;
+  --ds-bg-success-subtle:   #123F15; /* mismo valor que bg-success en dark — así resuelve Figma */
+  --ds-bg-hover-primary:    #094F78;
+  --ds-bg-accent-primary:   #163B44;
+  --ds-bg-accent-secondary: #631C39;
+  --ds-bg-warning:          #4B3203;
+  --ds-bg-info:             #0777B4;
+  --ds-bg-highlight:        #094F78; /* sin consumidores hoy — reservado para InlineNotification */
 
-  --ds-borderColor-default: #454C56;
-  --ds-borderColor-emphasis:#D8DBDE;
-  --ds-borderColor-accent:  #A0D1DE;
-  --ds-borderColor-primary: #4BA9C0;
-  --ds-borderColor-subtle:  #606772; /* añadido 24/08 — ListView atom */
-  --ds-borderColor-disabled: #7B8490; /* añadido 24/08 — ListView atom */
+  --ds-borderColor-default: #AAAFB5;
+  --ds-borderColor-emphasis:#FFFFFF;
+  --ds-borderColor-accent:  #A3D4E2;
+  --ds-borderColor-primary: #66AEC0;
+  --ds-borderColor-subtle:  #4C535D; /* añadido 24/08 — ListView atom */
+  --ds-borderColor-disabled: #5E6672; /* añadido 24/08 — ListView atom */
   --ds-borderColor-focus-inner: #050506;
-  --ds-borderColor-focus-outer: #B8E6FE;
-  --ds-borderColor-focus-outer-inverse: #016398;
+  --ds-borderColor-focus-outer: #BDE8FF;
+  --ds-borderColor-focus-outer-inverse: #094F78;
 
   --ds-opacity-hover-default: rgba(255,255,255,0.1);
   --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
-  --ds-opacity-overlay:       rgba(5,5,6,0.3);
+  --ds-opacity-overlay:       rgba(255,255,255,0.3);
 
   --ds-link-fg-label-default:        #FFFFFF;
-  --ds-link-fg-label-accent:         #4BA9C0;
+  --ds-link-fg-label-accent:         #A3D4E2;
   --ds-link-fg-icon-default:         #FFFFFF;
-  --ds-link-fg-icon-accent:          #4BA9C0;
-  --ds-link-border-bottom-default:   #A0D1DE;
-  --ds-link-border-bottom-accent:    #A0D1DE;
+  --ds-link-fg-icon-accent:          #66AEC0;
+  --ds-link-border-bottom-default:   #A3D4E2;
+  --ds-link-border-bottom-accent:    #A3D4E2;
   --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
+  /* añadidos 19/10 (A11y-2): tokens de Mode que faltaban en dark y heredaban el valor light */
+  --ds-borderColor-accent-inverse: #13525F;
+  --ds-borderColor-accent-primary: #66AEC0;
+  --ds-borderColor-error: #FB7F7D;
+  --ds-borderColor-focus-inner-inverse: #FFFFFF;
+  --ds-borderColor-info: #BDE8FF;
+  --ds-borderColor-info-inverse: #8DD5FE;
+  --ds-borderColor-inverse: #050506;
+  --ds-borderColor-secondary: #FEB9D6;
+  --ds-borderColor-success: #60B666;
+  --ds-borderColor-tertiary: #E1C2EE;
+  --ds-borderColor-tertiary-inverse: #8B619E;
+  --ds-borderColor-warning: #F1C771;
+  --ds-fg-error: #FDBCBB;
+  --ds-fg-headline-primary: #A3D4E2;
+  --ds-fg-headline-secondary: #FFEEF5;
+  --ds-fg-headline-subtle: #F1F2F4;
+  --ds-fg-headline-tertiary: #F9EFFD;
+  --ds-fg-icon-error: #FB7F7D;
+  --ds-fg-icon-info: #F4FAFE;
+  --ds-fg-icon-subtle: #F1F2F4;
+  --ds-fg-icon-success: #60B666;
+  --ds-fg-icon-warning: #F1C771;
+  --ds-fg-info: #BDE8FF;
+  --ds-fg-label-primary: #A3D4E2;
+  --ds-fg-label-subtle: #F1F2F4;
+  --ds-fg-label-tertiary: #E1C2EE;
+  --ds-fg-success: #9FDBA2;
+  --ds-fg-title-primary: #A3D4E2;
+  --ds-fg-warning: #F1C771;
+  --ds-opacity-hover-subtle: rgba(255,255,255,0.1);
+  --ds-opacity-hover-subtle-inverse: rgba(5,5,6,0.1);
 }
 
 /* ════ DEVICE — Tablet (Figma modo Tablet) · ≥768px ════ */
