@@ -5,3 +5,7 @@ dist/
 
 # Claude Code — configuración local de cada usuario
 .claude/settings.local.json
+
+# Escaneo de accesibilidad (npm run a11y)
+dist-a11y/
+a11y-report.json
