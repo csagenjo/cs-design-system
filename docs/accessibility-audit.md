@@ -55,6 +55,8 @@ cause, not by component.
 
 ## A · Colour contrast (tokens)
 
+> **Status 19/10/2026:** fixed in Figma — contrast-based Base palette + 61 Theme alias changes + 2 BadgeHighlight label tokens. Live check: 462 pairs × 2 modes, 0 failures. Pending: JSON re-export, `tokens.css` sync, BadgeHighlight.jsx, axe re-scan. See CLAUDE.md §10.
+
 Figma and code share the same colour tokens, so these fixes are made in
 Figma first (Theme / Mode layers), re-exported, and then synced to
 `tokens.css`. **They need a design decision from Carol** before any change:
