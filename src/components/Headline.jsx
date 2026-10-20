@@ -1,6 +1,6 @@
 /**
  * Headline — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2.0
  *
  * Títulos semánticos h1–h6. 6 tamaños × 4 colores.
  *
@@ -9,16 +9,24 @@
  * token de Componente, según la regla de tipografía (CLAUDE.md §5). Bold en
  * las 24 variantes (h1-h6 × 4 colores), no solo h1 — cambiado 22/09.
  *
- * `level` fija a la vez la etiqueta HTML y el tamaño (van bloqueados). Los
- * 6 niveles son RESPONSIVE vía tokens Device (mobile-first, 28/09/2026 — el
- * componente no tiene media queries propias, las resuelve tokens.css):
- *   level → token          Mobile   Tablet   Desktop   (fontSize/lineHeight)
- *   1 h1  headline/2xl      32/40    40/48    48/60
- *   2 h2  headline/xl       28/36    32/40    36/44
- *   3 h3  headline/lg       24/28    28/36    32/40
- *   4 h4  headline/md       22/28    24/28    28/36
- *   5 h5  headline/sm       19/24    22/28    24/28
- *   6 h6  headline/xs       16/20    19/24    19/24
+ * `level` y `size` SEPARADOS (v2, 20/10/2026 — audit §I, decisión de Carol):
+ *   · `level` (1–6) = la etiqueta HTML h1–h6. Depende de dónde va el título en
+ *     el esquema de la página, NUNCA de lo grande que se quiere ver.
+ *   · `size` ('2xl'…'xs') = solo el aspecto. Por defecto sigue al level
+ *     (1→2xl … 6→xs), así que todo el código anterior se ve igual.
+ *   Antes iban bloqueados y se elegía nivel por tamaño (SidebarMenu usaba un
+ *   h6 para un título pequeño → orden de encabezados roto).
+ *   Figma: propiedad `Size` (2xl…xs, antes `Variant` h1…h6); el nivel se anota
+ *   en cada instancia.
+ * Los 6 tamaños son RESPONSIVE vía tokens Device (mobile-first, 28/09/2026 —
+ * el componente no tiene media queries propias, las resuelve tokens.css):
+ *   size  token             Mobile   Tablet   Desktop   (fontSize/lineHeight)
+ *   2xl   headline/2xl      32/40    40/48    48/60
+ *   xl    headline/xl       28/36    32/40    36/44
+ *   lg    headline/lg       24/28    28/36    32/40
+ *   md    headline/md       22/28    24/28    28/36
+ *   sm    headline/sm       19/24    22/28    24/28
+ *   xs    headline/xs       16/20    19/24    19/24
  *   line-height = 1.25× redondeado al múltiplo de 4 más cercano (empate → abajo),
  *   29/09 — rejilla de 4 de tipografía; la lectura (body/label/title) va a 1.5×.
  *
@@ -34,6 +42,7 @@
  *
  * USO:
  *   <Headline level={1}>Título de página</Headline>
+ *   <Headline level={2} size="xs">Título de navegación (h2 pequeño)</Headline>
  *   <Headline level={2} color="primary">Sección</Headline>
  *   <Headline level={3} color="onColor">Sobre fondo de color</Headline>
  */
@@ -52,13 +61,13 @@ const css = `
   color:          var(--ds-headline-fg-default);
 }
 
-/* Tamaño = level (fontSize + lineHeight emparejados por rol, responsive vía tokens Device) */
-.ds-headline--1 { font-size: var(--ds-fontSize-headline-2xl); line-height: var(--ds-lineHeight-headline-2xl); }
-.ds-headline--2 { font-size: var(--ds-fontSize-headline-xl);  line-height: var(--ds-lineHeight-headline-xl);  }
-.ds-headline--3 { font-size: var(--ds-fontSize-headline-lg);  line-height: var(--ds-lineHeight-headline-lg);  }
-.ds-headline--4 { font-size: var(--ds-fontSize-headline-md);  line-height: var(--ds-lineHeight-headline-md);  }
-.ds-headline--5 { font-size: var(--ds-fontSize-headline-sm);  line-height: var(--ds-lineHeight-headline-sm);  }
-.ds-headline--6 { font-size: var(--ds-fontSize-headline-xs);  line-height: var(--ds-lineHeight-headline-xs);  }
+/* Tamaño = size (fontSize + lineHeight emparejados por rol, responsive vía tokens Device) */
+.ds-headline--2xl { font-size: var(--ds-fontSize-headline-2xl); line-height: var(--ds-lineHeight-headline-2xl); }
+.ds-headline--xl  { font-size: var(--ds-fontSize-headline-xl);  line-height: var(--ds-lineHeight-headline-xl);  }
+.ds-headline--lg  { font-size: var(--ds-fontSize-headline-lg);  line-height: var(--ds-lineHeight-headline-lg);  }
+.ds-headline--md  { font-size: var(--ds-fontSize-headline-md);  line-height: var(--ds-lineHeight-headline-md);  }
+.ds-headline--sm  { font-size: var(--ds-fontSize-headline-sm);  line-height: var(--ds-lineHeight-headline-sm);  }
+.ds-headline--xs  { font-size: var(--ds-fontSize-headline-xs);  line-height: var(--ds-lineHeight-headline-xs);  }
 
 /* Color */
 .ds-headline--primary   { color: var(--ds-headline-fg-primary);   }
@@ -77,8 +86,11 @@ function injectStyles() {
 
 /* ─── Headline ─────────────────────────────────────────────────────────────── */
 
+const SIZES = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs'];          // índice = level - 1
+
 export function Headline({
-  level = 1,          // 1..6 → h1..h6 (+ tamaño bloqueado)
+  level = 1,          // 1..6 → h1..h6 (solo la etiqueta)
+  size,               // '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' — por defecto, el del level
   color = 'default',  // 'default' | 'primary' | 'secondary' | 'onColor'
   children,
   id,
@@ -88,10 +100,11 @@ export function Headline({
 
   const lvl = Math.min(6, Math.max(1, level));
   const Tag = `h${lvl}`;
+  const resolvedSize = SIZES.includes(size) ? size : SIZES[lvl - 1];
 
   const classes = [
     'ds-headline',
-    `ds-headline--${lvl}`,
+    `ds-headline--${resolvedSize}`,
     color !== 'default' ? `ds-headline--${color}` : '',
     className || '',
   ].filter(Boolean).join(' ');

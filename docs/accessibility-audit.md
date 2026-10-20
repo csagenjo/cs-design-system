@@ -79,7 +79,12 @@ cause, not by component.
 |---|---|---|
 | A11y-2 · Colour | ✅ 19/10/2026 | colour-contrast 317 → 0 outside disabled |
 | A11y-0 · Foundations | ✅ 20/10/2026 — shared pieces built and tested; D and the StepNavigator bug fixed. Open criticals 14 → **9** (the five D findings) | 68 ARIA failures, unchanged by design (the helpers are wired into components in A11y-1/3/4); 0 in the pieces touched |
+| Headline `level` / `size` split | ✅ 20/10/2026 (pulled forward from A11y-5) — code + Figma | heading-order fixed (SidebarMenu): 68 → 66 |
 | A11y-1 · Critical blockers | Next | — |
+
+**Decisions (20/10/2026, Carol):**
+- **Screen-reader language: English.** Every built-in hidden string ("(opens in new tab)", "Close", "Back", "Remove file"…) is English by default and becomes a prop so an app can translate it. Applied in A11y-5 (K).
+- **Headline:** `level` (h1–h6 tag) and `size` (2xl–xs, visual) are separate; `size` defaults to the level's step, so existing code looks the same. Figma: the `Variant` property (h1–h6) is now `Size` (2xl–xs); the heading level is annotated per instance.
 
 ### A11y-0 · what exists now
 
@@ -266,9 +271,10 @@ there's no `href`. That fixes every consumer at once.
 ## I · Headings and structure (🟠)
 
 - Accordion: trigger not inside a heading; no `aria-controls` / region.
-- Headline: `level` sets both the tag and the visual size, so people pick a
+- ~~Headline: `level` sets both the tag and the visual size, so people pick a
   level for its size (SidebarMenu uses `level={6}` for a menu title). Split
-  into `level` + `size`.
+  into `level` + `size`.~~ ✅ 20/10/2026 — split in code and Figma; SidebarMenu
+  title is now `level={2} size="xs"`.
 - SectionHeader: `role="heading" aria-level={2}` hard-coded on a `<div>`.
 - Dialog title and ErrorAndEmptyState title are `<p>`; LinkList title is a
   fixed `<h2>` with no styling (see A17).
@@ -294,8 +300,9 @@ there's no `href`. That fixes every consumer at once.
 
 Hidden strings mix languages: "(opens in new tab)", "Loading", "Step X of
 Y", "Expand", "More", "Edit" vs "Cerrar", "Volver", "Eliminar fichero",
-"Buscar". **Decision needed:** the system's default language. Then every
-built-in string becomes a prop with that default.
+"Buscar". ~~**Decision needed:** the system's default language.~~ **Decided
+20/10/2026: English.** Every built-in string becomes a prop with an English
+default (A11y-5).
 
 ## Bug found during the audit
 
@@ -320,7 +327,7 @@ touched, and the Figma + inventory Accessibility sections updated.
 | **A11y-2 · Colour** | A1–A17: decide steps in Figma (Theme / Mode), re-export, sync `tokens.css`, re-scan both modes. Includes the open Pagination 2.7:1 debt and the borderColor dark-mode audit | Biggest visual change; done in Figma first | **Yes — brand teal decision** |
 | **A11y-3 · State and names** | E and G | Mostly additive props, low risk | — |
 | **A11y-4 · Forms and focus** | H and F; `RadioGroup` | Builds on the live region from A11y-0 | Required-field marker style (Figma) |
-| **A11y-5 · Structure, pointer, language** | I, J (rest), K. Headline `level`/`size` split | Touches APIs consumers use | **Yes — default language; Headline API change** |
+| **A11y-5 · Structure, pointer, language** | I, J (rest), K (English defaults as props). ~~Headline `level`/`size` split~~ ✅ done 20/10 | Touches APIs consumers use | ~~Yes~~ decided 20/10: English; Headline split |
 | **Close-out** | Screen-reader pass (VoiceOver + NVDA), 200 % / 400 % zoom, forced colors check; every component's Accessibility section says "no known gaps" | Proves the claim | — |
 
 ---
@@ -405,7 +412,7 @@ Colour issues (A) are in the tables above and not repeated here.
 - **TabItem** — 🟠 doesn't forward props [C] · 🟡 `role="tab"` outside a tablist
 - **Tabs** — 🟠 no roving tabindex / arrows [C] · 🟠 no tab ↔ panel link [C] · 🟡 tablist unnamed
 - **TopNavigation** — 🔴 flydown hover-only [C] · ~~🔴 flydown links without `href` [D]~~ ✅ · 🟠 nav built as tablist · 🟠 no Escape · 🟠 menu button no `aria-expanded` [E] · 🟠 mobile panel not a modal [B] · 🟡 flydown after all items in DOM · 🟡 group titles not headings · 🟡 `nav` unnamed
-- **SidebarMenu** — 🟠 `role="tree"` misuse [C] · 🟠 parents no `aria-expanded` [E] · 🟠 selected no `aria-current` [E] · 🟡 no `nav` landmark · axe: heading order (`h6`) [I]
+- **SidebarMenu** — 🟠 `role="tree"` misuse [C] · 🟠 parents no `aria-expanded` [E] · 🟠 selected no `aria-current` [E] · 🟡 no `nav` landmark · ~~axe: heading order (`h6`) [I]~~ ✅
 - **StepNavigator** — 🟠 chapter no `aria-expanded` [E] · 🟠 selected by colour only [E] · 🟠 status not in text [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
 - **SubstepNavigator** — 🟠 active/completed by colour only [E] · 🟠 selected by colour only [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
 - **StepIndicatorLarge** — 🟠 not a list, no current step [I][E]
@@ -416,7 +423,7 @@ Colour issues (A) are in the tables above and not repeated here.
 
 ### Page structure
 - **PageTitle** — ~~🔴 breadcrumb and nav links without `href` [D]~~ ✅ · 🟠 "Volver" button does nothing · 🟡 breadcrumb not `ol`, no `aria-current` · 🟡 icon-only buttons may be unnamed
-- **Headline** — 🟠 level tied to visual size [I]
+- **Headline** — ~~🟠 level tied to visual size [I]~~ ✅
 - **SectionHeader** — 🟠 hard-coded `aria-level={2}` on div [I]
 - **DropZone** — 🔴 hover disables the button [J] · 🟠 "Button" default name [G] · 🟡 instructions not linked
 - **FileSelector** — 🟠 `buttonLabel` not forwarded ("Button") [G] · 🟠 add/remove not announced [H] · 🟡 focus lost on remove [F] · 🟡 rows not a list

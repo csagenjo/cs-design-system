@@ -539,6 +539,11 @@ export default function Gallery({ mode }) {
           <div className="a11y-onsurface">
             <Headline level={3} color="onColor">Headline onColor</Headline>
           </div>
+          <div>
+            {/* level y size separados (v2): etiqueta h3, aspecto 2xl / etiqueta h3, aspecto xs */}
+            <Headline level={3} size="2xl">h3 con size 2xl</Headline>
+            <Headline level={3} size="xs">h3 con size xs</Headline>
+          </div>
         </Col>
       </Section>
 
