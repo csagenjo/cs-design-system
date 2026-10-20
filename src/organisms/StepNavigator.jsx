@@ -9,12 +9,12 @@
  * criterio que SidebarMenu con sus hijos — StepNavigator no gestiona una
  * lista, solo es una fila).
  *
- * `appearance="primary"` (fondo por defecto/mobile) vs `"secondary"` (fondo
- * gris claro/web) — decide qué fondo usa cada `state`, nunca el color de marca.
- * Hasta el 20/10/2026 este eje se llamaba `style`, el mismo nombre que el
- * `style` inline de React: `style="secondary"` rompía React (error #62).
- * Renombrado a `appearance` (Figma: propiedad `Style`). Un `style` de tipo
- * string se sigue aceptando como `appearance`, con aviso en consola en dev.
+ * `appearance` (Figma: `Style`) = sobre qué fondo de página va: `"onDefault"`
+ * (bg/default, blanco en claro — mobile) o `"onPage"` (bg/page, gris muy claro
+ * — web). Decide qué fondo usa cada `state`, nunca un color de marca. Hasta el
+ * 20/10/2026 se llamaba `style` con valores primary/secondary (chocaba con el
+ * `style` inline de React y sugería los colores de marca); los valores viejos
+ * se siguen aceptando con aviso en dev — ver `_stepAppearance.js`.
  * `state="selected"` es el fondo persistente; hover/focus son pseudo-clases
  * CSS nativas, `:active` usa la opacidad de pressed (mismo mecanismo que
  * Accordion/Icon Button — no es un color-mix).
@@ -24,7 +24,7 @@
  * conector colgando sin nada a lo que conectarse.
  *
  * USO:
- *   <StepNavigator state="active" number="2" title="Dirección" appearance="secondary" />
+ *   <StepNavigator state="active" number="2" title="Dirección" appearance="onPage" />
  *   <StepNavigator
  *     variation="chapter" state="incomplete" title="Documentación"
  *     expanded={open} onToggleExpand={() => setOpen(o => !o)}
@@ -44,14 +44,14 @@ const css = `
   width:          100%;
   padding:        0 var(--ds-steps-navigator-root-padding-horizontal);
   border:         none;
-  background:     var(--ds-steps-root-bg-primary-incomplete);
+  background:     var(--ds-steps-root-bg-on-default-incomplete);
   cursor:         pointer;
   text-align:     left;
   box-sizing:     border-box;
   outline:        none;
 }
-.ds-step-navigator--secondary {
-  background: var(--ds-steps-root-bg-secondary-incomplete);
+.ds-step-navigator--on-page {
+  background: var(--ds-steps-root-bg-on-page-incomplete);
 }
 .ds-step-navigator:hover {
   background: var(--ds-steps-root-bg-hover);
@@ -66,10 +66,10 @@ const css = `
               0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
 }
 .ds-step-navigator--selected {
-  background: var(--ds-steps-root-bg-primary-completed-selected);
+  background: var(--ds-steps-root-bg-on-default-completed-selected);
 }
-.ds-step-navigator--selected.ds-step-navigator--secondary {
-  background: var(--ds-steps-root-bg-secondary-completed-selected);
+.ds-step-navigator--selected.ds-step-navigator--on-page {
+  background: var(--ds-steps-root-bg-on-page-completed-selected);
 }
 .ds-step-navigator__title {
   flex:        1 1 auto;
@@ -115,7 +115,7 @@ export function StepNavigator({
   return (
     <button
       type="button"
-      className={`ds-step-navigator ${styleAxis === 'secondary' ? 'ds-step-navigator--secondary' : ''} ${selected ? 'ds-step-navigator--selected' : ''} ${className || ''}`}
+      className={`ds-step-navigator ${styleAxis === 'onPage' ? 'ds-step-navigator--on-page' : ''} ${selected ? 'ds-step-navigator--selected' : ''} ${className || ''}`}
       style={inlineStyle}
       onClick={isChapter ? onToggleExpand : onClick}
     >

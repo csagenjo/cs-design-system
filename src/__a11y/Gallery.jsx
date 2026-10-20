@@ -148,10 +148,10 @@ function Section({ name, children }) {
   );
 }
 
-/* StepNavigator/SubstepNavigator: eje primary/secondary = prop `appearance`
-   (antes `style`, que chocaba con el style inline de React — corregido en A11y-0). */
-const stepNavSecondary = (st) => ({ appearance: st });
-const substepSecondary = (st) => ({ appearance: st });
+/* StepNavigator/SubstepNavigator: eje `appearance` onDefault/onPage (Figma `Style`;
+   antes `style` primary/secondary — corregido en A11y-0). */
+const stepNavAppearance = (st) => ({ appearance: st });
+const substepAppearance = (st) => ({ appearance: st });
 const Row = ({ children, style }) => <div className="a11y-row" style={style}>{children}</div>;
 const Col = ({ children, style }) => <div className="a11y-col" style={style}>{children}</div>;
 const Contain = ({ height, children, style }) => (
@@ -1158,16 +1158,16 @@ export default function Gallery({ mode }) {
 
       <Section name="StepNavigator">
         <Row>
-          {['primary', 'secondary'].map((st) => (
+          {['onDefault', 'onPage'].map((st) => (
             <div key={st} style={{ width: 360 }}>
-              <StepNavigator {...stepNavSecondary(st)} state="completed" number="1" title={`Completado (${st})`} showTopConnector={false} onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} state="selected" number="2" title="Seleccionado" onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} state="active" number="3" title="Activo" onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} variation="chapter" state="incomplete" number="4" title="Capítulo expandido"
+              <StepNavigator {...stepNavAppearance(st)} state="completed" number="1" title={`Completado (${st})`} showTopConnector={false} onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} state="selected" number="2" title="Seleccionado" onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} state="active" number="3" title="Activo" onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="4" title="Capítulo expandido"
                 expanded onToggleExpand={noop} onClick={noop} />
-              <SubstepNavigator {...substepSecondary(st)} state="completed" label="Substep completado" onClick={noop} />
-              <SubstepNavigator {...substepSecondary(st)} state="active" label="Substep activo" selected onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} variation="chapter" state="incomplete" number="5" title="Capítulo colapsado"
+              <SubstepNavigator {...substepAppearance(st)} state="completed" label="Substep completado" onClick={noop} />
+              <SubstepNavigator {...substepAppearance(st)} state="active" label="Substep activo" selected onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="5" title="Capítulo colapsado"
                 expanded={false} onToggleExpand={noop} showBottomConnector={false} onClick={noop} />
             </div>
           ))}
@@ -1176,12 +1176,12 @@ export default function Gallery({ mode }) {
 
       <Section name="SubstepNavigator">
         <Row>
-          {['primary', 'secondary'].map((st) => (
+          {['onDefault', 'onPage'].map((st) => (
             <div key={st} style={{ width: 360 }}>
               {['incomplete', 'active', 'completed'].map((s) => (
-                <SubstepNavigator key={s} {...substepSecondary(st)} state={s} label={`Substep ${s} (${st})`} onClick={noop} />
+                <SubstepNavigator key={s} {...substepAppearance(st)} state={s} label={`Substep ${s} (${st})`} onClick={noop} />
               ))}
-              <SubstepNavigator {...substepSecondary(st)} state="active" label="Substep selected" selected onClick={noop} />
+              <SubstepNavigator {...substepAppearance(st)} state="active" label="Substep selected" selected onClick={noop} />
             </div>
           ))}
         </Row>

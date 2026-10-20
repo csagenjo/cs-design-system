@@ -32,7 +32,7 @@ const css = `
   padding:        8px var(--ds-steps-navigator-root-padding-horizontal);
   border:         none;
   border-radius:  0;
-  background:     var(--ds-steps-root-bg-primary-incomplete);
+  background:     var(--ds-steps-root-bg-on-default-incomplete);
   cursor:         pointer;
   text-align:     left;
   box-sizing:     border-box;
@@ -48,7 +48,7 @@ const css = `
               0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
 }
 .ds-step-indicator-small--selected {
-  background: var(--ds-steps-root-bg-primary-completed-selected);
+  background: var(--ds-steps-root-bg-on-default-completed-selected);
 }
 .ds-step-indicator-small__text {
   display:        flex;

@@ -15,9 +15,9 @@
  *
  * USO (montado por el consumidor bajo un StepNavigator expandido):
  *   <SubstepNavigator state="active" label="Datos de contacto" />
- *   <SubstepNavigator state="active" label="Datos de contacto" appearance="secondary" />
+ *   <SubstepNavigator state="active" label="Datos de contacto" appearance="onPage" />
  *
- * `appearance` primary/secondary — mismo eje y misma historia que en
+ * `appearance` onDefault/onPage — mismo eje y misma historia que en
  * StepNavigator (antes `style`, que chocaba con el `style` inline de React).
  */
 import React from 'react';
@@ -34,14 +34,14 @@ const css = `
   min-height:     40px;
   padding:        0 var(--ds-steps-navigator-root-padding-horizontal);
   border:         none;
-  background:     var(--ds-steps-root-bg-primary-incomplete);
+  background:     var(--ds-steps-root-bg-on-default-incomplete);
   cursor:         pointer;
   text-align:     left;
   box-sizing:     border-box;
   outline:        none;
 }
-.ds-substep-navigator--secondary {
-  background: var(--ds-steps-root-bg-secondary-incomplete);
+.ds-substep-navigator--on-page {
+  background: var(--ds-steps-root-bg-on-page-incomplete);
 }
 .ds-substep-navigator:hover {
   background: var(--ds-steps-root-bg-hover);
@@ -53,10 +53,10 @@ const css = `
               0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
 }
 .ds-substep-navigator--selected {
-  background: var(--ds-steps-root-bg-primary-completed-selected);
+  background: var(--ds-steps-root-bg-on-default-completed-selected);
 }
-.ds-substep-navigator--selected.ds-substep-navigator--secondary {
-  background: var(--ds-steps-root-bg-secondary-completed-selected);
+.ds-substep-navigator--selected.ds-substep-navigator--on-page {
+  background: var(--ds-steps-root-bg-on-page-completed-selected);
 }
 .ds-substep-navigator__line-col {
   flex-shrink:     0;
@@ -103,7 +103,7 @@ export function SubstepNavigator({
   return (
     <button
       type="button"
-      className={`ds-substep-navigator ds-substep-navigator--${state} ${styleAxis === 'secondary' ? 'ds-substep-navigator--secondary' : ''} ${selected ? 'ds-substep-navigator--selected' : ''} ${className || ''}`}
+      className={`ds-substep-navigator ds-substep-navigator--${state} ${styleAxis === 'onPage' ? 'ds-substep-navigator--on-page' : ''} ${selected ? 'ds-substep-navigator--selected' : ''} ${className || ''}`}
       style={inlineStyle}
       onClick={onClick}
     >

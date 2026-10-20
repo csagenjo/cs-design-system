@@ -1878,14 +1878,14 @@
   --ds-steps-border-width:                       2px;
   --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* #292C31, mismo gris que el borde Incomplete */
 
-  --ds-steps-root-bg-primary-incomplete:         var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-primary-active:             var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-primary-completed:          var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-primary-completed-selected: var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-secondary-incomplete:       var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-secondary-active:           var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-secondary-completed:        var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-secondary-completed-selected: var(--ds-bg-default);    /* #FFFFFF */
+  --ds-steps-root-bg-on-default-incomplete:         var(--ds-bg-default);      /* #FFFFFF */
+  --ds-steps-root-bg-on-default-active:             var(--ds-bg-page);         /* #FAFBFB */
+  --ds-steps-root-bg-on-default-completed:          var(--ds-bg-default);      /* #FFFFFF */
+  --ds-steps-root-bg-on-default-completed-selected: var(--ds-bg-page);         /* #FAFBFB */
+  --ds-steps-root-bg-on-page-incomplete:       var(--ds-bg-page);         /* #FAFBFB */
+  --ds-steps-root-bg-on-page-active:           var(--ds-bg-default);      /* #FFFFFF */
+  --ds-steps-root-bg-on-page-completed:        var(--ds-bg-page);         /* #FAFBFB */
+  --ds-steps-root-bg-on-page-completed-selected: var(--ds-bg-default);    /* #FFFFFF */
   --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);/* #BDE8FF */
   --ds-steps-root-opacity-pressed:               0.8;
   --ds-steps-root-border-width-focus:            2px;
