@@ -9,8 +9,12 @@
  * criterio que SidebarMenu con sus hijos — StepNavigator no gestiona una
  * lista, solo es una fila).
  *
- * `style="primary"` (fondo por defecto/mobile) vs `"secondary"` (fondo gris
- * claro/web) — decide qué fondo usa cada `state`, nunca el color de marca.
+ * `appearance="primary"` (fondo por defecto/mobile) vs `"secondary"` (fondo
+ * gris claro/web) — decide qué fondo usa cada `state`, nunca el color de marca.
+ * Hasta el 20/10/2026 este eje se llamaba `style`, el mismo nombre que el
+ * `style` inline de React: `style="secondary"` rompía React (error #62).
+ * Renombrado a `appearance` (Figma: propiedad `Style`). Un `style` de tipo
+ * string se sigue aceptando como `appearance`, con aviso en consola en dev.
  * `state="selected"` es el fondo persistente; hover/focus son pseudo-clases
  * CSS nativas, `:active` usa la opacidad de pressed (mismo mecanismo que
  * Accordion/Icon Button — no es un color-mix).
@@ -20,7 +24,7 @@
  * conector colgando sin nada a lo que conectarse.
  *
  * USO:
- *   <StepNavigator state="active" number="2" title="Dirección" style="secondary" />
+ *   <StepNavigator state="active" number="2" title="Dirección" appearance="secondary" />
  *   <StepNavigator
  *     variation="chapter" state="incomplete" title="Documentación"
  *     expanded={open} onToggleExpand={() => setOpen(o => !o)}
@@ -30,6 +34,7 @@ import React from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { StepVer } from '../components/StepVer';
 import { Icon } from '../components/Icon';
+import { resolveAppearance } from './_stepAppearance';
 
 const css = `
 .ds-step-navigator {
@@ -55,6 +60,8 @@ const css = `
   opacity: var(--ds-steps-root-opacity-pressed);
 }
 .ds-step-navigator:focus-visible {
+  outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
+  outline-offset: calc(var(--ds-border-width-lg) * -1);
   box-shadow: 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-inner) inset,
               0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
 }
@@ -85,9 +92,10 @@ const css = `
 
 injectStyles('ds-step-navigator', css);
 
+
 export function StepNavigator({
   variation = 'page',
-  style: styleAxis = 'primary',
+  appearance,
   state = 'incomplete',
   number = '1',
   title = 'Step name',
@@ -99,6 +107,7 @@ export function StepNavigator({
   className,
   style,
 }) {
+  const { styleAxis, inlineStyle } = resolveAppearance('StepNavigator', appearance, style);
   const isChapter = variation !== 'page';
   const selected = state === 'selected';
   const nodeState = selected ? 'completed' : state;
@@ -107,7 +116,7 @@ export function StepNavigator({
     <button
       type="button"
       className={`ds-step-navigator ${styleAxis === 'secondary' ? 'ds-step-navigator--secondary' : ''} ${selected ? 'ds-step-navigator--selected' : ''} ${className || ''}`}
-      style={style}
+      style={inlineStyle}
       onClick={isChapter ? onToggleExpand : onClick}
     >
       <StepVer state={nodeState} number={number} showTopConnector={showTopConnector} showBottomConnector={showBottomConnector} />

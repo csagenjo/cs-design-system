@@ -1,0 +1,65 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   foundations.css — reglas globales de accesibilidad (sprint A11y-0, 20/10/2026)
+   CS Design System
+
+   Se importa SIEMPRE junto a tokens.css (main.jsx, galería a11y y cualquier
+   app consumidora):
+
+     import './tokens.css';
+     import './foundations.css';
+
+   No define tokens: solo reglas que tienen que valer para TODO el sistema y que
+   no tiene sentido repetir en cada componente. Afectan solo a elementos con
+   clase `ds-*` — nunca al resto de la app.
+
+   1. Movimiento reducido  — WCAG 2.3.3 (AAA, buena práctica)
+   2. Colores forzados     — WCAG 2.4.7 / 1.4.11 en Windows High Contrast
+   Ver docs/accessibility-audit.md §J y §F.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+
+/* 1. Movimiento reducido ────────────────────────────────────────────────────
+   Con "Reducir movimiento" activado en el sistema, las transiciones de los
+   componentes pasan a ser instantáneas. Se usa 0.01ms y no `none` para que
+   los eventos `transitionend` sigan disparándose (algún componente podría
+   depender de ellos).
+
+   Lo que NO se toca, a propósito: las animaciones de carga (LoadingSpinner y
+   el spinner de ListItem). Son el único aviso visual de que algo está en
+   curso — movimiento esencial, permitido por 2.3.3. */
+@media (prefers-reduced-motion: reduce) {
+  [class^="ds-"],
+  [class*=" ds-"],
+  [class^="ds-"]::before,
+  [class*=" ds-"]::before,
+  [class^="ds-"]::after,
+  [class*=" ds-"]::after {
+    transition-duration: 0.01ms !important;
+    transition-delay:    0s !important;
+    scroll-behavior:     auto !important;
+  }
+
+  /* Button: escala al pulsar (0.98) — movimiento sin función. */
+  .ds-btn:active:not(:disabled) {
+    transform: none !important;
+  }
+}
+
+
+/* 2. Colores forzados (Windows High Contrast / "Contrast themes") ──────────
+   En colores forzados el navegador elimina `box-shadow`, y varios anillos de
+   foco del sistema se pintan solo con box-shadow (`outline: none`). Resultado:
+   foco invisible. Esta regla dibuja un contorno con el color de sistema
+   `Highlight` en cualquier elemento `ds-*` que reciba foco de teclado.
+
+   Es la red de seguridad global. Los componentes cuyo foco era solo
+   box-shadow (Link, CTALink, Pagination, StepNavigator, SubstepNavigator,
+   StepIndicatorSmall) además llevan `outline: … transparent` en su propio
+   :focus-visible, para funcionar aunque una app no importe este archivo. */
+@media (forced-colors: active) {
+  [class^="ds-"]:focus-visible,
+  [class*=" ds-"]:focus-visible {
+    outline:       var(--ds-border-width-lg) solid Highlight !important;
+    outline-style: solid !important;
+  }
+}

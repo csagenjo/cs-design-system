@@ -73,6 +73,32 @@ cause, not by component.
 | J | Pointer, hover, reflow and motion | 🔴 / 🟠 | DropZone, RangeSlider, Tooltip, Dialog, DialogSimple, Chip, all animated pieces |
 | K | Screen-reader strings mix English and Spanish | 🟡 | 14 |
 
+## Progress
+
+| Sprint | Status | Scan (`npm run a11y`) |
+|---|---|---|
+| A11y-2 · Colour | ✅ 19/10/2026 | colour-contrast 317 → 0 outside disabled |
+| A11y-0 · Foundations | ✅ 20/10/2026 — shared pieces built and tested; D and the StepNavigator bug fixed. Open criticals 14 → **9** (the five D findings) | 68 ARIA failures, unchanged by design (the helpers are wired into components in A11y-1/3/4); 0 in the pieces touched |
+| A11y-1 · Critical blockers | Next | — |
+
+### A11y-0 · what exists now
+
+| Piece | File | For | Used by (sprint) |
+|---|---|---|---|
+| `VisuallyHidden` | `src/components/VisuallyHidden.jsx` | Text for screen readers only; `focusable` for skip links | Link, CTALink (now) · names in G (A11y-3) |
+| `LiveRegion` | `src/components/LiveRegion.jsx` | Persistent `aria-live` container — mounted always, its content changes | Input errors, Checkbox, Radio, Selector, Snackbar (A11y-4, H) |
+| `announce()` | `src/components/announce.js` | Global polite/assertive announcements with no visible place ("3 results", "File uploaded") | Combobox no-results, FileSelector, ListItem (A11y-1/4) |
+| `useModal` | `src/components/_useModal.js` | Focus in, Tab trapped, background `inert`, scroll locked, Escape on the top layer only, focus returned | Dialog, DialogSimple, ErrorAndEmptyState popUp, TopNavigation mobile (A11y-1, B) |
+| `useRovingFocus` | `src/components/_rovingFocus.js` | One Tab stop per group; arrows / Home / End; skips disabled items | SegmentedControl, Tabs, RadioGroup, SidebarMenu (A11y-1/3/4, C) |
+| `useListbox` | `src/components/_rovingFocus.js` | APG listbox: `role=option`, `aria-selected`, Enter/Space, typeahead; `focus` mode (pickers) and `activedescendant` mode (Combobox input) | SelectorListItem → CountryPicker / CurrencyPicker / Selector, Combobox (A11y-1, C) |
+| Layer stack | `src/components/_focus.js` | Escape closes only the top layer — `_popoverDismiss` and `useModal` share it | All popovers and modals (now) |
+| Reduced motion | `src/foundations.css` | Transitions on `.ds-*` become instant; Button press scale off; spinners keep turning (essential motion) | All animated pieces (now) |
+| Forced colors | `src/foundations.css` + transparent `outline` in 6 components | Focus visible in Windows High Contrast | All focusable pieces (now) |
+
+`foundations.css` must be imported next to `tokens.css` in any app that uses the system.
+
+Verified with a keyboard harness (47 checks in Chromium, React StrictMode): Link/CTALink without `href` reachable and activated by Enter and Space; modal focus in / trap / Escape order with a popover inside / focus return / inert and scroll restored; roving and listbox keys, typeahead, disabled skipping, `aria-activedescendant` after filtering; `announce()`; forced-colors outline and reduced-motion transitions emulated.
+
 ---
 
 ## A · Colour contrast (tokens)
@@ -140,8 +166,8 @@ still scrolls. A keyboard user tabs behind the modal; a screen-reader user
 is told the background doesn't exist while focus is still there.
 
 **Fix once:** a shared `useModal` hook (or native `<dialog>.showModal()`)
-used by all four. Also: `_popoverDismiss` closes every open layer on one
-Escape (should close only the top one), and `PopoverSheet` pulls focus back
+used by all four. *(A11y-0 ✅ hook built — `_useModal.js`; wiring in A11y-1.)* Also: `_popoverDismiss` closes every open layer on one
+Escape (should close only the top one) *(✅ fixed in A11y-0 — layer stack in `_focus.js`)*, and `PopoverSheet` pulls focus back
 to its trigger even when the user clicked into another field.
 
 ## C · Custom list and selection widgets (🔴)
@@ -160,8 +186,11 @@ to its trigger even when the user clicked into another field.
 **Fix once:** a shared listbox/option behaviour (roving focus, arrows,
 Home/End, typeahead, `aria-selected`) used by SelectorListItem, Combobox and
 the pickers; a disclosure-navigation pattern for TopNavigation.
+*(A11y-0 ✅ `useListbox` and `useRovingFocus` built — `_rovingFocus.js`; wiring in A11y-1.)*
 
 ## D · `<a>` without `href` (🔴)
+
+> **Status 20/10/2026: ✅ fixed (A11y-0).** `Link` and `CTALink` render `<button type="button">` when there's no `href` (and CTALink when `disabled`). TopNavigation and PageTitle also pass `href` through when the data has one.
 
 `Link` and `CTALink` always render `<a href={href}>`. With only `onClick`
 (the documented usage in several places) the element isn't focusable and has
@@ -194,7 +223,8 @@ there's no `href`. That fixes every consumer at once.
 - **Forced colors:** Link, CTALink, Pagination, StepNavigator,
   SubstepNavigator and StepIndicatorSmall draw focus with `box-shadow` only,
   which disappears in Windows High Contrast. Fix: add
-  `outline: 2px solid transparent`.
+  `outline: 2px solid transparent`. *(✅ A11y-0 — in those six, plus a
+  global net in `foundations.css` for every `.ds-*` focus.)*
 
 ## G · Accessible names (🟠)
 
@@ -258,7 +288,7 @@ there's no `href`. That fixes every consumer at once.
 | Tooltip | Not hoverable (`pointer-events: none`) and can't be dismissed with Escape | 1.4.13 | 🟠 |
 | Dialog, DialogSimple | Fixed 480 px width and 616–680 px height: two-way scrolling at 320 px | 1.4.10 | 🟠 |
 | Chip (input) | Remove target 20 × 20 px | 2.5.8 | 🟡 |
-| All animated pieces | No `prefers-reduced-motion` anywhere in `src` (spinners, transitions, Button press scale) | 2.3.3 (AAA, best practice) | 🟡 |
+| All animated pieces | ~~No `prefers-reduced-motion` anywhere in `src`~~ ✅ A11y-0: `foundations.css` (transitions, Button press scale; spinners kept as essential motion) | 2.3.3 (AAA, best practice) | 🟡 |
 
 ## K · Language of screen-reader strings (🟡)
 
@@ -268,6 +298,8 @@ Y", "Expand", "More", "Edit" vs "Cerrar", "Volver", "Eliminar fichero",
 built-in string becomes a prop with that default.
 
 ## Bug found during the audit
+
+> **Status 20/10/2026: ✅ fixed (A11y-0).** The axis is now `appearance`; a string `style` is still read as `appearance`, with a dev warning.
 
 `StepNavigator` and `SubstepNavigator` read the `style` prop twice — as the
 primary/secondary axis and as the inline style. `style="secondary"`, exactly
@@ -283,7 +315,7 @@ touched, and the Figma + inventory Accessibility sections updated.
 
 | Sprint | Content | Why this order | Needs Carol |
 |---|---|---|---|
-| **A11y-0 · Foundations** | Shared helpers: `VisuallyHidden`, persistent live region, `useModal`, listbox/roving-focus behaviour, global `prefers-reduced-motion`, transparent outline for forced colors. `Link`/`CTALink` button fallback (D). StepNavigator `style` bug. Commit the axe gallery + script as a regression check | Every later fix reuses these; D alone unblocks 4 consumers | Approve adding the gallery to the repo |
+| **A11y-0 · Foundations** ✅ 20/10 | Shared helpers: `VisuallyHidden`, persistent live region, `useModal`, listbox/roving-focus behaviour, global `prefers-reduced-motion`, transparent outline for forced colors. `Link`/`CTALink` button fallback (D). StepNavigator `style` bug. Commit the axe gallery + script as a regression check | Every later fix reuses these; D alone unblocks 4 consumers | Approve adding the gallery to the repo |
 | **A11y-1 · Critical blockers** | B (all modals) · C criticals (SelectorListItem → pickers, Combobox trap + wiring, TopNavigation) · DropZone hover | Removes every "can't complete the task" issue | — |
 | **A11y-2 · Colour** | A1–A17: decide steps in Figma (Theme / Mode), re-export, sync `tokens.css`, re-scan both modes. Includes the open Pagination 2.7:1 debt and the borderColor dark-mode audit | Biggest visual change; done in Figma first | **Yes — brand teal decision** |
 | **A11y-3 · State and names** | E and G | Mostly additive props, low risk | — |
@@ -301,10 +333,10 @@ Colour issues (A) are in the tables above and not repeated here.
 ### Actions
 - **Button** — 🟠 `loading` sets native `disabled`: focus lost, busy state not announced [F] · 🟡 `iconOnly` without `ariaLabel` gives no name and no warning [G] · 🟡 press scale and spinner ignore reduced motion [J]
 - **IconButton** — 🟡 no warning when unnamed [G] · 🟡 `ariaLabel` overrides visible `label` (2.5.3) [G]
-- **Link** — 🔴 `<a>` without `href` isn't focusable [D] · 🟡 new-tab hint in English [K] · 🟡 hint only with `external`, not with `target="_blank"` · 🟡 focus via box-shadow only [F]
-- **CTALink** — 🔴 same `href` issue; its own example does it [D] · 🟡 English hint [K] · 🟡 box-shadow focus [F]
+- **Link** — ~~🔴 `<a>` without `href` isn't focusable [D]~~ ✅ · 🟡 new-tab hint in English [K] · ~~🟡 hint only with `external`, not with `target="_blank"`~~ ✅ · ~~🟡 focus via box-shadow only [F]~~ ✅
+- **CTALink** — ~~🔴 same `href` issue; its own example does it [D]~~ ✅ · 🟡 English hint [K] · ~~🟡 box-shadow focus [F]~~ ✅
 - **ButtonBar** — 🟡 no `role="group"` + label
-- **CellActions** — 🟡 doc example uses `Link` without `href` [D] · 🟡 doc example `size="small"` (should be `sm`) renders a 19 px target
+- **CellActions** — ~~🟡 doc example uses `Link` without `href` [D]~~ ✅ (Link renders a button) · 🟡 doc example `size="small"` (should be `sm`) renders a 19 px target
 
 ### Forms
 - **InputText** — 🟠 read-only removes the focus ring [F] · 🟡 error live region [H]
@@ -335,7 +367,7 @@ Colour issues (A) are in the tables above and not repeated here.
 - **Table** — 🟡 no name / caption [I]
 - **CellHeader** — 🟠 no `aria-sort`, no sort button, icon always ascending [E]
 - **CellMore** — 🟠 `role="cell"` replaces the button role [G] · 🟠 every trigger named "More" [G] · 🟡 no `aria-haspopup` [E]
-- **DescriptionList** — 🔴 Edit is `<Link>` without `href` [D] · 🟡 `<hr>` inside `<dl>` [I] · 🟡 "Edit" without field name, English [G][K]
+- **DescriptionList** — ~~🔴 Edit is `<Link>` without `href` [D]~~ ✅ · 🟡 `<hr>` inside `<dl>` [I] · 🟡 "Edit" without field name, English [G][K]
 - **List** — 🟡 add `role="list"` · 🟡 custom number marker hidden
 - **ListItem** — 🟠 remove button without file name [G] · 🟠 uploading not announced [H] · 🟠 error not linked [H] · 🟡 spinner motion [J] · 🟡 hard-coded strings [K]
 - **ListView** — 🟠 selected not exposed [E] · 🟠 controls inside the row button [I] · 🟡 `<p>` / heading inside button
@@ -352,7 +384,7 @@ Colour issues (A) are in the tables above and not repeated here.
 - **_dialogBase** — 🟡 title is `<p>` [I] · 🟡 title truncated with ellipsis · 🟡 "Volver/Cerrar" not translatable [K]
 - **Drawer** — 🟡 no `aria-controls` · 🟡 transition ignores reduced motion
 - **PopoverSheet** — 🟠 focus always returned to trigger, even after click-outside [B] · 🟡 panel `outline:none` · 🟡 no `aria-labelledby` option
-- **_popoverDismiss** — 🟡 one Escape closes every layer [B]
+- **_popoverDismiss** — ~~🟡 one Escape closes every layer [B]~~ ✅
 - **Tooltip** — 🟠 not hoverable · 🟠 no Escape [J] · 🟡 always in DOM at opacity 0 · 🟡 overwrites existing `aria-describedby` · 🟡 `nowrap`
 - **Snackbar** — 🟡 live region rendered with message [H] · 🟡 no dismiss / pause hook (2.2.1)
 - **InlineNotification** — 🟠 type only by hidden icon [E] · 🟡 `status` for errors [H] · 🟡 "Button" default
@@ -369,21 +401,21 @@ Colour issues (A) are in the tables above and not repeated here.
 - **AccountSelectorListItem** — 🟠 radios ungrouped [C] · 🟠 rows with the same header sound identical [G] · 🟡 `aria-disabled` on div
 
 ### Navigation
-- **Pagination** — 🟠 current page re-mounts as span, focus lost [F] · 🟠 prev/next disabled at the ends, focus lost [F] · 🟡 `aria-label` on span · 🟡 both ellipses "Saltar páginas" · 🟡 box-shadow focus · axe: two `nav` landmarks with the same label 🟡
+- **Pagination** — 🟠 current page re-mounts as span, focus lost [F] · 🟠 prev/next disabled at the ends, focus lost [F] · 🟡 `aria-label` on span · 🟡 both ellipses "Saltar páginas" · ~~🟡 box-shadow focus~~ ✅ · axe: two `nav` landmarks with the same label 🟡
 - **TabItem** — 🟠 doesn't forward props [C] · 🟡 `role="tab"` outside a tablist
 - **Tabs** — 🟠 no roving tabindex / arrows [C] · 🟠 no tab ↔ panel link [C] · 🟡 tablist unnamed
-- **TopNavigation** — 🔴 flydown hover-only [C] · 🔴 flydown links without `href` [D] · 🟠 nav built as tablist · 🟠 no Escape · 🟠 menu button no `aria-expanded` [E] · 🟠 mobile panel not a modal [B] · 🟡 flydown after all items in DOM · 🟡 group titles not headings · 🟡 `nav` unnamed
+- **TopNavigation** — 🔴 flydown hover-only [C] · ~~🔴 flydown links without `href` [D]~~ ✅ · 🟠 nav built as tablist · 🟠 no Escape · 🟠 menu button no `aria-expanded` [E] · 🟠 mobile panel not a modal [B] · 🟡 flydown after all items in DOM · 🟡 group titles not headings · 🟡 `nav` unnamed
 - **SidebarMenu** — 🟠 `role="tree"` misuse [C] · 🟠 parents no `aria-expanded` [E] · 🟠 selected no `aria-current` [E] · 🟡 no `nav` landmark · axe: heading order (`h6`) [I]
-- **StepNavigator** — 🟠 chapter no `aria-expanded` [E] · 🟠 selected by colour only [E] · 🟠 status not in text [E] · 🟡 box-shadow focus · bug: `style` prop crash
-- **SubstepNavigator** — 🟠 active/completed by colour only [E] · 🟠 selected by colour only [E] · 🟡 box-shadow focus · bug: `style` prop crash
+- **StepNavigator** — 🟠 chapter no `aria-expanded` [E] · 🟠 selected by colour only [E] · 🟠 status not in text [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
+- **SubstepNavigator** — 🟠 active/completed by colour only [E] · 🟠 selected by colour only [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
 - **StepIndicatorLarge** — 🟠 not a list, no current step [I][E]
-- **StepIndicatorSmall** — 🟠 selected by colour only [E] · 🟠 status not in text [E] · 🟡 "Step X of Y" English [K] · 🟡 button without `onClick` · 🟡 box-shadow focus
+- **StepIndicatorSmall** — 🟠 selected by colour only [E] · 🟠 status not in text [E] · 🟡 "Step X of Y" English [K] · 🟡 button without `onClick` · ~~🟡 box-shadow focus~~ ✅
 - **StepHor** — 🟠 status only visual, no `aria-current` [E]
 - **Node** — 🟠 completed shows a hidden check icon: number and status lost [E] · 🟡 active vs incomplete by fill only
 - **LinkList** — 🟡 always a `nav` landmark, may be unnamed · 🟡 fixed `h2` · 🟡 no `aria-current` · see A17
 
 ### Page structure
-- **PageTitle** — 🔴 breadcrumb and nav links without `href` [D] · 🟠 "Volver" button does nothing · 🟡 breadcrumb not `ol`, no `aria-current` · 🟡 icon-only buttons may be unnamed
+- **PageTitle** — ~~🔴 breadcrumb and nav links without `href` [D]~~ ✅ · 🟠 "Volver" button does nothing · 🟡 breadcrumb not `ol`, no `aria-current` · 🟡 icon-only buttons may be unnamed
 - **Headline** — 🟠 level tied to visual size [I]
 - **SectionHeader** — 🟠 hard-coded `aria-level={2}` on div [I]
 - **DropZone** — 🔴 hover disables the button [J] · 🟠 "Button" default name [G] · 🟡 instructions not linked

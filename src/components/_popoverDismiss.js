@@ -21,19 +21,33 @@
  * gestiona su propio Escape dentro de `handleKeyDown` del input (cierra Y
  * resetea el texto tecleado, más específico que el genérico de aquí); sin
  * este flag el Escape se dispararía dos veces por el mismo evento.
+ *
+ * Capas (A11y-0, 20/10/2026): cada popover abierto se apila en la pila de
+ * `_focus.js`. Escape cierra solo el de ARRIBA — antes, un Escape cerraba a
+ * la vez todos los popovers abiertos y el modal que los contenía. Con
+ * `closeOnEscape={false}` la capa se apila igual (para que el modal de debajo
+ * no se cierre con el Escape que el propio componente gestiona).
  */
-import { useEffect } from 'react';
+import { useEffect, useId, useRef } from 'react';
+import { isTopLayer, pushLayer } from './_focus';
 
 export function usePopoverDismiss({ open, onClose, refs, closeOnEscape = true }) {
+  const layerId = useId();
+  // onClose en ref: si el consumidor pasa una función nueva en cada render, el
+  // efecto NO se re-ejecuta — re-ejecutarlo re-apilaría la capa encima de un
+  // popover hijo ya abierto y Escape cerraría el padre en vez del hijo.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; });
   useEffect(() => {
     if (!open) return;
+    const popLayer = pushLayer(layerId);
 
     function handleMouseDown(e) {
       const insideAny = refs.some((ref) => ref.current && ref.current.contains(e.target));
-      if (!insideAny) onClose?.();
+      if (!insideAny) onCloseRef.current?.();
     }
     function handleKeyDown(e) {
-      if (closeOnEscape && e.key === 'Escape') onClose?.();
+      if (closeOnEscape && e.key === 'Escape' && isTopLayer(layerId)) onCloseRef.current?.();
     }
 
     document.addEventListener('mousedown', handleMouseDown);
@@ -41,6 +55,7 @@ export function usePopoverDismiss({ open, onClose, refs, closeOnEscape = true })
     return () => {
       document.removeEventListener('mousedown', handleMouseDown);
       document.removeEventListener('keydown', handleKeyDown);
+      popLayer();
     };
-  }, [open, onClose, closeOnEscape]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [open, closeOnEscape, layerId]); // eslint-disable-line react-hooks/exhaustive-deps
 }

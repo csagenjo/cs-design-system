@@ -27,7 +27,7 @@
  * `flydown` — array de `{ groupTitle?, links }`, SIN límite de columnas ni
  * de enlaces por columna (composición libre, no variantes — mismo criterio
  * que CellActions/StepIndicatorLarge). `groupTitle` es opcional: referencia
- * real de Carol (PowerOPs) confirma flydowns reales con 1 a 6+ columnas, de
+ * real de Carol (La Plataforma) confirma flydowns reales con 1 a 6+ columnas, de
  * 1 a 7+ enlaces cada una, y al menos un caso sin título de grupo en
  * absoluto (lista plana).
  *
@@ -57,7 +57,7 @@
  * grupo) en vez de crecer sin límite. `--ds-top-navigation-flydown-height`
  * es aproximado a propósito ("de un vistazo"), no una garantía matemática
  * para cualquier volumen de contenido — pensado para el rango real visto en
- * PowerOPs (hasta ~6 grupos, ~7 enlaces cada uno).
+ * La Plataforma (hasta ~6 grupos, ~7 enlaces cada uno).
  *
  * Por debajo del breakpoint: Logo + `IconButton` (Menu) — SIN botón de
  * salir aparte. El IconButton abre `SidebarMenu` (ya construido) sobre un
@@ -82,7 +82,7 @@
  *       {
  *         id: 'facturacion', label: 'Facturación y servicios',
  *         flydown: [
- *           { groupTitle: 'Facturación', links: [{ label: 'Facturas', onClick: fn }] },
+ *           { groupTitle: 'Facturación', links: [{ label: 'Facturas', href: '/facturas' }] },  // href → <a>; solo onClick → <button>
  *           { groupTitle: 'Sistema de pago', links: [{ label: 'Cobros', onClick: fn }] },
  *         ],
  *       },
@@ -172,7 +172,7 @@ const css = `
      columna en cuanto se queda sin alto — nunca scroll, nunca crece
      indefinido. Aproximado a propósito ("de un vistazo"), no es garantía
      matemática para cualquier volumen — pensado para el rango real visto en
-     PowerOPs (hasta ~6 grupos, ~7 enlaces cada uno). */
+     La Plataforma (hasta ~6 grupos, ~7 enlaces cada uno). */
   max-height: var(--ds-top-navigation-flydown-height);
   column-width: var(--ds-top-navigation-flydown-column-width);
   column-gap: var(--ds-top-navigation-flydown-gap);
@@ -312,7 +312,7 @@ export function TopNavigation({
                       ) : (
                         <div className="ds-top-navigation__group-links">
                           {group.links.map((link) => (
-                            <Link key={link.label} size="xs" emphasis="low" rightIcon={false} onClick={link.onClick}>
+                            <Link key={link.label} size="xs" emphasis="low" rightIcon={false} href={link.href} onClick={link.onClick}>
                               {link.label}
                             </Link>
                           ))}

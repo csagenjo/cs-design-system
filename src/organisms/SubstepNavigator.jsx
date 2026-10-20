@@ -15,10 +15,15 @@
  *
  * USO (montado por el consumidor bajo un StepNavigator expandido):
  *   <SubstepNavigator state="active" label="Datos de contacto" />
+ *   <SubstepNavigator state="active" label="Datos de contacto" appearance="secondary" />
+ *
+ * `appearance` primary/secondary — mismo eje y misma historia que en
+ * StepNavigator (antes `style`, que chocaba con el `style` inline de React).
  */
 import React from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Icon } from '../components/Icon';
+import { resolveAppearance } from './_stepAppearance';
 
 const css = `
 .ds-substep-navigator {
@@ -42,6 +47,8 @@ const css = `
   background: var(--ds-steps-root-bg-hover);
 }
 .ds-substep-navigator:focus-visible {
+  outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
+  outline-offset: calc(var(--ds-border-width-lg) * -1);
   box-shadow: 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-inner) inset,
               0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
 }
@@ -85,18 +92,19 @@ injectStyles('ds-substep-navigator', css);
 
 export function SubstepNavigator({
   state = 'incomplete',
-  style: styleAxis = 'primary',
+  appearance,
   label = 'Step name',
   selected = false,
   onClick,
   className,
   style,
 }) {
+  const { styleAxis, inlineStyle } = resolveAppearance('SubstepNavigator', appearance, style);
   return (
     <button
       type="button"
       className={`ds-substep-navigator ds-substep-navigator--${state} ${styleAxis === 'secondary' ? 'ds-substep-navigator--secondary' : ''} ${selected ? 'ds-substep-navigator--selected' : ''} ${className || ''}`}
-      style={style}
+      style={inlineStyle}
       onClick={onClick}
     >
       <span className="ds-substep-navigator__line-col">

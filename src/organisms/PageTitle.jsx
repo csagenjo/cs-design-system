@@ -14,9 +14,9 @@
  * prop (`weight`/`disabled`), no 3 variantes distintas:
  *
  *   { type: 'icon', icon, ariaLabel, onClick }
- *   { type: 'link', label, onClick }
+ *   { type: 'link', label, href?, onClick? }   — href → <a>; solo onClick → <button> (A11y-0)
  *   { type: 'text', label, weight?: 'regular'|'bold', disabled?: boolean }
- *   { type: 'breadcrumb', items: [{ label, onClick }, ...] }  — Desktop only,
+ *   { type: 'breadcrumb', items: [{ label, href?, onClick? }, ...] }  — Desktop only,
  *     último item = texto plano no clicable (la página actual)
  *   undefined → None
  *
@@ -174,7 +174,7 @@ function NavCompact({ nav }) {
     );
   }
   if (nav.type === 'link') {
-    return <Link size="sm" emphasis="low" rightIcon={false} onClick={nav.onClick}>{nav.label}</Link>;
+    return <Link size="sm" emphasis="low" rightIcon={false} href={nav.href} onClick={nav.onClick}>{nav.label}</Link>;
   }
   if (nav.type === 'text') {
     return (
@@ -217,7 +217,7 @@ function Breadcrumb({ items }) {
         }
         return (
           <React.Fragment key={i}>
-            <Link size="sm" emphasis="low" rightIcon={false} onClick={item.onClick}>{item.label}</Link>
+            <Link size="sm" emphasis="low" rightIcon={false} href={item.href} onClick={item.onClick}>{item.label}</Link>
             <Icon name="ChevronRight" size="2xs" className="ds-page-title__breadcrumb-sep" />
           </React.Fragment>
         );

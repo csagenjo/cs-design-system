@@ -42,6 +42,8 @@ const css = `
   background: var(--ds-steps-root-bg-hover);
 }
 .ds-step-indicator-small:focus-visible {
+  outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
+  outline-offset: calc(var(--ds-border-width-lg) * -1);
   box-shadow: 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-inner) inset,
               0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
 }

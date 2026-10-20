@@ -42,7 +42,8 @@ Rules that apply to every entry:
 | Feedback | _to be filled_ |
 | Navigation | _to be filled (includes Pagination)_ |
 | Page structure | Accordion, AccordionGroup |
-| Internal parts | _to be filled_ |
+| Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
+| Internal parts | _to be filled_ — includes `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss` |
 
 ---
 
@@ -193,3 +194,69 @@ import { AccordionGroup } from './organisms/AccordionGroup';
 **Don't**
 - Put interactive elements in the title.
 - Hide content every user must read (legal text, errors, key amounts).
+
+---
+
+## VisuallyHidden · LiveRegion
+
+Accessibility foundations (sprint A11y-0, 20/10/2026). No Figma component —
+they don't draw anything. Every app that uses the system also imports
+`src/foundations.css` next to `src/tokens.css` (reduced motion and
+forced-colors focus for every `ds-*` piece).
+
+## How to use
+
+### Designers · Figma
+
+Nothing to place on the canvas. When a design relies on something only
+visible — an icon-only button, a colour meaning "error", a position meaning
+"step 2 of 4" — write the text a screen reader should say in the
+annotation; developers put it in `VisuallyHidden`. When a message appears
+after an action (an error, "saved", "3 results"), say in the annotation
+whether it should interrupt (blocking error) or wait (everything else).
+
+### Developers · React
+
+```jsx
+import { VisuallyHidden } from '../components/VisuallyHidden';
+import { LiveRegion } from '../components/LiveRegion';
+import { announce } from '../components/announce';
+```
+
+| Piece | Props | Notes |
+|---|---|---|
+| `VisuallyHidden` | `as` = `'span'` · `focusable` = `false` · `className` | Read aloud, not shown. `focusable` shows it on focus (skip links). Class `ds-visually-hidden` is exported for non-React markup |
+| `LiveRegion` | `politeness` = `'polite'` \| `'assertive'` · `atomic` = `true` · `visuallyHidden` = `false` · `as` = `'div'` | Mount it ALWAYS; change what's inside. `polite` → `role="status"`, `assertive` → `role="alert"` (blocking errors only) |
+| `announce(message, { politeness })` | `politeness` = `'polite'` | For messages with no visible place. Repeating the same message announces it again |
+
+### AI agents · Claude Code
+
+- Pick `VisuallyHidden` when an element needs words that the visual design
+  already conveys. Don't pick it to hide a form label — labels are visible.
+- Pick `LiveRegion` around a message that appears on screen after an action.
+  Never mount the region together with the message (`{error && <LiveRegion>…}`
+  is wrong; `<LiveRegion>{error && …}</LiveRegion>` is right).
+- Pick `announce()` when nothing visible changes but the user needs to know
+  (result counts, background uploads).
+
+## Accessibility
+
+### Designers · Figma
+
+These pieces are the accessibility. Annotate the hidden text and the
+politeness of each status message.
+
+### Developers · React
+
+- A `LiveRegion` outside an open modal is `inert` and silent while the modal
+  is open — by design. `announce()` regions are never made inert.
+- Use `assertive` only for errors that stop the task; it interrupts whatever
+  the screen reader is saying.
+
+### AI agents · Claude Code
+
+Known gaps: none in these pieces. Strings passed to them follow the system
+language decision (audit §K, pending).
+
+**Tokens:** none.
+
