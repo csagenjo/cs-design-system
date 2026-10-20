@@ -21,6 +21,28 @@ lands, and the component's *Accessibility* section in Figma and in
 screen-reader passes (VoiceOver + NVDA), 200 % / 400 % zoom on real
 layouts, Windows High Contrast (forced colors) visual check.
 
+## How to run the scan
+
+```bash
+npm install                       # first time: installs playwright + axe-core
+npx playwright install chromium   # first time on a machine
+npm run a11y                      # build the gallery + scan light and dark
+npm run a11y -- --strict          # exit 1 if anything fails (for CI)
+```
+
+- **Gallery:** `a11y.html` → `src/__a11y/Gallery.jsx` renders every piece in
+  `src/components` and `src/organisms` with all its variants and states, one
+  `<section data-component>` each. Built with its own config
+  (`vite.a11y.config.js` → `dist-a11y/`), separate from the app.
+- **Scan:** `scripts/a11y-scan.mjs` runs axe-core (WCAG 2.0–2.2 A/AA +
+  best practice) in light and dark mode and prints the failures by rule and
+  component. Colour-contrast results on disabled elements are listed as exempt.
+  Full detail goes to `a11y-report.json` (git-ignored).
+- **When you add or change a component,** add it to the gallery with every
+  variant and state, so the scan covers it.
+- axe catches roughly a third of real issues. Keyboard, focus management and
+  screen-reader behaviour still need the manual checks in this audit.
+
 ## Summary
 
 | Severity | Count | Meaning |
