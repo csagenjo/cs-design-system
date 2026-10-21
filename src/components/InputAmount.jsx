@@ -233,6 +233,8 @@ export const InputAmount = forwardRef(function InputAmount({
   currencyVariant = 'selectable',
   currency        = 'EUR',
   onCurrencyClick,
+  currencyExpanded,             // estado del picker de moneda (aria-expanded)
+  currencyLabel = (c) => `Currency, ${c}`,
   helperText,
   errorMessage,
   fullWidth       = false,
@@ -249,7 +251,10 @@ export const InputAmount = forwardRef(function InputAmount({
   const inputId     = id || generatedId;
   const helperId    = helperText ? `${inputId}-helper` : null;
   const messageId   = state === 'error' && errorMessage ? `${inputId}-msg` : null;
-  const describedBy = [helperId, messageId].filter(Boolean).join(' ') || undefined;
+  // A11y-3: la moneda forma parte del dato — el campo la lee como descripción
+  // ("1.250,00, EUR").
+  const currencyId  = `${inputId}-currency`;
+  const describedBy = [currencyId, helperId, messageId].filter(Boolean).join(' ') || undefined;
   const isDisabled  = state === 'disabled';
   const isSelectable = currencyVariant === 'selectable' && !isDisabled;
 
@@ -293,10 +298,11 @@ export const InputAmount = forwardRef(function InputAmount({
           onClick={isSelectable ? onCurrencyClick : undefined}
           type={isSelectable ? 'button' : undefined}
           disabled={isSelectable ? isDisabled : undefined}
-          aria-label={isSelectable ? `Seleccionar moneda, actual ${currency}` : undefined}
-          tabIndex={isSelectable ? 0 : -1}
+          aria-label={isSelectable ? currencyLabel(currency) : undefined}
+          aria-haspopup={isSelectable ? 'listbox' : undefined}
+          aria-expanded={isSelectable ? currencyExpanded : undefined}
         >
-          <span className="ds-input-amount__currency-text">
+          <span className="ds-input-amount__currency-text" id={currencyId}>
             {currency}
           </span>
           {isSelectable && (

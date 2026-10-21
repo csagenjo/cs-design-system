@@ -61,6 +61,8 @@ injectStyles('ds-step-hor', css);
 export function StepHor({
   state = 'incomplete',
   number = '1',
+  stepLabel,
+  statusLabels,
   label = 'Step name',
   showLeftConnector = true,
   showRightConnector = true,
@@ -71,7 +73,7 @@ export function StepHor({
     <div className={`ds-step-hor ${className || ''}`} style={style}>
       <div className="ds-step-hor__indicator">
         <span className={`ds-step-hor__connector ${!showLeftConnector ? 'ds-step-hor__connector--hidden' : ''}`} aria-hidden="true" />
-        <Node state={state} number={number} />
+        <Node state={state} number={number} stepLabel={stepLabel} statusLabels={statusLabels} />
         <span className={`ds-step-hor__connector ${!showRightConnector ? 'ds-step-hor__connector--hidden' : ''}`} aria-hidden="true" />
       </div>
       <span className="ds-step-hor__label">{label}</span>

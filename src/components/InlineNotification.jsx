@@ -29,6 +29,7 @@
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
+import { VisuallyHidden } from './VisuallyHidden';
 import { Icon } from './Icon';
 import { Button } from './Button';
 
@@ -110,9 +111,13 @@ export function InlineNotification({
   showButton   = true,
   buttonLabel  = 'Button',
   onButtonClick,
+  typeLabels   = {},
   id,
   className,
 }) {
+  // A11y-3 (1.4.1): el tipo solo se veía por el color y un icono oculto; ahora
+  // se lee delante del texto: "Error: …".
+  const typeText = { error: 'Error', success: 'Success', information: 'Information', warning: 'Warning', ...typeLabels }[type];
   const classes = [
     'ds-inline-notification',
     `ds-inline-notification--${style}`,
@@ -128,6 +133,7 @@ export function InlineNotification({
       <div className="ds-inline-notification__content">
         {(showTitle || showMessage) && (
           <div className="ds-inline-notification__text">
+            {typeText && <VisuallyHidden>{`${typeText}: `}</VisuallyHidden>}
             {showTitle && <span className="ds-inline-notification__title">{title}</span>}
             {showMessage && <span className="ds-inline-notification__message">{message}</span>}
           </div>

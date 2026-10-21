@@ -70,6 +70,26 @@ const css = `
   flex-shrink: 0;
   color:       var(--ds-cell-common-icon-fg); /* #4BA9C0 */
 }
+
+/* Botón de orden (con onSort) — sin aspecto propio, hereda el de la celda */
+.ds-cell-header__sort-button {
+  display:     inline-flex;
+  align-items: center;
+  gap:         inherit;
+  margin:      0;
+  padding:     0;
+  border:      0;
+  background:  transparent;
+  color:       inherit;
+  font:        inherit;
+  text-align:  inherit;
+  cursor:      pointer;
+}
+.ds-cell-header__sort-button:focus-visible {
+  outline:        var(--ds-border-width-lg) solid var(--ds-cell-common-focus-outer);
+  outline-offset: var(--ds-border-width-lg);
+  box-shadow:     0 0 0 var(--ds-border-width-lg) var(--ds-cell-common-focus-inner);
+}
 `;
 
 let injected = false;
@@ -89,6 +109,8 @@ export function CellHeader({
   surface  = 'neutral',   // 'neutral' | 'onSurface' | 'zebra'
   border   = 'subtle',    // 'subtle' | 'primary'
   showSort = false,
+  sortDirection = 'none', // 'none' | 'ascending' | 'descending' (A11y-3)
+  onSort,                 // con onSort el título es un botón que ordena
   children,
   className,
   style,
@@ -104,13 +126,29 @@ export function CellHeader({
     className || '',
   ].filter(Boolean).join(' ');
 
+  // A11y-3: aria-sort dice el orden actual de la columna. Con `onSort` el
+  // título pasa a ser un botón (antes el icono era solo decorativo y siempre
+  // ascendente). El icono sigue al orden: A→Z, Z→A o sin ordenar.
+  const sortIcon = { ascending: 'ArrowUpAZ', descending: 'ArrowDownZA' }[sortDirection] ?? (onSort ? 'ArrowUpDown' : 'ArrowUpAZ');
+  const icon = (showSort || onSort) && (
+    <span className="ds-cell-header__sort" aria-hidden="true">
+      <Icon name={sortIcon} size="2xs" />
+    </span>
+  );
+  const ariaSort = (showSort || onSort) && sortDirection !== 'none' ? sortDirection : undefined;
+
   return (
-    <div className={classes} style={style} role="columnheader">
-      {children}
-      {showSort && (
-        <span className="ds-cell-header__sort">
-          <Icon name="ArrowUpAZ" size="2xs" />
-        </span>
+    <div className={classes} style={style} role="columnheader" aria-sort={ariaSort}>
+      {onSort ? (
+        <button type="button" className="ds-cell-header__sort-button" onClick={onSort}>
+          {children}
+          {icon}
+        </button>
+      ) : (
+        <>
+          {children}
+          {icon}
+        </>
       )}
     </div>
   );

@@ -181,7 +181,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
       ref={forwardedRef}
       id={id ?? rest.id}
       className={rootClasses}
-      aria-disabled={isDisabled || undefined}
+      aria-disabled={(isOption && isDisabled) || undefined}
       onClick={handleRowClick}
     >
       <span className="ds-selector-list-item__icon-left">
@@ -213,7 +213,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
             <SelectionControl
               checked={selected}
               state={isDisabled ? 'disabled' : 'default'}
-              ariaLabel={headerText}
+              ariaLabel={[headerText, isDataHidden ? null : detailText].filter((t) => typeof t === 'string' && t).join(', ')} /* A11y-3: filas con el mismo título se distinguen por el detalle */
               onChange={() => {}}
             />
           </span>

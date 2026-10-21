@@ -86,10 +86,17 @@ export function ProgressBar({
   showLabel      = true,
   helperText     = 'Helper text',
   showHelperText = true,
+  ariaLabel,      // nombre si no hay label visible (por defecto, el propio `label`)
   id,
   className,
 }) {
   const clamped = Math.min(100, Math.max(0, value));
+  // A11y-3: la barra no tenía nombre. Con label visible → aria-labelledby; si
+  // se oculta, el texto del label (o `ariaLabel`) va como aria-label. El
+  // helper text la describe.
+  const baseId = React.useId();
+  const labelId = `${baseId}-label`;
+  const helperId = `${baseId}-helper`;
 
   const classes = [
     'ds-progress-bar',
@@ -99,17 +106,20 @@ export function ProgressBar({
 
   return (
     <div id={id} className={classes}>
-      {showLabel && <p className="ds-progress-bar__label">{label}</p>}
+      {showLabel && <p className="ds-progress-bar__label" id={labelId}>{label}</p>}
       <div
         className="ds-progress-bar__track"
         role="progressbar"
         aria-valuenow={clamped}
         aria-valuemin={0}
         aria-valuemax={100}
+        aria-labelledby={showLabel && !ariaLabel ? labelId : undefined}
+        aria-label={showLabel && !ariaLabel ? undefined : (ariaLabel ?? label)}
+        aria-describedby={showHelperText ? helperId : undefined}
       >
         <div className="ds-progress-bar__indicator" style={{ width: `${clamped}%` }} />
       </div>
-      {showHelperText && <p className="ds-progress-bar__helper-text">{helperText}</p>}
+      {showHelperText && <p className="ds-progress-bar__helper-text" id={helperId}>{helperText}</p>}
     </div>
   );
 }

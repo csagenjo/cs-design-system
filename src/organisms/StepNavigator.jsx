@@ -32,6 +32,7 @@
  */
 import React from 'react';
 import { injectStyles } from '../components/_inputBase';
+import { currentFor } from '../components/_stepStatus';
 import { StepVer } from '../components/StepVer';
 import { Icon } from '../components/Icon';
 import { resolveAppearance } from './_stepAppearance';
@@ -103,6 +104,9 @@ export function StepNavigator({
   showBottomConnector = true,
   expanded = false,
   onToggleExpand,
+  controls,
+  stepLabel,
+  statusLabels,
   onClick,
   className,
   style,
@@ -118,8 +122,11 @@ export function StepNavigator({
       className={`ds-step-navigator ${styleAxis === 'onPage' ? 'ds-step-navigator--on-page' : ''} ${selected ? 'ds-step-navigator--selected' : ''} ${className || ''}`}
       style={inlineStyle}
       onClick={isChapter ? onToggleExpand : onClick}
+      aria-current={currentFor(state, selected)}
+      aria-expanded={isChapter ? expanded : undefined}
+      aria-controls={isChapter && expanded ? controls : undefined}
     >
-      <StepVer state={nodeState} number={number} showTopConnector={showTopConnector} showBottomConnector={showBottomConnector} />
+      <StepVer state={nodeState} number={number} stepLabel={stepLabel} statusLabels={statusLabels} showTopConnector={showTopConnector} showBottomConnector={showBottomConnector} />
       <span className="ds-step-navigator__title">{title}</span>
       {isChapter && (
         <span className={`ds-step-navigator__chevron ${expanded ? 'ds-step-navigator__chevron--expanded' : ''}`} aria-hidden="true">

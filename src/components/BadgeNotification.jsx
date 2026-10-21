@@ -1,3 +1,4 @@
+import { VisuallyHidden } from './VisuallyHidden';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 
@@ -46,8 +47,16 @@ export function BadgeNotification({
   ].filter(Boolean).join(' ');
 
   return (
-    <span className={className} aria-label={ariaLabel}>
-      {label}
+    // A11y-3: aria-label en un <span> sin rol no se lee. Con `ariaLabel`
+    // ("3 notificaciones sin leer") el número visible se oculta al lector y se
+    // lee el texto completo.
+    <span className={className}>
+      {ariaLabel ? (
+        <>
+          <span aria-hidden="true">{label}</span>
+          <VisuallyHidden>{ariaLabel}</VisuallyHidden>
+        </>
+      ) : label}
     </span>
   );
 }

@@ -42,6 +42,8 @@ injectStyles('ds-step-ver', css);
 export function StepVer({
   state = 'incomplete',
   number = '1',
+  stepLabel,
+  statusLabels,
   showTopConnector = true,
   showBottomConnector = true,
   className,
@@ -50,7 +52,7 @@ export function StepVer({
   return (
     <div className={`ds-step-ver ${className || ''}`} style={style}>
       <span className={`ds-step-ver__connector ${!showTopConnector ? 'ds-step-ver__connector--hidden' : ''}`} aria-hidden="true" />
-      <Node state={state} number={number} />
+      <Node state={state} number={number} stepLabel={stepLabel} statusLabels={statusLabels} />
       <span className={`ds-step-ver__connector ${!showBottomConnector ? 'ds-step-ver__connector--hidden' : ''}`} aria-hidden="true" />
     </div>
   );

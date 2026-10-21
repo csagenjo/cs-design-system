@@ -32,6 +32,11 @@ import { Icon } from './Icon';
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
+.ds-cell-more-cell {
+  display:   flex;
+  width:     100%;
+  min-width: 0;
+}
 .ds-cell-more {
   display:         flex;
   align-items:     center;
@@ -83,6 +88,8 @@ function injectStyles() {
 
 export function CellMore({
   label    = 'More',      // rótulo; vacío/falsy → solo chevron (variante Basic)
+  ariaLabel,              // nombre con contexto: "More about García" (A11y-3)
+  haspopup,               // si abre un menú/diálogo: 'menu' | 'dialog'…
   surface  = 'neutral',   // 'neutral' | 'onSurface' | 'zebra'
   lastRow  = false,
   onClick,
@@ -101,21 +108,25 @@ export function CellMore({
   ].filter(Boolean).join(' ');
 
   return (
-    <button
-      type="button"
-      className={classes}
-      style={style}
-      role="cell"
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={label ? undefined : 'More'}
-      {...rest}
-    >
-      {label && <span>{label}</span>}
-      <span className="ds-cell-more__chevron">
-        <Icon name="ChevronRight" size="2xs" />
-      </span>
-    </button>
+    // A11y-3: role="cell" iba en el propio <button> y le quitaba el rol de
+    // botón. Ahora la celda es un div que envuelve al botón. `ariaLabel` da
+    // contexto ("More about García") — si no, todas las filas dicen "More".
+    <div role="cell" className="ds-cell-more-cell" style={style}>
+      <button
+        {...rest}
+        type="button"
+        className={classes}
+        onClick={onClick}
+        disabled={disabled}
+        aria-label={ariaLabel ?? (label ? undefined : 'More')}
+        aria-haspopup={haspopup}
+      >
+        {label && <span>{label}</span>}
+        <span className="ds-cell-more__chevron">
+          <Icon name="ChevronRight" size="2xs" />
+        </span>
+      </button>
+    </div>
   );
 }
 

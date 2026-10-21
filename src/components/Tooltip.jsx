@@ -130,6 +130,7 @@ export function Tooltip({
   label,
   placement = 'top', // 'top' | 'bottom' | 'left' | 'right'
   forceVisible = false,
+  describe = true,
   children,
   id,
   className,
@@ -138,8 +139,13 @@ export function Tooltip({
   const generatedId = React.useId();
   const tooltipId = id || generatedId;
 
-  const trigger = React.isValidElement(children)
-    ? React.cloneElement(children, { 'aria-describedby': tooltipId })
+  // A11y-3: `describe={false}` cuando el texto del tooltip ya ES el nombre del
+  // trigger (botón solo icono con el mismo aria-label) — si no, el lector lo
+  // dice dos veces. Se suma a un aria-describedby que ya traiga el trigger, no
+  // lo pisa.
+  const existing = React.isValidElement(children) ? children.props['aria-describedby'] : undefined;
+  const trigger = React.isValidElement(children) && describe
+    ? React.cloneElement(children, { 'aria-describedby': [existing, tooltipId].filter(Boolean).join(' ') })
     : children;
 
   const classes = ['ds-tooltip', className || ''].filter(Boolean).join(' ');
@@ -152,7 +158,7 @@ export function Tooltip({
   return (
     <span className={classes} style={style}>
       {trigger}
-      <span className={bubbleClasses} role="tooltip" id={tooltipId}>
+      <span className={bubbleClasses} role="tooltip" id={tooltipId} aria-hidden={describe ? undefined : 'true'}>
         {label}
         <span className="ds-tooltip__arrow" />
       </span>

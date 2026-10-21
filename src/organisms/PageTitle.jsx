@@ -17,7 +17,8 @@
  *   { type: 'link', label, href?, onClick? }   — href → <a>; solo onClick → <button> (A11y-0)
  *   { type: 'text', label, weight?: 'regular'|'bold', disabled?: boolean }
  *   { type: 'breadcrumb', items: [{ label, href?, onClick? }, ...] }  — Desktop only,
- *     último item = texto plano no clicable (la página actual)
+ *     último item = texto plano no clicable (la página actual, aria-current).
+ *     `onBack` hace de la flecha un botón ("Back", `backLabel`) — A11y-3
  *   undefined → None
  *
  * `title` — string, instancia `<Headline level={1}>` SIEMPRE (nunca baja de
@@ -143,6 +144,15 @@ const css = `
   width: var(--ds-page-title-nav-icon-size-desktop);
   height: var(--ds-page-title-nav-icon-size-desktop);
 }
+.ds-page-title__breadcrumb-list,
+.ds-page-title__breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-page-title-root-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 .ds-page-title__breadcrumb-sep {
   color: var(--ds-page-title-nav-icon-fg);
   width: 16px;
@@ -204,24 +214,38 @@ function ActionsCompact({ actions }) {
   );
 }
 
-function Breadcrumb({ items }) {
+/* A11y-3 (21/10/2026): lista ordenada con la página actual en aria-current,
+   separadores ocultos al lector. El botón de volver solo es botón si hay
+   `onBack` (antes no hacía nada); sin él, la flecha es decorativa. */
+function Breadcrumb({ items, onBack, backLabel = 'Back', ariaLabel = 'Breadcrumb' }) {
   return (
-    <nav className="ds-page-title__breadcrumb" aria-label="breadcrumb">
-      <button type="button" className="ds-page-title__nav-icon-btn" aria-label="Volver">
-        <Icon name="ArrowLeft" size="sm" />
-      </button>
-      {items.map((item, i) => {
-        const isLast = i === items.length - 1;
-        if (isLast) {
-          return <span key={i} className="ds-page-title__breadcrumb-current">{item.label}</span>;
-        }
-        return (
-          <React.Fragment key={i}>
-            <Link size="sm" emphasis="low" rightIcon={false} href={item.href} onClick={item.onClick}>{item.label}</Link>
-            <Icon name="ChevronRight" size="2xs" className="ds-page-title__breadcrumb-sep" />
-          </React.Fragment>
-        );
-      })}
+    <nav className="ds-page-title__breadcrumb" aria-label={ariaLabel}>
+      {onBack ? (
+        <button type="button" className="ds-page-title__nav-icon-btn" aria-label={backLabel} onClick={onBack}>
+          <Icon name="ArrowLeft" size="sm" />
+        </button>
+      ) : (
+        <span className="ds-page-title__nav-icon-btn" aria-hidden="true">
+          <Icon name="ArrowLeft" size="sm" />
+        </span>
+      )}
+      <ol className="ds-page-title__breadcrumb-list">
+        {items.map((item, i) => {
+          const isLast = i === items.length - 1;
+          return (
+            <li key={i} className="ds-page-title__breadcrumb-item">
+              {isLast ? (
+                <span className="ds-page-title__breadcrumb-current" aria-current="page">{item.label}</span>
+              ) : (
+                <>
+                  <Link size="sm" emphasis="low" rightIcon={false} href={item.href} onClick={item.onClick}>{item.label}</Link>
+                  <Icon name="ChevronRight" size="2xs" className="ds-page-title__breadcrumb-sep" />
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ol>
     </nav>
   );
 }
@@ -240,7 +264,7 @@ export function PageTitle({ nav, title, actions = [], className, style }) {
 
       {/* Desktop */}
       <div className="ds-page-title__wide">
-        {nav && nav.type === 'breadcrumb' && <Breadcrumb items={nav.items} />}
+        {nav && nav.type === 'breadcrumb' && <Breadcrumb items={nav.items} onBack={nav.onBack} backLabel={nav.backLabel} ariaLabel={nav.ariaLabel} />}
         <div className="ds-page-title__row">
           <Headline level={1}>{title}</Headline>
           <div className="ds-page-title__actions">

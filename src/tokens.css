@@ -1541,6 +1541,8 @@
   --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #0A7C92 — orden columna / hover */
   --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #F1F2F4 — divisor por defecto */
   --ds-cell-common-border-bottom-width:         1px;                           /* borderWidth/sm */
+  --ds-cell-common-focus-inner:                 var(--ds-borderColor-focus-inner); /* botón de orden de CellHeader (A11y-3) */
+  --ds-cell-common-focus-outer:                 var(--ds-borderColor-focus-outer);
   /* Específico — NO fusionar con Common */
   --ds-cell-data-padding-ver-basic:             var(--ds-spacing-sm);          /* 6 — solo Cell */
   --ds-cell-header-padding-top-basic:           var(--ds-spacing-md);          /* 8 — solo Header */

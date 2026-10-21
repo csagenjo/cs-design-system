@@ -40,6 +40,7 @@
 import React from 'react';
 import { Icon } from './Icon';
 import { LoadingSpinner } from './LoadingSpinner';
+import { warnOnce, warnPlaceholderLabel } from './_devWarn';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -184,6 +185,7 @@ export function Button({
   loading   = false,
   onClick,
   ariaLabel,
+  loadingLabel = 'Loading', // se lee con el botón en `loading` (A11y-3, inglés por defecto)
   htmlType  = 'button',
   children,
   ...rest   // aria-*/data-*/title/handlers de wrappers (Tooltip, PopoverSheet) llegan al <button> real
@@ -195,6 +197,14 @@ export function Button({
   // icon/size (16/20/24). Confirmado en Figma: Button ya instancia el wrapper
   // Icon compartido, nunca un icono suelto — el código debía hacer lo mismo.
   const iconSize   = { sm: '2xs', md: 'xs', lg: 'sm' }[size];
+
+  // A11y-3: avisos de nombre en desarrollo — un botón solo icono sin nombre, o
+  // con el texto de relleno "Button" de Figma (Dialog, DropZone, FileUpload,
+  // InlineNotification… lo traen por defecto).
+  if (iconOnly && !ariaLabel && !rest['aria-label'] && !rest['aria-labelledby']) {
+    warnOnce('Button.iconOnly', '[DS Button] `iconOnly` sin `ariaLabel`: el botón no tiene nombre para el lector de pantalla.');
+  }
+  if (!iconOnly) warnPlaceholderLabel('Button', 'children', children);
   const isDisabled = disabled || loading;
 
   const classes = [
@@ -219,7 +229,7 @@ export function Button({
       aria-label={(iconOnly && ariaLabel) || rest['aria-label']}
       aria-busy={loading}
     >
-      {loading  && <LoadingSpinner color="current" label="Cargando" className="ds-btn__spinner" />}
+      {loading  && <LoadingSpinner color="current" label={loadingLabel} className="ds-btn__spinner" />}
       {!loading && iconLeft  && <Icon name={iconLeft}  size={iconSize} />}
       {!iconOnly && children}
       {!loading && iconRight && <Icon name={iconRight} size={iconSize} />}

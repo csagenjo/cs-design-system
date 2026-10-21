@@ -254,6 +254,9 @@ export const InputTelephone = forwardRef(function InputTelephone({
   flag, // slot opcional (p. ej. <CountryFlag country="spain" />) — sustituye a flagEmoji cuando se pasa, para poder mostrar la bandera real seleccionada en un Country Picker en vez de un emoji fijo
   countryCode      = '+34',
   onCountryClick,
+  countryName,                  // nombre del país (lo que no dice el prefijo solo)
+  countryExpanded,              // estado del picker de país (aria-expanded)
+  countryLabel = (code, nameText) => `Country code, ${code}${nameText ? ` (${nameText})` : ''}`,
   helperText,
   errorMessage,
   fullWidth        = false,
@@ -267,7 +270,10 @@ export const InputTelephone = forwardRef(function InputTelephone({
   const inputId      = id || generatedId;
   const helperId     = helperText ? `${inputId}-helper` : null;
   const messageId    = state === 'error' && errorMessage ? `${inputId}-msg` : null;
-  const describedBy  = [helperId, messageId].filter(Boolean).join(' ') || undefined;
+  // A11y-3: el prefijo forma parte del número — el campo lo lee como
+  // descripción ("612 345 678, +34").
+  const codeId       = `${inputId}-code`;
+  const describedBy  = [codeId, helperId, messageId].filter(Boolean).join(' ') || undefined;
   const isDisabled   = state === 'disabled';
   const isSelectable = countryVariant === 'selectable' && !isDisabled;
 
@@ -311,13 +317,14 @@ export const InputTelephone = forwardRef(function InputTelephone({
           onClick={isSelectable ? onCountryClick : undefined}
           type={isSelectable ? 'button' : undefined}
           disabled={isSelectable ? isDisabled : undefined}
-          aria-label={isSelectable ? `Seleccionar país, actual ${countryCode}` : undefined}
-          tabIndex={isSelectable ? 0 : -1}
+          aria-label={isSelectable ? countryLabel(countryCode, countryName) : undefined}
+          aria-haspopup={isSelectable ? 'listbox' : undefined}
+          aria-expanded={isSelectable ? countryExpanded : undefined}
         >
           <span className="ds-input-telephone__flag" aria-hidden="true">
             {flag ?? flagEmoji}
           </span>
-          <span className="ds-input-telephone__code">
+          <span className="ds-input-telephone__code" id={codeId}>
             {countryCode}
           </span>
           {isSelectable && (

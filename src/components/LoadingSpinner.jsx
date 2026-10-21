@@ -17,10 +17,15 @@
  *   <LoadingSpinner size="large" color="onColor" label="Guardando" />
  */
 
+import { VisuallyHidden } from './VisuallyHidden';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 
 const css = `
+.ds-loading-spinner-status {
+  display:     inline-flex;
+  line-height: 0;
+}
 .ds-loading-spinner {
   display: inline-block;
   animation: ds-loading-spinner-spin var(--ds-loading-spinner-duration) linear infinite;
@@ -67,10 +72,20 @@ export function LoadingSpinner({
     className || '',
   ].filter(Boolean).join(' ');
 
-  return (
-    <svg id={id} className={classes} viewBox="0 0 16 16" role="status" aria-label={label}>
+  const svg = (
+    <svg id={label ? undefined : id} className={classes} viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <circle className="ds-loading-spinner__track" cx="8" cy="8" r="7" pathLength="100" />
     </svg>
+  );
+  // A11y-3: role="status" en un <svg> no se anuncia. Ahora el svg es
+  // decorativo y el texto ("Loading") va en una región de estado de verdad.
+  // `label=""` → solo el dibujo (cuando el contexto ya dice que está cargando).
+  if (!label) return svg;
+  return (
+    <span id={id} className="ds-loading-spinner-status" role="status">
+      {svg}
+      <VisuallyHidden>{label}</VisuallyHidden>
+    </span>
   );
 }
 

@@ -76,10 +76,20 @@ export function FileUpload({
   onFileNameChange,
   onFileRemove,
   onButtonClick,
+  onFilesDrop,
+  buttonLabel = 'Button',
+  removeLabel,
+  nameLabel,
   disabled = false,
   id,
   className,
 }) {
+  // A11y-3: la etiqueta y la descripción describen el botón de subir ficheros
+  // (antes no estaban enlazadas a ningún control).
+  const baseId = React.useId();
+  const labelId = `${baseId}-label`;
+  const descriptionId = `${baseId}-description`;
+  const describedBy = `${labelId} ${descriptionId}`;
   const classes = [
     'ds-file-upload',
     `ds-file-upload--${layout}`,
@@ -91,13 +101,13 @@ export function FileUpload({
   return (
     <div id={id} className={classes}>
       <div className="ds-file-upload__label">
-        <LabelDescription align={align} label={label} description={description} />
+        <LabelDescription align={align} label={label} description={description} labelId={labelId} descriptionId={descriptionId} />
       </div>
 
       {layout === 'compact' ? (
         <div className="ds-file-upload__compact-files">
-          <Button variant="default" outline size="sm" iconLeft="ChevronLeft" iconRight="ChevronRight" disabled={disabled} onClick={onButtonClick}>
-            Button
+          <Button variant="default" outline size="sm" iconLeft="ChevronLeft" iconRight="ChevronRight" disabled={disabled} onClick={onButtonClick} aria-describedby={describedBy}>
+            {buttonLabel}
           </Button>
           {files.slice(0, 1).map((file) => (
             <ListItem
@@ -107,6 +117,8 @@ export function FileUpload({
               errorMessage={file.errorMessage}
               onNameChange={(name) => onFileNameChange?.(file.id, name)}
               onRemove={() => onFileRemove?.(file.id)}
+              removeLabel={removeLabel}
+              nameLabel={nameLabel}
             />
           ))}
         </div>
@@ -118,6 +130,11 @@ export function FileUpload({
             onFileNameChange={onFileNameChange}
             onFileRemove={onFileRemove}
             onButtonClick={onButtonClick}
+            onFilesDrop={onFilesDrop}
+            buttonLabel={buttonLabel}
+            describedBy={describedBy}
+            removeLabel={removeLabel}
+            nameLabel={nameLabel}
           />
         </div>
       )}

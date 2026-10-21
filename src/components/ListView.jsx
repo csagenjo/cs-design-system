@@ -123,11 +123,13 @@ export function ListView({
   rightPanel         = true,
   rightPanelContent,
   selected           = false,
+  current            = 'true', // aria-current cuando `selected` — 'page' en navegación (SidebarMenu)
   divider            = 'none', // 'none' | 'partialBottom' | 'fullBottom' | 'allSides'
   disabled           = false,
   onClick,
   id,
   className,
+  ...rest
 }) {
   const dividerClass = {
     none: '',
@@ -144,11 +146,13 @@ export function ListView({
 
   return (
     <button
+      {...rest}
       type="button"
       id={id}
       className={classes}
       disabled={disabled}
       onClick={onClick}
+      aria-current={selected ? current : undefined}
     >
       {selected && <span className="ds-list-view__ribbon" aria-hidden="true" />}
 

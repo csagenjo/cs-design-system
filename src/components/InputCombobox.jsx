@@ -217,6 +217,8 @@ injectStyles('ds-input-combobox', css);
 export const InputCombobox = forwardRef(function InputCombobox({
   label,
   ariaLabel,
+  clearLabel  = 'Clear',          // A11y-3: + nombre del campo → "Clear Country"
+  toggleLabel = 'Show options',   // nombre fijo; el estado lo da aria-expanded
   placeholder = '',
   value = '',
   onValueChange,
@@ -332,7 +334,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
               aria-describedby={describedBy}
               aria-invalid={state === 'error' ? 'true' : undefined}
               aria-expanded={open}
-              aria-autocomplete="list"
+              aria-autocomplete="both"
               className="ds-input-combobox__control"
               {...nativeProps}
             />
@@ -343,7 +345,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
               <button
                 type="button"
                 className="ds-input-combobox__delete"
-                aria-label="Borrar"
+                aria-label={`${clearLabel} ${label || ariaLabel || ''}`.trim()}
                 onClick={onClear}
               >
                 <Icon name="x" size="xs" />
@@ -352,7 +354,8 @@ export const InputCombobox = forwardRef(function InputCombobox({
             <button
               type="button"
               className={['ds-input-combobox__chevron', open ? 'ds-input-combobox__chevron--open' : ''].filter(Boolean).join(' ')}
-              aria-label={open ? 'Cerrar lista' : 'Abrir lista'}
+              aria-label={toggleLabel}
+              aria-expanded={open}
               disabled={disabled}
               onClick={onToggleOpen}
               tabIndex={-1}

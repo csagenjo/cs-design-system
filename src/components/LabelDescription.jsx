@@ -43,6 +43,8 @@ export function LabelDescription({
   align = 'left', // 'left' | 'right'
   label = 'Label',
   description = 'This is a short description of the input',
+  labelId,        // ids para que el control los referencie (aria-describedby) — A11y-3
+  descriptionId,
   id,
   className,
 }) {
@@ -54,8 +56,8 @@ export function LabelDescription({
 
   return (
     <div id={id} className={classes}>
-      <p className="ds-label-description__label">{label}</p>
-      <HelperText>{description}</HelperText>
+      <p className="ds-label-description__label" id={labelId}>{label}</p>
+      <HelperText id={descriptionId}>{description}</HelperText>
     </div>
   );
 }

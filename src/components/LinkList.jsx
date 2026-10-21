@@ -60,6 +60,7 @@ export function LinkList({
               leftIcon={item.leftIcon ?? true}
               rightIcon={item.rightIcon ?? true}
               ariaLabel={item.ariaLabel}
+              aria-current={item.current ? 'page' : undefined}
             >
               {item.label}
             </Link>

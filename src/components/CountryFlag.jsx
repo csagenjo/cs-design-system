@@ -20,7 +20,9 @@ import { FLAGS } from './flags';
 
 const ASPECT_RATIO = 16 / 22;
 
-export function CountryFlag({ country, size = 22, className }) {
+// A11y-3: `label` ("Spain") cuando la bandera es la única pista del país;
+// sin label sigue siendo decorativa (lo normal: va junto al nombre o prefijo).
+export function CountryFlag({ country, size = 22, label, className }) {
   const svg = FLAGS[country];
   if (!svg) return null;
   const height = Math.round(size * ASPECT_RATIO);
@@ -29,8 +31,8 @@ export function CountryFlag({ country, size = 22, className }) {
       src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`}
       width={size}
       height={height}
-      alt=""
-      aria-hidden="true"
+      alt={label || ''}
+      aria-hidden={label ? undefined : 'true'}
       className={className}
       style={{ borderRadius: 2, display: 'block', flexShrink: 0 }}
     />
