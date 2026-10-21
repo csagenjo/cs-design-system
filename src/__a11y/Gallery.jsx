@@ -35,6 +35,8 @@ import { DropZone } from '../components/DropZone';
 import { ErrorAndEmptyState } from '../components/ErrorAndEmptyState';
 import { Headline } from '../components/Headline';
 import { HelperText } from '../components/HelperText';
+import { FieldLabel } from '../components/FieldLabel';
+import { ValidationMessage } from '../components/ValidationMessage';
 import { Icon } from '../components/Icon';
 import { IconButton } from '../components/IconButton';
 import { Image } from '../components/Image';
@@ -570,6 +572,22 @@ export default function Gallery({ mode }) {
             <Headline level={3} size="2xl">h3 con size 2xl</Headline>
             <Headline level={3} size="xs">h3 con size xs</Headline>
           </div>
+        </Col>
+      </Section>
+
+      <Section name="FieldLabel">
+        <Row>
+          <FieldLabel as="p">Label</FieldLabel>
+          <FieldLabel as="p" required>Label obligatorio</FieldLabel>
+          <FieldLabel as="p" disabled>Label deshabilitado</FieldLabel>
+        </Row>
+      </Section>
+
+      <Section name="ValidationMessage">
+        <Col>
+          <ValidationMessage message="This field is required" />
+          <ValidationMessage message="A long validation message that wraps onto a second line so the icon stays aligned with the first line of text." />
+          <ValidationMessage type="counter" message="12/140" />
         </Col>
       </Section>
 

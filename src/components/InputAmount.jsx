@@ -28,11 +28,11 @@
  *   <InputAmount state="disabled" />
  */
 
-import { RequiredMark } from './_requiredMark';
-import { LiveRegion } from './LiveRegion';
 import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
+import { FieldLabel } from './FieldLabel';
+import { ValidationMessage } from './ValidationMessage';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -45,17 +45,7 @@ const css = `
 .ds-input-amount--full-width { display: flex; width: 100%; }
 
 /* Label */
-.ds-input-amount__label {
-  font-size:     var(--ds-fontSize-label-md);
-  font-weight:   var(--ds-font-weight-bold);
-  color:         var(--ds-input-fg-label);
-  cursor:        default;
-  line-height:   var(--ds-lineHeight-label-md);
-  margin-bottom: var(--ds-input-label-gap);
-}
-.ds-input-amount--disabled .ds-input-amount__label {
-  color: var(--ds-input-label-fg-disabled);
-}
+.ds-input-amount__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper */
 .ds-input-amount__helper {
@@ -205,22 +195,6 @@ const css = `
   cursor:     not-allowed;
 }
 
-/* ── Validation message ── */
-.ds-input-amount__message {
-  display:     flex;
-  align-items: flex-start;
-  gap:         4px;
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-validation-fg-text);
-  margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-amount__message-icon {
-  color:       var(--ds-input-fg-error);
-  flex-shrink: 0;
-  margin-top:  1px;
-  display:     flex;
-}
 `;
 
 injectStyles('ds-input-amount', css);
@@ -285,9 +259,7 @@ export const InputAmount = forwardRef(function InputAmount({
     <div className={wrapperClass}>
 
       {label && (
-        <label className="ds-input-amount__label" htmlFor={inputId}>
-          {label}<RequiredMark show={required} />
-        </label>
+        <FieldLabel className="ds-input-amount__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
@@ -344,18 +316,7 @@ export const InputAmount = forwardRef(function InputAmount({
         />
 
       </div>
-
-      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
-      <LiveRegion>
-        {state === 'error' && errorMessage && (
-          <p className="ds-input-amount__message" id={messageId}>
-            <span className="ds-input-amount__message-icon">
-              <Icon name="circle-x" size="2xs" />
-            </span>
-            {errorMessage}
-          </p>
-        )}
-      </LiveRegion>
+      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
 
     </div>
   );

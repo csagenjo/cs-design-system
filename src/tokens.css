@@ -995,6 +995,7 @@
   --ds-input-helper-gap:                    var(--ds-spacing-md);   /* gap se queda en Input — layout propio, NO en Helper Text */
   --ds-input-validation-fg-text:            var(--ds-fg-default);
   --ds-input-validation-gap:                var(--ds-spacing-xs);
+  --ds-input-validation-message-gap:        var(--ds-spacing-md);   /* icono → texto (Figma validationMessage/all/root/gap/generic) */
   --ds-input-fg-placeholder:               var(--ds-fg-subtle);
   --ds-input-border-hover:                 var(--ds-borderColor-emphasis);
   --ds-input-bg-readonly:                  var(--ds-bg-page);

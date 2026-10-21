@@ -3,8 +3,8 @@
  * CS Design System · v1.0
  *
  * Label + HelperText apilados, para el encabezado de File Upload. No lleva
- * tokens propios de color — reutiliza `--ds-input-fg-label` (mismo que
- * Input*) y el átomo HelperText.jsx tal cual, sin reimplementar nada.
+ * tokens propios de color — instancia los átomos FieldLabel y HelperText
+ * (los mismos que Input*), sin reimplementar nada.
  *
  * `align`: 'left' | 'right' — solo text-align, no reposiciona el bloque.
  *
@@ -16,6 +16,7 @@
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { HelperText } from './HelperText';
+import { FieldLabel } from './FieldLabel';
 
 const css = `
 .ds-label-description {
@@ -27,14 +28,6 @@ const css = `
 .ds-label-description--right { align-items: flex-end; text-align: right; }
 .ds-label-description--left  { align-items: flex-start; text-align: left; }
 
-.ds-label-description__label {
-  margin: 0;
-  font-family: inherit;
-  font-weight: var(--ds-font-weight-bold);
-  font-size: var(--ds-fontSize-label-md);
-  line-height: var(--ds-lineHeight-label-md);
-  color: var(--ds-input-fg-label);
-}
 `;
 
 injectStyles('ds-label-description', css);
@@ -56,7 +49,7 @@ export function LabelDescription({
 
   return (
     <div id={id} className={classes}>
-      <p className="ds-label-description__label" id={labelId}>{label}</p>
+      <FieldLabel as="p" className="ds-label-description__label" id={labelId}>{label}</FieldLabel>
       <HelperText id={descriptionId}>{description}</HelperText>
     </div>
   );

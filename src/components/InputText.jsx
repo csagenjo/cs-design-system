@@ -1,5 +1,3 @@
-import { LiveRegion } from './LiveRegion';
-import { RequiredMark } from './_requiredMark';
 import React, {
   useRef,
   useEffect,
@@ -9,6 +7,8 @@ import React, {
 } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
+import { FieldLabel } from './FieldLabel';
+import { ValidationMessage } from './ValidationMessage';
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -21,18 +21,7 @@ const css = `
 }
 .ds-input-text--full-width { display: flex; width: 100%; }
 
-.ds-input-text__label {
-  font-size:     var(--ds-fontSize-label-md);
-  font-weight:   var(--ds-font-weight-bold);
-  color:         var(--ds-input-fg-label);
-  cursor:        pointer;
-  line-height:   var(--ds-lineHeight-label-md);
-  margin-bottom: var(--ds-input-label-gap);
-}
-.ds-input-text--disabled .ds-input-text__label {
-  color: var(--ds-input-label-fg-disabled);
-  cursor: default;
-}
+.ds-input-text__label { margin-bottom: var(--ds-input-label-gap); }
 
 .ds-input-text__field-wrap {
   position: relative;
@@ -156,22 +145,6 @@ const css = `
 }
 .ds-input-text--disabled .ds-input-text__helper { color: var(--ds-input-helper-fg-disabled); }
 
-/* Mensaje de validación */
-.ds-input-text__message {
-  display:     flex;
-  align-items: flex-start;
-  gap:         4px;
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-validation-fg-text);
-  margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-text__message-icon {
-  color:      var(--ds-input-fg-error);
-  flex-shrink: 0;
-  margin-top:  1px;
-  display:     flex;
-}
 `;
 
 injectStyles('ds-input-text', css);
@@ -268,9 +241,7 @@ export const InputText = forwardRef(function InputText({
   return (
     <div className={wrapperClass}>
       {label && (
-        <label className="ds-input-text__label" htmlFor={inputId}>
-          {label}<RequiredMark show={required} />
-        </label>
+        <FieldLabel className="ds-input-text__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
@@ -303,18 +274,7 @@ export const InputText = forwardRef(function InputText({
           </span>
         )}
       </div>
-
-      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
-      <LiveRegion>
-        {state === 'error' && errorMessage && (
-          <p className="ds-input-text__message" id={messageId}>
-            <span className="ds-input-text__message-icon">
-              <Icon name="circle-x" size="2xs" />
-            </span>
-            {errorMessage}
-          </p>
-        )}
-      </LiveRegion>
+      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

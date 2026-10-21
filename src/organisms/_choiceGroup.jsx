@@ -13,11 +13,10 @@
  */
 import React, { useId } from 'react';
 import { injectStyles } from '../components/_inputBase';
-import { Icon } from '../components/Icon';
 import { HelperText } from '../components/HelperText';
-import { LiveRegion } from '../components/LiveRegion';
 import { VisuallyHidden } from '../components/VisuallyHidden';
-import { RequiredMark } from '../components/_requiredMark';
+import { FieldLabel } from '../components/FieldLabel';
+import { ValidationMessage } from '../components/ValidationMessage';
 
 injectStyles('ds-choice-group', `
 .ds-choice-group {
@@ -29,15 +28,7 @@ injectStyles('ds-choice-group', `
   border:         0;
   font-family:    inherit;
 }
-.ds-choice-group__legend {
-  padding:       0;
-  font-size:     var(--ds-fontSize-label-md);
-  font-weight:   var(--ds-font-weight-bold);
-  line-height:   var(--ds-lineHeight-label-md);
-  color:         var(--ds-input-fg-label);
-  margin-bottom: var(--ds-input-label-gap);
-}
-.ds-choice-group--disabled .ds-choice-group__legend { color: var(--ds-input-label-fg-disabled); }
+.ds-choice-group__legend { margin-bottom: var(--ds-input-label-gap); }
 .ds-choice-group__helper { margin-bottom: var(--ds-input-helper-gap); }
 .ds-choice-group__options {
   display:        flex;
@@ -46,19 +37,6 @@ injectStyles('ds-choice-group', `
 }
 .ds-choice-group--horizontal .ds-choice-group__options { flex-direction: row; flex-wrap: wrap; }
 .ds-choice-group--no-gap .ds-choice-group__options { gap: 0; }
-.ds-choice-group__message {
-  display:     flex;
-  align-items: flex-start;
-  gap:         var(--ds-spacing-xs);
-  font-size:   var(--ds-fontSize-body-sm);
-  line-height: var(--ds-lineHeight-body-sm);
-  color:       var(--ds-input-validation-fg-text);
-  margin:      var(--ds-input-validation-gap) 0 0;
-}
-.ds-choice-group__message-icon {
-  display: inline-flex;
-  color:   var(--ds-input-fg-error);
-}
 `);
 
 /**
@@ -105,25 +83,17 @@ export function ChoiceGroup({
       aria-invalid={supportsRequired && state === 'error' ? true : undefined}
       disabled={state === 'disabled'}
     >
-      <legend className="ds-choice-group__legend" id={legendId}>
+      <FieldLabel as="legend" className="ds-choice-group__legend" id={legendId} required={required} disabled={state === 'disabled'}>
         {label}
-        <RequiredMark show={required} />
         {required && !supportsRequired && requiredLabel && (
           <VisuallyHidden>{`, ${requiredLabel}`}</VisuallyHidden>
         )}
-      </legend>
+      </FieldLabel>
       {helperText && (
         <HelperText id={helperId} className="ds-choice-group__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
       <div className="ds-choice-group__options">{render({ messageId })}</div>
-      <LiveRegion>
-        {state === 'error' && errorMessage && (
-          <p className="ds-choice-group__message" id={messageId}>
-            <span className="ds-choice-group__message-icon"><Icon name="circle-x" size="2xs" /></span>
-            {errorMessage}
-          </p>
-        )}
-      </LiveRegion>
+      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
     </fieldset>
   );
 }
