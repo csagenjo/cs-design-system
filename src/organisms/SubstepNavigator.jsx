@@ -4,7 +4,12 @@
  *
  * Fila hija de un `StepNavigator` en `variation="chapter"` — sin `Node`
  * propio, solo una línea vertical de paso (la continuación visual del
- * conector del capítulo padre) + icono chevron + label. El consumidor la
+ * conector del capítulo padre) + icono de estado + label.
+ *
+ * Icono por `state` (igual que Figma, 21/10/2026): incomplete → punto,
+ * active → chevron derecho, completed → check. El label va en negrita en
+ * active, completed y con `selected`; regular en incomplete. Antes era
+ * siempre una flecha y el label siempre regular. El consumidor la
  * monta debajo del `StepNavigator` cuando `expanded` es true, igual que
  * SidebarMenu con sus filas hijas.
  *
@@ -42,6 +47,12 @@ const css = `
 }
 .ds-substep-navigator--on-page {
   background: var(--ds-steps-root-bg-on-page-incomplete);
+}
+.ds-substep-navigator--active {
+  background: var(--ds-steps-root-bg-on-default-active);
+}
+.ds-substep-navigator--active.ds-substep-navigator--on-page {
+  background: var(--ds-steps-root-bg-on-page-active);
 }
 .ds-substep-navigator:hover {
   background: var(--ds-steps-root-bg-hover);
@@ -84,11 +95,18 @@ const css = `
   font-family: inherit;
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-regular);
-  color:       var(--ds-fg-default);
+  color:       var(--ds-steps-navigator-root-fg-label);
+}
+.ds-substep-navigator--active .ds-substep-navigator__label,
+.ds-substep-navigator--completed .ds-substep-navigator__label,
+.ds-substep-navigator--selected .ds-substep-navigator__label {
+  font-weight: var(--ds-font-weight-bold);
 }
 `;
 
 injectStyles('ds-substep-navigator', css);
+
+const STATE_ICON = { incomplete: 'Dot', active: 'ChevronRight', completed: 'Check' };
 
 export function SubstepNavigator({
   state = 'incomplete',
@@ -111,7 +129,7 @@ export function SubstepNavigator({
         <span className="ds-substep-navigator__line" aria-hidden="true" />
       </span>
       <span className="ds-substep-navigator__icon" aria-hidden="true">
-        <Icon name="ArrowRight" size="xs" />
+        <Icon name={STATE_ICON[state] ?? STATE_ICON.incomplete} size="xs" />
       </span>
       <span className="ds-substep-navigator__label">{label}</span>
     </button>
