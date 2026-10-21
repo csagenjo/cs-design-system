@@ -28,6 +28,7 @@ const css = `
 
 .ds-dialog-header__title {
   flex: 1 0 0;
+  letter-spacing: inherit; /* es un h2: que no herede el letter-spacing global de h2 */
   min-width: 0;
   margin: 0;
   font-family: inherit;
@@ -91,6 +92,9 @@ export function DialogHeader({
   showClose = true,
   onBack,
   onClose,
+  titleId,                 // id del título — el diálogo lo usa en aria-labelledby (A11y-1)
+  backLabel = 'Back',      // textos para lector de pantalla — inglés por defecto (decisión 20/10)
+  closeLabel = 'Close',
 }) {
   const classes = [
     'ds-dialog-header',
@@ -101,15 +105,19 @@ export function DialogHeader({
   return (
     <div className={classes}>
       {showArrow ? (
-        <button type="button" className="ds-dialog-header__icon-btn" onClick={onBack} aria-label="Volver">
+        <button type="button" className="ds-dialog-header__icon-btn" onClick={onBack} aria-label={backLabel}>
           <Icon name="ArrowLeft" size="sm" />
         </button>
       ) : (
         <span className="ds-dialog-header__icon-btn ds-dialog-header__icon-btn--placeholder" aria-hidden="true" />
       )}
-      <p className="ds-dialog-header__title">{title}</p>
+      {/* Título = encabezado real (h2) para que el lector lo anuncie y el diálogo
+          lo use como nombre. Sin título (ErrorAndEmptyState) solo queda el hueco. */}
+      {title
+        ? <h2 id={titleId} className="ds-dialog-header__title">{title}</h2>
+        : <span className="ds-dialog-header__title" aria-hidden="true" />}
       {showClose ? (
-        <button type="button" className="ds-dialog-header__icon-btn" onClick={onClose} aria-label="Cerrar">
+        <button type="button" className="ds-dialog-header__icon-btn" onClick={onClose} aria-label={closeLabel}>
           <Icon name="X" size="sm" />
         </button>
       ) : (

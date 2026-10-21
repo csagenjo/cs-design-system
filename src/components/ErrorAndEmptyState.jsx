@@ -18,13 +18,23 @@
  *                         tenía) pero sin radio de esquina — Figma no lo define
  *                         para este componente.
  *
+ *
+ * ACCESIBILIDAD (A11y-1, 21/10/2026, audit §B):
+ *   popUp = diálogo modal: role="dialog" + `_useModal` (foco dentro, Tab
+ *   atrapado, fondo inert, Escape → `onClose`, foco de vuelta al cerrar),
+ *   nombre = el título (h2). `modal={false}` solo para mostrarlo estático.
+ *   fullScreen = contenido de página, no un diálogo: sin role, título h2.
+ *   El icono por defecto es decorativo (aria-hidden).
+ *
  * USO:
  *   <ErrorAndEmptyState title="No hay resultados" description="Prueba a cambiar los filtros." />
+ *   {open && <ErrorAndEmptyState variant="popUp" title="Sin resultados" onClose={close} />}
  *   <ErrorAndEmptyState variant="popUp" icon={<AlertTriangle />} onClose={fn} />
  */
 
-import React from 'react';
+import React, { useId, useRef } from 'react';
 import { injectStyles } from './_inputBase';
+import { useModal } from './_useModal';
 import { DialogHeader } from './_dialogBase';
 import { Button } from './Button';
 import { ImageOff } from 'lucide-react';
@@ -86,6 +96,7 @@ const css = `
 
 .ds-error-empty-state__title {
   margin: 0;
+  letter-spacing: inherit; /* es un h2: que no herede el letter-spacing global de h2 */
   width: 100%;
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
@@ -131,10 +142,17 @@ export function ErrorAndEmptyState({
   secondaryButton      = true,
   secondaryButtonLabel = 'Button',
   onSecondaryButton,
+  modal                = true,
+  closeLabel,
   id,
   className,
 }) {
   const isFullScreen = variant !== 'popUp';
+  const isDialog = !isFullScreen;
+  const ref = useRef(null);
+  const titleId = useId();
+  const descriptionId = useId();
+  useModal({ open: isDialog && modal, containerRef: ref, onClose });
 
   const classes = [
     'ds-error-empty-state',
@@ -143,15 +161,23 @@ export function ErrorAndEmptyState({
   ].filter(Boolean).join(' ');
 
   return (
-    <div id={id} className={classes}>
-      <DialogHeader color="default" size="standard" title="" showArrow={false} showClose onClose={onClose} />
+    <div
+      ref={ref}
+      id={id}
+      className={classes}
+      role={isDialog ? 'dialog' : undefined}
+      aria-modal={isDialog && modal ? 'true' : undefined}
+      aria-labelledby={isDialog ? titleId : undefined}
+      aria-describedby={isDialog ? descriptionId : undefined}
+    >
+      <DialogHeader color="default" size="standard" title="" showArrow={false} showClose onClose={onClose} closeLabel={closeLabel} />
       <div className="ds-error-empty-state__content">
-        <div className="ds-error-empty-state__icon">
+        <div className="ds-error-empty-state__icon" aria-hidden="true">
           {icon || <ImageOff size={64} strokeWidth={1.5} aria-hidden="true" />}
         </div>
         <div className="ds-error-empty-state__text">
-          <p className="ds-error-empty-state__title">{title}</p>
-          <p className="ds-error-empty-state__description">{description}</p>
+          <h2 id={titleId} className="ds-error-empty-state__title">{title}</h2>
+          <p id={descriptionId} className="ds-error-empty-state__description">{description}</p>
         </div>
       </div>
       {showButtons && (primaryButton || secondaryButton) && (

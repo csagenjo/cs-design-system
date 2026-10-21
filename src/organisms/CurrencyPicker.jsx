@@ -38,9 +38,9 @@
  *   </div>
  */
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { injectStyles } from '../components/_inputBase';
-import { usePopoverDismiss } from '../components/_popoverDismiss';
+import { usePickerListbox } from './_usePickerListbox';
 import { SelectorListItem } from '../components/SelectorListItem';
 
 const css = `
@@ -72,30 +72,32 @@ export function CurrencyPicker({
   onChange,
   open = false,
   onClose,
+  ariaLabel = 'Currencies',  // nombre del listbox para lector de pantalla (inglés por defecto, decisión 20/10)
   id,
 }) {
-  const rootRef = useRef(null);
-
-  // Cierre por click-fuera + Escape, mismo mecanismo que CountryPicker/
-  // Combobox/PopoverSheet/SidebarMenu.
-  usePopoverDismiss({ open, onClose, refs: [rootRef] });
+  // Listbox real con teclado — mismo helper que CountryPicker (A11y-1).
+  const label = (c) => `${c.code} — ${c.name}`;
+  const { listboxProps, getOptionProps } = usePickerListbox({
+    open, onClose, onChange,
+    items: currencies, value,
+    getValue: (c) => c.code,
+    getLabel: label,
+    label: ariaLabel,
+  });
 
   if (!open) return null;
 
   return (
-    <div className="ds-currency-picker" ref={rootRef} id={id} role="listbox">
-      {currencies.map((currency) => (
+    <div className="ds-currency-picker" {...listboxProps} id={id || listboxProps.id}>
+      {currencies.map((currency, i) => (
         <SelectorListItem
           key={currency.code}
+          {...getOptionProps(i)}
           data="single"
-          headerText={`${currency.code} — ${currency.name}`}
+          headerText={label(currency)}
           icon={null}
           showControl={false}
           selected={currency.code === value}
-          onClick={() => {
-            onChange?.(currency.code);
-            onClose?.();
-          }}
         />
       ))}
     </div>

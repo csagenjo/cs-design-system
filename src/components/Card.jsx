@@ -35,9 +35,9 @@ const css = `
 
 injectStyles('ds-card', css);
 
-export function Card({ children, className, style }) {
+export function Card({ children, className, style, id }) {
   return (
-    <div className={`ds-card ${className || ''}`} style={style}>
+    <div id={id} className={`ds-card ${className || ''}`} style={style}>
       {children}
     </div>
   );

@@ -31,6 +31,11 @@
  * USO:
  *   <InputCombobox label="País" value={value} onValueChange={setValue} ariaLabel="País" />
  *   <InputCombobox label="Etiquetas" multiple selectedChips={chips} onRemoveChip={fn} />
+ *
+ * A11y-1 (21/10/2026): el átomo no pinta la lista de opciones. Con `open`, el
+ * consumidor DEBE pasar `aria-controls` (id de su listbox) y, si resalta una
+ * opción, `aria-activedescendant` — llegan al <input> por las props nativas.
+ * `Combobox` ya lo hace (useListbox, modo activedescendant).
  */
 
 import React, { forwardRef, useId, useRef } from 'react';

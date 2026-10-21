@@ -23,13 +23,25 @@
  * paso se sincronizó `--ds-dialog-root-gap-generic` (existía en Figma sin
  * sincronizar) para dejar de usar el token de padding como gap.
  *
+ *
+ * ACCESIBILIDAD — modal (A11y-1, 21/10/2026, audit §B):
+ *   `modal` (default true) = montado es abierto. Vía `_useModal`: el foco entra
+ *   al abrir (primer elemento enfocable), Tab queda atrapado dentro, el resto de
+ *   la página se vuelve `inert`, el scroll de fondo se bloquea, Escape llama a
+ *   `onClose` y al cerrar el foco vuelve al elemento que lo abrió. El nombre del
+ *   diálogo es su título (`aria-labelledby` → h2). `modal={false}` solo para
+ *   mostrarlo estático (documentación, galería), nunca en una app.
+ *   Es una confirmación: role="alertdialog", con el mensaje como descripción
+ *   (`aria-describedby`) — el lector lee título y pregunta al abrir.
+ *
  * USO:
- *   <DialogSimple message="¿Seguro que quieres continuar?" />
+ *   {open && <DialogSimple message="¿Seguro que quieres continuar?" onClose={close} />}
  *   <DialogSimple variant="expanded" title="Confirmación" onPrimaryButton={fn} />
  */
 
-import React from 'react';
+import React, { useId, useRef } from 'react';
 import { injectStyles } from './_inputBase';
+import { useModal } from './_useModal';
 import { DialogHeader } from './_dialogBase';
 import { Button } from './Button';
 
@@ -106,9 +118,16 @@ export function DialogSimple({
   secondaryButton      = true,
   secondaryButtonLabel = 'Button',
   onSecondaryButton,
+  modal                = true,
+  backLabel,
+  closeLabel,
   id,
   className,
 }) {
+  const ref = useRef(null);
+  const titleId = useId();
+  const messageId = useId();
+  useModal({ open: modal, containerRef: ref, onClose });
   const isExpanded = variant === 'expanded';
   const btnSize = isExpanded ? 'lg' : 'sm'; /* igual que Figma: Default → Button Small, Expanded → Large */
 
@@ -119,18 +138,29 @@ export function DialogSimple({
   ].filter(Boolean).join(' ');
 
   return (
-    <div id={id} className={classes} role="dialog" aria-modal="true" aria-label={title}>
+    <div
+      ref={ref}
+      id={id}
+      className={classes}
+      role="alertdialog"
+      aria-modal={modal ? 'true' : undefined}
+      aria-labelledby={title ? titleId : undefined}
+      aria-describedby={messageId}
+    >
       <DialogHeader
         color="default"
         size="small"
         title={title}
+        titleId={titleId}
+        backLabel={backLabel}
+        closeLabel={closeLabel}
         showArrow
         showClose
         onBack={onBack}
         onClose={onClose}
       />
       <div className="ds-dialog-simple__content">
-        <p className="ds-dialog-simple__message">{message}</p>
+        <p id={messageId} className="ds-dialog-simple__message">{message}</p>
       </div>
       {showButtonBar && (primaryButton || secondaryButton) && (
         <div className="ds-dialog-simple__cta">

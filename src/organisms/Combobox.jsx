@@ -39,6 +39,17 @@
  * `autoSuggestText` (sugerencia gris tipo autocompletado) se calcula aquí:
  * la primera opción filtrada cuya etiqueta empiece por lo tecleado.
  *
+ * ACCESIBILIDAD (A11y-1, 21/10/2026 — audit §C, antes 2 críticos):
+ *   · El foco se queda SIEMPRE en el campo; la opción resaltada se comunica
+ *     con `aria-activedescendant` + `aria-controls` (useListbox, modo
+ *     activedescendant). Las filas son `role="option"` con `aria-selected`, y
+ *     su Radio/Checkbox ya no es una parada de Tab (es solo visual).
+ *   · Tab ya NO queda atrapado: con sugerencia, Tab la acepta y el foco sigue
+ *     su camino (antes `preventDefault` impedía salir del campo). Al salir del
+ *     componente con Tab el panel se cierra.
+ *   · "Sin resultados" se anuncia por lector (`announce`); quitar un chip
+ *     devuelve el foco al campo.
+ *
  * USO:
  *   <Combobox
  *     label="País"
@@ -61,6 +72,8 @@ import { injectStyles } from '../components/_inputBase';
 import { usePopoverDismiss } from '../components/_popoverDismiss';
 import { InputCombobox } from '../components/InputCombobox';
 import { SelectorListItem } from '../components/SelectorListItem';
+import { useListbox } from '../components/_rovingFocus';
+import { announce } from '../components/announce';
 
 const css = `
 .ds-combobox {
@@ -106,7 +119,8 @@ export function Combobox({
   errorMessage,
   state = 'default',
   fullWidth = false,
-  emptyMessage = 'Sin resultados',
+  emptyMessage = 'No results',   // inglés por defecto (decisión 20/10) — también es lo que se anuncia
+  listboxLabel,                  // nombre del listbox; por defecto el label/ariaLabel del campo
   id,
 }) {
   const generatedId = useId();
@@ -116,7 +130,6 @@ export function Combobox({
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState(multiple ? '' : (options.find(o => o.value === value)?.label || ''));
-  const [highlighted, setHighlighted] = useState(0);
 
   useEffect(() => {
     if (!multiple) {
@@ -142,12 +155,28 @@ export function Combobox({
     ? (filtered.find(o => o.label.toLowerCase().startsWith(query.toLowerCase()))?.label || '')
     : '';
 
+  // Listbox en modo activedescendant: el foco no sale del <input>.
+  const listbox = useListbox({
+    count: filtered.length,
+    selected: null,
+    mode: 'activedescendant',
+    onSelect: (i) => selectOption(filtered[i]),
+    label: listboxLabel || label || ariaLabel,
+  });
+  const highlighted = listbox.activeIndex;
+
   function openPicker() {
     setOpen(true);
-    setHighlighted(0);
+    listbox.setActiveIndex(0);
   }
 
-  function selectOption(opt) {
+  // "Sin resultados" solo se ve; el lector no se entera si no se anuncia.
+  const noResults = open && state !== 'disabled' && filtered.length === 0;
+  useEffect(() => {
+    if (noResults) announce(emptyMessage);
+  }, [noResults, emptyMessage]);
+
+  function selectOption(opt, { keepFocus = true } = {}) {
     if (multiple) {
       onSelectedValuesChange?.([...selectedValues, opt.value]);
       setQuery('');
@@ -156,7 +185,7 @@ export function Combobox({
       setQuery(opt.label);
     }
     setOpen(false);
-    inputRef.current?.focus();
+    if (keepFocus) inputRef.current?.focus();
   }
 
   function handleValueChange(next) {
@@ -168,6 +197,7 @@ export function Combobox({
   function handleRemoveChip(index) {
     const next = selectedValues.filter((_, i) => i !== index);
     onSelectedValuesChange?.(next);
+    inputRef.current?.focus(); // el chip desaparece: el foco no se pierde, vuelve al campo
   }
 
   function handleClear() {
@@ -178,27 +208,33 @@ export function Combobox({
   }
 
   function handleKeyDown(e) {
-    if (e.key === 'ArrowDown') {
+    if (!open && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
       e.preventDefault();
-      if (!open) { openPicker(); return; }
-      setHighlighted((h) => Math.min(h + 1, filtered.length - 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setHighlighted((h) => Math.max(h - 1, 0));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (open && filtered[highlighted]) selectOption(filtered[highlighted]);
-      else if (autoSuggestText) {
-        const match = filtered.find(o => o.label === autoSuggestText);
-        if (match) selectOption(match);
-      }
-    } else if (e.key === 'Escape') {
+      openPicker();
+      return;
+    }
+    if (e.key === 'Escape') {
       setOpen(false);
       if (!multiple) setQuery(options.find(o => o.value === value)?.label || '');
-    } else if (e.key === 'Tab' && autoSuggestText) {
-      e.preventDefault();
-      setQuery(autoSuggestText);
+      return;
     }
+    if (e.key === 'Tab') {
+      // Acepta la sugerencia SIN bloquear el Tab (antes preventDefault =
+      // trampa de teclado): el texto se completa y el foco sigue su camino.
+      if (autoSuggestText) {
+        const match = filtered.find(o => o.label === autoSuggestText);
+        if (match) selectOption(match, { keepFocus: false });
+      }
+      setOpen(false);
+      return;
+    }
+    if (e.key === 'Enter' && !(open && filtered[highlighted]) && autoSuggestText) {
+      e.preventDefault();
+      const match = filtered.find(o => o.label === autoSuggestText);
+      if (match) selectOption(match);
+      return;
+    }
+    if (open) listbox.controllerProps.onKeyDown(e); // ↑ ↓ Enter
   }
 
   const selectedChips = multiple
@@ -206,7 +242,15 @@ export function Combobox({
     : [];
 
   return (
-    <div className="ds-combobox" ref={rootRef} id={rootId}>
+    <div
+      className="ds-combobox"
+      ref={rootRef}
+      id={rootId}
+      onBlur={(e) => {
+        // Foco fuera del componente (Tab, programático) → cerrar el panel.
+        if (open && !rootRef.current?.contains(e.relatedTarget)) setOpen(false);
+      }}
+    >
       <InputCombobox
         ref={inputRef}
         label={label}
@@ -228,6 +272,8 @@ export function Combobox({
         onClear={handleClear}
         onFocus={openPicker}
         onKeyDown={handleKeyDown}
+        aria-controls={listbox.listboxId}
+        aria-activedescendant={open ? listbox.controllerProps['aria-activedescendant'] : undefined}
       />
 
       {/* onMouseDown con preventDefault: sin esto, clicar una fila BLUR-ea el
@@ -236,24 +282,24 @@ export function Combobox({
           opción recién elegida como único resultado filtrado — patrón
           estándar para paneles de combobox/autocomplete. */}
       {open && state !== 'disabled' && (
-        <div
-          className="ds-combobox__picker"
-          role="listbox"
-          onMouseDown={(e) => e.preventDefault()}
-        >
-          {filtered.length === 0 && (
+        <div className="ds-combobox__picker" onMouseDown={(e) => e.preventDefault()}>
+          {filtered.length === 0 ? (
             <div className="ds-combobox__empty">{emptyMessage}</div>
+          ) : (
+            <div {...listbox.listboxProps}>
+              {filtered.map((opt, i) => (
+                <SelectorListItem
+                  key={opt.value}
+                  {...listbox.getOptionProps(i)}
+                  aria-selected={i === highlighted ? 'true' : 'false'}
+                  data={multiple ? 'multiple' : 'single'}
+                  headerText={opt.label}
+                  descriptionText={opt.description}
+                  selected={i === highlighted}
+                />
+              ))}
+            </div>
           )}
-          {filtered.map((opt, i) => (
-            <SelectorListItem
-              key={opt.value}
-              data={multiple ? 'multiple' : 'single'}
-              headerText={opt.label}
-              descriptionText={opt.description}
-              selected={i === highlighted}
-              onClick={() => selectOption(opt)}
-            />
-          ))}
         </div>
       )}
     </div>

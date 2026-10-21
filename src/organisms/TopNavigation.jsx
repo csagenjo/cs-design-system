@@ -89,7 +89,7 @@
  *     ]}
  *   />
  */
-import React, { useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { TabItem } from '../components/TabItem';
 import { IconButton } from '../components/IconButton';
@@ -99,6 +99,7 @@ import { Image } from '../components/Image';
 import { Link } from '../components/Link';
 import { Scrim } from '../components/Scrim';
 import { SidebarMenu } from './SidebarMenu';
+import { useModal } from '../components/_useModal';
 
 const css = `
 .ds-top-navigation {
@@ -124,7 +125,9 @@ const css = `
 
 .ds-top-navigation__left { display: flex; align-items: center; gap: var(--ds-top-navigation-root-gap-generic); min-width: 0; }
 .ds-top-navigation__tabs { display: flex; align-items: stretch; }
-.ds-top-navigation__item { position: relative; }
+/* Sin position propio (A11y-1): el flydown vive DENTRO de su item (orden de
+   Tab correcto) pero se sigue anclando al <nav> raíz — ancho de barra completo. */
+.ds-top-navigation__item { position: static; }
 
 .ds-top-navigation__flydown {
   /* Mega-menú a ancho completo de página (25/09, ref. real de Carol:
@@ -245,12 +248,27 @@ export function TopNavigation({
   menuItems = [],
   exitLabel = 'Salir',
   onExit,
+  ariaLabel = 'Main',            // nombre del landmark <nav> (inglés por defecto, decisión 20/10)
+  openMenuLabel = 'Open menu',   // botón hamburguesa (mobile)
+  menuLabel = 'Menu',            // nombre del panel móvil
   className,
   style,
 }) {
   const [openFlydownId, setOpenFlydownId] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const openFlydownItem = menuItems.find((item) => item.id === openFlydownId && item.flydown);
+  const baseId = useId();
+  const flydownId = (itemId) => `${baseId}-flydown-${itemId}`;
+  const mobilePanelId = `${baseId}-mobile`;
+  const triggerRefs = useRef({});
+  // Abierto por hover: el click siguiente lo "fija" en vez de cerrarlo (si no,
+  // un usuario de ratón que pasa por encima y luego hace click lo vería cerrarse).
+  const openedByHover = useRef(false);
+  const mobileModalRef = useRef(null);
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+  // Panel móvil = modal de verdad: foco dentro, Tab atrapado, fondo inert,
+  // Escape cierra, foco de vuelta al botón hamburguesa (A11y-1, audit §B).
+  useModal({ open: mobileMenuOpen, containerRef: mobileModalRef, onClose: closeMobileMenu });
 
   // los leaves del árbol de SidebarMenu solo llevan id/label — el onClick
   // real de cada link/menuItem se guarda aparte y se resuelve en handleSelect
@@ -270,59 +288,102 @@ export function TopNavigation({
 
   function handleSidebarSelect(id) {
     onSelectLeaf[id]?.();
-    setMobileMenuOpen(false);
+    closeMobileMenu();
+  }
+
+  // Flydown = patrón "disclosure navigation" (A11y-1, audit §C): el item con
+  // flydown es un botón que lo abre/cierra (click, Enter, Espacio) con
+  // aria-expanded; Escape lo cierra y devuelve el foco al botón; salir del
+  // menú con Tab lo cierra. El hover de ratón sigue funcionando igual.
+  function closeFlydown({ returnFocus = false } = {}) {
+    const id = openFlydownId;
+    setOpenFlydownId(null);
+    if (returnFocus && id) triggerRefs.current[id]?.focus();
   }
 
   return (
-    <nav className={`ds-top-navigation ${className || ''}`} style={style}>
+    <nav className={`ds-top-navigation ${className || ''}`} style={style} aria-label={ariaLabel}>
       {/* ── Desktop ─────────────────────────────────────────────────────── */}
       <div className="ds-top-navigation__desktop">
         <div className="ds-top-navigation__left">
           {logo}
           <div
             className="ds-top-navigation__tabs"
-            role="tablist"
+            role="list"
             onMouseLeave={() => setOpenFlydownId(null)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape' && openFlydownId) {
+                e.stopPropagation();
+                closeFlydown({ returnFocus: true });
+              }
+            }}
+            onBlur={(e) => {
+              if (openFlydownId && !e.currentTarget.contains(e.relatedTarget)) setOpenFlydownId(null);
+            }}
           >
-            {menuItems.map((item) => (
-              <div
-                key={item.id}
-                className="ds-top-navigation__item"
-                // hover sobre un item SIN flydown debe cerrar el que estuviera
-                // abierto — bug real reportado por Carol 24/09: `item.flydown &&
-                // setOpenFlydownId(...)` era un no-op para esos items, así que
-                // el flydown anterior se quedaba abierto (p. ej. hover en
-                // "Clientes" con "Productos y servicios" ya desplegado).
-                onMouseEnter={() => setOpenFlydownId(item.flydown ? item.id : null)}
-              >
-                <TabItem size="l" onClick={item.onClick}>{item.label}</TabItem>
-              </div>
-            ))}
-            {openFlydownItem && (
-              <Card className="ds-top-navigation__flydown">
-                <span className="ds-top-navigation__flydown-title">{openFlydownItem.label}</span>
-                <div className="ds-top-navigation__flydown-columns">
-                  {openFlydownItem.flydown.map((group, groupIndex) => (
-                    <div className="ds-top-navigation__group" key={groupIndex}>
-                      {group.groupTitle && (
-                        <span className="ds-top-navigation__group-title">{group.groupTitle}</span>
-                      )}
-                      {group.featured ? (
-                        <Image {...group.featured} />
-                      ) : (
-                        <div className="ds-top-navigation__group-links">
-                          {group.links.map((link) => (
-                            <Link key={link.label} size="xs" emphasis="low" rightIcon={false} href={link.href} onClick={link.onClick}>
-                              {link.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+            {menuItems.map((item) => {
+              const hasFlydown = Boolean(item.flydown);
+              const isOpen = hasFlydown && openFlydownId === item.id;
+              return (
+                <div
+                  key={item.id}
+                  role="listitem"
+                  className="ds-top-navigation__item"
+                  // hover sobre un item SIN flydown debe cerrar el que estuviera
+                  // abierto — bug real reportado por Carol 24/09.
+                  onFocus={() => {
+                    // El foco pasa a OTRO item del menú → se cierra el flydown abierto.
+                    if (openFlydownId && openFlydownId !== item.id) setOpenFlydownId(null);
+                  }}
+                  onMouseEnter={() => {
+                    openedByHover.current = hasFlydown && openFlydownId !== item.id;
+                    setOpenFlydownId(hasFlydown ? item.id : null);
+                  }}
+                >
+                  <TabItem
+                    size="l"
+                    role={null}
+                    ref={(el) => { triggerRefs.current[item.id] = el; }}
+                    aria-expanded={hasFlydown ? isOpen : undefined}
+                    aria-controls={hasFlydown ? flydownId(item.id) : undefined}
+                    onClick={hasFlydown
+                      ? () => {
+                          if (isOpen && openedByHover.current) { openedByHover.current = false; return; }
+                          openedByHover.current = false;
+                          setOpenFlydownId(isOpen ? null : item.id);
+                        }
+                      : item.onClick}
+                  >
+                    {item.label}
+                  </TabItem>
+                  {isOpen && (
+                    <Card className="ds-top-navigation__flydown" id={flydownId(item.id)}>
+                      <span className="ds-top-navigation__flydown-title">{item.label}</span>
+                      <div className="ds-top-navigation__flydown-columns">
+                        {item.flydown.map((group, groupIndex) => (
+                          <div className="ds-top-navigation__group" key={groupIndex}>
+                            {group.groupTitle && (
+                              <span className="ds-top-navigation__group-title">{group.groupTitle}</span>
+                            )}
+                            {group.featured ? (
+                              <Image {...group.featured} />
+                            ) : (
+                              <div className="ds-top-navigation__group-links">
+                                {group.links.map((link) => (
+                                  <Link key={link.label} size="xs" emphasis="low" rightIcon={false} href={link.href} onClick={link.onClick}>
+                                    {link.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
+                  )}
                 </div>
-              </Card>
-            )}
+              );
+            })}
           </div>
         </div>
         <Button variant="ghost" size="lg" iconRight="LogOut" onClick={onExit}>{exitLabel}</Button>
@@ -335,20 +396,29 @@ export function TopNavigation({
           type="default"
           variant="tertiary"
           icon="Menu"
-          ariaLabel="Abrir menú"
+          ariaLabel={openMenuLabel}
+          aria-expanded={mobileMenuOpen}
+          aria-controls={mobileMenuOpen ? mobilePanelId : undefined}
+          aria-haspopup="dialog"
           onClick={() => setMobileMenuOpen(true)}
         />
       </div>
 
       {mobileMenuOpen && (
-        <>
+        <div ref={mobileModalRef}>
           <div className="ds-top-navigation__scrim-wrap">
-            <Scrim onClick={() => setMobileMenuOpen(false)} />
+            <Scrim onClick={closeMobileMenu} />
           </div>
-          <div className="ds-top-navigation__mobile-panel">
-            <SidebarMenu items={sidebarItems} onSelect={handleSidebarSelect} />
+          <div
+            className="ds-top-navigation__mobile-panel"
+            id={mobilePanelId}
+            role="dialog"
+            aria-modal="true"
+            aria-label={menuLabel}
+          >
+            <SidebarMenu items={sidebarItems} onSelect={handleSidebarSelect} collapseOnDismiss={false} />
           </div>
-        </>
+        </div>
       )}
     </nav>
   );

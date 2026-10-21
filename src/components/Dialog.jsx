@@ -22,13 +22,23 @@
  * la escala de Button coincide con Figma (label 14/16/19), así que ya no es
  * una aproximación.
  *
+ *
+ * ACCESIBILIDAD — modal (A11y-1, 21/10/2026, audit §B):
+ *   `modal` (default true) = montado es abierto. Vía `_useModal`: el foco entra
+ *   al abrir (primer elemento enfocable), Tab queda atrapado dentro, el resto de
+ *   la página se vuelve `inert`, el scroll de fondo se bloquea, Escape llama a
+ *   `onClose` y al cerrar el foco vuelve al elemento que lo abrió. El nombre del
+ *   diálogo es su título (`aria-labelledby` → h2). `modal={false}` solo para
+ *   mostrarlo estático (documentación, galería), nunca en una app.
+ *
  * USO:
- *   <Dialog header="default" width="popUp">Contenido…</Dialog>
+ *   {open && <Dialog header="default" width="popUp" onClose={() => setOpen(false)}>Contenido…</Dialog>}
  *   <Dialog header="primary" size="small" onMainButton={fn} onSecondaryButton={fn} />
  */
 
-import React from 'react';
+import React, { useId, useRef } from 'react';
 import { injectStyles } from './_inputBase';
+import { useModal } from './_useModal';
 import { DialogHeader } from './_dialogBase';
 import { Button } from './Button';
 
@@ -92,9 +102,15 @@ export function Dialog({
   secondaryButtonLabel = 'Button',
   onSecondaryButton,
   children,
+  modal               = true,
+  backLabel,
+  closeLabel,
   id,
   className,
 }) {
+  const ref = useRef(null);
+  const titleId = useId();
+  useModal({ open: modal, containerRef: ref, onClose });
   const isAccent  = header === 'primary' || header === 'onPrimary';
   const btnVariant = isAccent ? 'accent' : 'default';
   const widthClass = width === 'fullScreen' ? 'full-screen' : 'pop-up';
@@ -107,11 +123,21 @@ export function Dialog({
   ].filter(Boolean).join(' ');
 
   return (
-    <div id={id} className={classes} role="dialog" aria-modal="true" aria-label={title}>
+    <div
+      ref={ref}
+      id={id}
+      className={classes}
+      role="dialog"
+      aria-modal={modal ? 'true' : undefined}
+      aria-labelledby={title ? titleId : undefined}
+    >
       <DialogHeader
         color={header}
         size={size}
         title={title}
+        titleId={titleId}
+        backLabel={backLabel}
+        closeLabel={closeLabel}
         showArrow={showArrow}
         showClose={crossButton}
         onBack={onBack}
