@@ -113,6 +113,8 @@ export function TabItem({
   children,
   id,
   className,
+  role = 'tab',   // A11y-1: TopNavigation la usa como botón de navegación (role={null}), no como pestaña
+  ...rest         // A11y-1: aria-expanded/aria-controls/ref/onKeyDown… llegan al <button>
 }) {
   const classes = [
     'ds-tab-item',
@@ -123,13 +125,14 @@ export function TabItem({
 
   return (
     <button
+      {...rest}
       id={id}
       type="button"
       className={classes}
       onClick={onClick}
       disabled={disabled}
-      role="tab"
-      aria-selected={selected}
+      role={role || undefined}
+      aria-selected={role === 'tab' ? selected : undefined}
     >
       {children}
       {selected && <span className="ds-tab-item__ribbon" aria-hidden="true" />}

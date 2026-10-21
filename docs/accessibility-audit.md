@@ -80,7 +80,8 @@ cause, not by component.
 | A11y-2 · Colour | ✅ 19/10/2026 | colour-contrast 317 → 0 outside disabled |
 | A11y-0 · Foundations | ✅ 20/10/2026 — shared pieces built and tested; D and the StepNavigator bug fixed. Open criticals 14 → **9** (the five D findings) | 68 ARIA failures, unchanged by design (the helpers are wired into components in A11y-1/3/4); 0 in the pieces touched |
 | Headline `level` / `size` split | ✅ 20/10/2026 (pulled forward from A11y-5) — code + Figma | heading-order fixed (SidebarMenu): 68 → 66 |
-| A11y-1 · Critical blockers | Next | — |
+| A11y-1 · Critical blockers | ✅ 21/10/2026 — B, C criticals, DropZone. Open criticals 9 → **0** | 66 → 56 (CountryPicker, CurrencyPicker listbox fixed; the rest belong to A11y-3/4/5) |
+| A11y-3 · State and names | Next | — |
 
 **Decisions (20/10/2026, Carol):**
 - **Screen-reader language: English.** Every built-in hidden string ("(opens in new tab)", "Close", "Back", "Remove file"…) is English by default and becomes a prop so an app can translate it. Applied in A11y-5 (K).
@@ -103,6 +104,24 @@ cause, not by component.
 `foundations.css` must be imported next to `tokens.css` in any app that uses the system.
 
 Verified with a keyboard harness (47 checks in Chromium, React StrictMode): Link/CTALink without `href` reachable and activated by Enter and Space; modal focus in / trap / Escape order with a popover inside / focus return / inert and scroll restored; roving and listbox keys, typeahead, disabled skipping, `aria-activedescendant` after filtering; `announce()`; forced-colors outline and reduced-motion transitions emulated.
+
+---
+
+### A11y-1 · what changed
+
+| Piece | Before | Now |
+|---|---|---|
+| Dialog, DialogSimple, ErrorAndEmptyState (popUp) | `aria-modal` with no focus handling | `useModal`: focus in, Tab trapped, background `inert`, scroll locked, Escape → `onClose`, focus back to the opener. Name from the title, now an `h2` (`aria-labelledby`). DialogSimple is an `alertdialog` with the message as description. New `modal` prop (default `true`; `false` only for static docs/gallery) |
+| CountryPicker, CurrencyPicker | `<div onClick>` rows, nothing focusable | Listbox (`useListbox`, focus mode): focus goes to the selected option, arrows / Home / End / typeahead, Enter or Space chooses, Escape / Tab close, focus returns to the opener. Named "Countries" / "Currencies" (`ariaLabel`) |
+| SelectorListItem | — | Forwards `role`/`aria-*`/`tabIndex`/handlers, so it can be a listbox option; as an option its Radio/Checkbox is visual only (`inert`). Own focus ring when the row itself has focus |
+| Combobox | Tab trapped by the auto-suggestion; no listbox wiring | Focus stays in the input; `aria-controls` + `aria-activedescendant`; options are `role="option"` with no inner tab stops. Tab accepts the suggestion and moves on; leaving with Tab closes the panel. "No results" announced; removing a chip keeps focus in the field |
+| TopNavigation | Flydown on hover only; nav built as a tablist; mobile panel not modal | Disclosure navigation: items with a flydown are buttons with `aria-expanded`/`aria-controls` (click, Enter, Space); the flydown sits right after its button in the Tab order; Escape closes it and returns focus; focus moving away closes it; hover still works. `<nav aria-label="Main">`, items in a list. Mobile panel is a modal (`useModal`) with `aria-expanded` on the menu button |
+| PopoverSheet | Always pulled focus back to the trigger | Only when focus was lost or is still inside — a click into another field keeps its focus |
+| DropZone | Mouse hover disabled the "select file" button | The Figma "Hover" state is driven by drag events, so the button always works with a mouse; drops are delivered through `onFilesDrop(files)`; instructions linked to the button |
+
+Verified with a keyboard harness (52 checks, Chromium, StrictMode) and pixel diffs of the gallery (Dialog, DialogSimple, ErrorAndEmptyState, TabItem, DropZone identical to before).
+
+**Note for consumers:** a TopNavigation item with a `flydown` is now only a toggle — its own `onClick` no longer runs (its links navigate).
 
 ---
 
@@ -167,11 +186,11 @@ borders, indicators and any fill that carries white text.
 TopNavigation mobile panel declare `aria-modal` (or behave as modals) but:
 focus isn't moved in on open, isn't trapped, isn't returned to the trigger
 on close; Escape does nothing; the background isn't `inert` and the page
-still scrolls. A keyboard user tabs behind the modal; a screen-reader user
+still scrolls. **Status 21/10/2026: ✅ fixed (A11y-1).** A keyboard user tabs behind the modal; a screen-reader user
 is told the background doesn't exist while focus is still there.
 
 **Fix once:** a shared `useModal` hook (or native `<dialog>.showModal()`)
-used by all four. *(A11y-0 ✅ hook built — `_useModal.js`; wiring in A11y-1.)* Also: `_popoverDismiss` closes every open layer on one
+used by all four. *(✅ A11y-1 — all four use `_useModal.js`.)* Also: `_popoverDismiss` closes every open layer on one
 Escape (should close only the top one) *(✅ fixed in A11y-0 — layer stack in `_focus.js`)*, and `PopoverSheet` pulls focus back
 to its trigger even when the user clicked into another field.
 
@@ -191,7 +210,7 @@ to its trigger even when the user clicked into another field.
 **Fix once:** a shared listbox/option behaviour (roving focus, arrows,
 Home/End, typeahead, `aria-selected`) used by SelectorListItem, Combobox and
 the pickers; a disclosure-navigation pattern for TopNavigation.
-*(A11y-0 ✅ `useListbox` and `useRovingFocus` built — `_rovingFocus.js`; wiring in A11y-1.)*
+*(A11y-0 ✅ `useListbox` and `useRovingFocus` built. A11y-1 ✅ pickers, Combobox and TopNavigation wired; SegmentedControl, Tabs, Selector radios and SidebarMenu are A11y-3.)*
 
 ## D · `<a>` without `href` (🔴)
 
@@ -289,7 +308,7 @@ there's no `href`. That fixes every consumer at once.
 
 | Piece | Problem | WCAG | Severity |
 |---|---|---|---|
-| DropZone | Hovering the zone **disables its own button**, so a mouse user can never click "select file" — the only alternative to drag-and-drop | 2.5.7 | 🔴 |
+| DropZone | ~~Hovering the zone **disables its own button**~~ ✅ A11y-1: the state follows drag events, not mouse hover | 2.5.7 | 🔴 |
 | RangeSlider | Values can only change by dragging; no click on the track | 2.5.7 | 🟠 |
 | Tooltip | Not hoverable (`pointer-events: none`) and can't be dismissed with Escape | 1.4.13 | 🟠 |
 | Dialog, DialogSimple | Fixed 480 px width and 616–680 px height: two-way scrolling at 320 px | 1.4.10 | 🟠 |
@@ -323,7 +342,7 @@ touched, and the Figma + inventory Accessibility sections updated.
 | Sprint | Content | Why this order | Needs Carol |
 |---|---|---|---|
 | **A11y-0 · Foundations** ✅ 20/10 | Shared helpers: `VisuallyHidden`, persistent live region, `useModal`, listbox/roving-focus behaviour, global `prefers-reduced-motion`, transparent outline for forced colors. `Link`/`CTALink` button fallback (D). StepNavigator `style` bug. Commit the axe gallery + script as a regression check | Every later fix reuses these; D alone unblocks 4 consumers | Approve adding the gallery to the repo |
-| **A11y-1 · Critical blockers** | B (all modals) · C criticals (SelectorListItem → pickers, Combobox trap + wiring, TopNavigation) · DropZone hover | Removes every "can't complete the task" issue | — |
+| **A11y-1 · Critical blockers** ✅ 21/10 | B (all modals) · C criticals (SelectorListItem → pickers, Combobox trap + wiring, TopNavigation) · DropZone hover | Removes every "can't complete the task" issue | — |
 | **A11y-2 · Colour** | A1–A17: decide steps in Figma (Theme / Mode), re-export, sync `tokens.css`, re-scan both modes. Includes the open Pagination 2.7:1 debt and the borderColor dark-mode audit | Biggest visual change; done in Figma first | **Yes — brand teal decision** |
 | **A11y-3 · State and names** | E and G | Mostly additive props, low risk | — |
 | **A11y-4 · Forms and focus** | H and F; `RadioGroup` | Builds on the live region from A11y-0 | Required-field marker style (Figma) |
@@ -362,9 +381,9 @@ Colour issues (A) are in the tables above and not repeated here.
 - **RangeSlider** — 🟠 no track click (2.5.7) [J] · 🟠 knobs "Mínimo/Máximo" without context, no group [G]
 - **_sliderKnob** — 🟡 `aria-valuetext` never set · 🟡 Tooltip repeats the value as description
 - **SegmentedControl** — 🟠 radiogroup unnamed [G] · 🟠 no roving tabindex / arrows [C]
-- **Combobox** — 🔴 Tab keyboard trap [C] · 🔴 no listbox wiring [C] · 🟠 Radio/Checkbox tab stops inside options · 🟠 no results not announced [H] · 🟠 chip remove drops focus [F] · 🟡 listbox unnamed
-- **CountryPicker** — 🔴 rows not keyboard-reachable [C] · 🟠 listbox unnamed, no options [C] · 🟠 no focus management [B]
-- **CurrencyPicker** — 🔴 rows not keyboard-reachable [C] · 🟠 listbox unnamed, no options [C] · 🟠 no focus management [B]
+- **Combobox** — ~~🔴 Tab keyboard trap [C]~~ ✅ · ~~🔴 no listbox wiring [C]~~ ✅ · ~~🟠 Radio/Checkbox tab stops inside options~~ ✅ · ~~🟠 no results not announced [H]~~ ✅ · ~~🟠 chip remove drops focus [F]~~ ✅ · ~~🟡 listbox unnamed~~ ✅
+- **CountryPicker** — ~~🔴 rows not keyboard-reachable [C]~~ ✅ · ~~🟠 listbox unnamed, no options [C]~~ ✅ · ~~🟠 no focus management [B]~~ ✅
+- **CurrencyPicker** — ~~🔴 rows not keyboard-reachable [C]~~ ✅ · ~~🟠 listbox unnamed, no options [C]~~ ✅ · ~~🟠 no focus management [B]~~ ✅
 
 ### Data
 - **AccordionGroup** — 🟡 no `headingLevel` / ids to pass down [I]
@@ -386,32 +405,32 @@ Colour issues (A) are in the tables above and not repeated here.
 - **CountryFlag** — 🟡 no label option (only country cue in InputTelephone)
 
 ### Feedback
-- **Dialog** — 🔴 no focus management [B] · 🟠 no Escape [B] · 🟠 background not inert [B] · 🟠 fixed size breaks reflow [J] · 🟡 `aria-label` instead of `aria-labelledby` · 🟡 "Button" defaults [G]
-- **DialogSimple** — 🔴 no focus management [B] · 🟠 no Escape / inert [B] · 🟠 fixed size [J] · 🟡 should be `alertdialog` · 🟡 "Button" defaults
-- **_dialogBase** — 🟡 title is `<p>` [I] · 🟡 title truncated with ellipsis · 🟡 "Volver/Cerrar" not translatable [K]
+- **Dialog** — ~~🔴 no focus management [B]~~ ✅ · ~~🟠 no Escape [B]~~ ✅ · ~~🟠 background not inert [B]~~ ✅ · 🟠 fixed size breaks reflow [J] · ~~🟡 `aria-label` instead of `aria-labelledby`~~ ✅ · 🟡 "Button" defaults [G]
+- **DialogSimple** — ~~🔴 no focus management [B]~~ ✅ · ~~🟠 no Escape / inert [B]~~ ✅ · 🟠 fixed size [J] · ~~🟡 should be `alertdialog`~~ ✅ · 🟡 "Button" defaults
+- **_dialogBase** — ~~🟡 title is `<p>` [I]~~ ✅ (`h2`) · 🟡 title truncated with ellipsis · ~~🟡 "Volver/Cerrar" not translatable [K]~~ ✅ (`backLabel`/`closeLabel`, English defaults)
 - **Drawer** — 🟡 no `aria-controls` · 🟡 transition ignores reduced motion
-- **PopoverSheet** — 🟠 focus always returned to trigger, even after click-outside [B] · 🟡 panel `outline:none` · 🟡 no `aria-labelledby` option
+- **PopoverSheet** — ~~🟠 focus always returned to trigger, even after click-outside [B]~~ ✅ · 🟡 panel `outline:none` · 🟡 no `aria-labelledby` option
 - **_popoverDismiss** — ~~🟡 one Escape closes every layer [B]~~ ✅
 - **Tooltip** — 🟠 not hoverable · 🟠 no Escape [J] · 🟡 always in DOM at opacity 0 · 🟡 overwrites existing `aria-describedby` · 🟡 `nowrap`
 - **Snackbar** — 🟡 live region rendered with message [H] · 🟡 no dismiss / pause hook (2.2.1)
 - **InlineNotification** — 🟠 type only by hidden icon [E] · 🟡 `status` for errors [H] · 🟡 "Button" default
 - **LoadingSpinner** — 🟠 `role="status"` on svg is never announced [G] · 🟡 motion · 🟡 "Loading" in English [K]
 - **ProgressBar** — 🟠 no accessible name [G] · 🟡 helper not linked
-- **ErrorAndEmptyState** — 🟠 popUp has no dialog role / focus [B] · 🟠 error not announced [H] · 🟡 title `<p>` · 🟡 close button without `onClose` · 🟡 custom icon not hidden · 🟡 "Button" defaults
+- **ErrorAndEmptyState** — ~~🟠 popUp has no dialog role / focus [B]~~ ✅ · 🟠 error not announced [H] · ~~🟡 title `<p>`~~ ✅ · 🟡 close button without `onClose` · ~~🟡 custom icon not hidden~~ ✅ · 🟡 "Button" defaults
 - **BadgeHighlight** — 🟠 `aria-label` on span ignored [G] · 🟡 variant by colour only [E] · 🟡 disabled visual only
 - **BadgeNotification** — 🟠 count read bare, `aria-label` ignored [G]
 - **Selector** — 🟠 `label htmlFor` hides the selected value [G] · 🟡 error live region [H]
 - **SelectorInvoker** — 🟠 no `aria-haspopup`/`aria-expanded` [E] · 🟠 read-only removes focus ring [F] · 🟠 `ariaLabel` hides the value [G] · 🟡 `aria-readonly` on button · 🟡 `<p>` in button · 🟡 count badge without context · 🟡 masked bullets read aloud
-- **SelectorListItem** — 🔴 `<div onClick>` row not keyboard-reachable [C] · 🟠 selected not exposed · 🟠 radios ungrouped [C] · 🟡 description not linked · 🟡 `aria-disabled` on div · 🟡 custom icon not hidden
+- **SelectorListItem** — ~~🔴 `<div onClick>` row not keyboard-reachable [C]~~ ✅ (as a listbox option) · ~~🟠 selected not exposed~~ ✅ (`aria-selected` as option) · 🟠 radios ungrouped [C] · 🟡 description not linked · 🟡 `aria-disabled` on div · 🟡 custom icon not hidden
 - **AccountSelector** — 🟠 `label htmlFor` hides the value [G] · 🟡 error live region [H]
 - **AccountSelectorInvoker** — 🟠 no popup state [E] · 🟠 read-only removes focus ring [F] · 🟠 `ariaLabel` hides the value [G] · 🟡 `aria-readonly` · 🟡 `<div>` in button · 🟡 count badge · 🟡 masked data read aloud
 - **AccountSelectorListItem** — 🟠 radios ungrouped [C] · 🟠 rows with the same header sound identical [G] · 🟡 `aria-disabled` on div
 
 ### Navigation
 - **Pagination** — 🟠 current page re-mounts as span, focus lost [F] · 🟠 prev/next disabled at the ends, focus lost [F] · 🟡 `aria-label` on span · 🟡 both ellipses "Saltar páginas" · ~~🟡 box-shadow focus~~ ✅ · axe: two `nav` landmarks with the same label 🟡
-- **TabItem** — 🟠 doesn't forward props [C] · 🟡 `role="tab"` outside a tablist
+- **TabItem** — ~~🟠 doesn't forward props [C]~~ ✅ · 🟡 `role="tab"` outside a tablist
 - **Tabs** — 🟠 no roving tabindex / arrows [C] · 🟠 no tab ↔ panel link [C] · 🟡 tablist unnamed
-- **TopNavigation** — 🔴 flydown hover-only [C] · ~~🔴 flydown links without `href` [D]~~ ✅ · 🟠 nav built as tablist · 🟠 no Escape · 🟠 menu button no `aria-expanded` [E] · 🟠 mobile panel not a modal [B] · 🟡 flydown after all items in DOM · 🟡 group titles not headings · 🟡 `nav` unnamed
+- **TopNavigation** — ~~🔴 flydown hover-only [C]~~ ✅ · ~~🔴 flydown links without `href` [D]~~ ✅ · ~~🟠 nav built as tablist~~ ✅ · ~~🟠 no Escape~~ ✅ · ~~🟠 menu button no `aria-expanded` [E]~~ ✅ · ~~🟠 mobile panel not a modal [B]~~ ✅ · ~~🟡 flydown after all items in DOM~~ ✅ · 🟡 group titles not headings · ~~🟡 `nav` unnamed~~ ✅
 - **SidebarMenu** — 🟠 `role="tree"` misuse [C] · 🟠 parents no `aria-expanded` [E] · 🟠 selected no `aria-current` [E] · 🟡 no `nav` landmark · ~~axe: heading order (`h6`) [I]~~ ✅
 - **StepNavigator** — 🟠 chapter no `aria-expanded` [E] · 🟠 selected by colour only [E] · 🟠 status not in text [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
 - **SubstepNavigator** — 🟠 active/completed by colour only [E] · 🟠 selected by colour only [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
@@ -425,6 +444,6 @@ Colour issues (A) are in the tables above and not repeated here.
 - **PageTitle** — ~~🔴 breadcrumb and nav links without `href` [D]~~ ✅ · 🟠 "Volver" button does nothing · 🟡 breadcrumb not `ol`, no `aria-current` · 🟡 icon-only buttons may be unnamed
 - **Headline** — ~~🟠 level tied to visual size [I]~~ ✅
 - **SectionHeader** — 🟠 hard-coded `aria-level={2}` on div [I]
-- **DropZone** — 🔴 hover disables the button [J] · 🟠 "Button" default name [G] · 🟡 instructions not linked
+- **DropZone** — ~~🔴 hover disables the button [J]~~ ✅ · 🟠 "Button" default name [G] · ~~🟡 instructions not linked~~ ✅
 - **FileSelector** — 🟠 `buttonLabel` not forwarded ("Button") [G] · 🟠 add/remove not announced [H] · 🟡 focus lost on remove [F] · 🟡 rows not a list
 - **FileUpload** — 🟠 label/description not linked to the control [G] · 🟠 compact layout button text "Button" [G]

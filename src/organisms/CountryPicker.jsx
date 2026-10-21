@@ -43,9 +43,9 @@
  *   </div>
  */
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { injectStyles } from '../components/_inputBase';
-import { usePopoverDismiss } from '../components/_popoverDismiss';
+import { usePickerListbox } from './_usePickerListbox';
 import { SelectorListItem } from '../components/SelectorListItem';
 import { CountryFlag } from '../components/CountryFlag';
 
@@ -78,31 +78,32 @@ export function CountryPicker({
   onChange,
   open = false,
   onClose,
+  ariaLabel = 'Countries',   // nombre del listbox para lector de pantalla (inglés por defecto, decisión 20/10)
   id,
 }) {
-  const rootRef = useRef(null);
-
-  // Cierre por click-fuera + Escape (antes duplicado a mano aquí y en
-  // Combobox — extraído a _popoverDismiss.js el 15/09; de paso cierra el
-  // hueco real de Escape, que CountryPicker no tenía).
-  usePopoverDismiss({ open, onClose, refs: [rootRef] });
+  // Listbox real con teclado, foco y cierre por Escape/Tab/click-fuera
+  // (A11y-1, ver _usePickerListbox.js). Antes: <div onClick> inalcanzables.
+  const { listboxProps, getOptionProps } = usePickerListbox({
+    open, onClose, onChange,
+    items: countries, value,
+    getValue: (c) => c.value,
+    getLabel: (c) => c.label,
+    label: ariaLabel,
+  });
 
   if (!open) return null;
 
   return (
-    <div className="ds-country-picker" ref={rootRef} id={id} role="listbox">
-      {countries.map((country) => (
+    <div className="ds-country-picker" {...listboxProps} id={id || listboxProps.id}>
+      {countries.map((country, i) => (
         <SelectorListItem
           key={country.value}
+          {...getOptionProps(i)}
           data="single"
           headerText={country.label}
           icon={<CountryFlag country={country.flag} size={22} />}
           showControl={false}
           selected={country.value === value}
-          onClick={() => {
-            onChange?.(country.value);
-            onClose?.();
-          }}
         />
       ))}
     </div>

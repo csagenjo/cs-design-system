@@ -444,21 +444,21 @@ export default function Gallery({ mode }) {
       <Section name="Dialog">
         <Col>
           {['default', 'primary', 'onPrimary', 'secondary', 'tertiary'].map((h) => (
-            <Dialog key={h} header={h} title={`Dialog ${h}`} onBack={noop} onClose={noop}
+            <Dialog modal={false} key={h} header={h} title={`Dialog ${h}`} onBack={noop} onClose={noop}
               mainButtonLabel="Aceptar" secondaryButtonLabel="Cancelar" onMainButton={noop} onSecondaryButton={noop}>
               <p>Contenido scrollable del diálogo ({h}).</p>
             </Dialog>
           ))}
-          <Dialog size="small" header="primary" title="Dialog small" onClose={noop} onMainButton={noop} onSecondaryButton={noop}>
+          <Dialog modal={false} size="small" header="primary" title="Dialog small" onClose={noop} onMainButton={noop} onSecondaryButton={noop}>
             <p>Header small.</p>
           </Dialog>
           <Contain height={420} style={{ maxWidth: 720 }}>
-            <Dialog width="fullScreen" header="default" title="Dialog fullScreen" onClose={noop}
+            <Dialog modal={false} width="fullScreen" header="default" title="Dialog fullScreen" onClose={noop}
               mainButtonLabel="Aceptar" secondaryButtonLabel="Cancelar" onMainButton={noop} onSecondaryButton={noop}>
               <p>Variante a pantalla completa.</p>
             </Dialog>
           </Contain>
-          <Dialog header="tertiary" title="Sin cruz ni flecha" crossButton={false} showArrow={false} showButtons={false}>
+          <Dialog modal={false} header="tertiary" title="Sin cruz ni flecha" crossButton={false} showArrow={false} showButtons={false}>
             <p>Sin botones.</p>
           </Dialog>
         </Col>
@@ -466,12 +466,12 @@ export default function Gallery({ mode }) {
 
       <Section name="DialogSimple">
         <Row>
-          <DialogSimple message="¿Seguro que quieres eliminar este elemento?" onClose={noop}
+          <DialogSimple modal={false} message="¿Seguro que quieres eliminar este elemento?" onClose={noop}
             onPrimaryButton={noop} onSecondaryButton={noop} />
-          <DialogSimple variant="expanded" title="Confirmar operación" message="Esta acción no se puede deshacer."
+          <DialogSimple modal={false} variant="expanded" title="Confirmar operación" message="Esta acción no se puede deshacer."
             primaryButtonLabel="Confirmar" secondaryButtonLabel="Cancelar" onBack={noop} onClose={noop}
             onPrimaryButton={noop} onSecondaryButton={noop} />
-          <DialogSimple message="Sin botones" showButtonBar={false} onClose={noop} />
+          <DialogSimple modal={false} message="Sin botones" showButtonBar={false} onClose={noop} />
         </Row>
       </Section>
 
@@ -519,13 +519,13 @@ export default function Gallery({ mode }) {
       <Section name="ErrorAndEmptyState">
         <Row>
           <Contain height={520} style={{ width: 480 }}>
-            <ErrorAndEmptyState title="No se pudo cargar la información" description="Inténtalo de nuevo más tarde."
+            <ErrorAndEmptyState modal={false} title="No se pudo cargar la información" description="Inténtalo de nuevo más tarde."
               onClose={noop} onPrimaryButton={noop} onSecondaryButton={noop} />
           </Contain>
-          <ErrorAndEmptyState variant="popUp" title="Sin resultados" description="Prueba a cambiar los filtros."
+          <ErrorAndEmptyState modal={false} variant="popUp" title="Sin resultados" description="Prueba a cambiar los filtros."
             secondaryButton={false} primaryButtonLabel="Reintentar" onPrimaryButton={noop} onClose={noop}
             icon={<Icon name="alert-circle" size="3xl" />} />
-          <ErrorAndEmptyState variant="popUp" title="Sin botones" showButtons={false} onClose={noop} />
+          <ErrorAndEmptyState modal={false} variant="popUp" title="Sin botones" showButtons={false} onClose={noop} />
         </Row>
       </Section>
 
@@ -621,7 +621,11 @@ export default function Gallery({ mode }) {
               errorMessage="Sin coincidencias" helperText="Escribe para buscar" />
           ))}
           <InputCombobox label="Con autosuggest" value="Mad" autoSuggestText="Madrid" onValueChange={noop} iconLeft="search" />
-          <InputCombobox label="Abierto" value="" placeholder="Buscar país" open onToggleOpen={noop} onValueChange={noop} />
+          {/* Abierto: el átomo no pinta la lista — el consumidor (Combobox) le pasa aria-controls con el id de su listbox */}
+          <InputCombobox label="Abierto" value="" placeholder="Buscar país" open onToggleOpen={noop} onValueChange={noop} aria-controls="gal-input-combobox-list" />
+          <div id="gal-input-combobox-list" role="listbox" aria-label="Países">
+            <div role="option" aria-selected="false">España</div>
+          </div>
           <InputCombobox label="Etiquetas (multiple)" multiple value="" onValueChange={noop}
             selectedChips={[{ value: 'es', label: 'España' }, { value: 'fr', label: 'Francia' }]} onRemoveChip={noop} />
         </div>

@@ -153,6 +153,7 @@ export function SidebarMenu({
   onSelect,
   collapsed = false,
   onToggleCollapse,
+  collapseOnDismiss = true,   // click fuera / Escape colapsan el menú. TopNavigation lo apaga: dentro de su panel móvil, Escape cierra el panel entero (A11y-1)
   id,
   className,
   style,
@@ -167,7 +168,7 @@ export function SidebarMenu({
 
   const rootRef = useRef(null);
   usePopoverDismiss({
-    open: !collapsed,
+    open: collapseOnDismiss && !collapsed,
     onClose: () => onToggleCollapse?.(),
     refs: [rootRef],
   });

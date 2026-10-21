@@ -207,6 +207,7 @@ export function PopoverSheet({
   className,
   style,
   ariaLabel,
+  closeLabel = 'Close',   // inglés por defecto (decisión 20/10)
 }) {
   const generatedId = useId();
   const panelId = id || generatedId;
@@ -241,7 +242,13 @@ export function PopoverSheet({
     if (open) {
       panelRef.current?.focus();
     } else if (wasOpenRef.current && wrapperRef.current) {
-      focusFirst(wrapperRef.current);
+      // Solo si el foco se ha perdido (estaba en el panel, que ya no existe)
+      // o sigue dentro del popover. Si el usuario cerró haciendo click en otro
+      // campo, el foco se queda allí (A11y-1, audit §B — antes se lo robaba).
+      const active = document.activeElement;
+      if (!active || active === document.body || wrapperRef.current.contains(active)) {
+        focusFirst(wrapperRef.current);
+      }
     }
     wasOpenRef.current = open;
   }, [open]);
@@ -280,7 +287,7 @@ export function PopoverSheet({
           tabIndex={-1}
         >
           {showCloseButton && (
-            <button type="button" className="ds-popover-sheet__close" onClick={onClose} aria-label="Cerrar">
+            <button type="button" className="ds-popover-sheet__close" onClick={onClose} aria-label={closeLabel}>
               <Icon name="X" size="sm" />
             </button>
           )}

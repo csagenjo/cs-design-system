@@ -108,6 +108,15 @@ const css = `
 .ds-selector-list-item:has(:focus-visible) {
   box-shadow: 0 0 0 var(--ds-selector-root-border-width-focus) var(--ds-selector-root-border-color-focus-inner);
 }
+/* Fila enfocada ella misma (opción de un listbox, A11y-1): doble anillo del
+   sistema DENTRO de la fila (hueco focus-inner + anillo focus-outer) — el
+   anillo blanco solo no se ve sobre un panel blanco, y por dentro no lo
+   recorta el overflow del panel. */
+.ds-selector-list-item:focus-visible {
+  outline:        var(--ds-selector-root-border-width-focus) solid var(--ds-selector-root-border-color-focus-outer);
+  outline-offset: calc(var(--ds-selector-root-border-width-focus) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-selector-root-border-width-focus) * 2) var(--ds-selector-root-border-color-focus-inner);
+}
 
 /* Data hidden */
 .ds-selector-list-item--dataHidden { cursor: default; }
@@ -137,7 +146,13 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
   icon             = <Icon name="file-text" size="xs" />, // slot libre — refleja "Left Panel" de Figma, con el mismo icono de antes por defecto
   showControl      = true, // oculta el Radio/Checkbox — refleja "Right Panel" de Figma (p. ej. Country Picker, donde el borde ya es la selección)
   id,
+  ...rest                   // A11y-1: role/aria-*/tabIndex/eventos de useListbox (`getOptionProps(i)`) llegan a la fila
 }, forwardedRef) {
+
+  // Como opción de un listbox (pickers, Combobox — A11y-1), la fila es la
+  // única parada: el Radio/Checkbox de dentro pasa a ser solo visual
+  // (`inert`, fuera del Tab y del lector), y el estado lo da aria-selected.
+  const isOption = rest.role === 'option';
 
   const isDisabled   = disabled || state === 'disabled';
   const isError      = state === 'error';
@@ -162,8 +177,9 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
 
   return (
     <div
+      {...rest}
       ref={forwardedRef}
-      id={id}
+      id={id ?? rest.id}
       className={rootClasses}
       aria-disabled={isDisabled || undefined}
       onClick={handleRowClick}
@@ -190,7 +206,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
         </span>
 
         {showControl && (
-          <span className="ds-selector-list-item__right">
+          <span className="ds-selector-list-item__right" inert={isOption || undefined} aria-hidden={isOption || undefined}>
             {/* Radio/Checkbox real — es el único control nativo enfocable de la fila.
                 Su propio onChange no hace nada: el click de la fila (arriba) es la fuente de verdad;
                 se deja como no-op para que React no marque el input como "uncontrolled". */}

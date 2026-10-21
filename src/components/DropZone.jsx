@@ -18,12 +18,22 @@
  * `disabled`: prop de estado real independiente del hover (Drop Zone
  * deshabilitada de verdad, ej. límite de ficheros alcanzado).
  *
+ * A11y-1 (21/10/2026, audit §J — era crítico): el estado "Hover" de Figma
+ * significa "hay un fichero arrastrándose encima", pero en código se activaba
+ * con el ratón (`mouseenter`) — así que al acercar el ratón para pulsar el
+ * botón, el botón se deshabilitaba: la única alternativa al arrastre quedaba
+ * inalcanzable con ratón (WCAG 2.5.7). Ahora el estado lo disparan los
+ * eventos de ARRASTRE (dragenter/dragleave/drop), que es lo que dibuja Figma;
+ * con el ratón normal el botón funciona siempre. De paso la zona acepta los
+ * ficheros soltados: `onFilesDrop(files)`. El texto de instrucciones está
+ * enlazado al botón (`aria-describedby`).
+ *
  * USO:
- *   <DropZone onButtonClick={fn} />
+ *   <DropZone onButtonClick={openFilePicker} onFilesDrop={addFiles} />
  *   <DropZone disabled />
  */
 
-import React, { useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
 import { injectStyles } from './_inputBase';
 import { Button } from './Button';
 
@@ -64,11 +74,29 @@ export function DropZone({
   disabled = false,
   buttonLabel = 'Button',
   onButtonClick,
+  onFilesDrop,
   id,
   className,
 }) {
-  const [isHovering, setIsHovering] = useState(false);
-  const hovering = isHovering && !disabled;
+  const [isDragging, setIsDragging] = useState(false);
+  // dragenter/dragleave se disparan también al pasar por los hijos: contador
+  // para saber cuándo el fichero sale de verdad de la zona.
+  const dragDepth = useRef(0);
+  const textId = useId();
+  const hovering = isDragging && !disabled;
+
+  const dragHandlers = disabled ? {} : {
+    onDragEnter: (e) => { e.preventDefault(); dragDepth.current += 1; setIsDragging(true); },
+    onDragOver:  (e) => { e.preventDefault(); },
+    onDragLeave: () => { dragDepth.current = Math.max(0, dragDepth.current - 1); if (dragDepth.current === 0) setIsDragging(false); },
+    onDrop: (e) => {
+      e.preventDefault();
+      dragDepth.current = 0;
+      setIsDragging(false);
+      const files = Array.from(e.dataTransfer?.files || []);
+      if (files.length) onFilesDrop?.(files);
+    },
+  };
 
   const classes = [
     'ds-drop-zone',
@@ -81,13 +109,12 @@ export function DropZone({
     <div
       id={id}
       className={classes}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      {...dragHandlers}
     >
-      <p className="ds-drop-zone__text">
+      <p id={textId} className="ds-drop-zone__text">
         {hovering ? 'Drag & drop your files here' : 'Drag & drop your files here or'}
       </p>
-      <Button variant="default" outline size="sm" disabled={disabled || hovering} onClick={onButtonClick}>
+      <Button variant="default" outline size="sm" disabled={disabled || hovering} onClick={onButtonClick} aria-describedby={textId}>
         {buttonLabel}
       </Button>
     </div>
