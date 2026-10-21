@@ -1,4 +1,3 @@
-import { RequiredMark } from './_requiredMark';
 import { LiveRegion } from './LiveRegion';
 import React, { useRef, forwardRef, useId, useContext } from 'react';
 import { RadioGroupContext } from './_radioGroupContext';
@@ -186,7 +185,8 @@ export const Radio = forwardRef(function Radio({
 }, forwardedRef) {
 
   // A11y-4: dentro de un RadioGroup, el grupo pone name, valor elegido,
-  // obligatorio, error y deshabilitado (y su asterisco va en la leyenda).
+  // obligatorio, error y deshabilitado. El asterisco va en la leyenda del
+  // grupo, nunca en la opción (regla de Carol, 21/10).
   const group = useContext(RadioGroupContext);
   if (group) {
     name = group.name;
@@ -250,7 +250,7 @@ export const Radio = forwardRef(function Radio({
             </span>
           </span>
         </span>
-        {label && showLabel && <span className="ds-radio__label">{label}<RequiredMark show={required && !group} /></span>}
+        {label && showLabel && <span className="ds-radio__label">{label}</span>}
       </label>
 
       {description && (

@@ -970,6 +970,7 @@
   --ds-input-fg-disabled:                   var(--ds-fg-disabled);
   --ds-input-fg-label:                      var(--ds-fg-label-default);
   --ds-input-fg-required:                   var(--ds-fg-label-primary); /* asterisco de campo obligatorio (A11y-4) — color de marca, no rojo: rojo = error */
+  --ds-input-required-gap:                  var(--ds-spacing-2xs);  /* separación label → asterisco (A11y-4) */
   --ds-input-fg-helper:                     var(--ds-helper-text-fg-generic);   /* borrowing átomo Helper Text */
   --ds-input-fg-error:                      var(--ds-fg-icon-error);
 
@@ -1085,7 +1086,7 @@
   --ds-radio-label-fg-disabled:             var(--ds-fg-label-disabled);
   --ds-radio-description-fg:                var(--ds-fg-subtle);
   --ds-radio-validation-fg:                 var(--ds-fg-error);
-  --ds-radio-group-gap:                     var(--ds-spacing-md);   /* entre opciones de RadioGroup (A11y-4, sin componente en Figma todavía) */
+  --ds-choice-group-gap:                    var(--ds-spacing-md);   /* entre opciones de RadioGroup / CheckboxGroup (A11y-4, sin componente en Figma todavía) */
 
   --ds-radio-root-size-generic:                var(--ds-sizing-sm);
   --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);

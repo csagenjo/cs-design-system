@@ -16,7 +16,7 @@ import { injectStyles } from './_inputBase';
 injectStyles('ds-required-mark', `
 .ds-required-mark {
   color:       var(--ds-input-fg-required);
-  margin-left: 0.15em;
+  margin-left: var(--ds-input-required-gap);
 }
 `);
 

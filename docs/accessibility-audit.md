@@ -82,7 +82,7 @@ cause, not by component.
 | Headline `level` / `size` split | ✅ 20/10/2026 (pulled forward from A11y-5) — code + Figma | heading-order fixed (SidebarMenu): 68 → 66 |
 | A11y-1 · Critical blockers | ✅ 21/10/2026 — B, C criticals, DropZone. Open criticals 9 → **0** | 66 → 56 (CountryPicker, CurrencyPicker listbox fixed; the rest belong to A11y-3/4/5) |
 | A11y-3 · State and names | ✅ 21/10/2026 — E and G, plus SegmentedControl, Tabs and SidebarMenu keyboard patterns (C) | 56 → **0** failures |
-| A11y-4 · Forms and focus | ✅ 21/10/2026 — H and F, new `RadioGroup`, required marker (asterisk) | **0** failures (RadioGroup and required states added to the gallery) |
+| A11y-4 · Forms and focus | ✅ 21/10/2026 — H and F, new `RadioGroup` and `CheckboxGroup`, required marker (asterisk on the group legend) | **0** failures (RadioGroup and required states added to the gallery) |
 
 **Decisions (20/10/2026, Carol):**
 - **Screen-reader language: English.** Every built-in hidden string ("(opens in new tab)", "Close", "Back", "Remove file"…) is English by default and becomes a prop so an app can translate it. Applied in A11y-5 (K).
@@ -161,14 +161,14 @@ intended ones (sortable CellHeader icon, new Tabs-with-panel example).
 | Area | Pieces | Now |
 |---|---|---|
 | Error announcements (H) | InputText, InputAmount, InputCombobox, InputDate, InputDropdown, InputStepper, InputTelephone, Checkbox, Radio, Selector, AccountSelector | The error message sits inside a `LiveRegion` that is mounted all the time, so it's announced when it appears (before, the live element appeared together with the message and most screen readers stayed silent). An empty region takes no space |
-| Required (H) | All inputs, Checkbox, Radio, RadioGroup, Combobox | `required` prop on every field: native `required` + an asterisk in the brand primary colour after the label (`--ds-input-fg-required` → `fg/label/primary`; red is kept for errors), hidden from screen readers because `required` is already read. Decision (Carol, 21/10): asterisk, brand primary |
-| Radio groups (H, C) | New `RadioGroup` | `<fieldset role="radiogroup">` + `<legend>` (the question), helper, group error in a live region, `required`, `disabled`, vertical / horizontal. Radios share a `name`, so one Tab stop and arrow keys come from the browser. `spacing="none"` for lists of SelectorListItem / AccountSelectorListItem, which now take `name` |
+| Required (H) | All inputs, RadioGroup, CheckboxGroup, Combobox | `required` prop on every field: native `required` + an asterisk in the brand primary colour after the label (`--ds-input-fg-required` → `fg/label/primary`; red is kept for errors), hidden from screen readers because `required` is already read. Decision (Carol, 21/10): asterisk, brand primary, and **only on the group legend — never on single Checkbox / Radio options**; a lone required checkbox ("I accept the terms") goes in a one-option CheckboxGroup |
+| Option groups (H, C) | New organisms `RadioGroup` and `CheckboxGroup` | `<fieldset>` + `<legend>` (the question), helper, group error in a live region, `required`, `disabled`, vertical / horizontal (shared `_choiceGroup.jsx`). Radios share a `name`, so one Tab stop and arrow keys come from the browser. CheckboxGroup: `values` + `onChange`; with one option that option is natively `required`, with several none are and the legend adds a hidden ", required" (`role=group` has no `aria-required`). `spacing="none"` for lists of SelectorListItem / AccountSelectorListItem, which now take `name` |
 | Status messages (H) | ListItem, FileSelector, Snackbar, InlineNotification, ErrorAndEmptyState | ListItem announces "uploaded" / error (`statusLabels`) and links the error to the name field; FileSelector announces added / removed files; Snackbar announces through `announce()`; InlineNotification `error` is `role="alert"`; ErrorAndEmptyState full screen announces its title and description (`announceOnMount`) |
 | Date format (H) | InputDate | The format is read as description ("Format DD/MM/YYYY", `formatHint`), not only in the placeholder |
 | Focus kept (F) | Button, Pagination, InputStepper, FileSelector | Button `loading` and Pagination prev/next at the ends and InputStepper −/+ at min/max use `aria-disabled` + a click guard, so focus stays on them. Loading reads ", Loading" in the name and is announced. Pagination's current page stays a button (`aria-current`). After removing a file, focus goes to the next row, the previous one, or the upload button |
 | Focus visible (F) | InputText, SelectorInvoker, AccountSelectorInvoker (read-only), InputAmount currency, InputTelephone country, InputStepper −/+, PopoverSheet panel | Read-only fields keep their focus ring; inner buttons get their own ring so you can tell which part has focus; PopoverSheet panel shows focus (`--ds-popover-sheet-focus-outer`) |
 
-Verified with a keyboard and accessibility-tree harness (32 checks, Chromium
+Verified with a keyboard and accessibility-tree harness (37 checks, Chromium
 via CDP, StrictMode), the A11y-3 (40/40) and A11y-1 (57/57) harnesses, and
 pixel diffs of all gallery sections in light and dark: no visual change
 except the intended ones (Pagination arrows at the ends keep the disabled look

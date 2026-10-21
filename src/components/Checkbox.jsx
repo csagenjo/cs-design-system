@@ -24,9 +24,9 @@
  *   <Checkbox ariaLabel="Seleccionar fila" checked={v} onChange={fn} />
  */
 
-import { RequiredMark } from './_requiredMark';
+import { CheckboxGroupContext } from './_checkboxGroupContext';
 import { LiveRegion } from './LiveRegion';
-import React, { useRef, useEffect, forwardRef, useId } from 'react';
+import React, { useRef, useEffect, forwardRef, useId, useContext } from 'react';
 import { Check, Minus } from 'lucide-react';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -208,13 +208,27 @@ export const Checkbox = forwardRef(function Checkbox({
   fullWidth     = false,
 }, forwardedRef) {
 
+  // A11y-4: dentro de un CheckboxGroup, el grupo pone name, marcado,
+  // obligatorio (solo si es la única opción), error y deshabilitado. El
+  // asterisco de obligatorio va en la leyenda del grupo, nunca en la opción
+  // (regla de Carol, 21/10) — un check suelto con `required` no lo pinta.
+  const group = useContext(CheckboxGroupContext);
+  if (group) {
+    name = group.name;
+    if (checked === undefined) checked = group.values.includes(value);
+    if (!onChange) onChange = (e) => group.toggle(value, e.target.checked);
+    required = group.required;
+    if (group.disabled) state = 'disabled';
+    else if (group.invalid && state === 'default') state = 'error';
+  }
+
   const inputRef    = useRef(null);
   const generatedId = useId();
   const inputId     = id || generatedId;
 
   const descId = description                       ? `${inputId}-desc` : null;
   const msgId  = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
-  const describedBy = [descId, msgId].filter(Boolean).join(' ') || undefined;
+  const describedBy = [descId, msgId, group?.describedBy].filter(Boolean).join(' ') || undefined;
 
   if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
     console.warn('[DS Checkbox] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
@@ -271,7 +285,7 @@ export const Checkbox = forwardRef(function Checkbox({
             <Minus size={14} strokeWidth={2.5} aria-hidden="true" />
           </span>
         </span>
-        {label && <span className="ds-checkbox__label">{label}<RequiredMark show={required} /></span>}
+        {label && <span className="ds-checkbox__label">{label}</span>}
       </label>
 
       {description && (
