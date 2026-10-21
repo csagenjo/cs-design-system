@@ -1725,7 +1725,7 @@
   --ds-list-view-root-bg-hover:            var(--ds-bg-hover-primary);  /* #BDE8FF / #016398 dark */
   --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);       /* #F1F2F4 / #9AA1AA dark */
   --ds-list-view-root-opacity-pressed:     var(--ds-opacity-pressed);   /* 0.8 */
-  --ds-list-view-root-border-color-generic:  var(--ds-borderColor-subtle);   /* divider — #EEEFF1 / #606772 dark */
+  --ds-list-view-root-border-color-generic:  var(--ds-borderColor-subtle);   /* divider — #F1F2F4 / #676D76 dark */
   --ds-list-view-root-border-color-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
   --ds-list-view-root-border-color-disabled: var(--ds-borderColor-disabled); /* #AAAFB5 / #7B8490 dark */
   --ds-list-view-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
@@ -1763,7 +1763,7 @@
   --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* #0A7C92 fijo */
 
   /* ListItem */
-  --ds-file-upload-list-item-border-color-generic: var(--ds-borderColor-subtle); /* divisor de fila — #EEEFF1 / #606772 dark */
+  --ds-file-upload-list-item-border-color-generic: var(--ds-borderColor-subtle); /* divisor de fila — #F1F2F4 / #676D76 dark */
   --ds-file-upload-list-item-border-color-error:   var(--ds-borderColor-error);  /* #B12A29 fijo */
   --ds-file-upload-list-item-border-width-generic: 1px;                         /* borderWidth/sm-desk — valor asumido, pendiente de confirmar en Figma (el token propio se borró en la limpieza) */
   --ds-file-upload-list-item-padding-ver-generic:  4px;                         /* spacing/xs */
@@ -2071,7 +2071,7 @@
     --ds-borderColor-emphasis:#FFFFFF;
     --ds-borderColor-accent:  #A3D4E2;
     --ds-borderColor-primary: #66AEC0;
-    --ds-borderColor-subtle:  #4C535D; /* añadido 24/08 — ListView atom */
+    --ds-borderColor-subtle:  #676D76; /* neutral/400 (21/10) — antes #4C535D = bg/container: invisible sobre tarjetas/paneles */
     --ds-borderColor-disabled: #5E6672; /* añadido 24/08 — ListView atom */
     --ds-borderColor-focus-inner: #050506;
     --ds-borderColor-focus-outer: #BDE8FF;
@@ -2199,7 +2199,7 @@
   --ds-borderColor-emphasis:#FFFFFF;
   --ds-borderColor-accent:  #A3D4E2;
   --ds-borderColor-primary: #66AEC0;
-  --ds-borderColor-subtle:  #4C535D; /* añadido 24/08 — ListView atom */
+  --ds-borderColor-subtle:  #676D76; /* neutral/400 (21/10) — antes #4C535D = bg/container: invisible sobre tarjetas/paneles */
   --ds-borderColor-disabled: #5E6672; /* añadido 24/08 — ListView atom */
   --ds-borderColor-focus-inner: #050506;
   --ds-borderColor-focus-outer: #BDE8FF;
