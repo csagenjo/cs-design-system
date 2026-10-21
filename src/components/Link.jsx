@@ -28,10 +28,21 @@
  *   <Link href="/ruta" variant="accent" size="md" emphasis="medium">Más info</Link>
  *   <Link href="/ruta" leftIcon rightIcon={false}>Anterior</Link>
  *   <Link href="https://..." external>Enlace externo</Link>
+ *   <Link onClick={abrirEdicion}>Editar</Link>   ← sin href: se pinta como <button>
+ *
+ * SIN `href` → <button type="button"> con el mismo aspecto (A11y-0, 20/10/2026).
+ *   Un <a> sin href no recibe foco ni tiene rol: con solo `onClick` el enlace
+ *   no se podía usar con teclado ni lo anunciaba el lector (audit §D). Regla
+ *   de uso: si lleva a otra página/URL → `href` (es un enlace de verdad); si
+ *   ejecuta una acción en la misma vista → solo `onClick` (es un botón con
+ *   aspecto de enlace). Arregla de una vez TopNavigation (flydown),
+ *   DescriptionList (Edit), PageTitle (nav y breadcrumb) y CellActions.
+ *   El aviso "(opens in new tab)" se añade con `external` o con target="_blank".
  */
 
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
+import { VisuallyHidden } from './VisuallyHidden';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -53,6 +64,16 @@ const css = `
   cursor:          pointer;
   border-radius:   2px;
   transition:      background 0.12s, opacity 0.12s;
+}
+
+/* ── Sin href → <button>: quita el aspecto de botón nativo ── */
+.ds-link--as-button {
+  margin:      0;
+  padding:     0;
+  border:      0;
+  background:  transparent;
+  text-align:  inherit;
+  appearance:  none;
 }
 
 /* ── Underline sobre el texto ── */
@@ -82,7 +103,9 @@ const css = `
 
 /* ── Focus ── */
 .ds-link:focus-visible {
-  outline:    none;
+  /* outline transparente: invisible normalmente, visible en colores forzados
+     (Windows High Contrast elimina el box-shadow) — audit §F. */
+  outline:    var(--ds-border-width-lg) solid transparent;
   box-shadow: 0 0 0 2px var(--ds-link-focus-inner),
               0 0 0 4px var(--ds-link-focus-outer);
 }
@@ -91,19 +114,6 @@ const css = `
 .ds-link:active {
   opacity:     var(--ds-link-opacity-pressed);
   font-weight: var(--ds-font-weight-semibold);
-}
-
-/* ── SR-only (enlace externo) ── */
-.ds-link .sr-only {
-  position:    absolute;
-  width:       1px;
-  height:      1px;
-  padding:     0;
-  margin:      -1px;
-  overflow:    hidden;
-  clip:        rect(0,0,0,0);
-  white-space: nowrap;
-  border:      0;
 }
 `;
 
@@ -140,12 +150,33 @@ export function Link({
   const resolvedTarget = target ?? (external ? '_blank'              : undefined);
   const resolvedRel    = rel    ?? (external ? 'noopener noreferrer' : undefined);
 
+  const isAnchor = href != null && href !== '';
+  const opensNewTab = isAnchor && resolvedTarget === '_blank';
+
   const classes = [
     'ds-link',
     `ds-link--${size}`,
     `ds-link--${variant}`,
     emphasis === 'medium' ? 'ds-link--emphasis-medium' : '',
+    isAnchor ? '' : 'ds-link--as-button',
   ].filter(Boolean).join(' ');
+
+  const content = (
+    <>
+      {leftIcon  && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
+      <span className="ds-link__text">{children}</span>
+      {rightIcon && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
+      {opensNewTab && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
+    </>
+  );
+
+  if (!isAnchor) {
+    return (
+      <button type="button" className={classes} onClick={onClick} aria-label={ariaLabel} {...rest}>
+        {content}
+      </button>
+    );
+  }
 
   return (
     <a
@@ -157,10 +188,7 @@ export function Link({
       aria-label={ariaLabel}
       {...rest}
     >
-      {leftIcon  && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
-      <span className="ds-link__text">{children}</span>
-      {rightIcon && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
-      {external  && <span className="sr-only">(opens in new tab)</span>}
+      {content}
     </a>
   );
 }
@@ -176,4 +204,5 @@ export default Link;
 <Link href="/ruta" leftIcon rightIcon={false}>Anterior</Link>
 <Link href="/ruta" rightIcon={false}>Sin icono</Link>
 <Link href="https://..." external>Enlace externo</Link>
+<Link onClick={() => setEditing(true)}>Editar</Link>      ← <button> con aspecto de enlace
 */

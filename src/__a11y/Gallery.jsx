@@ -52,6 +52,7 @@ import { LinkList } from '../components/LinkList';
 import { List } from '../components/List';
 import { ListItem } from '../components/ListItem';
 import { ListView } from '../components/ListView';
+import { LiveRegion } from '../components/LiveRegion';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { Node } from '../components/Node';
 import { Pagination } from '../components/Pagination';
@@ -73,6 +74,7 @@ import { SteppedSlider } from '../components/SteppedSlider';
 import { TabItem } from '../components/TabItem';
 import { Text } from '../components/Text';
 import { Tooltip } from '../components/Tooltip';
+import { VisuallyHidden } from '../components/VisuallyHidden';
 
 /* ── Capa 2 · organisms ── */
 import { AccordionGroup } from '../organisms/AccordionGroup';
@@ -146,12 +148,10 @@ function Section({ name, children }) {
   );
 }
 
-/* StepNavigator/SubstepNavigator destructuran `style` dos veces (eje de estilo
-   y style inline): pasar style="secondary" como documenta su USO acaba en el
-   style del <button> y React lanza el error #62. Para mostrar el eje secondary
-   sin tocar el componente, se aplica su clase modificadora vía className. */
-const stepNavSecondary = (st) => (st === 'secondary' ? { className: 'ds-step-navigator--secondary' } : {});
-const substepSecondary = (st) => (st === 'secondary' ? { className: 'ds-substep-navigator--secondary' } : {});
+/* StepNavigator/SubstepNavigator: eje `appearance` onDefault/onPage (Figma `Style`;
+   antes `style` primary/secondary — corregido en A11y-0). */
+const stepNavAppearance = (st) => ({ appearance: st });
+const substepAppearance = (st) => ({ appearance: st });
 const Row = ({ children, style }) => <div className="a11y-row" style={style}>{children}</div>;
 const Col = ({ children, style }) => <div className="a11y-col" style={style}>{children}</div>;
 const Contain = ({ height, children, style }) => (
@@ -310,6 +310,10 @@ export default function Gallery({ mode }) {
             ))}
             <CTALink href="https://example.com" variant={v} external>{`Externo ${v}`}</CTALink>
             <CTALink variant={v} disabled>{`Disabled ${v}`}</CTALink>
+            {/* Sin href → <button> con aspecto de CTA (A11y-0, audit §D) */}
+            {['low', 'medium', 'high'].map((e) => (
+              <CTALink key={`btn-${e}`} variant={v} emphasis={e} onClick={noop}>{`Acción ${v} ${e}`}</CTALink>
+            ))}
           </Row>
         ))}
       </Section>
@@ -535,6 +539,11 @@ export default function Gallery({ mode }) {
           <div className="a11y-onsurface">
             <Headline level={3} color="onColor">Headline onColor</Headline>
           </div>
+          <div>
+            {/* level y size separados (v2): etiqueta h3, aspecto 2xl / etiqueta h3, aspecto xs */}
+            <Headline level={3} size="2xl">h3 con size 2xl</Headline>
+            <Headline level={3} size="xs">h3 con size xs</Headline>
+          </div>
         </Col>
       </Section>
 
@@ -689,6 +698,9 @@ export default function Gallery({ mode }) {
             <Link href="#" variant={v} leftIcon rightIcon={false}>Anterior</Link>
             <Link href="#" variant={v} rightIcon={false}>Sin icono</Link>
             <Link href="https://example.com" variant={v} external>Enlace externo</Link>
+            {/* Sin href → <button> con aspecto de enlace (A11y-0, audit §D) */}
+            <Link variant={v} onClick={noop}>{`Acción ${v} (sin href)`}</Link>
+            <Link variant={v} emphasis="medium" leftIcon rightIcon={false} onClick={noop}>{`Acción ${v} con icono`}</Link>
           </Row>
         ))}
       </Section>
@@ -736,6 +748,15 @@ export default function Gallery({ mode }) {
           <ListView header="All sides" divider="allSides" onClick={noop} />
           <ListView header="Disabled" disabled onClick={noop} />
           <ListView header="Sin paneles" leftPanel={false} rightPanel={false} description={false} detail={false} onClick={noop} />
+        </Col>
+      </Section>
+
+      <Section name="LiveRegion">
+        <Col>
+          <LiveRegion><p>Región persistente (polite) con contenido visible.</p></LiveRegion>
+          <LiveRegion politeness="assertive"><p>Región persistente (assertive) — solo errores que bloquean.</p></LiveRegion>
+          <LiveRegion visuallyHidden>Región oculta: solo para lector de pantalla.</LiveRegion>
+          <LiveRegion />
         </Col>
       </Section>
 
@@ -955,6 +976,14 @@ export default function Gallery({ mode }) {
         </Row>
       </Section>
 
+      <Section name="VisuallyHidden">
+        <Row>
+          <button type="button"><Icon name="X" size="sm" /><VisuallyHidden>Cerrar</VisuallyHidden></button>
+          <p>Texto visible <VisuallyHidden>con contexto extra solo para lector</VisuallyHidden></p>
+          <a href="#main"><VisuallyHidden focusable>Saltar al contenido</VisuallyHidden></a>
+        </Row>
+      </Section>
+
       {/* ═══════════ organisms ═══════════ */}
 
       <Section name="AccordionGroup">
@@ -1129,16 +1158,16 @@ export default function Gallery({ mode }) {
 
       <Section name="StepNavigator">
         <Row>
-          {['primary', 'secondary'].map((st) => (
+          {['onDefault', 'onPage'].map((st) => (
             <div key={st} style={{ width: 360 }}>
-              <StepNavigator {...stepNavSecondary(st)} state="completed" number="1" title={`Completado (${st})`} showTopConnector={false} onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} state="selected" number="2" title="Seleccionado" onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} state="active" number="3" title="Activo" onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} variation="chapter" state="incomplete" number="4" title="Capítulo expandido"
+              <StepNavigator {...stepNavAppearance(st)} state="completed" number="1" title={`Completado (${st})`} showTopConnector={false} onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} state="selected" number="2" title="Seleccionado" onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} state="active" number="3" title="Activo" onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="4" title="Capítulo expandido"
                 expanded onToggleExpand={noop} onClick={noop} />
-              <SubstepNavigator {...substepSecondary(st)} state="completed" label="Substep completado" onClick={noop} />
-              <SubstepNavigator {...substepSecondary(st)} state="active" label="Substep activo" selected onClick={noop} />
-              <StepNavigator {...stepNavSecondary(st)} variation="chapter" state="incomplete" number="5" title="Capítulo colapsado"
+              <SubstepNavigator {...substepAppearance(st)} state="completed" label="Substep completado" onClick={noop} />
+              <SubstepNavigator {...substepAppearance(st)} state="active" label="Substep activo" selected onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="5" title="Capítulo colapsado"
                 expanded={false} onToggleExpand={noop} showBottomConnector={false} onClick={noop} />
             </div>
           ))}
@@ -1147,12 +1176,12 @@ export default function Gallery({ mode }) {
 
       <Section name="SubstepNavigator">
         <Row>
-          {['primary', 'secondary'].map((st) => (
+          {['onDefault', 'onPage'].map((st) => (
             <div key={st} style={{ width: 360 }}>
               {['incomplete', 'active', 'completed'].map((s) => (
-                <SubstepNavigator key={s} {...substepSecondary(st)} state={s} label={`Substep ${s} (${st})`} onClick={noop} />
+                <SubstepNavigator key={s} {...substepAppearance(st)} state={s} label={`Substep ${s} (${st})`} onClick={noop} />
               ))}
-              <SubstepNavigator {...substepSecondary(st)} state="active" label="Substep selected" selected onClick={noop} />
+              <SubstepNavigator {...substepAppearance(st)} state="active" label="Substep selected" selected onClick={noop} />
             </div>
           ))}
         </Row>

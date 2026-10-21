@@ -55,7 +55,7 @@ const css = `
   transition:       background 0.12s, color 0.12s, opacity 0.12s;
 }
 .ds-pgn__item:focus-visible {
-  outline:    none;
+  outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
   box-shadow: 0 0 0 var(--ds-pagination-root-border-width-focus) var(--ds-pagination-root-border-color-focus-inner),
               0 0 0 calc(var(--ds-pagination-root-border-width-focus) * 2) var(--ds-pagination-root-border-color-focus-outer);
 }

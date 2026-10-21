@@ -26,9 +26,16 @@
  *   <CTALink href="/ruta" emphasis="high" variant="accent">Empezar</CTALink>
  *   <CTALink href="https://..." external>Enlace externo</CTALink>
  *   <CTALink disabled>No disponible</CTALink>
+ *   <CTALink onClick={guardar}>Guardar</CTALink>   ← sin href: se pinta como <button>
+ *
+ * SIN `href` o `disabled` → <button type="button"> con el mismo aspecto
+ *   (A11y-0, 20/10/2026, audit §D). Un <a> sin href no recibe foco ni tiene
+ *   rol. Un enlace no puede estar "deshabilitado": `disabled` pinta un
+ *   <button disabled>, que el lector anuncia como no disponible.
  */
 
 import React from 'react';
+import { VisuallyHidden } from './VisuallyHidden';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -45,13 +52,17 @@ const css = `
   cursor:          pointer;
   border:          1px solid transparent;
   box-sizing:      border-box;
+  margin:          0;              /* reset de <button> (sin href) */
+  background:      transparent;    /* idem — low/medium no tienen fondo; high lo pone abajo */
+  appearance:      none;
   white-space:     nowrap;
   transition:      background 0.12s, border-color 0.12s, color 0.12s, opacity 0.12s;
 }
 
 /* Focus — doble anillo (solo en Focus state, no en Hover ni Pressed) */
 .ds-cta-link:focus-visible {
-  outline:       none;
+  /* outline transparente: visible solo en colores forzados — audit §F */
+  outline:       var(--ds-border-width-lg) solid transparent;
   border-radius: var(--ds-cta-link-border-radius-focus);
   box-shadow:    0 0 0 2px var(--ds-cta-link-focus-inner),
                  0 0 0 4px var(--ds-cta-link-focus-outer);
@@ -134,18 +145,6 @@ const css = `
   border-color:    transparent;
   opacity:         0.6;
 }
-
-.ds-cta-link .sr-only {
-  position:    absolute;
-  width:       1px;
-  height:      1px;
-  padding:     0;
-  margin:      -1px;
-  overflow:    hidden;
-  clip:        rect(0,0,0,0);
-  white-space: nowrap;
-  border:      0;
-}
 `;
 
 let _styleInjected = false;
@@ -173,6 +172,7 @@ export function CTALink({
 }) {
   const resolvedTarget = external ? '_blank'              : undefined;
   const resolvedRel    = external ? 'noopener noreferrer' : undefined;
+  const isAnchor = !disabled && href != null && href !== '';
 
   const classes = [
     'ds-cta-link',
@@ -180,20 +180,34 @@ export function CTALink({
     `ds-cta-link--${variant}`,
   ].join(' ');
 
+  if (!isAnchor) {
+    return (
+      <button
+        type="button"
+        className={classes}
+        onClick={disabled ? undefined : onClick}
+        disabled={disabled || undefined}
+        aria-disabled={disabled ? 'true' : undefined}
+        aria-label={ariaLabel}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  }
+
   return (
     <a
-      href={disabled ? undefined : href}
+      href={href}
       target={resolvedTarget}
       rel={resolvedRel}
       className={classes}
-      onClick={disabled ? undefined : onClick}
-      aria-disabled={disabled ? 'true' : undefined}
+      onClick={onClick}
       aria-label={ariaLabel}
-      tabIndex={disabled ? -1 : undefined}
       {...rest}
     >
       {children}
-      {external && !disabled && <span className="sr-only">(opens in new tab)</span>}
+      {external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
     </a>
   );
 }
@@ -238,5 +252,5 @@ export default CTALink;
 <CTALink href="/ruta" emphasis="high" variant="accent">Empezar</CTALink>
 <CTALink href="https://..." external>Enlace externo</CTALink>
 <CTALink disabled>No disponible</CTALink>
-<CTALink onClick={() => alert('click')} emphasis="medium">Acción</CTALink>
+<CTALink onClick={() => alert('click')} emphasis="medium">Acción</CTALink>   ← <button>
 */

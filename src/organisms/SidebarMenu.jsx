@@ -25,7 +25,7 @@
  * Drawer que Carol dejó explícitamente para más adelante). Al colapsar, el
  * título desaparece con el resto del contenido — coincide con la referencia
  * (el estado "Hide" solo muestra el icono). Instancia el átomo `Headline`
- * (`level={6}`, Default) — nunca reimplementado a mano, mismo criterio que
+ * (`level={2} size="xs"` — h2 con el tamaño pequeño; antes `level={6}`, que rompía el orden de encabezados, 20/10) — nunca reimplementado a mano, mismo criterio que
  * el resto del sistema — envuelto en un padding propio (`--ds-sidebar-menu-
  * title-padding-*`, 16/16/8, token real desde Figma).
  *
@@ -200,7 +200,7 @@ export function SidebarMenu({
     >
       {title && (
         <div className="ds-sidebar-menu__title">
-          <Headline level={6}>{title}</Headline>
+          <Headline level={2} size="xs">{title}</Headline>
         </div>
       )}
       <div className="ds-sidebar-menu__tree" role="tree">

@@ -17628,7 +17628,7 @@
             }
           },
           "bg": {
-            "primary-incomplete": {
+            "onDefault-incomplete": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17655,7 +17655,7 @@
                 }
               }
             },
-            "primary-completed": {
+            "onDefault-completed": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17682,7 +17682,7 @@
                 }
               }
             },
-            "primary-completedSelected": {
+            "onDefault-completedSelected": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17709,7 +17709,7 @@
                 }
               }
             },
-            "primary-active": {
+            "onDefault-active": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17736,7 +17736,7 @@
                 }
               }
             },
-            "secondary-incomplete": {
+            "onPage-incomplete": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17763,7 +17763,7 @@
                 }
               }
             },
-            "secondary-completed": {
+            "onPage-completed": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17790,7 +17790,7 @@
                 }
               }
             },
-            "secondary-completedSelected": {
+            "onPage-completedSelected": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
@@ -17817,7 +17817,7 @@
                 }
               }
             },
-            "secondary-active": {
+            "onPage-active": {
               "$type": "color",
               "$value": {
                 "colorSpace": "srgb",
