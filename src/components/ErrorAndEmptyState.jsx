@@ -32,7 +32,8 @@
  *   <ErrorAndEmptyState variant="popUp" icon={<AlertTriangle />} onClose={fn} />
  */
 
-import React, { useId, useRef } from 'react';
+import React, { useId, useRef, useEffect } from 'react';
+import { announce } from './announce';
 import { injectStyles } from './_inputBase';
 import { useModal } from './_useModal';
 import { DialogHeader } from './_dialogBase';
@@ -143,6 +144,7 @@ export function ErrorAndEmptyState({
   secondaryButtonLabel = 'Button',
   onSecondaryButton,
   modal                = true,
+  announceOnMount      = true,  // A11y-4: fullScreen sustituye al contenido sin mover el foco — se anuncia título + descripción
   closeLabel,
   id,
   className,
@@ -153,6 +155,10 @@ export function ErrorAndEmptyState({
   const titleId = useId();
   const descriptionId = useId();
   useModal({ open: isDialog && modal, containerRef: ref, onClose });
+  // popUp ya se lee al recibir el foco (es un diálogo); fullScreen no lo recibe.
+  useEffect(() => {
+    if (isFullScreen && announceOnMount) announce([title, description].filter((t) => typeof t === 'string' && t).join('. '));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const classes = [
     'ds-error-empty-state',

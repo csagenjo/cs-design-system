@@ -24,6 +24,8 @@
  *   <Checkbox ariaLabel="Seleccionar fila" checked={v} onChange={fn} />
  */
 
+import { RequiredMark } from './_requiredMark';
+import { LiveRegion } from './LiveRegion';
 import React, { useRef, useEffect, forwardRef, useId } from 'react';
 import { Check, Minus } from 'lucide-react';
 
@@ -247,7 +249,7 @@ export const Checkbox = forwardRef(function Checkbox({
     'aria-label':     !label ? ariaLabel : undefined,
     'aria-describedby': describedBy,
     'aria-invalid':   state === 'error' ? 'true' : undefined,
-    'aria-checked':   indeterminate ? 'mixed' : undefined,
+    // A11y-4: sin aria-checked — en un checkbox nativo el estado mixto lo da la propiedad .indeterminate (arriba)
   };
 
   /* Controlled vs uncontrolled */
@@ -269,7 +271,7 @@ export const Checkbox = forwardRef(function Checkbox({
             <Minus size={14} strokeWidth={2.5} aria-hidden="true" />
           </span>
         </span>
-        {label && <span className="ds-checkbox__label">{label}</span>}
+        {label && <span className="ds-checkbox__label">{label}<RequiredMark show={required} /></span>}
       </label>
 
       {description && (
@@ -278,15 +280,17 @@ export const Checkbox = forwardRef(function Checkbox({
         </p>
       )}
 
-      {state === 'error' && errorMessage && (
-        <p
-          className="ds-checkbox__message ds-checkbox__message--error"
-          id={msgId}
-          aria-live="polite"
-        >
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p
+            className="ds-checkbox__message ds-checkbox__message--error"
+            id={msgId}
+          >
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

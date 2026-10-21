@@ -23,7 +23,8 @@
  *   <ListItem status="error" documentName="factura.pdf" errorMessage="Formato no soportado" onRemove={fn} />
  */
 
-import React from 'react';
+import React, { useEffect, useId, useRef } from 'react';
+import { announce } from './announce';
 import { injectStyles } from './_inputBase';
 import { Icon } from './Icon';
 import { AlertCircle } from 'lucide-react';
@@ -132,9 +133,26 @@ export function ListItem({
   errorMessage = 'Validation or counter here',
   nameLabel = 'File name',
   removeLabel = (name) => `Remove ${name || 'file'}`, // A11y-3: con el nombre del fichero
+  statusLabels = {},
   id,
   className,
 }) {
+  // A11y-4: el cambio de estado se anuncia ("id.pdf uploaded" / el error) y el
+  // error queda enlazado al campo del nombre. Solo cambios, no el montaje.
+  const t = {
+    uploaded: (n) => `${n || 'File'} uploaded`,
+    error: (n, msg) => `${n || 'File'}: ${msg}`,
+    ...statusLabels,
+  };
+  const errorId = `${useId()}-error`;
+  const prevStatus = useRef(status);
+  useEffect(() => {
+    if (prevStatus.current === status) return;
+    prevStatus.current = status;
+    if (status === 'uploaded') announce(t.uploaded(documentName));
+    if (status === 'error') announce(t.error(documentName, errorMessage));
+  }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const classes = [
     'ds-list-item',
     `ds-list-item--${status}`,
@@ -158,6 +176,8 @@ export function ListItem({
           onChange={(e) => onNameChange?.(e.target.value)}
           disabled={status === 'uploading'}
           aria-label={nameLabel}
+          aria-invalid={status === 'error' || undefined}
+          aria-describedby={status === 'error' ? errorId : undefined}
         />
         <button
           type="button"
@@ -169,7 +189,7 @@ export function ListItem({
         </button>
       </div>
       {status === 'error' && (
-        <p className="ds-list-item__validation">
+        <p className="ds-list-item__validation" id={errorId}>
           <span className="ds-list-item__validation-icon">
             <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
           </span>

@@ -88,7 +88,10 @@ const css = `
   padding:       var(--ds-popover-sheet-root-padding);
   z-index:       10;
 }
-.ds-popover-sheet:focus-visible { outline: none; } /* el foco lo señala el propio trigger/close, no el panel */
+.ds-popover-sheet:focus-visible { /* A11y-4: al abrir con teclado el foco entra en el panel — se tiene que ver */
+  outline:        var(--ds-border-width-lg) solid var(--ds-popover-sheet-focus-outer);
+  outline-offset: var(--ds-border-width-lg);
+}
 .ds-popover-sheet--with-close {
   padding-top: 36px; /* despeja el hueco del botón de cierre (44×44 en Figma) */
 }

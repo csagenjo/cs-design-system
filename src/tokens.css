@@ -947,6 +947,7 @@
      La Empresa.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-popover-sheet-root-bg:            var(--ds-bg-container);
+  --ds-popover-sheet-focus-outer:        var(--ds-borderColor-focus-outer); /* foco del panel al abrir con teclado (A11y-4) */
   --ds-popover-sheet-root-border-radius: 4px;   /* literal, Figma cornerRadius=4 */
   --ds-popover-sheet-root-padding:       8px;   /* spacing/md — consolidado 14/09 desde 6 tokens fragmentados sin enlazar (popoverSheet/web/root/padding*) */
   --ds-popover-sheet-root-shadow:        0 5px 5px -3px rgba(0, 0, 0, 0.20), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
@@ -968,6 +969,7 @@
   --ds-input-fg-default:                    var(--ds-fg-default);
   --ds-input-fg-disabled:                   var(--ds-fg-disabled);
   --ds-input-fg-label:                      var(--ds-fg-label-default);
+  --ds-input-fg-required:                   var(--ds-fg-error);         /* asterisco de campo obligatorio (A11y-4) */
   --ds-input-fg-helper:                     var(--ds-helper-text-fg-generic);   /* borrowing átomo Helper Text */
   --ds-input-fg-error:                      var(--ds-fg-icon-error);
 
@@ -1083,6 +1085,7 @@
   --ds-radio-label-fg-disabled:             var(--ds-fg-label-disabled);
   --ds-radio-description-fg:                var(--ds-fg-subtle);
   --ds-radio-validation-fg:                 var(--ds-fg-error);
+  --ds-radio-group-gap:                     var(--ds-spacing-md);   /* entre opciones de RadioGroup (A11y-4, sin componente en Figma todavía) */
 
   --ds-radio-root-size-generic:                var(--ds-sizing-sm);
   --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);

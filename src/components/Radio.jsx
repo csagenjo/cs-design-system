@@ -1,4 +1,7 @@
-import React, { useRef, forwardRef, useId } from 'react';
+import { RequiredMark } from './_requiredMark';
+import { LiveRegion } from './LiveRegion';
+import React, { useRef, forwardRef, useId, useContext } from 'react';
+import { RadioGroupContext } from './_radioGroupContext';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -182,13 +185,25 @@ export const Radio = forwardRef(function Radio({
   showLabel     = true,
 }, forwardedRef) {
 
+  // A11y-4: dentro de un RadioGroup, el grupo pone name, valor elegido,
+  // obligatorio, error y deshabilitado (y su asterisco va en la leyenda).
+  const group = useContext(RadioGroupContext);
+  if (group) {
+    name = group.name;
+    if (checked === undefined && group.value !== undefined) checked = group.value === value;
+    if (!onChange && group.onChange) onChange = () => group.onChange(value);
+    if (group.required) required = true;
+    if (group.disabled) state = 'disabled';
+    else if (group.invalid && state === 'default') state = 'error';
+  }
+
   const inputRef    = useRef(null);
   const generatedId = useId();
   const inputId     = id || generatedId;
 
   const descId = description                       ? `${inputId}-desc` : null;
   const msgId  = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
-  const describedBy = [descId, msgId].filter(Boolean).join(' ') || undefined;
+  const describedBy = [descId, msgId, group?.describedBy].filter(Boolean).join(' ') || undefined;
 
   if (process.env.NODE_ENV !== 'production' && !(label && showLabel) && !ariaLabel) {
     console.warn('[DS Radio] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
@@ -235,7 +250,7 @@ export const Radio = forwardRef(function Radio({
             </span>
           </span>
         </span>
-        {label && showLabel && <span className="ds-radio__label">{label}</span>}
+        {label && showLabel && <span className="ds-radio__label">{label}<RequiredMark show={required && !group} /></span>}
       </label>
 
       {description && (
@@ -244,15 +259,17 @@ export const Radio = forwardRef(function Radio({
         </p>
       )}
 
-      {state === 'error' && errorMessage && (
-        <p
-          className="ds-radio__message ds-radio__message--error"
-          id={msgId}
-          aria-live="polite"
-        >
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p
+            className="ds-radio__message ds-radio__message--error"
+            id={msgId}
+          >
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

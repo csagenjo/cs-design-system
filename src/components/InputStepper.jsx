@@ -1,4 +1,5 @@
 import React, { useState, forwardRef, useId } from 'react';
+import { LiveRegion } from './LiveRegion';
 import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 
@@ -94,16 +95,24 @@ const css = `
 .ds-input-stepper__btn--right { color: var(--ds-input-icon-fg-primary); }
 
 .ds-input-stepper__btn:focus  { outline: none; }
+/* A11y-4: además del anillo del campo, el botón que tiene el foco se marca
+   por dentro — si no, no se sabía si el foco estaba en − o en +. */
+.ds-input-stepper__btn:focus-visible {
+  outline:        var(--ds-border-width-lg) solid var(--ds-input-focus-outer);
+  outline-offset: calc(var(--ds-border-width-lg) * -2);
+}
 
-.ds-input-stepper__btn:hover:not(:disabled) {
+.ds-input-stepper__btn:hover:not(:disabled):not([aria-disabled="true"]) {
   background: var(--ds-input-stepper-btn-bg-hover);
 }
 
-.ds-input-stepper__btn:disabled {
+.ds-input-stepper__btn:disabled,
+.ds-input-stepper__btn[aria-disabled="true"] {
   color:  var(--ds-input-icon-fg-disabled);
   cursor: not-allowed;
 }
-.ds-input-stepper__btn--right:disabled { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-stepper__btn--right:disabled,
+.ds-input-stepper__btn--right[aria-disabled="true"] { color: var(--ds-input-icon-fg-disabled); }
 
 /* Valor central */
 .ds-input-stepper__value {
@@ -152,6 +161,8 @@ export const InputStepper = forwardRef(function InputStepper({
   helperText,
   errorMessage,
   fullWidth     = false,
+  decrementLabel = 'Decrease',
+  incrementLabel = 'Increase',
   id,
 }, forwardedRef) {
 
@@ -204,19 +215,21 @@ export const InputStepper = forwardRef(function InputStepper({
         aria-label={!label ? ariaLabel : undefined}
         aria-describedby={[helperId, messageId].filter(Boolean).join(' ') || undefined}
       >
+        {/* A11y-4: al llegar al mínimo/máximo el botón queda aria-disabled (sigue
+            enfocable) — con disabled nativo el foco se perdía al pulsarlo. */}
         <button
           type="button"
           className="ds-input-stepper__btn ds-input-stepper__btn--left"
-          onClick={() => update(current - step)}
-          disabled={isDisabled || atMin}
-          aria-label="Decrementar"
+          onClick={() => { if (!atMin) update(current - step); }}
+          disabled={isDisabled}
+          aria-disabled={!isDisabled && atMin ? 'true' : undefined}
+          aria-label={decrementLabel}
         >
           <Icon name="minus" size="sm" />
         </button>
 
         <output
           className="ds-input-stepper__value"
-          htmlFor={`${groupId}-label`}
           aria-live="polite"
           aria-atomic="true"
         >
@@ -226,22 +239,26 @@ export const InputStepper = forwardRef(function InputStepper({
         <button
           type="button"
           className="ds-input-stepper__btn ds-input-stepper__btn--right"
-          onClick={() => update(current + step)}
-          disabled={isDisabled || atMax}
-          aria-label="Incrementar"
+          onClick={() => { if (!atMax) update(current + step); }}
+          disabled={isDisabled}
+          aria-disabled={!isDisabled && atMax ? 'true' : undefined}
+          aria-label={incrementLabel}
         >
           <Icon name="plus" size="sm" />
         </button>
       </div>
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-input-stepper__message" id={messageId} aria-live="polite">
-          <span className="ds-input-stepper__message-icon">
-            <Icon name="circle-x" size="2xs" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-input-stepper__message" id={messageId}>
+            <span className="ds-input-stepper__message-icon">
+              <Icon name="circle-x" size="2xs" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

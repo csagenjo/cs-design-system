@@ -38,6 +38,8 @@
  * `Combobox` ya lo hace (useListbox, modo activedescendant).
  */
 
+import { RequiredMark } from './_requiredMark';
+import { LiveRegion } from './LiveRegion';
 import React, { forwardRef, useId, useRef } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
@@ -234,6 +236,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
   open = false,
   onToggleOpen,
   onClear,
+  required        = false, // A11y-4: asterisco visible + `required` nativo
   id,
   name,
   onFocus,
@@ -275,7 +278,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
     <div className={wrapperClass}>
       {label && (
         <label className="ds-input-combobox__label" htmlFor={inputId}>
-          {label}
+          {label}<RequiredMark show={required} />
         </label>
       )}
 
@@ -333,6 +336,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
               aria-label={!label ? ariaLabel : undefined}
               aria-describedby={describedBy}
               aria-invalid={state === 'error' ? 'true' : undefined}
+          required={required}
               aria-expanded={open}
               aria-autocomplete="both"
               className="ds-input-combobox__control"
@@ -366,14 +370,17 @@ export const InputCombobox = forwardRef(function InputCombobox({
         </div>
       </div>
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-input-combobox__message" id={messageId} aria-live="polite">
-          <span className="ds-input-combobox__message-icon">
-            <Icon name="circle-x" size="2xs" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-input-combobox__message" id={messageId}>
+            <span className="ds-input-combobox__message-icon">
+              <Icon name="circle-x" size="2xs" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

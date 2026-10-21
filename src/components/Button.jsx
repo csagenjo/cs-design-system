@@ -40,6 +40,8 @@
 import React from 'react';
 import { Icon } from './Icon';
 import { LoadingSpinner } from './LoadingSpinner';
+import { VisuallyHidden } from './VisuallyHidden';
+import { announce } from './announce';
 import { warnOnce, warnPlaceholderLabel } from './_devWarn';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -91,9 +93,11 @@ const css = `
   pointer-events: none;
 }
 .ds-btn--icon-only { padding: 0; width: var(--_h); }
-/* Loading: no clicable (disabled nativo) pero con el aspecto de Enabled, como
-   en Figma — no es un botón deshabilitado, es una acción en curso. */
-.ds-btn--loading:disabled { opacity: 1; cursor: progress; }
+/* Loading: aspecto de Enabled, como en Figma — no es un botón deshabilitado,
+   es una acción en curso. A11y-4: ya no es \`disabled\` nativo (el foco se
+   perdía al pulsarlo); es aria-disabled y el click no hace nada. */
+.ds-btn--loading { cursor: progress; }
+.ds-btn--loading:active { opacity: 1; transform: none; }
 
 /* Accent filled */
 .ds-btn--accent {
@@ -205,7 +209,18 @@ export function Button({
     warnOnce('Button.iconOnly', '[DS Button] `iconOnly` sin `ariaLabel`: el botón no tiene nombre para el lector de pantalla.');
   }
   if (!iconOnly) warnPlaceholderLabel('Button', 'children', children);
-  const isDisabled = disabled || loading;
+  // A11y-4: "loading" forma parte del nombre ("Save, Loading") y se anuncia
+  // al empezar — un role=status dentro del botón no entraba en el nombre ni se
+  // anunciaba de forma fiable al aparecer.
+  const wasLoading = React.useRef(loading);
+  React.useEffect(() => {
+    if (loading && !wasLoading.current) announce(loadingLabel);
+    wasLoading.current = loading;
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleClick = loading
+    ? (e) => e.preventDefault() // tampoco envía el formulario si es type="submit"
+    : onClick;
 
   const classes = [
     'ds-btn',
@@ -224,14 +239,16 @@ export function Button({
       {...rest}
       type={htmlType}
       className={classes}
-      onClick={onClick}
-      disabled={isDisabled}
+      onClick={handleClick}
+      disabled={disabled}
+      aria-disabled={loading && !disabled ? 'true' : undefined}
       aria-label={(iconOnly && ariaLabel) || rest['aria-label']}
       aria-busy={loading}
     >
-      {loading  && <LoadingSpinner color="current" label={loadingLabel} className="ds-btn__spinner" />}
+      {loading  && <LoadingSpinner color="current" label="" className="ds-btn__spinner" />}
       {!loading && iconLeft  && <Icon name={iconLeft}  size={iconSize} />}
       {!iconOnly && children}
+      {loading && <VisuallyHidden>{`, ${loadingLabel}`}</VisuallyHidden>}
       {!loading && iconRight && <Icon name={iconRight} size={iconSize} />}
     </button>
   );

@@ -17,7 +17,8 @@
  *   />
  */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { announce } from '../components/announce';
 import { injectStyles } from '../components/_inputBase';
 import { DropZone } from '../components/DropZone';
 import { ListItem } from '../components/ListItem';
@@ -44,23 +45,48 @@ export function FileSelector({
   describedBy,
   removeLabel,
   nameLabel,
+  addedLabel = (name) => `${name} added`,
+  removedLabel = (name) => `${name} removed`,
   disabled = false,
   id,
   className,
 }) {
   const classes = ['ds-file-selector', className || ''].filter(Boolean).join(' ');
 
+  // A11y-4: añadir y quitar ficheros se anuncia, y al quitar uno el foco no
+  // se pierde: pasa al botón de quitar del siguiente (o del anterior) o, si no
+  // quedan, al botón de la DropZone.
+  const rootRef = useRef(null);
+  const prevFiles = useRef(files);
+  const focusAfterRemove = useRef(null);
+  useEffect(() => {
+    const before = prevFiles.current;
+    prevFiles.current = files;
+    if (before === files) return;
+    const nowIds = new Set(files.map((f) => f.id));
+    const beforeIds = new Set(before.map((f) => f.id));
+    files.filter((f) => !beforeIds.has(f.id)).forEach((f) => announce(addedLabel(f.name)));
+    before.filter((f) => !nowIds.has(f.id)).forEach((f) => announce(removedLabel(f.name)));
+    if (focusAfterRemove.current != null) {
+      const closes = rootRef.current?.querySelectorAll('.ds-list-item__close') || [];
+      const target = closes[Math.min(focusAfterRemove.current, closes.length - 1)]
+        || rootRef.current?.querySelector('.ds-drop-zone button');
+      target?.focus();
+      focusAfterRemove.current = null;
+    }
+  }, [files]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
-    <div id={id} className={classes}>
+    <div id={id} className={classes} ref={rootRef}>
       <DropZone disabled={disabled} onButtonClick={onButtonClick} onFilesDrop={onFilesDrop} buttonLabel={buttonLabel} describedBy={describedBy} />
-      {files.map((file) => (
+      {files.map((file, index) => (
         <ListItem
           key={file.id}
           status={file.status}
           documentName={file.name}
           errorMessage={file.errorMessage}
           onNameChange={(name) => onFileNameChange?.(file.id, name)}
-          onRemove={() => onFileRemove?.(file.id)}
+          onRemove={() => { focusAfterRemove.current = index; onFileRemove?.(file.id); }}
           removeLabel={removeLabel}
           nameLabel={nameLabel}
         />

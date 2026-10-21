@@ -125,6 +125,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
   onSelectedChange,
   onClick,
   disabled         = false,
+  name,          // A11y-4: mismo `name` en las filas de una lista → un grupo de radios (o envolver en RadioGroup)
   id,
 }, forwardedRef) {
 
@@ -181,6 +182,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
             state={isDisabled ? 'disabled' : 'default'}
             ariaLabel={[headerText, isDataHidden ? null : detailText].filter((t) => typeof t === 'string' && t).join(', ')} /* A11y-3: filas con el mismo título se distinguen por el detalle */
             onChange={() => {}}
+              name={name}
           />
         </span>
       </span>

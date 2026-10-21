@@ -23,7 +23,6 @@
  *   <Pagination variant="secondary" currentPage={7} totalPages={20} onPageChange={setPage} />
  */
 
-import { VisuallyHidden } from './VisuallyHidden';
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -67,16 +66,17 @@ const css = `
 .ds-pgn--primary   .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-primary); }
 .ds-pgn--secondary .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-secondary); }
 
-.ds-pgn--primary   .ds-pgn__nav--prev:hover:not(:disabled) { background: var(--ds-pagination-previous-bg-hover-primary);   color: var(--ds-pagination-previous-fg-hover); }
-.ds-pgn--secondary .ds-pgn__nav--prev:hover:not(:disabled) { background: var(--ds-pagination-previous-bg-hover-secondary); color: var(--ds-pagination-previous-fg-hover); }
-.ds-pgn--primary   .ds-pgn__nav--next:hover:not(:disabled) { background: var(--ds-pagination-next-bg-hover-primary);       color: var(--ds-pagination-next-fg-hover); }
-.ds-pgn--secondary .ds-pgn__nav--next:hover:not(:disabled) { background: var(--ds-pagination-next-bg-hover-secondary);     color: var(--ds-pagination-next-fg-hover); }
+.ds-pgn--primary   .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-primary);   color: var(--ds-pagination-previous-fg-hover); }
+.ds-pgn--secondary .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-secondary); color: var(--ds-pagination-previous-fg-hover); }
+.ds-pgn--primary   .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-primary);       color: var(--ds-pagination-next-fg-hover); }
+.ds-pgn--secondary .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-secondary);     color: var(--ds-pagination-next-fg-hover); }
 
 /* Cada flecha usa su propio token de opacidad al pulsar — antes Next reusaba el de Previous */
-.ds-pgn__nav--prev:active:not(:disabled) { opacity: var(--ds-pagination-previous-opacity-pressed); }
-.ds-pgn__nav--next:active:not(:disabled) { opacity: var(--ds-pagination-next-opacity-pressed); }
+.ds-pgn__nav--prev:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-previous-opacity-pressed); }
+.ds-pgn__nav--next:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-next-opacity-pressed); }
 
-.ds-pgn__nav:disabled {
+.ds-pgn__nav:disabled,
+.ds-pgn__nav[aria-disabled="true"] {
   color:          var(--ds-pagination-previous-fg-disabled);
   cursor:         not-allowed;
   pointer-events: none;
@@ -202,7 +202,6 @@ export function Pagination({
     previous: 'Previous page',
     next: 'Next page',
     page: (n) => `Page ${n}`,
-    pagePrefix: 'Page ',
     earlierPages: 'Earlier pages',
     laterPages: 'Later pages',
     ...labels,
@@ -222,8 +221,10 @@ export function Pagination({
     disabled ? 'ds-pgn--disabled' : '',
   ].filter(Boolean).join(' ');
 
-  const atFirst = disabled || currentPage <= 1;
-  const atLast  = disabled || currentPage >= totalPages;
+  // A11y-4: en los extremos las flechas quedan aria-disabled (siguen
+  // enfocables): con `disabled` nativo el foco se perdía al llegar al final.
+  const atFirst = currentPage <= 1;
+  const atLast  = currentPage >= totalPages;
 
   return (
     <nav className={rootClasses} aria-label={ariaLabel}>
@@ -231,7 +232,8 @@ export function Pagination({
         type="button"
         className="ds-pgn__item ds-pgn__nav ds-pgn__nav--prev"
         onClick={() => go(currentPage - 1)}
-        disabled={atFirst}
+        disabled={disabled}
+        aria-disabled={!disabled && atFirst ? 'true' : undefined}
         aria-label={t.previous}
       >
         <ChevronLeft width={20} height={20} strokeWidth={1.75} aria-hidden="true" />
@@ -260,22 +262,18 @@ export function Pagination({
             </button>
           );
         }
-        return item === currentPage ? (
-          <span
-            key={item}
-            className="ds-pgn__item ds-pgn__current"
-            aria-current="page"
-          >
-            {/* aria-label en un <span> sin rol no se lee: "Page 3, current page" */}
-            <VisuallyHidden>{t.pagePrefix}</VisuallyHidden>{item}
-          </span>
-        ) : (
+        // A11y-4: la página actual es el MISMO botón (misma key y etiqueta) que
+        // antes de pulsarlo, solo cambia de aspecto — antes se re-montaba como
+        // <span> y el foco se perdía. "Page 3, current page".
+        const isCurrent = item === currentPage;
+        return (
           <button
             key={item}
             type="button"
-            className="ds-pgn__item ds-pgn__page"
+            className={`ds-pgn__item ${isCurrent ? 'ds-pgn__current' : 'ds-pgn__page'}`}
             onClick={() => go(item)}
             disabled={disabled}
+            aria-current={isCurrent ? 'page' : undefined}
             aria-label={t.page(item)}
           >
             {item}
@@ -287,7 +285,8 @@ export function Pagination({
         type="button"
         className="ds-pgn__item ds-pgn__nav ds-pgn__nav--next"
         onClick={() => go(currentPage + 1)}
-        disabled={atLast}
+        disabled={disabled}
+        aria-disabled={!disabled && atLast ? 'true' : undefined}
         aria-label={t.next}
       >
         <ChevronRight width={20} height={20} strokeWidth={1.75} aria-hidden="true" />

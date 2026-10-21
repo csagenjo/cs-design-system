@@ -145,6 +145,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
   disabled         = false,
   icon             = <Icon name="file-text" size="xs" />, // slot libre — refleja "Left Panel" de Figma, con el mismo icono de antes por defecto
   showControl      = true, // oculta el Radio/Checkbox — refleja "Right Panel" de Figma (p. ej. Country Picker, donde el borde ya es la selección)
+  name,          // A11y-4: mismo `name` en las filas de una lista → un grupo de radios (o envolver en RadioGroup)
   id,
   ...rest                   // A11y-1: role/aria-*/tabIndex/eventos de useListbox (`getOptionProps(i)`) llegan a la fila
 }, forwardedRef) {
@@ -215,6 +216,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
               state={isDisabled ? 'disabled' : 'default'}
               ariaLabel={[headerText, isDataHidden ? null : detailText].filter((t) => typeof t === 'string' && t).join(', ')} /* A11y-3: filas con el mismo título se distinguen por el detalle */
               onChange={() => {}}
+              name={name}
             />
           </span>
         )}
