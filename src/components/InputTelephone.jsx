@@ -34,6 +34,8 @@
  *   <InputTelephone state="disabled" />
  */
 
+import { RequiredMark } from './_requiredMark';
+import { LiveRegion } from './LiveRegion';
 import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
@@ -144,6 +146,9 @@ const css = `
   background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
 }
 .ds-input-telephone__country--selectable:focus-visible {
+  /* A11y-4: marca qué parte del campo tiene el foco (el anillo exterior es de todo el campo) */
+  outline:        var(--ds-border-width-lg) solid var(--ds-input-focus-outer);
+  outline-offset: calc(var(--ds-border-width-lg) * -2);
   background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
 }
 
@@ -260,6 +265,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
   helperText,
   errorMessage,
   fullWidth        = false,
+  required        = false, // A11y-4: asterisco visible + `required` nativo
   id,
   name,
   onFocus,
@@ -299,7 +305,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
 
       {label && (
         <label className="ds-input-telephone__label" htmlFor={inputId}>
-          {label}
+          {label}<RequiredMark show={required} />
         </label>
       )}
 
@@ -353,20 +359,24 @@ export const InputTelephone = forwardRef(function InputTelephone({
           aria-label={!label ? ariaLabel : undefined}
           aria-describedby={describedBy}
           aria-invalid={state === 'error' ? 'true' : undefined}
+          required={required}
           className="ds-input-telephone__phone"
           autoComplete="tel-national"
         />
 
       </div>
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-input-telephone__message" id={messageId} aria-live="polite">
-          <span className="ds-input-telephone__message-icon">
-            <Icon name="circle-x" size="2xs" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-input-telephone__message" id={messageId}>
+            <span className="ds-input-telephone__message-icon">
+              <Icon name="circle-x" size="2xs" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
 
     </div>
   );

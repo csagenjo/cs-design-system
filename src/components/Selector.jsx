@@ -1,3 +1,4 @@
+import { LiveRegion } from './LiveRegion';
 import React, { forwardRef, useId } from 'react';
 import { AlertCircle } from 'lucide-react';
 import { injectStyles } from './_inputBase';
@@ -121,14 +122,17 @@ export const Selector = forwardRef(function Selector({
         aria-invalid={state === 'error' ? 'true' : undefined}
       />
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-selector__message" id={messageId} aria-live="polite">
-          <span className="ds-selector__message-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-selector__message" id={messageId}>
+            <span className="ds-selector__message-icon">
+              <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

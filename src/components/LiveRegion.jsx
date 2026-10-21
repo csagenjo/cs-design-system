@@ -34,6 +34,15 @@
  */
 import React from 'react';
 import { VISUALLY_HIDDEN_CLASS } from './VisuallyHidden';
+import { injectStyles } from './_inputBase';
+
+/* A11y-4: vacía no ocupa sitio — si no, dentro de un contenedor flex con
+   `gap` (Checkbox, Radio) añadía un hueco aunque no hubiera mensaje. Sigue en
+   el árbol de accesibilidad (no es display:none), así que el mensaje que entre
+   después se anuncia igual. */
+injectStyles('ds-live-region', `
+.ds-live-region:empty { position: absolute; }
+`);
 
 /* `announce()` vive en ./announce.js (un archivo de componente solo puede
    exportar componentes — Fast Refresh). */
@@ -48,7 +57,7 @@ export function LiveRegion({
   ...rest
 }) {
   const assertive = politeness === 'assertive';
-  const classes = [visuallyHidden ? VISUALLY_HIDDEN_CLASS : '', className || ''].filter(Boolean).join(' ');
+  const classes = ['ds-live-region', visuallyHidden ? VISUALLY_HIDDEN_CLASS : '', className || ''].filter(Boolean).join(' ');
   return (
     <Tag
       role={assertive ? 'alert' : 'status'}

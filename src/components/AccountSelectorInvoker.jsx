@@ -97,11 +97,7 @@ const css = `
   border-color: var(--ds-account-selector-root-border-color-disabled);
   cursor:       default;
 }
-.ds-account-selector-invoker--readOnly:focus-visible {
-  outline: none;
-  box-shadow: none;
-  border-width: var(--ds-account-selector-root-border-width-generic);
-}
+/* A11y-4: solo lectura sigue siendo enfocable — conserva el anillo de foco (antes se quitaba). */
 
 .ds-account-selector-invoker--dataHidden { cursor: default; }
 

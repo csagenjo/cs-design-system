@@ -1,3 +1,5 @@
+import { LiveRegion } from './LiveRegion';
+import { RequiredMark } from './_requiredMark';
 import React, {
   useRef,
   useEffect,
@@ -86,11 +88,8 @@ const css = `
   background: var(--ds-input-bg-readonly);
   cursor:     default;
 }
-.ds-input-text--readonly .ds-input-text__control:focus {
-  border-color: var(--ds-input-border-default);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
+/* A11y-4: un campo de solo lectura se puede enfocar (para leerlo o copiarlo),
+   así que lleva el mismo anillo de foco que el resto — antes se quitaba. */
 
 /* Disabled */
 .ds-input-text--disabled .ds-input-text__control {
@@ -195,6 +194,7 @@ export const InputText = forwardRef(function InputText({
   iconRight,
   iconRightPrimary = false,
   fullWidth        = false,
+  required        = false, // A11y-4: asterisco visible + `required` nativo
   id,
   name,
   onFocus,
@@ -260,6 +260,7 @@ export const InputText = forwardRef(function InputText({
     'aria-label':       !label ? ariaLabel : undefined,
     'aria-describedby': describedBy,
     'aria-invalid':     state === 'error' ? 'true' : undefined,
+    required,
     className:          'ds-input-text__control',
     ...nativeProps,
   };
@@ -268,7 +269,7 @@ export const InputText = forwardRef(function InputText({
     <div className={wrapperClass}>
       {label && (
         <label className="ds-input-text__label" htmlFor={inputId}>
-          {label}
+          {label}<RequiredMark show={required} />
         </label>
       )}
 
@@ -303,14 +304,17 @@ export const InputText = forwardRef(function InputText({
         )}
       </div>
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-input-text__message" id={messageId} aria-live="polite">
-          <span className="ds-input-text__message-icon">
-            <Icon name="circle-x" size="2xs" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-input-text__message" id={messageId}>
+            <span className="ds-input-text__message-icon">
+              <Icon name="circle-x" size="2xs" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

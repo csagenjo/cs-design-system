@@ -59,6 +59,8 @@ import { Pagination } from '../components/Pagination';
 import { PopoverSheet } from '../components/PopoverSheet';
 import { ProgressBar } from '../components/ProgressBar';
 import { Radio } from '../components/Radio';
+import { RadioGroup } from '../organisms/RadioGroup';
+import { CheckboxGroup } from '../organisms/CheckboxGroup';
 import { RangeSlider } from '../components/RangeSlider';
 import { Scrim } from '../components/Scrim';
 import { SectionHeader } from '../components/SectionHeader';
@@ -379,6 +381,30 @@ export default function Gallery({ mode }) {
         </Row>
       </Section>
 
+      <Section name="CheckboxGroup">
+        <Row>
+          <CheckboxGroup label="Términos y condiciones" values={[]} onChange={noop} required>
+            <Checkbox value="accept" label="Acepto los términos" />
+          </CheckboxGroup>
+          <CheckboxGroup label="Avisos" values={['email']} onChange={noop} required helperText="Elige al menos uno">
+            <Checkbox value="email" label="Email" />
+            <Checkbox value="sms" label="SMS" />
+          </CheckboxGroup>
+          <CheckboxGroup label="Canales (error)" values={[]} onChange={noop} state="error" errorMessage="Elige al menos un canal">
+            <Checkbox value="web" label="Web" />
+            <Checkbox value="app" label="App" />
+          </CheckboxGroup>
+          <CheckboxGroup label="Disabled" values={['a']} onChange={noop} state="disabled">
+            <Checkbox value="a" label="A" />
+            <Checkbox value="b" label="B" />
+          </CheckboxGroup>
+          <CheckboxGroup label="Horizontal" values={[]} onChange={noop} orientation="horizontal">
+            <Checkbox value="x" label="X" />
+            <Checkbox value="y" label="Y" />
+          </CheckboxGroup>
+        </Row>
+      </Section>
+
       <Section name="Chip">
         <Row>
           <Chip type="choice" label="Choice" selected={false} onSelectedChange={noop} />
@@ -683,6 +709,7 @@ export default function Gallery({ mode }) {
           <InputText label="Contraseña" type="password" defaultValue="secreto" iconRight="eye-off" />
           <InputText label="Adaptive (textarea)" adaptive defaultValue={'Línea 1\nLínea 2'} />
           <InputText ariaLabel="Sin label visible" placeholder="Sin label" iconLeft="search" iconLeftPrimary />
+          <InputText label="Obligatorio" required placeholder="Con asterisco (A11y-4)" />
         </div>
       </Section>
 
@@ -829,6 +856,33 @@ export default function Gallery({ mode }) {
           <Radio label="Disabled checked" name="a11y-dis2" value="c" state="disabled" checked onChange={noop} />
           <Radio ariaLabel="Seleccionar fila 1" showLabel={false} name="a11y-filas" value="1" checked onChange={noop} />
         </Row>
+      </Section>
+
+      <Section name="RadioGroup">
+        <Row>
+          <RadioGroup label="Tipo de cuenta" name="g-rg-1" value="personal" onChange={noop} required helperText="Elige una">
+            <Radio value="personal" label="Personal" />
+            <Radio value="empresa" label="Empresa" />
+          </RadioGroup>
+          <RadioGroup label="Frecuencia (error)" name="g-rg-2" value={undefined} onChange={noop} state="error" errorMessage="Elige una frecuencia">
+            <Radio value="m" label="Mensual" />
+            <Radio value="a" label="Anual" />
+          </RadioGroup>
+          <RadioGroup label="Disabled" name="g-rg-3" value="a" onChange={noop} state="disabled">
+            <Radio value="a" label="A" />
+            <Radio value="b" label="B" />
+          </RadioGroup>
+          <RadioGroup label="Horizontal" name="g-rg-4" value="s" onChange={noop} orientation="horizontal">
+            <Radio value="s" label="Sí" />
+            <Radio value="n" label="No" />
+          </RadioGroup>
+        </Row>
+        <div style={{ maxWidth: 420, marginTop: 16 }}>
+          <RadioGroup label="Cuenta de cargo (lista)" name="g-rg-5" spacing="none" value="1" onChange={noop}>
+            <SelectorListItem headerText="Cuenta nómina" detailText="ES12 3456" selected onSelectedChange={noop} />
+            <SelectorListItem headerText="Cuenta ahorro" detailText="ES98 7654" selected={false} onSelectedChange={noop} />
+          </RadioGroup>
+        </div>
       </Section>
 
       <Section name="RangeSlider">

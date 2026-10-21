@@ -22,6 +22,7 @@
  */
 
 import React from 'react';
+import { announce } from './announce';
 import { Button } from './Button';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -84,6 +85,13 @@ export function Snackbar({
 }) {
   injectStyles();
 
+  // A11y-4: el Snackbar se monta a la vez que su mensaje, así que su propio
+  // aria-live no se oía en muchos lectores. Se anuncia por la región global
+  // persistente de announce() y el contenedor ya no es región viva.
+  React.useEffect(() => {
+    if (message) announce(message);
+  }, [message]);
+
   const isMulti = length === 'multi';
 
   const classes = [
@@ -93,7 +101,7 @@ export function Snackbar({
   ].filter(Boolean).join(' ');
 
   return (
-    <div id={id} className={classes} role="status" aria-live="polite">
+    <div id={id} className={classes}>
       <p className="ds-snackbar__message">{message}</p>
       {showAction && actionLabel && (
         <Button variant="default" size="sm" onClick={onAction}>

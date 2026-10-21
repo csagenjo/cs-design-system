@@ -117,6 +117,7 @@ export function Combobox({
   iconLeft,
   helperText,
   errorMessage,
+  required = false,
   state = 'default',
   fullWidth = false,
   emptyMessage = 'No results',   // inglés por defecto (decisión 20/10) — también es lo que se anuncia
@@ -266,6 +267,7 @@ export function Combobox({
         state={state}
         helperText={helperText}
         errorMessage={errorMessage}
+        required={required}
         fullWidth={fullWidth}
         open={open}
         onToggleOpen={() => (open ? setOpen(false) : openPicker())}

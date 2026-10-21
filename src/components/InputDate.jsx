@@ -1,4 +1,7 @@
+import { RequiredMark } from './_requiredMark';
+import { VisuallyHidden } from './VisuallyHidden';
 import React, { forwardRef, useId } from 'react';
+import { LiveRegion } from './LiveRegion';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 
@@ -138,6 +141,8 @@ export const InputDate = forwardRef(function InputDate({
   helperText,
   errorMessage,
   fullWidth     = false,
+  required        = false, // A11y-4: asterisco visible + `required` nativo
+  formatHint      = (fmt) => `Format ${fmt}`, // A11y-4: el formato solo estaba en el placeholder (desaparece al escribir); null si helperText ya lo dice
   id,
   name,
   onFocus,
@@ -149,7 +154,8 @@ export const InputDate = forwardRef(function InputDate({
   const inputId     = id || generatedId;
   const helperId    = helperText ? `${inputId}-helper` : null;
   const messageId   = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
-  const describedBy = [helperId, messageId].filter(Boolean).join(' ') || undefined;
+  const formatId    = formatHint && placeholder ? `${inputId}-format` : null;
+  const describedBy = [helperId, formatId, messageId].filter(Boolean).join(' ') || undefined;
 
   if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
     console.warn('[DS InputDate] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
@@ -166,7 +172,7 @@ export const InputDate = forwardRef(function InputDate({
     <div className={wrapperClass}>
       {label && (
         <label className="ds-input-date__label" htmlFor={inputId}>
-          {label}
+          {label}<RequiredMark show={required} />
         </label>
       )}
 
@@ -192,22 +198,27 @@ export const InputDate = forwardRef(function InputDate({
           aria-label={!label ? ariaLabel : undefined}
           aria-describedby={describedBy}
           aria-invalid={state === 'error' ? 'true' : undefined}
+          required={required}
           className="ds-input-date__control"
           {...nativeProps}
         />
+        {formatId && <VisuallyHidden id={formatId}>{formatHint(placeholder)}</VisuallyHidden>}
         <span className="ds-input-date__icon" aria-hidden="true">
           <Icon name="calendar-days" size="sm" />
         </span>
       </div>
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-input-date__message" id={messageId} aria-live="polite">
-          <span className="ds-input-date__message-icon">
-            <Icon name="circle-x" size="2xs" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-input-date__message" id={messageId}>
+            <span className="ds-input-date__message-icon">
+              <Icon name="circle-x" size="2xs" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });

@@ -128,7 +128,7 @@ export function InlineNotification({
   const iconClasses = ['ds-inline-notification__icon', `ds-inline-notification__icon--${type}`].join(' ');
 
   return (
-    <div id={id} className={classes} role="status">
+    <div id={id} className={classes} role={type === 'error' ? 'alert' : 'status'}>
       <Icon name={ICON_BY_TYPE[type]} size="sm" className={iconClasses} />
       <div className="ds-inline-notification__content">
         {(showTitle || showMessage) && (

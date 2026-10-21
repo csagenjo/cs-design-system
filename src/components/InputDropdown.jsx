@@ -1,4 +1,6 @@
+import { RequiredMark } from './_requiredMark';
 import React, { forwardRef, useId } from 'react';
+import { LiveRegion } from './LiveRegion';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 
@@ -142,6 +144,7 @@ export const InputDropdown = forwardRef(function InputDropdown({
   errorMessage,
   placeholder   = 'Selecciona una opción',
   fullWidth     = false,
+  required        = false, // A11y-4: asterisco visible + `required` nativo
   id,
   name,
   onFocus,
@@ -177,7 +180,7 @@ export const InputDropdown = forwardRef(function InputDropdown({
     <div className={wrapperClass}>
       {label && (
         <label className="ds-input-dropdown__label" htmlFor={inputId}>
-          {label}
+          {label}<RequiredMark show={required} />
         </label>
       )}
 
@@ -201,6 +204,7 @@ export const InputDropdown = forwardRef(function InputDropdown({
           aria-label={!label ? ariaLabel : undefined}
           aria-describedby={describedBy}
           aria-invalid={state === 'error' ? 'true' : undefined}
+          required={required}
           className={controlClass}
         >
           <option value="" disabled>{placeholder}</option>
@@ -216,14 +220,17 @@ export const InputDropdown = forwardRef(function InputDropdown({
         </span>
       </div>
 
-      {state === 'error' && errorMessage && (
-        <p className="ds-input-dropdown__message" id={messageId} aria-live="polite">
-          <span className="ds-input-dropdown__message-icon">
-            <Icon name="circle-x" size="2xs" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
+      <LiveRegion>
+        {state === 'error' && errorMessage && (
+          <p className="ds-input-dropdown__message" id={messageId}>
+            <span className="ds-input-dropdown__message-icon">
+              <Icon name="circle-x" size="2xs" />
+            </span>
+            {errorMessage}
+          </p>
+        )}
+      </LiveRegion>
     </div>
   );
 });
