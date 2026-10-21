@@ -153,7 +153,7 @@ export const Drawer = React.forwardRef(function Drawer({
   icon,
   expandedIcon,
   iconPlacement    = 'start',   // 'start' | 'end' | 'none'
-  iconLabel        = 'Abrir/cerrar panel',
+  iconLabel        = 'Toggle panel',
   showDivider      = true,
   children,
   id,
@@ -161,6 +161,8 @@ export const Drawer = React.forwardRef(function Drawer({
   style,
 }, ref) {
   const isCollapsed = dismissable && collapsed;
+  // A11y-3: el botón de abrir/cerrar apunta al contenido (aria-controls).
+  const contentId = `${React.useId()}-content`;
   const currentIcon = iconPlacement === 'none' ? null : (isCollapsed ? icon : (expandedIcon ?? icon));
 
   const classes = [
@@ -181,6 +183,7 @@ export const Drawer = React.forwardRef(function Drawer({
           onClick={onToggleCollapse}
           aria-label={iconLabel}
           aria-expanded={!isCollapsed}
+          aria-controls={contentId}
         >
           {currentIcon}
         </button>
@@ -194,7 +197,7 @@ export const Drawer = React.forwardRef(function Drawer({
     <div ref={ref} id={id} className={classes} style={style}>
       {iconRow}
       {showDivider && currentIcon && anchor === 'left' && <Divider />}
-      <div className="ds-drawer__content">{children}</div>
+      <div className="ds-drawer__content" id={contentId}>{children}</div>
     </div>
   );
 });

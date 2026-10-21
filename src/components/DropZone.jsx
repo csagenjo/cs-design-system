@@ -75,6 +75,7 @@ export function DropZone({
   buttonLabel = 'Button',
   onButtonClick,
   onFilesDrop,
+  describedBy,    // ids extra que describen el botón (p. ej. label + descripción de FileUpload)
   id,
   className,
 }) {
@@ -114,7 +115,7 @@ export function DropZone({
       <p id={textId} className="ds-drop-zone__text">
         {hovering ? 'Drag & drop your files here' : 'Drag & drop your files here or'}
       </p>
-      <Button variant="default" outline size="sm" disabled={disabled || hovering} onClick={onButtonClick} aria-describedby={textId}>
+      <Button variant="default" outline size="sm" disabled={disabled || hovering} onClick={onButtonClick} aria-describedby={[describedBy, textId].filter(Boolean).join(' ')}>
         {buttonLabel}
       </Button>
     </div>

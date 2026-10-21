@@ -16,6 +16,10 @@
  * USO:
  *   <CollapsibleIconButton expanded={open} onToggle={() => setOpen(!open)} />
  *   <CollapsibleIconButton variant="secondary" size="small" expanded={open} onToggle={fn} />
+ *
+ * A11y-3 (21/10/2026): `aria-expanded` en el botón; `controls` = id del
+ * contenido que abre/cierra (→ `aria-controls`). El tooltip ya es el nombre
+ * del botón, así que no se repite como descripción.
  */
 
 import React from 'react';
@@ -45,6 +49,7 @@ export function CollapsibleIconButton({
   expanded = false,
   onToggle,
   labels   = { expand: 'Expand', collapse: 'Collapse' },
+  controls,
   id,
   className,
 }) {
@@ -57,13 +62,15 @@ export function CollapsibleIconButton({
 
   return (
     <span className={classes} id={id}>
-      <Tooltip label={label} placement="top">
+      <Tooltip label={label} placement="top" describe={false}>
         <IconButton
           type="default"
           variant="secondary"
           size={size}
           icon={expanded ? 'chevron-up' : 'chevron-down'}
           ariaLabel={label}
+          aria-expanded={expanded}
+          aria-controls={expanded ? controls : undefined}
           onClick={onToggle}
         />
       </Tooltip>

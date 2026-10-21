@@ -45,6 +45,7 @@
  *   <Slider value={value} onChange={setValue} ariaLabel="Progreso" variant="secondary" />
  */
 
+import { warnOnce } from './_devWarn';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { SliderKnob } from './_sliderKnob';
@@ -134,9 +135,13 @@ export function Slider({
   iconRight,
   formatValue = (v) => `${v}%`,
   ariaLabel,
+  ariaLabelledBy,
   id,
   className,
 }) {
+  // A11y-3: el control necesita nombre ("Volume"); la burbuja con el valor ya
+  // se lee como aria-valuetext, no como descripción repetida.
+  if (!ariaLabel && !ariaLabelledBy) warnOnce('Slider.unnamed', '[DS Slider] Necesita `ariaLabel` o `ariaLabelledBy`: sin ellos el control no tiene nombre.');
   const trackRef = React.useRef(null);
   const knobRef = React.useRef(null);
   const [dragging, setDragging] = React.useState(false);
@@ -215,6 +220,7 @@ export function Slider({
           onPointerDown={handlePointerDown}
           onKeyDown={handleKeyDown}
           ariaLabel={ariaLabel}
+          ariaLabelledBy={ariaLabelledBy}
           ariaValueMin={min}
           ariaValueMax={max}
           ariaValueNow={value}

@@ -21,6 +21,8 @@
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { Icon } from './Icon';
+import { VisuallyHidden } from './VisuallyHidden';
+import { stepStatusText } from './_stepStatus';
 
 const css = `
 .ds-node {
@@ -61,12 +63,25 @@ const css = `
 
 injectStyles('ds-node', css);
 
-export function Node({ state = 'incomplete', number = '1', className, style }) {
+export function Node({
+  state = 'incomplete',
+  number = '1',
+  stepLabel = 'Step',
+  statusLabels,
+  srLabel,
+  className,
+  style,
+}) {
+  // A11y-3: el círculo (relleno, número, check) es solo visual; lo que se lee
+  // es "Step 2, in progress". `srLabel` lo sustituye entero (StepIndicatorSmall
+  // ya muestra "Step 2 of 4" y solo necesita el estado); `srLabel=""` no lee nada.
+  const spoken = srLabel ?? `${stepLabel} ${number}, ${stepStatusText(state, statusLabels)}`;
   return (
     <div className={`ds-node ds-node--${state} ${className || ''}`} style={style}>
-      <div className="ds-node__circle">
+      <div className="ds-node__circle" aria-hidden="true">
         {state === 'completed' ? <Icon name="Check" size="sm" /> : <span>{number}</span>}
       </div>
+      {spoken ? <VisuallyHidden>{spoken}</VisuallyHidden> : null}
     </div>
   );
 }

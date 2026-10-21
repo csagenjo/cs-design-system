@@ -93,7 +93,7 @@ import { StepIndicatorSmall } from '../organisms/StepIndicatorSmall';
 import { StepNavigator } from '../organisms/StepNavigator';
 import { SubstepNavigator } from '../organisms/SubstepNavigator';
 import { Table, TableRow } from '../organisms/Table';
-import { Tabs } from '../organisms/Tabs';
+import { Tabs, TabPanel } from '../organisms/Tabs';
 import { TopNavigation } from '../organisms/TopNavigation';
 
 const noop = () => {};
@@ -346,7 +346,7 @@ export default function Gallery({ mode }) {
           {['neutral', 'onSurface', 'zebra'].map((s) => (
             <TableRow key={s}>
               <CellHeader surface={s}>{`Cliente (${s})`}</CellHeader>
-              <CellHeader surface={s} border="primary" showSort>Fecha</CellHeader>
+              <CellHeader surface={s} border="primary" showSort sortDirection="descending" onSort={noop}>Fecha</CellHeader>
               <CellHeader surface={s} density="basic" align="right">Importe</CellHeader>
             </TableRow>
           ))}
@@ -783,10 +783,10 @@ export default function Gallery({ mode }) {
 
       <Section name="Pagination">
         <Col>
-          <Pagination currentPage={1} totalPages={4} onPageChange={noop} />
-          <Pagination variant="secondary" currentPage={7} totalPages={20} onPageChange={noop} />
-          <Pagination currentPage={20} totalPages={20} onPageChange={noop} />
-          <Pagination currentPage={3} totalPages={10} disabled onPageChange={noop} />
+          <Pagination currentPage={1} totalPages={4} onPageChange={noop} ariaLabel="Pagination, primera" />
+          <Pagination variant="secondary" currentPage={7} totalPages={20} onPageChange={noop} ariaLabel="Pagination, secondary" />
+          <Pagination currentPage={20} totalPages={20} onPageChange={noop} ariaLabel="Pagination, última" />
+          <Pagination currentPage={3} totalPages={10} disabled onPageChange={noop} ariaLabel="Pagination, disabled" />
         </Col>
       </Section>
 
@@ -833,9 +833,9 @@ export default function Gallery({ mode }) {
 
       <Section name="RangeSlider">
         <Col style={{ maxWidth: 480, paddingTop: 48 }}>
-          <RangeSlider value={[20, 70]} onChange={noop} />
-          <RangeSlider value={[20, 70]} onChange={noop} variant="secondary" />
-          <RangeSlider value={[20, 70]} onChange={noop} disabled />
+          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Precio" />
+          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Precio secondary" variant="secondary" />
+          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Precio disabled" disabled />
         </Col>
       </Section>
 
@@ -857,9 +857,9 @@ export default function Gallery({ mode }) {
       <Section name="SegmentedControl">
         <Col>
           {sizes3.map((s) => (
-            <SegmentedControl key={s} size={s} segments={['Día', 'Semana', 'Mes']} selectedIndex={1} onChange={noop} />
+            <SegmentedControl key={s} size={s} segments={['Día', 'Semana', 'Mes']} selectedIndex={1} onChange={noop} ariaLabel={`Periodo ${s}`} />
           ))}
-          <SegmentedControl segments={['A', 'B', 'C', 'D', 'E', 'F', 'G']} selectedIndex={0} onChange={noop} />
+          <SegmentedControl segments={['A', 'B', 'C', 'D', 'E', 'F', 'G']} selectedIndex={0} onChange={noop} ariaLabel="Siete segmentos" />
         </Col>
       </Section>
 
@@ -1219,15 +1219,19 @@ export default function Gallery({ mode }) {
       <Section name="Tabs">
         <Col>
           {['line', 'contained'].flatMap((v) => ['s', 'm', 'l'].map((s) => (
-            <Tabs key={v + s} size={s} variant={v} selectedId="b" onChange={noop}
+            <Tabs key={v + s} size={s} variant={v} selectedId="b" onChange={noop} ariaLabel={`Cuenta ${v} ${s}`}
               items={[{ id: 'a', label: `Resumen ${v} ${s}` }, { id: 'b', label: 'Movimientos' }, { id: 'c', label: 'Documentos' }]} />
           )))}
           <div style={{ maxWidth: 420 }}>
-            <Tabs size="s" variant="contained" type="scrollable" selectedId="1" onChange={noop} items={[
+            <Tabs size="s" variant="contained" type="scrollable" selectedId="1" onChange={noop} ariaLabel="Meses" items={[
               { id: '1', label: 'Enero' }, { id: '2', label: 'Febrero' }, { id: '3', label: 'Marzo' },
               { id: '4', label: 'Abril' }, { id: '5', label: 'Mayo' }, { id: '6', label: 'Junio' },
             ]} />
           </div>
+          {/* Pestañas enlazadas a su panel (A11y-3): id en Tabs + TabPanel */}
+          <Tabs id="g-tabs" selectedId="mov" onChange={noop} ariaLabel="Cuenta con paneles"
+            items={[{ id: 'res', label: 'Resumen' }, { id: 'mov', label: 'Movimientos' }]} />
+          <TabPanel tabsId="g-tabs" itemId="mov">Panel de movimientos</TabPanel>
         </Col>
       </Section>
 

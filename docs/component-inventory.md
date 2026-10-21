@@ -170,7 +170,10 @@ import { AccordionGroup } from './organisms/AccordionGroup';
 ### Developers · React
 
 **Semantics**
-- The trigger is a native `<button type="button">` with `aria-expanded`.
+- The trigger is a native `<button type="button">` with `aria-expanded`
+  and, when open, `aria-controls` pointing at the content.
+- The open content is a `region` named by the title, so screen-reader
+  users can jump to it from the landmarks list.
 - Collapsed content is removed from the DOM, so Tab and screen readers
   skip it.
 
@@ -178,8 +181,9 @@ import { AccordionGroup } from './organisms/AccordionGroup';
 - Tab / Shift + Tab move between triggers · Enter or Space toggles.
 - Focus ring comes from `:focus-visible` — don't override or remove it.
 
-**Known gaps** (`docs/accessibility-audit.md`, sprint A11y-3 / A11y-5)
-- No `aria-controls` / `id` linking the trigger to its content yet.
+**Known gaps** (`docs/accessibility-audit.md`, sprint A11y-5)
+- ~~No `aria-controls` / `id` linking the trigger to its content.~~ Fixed
+  21/10 (A11y-3).
 - The trigger isn't wrapped in a heading (h2–h4), as the WAI-ARIA
   accordion pattern recommends.
 

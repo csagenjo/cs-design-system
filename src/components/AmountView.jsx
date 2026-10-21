@@ -30,6 +30,7 @@
  *   <AmountView amount="99,00" currency="USD" isoPlacement="left" amountWeight="bold" />
  */
 
+import { VisuallyHidden } from './VisuallyHidden';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 
@@ -93,6 +94,7 @@ export function AmountView({
   size         = 'sm',        // 'xs' | 'sm' | 'md' | 'lg'  (12/14/16/19)
   isoPlacement = 'right',     // 'right' | 'left'
   amountWeight = 'regular',   // 'regular' | 'bold'
+  negativeLabel = 'negative', // A11y-3: se lee si el importe es negativo y no lleva signo
 }) {
   const className = [
     'ds-amount-view',
@@ -111,6 +113,11 @@ export function AmountView({
     <div className={className} style={typo}>
       <span>{amount}</span>
       {currency != null && <span>{currency}</span>}
+      {/* A11y-3 (1.4.1): el rojo no es la única pista — un importe negativo sin
+          signo se lee "1.250,00 EUR, negative". Con "-" o "−" ya se entiende. */}
+      {type === 'negative' && !/^\s*[-−]/.test(String(amount ?? '')) && (
+        <VisuallyHidden>{`, ${negativeLabel}`}</VisuallyHidden>
+      )}
     </div>
   );
 }

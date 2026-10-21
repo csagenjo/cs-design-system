@@ -7,7 +7,7 @@ import {
   Percent, Coins, Wallet, CreditCard,
   MoreHorizontal, Phone, Lock,
   FileText, Link as LinkIcon,
-  ArrowUpAZ, Loader2,
+  ArrowUpAZ, ArrowDownZA, ArrowUpDown, Loader2,
   CircleX, Info, CircleCheck,
   Menu, LogOut, Share2, Heart,
 } from 'lucide-react';
@@ -54,6 +54,8 @@ export const ICONS = {
   FileText, 'file-text': FileText,
   LinkIcon, 'link': LinkIcon,
   ArrowUpAZ, 'arrow-up-az': ArrowUpAZ,
+  ArrowDownZA, 'arrow-down-za': ArrowDownZA,
+  ArrowUpDown, 'arrow-up-down': ArrowUpDown,
   Loader2, 'loader': Loader2,
   CircleX, 'circle-x': CircleX,
   Info, 'info': Info,

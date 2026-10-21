@@ -23,6 +23,7 @@
  *   <Pagination variant="secondary" currentPage={7} totalPages={20} onPageChange={setPage} />
  */
 
+import { VisuallyHidden } from './VisuallyHidden';
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -193,7 +194,19 @@ export function Pagination({
   disabled    = false,
   maxSlots    = 7,
   siblingCount = 1,   // páginas que salta cada "…" en su dirección
+  ariaLabel   = 'Pagination', // nombre del <nav> — distinto si hay dos en la página
+  labels      = {},
 }) {
+  // A11y-3: textos ocultos en inglés por defecto (decisión 20/10), por prop.
+  const t = {
+    previous: 'Previous page',
+    next: 'Next page',
+    page: (n) => `Page ${n}`,
+    pagePrefix: 'Page ',
+    earlierPages: 'Earlier pages',
+    laterPages: 'Later pages',
+    ...labels,
+  };
   injectStyles();
 
   const go = (page) => {
@@ -213,13 +226,13 @@ export function Pagination({
   const atLast  = disabled || currentPage >= totalPages;
 
   return (
-    <nav className={rootClasses} aria-label="Paginación">
+    <nav className={rootClasses} aria-label={ariaLabel}>
       <button
         type="button"
         className="ds-pgn__item ds-pgn__nav ds-pgn__nav--prev"
         onClick={() => go(currentPage - 1)}
         disabled={atFirst}
-        aria-label="Página anterior"
+        aria-label={t.previous}
       >
         <ChevronLeft width={20} height={20} strokeWidth={1.75} aria-hidden="true" />
       </button>
@@ -241,7 +254,7 @@ export function Pagination({
               className="ds-pgn__item ds-pgn__dots"
               onClick={() => go(target)}
               disabled={disabled}
-              aria-label="Saltar páginas"
+              aria-label={back ? t.earlierPages : t.laterPages}
             >
               …
             </button>
@@ -252,9 +265,9 @@ export function Pagination({
             key={item}
             className="ds-pgn__item ds-pgn__current"
             aria-current="page"
-            aria-label={`Página ${item}`}
           >
-            {item}
+            {/* aria-label en un <span> sin rol no se lee: "Page 3, current page" */}
+            <VisuallyHidden>{t.pagePrefix}</VisuallyHidden>{item}
           </span>
         ) : (
           <button
@@ -263,7 +276,7 @@ export function Pagination({
             className="ds-pgn__item ds-pgn__page"
             onClick={() => go(item)}
             disabled={disabled}
-            aria-label={`Ir a la página ${item}`}
+            aria-label={t.page(item)}
           >
             {item}
           </button>
@@ -275,7 +288,7 @@ export function Pagination({
         className="ds-pgn__item ds-pgn__nav ds-pgn__nav--next"
         onClick={() => go(currentPage + 1)}
         disabled={atLast}
-        aria-label="Página siguiente"
+        aria-label={t.next}
       >
         <ChevronRight width={20} height={20} strokeWidth={1.75} aria-hidden="true" />
       </button>

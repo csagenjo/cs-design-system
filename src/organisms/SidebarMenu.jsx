@@ -68,7 +68,7 @@
  *     onToggleCollapse={() => setCollapsed(c => !c)}
  *   />
  */
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useId, useState, useMemo, useRef } from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Drawer } from '../components/Drawer';
 import { ListView } from '../components/ListView';
@@ -80,7 +80,7 @@ const css = `
 .ds-sidebar-menu__title {
   padding: var(--ds-sidebar-menu-title-padding-top) var(--ds-sidebar-menu-title-padding-horizontal) var(--ds-sidebar-menu-title-padding-bottom);
 }
-.ds-sidebar-menu__tree { display: flex; flex-direction: column; }
+.ds-sidebar-menu__list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
 .ds-sidebar-menu__row  { padding-left: var(--ds-sidebar-menu-indent, 0px); }
 .ds-sidebar-menu__chevron {
   display:    flex;
@@ -109,13 +109,37 @@ function collectAncestors(items, targetId, path = []) {
   return null;
 }
 
+/* A11y-3 (21/10/2026): antes role="tree" sin treeitems ni flechas (audit §C).
+   Ahora es navegación normal — listas anidadas de botones, el patrón que
+   recomienda APG para un menú de sitio: Tab recorre las filas visibles, un
+   Parent con hijos es un botón de mostrar/ocultar (aria-expanded +
+   aria-controls a su lista) y la página abierta lleva aria-current="page". */
+function SidebarMenuList({ items, level, listId, selectedId, expandedIds, onSelect, onToggleExpand }) {
+  return (
+    <ul className="ds-sidebar-menu__list" id={listId}>
+      {items.map((item) => (
+        <SidebarMenuNode
+          key={item.id}
+          item={item}
+          level={level}
+          selectedId={selectedId}
+          expandedIds={expandedIds}
+          onSelect={onSelect}
+          onToggleExpand={onToggleExpand}
+        />
+      ))}
+    </ul>
+  );
+}
+
 function SidebarMenuNode({ item, level, selectedId, expandedIds, onSelect, onToggleExpand }) {
   const hasChildren = !!item.children?.length;
   const isSelected = item.id === selectedId;
   const isExpanded = expandedIds.has(item.id);
+  const childListId = `${useId()}-children`;
 
   return (
-    <>
+    <li>
       <div className="ds-sidebar-menu__row" style={{ '--ds-sidebar-menu-indent': `calc((${level} - 1) * var(--ds-sidebar-menu-indent-step))` }}>
         <ListView
           header={item.label}
@@ -123,6 +147,9 @@ function SidebarMenuNode({ item, level, selectedId, expandedIds, onSelect, onTog
           description={false}
           detail={false}
           selected={isSelected}
+          current="page"
+          aria-expanded={hasChildren ? isExpanded : undefined}
+          aria-controls={hasChildren && isExpanded ? childListId : undefined}
           rightPanelContent={hasChildren ? (
             <span className={`ds-sidebar-menu__chevron ${isExpanded ? 'ds-sidebar-menu__chevron--expanded' : ''}`} aria-hidden="true">
               <Icon name="ChevronDown" size="sm" />
@@ -131,18 +158,18 @@ function SidebarMenuNode({ item, level, selectedId, expandedIds, onSelect, onTog
           onClick={() => (hasChildren ? onToggleExpand(item.id) : onSelect(item.id))}
         />
       </div>
-      {hasChildren && isExpanded && item.children.map((child) => (
-        <SidebarMenuNode
-          key={child.id}
-          item={child}
+      {hasChildren && isExpanded && (
+        <SidebarMenuList
+          items={item.children}
           level={level + 1}
+          listId={childListId}
           selectedId={selectedId}
           expandedIds={expandedIds}
           onSelect={onSelect}
           onToggleExpand={onToggleExpand}
         />
-      ))}
-    </>
+      )}
+    </li>
   );
 }
 
@@ -153,7 +180,9 @@ export function SidebarMenu({
   onSelect,
   collapsed = false,
   onToggleCollapse,
-  collapseOnDismiss = true,   // click fuera / Escape colapsan el menú. TopNavigation lo apaga: dentro de su panel móvil, Escape cierra el panel entero (A11y-1)
+  collapseOnDismiss = true,
+  ariaLabel,                  // nombre del <nav>; por defecto el `title`, o "Menu"
+  toggleLabel = 'Menu',       // nombre del botón de abrir/cerrar del Drawer   // click fuera / Escape colapsan el menú. TopNavigation lo apaga: dentro de su panel móvil, Escape cierra el panel entero (A11y-1)
   id,
   className,
   style,
@@ -195,6 +224,7 @@ export function SidebarMenu({
       dismissable
       collapsed={collapsed}
       onToggleCollapse={onToggleCollapse}
+      iconLabel={toggleLabel}
       icon={<Icon name="Menu" />}
       expandedIcon={<Icon name="ArrowLeft" />}
       style={{ '--ds-drawer-collapsed-size': '56px', '--ds-drawer-expanded-size': '312px', ...style }}
@@ -204,19 +234,16 @@ export function SidebarMenu({
           <Headline level={2} size="xs">{title}</Headline>
         </div>
       )}
-      <div className="ds-sidebar-menu__tree" role="tree">
-        {items.map((item) => (
-          <SidebarMenuNode
-            key={item.id}
-            item={item}
-            level={1}
-            selectedId={selectedId}
-            expandedIds={expandedIds}
-            onSelect={onSelect}
-            onToggleExpand={toggleExpand}
-          />
-        ))}
-      </div>
+      <nav aria-label={ariaLabel ?? title ?? 'Menu'}>
+        <SidebarMenuList
+          items={items}
+          level={1}
+          selectedId={selectedId}
+          expandedIds={expandedIds}
+          onSelect={onSelect}
+          onToggleExpand={toggleExpand}
+        />
+      </nav>
     </Drawer>
   );
 }

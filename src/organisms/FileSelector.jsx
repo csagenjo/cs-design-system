@@ -39,6 +39,11 @@ export function FileSelector({
   onFileNameChange,
   onFileRemove,
   onButtonClick,
+  onFilesDrop,
+  buttonLabel,        // texto del botón de la DropZone (antes no llegaba: siempre "Button")
+  describedBy,
+  removeLabel,
+  nameLabel,
   disabled = false,
   id,
   className,
@@ -47,7 +52,7 @@ export function FileSelector({
 
   return (
     <div id={id} className={classes}>
-      <DropZone disabled={disabled} onButtonClick={onButtonClick} />
+      <DropZone disabled={disabled} onButtonClick={onButtonClick} onFilesDrop={onFilesDrop} buttonLabel={buttonLabel} describedBy={describedBy} />
       {files.map((file) => (
         <ListItem
           key={file.id}
@@ -56,6 +61,8 @@ export function FileSelector({
           errorMessage={file.errorMessage}
           onNameChange={(name) => onFileNameChange?.(file.id, name)}
           onRemove={() => onFileRemove?.(file.id)}
+          removeLabel={removeLabel}
+          nameLabel={nameLabel}
         />
       ))}
     </div>

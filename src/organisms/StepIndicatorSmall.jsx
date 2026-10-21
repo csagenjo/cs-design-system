@@ -22,6 +22,7 @@
 import React from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Node } from '../components/Node';
+import { currentFor, stepStatusText } from '../components/_stepStatus';
 
 const css = `
 .ds-step-indicator-small {
@@ -38,7 +39,10 @@ const css = `
   box-sizing:     border-box;
   outline:        none;
 }
-.ds-step-indicator-small:hover {
+.ds-step-indicator-small--static {
+  cursor: default;
+}
+.ds-step-indicator-small:not(.ds-step-indicator-small--static):hover {
   background: var(--ds-steps-root-bg-hover);
 }
 .ds-step-indicator-small:focus-visible {
@@ -79,25 +83,31 @@ export function StepIndicatorSmall({
   total,
   label = 'Step name',
   selected = false,
+  formatStep = (n, of) => `Step ${n} of ${of}`,
+  statusLabels,
   onClick,
   className,
   style,
 }) {
+  // A11y-3: estado en texto (el Node solo lee "in progress", el "Step 2 of 4"
+  // ya es visible) y aria-current. Sin onClick no es un botón, es un div.
+  const Tag = onClick ? 'button' : 'div';
   return (
-    <button
-      type="button"
-      className={`ds-step-indicator-small ${selected ? 'ds-step-indicator-small--selected' : ''} ${className || ''}`}
+    <Tag
+      type={onClick ? 'button' : undefined}
+      className={`ds-step-indicator-small ${selected ? 'ds-step-indicator-small--selected' : ''} ${onClick ? '' : 'ds-step-indicator-small--static'} ${className || ''}`}
       style={style}
       onClick={onClick}
+      aria-current={currentFor(state, selected)}
     >
-      <Node state={state} number={number} />
+      <Node state={state} number={number} srLabel={step != null && total != null ? stepStatusText(state, statusLabels) : undefined} statusLabels={statusLabels} />
       <span className="ds-step-indicator-small__text">
         {step != null && total != null && (
-          <span className="ds-step-indicator-small__meta">Step {step} of {total}</span>
+          <span className="ds-step-indicator-small__meta">{formatStep(step, total)}</span>
         )}
         <span className="ds-step-indicator-small__label">{label}</span>
       </span>
-    </button>
+    </Tag>
   );
 }
 

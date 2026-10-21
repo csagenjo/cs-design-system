@@ -29,7 +29,9 @@ const SIZE_PX = {
   '3xl': 64,
 };
 
-export function Icon({ name, size = 'sm', strokeWidth = 1.75, className }) {
+// A11y-3: `label` para el raro caso de un icono con significado propio (sin
+// texto al lado) → role="img" + aria-label. Sin label es decorativo.
+export function Icon({ name, size = 'sm', strokeWidth = 1.75, label, className }) {
   const IconComponent = ICONS[name];
   if (!IconComponent) return null;
   return (
@@ -37,7 +39,10 @@ export function Icon({ name, size = 'sm', strokeWidth = 1.75, className }) {
       size={SIZE_PX[size] ?? SIZE_PX.sm}
       strokeWidth={strokeWidth}
       className={className}
-      aria-hidden="true"
+      aria-hidden={label ? undefined : 'true'}
+      role={label ? 'img' : undefined}
+      aria-label={label || undefined}
+      focusable="false"
     />
   );
 }

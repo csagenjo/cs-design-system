@@ -59,6 +59,7 @@ export const SliderKnob = React.forwardRef(function SliderKnob(
     onPointerDown,
     onKeyDown,
     ariaLabel,
+    ariaLabelledBy,
     ariaValueMin,
     ariaValueMax,
     ariaValueNow,
@@ -68,6 +69,7 @@ export const SliderKnob = React.forwardRef(function SliderKnob(
   return (
     <Tooltip
       label={valueText}
+      describe={false}
       placement="top"
       forceVisible={dragging}
       style={{
@@ -81,10 +83,12 @@ export const SliderKnob = React.forwardRef(function SliderKnob(
         ref={ref}
         role="slider"
         tabIndex={disabled ? -1 : 0}
-        aria-label={ariaLabel}
+        aria-label={ariaLabelledBy ? undefined : ariaLabel}
+        aria-labelledby={ariaLabelledBy}
         aria-valuemin={ariaValueMin}
         aria-valuemax={ariaValueMax}
         aria-valuenow={ariaValueNow}
+        aria-valuetext={valueText}
         aria-disabled={disabled || undefined}
         className={['ds-slider__knob', disabled ? 'ds-slider__knob--disabled' : ''].filter(Boolean).join(' ')}
         onPointerDown={disabled ? undefined : onPointerDown}

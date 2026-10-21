@@ -304,6 +304,7 @@ export const Chip = forwardRef(function Chip({
   id,
   name,
   ariaLabel,
+  removeLabel = 'Remove', // A11y-3: "Remove Status: Active" / "Remove Spain"
 }, forwardedRef) {
 
   const generatedId = useId();
@@ -321,6 +322,8 @@ export const Chip = forwardRef(function Chip({
       console.warn('[DS Chip] type="filter" variant="dismissible" necesita `filterLabel`.', { id: chipId });
     }
   }
+
+  const filterText = [filterLabel, value].filter(Boolean).join(': ');
 
   function handleToggle() {
     if (disabled) return;
@@ -359,7 +362,7 @@ export const Chip = forwardRef(function Chip({
         ref={forwardedRef}
         className={`ds-chip-dismissible${disabled ? ' ds-chip-dismissible--disabled' : ''}`}
         role="group"
-        aria-label={ariaLabel || `${filterLabel}: ${value}`}
+        aria-label={ariaLabel || filterText}
       >
         {filterLabel && (
           <span className="ds-chip-dismissible__filter-label" aria-hidden="true">
@@ -374,7 +377,7 @@ export const Chip = forwardRef(function Chip({
         <button
           type="button"
           className="ds-chip-dismissible__remove"
-          aria-label={`Eliminar ${filterLabel}: ${value}`}
+          aria-label={`${removeLabel} ${filterText}`.trim()}
           disabled={disabled}
           onClick={onRemove}
         >
@@ -412,7 +415,7 @@ export const Chip = forwardRef(function Chip({
           <button
             type="button"
             className="ds-chip-input__remove"
-            aria-label={`Eliminar ${label || ''}`}
+            aria-label={`${removeLabel} ${label || ariaLabel || ''}`.trim()}
             disabled={disabled}
             onClick={onRemove}
           >

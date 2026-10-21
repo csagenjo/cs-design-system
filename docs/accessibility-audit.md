@@ -81,7 +81,7 @@ cause, not by component.
 | A11y-0 · Foundations | ✅ 20/10/2026 — shared pieces built and tested; D and the StepNavigator bug fixed. Open criticals 14 → **9** (the five D findings) | 68 ARIA failures, unchanged by design (the helpers are wired into components in A11y-1/3/4); 0 in the pieces touched |
 | Headline `level` / `size` split | ✅ 20/10/2026 (pulled forward from A11y-5) — code + Figma | heading-order fixed (SidebarMenu): 68 → 66 |
 | A11y-1 · Critical blockers | ✅ 21/10/2026 — B, C criticals, DropZone. Open criticals 9 → **0** | 66 → 56 (CountryPicker, CurrencyPicker listbox fixed; the rest belong to A11y-3/4/5) |
-| A11y-3 · State and names | Next | — |
+| A11y-3 · State and names | ✅ 21/10/2026 — E and G, plus SegmentedControl, Tabs and SidebarMenu keyboard patterns (C) | 56 → **0** failures |
 
 **Decisions (20/10/2026, Carol):**
 - **Screen-reader language: English.** Every built-in hidden string ("(opens in new tab)", "Close", "Back", "Remove file"…) is English by default and becomes a prop so an app can translate it. Applied in A11y-5 (K).
@@ -122,6 +122,38 @@ Verified with a keyboard harness (47 checks in Chromium, React StrictMode): Link
 Verified with a keyboard harness (52 checks, Chromium, StrictMode) and pixel diffs of the gallery (Dialog, DialogSimple, ErrorAndEmptyState, TabItem, DropZone identical to before).
 
 **Note for consumers:** a TopNavigation item with a `flydown` is now only a toggle — its own `onClick` no longer runs (its links navigate).
+
+---
+
+### A11y-3 · what changed
+
+| Area | Pieces | Now |
+|---|---|---|
+| Step status (E) | Node, StepHor, StepVer, StepNavigator, SubstepNavigator, StepIndicatorLarge, StepIndicatorSmall | Status read as text: "Step 2, in progress" (`_stepStatus.js`, labels by prop). `aria-current="step"` on the step in progress, `"page"` on the one being viewed. StepIndicatorLarge is an `<ol>`. Chapter rows have `aria-expanded` + `controls`. StepIndicatorSmall without `onClick` is a `div`, not a dead button |
+| Expanded / popup state (E) | Accordion, Collapsible, CollapsibleIconButton, Drawer, SelectorInvoker, AccountSelectorInvoker, InputAmount, InputTelephone, CellMore | `aria-expanded` + `aria-controls` (Accordion content is a named `region`); invokers have `aria-haspopup` + `expanded`; currency / country buttons are `aria-haspopup="listbox"`; CellMore takes `haspopup` |
+| Current item (E) | SidebarMenu, ListView, LinkList, Pagination, PageTitle breadcrumb | `aria-current` (ListView `current` prop, LinkList `item.current`). SidebarMenu is a named `<nav>` of nested lists — no more `role="tree"` — with `aria-expanded`/`aria-controls` on parents. Breadcrumb is an `<ol>`; the back arrow is a button only with `onBack` |
+| Sorting (E) | CellHeader | `aria-sort`; with `onSort` the title is a button and the icon follows the order (A→Z, Z→A, unsorted) |
+| Not by colour only (1.4.1) | AmountView, InlineNotification, BadgeHighlight | Negative amounts without a sign read "negative"; notifications start with their type ("Warning: …"); BadgeHighlight documents that the text must carry the state |
+| ARIA with no effect (G) | BadgeNotification, BadgeHighlight, Pagination, SelectorInvoker, AccountSelectorInvoker, SelectorListItem, AccountSelectorListItem, LoadingSpinner, CellMore | `ariaLabel` read through hidden text; `aria-readonly` on a button → `aria-disabled` + "read only"; masked data reads "hidden"; LoadingSpinner is a real `role="status"` with text; CellMore is a button inside a `cell` wrapper |
+| Missing names (G) | ProgressBar, Slider, SteppedSlider, RangeSlider, SegmentedControl, Tabs | Names from the visible label or `ariaLabel` (dev warning when missing); sliders expose `aria-valuetext` and the value bubble is no longer read twice; RangeSlider knobs sit in a named `group` |
+| Generic names (G) | Button, IconButton, CellMore, ListItem, DescriptionList, Pagination, InputCombobox, Chip, FileSelector, FileUpload | Dev warning for "Button" placeholder text and unnamed icon-only buttons; IconButton keeps its visible label as the name (2.5.3); "Remove id.pdf", "Edit Status", "Earlier / Later pages", "Clear Country", "Remove Spain"; FileSelector forwards `buttonLabel` |
+| Value hidden by the name (G) | Selector, AccountSelector, InputAmount, InputTelephone | Name = label + selected value (`aria-labelledby` label + button); `ariaLabel` is read before the value instead of replacing it; the amount / phone field reads its currency / prefix as description |
+| Not linked (G) | LabelDescription, FileUpload, DropZone | LabelDescription takes ids; FileUpload's label and description describe the upload button |
+| Keyboard patterns (C) | SegmentedControl, Tabs | One Tab stop, arrows / Home / End (`useRovingFocus`), radios select on arrow, tabs activate on arrow and skip disabled ones. `Tabs id` + `<TabPanel tabsId itemId>` link each tab to its panel |
+
+All hidden strings are English by default and can be changed by prop. New
+optional labels: `Icon label` and `CountryFlag label` for the rare icon or
+flag with no text next to it.
+
+Verified with a keyboard and accessibility-tree harness (40 checks in
+Chromium via CDP, StrictMode), the A11y-1 harness (57/57) and pixel diffs of
+all 86 gallery sections in light and dark: no visual change except the
+intended ones (sortable CellHeader icon, new Tabs-with-panel example).
+
+**Notes for consumers:**
+- `RangeSlider` defaults `ariaLabelMin`/`ariaLabelMax` to "Minimum"/"Maximum" (were Spanish) and wants an `ariaLabel` for the pair.
+- `Drawer iconLabel` defaults to "Toggle panel"; `Pagination` hidden labels are English (`labels`, `ariaLabel` props).
+- `Selector ariaLabel` (without a visible label) is now read before the value, not instead of it.
 
 ---
 
@@ -210,7 +242,7 @@ to its trigger even when the user clicked into another field.
 **Fix once:** a shared listbox/option behaviour (roving focus, arrows,
 Home/End, typeahead, `aria-selected`) used by SelectorListItem, Combobox and
 the pickers; a disclosure-navigation pattern for TopNavigation.
-*(A11y-0 ✅ `useListbox` and `useRovingFocus` built. A11y-1 ✅ pickers, Combobox and TopNavigation wired; SegmentedControl, Tabs, Selector radios and SidebarMenu are A11y-3.)*
+*(A11y-0 ✅ `useListbox` and `useRovingFocus` built. A11y-1 ✅ pickers, Combobox and TopNavigation wired. A11y-3 ✅ SegmentedControl, Tabs and SidebarMenu. Selector / AccountSelector radios move to A11y-4 with `RadioGroup`.)*
 
 ## D · `<a>` without `href` (🔴)
 
@@ -225,6 +257,8 @@ no role. Consumers that do this: TopNavigation flydown links, DescriptionList
 there's no `href`. That fixes every consumer at once.
 
 ## E · State not exposed to assistive tech (🟠)
+
+*(✅ A11y-3, 21/10/2026 — every row below; details in "A11y-3 · what changed".)*
 
 | State | Missing on |
 |---|---|
@@ -251,6 +285,8 @@ there's no `href`. That fixes every consumer at once.
   global net in `foundations.css` for every `.ds-*` focus.)*
 
 ## G · Accessible names (🟠)
+
+*(✅ A11y-3, 21/10/2026 — every point below; the "Button" placeholder text gets a dev warning, the real text is the consumer's.)*
 
 - **ARIA that has no effect:** `aria-label` on role-less `<span>`
   (BadgeNotification count, BadgeHighlight, Pagination current page),
@@ -344,7 +380,7 @@ touched, and the Figma + inventory Accessibility sections updated.
 | **A11y-0 · Foundations** ✅ 20/10 | Shared helpers: `VisuallyHidden`, persistent live region, `useModal`, listbox/roving-focus behaviour, global `prefers-reduced-motion`, transparent outline for forced colors. `Link`/`CTALink` button fallback (D). StepNavigator `style` bug. Commit the axe gallery + script as a regression check | Every later fix reuses these; D alone unblocks 4 consumers | Approve adding the gallery to the repo |
 | **A11y-1 · Critical blockers** ✅ 21/10 | B (all modals) · C criticals (SelectorListItem → pickers, Combobox trap + wiring, TopNavigation) · DropZone hover | Removes every "can't complete the task" issue | — |
 | **A11y-2 · Colour** | A1–A17: decide steps in Figma (Theme / Mode), re-export, sync `tokens.css`, re-scan both modes. Includes the open Pagination 2.7:1 debt and the borderColor dark-mode audit | Biggest visual change; done in Figma first | **Yes — brand teal decision** |
-| **A11y-3 · State and names** | E and G | Mostly additive props, low risk | — |
+| **A11y-3 · State and names** ✅ 21/10 | E and G | Mostly additive props, low risk | — |
 | **A11y-4 · Forms and focus** | H and F; `RadioGroup` | Builds on the live region from A11y-0 | Required-field marker style (Figma) |
 | **A11y-5 · Structure, pointer, language** | I, J (rest), K (English defaults as props). ~~Headline `level`/`size` split~~ ✅ done 20/10 | Touches APIs consumers use | ~~Yes~~ decided 20/10: English; Headline split |
 | **Close-out** | Screen-reader pass (VoiceOver + NVDA), 200 % / 400 % zoom, forced colors check; every component's Accessibility section says "no known gaps" | Proves the claim | — |
@@ -357,8 +393,8 @@ Severity: 🔴 Critical · 🟠 Major · 🟡 Minor. Root cause letter in bracke
 Colour issues (A) are in the tables above and not repeated here.
 
 ### Actions
-- **Button** — 🟠 `loading` sets native `disabled`: focus lost, busy state not announced [F] · 🟡 `iconOnly` without `ariaLabel` gives no name and no warning [G] · 🟡 press scale and spinner ignore reduced motion [J]
-- **IconButton** — 🟡 no warning when unnamed [G] · 🟡 `ariaLabel` overrides visible `label` (2.5.3) [G]
+- **Button** — 🟠 `loading` sets native `disabled`: focus lost, busy state not announced [F] · ~~🟡 `iconOnly` without `ariaLabel` gives no name and no warning [G]~~ ✅ · 🟡 press scale and spinner ignore reduced motion [J]
+- **IconButton** — ~~🟡 no warning when unnamed [G]~~ ✅ · ~~🟡 `ariaLabel` overrides visible `label` (2.5.3) [G]~~ ✅
 - **Link** — ~~🔴 `<a>` without `href` isn't focusable [D]~~ ✅ · 🟡 new-tab hint in English [K] · ~~🟡 hint only with `external`, not with `target="_blank"`~~ ✅ · ~~🟡 focus via box-shadow only [F]~~ ✅
 - **CTALink** — ~~🔴 same `href` issue; its own example does it [D]~~ ✅ · 🟡 English hint [K] · ~~🟡 box-shadow focus [F]~~ ✅
 - **ButtonBar** — 🟡 no `role="group"` + label
@@ -366,84 +402,84 @@ Colour issues (A) are in the tables above and not repeated here.
 
 ### Forms
 - **InputText** — 🟠 read-only removes the focus ring [F] · 🟡 error live region [H]
-- **InputAmount** — 🟠 currency button focus barely visible [F] · 🟠 currency not linked to the input [G] · 🟡 no `aria-haspopup`/`aria-expanded` [E] · 🟡 no `required` pass-through [H] · 🟡 error live region [H]
-- **InputCombobox** — 🟡 `aria-autocomplete` should be `both` · 🟡 clear button "Borrar" without context [G] · 🟡 error live region [H] · axe: `aria-controls` missing on `role="combobox"` 🟠 [C]
+- **InputAmount** — 🟠 currency button focus barely visible [F] · ~~🟠 currency not linked to the input [G]~~ ✅ · ~~🟡 no `aria-haspopup`/`aria-expanded` [E]~~ ✅ · 🟡 no `required` pass-through [H] · 🟡 error live region [H]
+- **InputCombobox** — ~~🟡 `aria-autocomplete` should be `both`~~ ✅ · ~~🟡 clear button "Borrar" without context [G]~~ ✅ · 🟡 error live region [H] · axe: `aria-controls` missing on `role="combobox"` 🟠 [C]
 - **InputDate** — 🟡 format only in placeholder [H] · 🟡 error live region [H]
 - **InputDropdown** — 🟡 no `required` [H] · 🟡 error live region [H]
 - **InputStepper** — 🟠 −/+ have `outline:none` [F] · 🟠 reaching min/max disables the focused button [F] · 🟡 `<output htmlFor>` points at the label · 🟡 error live region [H]
-- **InputTelephone** — 🟠 country button focus barely visible [F] · 🟡 no `aria-haspopup`/`aria-expanded` [E] · 🟡 fixed country code not linked · 🟡 no `required` [H] · 🟡 error live region [H]
+- **InputTelephone** — 🟠 country button focus barely visible [F] · ~~🟡 no `aria-haspopup`/`aria-expanded` [E]~~ ✅ · ~~🟡 fixed country code not linked~~ ✅ · 🟡 no `required` [H] · 🟡 error live region [H]
 - **Checkbox** — 🟡 `aria-checked="mixed"` on a native checkbox · 🟡 no visible required marker [H] · 🟡 error live region [H]
 - **Radio** — 🟠 no RadioGroup [H] · 🟡 no required marker · 🟡 error live region
-- **Chip** — 🟡 remove target 20 px [J] · 🟡 remove name "Eliminar " when only `ariaLabel` · 🟡 "undefined" in filter chip names · 🟡 choice chips not grouped
-- **LabelDescription** — 🟠 no ids for label/description [G]
-- **Slider** — 🟠 name only via optional `ariaLabel` [G] · 🟡 no PageUp/PageDown
-- **SteppedSlider** — 🟠 decimal `aria-valuenow` with no `aria-valuetext` · 🟠 naming as Slider [G]
-- **RangeSlider** — 🟠 no track click (2.5.7) [J] · 🟠 knobs "Mínimo/Máximo" without context, no group [G]
-- **_sliderKnob** — 🟡 `aria-valuetext` never set · 🟡 Tooltip repeats the value as description
-- **SegmentedControl** — 🟠 radiogroup unnamed [G] · 🟠 no roving tabindex / arrows [C]
+- **Chip** — 🟡 remove target 20 px [J] · ~~🟡 remove name "Eliminar " when only `ariaLabel`~~ ✅ · ~~🟡 "undefined" in filter chip names~~ ✅ · 🟡 choice chips not grouped
+- **LabelDescription** — ~~🟠 no ids for label/description [G]~~ ✅
+- **Slider** — ~~🟠 name only via optional `ariaLabel` [G]~~ ✅ · 🟡 no PageUp/PageDown
+- **SteppedSlider** — ~~🟠 decimal `aria-valuenow` with no `aria-valuetext`~~ ✅ · ~~🟠 naming as Slider [G]~~ ✅
+- **RangeSlider** — 🟠 no track click (2.5.7) [J] · ~~🟠 knobs "Mínimo/Máximo" without context, no group [G]~~ ✅
+- **_sliderKnob** — ~~🟡 `aria-valuetext` never set~~ ✅ · ~~🟡 Tooltip repeats the value as description~~ ✅
+- **SegmentedControl** — ~~🟠 radiogroup unnamed [G]~~ ✅ · ~~🟠 no roving tabindex / arrows [C]~~ ✅
 - **Combobox** — ~~🔴 Tab keyboard trap [C]~~ ✅ · ~~🔴 no listbox wiring [C]~~ ✅ · ~~🟠 Radio/Checkbox tab stops inside options~~ ✅ · ~~🟠 no results not announced [H]~~ ✅ · ~~🟠 chip remove drops focus [F]~~ ✅ · ~~🟡 listbox unnamed~~ ✅
 - **CountryPicker** — ~~🔴 rows not keyboard-reachable [C]~~ ✅ · ~~🟠 listbox unnamed, no options [C]~~ ✅ · ~~🟠 no focus management [B]~~ ✅
 - **CurrencyPicker** — ~~🔴 rows not keyboard-reachable [C]~~ ✅ · ~~🟠 listbox unnamed, no options [C]~~ ✅ · ~~🟠 no focus management [B]~~ ✅
 
 ### Data
 - **AccordionGroup** — 🟡 no `headingLevel` / ids to pass down [I]
-- **Accordion** — 🟠 no heading wrapper [I] · 🟡 no `aria-controls` / region [E]
-- **Collapsible** — 🟠 no `aria-expanded` / `aria-controls` [E] · 🟡 default "Expand/Collapse" without context [G]
-- **CollapsibleIconButton** — 🟠 no `aria-expanded` [E] · 🟡 tooltip repeats the name
+- **Accordion** — 🟠 no heading wrapper [I] · ~~🟡 no `aria-controls` / region [E]~~ ✅
+- **Collapsible** — ~~🟠 no `aria-expanded` / `aria-controls` [E]~~ ✅ · 🟡 default "Expand/Collapse" without context [G]
+- **CollapsibleIconButton** — ~~🟠 no `aria-expanded` [E]~~ ✅ · ~~🟡 tooltip repeats the name~~ ✅
 - **Table** — 🟡 no name / caption [I]
-- **CellHeader** — 🟠 no `aria-sort`, no sort button, icon always ascending [E]
-- **CellMore** — 🟠 `role="cell"` replaces the button role [G] · 🟠 every trigger named "More" [G] · 🟡 no `aria-haspopup` [E]
-- **DescriptionList** — ~~🔴 Edit is `<Link>` without `href` [D]~~ ✅ · 🟡 `<hr>` inside `<dl>` [I] · 🟡 "Edit" without field name, English [G][K]
+- **CellHeader** — ~~🟠 no `aria-sort`, no sort button, icon always ascending [E]~~ ✅
+- **CellMore** — ~~🟠 `role="cell"` replaces the button role [G]~~ ✅ · ~~🟠 every trigger named "More" [G]~~ ✅ · ~~🟡 no `aria-haspopup` [E]~~ ✅
+- **DescriptionList** — ~~🔴 Edit is `<Link>` without `href` [D]~~ ✅ · ~~🟡 `<hr>` inside `<dl>` [I]~~ ✅ · ~~🟡 "Edit" without field name, English [G][K]~~ ✅
 - **List** — 🟡 add `role="list"` · 🟡 custom number marker hidden
-- **ListItem** — 🟠 remove button without file name [G] · 🟠 uploading not announced [H] · 🟠 error not linked [H] · 🟡 spinner motion [J] · 🟡 hard-coded strings [K]
-- **ListView** — 🟠 selected not exposed [E] · 🟠 controls inside the row button [I] · 🟡 `<p>` / heading inside button
-- **AmountView** — 🟠 positive/negative by colour only [E] · 🟡 disabled visual only
+- **ListItem** — ~~🟠 remove button without file name [G]~~ ✅ · 🟠 uploading not announced [H] · 🟠 error not linked [H] · 🟡 spinner motion [J] · 🟡 hard-coded strings [K]
+- **ListView** — ~~🟠 selected not exposed [E]~~ ✅ · 🟠 controls inside the row button [I] · 🟡 `<p>` / heading inside button
+- **AmountView** — ~~🟠 positive/negative by colour only [E]~~ ✅ · 🟡 disabled visual only
 - **DetailText** — 🟡 meaningful icon always hidden
 - **Text** — 🟠 `color="disabled"` still clickable · 🟡 20 px target
-- **Icon** — 🟡 no `label` option for meaningful icons
+- **Icon** — ~~🟡 no `label` option for meaningful icons~~ ✅
 - **Image** — 🟡 `alt` defaults to `''` · 🟡 caption not `<figcaption>`
-- **CountryFlag** — 🟡 no label option (only country cue in InputTelephone)
+- **CountryFlag** — ~~🟡 no label option (only country cue in InputTelephone)~~ ✅
 
 ### Feedback
-- **Dialog** — ~~🔴 no focus management [B]~~ ✅ · ~~🟠 no Escape [B]~~ ✅ · ~~🟠 background not inert [B]~~ ✅ · 🟠 fixed size breaks reflow [J] · ~~🟡 `aria-label` instead of `aria-labelledby`~~ ✅ · 🟡 "Button" defaults [G]
-- **DialogSimple** — ~~🔴 no focus management [B]~~ ✅ · ~~🟠 no Escape / inert [B]~~ ✅ · 🟠 fixed size [J] · ~~🟡 should be `alertdialog`~~ ✅ · 🟡 "Button" defaults
+- **Dialog** — ~~🔴 no focus management [B]~~ ✅ · ~~🟠 no Escape [B]~~ ✅ · ~~🟠 background not inert [B]~~ ✅ · 🟠 fixed size breaks reflow [J] · ~~🟡 `aria-label` instead of `aria-labelledby`~~ ✅ · ~~🟡 "Button" defaults [G]~~ ✅
+- **DialogSimple** — ~~🔴 no focus management [B]~~ ✅ · ~~🟠 no Escape / inert [B]~~ ✅ · 🟠 fixed size [J] · ~~🟡 should be `alertdialog`~~ ✅ · ~~🟡 "Button" defaults~~ ✅
 - **_dialogBase** — ~~🟡 title is `<p>` [I]~~ ✅ (`h2`) · 🟡 title truncated with ellipsis · ~~🟡 "Volver/Cerrar" not translatable [K]~~ ✅ (`backLabel`/`closeLabel`, English defaults)
-- **Drawer** — 🟡 no `aria-controls` · 🟡 transition ignores reduced motion
+- **Drawer** — ~~🟡 no `aria-controls`~~ ✅ · 🟡 transition ignores reduced motion
 - **PopoverSheet** — ~~🟠 focus always returned to trigger, even after click-outside [B]~~ ✅ · 🟡 panel `outline:none` · 🟡 no `aria-labelledby` option
 - **_popoverDismiss** — ~~🟡 one Escape closes every layer [B]~~ ✅
-- **Tooltip** — 🟠 not hoverable · 🟠 no Escape [J] · 🟡 always in DOM at opacity 0 · 🟡 overwrites existing `aria-describedby` · 🟡 `nowrap`
+- **Tooltip** — 🟠 not hoverable · 🟠 no Escape [J] · 🟡 always in DOM at opacity 0 · ~~🟡 overwrites existing `aria-describedby`~~ ✅ · 🟡 `nowrap`
 - **Snackbar** — 🟡 live region rendered with message [H] · 🟡 no dismiss / pause hook (2.2.1)
-- **InlineNotification** — 🟠 type only by hidden icon [E] · 🟡 `status` for errors [H] · 🟡 "Button" default
-- **LoadingSpinner** — 🟠 `role="status"` on svg is never announced [G] · 🟡 motion · 🟡 "Loading" in English [K]
-- **ProgressBar** — 🟠 no accessible name [G] · 🟡 helper not linked
-- **ErrorAndEmptyState** — ~~🟠 popUp has no dialog role / focus [B]~~ ✅ · 🟠 error not announced [H] · ~~🟡 title `<p>`~~ ✅ · 🟡 close button without `onClose` · ~~🟡 custom icon not hidden~~ ✅ · 🟡 "Button" defaults
-- **BadgeHighlight** — 🟠 `aria-label` on span ignored [G] · 🟡 variant by colour only [E] · 🟡 disabled visual only
-- **BadgeNotification** — 🟠 count read bare, `aria-label` ignored [G]
-- **Selector** — 🟠 `label htmlFor` hides the selected value [G] · 🟡 error live region [H]
-- **SelectorInvoker** — 🟠 no `aria-haspopup`/`aria-expanded` [E] · 🟠 read-only removes focus ring [F] · 🟠 `ariaLabel` hides the value [G] · 🟡 `aria-readonly` on button · 🟡 `<p>` in button · 🟡 count badge without context · 🟡 masked bullets read aloud
-- **SelectorListItem** — ~~🔴 `<div onClick>` row not keyboard-reachable [C]~~ ✅ (as a listbox option) · ~~🟠 selected not exposed~~ ✅ (`aria-selected` as option) · 🟠 radios ungrouped [C] · 🟡 description not linked · 🟡 `aria-disabled` on div · 🟡 custom icon not hidden
-- **AccountSelector** — 🟠 `label htmlFor` hides the value [G] · 🟡 error live region [H]
-- **AccountSelectorInvoker** — 🟠 no popup state [E] · 🟠 read-only removes focus ring [F] · 🟠 `ariaLabel` hides the value [G] · 🟡 `aria-readonly` · 🟡 `<div>` in button · 🟡 count badge · 🟡 masked data read aloud
-- **AccountSelectorListItem** — 🟠 radios ungrouped [C] · 🟠 rows with the same header sound identical [G] · 🟡 `aria-disabled` on div
+- **InlineNotification** — ~~🟠 type only by hidden icon [E]~~ ✅ · 🟡 `status` for errors [H] · ~~🟡 "Button" default~~ ✅
+- **LoadingSpinner** — ~~🟠 `role="status"` on svg is never announced [G]~~ ✅ · 🟡 motion · 🟡 "Loading" in English [K]
+- **ProgressBar** — ~~🟠 no accessible name [G]~~ ✅ · ~~🟡 helper not linked~~ ✅
+- **ErrorAndEmptyState** — ~~🟠 popUp has no dialog role / focus [B]~~ ✅ · 🟠 error not announced [H] · ~~🟡 title `<p>`~~ ✅ · 🟡 close button without `onClose` · ~~🟡 custom icon not hidden~~ ✅ · ~~🟡 "Button" defaults~~ ✅
+- **BadgeHighlight** — ~~🟠 `aria-label` on span ignored [G]~~ ✅ · ~~🟡 variant by colour only [E]~~ ✅ · 🟡 disabled visual only
+- **BadgeNotification** — ~~🟠 count read bare, `aria-label` ignored [G]~~ ✅
+- **Selector** — ~~🟠 `label htmlFor` hides the selected value [G]~~ ✅ · 🟡 error live region [H]
+- **SelectorInvoker** — ~~🟠 no `aria-haspopup`/`aria-expanded` [E]~~ ✅ · 🟠 read-only removes focus ring [F] · ~~🟠 `ariaLabel` hides the value [G]~~ ✅ · ~~🟡 `aria-readonly` on button~~ ✅ · 🟡 `<p>` in button · ~~🟡 count badge without context~~ ✅ · ~~🟡 masked bullets read aloud~~ ✅
+- **SelectorListItem** — ~~🔴 `<div onClick>` row not keyboard-reachable [C]~~ ✅ (as a listbox option) · ~~🟠 selected not exposed~~ ✅ (`aria-selected` as option) · 🟠 radios ungrouped [C] · 🟡 description not linked · ~~🟡 `aria-disabled` on div~~ ✅ · 🟡 custom icon not hidden
+- **AccountSelector** — ~~🟠 `label htmlFor` hides the value [G]~~ ✅ · 🟡 error live region [H]
+- **AccountSelectorInvoker** — ~~🟠 no popup state [E]~~ ✅ · 🟠 read-only removes focus ring [F] · ~~🟠 `ariaLabel` hides the value [G]~~ ✅ · ~~🟡 `aria-readonly`~~ ✅ · 🟡 `<div>` in button · ~~🟡 count badge~~ ✅ · ~~🟡 masked data read aloud~~ ✅
+- **AccountSelectorListItem** — 🟠 radios ungrouped [C] · ~~🟠 rows with the same header sound identical [G]~~ ✅ · ~~🟡 `aria-disabled` on div~~ ✅
 
 ### Navigation
-- **Pagination** — 🟠 current page re-mounts as span, focus lost [F] · 🟠 prev/next disabled at the ends, focus lost [F] · 🟡 `aria-label` on span · 🟡 both ellipses "Saltar páginas" · ~~🟡 box-shadow focus~~ ✅ · axe: two `nav` landmarks with the same label 🟡
+- **Pagination** — 🟠 current page re-mounts as span, focus lost [F] · 🟠 prev/next disabled at the ends, focus lost [F] · ~~🟡 `aria-label` on span~~ ✅ · ~~🟡 both ellipses "Saltar páginas"~~ ✅ · ~~🟡 box-shadow focus~~ ✅ · ~~axe: two `nav` landmarks with the same label 🟡~~ ✅
 - **TabItem** — ~~🟠 doesn't forward props [C]~~ ✅ · 🟡 `role="tab"` outside a tablist
-- **Tabs** — 🟠 no roving tabindex / arrows [C] · 🟠 no tab ↔ panel link [C] · 🟡 tablist unnamed
+- **Tabs** — ~~🟠 no roving tabindex / arrows [C]~~ ✅ · ~~🟠 no tab ↔ panel link [C]~~ ✅ · ~~🟡 tablist unnamed~~ ✅
 - **TopNavigation** — ~~🔴 flydown hover-only [C]~~ ✅ · ~~🔴 flydown links without `href` [D]~~ ✅ · ~~🟠 nav built as tablist~~ ✅ · ~~🟠 no Escape~~ ✅ · ~~🟠 menu button no `aria-expanded` [E]~~ ✅ · ~~🟠 mobile panel not a modal [B]~~ ✅ · ~~🟡 flydown after all items in DOM~~ ✅ · 🟡 group titles not headings · ~~🟡 `nav` unnamed~~ ✅
-- **SidebarMenu** — 🟠 `role="tree"` misuse [C] · 🟠 parents no `aria-expanded` [E] · 🟠 selected no `aria-current` [E] · 🟡 no `nav` landmark · ~~axe: heading order (`h6`) [I]~~ ✅
-- **StepNavigator** — 🟠 chapter no `aria-expanded` [E] · 🟠 selected by colour only [E] · 🟠 status not in text [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
-- **SubstepNavigator** — 🟠 active/completed by colour only [E] · 🟠 selected by colour only [E] · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
-- **StepIndicatorLarge** — 🟠 not a list, no current step [I][E]
-- **StepIndicatorSmall** — 🟠 selected by colour only [E] · 🟠 status not in text [E] · 🟡 "Step X of Y" English [K] · 🟡 button without `onClick` · ~~🟡 box-shadow focus~~ ✅
-- **StepHor** — 🟠 status only visual, no `aria-current` [E]
-- **Node** — 🟠 completed shows a hidden check icon: number and status lost [E] · 🟡 active vs incomplete by fill only
-- **LinkList** — 🟡 always a `nav` landmark, may be unnamed · 🟡 fixed `h2` · 🟡 no `aria-current` · see A17
+- **SidebarMenu** — ~~🟠 `role="tree"` misuse [C]~~ ✅ · ~~🟠 parents no `aria-expanded` [E]~~ ✅ · ~~🟠 selected no `aria-current` [E]~~ ✅ · ~~🟡 no `nav` landmark~~ ✅ · ~~axe: heading order (`h6`) [I]~~ ✅
+- **StepNavigator** — ~~🟠 chapter no `aria-expanded` [E]~~ ✅ · ~~🟠 selected by colour only [E]~~ ✅ · ~~🟠 status not in text [E]~~ ✅ · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
+- **SubstepNavigator** — ~~🟠 active/completed by colour only [E]~~ ✅ · ~~🟠 selected by colour only [E]~~ ✅ · ~~🟡 box-shadow focus~~ ✅ · ~~bug: `style` prop crash~~ ✅
+- **StepIndicatorLarge** — ~~🟠 not a list, no current step [I][E]~~ ✅
+- **StepIndicatorSmall** — ~~🟠 selected by colour only [E]~~ ✅ · ~~🟠 status not in text [E]~~ ✅ · ~~🟡 "Step X of Y" English [K]~~ ✅ · ~~🟡 button without `onClick`~~ ✅ · ~~🟡 box-shadow focus~~ ✅
+- **StepHor** — ~~🟠 status only visual, no `aria-current` [E]~~ ✅
+- **Node** — ~~🟠 completed shows a hidden check icon: number and status lost [E]~~ ✅ · ~~🟡 active vs incomplete by fill only~~ ✅
+- **LinkList** — 🟡 always a `nav` landmark, may be unnamed · 🟡 fixed `h2` · ~~🟡 no `aria-current`~~ ✅ · see A17
 
 ### Page structure
-- **PageTitle** — ~~🔴 breadcrumb and nav links without `href` [D]~~ ✅ · 🟠 "Volver" button does nothing · 🟡 breadcrumb not `ol`, no `aria-current` · 🟡 icon-only buttons may be unnamed
+- **PageTitle** — ~~🔴 breadcrumb and nav links without `href` [D]~~ ✅ · ~~🟠 "Volver" button does nothing~~ ✅ · ~~🟡 breadcrumb not `ol`, no `aria-current`~~ ✅ · 🟡 icon-only buttons may be unnamed
 - **Headline** — ~~🟠 level tied to visual size [I]~~ ✅
 - **SectionHeader** — 🟠 hard-coded `aria-level={2}` on div [I]
-- **DropZone** — ~~🔴 hover disables the button [J]~~ ✅ · 🟠 "Button" default name [G] · ~~🟡 instructions not linked~~ ✅
-- **FileSelector** — 🟠 `buttonLabel` not forwarded ("Button") [G] · 🟠 add/remove not announced [H] · 🟡 focus lost on remove [F] · 🟡 rows not a list
-- **FileUpload** — 🟠 label/description not linked to the control [G] · 🟠 compact layout button text "Button" [G]
+- **DropZone** — ~~🔴 hover disables the button [J]~~ ✅ · ~~🟠 "Button" default name [G]~~ ✅ · ~~🟡 instructions not linked~~ ✅
+- **FileSelector** — ~~🟠 `buttonLabel` not forwarded ("Button") [G]~~ ✅ · 🟠 add/remove not announced [H] · 🟡 focus lost on remove [F] · 🟡 rows not a list
+- **FileUpload** — ~~🟠 label/description not linked to the control [G]~~ ✅ · ~~🟠 compact layout button text "Button" [G]~~ ✅

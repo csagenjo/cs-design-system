@@ -30,8 +30,11 @@ const css = `
 
 injectStyles('ds-divider', css);
 
-export function Divider({ className }) {
+// `decorative`: la línea es solo visual (la estructura ya agrupa el contenido,
+// p. ej. entre items de una <dl>) → oculta al lector. A11y-3.
+export function Divider({ decorative = false, className }) {
   const classes = ['ds-divider', className || ''].filter(Boolean).join(' ');
+  if (decorative) return <hr className={classes} aria-hidden="true" />;
   return <hr className={classes} role="separator" aria-orientation="horizontal" />;
 }
 

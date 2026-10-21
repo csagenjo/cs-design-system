@@ -1,3 +1,4 @@
+import { VisuallyHidden } from './VisuallyHidden';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 
@@ -76,9 +77,17 @@ export function BadgeHighlight({
   ].join(' ');
 
   return (
-    <span className={className} aria-label={ariaLabel}>
+    // A11y-3: aria-label en un <span> sin rol no se lee — `ariaLabel` sustituye
+    // al texto visible para el lector. El color refuerza, no informa: el texto
+    // (`label` o `ariaLabel`) tiene que decir el estado ("Paid", "Overdue").
+    <span className={className}>
       {icon && <span className="ds-badge-highlight__icon" aria-hidden="true">{icon}</span>}
-      {label}
+      {ariaLabel ? (
+        <>
+          <span aria-hidden="true">{label}</span>
+          <VisuallyHidden>{ariaLabel}</VisuallyHidden>
+        </>
+      ) : label}
     </span>
   );
 }

@@ -30,6 +30,7 @@
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
+import { warnOnce } from './_devWarn';
 import { Icon } from './Icon';
 
 const ICON_SIZE_BY_BUTTON_SIZE = { small: '2xs', medium: 'xs', large: 'sm' };
@@ -193,6 +194,20 @@ export function IconButton({
     className || '',
   ].filter(Boolean).join(' ');
 
+  // A11y-3: con `label` visible, ese texto ES el nombre (WCAG 2.5.3: quien
+  // dice "pulsa Editar" tiene que poder usarlo). `ariaLabel` solo se usa si
+  // contiene el texto visible ("Editar dirección"); si no, se ignora y se avisa.
+  // Sin label ni ariaLabel, el botón no tiene nombre: aviso en desarrollo.
+  const explicit = ariaLabel ?? rest['aria-label'];
+  let name = explicit;
+  if (label && explicit && !String(explicit).toLowerCase().includes(String(label).toLowerCase())) {
+    warnOnce(`IconButton.label.${label}`, `[DS IconButton] \`ariaLabel\` ("${explicit}") no contiene el texto visible ("${label}"); se usa el texto visible.`);
+    name = undefined;
+  }
+  if (!label && !explicit && !rest['aria-labelledby']) {
+    warnOnce('IconButton.unnamed', '[DS IconButton] Sin `label` ni `ariaLabel`: el botón no tiene nombre para el lector de pantalla.');
+  }
+
   return (
     <button
       {...rest}
@@ -201,7 +216,7 @@ export function IconButton({
       className={classes}
       onClick={onClick}
       disabled={disabled}
-      aria-label={ariaLabel ?? rest['aria-label']}
+      aria-label={name}
     >
       <span className="ds-icon-btn__circle">
         <Icon name={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />

@@ -61,6 +61,8 @@ export const Selector = forwardRef(function Selector({
   selectedCount,
   onClick,
   fullWidth       = false,
+  expanded,
+  haspopup,
   id,
   name,
 }, forwardedRef) {
@@ -68,6 +70,10 @@ export const Selector = forwardRef(function Selector({
   const generatedId = useId();
   const invokerId    = id || generatedId;
 
+  // A11y-3: con <label htmlFor> el nombre del botón era SOLO la etiqueta y el
+  // valor elegido no se leía. aria-labelledby = etiqueta + el propio botón →
+  // "Cuenta de cargo, Cuenta nómina, ES12…".
+  const labelId   = label ? `${invokerId}-label` : null;
   const helperId  = helperText ? `${invokerId}-helper` : null;
   const messageId = state === 'error' && errorMessage ? `${invokerId}-msg` : null;
 
@@ -84,7 +90,7 @@ export const Selector = forwardRef(function Selector({
   return (
     <div className={wrapperClass}>
       {label && (
-        <label className="ds-selector__label" htmlFor={invokerId}>
+        <label className="ds-selector__label" htmlFor={invokerId} id={labelId}>
           {label}
         </label>
       )}
@@ -108,6 +114,9 @@ export const Selector = forwardRef(function Selector({
         onClick={onClick}
         fullWidth={fullWidth}
         ariaLabel={!label ? ariaLabel : undefined}
+        aria-labelledby={labelId ? `${labelId} ${invokerId}` : undefined}
+        expanded={expanded}
+        haspopup={haspopup}
         aria-describedby={[helperId, messageId].filter(Boolean).join(' ') || undefined}
         aria-invalid={state === 'error' ? 'true' : undefined}
       />

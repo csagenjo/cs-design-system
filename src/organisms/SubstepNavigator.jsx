@@ -28,6 +28,8 @@
 import React from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Icon } from '../components/Icon';
+import { VisuallyHidden } from '../components/VisuallyHidden';
+import { currentFor, stepStatusText } from '../components/_stepStatus';
 import { resolveAppearance } from './_stepAppearance';
 
 const css = `
@@ -113,6 +115,7 @@ export function SubstepNavigator({
   appearance,
   label = 'Step name',
   selected = false,
+  statusLabels,
   onClick,
   className,
   style,
@@ -124,6 +127,7 @@ export function SubstepNavigator({
       className={`ds-substep-navigator ds-substep-navigator--${state} ${styleAxis === 'onPage' ? 'ds-substep-navigator--on-page' : ''} ${selected ? 'ds-substep-navigator--selected' : ''} ${className || ''}`}
       style={inlineStyle}
       onClick={onClick}
+      aria-current={currentFor(state, selected)}
     >
       <span className="ds-substep-navigator__line-col">
         <span className="ds-substep-navigator__line" aria-hidden="true" />
@@ -132,6 +136,7 @@ export function SubstepNavigator({
         <Icon name={STATE_ICON[state] ?? STATE_ICON.incomplete} size="xs" />
       </span>
       <span className="ds-substep-navigator__label">{label}</span>
+      <VisuallyHidden>, {stepStatusText(state, statusLabels)}</VisuallyHidden>
     </button>
   );
 }

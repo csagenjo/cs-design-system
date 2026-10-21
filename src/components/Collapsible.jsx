@@ -21,6 +21,11 @@
  *   <Collapsible expanded={open} onToggle={() => setOpen(!open)} />
  *   <Collapsible variant="secondary" size="sm" expanded={open} onToggle={fn} />
  *   <Collapsible labels={{ expand: 'Ver más', collapse: 'Ver menos' }} expanded={open} onToggle={fn} />
+ *   <Collapsible expanded={open} onToggle={fn} controls="movimientos" />
+ *
+ * A11y-3 (21/10/2026): `aria-expanded` en el botón; `controls` = id del
+ * contenido que abre/cierra (→ `aria-controls`). Para dar contexto ("Ver más
+ * movimientos"), usar `labels` con el texto completo.
  */
 
 import React from 'react';
@@ -46,6 +51,7 @@ export function Collapsible({
   expanded = false,
   onToggle,
   labels   = { expand: 'Expand', collapse: 'Collapse' },
+  controls,
   id,
   className,
 }) {
@@ -62,6 +68,8 @@ export function Collapsible({
         outline
         size={size}
         iconRight={expanded ? 'chevron-up' : 'chevron-down'}
+        aria-expanded={expanded}
+        aria-controls={expanded ? controls : undefined}
         onClick={onToggle}
       >
         {expanded ? labels.collapse : labels.expand}

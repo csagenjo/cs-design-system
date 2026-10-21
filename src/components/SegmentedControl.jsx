@@ -27,6 +27,8 @@
  *   <SegmentedControl segments={['A', 'B']} selectedIndex={0} onChange={fn} size="large" />
  */
 
+import { useRovingFocus } from './_rovingFocus';
+import { warnOnce } from './_devWarn';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 
@@ -100,13 +102,25 @@ export function SegmentedControl({
   selectedIndex = 0,
   onChange,
   size = 'small', // 'small' | 'medium' | 'large'
+  ariaLabel,      // nombre del grupo ("View") — A11y-3
+  ariaLabelledBy,
   id,
   className,
 }) {
   const classes = ['ds-segmented-control', className || ''].filter(Boolean).join(' ');
 
+  // A11y-3: patrón radiogroup de APG — una sola parada de Tab (el segmento
+  // elegido) y las flechas mueven Y eligen. Antes cada segmento era una parada
+  // de Tab y no había flechas.
+  const { getItemProps } = useRovingFocus({
+    count: segments.length,
+    activeIndex: selectedIndex,
+    onActiveIndexChange: (i) => onChange && onChange(i),
+  });
+  if (!ariaLabel && !ariaLabelledBy) warnOnce('SegmentedControl.unnamed', '[DS SegmentedControl] Necesita `ariaLabel` o `ariaLabelledBy` para nombrar el grupo.');
+
   return (
-    <div id={id} className={classes} role="radiogroup">
+    <div id={id} className={classes} role="radiogroup" aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
       {segments.map((label, i) => (
         <button
           key={i}
@@ -115,6 +129,7 @@ export function SegmentedControl({
           aria-checked={i === selectedIndex}
           className={`ds-segmented-control__segment ds-segmented-control__segment--${size}`}
           onClick={() => onChange && onChange(i)}
+          {...getItemProps(i)}
         >
           {label}
         </button>

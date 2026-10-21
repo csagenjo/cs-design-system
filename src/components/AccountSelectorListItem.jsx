@@ -154,7 +154,6 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
       ref={forwardedRef}
       id={id}
       className={rootClasses}
-      aria-disabled={isDisabled || undefined}
       onClick={handleRowClick}
     >
       <span className="ds-account-selector-list-item__icon-left">
@@ -180,7 +179,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
           <SelectionControl
             checked={selected}
             state={isDisabled ? 'disabled' : 'default'}
-            ariaLabel={headerText}
+            ariaLabel={[headerText, isDataHidden ? null : detailText].filter((t) => typeof t === 'string' && t).join(', ')} /* A11y-3: filas con el mismo título se distinguen por el detalle */
             onChange={() => {}}
           />
         </span>

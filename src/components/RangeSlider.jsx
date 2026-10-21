@@ -19,6 +19,7 @@
  *   <RangeSlider value={[20, 70]} onChange={setRange} ariaLabelMin="Mínimo" ariaLabelMax="Máximo" />
  */
 
+import { warnOnce } from './_devWarn';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { SliderKnob } from './_sliderKnob';
@@ -91,12 +92,14 @@ export function RangeSlider({
   disabled = false,
   variant = 'primary', // 'primary' | 'secondary'
   formatValue = (v) => `${v}%`,
-  ariaLabelMin = 'Mínimo',
-  ariaLabelMax = 'Máximo',
+  ariaLabel,                // nombre del par ("Price") → role="group" (A11y-3)
+  ariaLabelMin = 'Minimum',
+  ariaLabelMax = 'Maximum',
   id,
   className,
 }) {
   const [lo, hi] = value;
+  if (!ariaLabel) warnOnce('RangeSlider.unnamed', '[DS RangeSlider] Necesita `ariaLabel` (p. ej. "Price"): los knobs "Minimum"/"Maximum" no dicen de qué.');
   const trackRef = React.useRef(null);
   const loKnobRef = React.useRef(null);
   const hiKnobRef = React.useRef(null);
@@ -161,7 +164,9 @@ export function RangeSlider({
   ].filter(Boolean).join(' ');
 
   return (
-    <div id={id} className={classes}>
+    // A11y-3: los dos knobs van en un grupo con nombre — "Price, group,
+    // Minimum, 20%" en vez de un "Minimum" suelto sin saber de qué.
+    <div id={id} className={classes} role="group" aria-label={ariaLabel}>
       <div
         className="ds-range-slider__track-wrapper"
         ref={trackRef}

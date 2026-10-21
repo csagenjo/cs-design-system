@@ -130,6 +130,8 @@ export function ListItem({
   onNameChange,
   onRemove,
   errorMessage = 'Validation or counter here',
+  nameLabel = 'File name',
+  removeLabel = (name) => `Remove ${name || 'file'}`, // A11y-3: con el nombre del fichero
   id,
   className,
 }) {
@@ -155,13 +157,13 @@ export function ListItem({
           value={documentName}
           onChange={(e) => onNameChange?.(e.target.value)}
           disabled={status === 'uploading'}
-          aria-label="Nombre del documento"
+          aria-label={nameLabel}
         />
         <button
           type="button"
           className="ds-list-item__close"
           onClick={onRemove}
-          aria-label="Eliminar fichero"
+          aria-label={removeLabel(documentName)}
         >
           <Icon name="x" size="sm" />
         </button>

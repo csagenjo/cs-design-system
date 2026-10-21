@@ -140,6 +140,11 @@ export function Accordion({
   id,
   className,
 }) {
+  // A11y-3: el botón apunta a su panel (aria-controls) y el panel es una
+  // región con el nombre del título.
+  const baseId = React.useId();
+  const triggerId = `${baseId}-trigger`;
+  const panelId = `${baseId}-panel`;
   const classes = ['ds-accordion', isLast ? 'ds-accordion--last' : '', className || '']
     .filter(Boolean)
     .join(' ');
@@ -149,7 +154,9 @@ export function Accordion({
       <button
         type="button"
         className="ds-accordion__trigger"
+        id={triggerId}
         aria-expanded={expanded}
+        aria-controls={expanded ? panelId : undefined}
         onClick={() => onToggle && onToggle()}
       >
         {title}
@@ -161,7 +168,7 @@ export function Accordion({
         />
       </button>
       {expanded && (
-        <div className="ds-accordion__content">
+        <div className="ds-accordion__content" id={panelId} role="region" aria-labelledby={triggerId}>
           <div className="ds-accordion__content-inner">{children}</div>
         </div>
       )}

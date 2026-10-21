@@ -29,6 +29,7 @@
  *   </DescriptionList>
  */
 
+import { VisuallyHidden } from '../components/VisuallyHidden';
 import React from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Divider } from '../components/Divider';
@@ -85,6 +86,7 @@ export function DescriptionListItem({
   emptyText,
   showEdit = false,
   onEdit,
+  editLabel = 'Edit',
   children,
 }) {
   const isEmpty = (children == null || children === '') && emptyText != null;
@@ -106,7 +108,11 @@ export function DescriptionListItem({
         {isEmpty ? emptyText : children}
         {showEdit && (
           <div className="ds-dl-item__edit">
-            <Link rightIcon={false} onClick={onEdit}>Edit</Link>
+            {/* A11y-3: "Edit" a secas en cada fila no dice qué — se lee "Edit Estado". */}
+            <Link rightIcon={false} onClick={onEdit}>
+              {editLabel}
+              {typeof label === 'string' && <VisuallyHidden>{` ${label}`}</VisuallyHidden>}
+            </Link>
           </div>
         )}
       </dd>
@@ -137,7 +143,8 @@ export function DescriptionList({
       {items.map((child, i) => (
         <React.Fragment key={i}>
           {child}
-          {i < items.length - 1 && <Divider />}
+          {/* decorativo: dentro de <dl> solo valen dt/dd; los pares ya agrupan */}
+          {i < items.length - 1 && <Divider decorative />}
         </React.Fragment>
       ))}
     </dl>

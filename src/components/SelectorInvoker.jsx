@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { VisuallyHidden } from './VisuallyHidden';
 import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { BadgeNotification } from './BadgeNotification';
@@ -148,6 +149,11 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
   onBlur,
   id,
   ariaLabel,
+  expanded,                     // estado del panel que abre (aria-expanded)
+  haspopup       = 'dialog',    // qué abre: 'dialog' | 'listbox' | 'menu'…
+  readOnlyLabel  = 'read only',
+  hiddenLabel    = 'hidden',
+  selectedCountLabel = (n) => `${n} selected`,
   fullWidth      = false,
   ...nativeProps
 }, forwardedRef) {
@@ -164,7 +170,11 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
     fullWidth   ? 'ds-selector-invoker--full-width' : '',
   ].filter(Boolean).join(' ');
 
-  const mask = (text) => (isDataHidden ? '••••••••' : text);
+  // A11y-3: los puntos de dato oculto no se leen ("bullet bullet…"); se dice
+  // "hidden".
+  const mask = (text) => (isDataHidden
+    ? <><span aria-hidden="true">••••••••</span><VisuallyHidden>{hiddenLabel}</VisuallyHidden></>
+    : text);
 
   return (
     <button
@@ -173,13 +183,17 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
       id={id}
       className={rootClasses}
       disabled={isDisabled}
-      aria-label={ariaLabel}
-      aria-readonly={isReadOnly || undefined}
+      aria-haspopup={haspopup}
+      aria-expanded={expanded}
+      aria-disabled={isReadOnly || undefined}
       onClick={isReadOnly ? undefined : onClick}
       onFocus={onFocus}
       onBlur={onBlur}
       {...nativeProps}
     >
+      {/* A11y-3: `ariaLabel` ya no sustituye al nombre (ocultaba el valor
+          elegido) — se lee delante: "Cuenta de cargo, Cuenta nómina…". */}
+      {ariaLabel && <VisuallyHidden>{`${ariaLabel}, `}</VisuallyHidden>}
       {showIconLeft && (
         <span className="ds-selector-invoker__icon-left">
           <Icon name="file-text" size="xs" />
@@ -205,11 +219,12 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
 
         <span className="ds-selector-invoker__right">
           {dataSelection === 'multiple' && selectedCount != null && (
-            <BadgeNotification color="secondary" size="expanded" label={selectedCount} />
+            <BadgeNotification color="secondary" size="expanded" label={selectedCount} ariaLabel={selectedCountLabel(selectedCount)} />
           )}
           <Icon name="chevron-right" size="xs" />
         </span>
       </span>
+      {isReadOnly && <VisuallyHidden>{`, ${readOnlyLabel}`}</VisuallyHidden>}
     </button>
   );
 });

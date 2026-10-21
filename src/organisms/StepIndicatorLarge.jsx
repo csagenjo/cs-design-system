@@ -36,6 +36,9 @@ const css = `
   display:     flex;
   align-items: flex-start;
   width:       100%;
+  margin:      0;
+  padding:     0;
+  list-style:  none;
 }
 .ds-step-indicator-large__step {
   flex: 1 1 auto;
@@ -45,25 +48,29 @@ const css = `
 
 injectStyles('ds-step-indicator-large', css);
 
-export function StepIndicatorLarge({ steps = [], className, style }) {
+export function StepIndicatorLarge({ steps = [], ariaLabel = 'Progress', stepLabel, statusLabels, className, style }) {
   if (process.env.NODE_ENV !== 'production' && steps.length > 7) {
     console.warn('[DS StepIndicatorLarge] Más de 7 pasos puede no caber en pantallas estrechas — se recomiendan hasta 7, se recibieron ' + steps.length + '.');
   }
 
+  // A11y-3: lista ordenada (el lector anuncia "lista, 4 elementos") y el paso
+  // en curso lleva aria-current="step". Cada Node lee "Step 2, in progress".
   return (
-    <div className={`ds-step-indicator-large ${className || ''}`} style={style}>
+    <ol className={`ds-step-indicator-large ${className || ''}`} style={style} aria-label={ariaLabel}>
       {steps.map((step, i) => (
-        <div className="ds-step-indicator-large__step" key={step.id ?? i}>
+        <li className="ds-step-indicator-large__step" key={step.id ?? i} aria-current={step.state === 'active' ? 'step' : undefined}>
           <StepHor
             state={step.state}
             number={step.number ?? String(i + 1)}
             label={step.label}
+            stepLabel={stepLabel}
+            statusLabels={statusLabels}
             showLeftConnector={i !== 0}
             showRightConnector={i !== steps.length - 1}
           />
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 

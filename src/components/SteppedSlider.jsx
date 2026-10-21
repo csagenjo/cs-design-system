@@ -26,6 +26,7 @@
  *   <SteppedSlider value={value} steps={5} onChange={setValue} ariaLabel="Nivel" />
  */
 
+import { warnOnce } from './_devWarn';
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { SliderKnob } from './_sliderKnob';
@@ -131,9 +132,13 @@ export function SteppedSlider({
   variant = 'primary', // 'primary' | 'secondary'
   formatValue = (v) => `${Math.round(v)}%`, // steps no siempre divide min-max en enteros exactos (p.ej. steps=4 → 33.33/66.66) — se redondea solo la burbuja, el snapping interno sigue con el valor real
   ariaLabel,
+  ariaLabelledBy,
   id,
   className,
 }) {
+  // A11y-3: el control necesita nombre ("Volume"); la burbuja con el valor ya
+  // se lee como aria-valuetext, no como descripción repetida.
+  if (!ariaLabel && !ariaLabelledBy) warnOnce('SteppedSlider.unnamed', '[DS SteppedSlider] Necesita `ariaLabel` o `ariaLabelledBy`: sin ellos el control no tiene nombre.');
   const trackRef = React.useRef(null);
   const knobRef = React.useRef(null);
   const [dragging, setDragging] = React.useState(false);
@@ -241,6 +246,7 @@ export function SteppedSlider({
           onPointerDown={handlePointerDown}
           onKeyDown={handleKeyDown}
           ariaLabel={ariaLabel}
+          ariaLabelledBy={ariaLabelledBy}
           ariaValueMin={min}
           ariaValueMax={max}
           ariaValueNow={value}

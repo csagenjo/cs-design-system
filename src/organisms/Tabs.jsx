@@ -21,7 +21,9 @@
  *     items={manyItems} selectedId={id} onChange={fn} />
  */
 
-import React from 'react';
+import { useRovingFocus } from '../components/_rovingFocus';
+import { warnOnce } from '../components/_devWarn';
+import React, { useId } from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { TabItem } from '../components/TabItem';
 
@@ -54,6 +56,10 @@ const css = `
 
 injectStyles('ds-tabs', css);
 
+const safe = (v) => String(v).replace(/\s+/g, '-');
+const tabDomId = (tabsId, itemId) => `${tabsId}-tab-${safe(itemId)}`;
+const panelDomId = (tabsId, itemId) => `${tabsId}-panel-${safe(itemId)}`;
+
 export function Tabs({
   items = [],
   selectedId,
@@ -61,6 +67,8 @@ export function Tabs({
   size = 'm',          // 's' | 'm' | 'l'
   type = 'fixed',      // 'fixed' | 'scrollable'
   variant = 'line',    // 'line' | 'contained'
+  ariaLabel,           // nombre del tablist — A11y-3
+  ariaLabelledBy,
   id,
   className,
 }) {
@@ -71,20 +79,56 @@ export function Tabs({
     className || '',
   ].filter(Boolean).join(' ');
 
+  // A11y-3: patrón tabs de APG con activación automática — una parada de Tab
+  // (la pestaña elegida), flechas / Inicio / Fin cambian de pestaña. Con `id`,
+  // cada pestaña apunta a su panel (aria-controls) y <TabPanel tabsId itemId>
+  // pone el rol, el nombre y los ids que casan.
+  const generatedId = useId();
+  const baseId = id || generatedId;
+  const selectedIndex = items.findIndex((item) => item.id === selectedId);
+  const { getItemProps } = useRovingFocus({
+    count: items.length,
+    activeIndex: selectedIndex < 0 ? 0 : selectedIndex,
+    onActiveIndexChange: (i) => onChange?.(items[i].id),
+    isItemDisabled: (i) => !!items[i]?.disabled,
+  });
+  if (!ariaLabel && !ariaLabelledBy) warnOnce('Tabs.unnamed', '[DS Tabs] Necesita `ariaLabel` o `ariaLabelledBy` para nombrar las pestañas.');
+
   return (
-    <div id={id} className={classes} role="tablist">
-      {items.map((item) => (
+    <div id={id} className={classes} role="tablist" aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
+      {items.map((item, i) => (
         <TabItem
           key={item.id}
+          id={tabDomId(baseId, item.id)}
+          aria-controls={id ? panelDomId(id, item.id) : undefined}
           size={size}
           variant={variant}
           selected={item.id === selectedId}
           disabled={item.disabled}
           onClick={() => onChange?.(item.id)}
+          {...getItemProps(i)}
         >
           {item.label}
         </TabItem>
       ))}
+    </div>
+  );
+}
+
+/* Panel de una pestaña: `tabsId` = el `id` de <Tabs>, `itemId` = el id del item.
+   Solo se monta el panel visible (o se pasa `hidden`). */
+export function TabPanel({ tabsId, itemId, hidden, children, className, style }) {
+  return (
+    <div
+      id={panelDomId(tabsId, itemId)}
+      role="tabpanel"
+      aria-labelledby={tabDomId(tabsId, itemId)}
+      tabIndex={0}
+      hidden={hidden}
+      className={className}
+      style={style}
+    >
+      {children}
     </div>
   );
 }
