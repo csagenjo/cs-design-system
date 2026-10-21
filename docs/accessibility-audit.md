@@ -179,7 +179,7 @@ with `aria-disabled`).
 - `Button loading` stays focusable; clicks are ignored while loading.
 - `InputStepper` buttons default to "Decrease" / "Increase" (`decrementLabel`, `incrementLabel`).
 
-**Pending in Figma:** asterisk on input / Checkbox / Radio labels and a RadioGroup composition page.
+**Figma (done 21/10):** new 🟢 Form Elements page with Label (Required boolean → `*` in `fg/label/primary`, gap `spacing/2xs`), Helper (Generic / Disabled) and Validation Message, shared by every field. Radio Group and Checkbox Group component sets, options in an "Options" slot. The asterisk goes on the group label, never on single Checkbox / Radio options.
 
 ---
 
