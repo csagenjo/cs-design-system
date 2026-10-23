@@ -329,7 +329,7 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="CellData">
-        <Table>
+        <Table ariaLabel="Clientes">
           {['neutral', 'onSurface', 'zebra'].map((s) => (
             <TableRow key={s}>
               <CellData surface={s}>{`García (${s})`}</CellData>
@@ -346,7 +346,7 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="CellHeader">
-        <Table>
+        <Table ariaLabel="Cabeceras">
           {['neutral', 'onSurface', 'zebra'].map((s) => (
             <TableRow key={s}>
               <CellHeader surface={s}>{`Cliente (${s})`}</CellHeader>
@@ -358,7 +358,7 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="CellMore">
-        <Table>
+        <Table ariaLabel="CellMore">
           {['neutral', 'onSurface', 'zebra'].map((s, i) => (
             <TableRow key={s}>
               <CellData surface={s}>{`Fila ${s}`}</CellData>
@@ -762,7 +762,7 @@ export default function Gallery({ mode }) {
             { label: 'Informes', href: '#', emphasis: 'medium' },
             { label: 'Ayuda', href: 'https://example.com', external: true },
           ]} />
-          <LinkList title="Accesos rápidos" gap="lg" ariaLabel="Accesos rápidos" items={[
+          <LinkList title="Accesos rápidos" titleLevel={3} gap="lg" items={[
             { label: 'Nueva operación', href: '#', variant: 'accent', emphasis: 'medium' },
             { label: 'Ver historial', href: '#' },
           ]} />
@@ -921,7 +921,7 @@ export default function Gallery({ mode }) {
       <Section name="SectionHeader">
         <Row>
           {['sm', 'md'].flatMap((s) => ['default', 'primary', 'disabled'].flatMap((c) => ['bold', 'regular'].map((w) => (
-            <SectionHeader key={s + c + w} size={s} color={c} weight={w}>{`Sección ${s} ${c} ${w}`}</SectionHeader>
+            <SectionHeader key={s + c + w} level={3} size={s} color={c} weight={w}>{`Sección ${s} ${c} ${w}`}</SectionHeader>
           ))))}
         </Row>
       </Section>
@@ -1093,7 +1093,7 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="CellActions">
-        <Table>
+        <Table ariaLabel="CellActions">
           {['neutral', 'onSurface', 'zebra'].map((s, i) => (
             <TableRow key={s}>
               <CellData surface={s} lastRow={i === 2}>{`Fila ${s}`}</CellData>
@@ -1264,7 +1264,7 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="Table">
-        <Table>
+        <Table ariaLabel="Table">
           <TableRow>
             <CellHeader border="primary" showSort>Cliente</CellHeader>
             <CellHeader>Estado</CellHeader>

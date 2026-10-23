@@ -181,11 +181,12 @@ import { AccordionGroup } from './organisms/AccordionGroup';
 - Tab / Shift + Tab move between triggers · Enter or Space toggles.
 - Focus ring comes from `:focus-visible` — don't override or remove it.
 
-**Known gaps** (`docs/accessibility-audit.md`, sprint A11y-5)
-- ~~No `aria-controls` / `id` linking the trigger to its content.~~ Fixed
-  21/10 (A11y-3).
-- The trigger isn't wrapped in a heading (h2–h4), as the WAI-ARIA
-  accordion pattern recommends.
+- The trigger sits inside a heading (`<h3>` by default). Set
+  `headingLevel` to fit the page outline (one level below the section
+  heading above it); `headingLevel={null}` drops the heading.
+
+**Known gaps:** none. ~~No `aria-controls`~~ fixed 21/10 (A11y-3) ·
+~~trigger not in a heading~~ fixed 23/10 (A11y-5).
 
 ### AI agents · Claude Code
 

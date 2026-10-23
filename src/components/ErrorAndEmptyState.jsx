@@ -146,11 +146,13 @@ export function ErrorAndEmptyState({
   modal                = true,
   announceOnMount      = true,  // A11y-4: fullScreen sustituye al contenido sin mover el foco — se anuncia título + descripción
   closeLabel,
+  headingLevel         = 2,  // A11y-5: nivel del título en fullScreen (en popUp es un diálogo: siempre h2)
   id,
   className,
 }) {
   const isFullScreen = variant !== 'popUp';
   const isDialog = !isFullScreen;
+  const TitleTag = isDialog ? 'h2' : `h${Math.min(6, Math.max(1, headingLevel))}`;
   const ref = useRef(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -182,7 +184,7 @@ export function ErrorAndEmptyState({
           {icon || <ImageOff size={64} strokeWidth={1.5} aria-hidden="true" />}
         </div>
         <div className="ds-error-empty-state__text">
-          <h2 id={titleId} className="ds-error-empty-state__title">{title}</h2>
+          <TitleTag id={titleId} className="ds-error-empty-state__title">{title}</TitleTag>
           <p id={descriptionId} className="ds-error-empty-state__description">{description}</p>
         </div>
       </div>

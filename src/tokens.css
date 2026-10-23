@@ -1116,6 +1116,7 @@
   --ds-chip-icon-fg-selected:              var(--ds-fg-icon-onColor); /* corregido 11/08 — mismo motivo que label-fg-selected */
   --ds-chip-icon-fg-disabled:              var(--ds-fg-icon-disabled);
   --ds-chip-icon-size-generic:             var(--ds-sizing-xs);
+  --ds-chip-remove-target-size:            var(--ds-sizing-sm);   /* área de clic mínima de la X (A11y-5, WCAG 2.5.8: 24 × 24) — sin cambio visual */
 
   /* chip/chipFilter/all/ — específicos de type="filter" variant="dismissible" */
   --ds-chip-filter-label-font-weight:      var(--ds-font-weight-bold);
@@ -1276,6 +1277,7 @@
   --ds-list-gap-unordered:              var(--ds-spacing-md);        /* 8 — bullet/number ↔ texto */
   --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — icono ↔ texto */
   --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 */
+  --ds-list-ordered-indent-level2:      var(--ds-sizing-sm);         /* 24 — columna del número (Figma list/all/orderedList/indent/level2-16) */
   --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — separación entre items (29/09: 6→8, filas de 24/28 caen en rejilla de 4/8) */
 
 
@@ -1309,6 +1311,7 @@
   --ds-descriptionlist-label-fg-generic:      var(--ds-fg-label-default);  /* #050506 */
   --ds-descriptionlist-valuetext-fg-generic:  var(--ds-fg-body-default);   /* #050506 */
   --ds-descriptionlist-valuetext-fg-subtle:   var(--ds-fg-body-subtle);    /* #676D76 — Not Filled */
+  --ds-descriptionlist-divider-color:         var(--ds-divider-border-color-generic); /* separador entre pares (A11y-5: borde del grupo, no <hr> dentro de <dl>) — mismo color que el átomo Divider que instancia Figma */
   --ds-descriptionlist-accountname-fg-generic:var(--ds-fg-label-default);  /* #050506 */
   --ds-descriptionlist-iban-fg-generic:       var(--ds-fg-label-subtle);   /* #676D76 */
   --ds-descriptionlist-helpertext-fg-generic: var(--ds-fg-label-subtle);   /* #676D76 */

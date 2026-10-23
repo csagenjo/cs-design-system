@@ -83,6 +83,7 @@ cause, not by component.
 | A11y-1 · Critical blockers | ✅ 21/10/2026 — B, C criticals, DropZone. Open criticals 9 → **0** | 66 → 56 (CountryPicker, CurrencyPicker listbox fixed; the rest belong to A11y-3/4/5) |
 | A11y-3 · State and names | ✅ 21/10/2026 — E and G, plus SegmentedControl, Tabs and SidebarMenu keyboard patterns (C) | 56 → **0** failures |
 | A11y-4 · Forms and focus | ✅ 21/10/2026 — H and F, new `RadioGroup` and `CheckboxGroup`, required marker (asterisk on the group legend) | **0** failures (RadioGroup and required states added to the gallery) |
+| A11y-5 · Structure, pointer, language | ✅ 23/10/2026 — I, J and K | **0** failures |
 
 **Decisions (20/10/2026, Carol):**
 - **Screen-reader language: English.** Every built-in hidden string ("(opens in new tab)", "Close", "Back", "Remove file"…) is English by default and becomes a prop so an app can translate it. Applied in A11y-5 (K).
@@ -180,6 +181,34 @@ with `aria-disabled`).
 - `InputStepper` buttons default to "Decrease" / "Increase" (`decrementLabel`, `incrementLabel`).
 
 **Figma (done 21/10):** new 🟢 Form Elements page with Label (Required boolean → `*` in `fg/label/primary`, gap `spacing/2xs`), Helper (Generic / Disabled) and Validation Message, shared by every field. Radio Group and Checkbox Group component sets, options in an "Options" slot. The asterisk goes on the group label, never on single Checkbox / Radio options.
+
+### A11y-5 · what changed
+
+| Area | Pieces | Now |
+|---|---|---|
+| Headings (I) | Accordion, AccordionGroup | The trigger sits inside a heading (`headingLevel`, h3 by default; `null` for none), as the WAI-ARIA accordion pattern asks. Same height as before |
+| Headings (I) | SectionHeader | A real `<h2>` (`level` 2–6; `null` → plain text) instead of a `div role="heading" aria-level=2`. ListView uses `level={null}` because it sits inside a button |
+| Headings (I) | LinkList, ErrorAndEmptyState | LinkList `titleLevel` (h2 by default); with a title, the `<nav>` is named by it. ErrorAndEmptyState full screen `headingLevel` (popUp stays h2, it's a dialog) |
+| Lists and tables (I) | List, Table, DescriptionList | List has `role="list"` (Safari drops list semantics with `list-style: none`). Table takes `ariaLabel` / `ariaLabelledBy` and warns in development without one. DescriptionList no longer puts `<hr>` inside `<dl>`: the separator is the top border of each pair (same colour, `--ds-descriptionlist-divider-color`) |
+| Button content (I) | SelectorInvoker, AccountSelectorInvoker, ListView | No `<p>` / `<div>` / heading inside the button: DescriptionText and AmountView take `as="span"`. ListView warns in development if `rightPanelContent` or `swapDescription` holds a button, link or field (a control inside a control) |
+| Hover content (J, 1.4.13) | Tooltip | The bubble can be hovered (the pointer can move onto it without it closing) and Escape hides it without moving pointer or focus; it comes back when pointer or focus leave and return. Inside a dialog the first Escape only closes the bubble |
+| Pointer (J, 2.5.7) | RangeSlider | A click on the track moves the nearest knob (on equal distance, the one on the clicked side), moves focus to it and keeps dragging |
+| Target size (J, 2.5.8) | Chip (input) | The remove X accepts clicks on a 24 × 24 area (`--ds-chip-remove-target-size`) with no visual change |
+| Reflow (J, 1.4.10) | Dialog, DialogSimple | popUp and expanded shrink to the viewport (`min(480px, 100%)`, `max-height: 100dvh`) and scroll inside: they fit at 320 × 568 |
+| Language (K) | InputDropdown, ButtonBar, TopNavigation, AccountSelectorInvoker, AccountSelectorListItem | Last Spanish defaults now English: "Select an option", "Cancel", "Confirm", "Accept and continue", "Accept", "Search", "Log out", "Account". Every built-in string is a prop |
+
+Verified with a new harness (30 checks: headings, list and table names,
+Tooltip hover/Escape including inside a dialog, RangeSlider track clicks and
+drag, Chip target, dialogs at 320 × 568), the A11y-4 (37/37), A11y-3 (40/40)
+and A11y-1 (57/57) harnesses, and pixel diffs of the gallery in light and
+dark. Visual changes: the English defaults above, and DescriptionList now
+matches Figma: each item is content + 8 px + divider (the last one too) and
+items sit 8 px apart — the code had 14 px on each side of the line.
+
+**Notes for consumers:**
+- Accordion titles are now `<h3>` by default: set `headingLevel` to fit the page outline.
+- `SectionHeader` renders an `<h2>`: pass `level` to fit the outline, or `level={null}` for a non-heading title.
+- Give every `Table` an `ariaLabelledBy` (id of its visible title) or `ariaLabel`.
 
 ---
 
@@ -355,30 +384,30 @@ there's no `href`. That fixes every consumer at once.
 
 ## I · Headings and structure (🟠)
 
-- Accordion: trigger not inside a heading; no `aria-controls` / region.
+- ~~Accordion: trigger not inside a heading; no `aria-controls` / region.~~ ✅ A11y-3 (region) + A11y-5: trigger inside `<h3>` by default (`headingLevel`, `null` = no heading); AccordionGroup passes it down.
 - ~~Headline: `level` sets both the tag and the visual size, so people pick a
   level for its size (SidebarMenu uses `level={6}` for a menu title). Split
   into `level` + `size`.~~ ✅ 20/10/2026 — split in code and Figma; SidebarMenu
   title is now `level={2} size="xs"`.
-- SectionHeader: `role="heading" aria-level={2}` hard-coded on a `<div>`.
-- Dialog title and ErrorAndEmptyState title are `<p>`; LinkList title is a
-  fixed `<h2>` with no styling (see A17).
-- DescriptionList: `<hr>` as a direct child of `<dl>`.
-- List: `list-style: none` drops list semantics in Safari (add `role="list"`).
-- Table: no way to give it a name or caption.
-- StepIndicatorLarge and the PageTitle breadcrumb aren't ordered lists.
-- `<p>` / `<div>` inside `<button>` (SelectorInvoker, AccountSelectorInvoker,
-  ListView) and controls inside a button (ListView right panel).
+- ~~SectionHeader: `role="heading" aria-level={2}` hard-coded on a `<div>`.~~ ✅ A11y-5: real `h1`–`h6` via `level` (default 2), `level={null}` = `span` (used inside ListView).
+- ~~Dialog title and ErrorAndEmptyState title are `<p>`; LinkList title is a
+  fixed `<h2>` with no styling (see A17).~~ ✅ A11y-1 (Dialog `h2`) + A11y-5: ErrorAndEmptyState `headingLevel` (fullScreen, default 2; popUp always `h2`), LinkList `titleLevel` (default 2) and the `<nav>` is named by its title.
+- ~~DescriptionList: `<hr>` as a direct child of `<dl>`.~~ ✅ A11y-5: the divider is each item's bottom border, spaced as in Figma (8 px to the line, 8 px between items, a line under the last item too).
+- ~~List: `list-style: none` drops list semantics in Safari (add `role="list"`).~~ ✅ A11y-5.
+- ~~Table: no way to give it a name or caption.~~ ✅ A11y-5: `ariaLabel` / `ariaLabelledBy`, dev warning if neither.
+- ~~StepIndicatorLarge and the PageTitle breadcrumb aren't ordered lists.~~ ✅ A11y-3.
+- ~~`<p>` / `<div>` inside `<button>` (SelectorInvoker, AccountSelectorInvoker,
+  ListView) and controls inside a button (ListView right panel).~~ ✅ A11y-5: DescriptionText / AmountView take `as="span"` inside buttons; ListView warns in dev if its right panel holds a control.
 
 ## J · Pointer, hover, reflow and motion
 
 | Piece | Problem | WCAG | Severity |
 |---|---|---|---|
 | DropZone | ~~Hovering the zone **disables its own button**~~ ✅ A11y-1: the state follows drag events, not mouse hover | 2.5.7 | 🔴 |
-| RangeSlider | Values can only change by dragging; no click on the track | 2.5.7 | 🟠 |
-| Tooltip | Not hoverable (`pointer-events: none`) and can't be dismissed with Escape | 1.4.13 | 🟠 |
-| Dialog, DialogSimple | Fixed 480 px width and 616–680 px height: two-way scrolling at 320 px | 1.4.10 | 🟠 |
-| Chip (input) | Remove target 20 × 20 px | 2.5.8 | 🟡 |
+| RangeSlider | ~~Values can only change by dragging; no click on the track~~ ✅ A11y-5: a click on the track moves the nearest knob | 2.5.7 | 🟠 |
+| Tooltip | ~~Not hoverable (`pointer-events: none`) and can't be dismissed with Escape~~ ✅ A11y-5: bubble hoverable (bridge over the arrow), Escape hides it until the pointer/focus leaves | 1.4.13 | 🟠 |
+| Dialog, DialogSimple | ~~Fixed 480 px width and 616–680 px height: two-way scrolling at 320 px~~ ✅ A11y-5: `min(480px, 100%)`, height capped at `100dvh` with inner scroll | 1.4.10 | 🟠 |
+| Chip (input) | ~~Remove target 20 × 20 px~~ ✅ A11y-5: 24 × 24 hit area (`--ds-chip-remove-target-size`), same look | 2.5.8 | 🟡 |
 | All animated pieces | ~~No `prefers-reduced-motion` anywhere in `src`~~ ✅ A11y-0: `foundations.css` (transitions, Button press scale; spinners kept as essential motion) | 2.3.3 (AAA, best practice) | 🟡 |
 
 ## K · Language of screen-reader strings (🟡)
@@ -387,7 +416,7 @@ Hidden strings mix languages: "(opens in new tab)", "Loading", "Step X of
 Y", "Expand", "More", "Edit" vs "Cerrar", "Volver", "Eliminar fichero",
 "Buscar". ~~**Decision needed:** the system's default language.~~ **Decided
 20/10/2026: English.** Every built-in string becomes a prop with an English
-default (A11y-5).
+default (A11y-5). ✅ 23/10/2026: the last Spanish defaults (InputDropdown placeholder, ButtonBar labels, TopNavigation "Log out", Account Selector "Account") are English.
 
 ## Bug found during the audit
 
@@ -412,7 +441,7 @@ touched, and the Figma + inventory Accessibility sections updated.
 | **A11y-2 · Colour** | A1–A17: decide steps in Figma (Theme / Mode), re-export, sync `tokens.css`, re-scan both modes. Includes the open Pagination 2.7:1 debt and the borderColor dark-mode audit | Biggest visual change; done in Figma first | **Yes — brand teal decision** |
 | **A11y-3 · State and names** ✅ 21/10 | E and G | Mostly additive props, low risk | — |
 | **A11y-4 · Forms and focus** ✅ 21/10 | H and F; `RadioGroup` | Builds on the live region from A11y-0 | ~~Required-field marker style~~ decided 21/10: asterisk |
-| **A11y-5 · Structure, pointer, language** | I, J (rest), K (English defaults as props). ~~Headline `level`/`size` split~~ ✅ done 20/10 | Touches APIs consumers use | ~~Yes~~ decided 20/10: English; Headline split |
+| **A11y-5 · Structure, pointer, language** ✅ 23/10 | I, J (rest), K (English defaults as props). ~~Headline `level`/`size` split~~ ✅ done 20/10 | Touches APIs consumers use | ~~Yes~~ decided 20/10: English; Headline split |
 | **Close-out** | Screen-reader pass (VoiceOver + NVDA), 200 % / 400 % zoom, forced colors check; every component's Accessibility section says "no known gaps" | Proves the claim | — |
 
 ---

@@ -17,8 +17,14 @@
  *                fg/title/default, NO fg/title/subtle.
  *   · weight : bold (default) | regular
  *
+ * Accesibilidad (A11y-5): es un heading real (`<h2>` por defecto) — antes un
+ * `<div role="heading" aria-level={2}>` fijo. `level` lo decide el esquema de
+ * la página, nunca el tamaño; `level={null}` lo deja como texto (lo usa ListView,
+ * donde va dentro de un botón y un heading ahí no es válido).
+ *
  * USO:
  *   <SectionHeader>Datos del cliente</SectionHeader>
+ *   <SectionHeader level={3}>Dirección</SectionHeader>
  *   <SectionHeader size="sm" color="primary">Sección</SectionHeader>
  *   <SectionHeader weight="regular" color="disabled">Inactiva</SectionHeader>
  */
@@ -28,7 +34,9 @@ import { injectStyles } from './_inputBase';
 
 const css = `
 .ds-section-header {
+  display:      block;
   margin:       0;
+  letter-spacing: inherit;
   font-family:  inherit;                     /* Nunito */
   font-weight:  var(--ds-font-weight-bold);  /* 700 por defecto */
   text-align:   left;
@@ -53,6 +61,7 @@ export function SectionHeader({
   size   = 'md',       // 'sm' | 'md'
   color  = 'default',  // 'default' | 'primary' | 'disabled'
   weight = 'bold',     // 'bold' | 'regular'
+  level  = 2,          // A11y-5: 2–6 → <h2>…<h6>; null → <span> (título visual sin heading, p. ej. dentro de un botón)
   children,
   id,
   className,
@@ -65,10 +74,11 @@ export function SectionHeader({
     className || '',
   ].filter(Boolean).join(' ');
 
+  const Tag = level >= 1 && level <= 6 ? `h${level}` : 'span';
   return (
-    <div id={id} className={classes} role="heading" aria-level={2}>
+    <Tag id={id} className={classes}>
       {children}
-    </div>
+    </Tag>
   );
 }
 

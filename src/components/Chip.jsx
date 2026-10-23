@@ -237,6 +237,7 @@ const css = `
 }
 
 .ds-chip-input__remove {
+  position:        relative;
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
@@ -259,6 +260,18 @@ const css = `
   outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
   outline-offset: var(--ds-chip-root-border-width-focus);
   box-shadow:     inset 0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
+}
+
+/* A11y-5 (2.5.8): el icono mide 20 px; el área que acepta el clic llega a 24
+   sin cambiar el aspecto (pseudo-elemento invisible centrado sobre el botón) */
+.ds-chip-input__remove::after {
+  content:   '';
+  position:  absolute;
+  top:       50%;
+  left:      50%;
+  width:     var(--ds-chip-remove-target-size);
+  height:    var(--ds-chip-remove-target-size);
+  transform: translate(-50%, -50%);
 }
 
 /* SVGs de Lucide dimensionados via CSS — sin size= en JSX */

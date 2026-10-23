@@ -22,6 +22,7 @@
  *
  *   <AccordionGroup items={items} multiple />
  *   <AccordionGroup items={items} defaultOpenIndex={0} />
+ *   <AccordionGroup items={items} headingLevel={2} />   // títulos como h2
  */
 
 import React, { useState } from 'react';
@@ -43,6 +44,7 @@ export function AccordionGroup({
   items = [],
   multiple = false,
   defaultOpenIndex,
+  headingLevel = 3,   // A11y-5: nivel de heading de cada título (h2–h6)
   id,
   className,
 }) {
@@ -81,6 +83,7 @@ export function AccordionGroup({
           expanded={isOpen(i)}
           onToggle={() => toggle(i)}
           isLast={i === items.length - 1}
+          headingLevel={headingLevel}
         >
           {item.content}
         </Accordion>

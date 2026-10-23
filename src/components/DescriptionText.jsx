@@ -19,6 +19,7 @@ import { injectStyles } from './_inputBase';
 
 const css = `
 .ds-description-text {
+  display: block;
   margin: 0;
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
@@ -39,6 +40,7 @@ export function DescriptionText({
   children,
   color = 'subtle', // 'subtle' | 'default' | 'disabled'
   size  = '14',       // '14' | '16'
+  as: Tag = 'p',      // A11y-5: 'span' dentro de un botón (un <p> ahí no es válido)
   id,
   className,
 }) {
@@ -49,7 +51,7 @@ export function DescriptionText({
     className || '',
   ].filter(Boolean).join(' ');
 
-  return <p id={id} className={classes}>{children}</p>;
+  return <Tag id={id} className={classes}>{children}</Tag>;
 }
 
 export default DescriptionText;

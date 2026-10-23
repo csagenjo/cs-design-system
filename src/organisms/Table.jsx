@@ -36,6 +36,7 @@
  */
 
 import React from 'react';
+import { warnOnce } from '../components/_devWarn';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -62,13 +63,18 @@ function injectStyles() {
 
 /* ─── Table ────────────────────────────────────────────────────────────────── */
 
-export function Table({ children, className, style }) {
+export function Table({ children, ariaLabel, ariaLabelledBy, className, style }) {
   injectStyles();
 
   const classes = ['ds-table', className || ''].filter(Boolean).join(' ');
+  if (!ariaLabel && !ariaLabelledBy) {
+    warnOnce('Table.name', '[DS Table] La tabla no tiene nombre: pasa `ariaLabelledBy` (id del título visible) o `ariaLabel`.');
+  }
 
   return (
-    <div className={classes} style={style} role="table">
+    // A11y-5: una tabla necesita nombre — `ariaLabel`, o mejor `ariaLabelledBy`
+    // con el id del título visible que la presenta.
+    <div className={classes} style={style} role="table" aria-label={ariaLabelledBy ? undefined : ariaLabel} aria-labelledby={ariaLabelledBy}>
       {children}
     </div>
   );

@@ -111,7 +111,7 @@ export const InputDropdown = forwardRef(function InputDropdown({
   state         = 'default',
   helperText,
   errorMessage,
-  placeholder   = 'Selecciona una opción',
+  placeholder   = 'Select an option',  // A11y-5 (K): textos por defecto en inglés
   fullWidth     = false,
   required        = false, // A11y-4: asterisco visible + `required` nativo
   id,

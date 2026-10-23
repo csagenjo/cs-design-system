@@ -124,6 +124,24 @@ export function RangeSlider({
     (which === 'lo' ? loKnobRef : hiKnobRef).current?.focus();
   }
 
+  // A11y-5 (2.5.7): un clic en el track mueve el knob más cercano a ese punto
+  // (con los dos en el mismo sitio, el del lado del clic) y deja seguir
+  // arrastrando — ya no hace falta atinar al knob.
+  function handleTrackPointerDown(e) {
+    if (disabled || e.target.closest('[role="slider"]')) return;
+    const next = valueFromClientX(e.clientX);
+    let which;
+    if (next <= lo) which = 'lo';
+    else if (next >= hi) which = 'hi';
+    else which = next - lo <= hi - next ? 'lo' : 'hi';
+    e.preventDefault();
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    setDragging(which);
+    (which === 'lo' ? loKnobRef : hiKnobRef).current?.focus();
+    if (which === 'lo') onChange && onChange([Math.min(next, hi), hi]);
+    else onChange && onChange([lo, Math.max(next, lo)]);
+  }
+
   function handlePointerMove(e) {
     if (!dragging || disabled) return;
     const next = valueFromClientX(e.clientX);
@@ -170,6 +188,7 @@ export function RangeSlider({
       <div
         className="ds-range-slider__track-wrapper"
         ref={trackRef}
+        onPointerDown={handleTrackPointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
       >

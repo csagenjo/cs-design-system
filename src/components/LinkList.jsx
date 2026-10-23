@@ -34,13 +34,21 @@ injectStyles();
 export function LinkList({
   items     = [],
   title,
+  titleLevel = 2,   // A11y-5: nivel del heading del título (h2–h6), según el esquema de la página
   gap       = 'md',
   ariaLabel,
   fullWidth = false,
 }) {
+  const titleId = React.useId();
+  const TitleTag = `h${Math.min(6, Math.max(2, titleLevel))}`;
   return (
-    <nav aria-label={ariaLabel} style={fullWidth ? { width: '100%' } : undefined}>
-      {title && <h2 className="ds-link-list__title">{title}</h2>}
+    // A11y-5: con título visible, el <nav> se nombra con él (antes solo con ariaLabel)
+    <nav
+      aria-label={title ? undefined : ariaLabel}
+      aria-labelledby={title ? titleId : undefined}
+      style={fullWidth ? { width: '100%' } : undefined}
+    >
+      {title && <TitleTag id={titleId} className="ds-link-list__title">{title}</TitleTag>}
       <ul
         role="list"
         className={[

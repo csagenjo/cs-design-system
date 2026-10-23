@@ -9,7 +9,9 @@
  * Los valores son un slot libre (`children` de cada item): texto plano, o átomos
  * importados e instanciados por el consumidor — <BadgeHighlight>, <List>,
  * <AmountView>, etc. DescriptionList NUNCA los reimplementa (regla del proyecto).
- * El título de sección y los divisores usan los átomos SectionHeader / Divider.
+ * El título de sección usa el átomo SectionHeader. Los divisores son el borde
+ * superior de cada par (en Figma, instancias de Divider): un <hr> no puede ir
+ * dentro de <dl> (A11y-5).
  *
  * Ejes:
  *   · orientation : landscape (label|valor lado a lado) | portrait (valor bajo label)
@@ -32,7 +34,6 @@
 import { VisuallyHidden } from '../components/VisuallyHidden';
 import React from 'react';
 import { injectStyles } from '../components/_inputBase';
-import { Divider } from '../components/Divider';
 import { Link } from '../components/Link';
 
 const css = `
@@ -44,10 +45,18 @@ const css = `
   font-family: inherit;
 }
 
+/* Igual que Figma: cada par = contenido + 8 + Divider (también el último), y
+   8 entre pares. El Divider es el borde inferior del propio grupo, no un <hr>
+   suelto dentro de <dl> (ahí solo valen dt/dd y div que los agrupan, A11y-5).
+   Mismo color y grosor que el átomo Divider. */
 .ds-dl-item {
   display: flex;
   gap:     var(--ds-spacing-md);           /* 8 */
-  padding: var(--ds-spacing-sm) 0;         /* 6 vert */
+  padding-bottom: var(--ds-spacing-md);    /* 8 hasta la línea */
+  border-bottom:  var(--ds-border-width-sm) solid var(--ds-descriptionlist-divider-color);
+}
+.ds-dl-item + .ds-dl-item {
+  margin-top: var(--ds-spacing-md);        /* 8 entre pares */
 }
 .ds-dl--landscape .ds-dl-item { flex-direction: row;    align-items: baseline; }
 .ds-dl--portrait  .ds-dl-item { flex-direction: column; }
@@ -140,13 +149,7 @@ export function DescriptionList({
 
   return (
     <dl className={classes} style={style}>
-      {items.map((child, i) => (
-        <React.Fragment key={i}>
-          {child}
-          {/* decorativo: dentro de <dl> solo valen dt/dd; los pares ya agrupan */}
-          {i < items.length - 1 && <Divider decorative />}
-        </React.Fragment>
-      ))}
+      {items}
     </dl>
   );
 }
