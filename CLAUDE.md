@@ -207,6 +207,8 @@ Si falla: `claude mcp remove figma` (el OAuth se reactiva solo).
 `use_figma` requiere Figma desktop abierto.
 SIEMPRE leer `/mnt/skills/plugins/figma:figma-use/SKILL.md` antes de usar `use_figma`.
 
+**Exportar tokens (JSON), 23/10/2026.** Carol exporta desde Figma a `~/Downloads/DDMMAAAA/` (una carpeta por día, p. ej. `23102026`), donde queda el zip tal cual (`Component tokens.zip` → `Mode 1.tokens.json`). **Nunca lo copia dentro del repo de su Mac:** así su `main` local no tiene cambios sueltos y el pull tras el merge sale limpio. Cuando avisa ("exportados"), Claude pide acceso a `~/Downloads` (el permiso es por sesión), coge el zip de la carpeta más reciente, lo descomprime en `tokens/<Colección>/` de la rama de trabajo, revisa el diff por nombre de token (el orden de Figma cambia entre exports, el diff de texto engaña) y lo sube en la PR.
+
 **Figma fileKey:** `QiWDJdMPB5pfY3vHy9CqZv`
 **Lucide Icons Figma:** librería externa activada en el equipo — NO usar página de iconos local.
 
