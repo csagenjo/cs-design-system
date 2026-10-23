@@ -1277,6 +1277,7 @@
   --ds-list-gap-unordered:              var(--ds-spacing-md);        /* 8 — bullet/number ↔ texto */
   --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — icono ↔ texto */
   --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 */
+  --ds-list-ordered-indent-level2:      var(--ds-sizing-sm);         /* 24 — columna del número (Figma list/all/orderedList/indent/level2-16) */
   --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — separación entre items (29/09: 6→8, filas de 24/28 caen en rejilla de 4/8) */
 
 

@@ -44,8 +44,16 @@ const css = `
 }
 .ds-list__item:last-child { padding-bottom: 0; }
 
-.ds-list--unordered .ds-list__item,
-.ds-list--ordered   .ds-list__item { gap: var(--ds-list-gap-unordered); }  /* 8 */
+.ds-list--unordered .ds-list__item { gap: var(--ds-list-gap-unordered); }  /* 8 */
+/* Ordered: como Figma, el número va en una columna fija (Order Container) y el
+   texto empieza justo después, sin gap. La columna es la misma medida que la
+   sangría del nivel 2. Un número largo ("10.") la ensancha y deja 4 px. */
+.ds-list--ordered .ds-list__item { gap: 0; }
+.ds-list--ordered .ds-list__marker {
+  box-sizing:    border-box;
+  min-width:     var(--ds-list-ordered-indent-level2);  /* 24 */
+  padding-right: var(--ds-spacing-xs);                  /* 4 */
+}
 .ds-list--checkmark .ds-list__item { gap: var(--ds-list-gap-checkmark); }  /* 6 */
 
 /* Marcador (bullet / number) — label/md bold */
