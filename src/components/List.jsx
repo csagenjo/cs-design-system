@@ -99,7 +99,8 @@ export function List({
   ].filter(Boolean).join(' ');
 
   return (
-    <Tag className={classes}>
+    // A11y-5: con list-style:none, Safari/VoiceOver deja de anunciarla como lista
+    <Tag className={classes} role="list">
       {items.map((raw, i) => {
         const { content, number } = normalize(raw);
         return (

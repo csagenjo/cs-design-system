@@ -202,7 +202,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
 
           {!isEmpty && descriptionText && (
             <span className="ds-selector-invoker__description">
-              <DescriptionText color={isDisabled ? 'disabled' : 'subtle'} size="14">{mask(descriptionText)}</DescriptionText>
+              <DescriptionText as="span" color={isDisabled ? 'disabled' : 'subtle'} size="14">{mask(descriptionText)}</DescriptionText>
             </span>
           )}
 

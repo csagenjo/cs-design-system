@@ -55,7 +55,10 @@ const css = `
   box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — 25/08: aplicada a todas las variantes, antes solo PopUp */
 }
 .ds-dialog--pop-up {
-  width: 480px;
+  /* A11y-5 (1.4.10): a 320 px de ancho o con zoom al 400 % se encoge al viewport
+     en vez de obligar a hacer scroll en dos direcciones; el contenido hace scroll */
+  width: min(480px, 100%);
+  max-height: 100dvh;
   flex-shrink: 0;
 }
 .ds-dialog--pop-up.ds-dialog--standard { height: 616px; }

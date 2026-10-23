@@ -37,6 +37,11 @@
  * (src/organisms/) — gestiona qué item(s) está(n) abierto(s) y agrupa con
  * gap 0 real, sin depender de que el consumidor lo monte bien a mano.
  *
+ * Accesibilidad (A11y-5): el trigger va dentro de un heading (`headingLevel`,
+ * h3 por defecto) para que el lector lo liste entre los encabezados de la
+ * página, como pide el patrón de acordeón de WAI-ARIA. Elige el nivel que
+ * toque según el esquema de la página (debajo de un h2 → 3).
+ *
  * USO:
  *   <Accordion title="Título" expanded={open} onToggle={() => setOpen(!open)}>
  *     Contenido...
@@ -52,6 +57,12 @@ const css = `
   position: relative;
   width: 100%;
   box-sizing: border-box;
+}
+.ds-accordion__heading {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
 }
 .ds-accordion__trigger {
   display: flex;
@@ -137,6 +148,7 @@ export function Accordion({
   expanded = false,
   onToggle,
   isLast = false,
+  headingLevel = 3,  // A11y-5: el trigger va dentro de un h2–h6 (patrón APG); null = sin heading
   id,
   className,
 }) {
@@ -149,8 +161,13 @@ export function Accordion({
     .filter(Boolean)
     .join(' ');
 
+  const level = headingLevel && headingLevel >= 2 && headingLevel <= 6 ? headingLevel : null;
+  const Heading = level ? `h${level}` : React.Fragment;
+  const headingProps = level ? { className: 'ds-accordion__heading' } : {};
+
   return (
     <div id={id} className={classes}>
+      <Heading {...headingProps}>
       <button
         type="button"
         className="ds-accordion__trigger"
@@ -167,6 +184,7 @@ export function Accordion({
           strokeWidth={2}
         />
       </button>
+      </Heading>
       {expanded && (
         <div className="ds-accordion__content" id={panelId} role="region" aria-labelledby={triggerId}>
           <div className="ds-accordion__content-inner">{children}</div>

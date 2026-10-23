@@ -57,15 +57,18 @@ const css = `
 }
 .ds-dialog-simple--default {
   width: 280px;
-  min-width: 280px;
+  max-width: 100%;   /* A11y-5 (1.4.10) */
   flex-shrink: 0;
   padding: var(--ds-dialog-root-padding-ver-generic) var(--ds-dialog-root-padding-hor-generic);
   border: 0.5px solid var(--ds-dialog-simple-border-color-generic);
   box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — mismo valor que Dialog PopUp */
 }
 .ds-dialog-simple--expanded {
-  width: 480px;
-  min-height: 680px;
+  /* A11y-5 (1.4.10): cabe en 320 px / zoom 400 %; si no hay alto, hace scroll por dentro */
+  width: min(480px, 100%);
+  min-height: min(680px, 100dvh);
+  max-height: 100dvh;
+  overflow-y: auto;
   flex-shrink: 0;
   box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — añadida 25/08, antes Expanded no llevaba sombra; sigue sin borde */
 }

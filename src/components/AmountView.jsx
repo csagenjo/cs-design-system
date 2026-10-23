@@ -95,6 +95,7 @@ export function AmountView({
   isoPlacement = 'right',     // 'right' | 'left'
   amountWeight = 'regular',   // 'regular' | 'bold'
   negativeLabel = 'negative', // A11y-3: se lee si el importe es negativo y no lleva signo
+  as: Tag = 'div',            // A11y-5: 'span' dentro de un botón (Account Selector)
 }) {
   const className = [
     'ds-amount-view',
@@ -110,7 +111,7 @@ export function AmountView({
   };
 
   return (
-    <div className={className} style={typo}>
+    <Tag className={className} style={typo}>
       <span>{amount}</span>
       {currency != null && <span>{currency}</span>}
       {/* A11y-3 (1.4.1): el rojo no es la única pista — un importe negativo sin
@@ -118,7 +119,7 @@ export function AmountView({
       {type === 'negative' && !/^\s*[-−]/.test(String(amount ?? '')) && (
         <VisuallyHidden>{`, ${negativeLabel}`}</VisuallyHidden>
       )}
-    </div>
+    </Tag>
   );
 }
 

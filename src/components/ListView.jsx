@@ -23,7 +23,8 @@
  *   <ListView header="Fila" swapDescription={<Text chevron>Ver más</Text>} selected />
  */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { warnOnce } from './_devWarn';
 import { injectStyles } from './_inputBase';
 import { SectionHeader } from './SectionHeader';
 import { DescriptionText } from './DescriptionText';
@@ -138,6 +139,17 @@ export function ListView({
     allSides: 'ds-list-view--all-sides',
   }[divider] || '';
 
+  // A11y-5: la fila entera es un <button>; un control dentro de otro control no
+  // es válido (el lector y el teclado no lo alcanzan). Aviso en desarrollo si
+  // `rightPanelContent` o `swapDescription` traen algo interactivo.
+  const rootRef = useRef(null);
+  useEffect(() => {
+    const el = rootRef.current;
+    if (el && el.querySelector('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')) {
+      warnOnce('ListView.nested', '[DS ListView] La fila ya es un botón: no metas botones, enlaces ni campos en `rightPanelContent` / `swapDescription`. Usa contenido estático (texto, AmountView, Badge) o pon la acción fuera de la fila.');
+    }
+  });
+
   const classes = [
     'ds-list-view',
     dividerClass,
@@ -147,6 +159,7 @@ export function ListView({
   return (
     <button
       {...rest}
+      ref={rootRef}
       type="button"
       id={id}
       className={classes}
@@ -165,13 +178,13 @@ export function ListView({
       <span className="ds-list-view__content">
         <span className="ds-list-view__center">
           <span className="ds-list-view__row">
-            <SectionHeader size="sm" color={disabled ? 'disabled' : 'default'}>{header}</SectionHeader>
+            <SectionHeader level={null} size="sm" color={disabled ? 'disabled' : 'default'}>{header}</SectionHeader>
           </span>
 
           {description && (
             <span className="ds-list-view__row">
               {swapDescription || (
-                <DescriptionText color={disabled ? 'disabled' : 'subtle'} size="14">{descriptionText}</DescriptionText>
+                <DescriptionText as="span" color={disabled ? 'disabled' : 'subtle'} size="14">{descriptionText}</DescriptionText>
               )}
             </span>
           )}

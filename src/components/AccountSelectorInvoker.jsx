@@ -117,7 +117,7 @@ injectStyles('ds-account-selector-invoker', css);
 export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker({
   state          = 'default',   // 'default' | 'error' | 'disabled' | 'readOnly' | 'dataHidden'
   dataSelection  = 'single',    // 'single' | 'multiple' | 'empty'
-  headerText     = 'Cuenta',
+  headerText     = 'Account',
   amount,
   currency,
   amountType     = 'positive',  // 'positive' | 'negative'
@@ -185,7 +185,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
           <span className="ds-account-selector-invoker__header">{mask(headerText)}</span>
 
           {!isEmpty && amount != null && !isDataHidden && (
-            <AmountView amount={amount} currency={currency} type={amountType} />
+            <AmountView as="span" amount={amount} currency={currency} type={amountType} />
           )}
 
           {!isEmpty && detailText && (

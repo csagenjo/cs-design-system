@@ -77,7 +77,7 @@ function injectBarStyles() {
  * NAVEGACIÓN (solo variant="complex"):
  * @param {Function} [props.onPrev]
  * @param {boolean}  [props.prevDisabled]
- * @param {boolean}  [props.nextIsConfirm]   — cambia "Siguiente" por "Confirmar"
+ * @param {boolean}  [props.nextIsConfirm]   — cambia la acción principal por "Confirm"
  */
 export function ButtonBar({
   variant,
@@ -89,7 +89,7 @@ export function ButtonBar({
   onSecondary,
   secondaryIcon,
   extraSecondary = [],
-  cancelLabel = 'Cancelar',
+  cancelLabel = 'Cancel',   // A11y-5 (K): textos por defecto en inglés
   onCancel,
   negativeActions = [],
   onPrev,
@@ -146,7 +146,7 @@ export function ButtonBar({
             iconLeft={primaryIcon}
             iconRight={!nextIsConfirm ? 'arrow-right' : undefined}
             onClick={onPrimary}>
-            {nextIsConfirm ? 'Confirmar' : (primaryLabel || 'Aceptar y continuar')}
+            {nextIsConfirm ? 'Confirm' : (primaryLabel || 'Accept and continue')}
           </Button>
         )}
 
@@ -168,7 +168,7 @@ export function ButtonBar({
         {onPrimary && (
           <Button variant="accent" size={size}
             iconLeft={primaryIcon || 'search'} onClick={onPrimary}>
-            {primaryLabel || 'Buscar'}
+            {primaryLabel || 'Search'}
           </Button>
         )}
       </div>
@@ -194,7 +194,7 @@ export function ButtonBar({
         {onPrimary && (
           <Button variant="accent" size={size}
             iconLeft={primaryIcon} onClick={onPrimary}>
-            {primaryLabel || 'Aceptar'}
+            {primaryLabel || 'Accept'}
           </Button>
         )}
       </div>

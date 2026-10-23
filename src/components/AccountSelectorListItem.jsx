@@ -116,7 +116,7 @@ injectStyles('ds-account-selector-list-item', css);
 export const AccountSelectorListItem = forwardRef(function AccountSelectorListItem({
   data             = 'single',       // 'single' | 'multiple'
   state,                              // 'error' | 'disabled' | 'dataHidden'
-  headerText       = 'Cuenta',
+  headerText       = 'Account',
   amount,
   currency,
   amountType       = 'positive',

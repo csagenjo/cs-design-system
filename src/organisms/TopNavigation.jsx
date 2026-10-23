@@ -246,7 +246,7 @@ function flydownToSidebarChildren(flydown, onSelectLeaf, parentId) {
 export function TopNavigation({
   logo,
   menuItems = [],
-  exitLabel = 'Salir',
+  exitLabel = 'Log out',   // A11y-5 (K): textos por defecto en inglés
   onExit,
   ariaLabel = 'Main',            // nombre del landmark <nav> (inglés por defecto, decisión 20/10)
   openMenuLabel = 'Open menu',   // botón hamburguesa (mobile)

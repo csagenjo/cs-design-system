@@ -60,6 +60,19 @@ const css = `
 .ds-tooltip:focus-within .ds-tooltip__bubble,
 .ds-tooltip__bubble--force-visible {
   opacity: 1;
+  pointer-events: auto; /* A11y-5 (1.4.13): se puede pasar el ratón por encima sin que desaparezca */
+}
+/* puente invisible sobre el hueco de la flecha: al ir del trigger a la burbuja
+   el puntero no sale de .ds-tooltip y la burbuja no se cierra por el camino */
+.ds-tooltip__bubble::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--ds-tooltip-arrow-length));
+}
+/* Escape la oculta hasta que el puntero o el foco salgan del trigger */
+.ds-tooltip--dismissed .ds-tooltip__bubble:not(.ds-tooltip__bubble--force-visible) {
+  opacity: 0;
+  pointer-events: none;
 }
 .ds-tooltip__arrow {
   position: absolute;
@@ -148,7 +161,31 @@ export function Tooltip({
     ? React.cloneElement(children, { 'aria-describedby': [existing, tooltipId].filter(Boolean).join(' ') })
     : children;
 
-  const classes = ['ds-tooltip', className || ''].filter(Boolean).join(' ');
+  // A11y-5 (1.4.13): Escape oculta la burbuja sin mover el puntero ni el foco.
+  // Vuelve a poder mostrarse cuando el puntero sale o el foco sale del trigger.
+  const rootRef = React.useRef(null);
+  const [dismissed, setDismissed] = React.useState(false);
+  React.useEffect(() => {
+    if (dismissed) return undefined;
+    const onKey = (e) => {
+      const el = rootRef.current;
+      if (e.key !== 'Escape' || !el) return;
+      if (el.matches(':hover') || el.contains(document.activeElement)) {
+        setDismissed(true);
+        // la burbuja estaba a la vista: este Escape es para ella, no para el
+        // diálogo o popover que la contiene
+        e.stopImmediatePropagation();
+      }
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [dismissed]);
+  const reset = (e) => {
+    if (e.type === 'blur' && rootRef.current?.contains(e.relatedTarget)) return;
+    setDismissed(false);
+  };
+
+  const classes = ['ds-tooltip', dismissed ? 'ds-tooltip--dismissed' : '', className || ''].filter(Boolean).join(' ');
   const bubbleClasses = [
     'ds-tooltip__bubble',
     `ds-tooltip__bubble--${placement}`,
@@ -156,7 +193,7 @@ export function Tooltip({
   ].filter(Boolean).join(' ');
 
   return (
-    <span className={classes} style={style}>
+    <span ref={rootRef} className={classes} style={style} onMouseLeave={reset} onBlur={reset}>
       {trigger}
       <span className={bubbleClasses} role="tooltip" id={tooltipId} aria-hidden={describe ? undefined : 'true'}>
         {label}
