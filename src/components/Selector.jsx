@@ -2,6 +2,7 @@ import React, { forwardRef, useId } from 'react';
 import { injectStyles } from './_inputBase';
 import { SelectorInvoker } from './SelectorInvoker';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const css = `
@@ -14,13 +15,8 @@ const css = `
 
 .ds-selector__label { margin-bottom: var(--ds-input-label-gap); }
 
-.ds-selector__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-selector--disabled .ds-selector__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-selector__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-selector__message { margin-top: var(--ds-input-validation-gap); }
 
 `;
 
@@ -72,9 +68,7 @@ export const Selector = forwardRef(function Selector({
       )}
 
       {helperText && (
-        <p className="ds-selector__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-selector__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <SelectorInvoker
@@ -96,7 +90,7 @@ export const Selector = forwardRef(function Selector({
         aria-describedby={[helperId, messageId].filter(Boolean).join(' ') || undefined}
         aria-invalid={state === 'error' ? 'true' : undefined}
       />
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-selector__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

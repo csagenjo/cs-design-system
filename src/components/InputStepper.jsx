@@ -2,6 +2,7 @@ import React, { useState, forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const css = `
@@ -15,13 +16,8 @@ const css = `
 .ds-input-stepper__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper — encima del campo */
-.ds-input-stepper__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-stepper--disabled .ds-input-stepper__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-input-stepper__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-stepper__message { margin-top: var(--ds-input-validation-gap); }
 
 /* Campo: contenedor con borde, fondo, radio — igual que otros inputs */
 .ds-input-stepper__field-wrap {
@@ -179,9 +175,7 @@ export const InputStepper = forwardRef(function InputStepper({
       )}
 
       {helperText && (
-        <p className="ds-input-stepper__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-stepper__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div
@@ -223,7 +217,7 @@ export const InputStepper = forwardRef(function InputStepper({
           <Icon name="plus" size="sm" />
         </button>
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-stepper__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

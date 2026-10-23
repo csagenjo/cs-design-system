@@ -2,6 +2,7 @@ import React, { forwardRef, useId } from 'react';
 import { injectStyles } from './_inputBase';
 import { AccountSelectorInvoker } from './AccountSelectorInvoker';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const css = `
@@ -14,13 +15,8 @@ const css = `
 
 .ds-account-selector__label { margin-bottom: var(--ds-input-label-gap); }
 
-.ds-account-selector__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-account-selector--disabled .ds-account-selector__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-account-selector__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-account-selector__message { margin-top: var(--ds-input-validation-gap); }
 
 `;
 
@@ -74,9 +70,7 @@ export const AccountSelector = forwardRef(function AccountSelector({
       )}
 
       {helperText && (
-        <p className="ds-account-selector__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-account-selector__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <AccountSelectorInvoker
@@ -100,7 +94,7 @@ export const AccountSelector = forwardRef(function AccountSelector({
         aria-describedby={[helperId, messageId].filter(Boolean).join(' ') || undefined}
         aria-invalid={state === 'error' ? 'true' : undefined}
       />
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-account-selector__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

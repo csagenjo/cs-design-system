@@ -3,6 +3,7 @@ import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const css = `
@@ -91,13 +92,8 @@ const css = `
 .ds-input-date--disabled .ds-input-date__icon { color: var(--ds-input-icon-fg-disabled); }
 
 /* Helper — aparece ENCIMA del campo */
-.ds-input-date__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-date--disabled .ds-input-date__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-input-date__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-date__message { margin-top: var(--ds-input-validation-gap); }
 
 /* Validación */
 `;
@@ -149,9 +145,7 @@ export const InputDate = forwardRef(function InputDate({
       )}
 
       {helperText && (
-        <p className="ds-input-date__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-date__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-date__field-wrap">
@@ -179,7 +173,7 @@ export const InputDate = forwardRef(function InputDate({
           <Icon name="calendar-days" size="sm" />
         </span>
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-date__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

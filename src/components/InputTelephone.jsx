@@ -38,6 +38,7 @@ import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -54,15 +55,8 @@ const css = `
 .ds-input-telephone__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper — encima del campo */
-.ds-input-telephone__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-telephone--disabled .ds-input-telephone__helper {
-  color: var(--ds-input-helper-fg-disabled);
-}
+.ds-input-telephone__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-telephone__message { margin-top: var(--ds-input-validation-gap); }
 
 /* Contenedor del campo doble */
 .ds-input-telephone__field-wrap {
@@ -282,9 +276,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
       )}
 
       {helperText && (
-        <p className="ds-input-telephone__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-telephone__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-telephone__field-wrap">
@@ -337,7 +329,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
         />
 
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-telephone__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
 
     </div>
   );

@@ -8,8 +8,9 @@
  * CSS; ahora todos instancian este átomo.
  *
  * Figma: `Label` en la página 🟢 Form Elements. La booleana `Required` enciende
- * el asterisco (color de marca `Input/InputCommon/label/fg/required` →
- * `fg/label/primary`; rojo se reserva para error). El asterisco es solo
+ * el asterisco (color de marca `fieldLabel/all/required/fg/generic` →
+ * `fg/label/primary`; rojo se reserva para error). Tokens propios
+ * `--ds-field-label-*` (`fieldLabel/all/*`, 23/10/2026), ya no los de Input. El asterisco es solo
  * visual: el "required" lo anuncia el atributo del control.
  *
  * El margen con lo que viene debajo NO vive aquí: cada componente lo pone
@@ -39,11 +40,11 @@ injectStyles('ds-field-label', `
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-label-md);
-  color:       var(--ds-input-fg-label);
+  color:       var(--ds-field-label-fg-generic);
   cursor:      default;
 }
 .ds-field-label--clickable { cursor: pointer; }
-.ds-field-label--disabled  { color: var(--ds-input-label-fg-disabled); cursor: default; }
+.ds-field-label--disabled  { color: var(--ds-field-label-fg-disabled); cursor: default; }
 `);
 
 export function FieldLabel({

@@ -968,11 +968,6 @@
 
   --ds-input-fg-default:                    var(--ds-fg-default);
   --ds-input-fg-disabled:                   var(--ds-fg-disabled);
-  --ds-input-fg-label:                      var(--ds-fg-label-default);
-  --ds-input-fg-required:                   var(--ds-fg-label-primary); /* asterisco de campo obligatorio (A11y-4) — color de marca, no rojo: rojo = error */
-  --ds-input-required-gap:                  var(--ds-spacing-2xs);  /* separación label → asterisco (A11y-4) */
-  --ds-input-fg-helper:                     var(--ds-helper-text-fg-generic);   /* borrowing átomo Helper Text */
-  --ds-input-fg-error:                      var(--ds-fg-icon-error);
 
   --ds-input-border-default:                var(--ds-borderColor-default);
   --ds-input-border-disabled:               var(--ds-borderColor-disabled);
@@ -990,12 +985,8 @@
   --ds-input-min-height:                    var(--ds-sizing-2xl);
   --ds-input-field-icon-gap:                var(--ds-spacing-lg);
   --ds-input-label-gap:                     var(--ds-spacing-xs);
-  --ds-input-label-fg-disabled:             var(--ds-fg-label-disabled);
-  --ds-input-helper-fg-disabled:            var(--ds-helper-text-fg-disabled);  /* borrowing átomo Helper Text */
   --ds-input-helper-gap:                    var(--ds-spacing-md);   /* gap se queda en Input — layout propio, NO en Helper Text */
-  --ds-input-validation-fg-text:            var(--ds-fg-default);
   --ds-input-validation-gap:                var(--ds-spacing-xs);
-  --ds-input-validation-message-gap:        var(--ds-spacing-md);   /* icono → texto (Figma validationMessage/all/root/gap/generic) */
   --ds-input-fg-placeholder:               var(--ds-fg-subtle);
   --ds-input-border-hover:                 var(--ds-borderColor-emphasis);
   --ds-input-bg-readonly:                  var(--ds-bg-page);
@@ -1087,7 +1078,9 @@
   --ds-radio-label-fg-disabled:             var(--ds-fg-label-disabled);
   --ds-radio-description-fg:                var(--ds-fg-subtle);
   --ds-radio-validation-fg:                 var(--ds-fg-error);
-  --ds-choice-group-gap:                    var(--ds-spacing-md);   /* entre opciones de RadioGroup / CheckboxGroup (A11y-4, sin componente en Figma todavía) */
+  --ds-choice-group-gap:                    var(--ds-spacing-md);   /* choiceGroup/all/options/gap/generic — entre opciones de RadioGroup / CheckboxGroup */
+  --ds-choice-group-root-gap:               var(--ds-spacing-md);   /* choiceGroup/all/root/gap/generic — pila del grupo: pregunta → ayuda → opciones */
+  --ds-choice-group-validation-gap:         var(--ds-spacing-xs);   /* choiceGroup/all/validation/gap/generic — opciones → error */
 
   --ds-radio-root-size-generic:                var(--ds-sizing-sm);
   --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);
@@ -1503,15 +1496,27 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Helper Text (helperText/*)
-     Átomo extraído de Input/InputCommon/helper el 22/07. SIN segmento `all`
-     (componente simple, sin variación por dispositivo). Solo color: la
-     tipografía (Nunito Regular 16/24, Body/sm) se consume directa de Device.
-     Segundo consumidor: contador de resultados de TableContainer.
-     El `gap` NO vive aquí — sigue en Input (--ds-input-helper-gap).
+     COMPONENT TOKENS — Form Elements (fieldLabel/* · helperText/* · validationMessage/*)
+     Los tres átomos de la página 🟢 Form Elements de Figma: Label (FieldLabel),
+     Helper (HelperText) y Validation Message (ValidationMessage). Los instancian
+     Inputs, Selector, Account Selector, Combobox, File Upload y RadioGroup /
+     CheckboxGroup. Cada átomo tiene sus propios tokens (23/10/2026) — antes
+     tomaban prestados los de Input/InputCommon. Solo color y la separación
+     INTERNA de cada átomo; la tipografía va directa de Device (regla §5) y la
+     separación ENTRE átomos la pone cada consumidor (--ds-input-*-gap,
+     --ds-choice-group-root-gap / -validation-gap).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-helper-text-fg-generic:   var(--ds-fg-body-subtle);    /* #676D76 */
-  --ds-helper-text-fg-disabled:  var(--ds-fg-body-disabled);  /* #AAAFB5 */
+  --ds-field-label-fg-generic:          var(--ds-fg-label-default);   /* fieldLabel/all/text/fg/generic */
+  --ds-field-label-fg-disabled:         var(--ds-fg-label-disabled);  /* fieldLabel/all/text/fg/disabled */
+  --ds-field-label-required-fg:         var(--ds-fg-label-primary);   /* fieldLabel/all/required/fg/generic — asterisco: color de marca, rojo = error */
+  --ds-field-label-gap:                 var(--ds-spacing-2xs);        /* fieldLabel/all/root/gap/generic — label → asterisco */
+
+  --ds-helper-text-fg-generic:          var(--ds-fg-body-subtle);     /* helperText/all/text/fg/generic */
+  --ds-helper-text-fg-disabled:         var(--ds-fg-body-disabled);   /* helperText/all/text/fg/disabled */
+
+  --ds-validation-message-fg-text:      var(--ds-fg-body-default);    /* validationMessage/all/text/fg/generic */
+  --ds-validation-message-fg-icon:      var(--ds-fg-icon-error);      /* validationMessage/all/icon/fg/generic */
+  --ds-validation-message-gap:          var(--ds-spacing-md);         /* validationMessage/all/root/gap/generic — icono → texto */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
