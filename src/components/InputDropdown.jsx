@@ -2,6 +2,7 @@ import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const css = `
@@ -15,13 +16,8 @@ const css = `
 .ds-input-dropdown__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper — encima del campo */
-.ds-input-dropdown__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-dropdown--disabled .ds-input-dropdown__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-input-dropdown__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-dropdown__message { margin-top: var(--ds-input-validation-gap); }
 
 .ds-input-dropdown__field-wrap {
   position: relative;
@@ -156,9 +152,7 @@ export const InputDropdown = forwardRef(function InputDropdown({
       )}
 
       {helperText && (
-        <p className="ds-input-dropdown__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-dropdown__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-dropdown__field-wrap">
@@ -190,7 +184,7 @@ export const InputDropdown = forwardRef(function InputDropdown({
           <Icon name="chevron-down" size="sm" />
         </span>
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-dropdown__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

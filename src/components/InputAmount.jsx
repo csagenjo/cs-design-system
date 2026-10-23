@@ -32,6 +32,7 @@ import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
@@ -48,15 +49,8 @@ const css = `
 .ds-input-amount__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper */
-.ds-input-amount__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-amount--disabled .ds-input-amount__helper {
-  color: var(--ds-input-helper-fg-disabled);
-}
+.ds-input-amount__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-amount__message { margin-top: var(--ds-input-validation-gap); }
 
 /* Contenedor del campo doble */
 .ds-input-amount__field-wrap {
@@ -263,9 +257,7 @@ export const InputAmount = forwardRef(function InputAmount({
       )}
 
       {helperText && (
-        <p className="ds-input-amount__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-amount__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-amount__field-wrap">
@@ -316,7 +308,7 @@ export const InputAmount = forwardRef(function InputAmount({
         />
 
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-amount__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
 
     </div>
   );

@@ -37,13 +37,13 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | _to be filled_ |
-| Forms | _to be filled_ |
+| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · _rest to be filled_ |
 | Data | _to be filled_ |
 | Feedback | _to be filled_ |
 | Navigation | _to be filled (includes Pagination)_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
-| Internal parts | _to be filled_ — includes `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss` |
+| Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss` |
 
 ---
 
@@ -264,3 +264,232 @@ language decision (audit §K, pending).
 
 **Tokens:** none.
 
+---
+
+## FieldLabel · HelperText · ValidationMessage (Form Elements)
+
+**Group:** Forms
+**Figma:** 🟢 Form Elements page → `Label` (State Generic/Disabled + Required), `Helper` (State Generic/Disabled), `Validation Message` (Vertically Centred · Top Aligned · Counter)
+**Code:** `src/components/FieldLabel.jsx`, `src/components/HelperText.jsx`, `src/components/ValidationMessage.jsx` (atoms)
+**Tokens:** `--ds-field-label-*` · `--ds-helper-text-*` · `--ds-validation-message-*`
+
+The three pieces every form field is made of: the label (the question, with
+the required asterisk), the helper text under it and the message under the
+control (an error or a counter). Every input, Selector, Account Selector,
+Combobox, File Upload, RadioGroup and CheckboxGroup instances these same
+atoms, so a change here reaches all of them.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Inside field components they're already placed — you only set their
+  properties on the field instance.
+- Use them on their own only to build a field the library doesn't have yet.
+
+**Properties**
+- `Label` → `State` Generic · Disabled · `Required` (shows the asterisk,
+  brand primary — red is kept for errors) · `Input Label` (text).
+- `Helper` → `State` Generic · Disabled · `Description` (text).
+- `Validation Message` → `Message Type` Vertically Centred · Top Aligned
+  (both are the same in code: the icon sits on the first line) · Counter
+  (no icon).
+
+**Building a field**
+- Order: Label → Helper → control → Validation Message.
+- The spacing between them belongs to the field (Input: `Input/InputCommon/*/gap`;
+  groups: `choiceGroup/all/root/gap` and `/validation/gap`), not to the atoms.
+- In a group, the asterisk goes on the group label, never on each option.
+  A screen that uses asterisks explains them once ("* Required field").
+
+### Developers · React
+
+```jsx
+import { FieldLabel } from './components/FieldLabel';
+import { HelperText } from './components/HelperText';
+import { ValidationMessage } from './components/ValidationMessage';
+```
+
+| Atom | Props | Notes |
+|---|---|---|
+| `FieldLabel` | `as` = `'label'` \| `'span'` \| `'p'` \| `'legend'` · `htmlFor` · `id` · `required` · `disabled` · `className` | `htmlFor` makes it clickable. The asterisk is `aria-hidden` |
+| `HelperText` | `id` · `disabled` · `className` | Always visible; never replaces the validation message |
+| `ValidationMessage` | `id` · `message` · `type` = `'error'` \| `'counter'` · `live` (default: true for error, false for counter) · `className` | With no `message` it renders nothing, but the live region stays mounted |
+
+**Usage**
+- None of the three has an outer margin. The parent sets the spacing with
+  its own class (`className`), the same way auto layout does in Figma.
+- Point the control's `aria-describedby` at the HelperText and
+  ValidationMessage `id`s.
+- Pass `message={state === 'error' ? errorMessage : ''}` — don't mount the
+  component only when there's an error, or the error won't be announced.
+
+### AI agents · Claude Code
+
+**Pick them when**
+- You build a field the library doesn't have. For the usual fields use the
+  field component (InputText, Selector, RadioGroup…) — they already include them.
+
+**Don't**
+- Rebuild a label, helper or error with plain `<p>`/`<label>` and copied CSS.
+- Put the asterisk on Checkbox or Radio options.
+- Use HelperText for errors or ValidationMessage for permanent hints.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Label 16/24 bold, helper 16/24, message 14/20 with a 16 px icon — all pass
+  4.5:1 in light and dark (disabled states are exempt).
+- Error = icon + text, never colour alone.
+
+**Your job**
+- Write the label as a question or noun the field answers; don't rely on
+  placeholder text.
+- Error text says what to fix ("Enter a date after today"), not only "Error".
+
+### Developers · React
+
+- `FieldLabel` with `htmlFor` (or `as="legend"` inside a fieldset) gives the
+  control its accessible name.
+- "Required" is read from the control's `required` / `aria-required`, so
+  the asterisk is hidden from screen readers.
+- `ValidationMessage` error lives in a persistent `LiveRegion` (polite): it's
+  announced when it appears. Counter isn't live (it would talk on every key).
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every control has a visible FieldLabel (or a group legend).
+- Helper and error ids are in the control's `aria-describedby`.
+
+Known gaps: none.
+
+**Tokens:** `--ds-field-label-fg-generic|disabled`, `--ds-field-label-required-fg`,
+`--ds-field-label-gap` (Figma `fieldLabel/all/*`) · `--ds-helper-text-fg-generic|disabled`
+(`helperText/all/text/fg/*`) · `--ds-validation-message-fg-text|fg-icon`,
+`--ds-validation-message-gap` (`validationMessage/all/*`). Typography comes
+straight from Device. Since 23/10/2026 they no longer borrow `Input/InputCommon` tokens.
+
+---
+
+## RadioGroup · CheckboxGroup
+
+**Group:** Forms
+**Figma:** 🟢 Radio button page → `Radio Group` · 🟢 Checkbox page → `Checkbox Group` (State Initial/Error/Disabled × Orientation Vertical/Horizontal, options in the **Options** slot)
+**Code:** `src/organisms/RadioGroup.jsx`, `src/organisms/CheckboxGroup.jsx` (organisms; shared structure in `_choiceGroup.jsx`)
+**Tokens:** `--ds-choice-group-*` (+ the Form Elements atoms and Radio / Checkbox)
+
+A question with several options: one answer (RadioGroup) or several
+(CheckboxGroup). The group owns the question, the helper, the asterisk and
+the error; the options are plain Radio / Checkbox.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- RadioGroup: one answer out of 2–7 visible options. More options, or
+  little space → Selector or Combobox.
+- CheckboxGroup: zero, one or several answers. A single required check
+  ("I accept the terms") also goes in a CheckboxGroup with its question.
+- Choosing between views of the same content → Segmented Control or Tabs.
+
+**Properties**
+- `State` → Initial · Error (shows the Validation Message) · Disabled.
+- `Orientation` → Vertical (default) · Horizontal (only short labels, ≤ 3 options).
+- Label and Helper are exposed: set `Required`, the question and the help.
+- Put the options in the **Options** slot — as many Radio / Checkbox as you need.
+
+**Spacing**
+- Question → helper → options: `choiceGroup/all/root/gap` (8).
+- Between options: `choiceGroup/all/options/gap` (8).
+- Options → error: `choiceGroup/all/validation/gap` (4).
+
+### Developers · React
+
+```jsx
+import { RadioGroup } from './organisms/RadioGroup';
+import { CheckboxGroup } from './organisms/CheckboxGroup';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | node | — | The question (legend) |
+| `helperText` | node | — | Under the question |
+| `errorMessage` | node | — | Shown with `state="error"` |
+| `state` | `'default'` \| `'error'` \| `'disabled'` | `'default'` | |
+| `value` / `values` | string / string[] | — | RadioGroup / CheckboxGroup, controlled |
+| `onChange` | func | — | RadioGroup: `(value)` · CheckboxGroup: `(nextValues)` |
+| `required` | bool | `false` | Asterisk on the question + native `required` |
+| `requiredLabel` | string | `'required'` | CheckboxGroup only: hidden ", required" in the legend when there are several options |
+| `orientation` | `'vertical'` \| `'horizontal'` | `'vertical'` | |
+| `spacing` | `'default'` \| `'none'` | `'default'` | `none` for lists of SelectorListItem / AccountSelectorListItem |
+| `name`, `id`, `className` | string | — | `name` is generated if omitted |
+
+```jsx
+<RadioGroup label="Account type" value={type} onChange={setType} required>
+  <Radio value="personal" label="Personal" />
+  <Radio value="business" label="Business" />
+</RadioGroup>
+```
+
+**Usage**
+- Children only need `value` and `label`; the group passes name, checked
+  state, required, error and disabled through context.
+- Never put `required` on the children.
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A form asks one question with a short, fixed list of answers.
+
+**Don't pick it when**
+- More than ~7 options → Selector / Combobox.
+- The choice applies immediately and switches a view → Segmented Control / Tabs.
+- An on/off setting → a single Checkbox inside a CheckboxGroup only if it's a question; otherwise wait for Switch.
+
+**Composition rules**
+- Always render Radio / Checkbox inside their group, never loose with
+  hand-made headings.
+- A lone required checkbox = CheckboxGroup with one option.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The question is the group's name; the asterisk sits only on it.
+- Error = icon + text under the options.
+
+**Your job**
+- Write the question as the group label — don't rely on a nearby heading.
+
+### Developers · React
+
+**Semantics**
+- `<fieldset>` + `<legend>`. RadioGroup: `role="radiogroup"` with
+  `aria-required` / `aria-invalid`. CheckboxGroup: `role="group"` (which has
+  no `aria-required`), so with several options the legend adds a hidden
+  ", required"; with one option, that option gets native `required`.
+- Helper and error are linked with `aria-describedby`; the error is in a
+  persistent live region.
+
+**Keyboard**
+- RadioGroup: one Tab stop, arrows move and select (native radios).
+- CheckboxGroup: each option is a Tab stop, Space toggles.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every group has a `label`.
+- At least one option is checked by default in a RadioGroup unless "no
+  answer" is valid.
+
+Known gaps: none.
+
+**Tokens:** `--ds-choice-group-gap` (options, `choiceGroup/all/options/gap`),
+`--ds-choice-group-root-gap` (question → helper → options, `choiceGroup/all/root/gap`),
+`--ds-choice-group-validation-gap` (`choiceGroup/all/validation/gap`).

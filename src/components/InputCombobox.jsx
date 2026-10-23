@@ -43,6 +43,7 @@ import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { Chip } from './Chip';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const css = `
@@ -55,13 +56,8 @@ const css = `
 
 .ds-input-combobox__label { margin-bottom: var(--ds-input-label-gap); }
 
-.ds-input-combobox__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-combobox--disabled .ds-input-combobox__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-input-combobox__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-combobox__message { margin-top: var(--ds-input-validation-gap); }
 
 .ds-input-combobox__field-wrap {
   position: relative;
@@ -255,9 +251,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
       )}
 
       {helperText && (
-        <p className="ds-input-combobox__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-combobox__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-combobox__field-wrap">
@@ -341,7 +335,7 @@ export const InputCombobox = forwardRef(function InputCombobox({
           </div>
         </div>
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-combobox__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

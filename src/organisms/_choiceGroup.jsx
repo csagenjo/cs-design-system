@@ -28,8 +28,9 @@ injectStyles('ds-choice-group', `
   border:         0;
   font-family:    inherit;
 }
-.ds-choice-group__legend { margin-bottom: var(--ds-input-label-gap); }
-.ds-choice-group__helper { margin-bottom: var(--ds-input-helper-gap); }
+.ds-choice-group__legend { margin-bottom: var(--ds-choice-group-root-gap); }
+.ds-choice-group__helper { margin-bottom: var(--ds-choice-group-root-gap); }
+.ds-choice-group__message { margin-top: var(--ds-choice-group-validation-gap); }
 .ds-choice-group__options {
   display:        flex;
   flex-direction: column;
@@ -93,7 +94,7 @@ export function ChoiceGroup({
         <HelperText id={helperId} className="ds-choice-group__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
       <div className="ds-choice-group__options">{render({ messageId })}</div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-choice-group__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </fieldset>
   );
 }

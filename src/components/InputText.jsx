@@ -8,6 +8,7 @@ import React, {
 import { Icon } from './Icon';
 import { mergeRefs, injectStyles } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 const useIsomorphicLayoutEffect =
@@ -137,13 +138,8 @@ const css = `
 }
 
 /* Helper text — aparece ENCIMA del campo */
-.ds-input-text__helper {
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-fg-helper);
-  margin:      0 0 var(--ds-input-helper-gap);
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-text--disabled .ds-input-text__helper { color: var(--ds-input-helper-fg-disabled); }
+.ds-input-text__helper  { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-text__message { margin-top: var(--ds-input-validation-gap); }
 
 `;
 
@@ -245,9 +241,7 @@ export const InputText = forwardRef(function InputText({
       )}
 
       {helperText && (
-        <p className="ds-input-text__helper" id={helperId}>
-          {helperText}
-        </p>
+        <HelperText id={helperId} className="ds-input-text__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className={fieldWrapClass}>
@@ -274,7 +268,7 @@ export const InputText = forwardRef(function InputText({
           </span>
         )}
       </div>
-      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-text__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });

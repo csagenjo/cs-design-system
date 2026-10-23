@@ -8,7 +8,8 @@
  *
  * Figma: `Validation Message` en 🟢 Form Elements — Body/xs (14/20), icono
  * `circle-x` de 16 px, separación icono–texto `validationMessage/all/root/gap`
- * (`spacing/md`). "Vertically Centered" y "Top Aligned" son el mismo
+ * (`spacing/md`). Tokens propios `--ds-validation-message-*`
+ * (`validationMessage/all/*`, 23/10/2026). "Vertically Centered" y "Top Aligned" son el mismo
  * comportamiento en código: el icono se centra en la PRIMERA línea, así queda
  * centrado con una línea y arriba con varias. "Counter" = sin icono.
  *
@@ -33,24 +34,24 @@ import { Icon } from './Icon';
 import { LiveRegion } from './LiveRegion';
 
 injectStyles('ds-validation-message', `
-/* margen sin especificidad: el que lo instancia puede cambiarlo con su clase */
-:where(.ds-validation-message) { margin: var(--ds-input-validation-gap) 0 0; }
+/* sin margen propio: la separación con el campo la pone quien lo instancia (su clase) */
+:where(.ds-validation-message) { margin: 0; }
 .ds-validation-message {
   display:     flex;
   align-items: flex-start;
-  gap:         var(--ds-input-validation-message-gap);
+  gap:         var(--ds-validation-message-gap);
   font-family: inherit;
   font-size:   var(--ds-fontSize-body-xs);
   font-weight: var(--ds-font-weight-regular);
   line-height: var(--ds-lineHeight-body-xs);
-  color:       var(--ds-input-validation-fg-text);
+  color:       var(--ds-validation-message-fg-text);
 }
 .ds-validation-message__icon {
   display:     inline-flex;
   align-items: center;
   flex-shrink: 0;
   height:      var(--ds-lineHeight-body-xs);
-  color:       var(--ds-input-fg-error);
+  color:       var(--ds-validation-message-fg-icon);
 }
 `);
 

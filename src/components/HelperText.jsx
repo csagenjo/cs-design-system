@@ -9,10 +9,12 @@
  * consumidores: formularios (Input*) y el contador de resultados de
  * TableContainer (ej. "1-25 de 100").
  *
- * Tokens: color vía --ds-helper-text-fg-* (Componente→Mode). Tipografía directa
+ * Figma: `Helper` (set State=Generic|Disabled) en 🟢 Form Elements.
+ * Tokens: color vía --ds-helper-text-fg-* (`helperText/all/text/fg/*`, Componente→Mode). Tipografía directa
  * de Device (Body/sm = Nunito Regular 16/24) — sin token de Componente, según la
  * regla de tipografía (CLAUDE.md §5). El `gap` respecto a otros elementos NO es
- * de este átomo: lo fija cada consumidor (Input usa --ds-input-helper-gap).
+ * de este átomo: lo fija cada consumidor con su clase (Input usa
+ * --ds-input-helper-gap, RadioGroup/CheckboxGroup --ds-choice-group-root-gap).
  *
  * Estados: generic (por defecto) · disabled.
  *
@@ -23,35 +25,28 @@
  */
 
 import React from 'react';
+import { injectStyles } from './_inputBase';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
+/* sin margen propio: la separación la pone quien lo instancia (su clase) */
+:where(.ds-helper-text) { margin: 0; }
 .ds-helper-text {
-  margin:      0;
   font-family: inherit;                          /* Nunito (fontFamily/default) */
   font-size:   var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);    /* 400 */
   line-height: var(--ds-lineHeight-body-sm);          /* 24 */
-  color:       var(--ds-helper-text-fg-generic); /* #9AA1AA */
+  color:       var(--ds-helper-text-fg-generic);
 }
-.ds-helper-text--disabled { color: var(--ds-helper-text-fg-disabled); }  /* #B9BEC4 */
+.ds-helper-text--disabled { color: var(--ds-helper-text-fg-disabled); }
 `;
 
-let injected = false;
-function injectStyles() {
-  if (injected || typeof document === 'undefined') return;
-  const s = document.createElement('style');
-  s.textContent = css;
-  document.head.appendChild(s);
-  injected = true;
-}
+injectStyles('ds-helper-text', css);
 
 /* ─── HelperText ───────────────────────────────────────────────────────────── */
 
 export function HelperText({ children, disabled = false, id, className }) {
-  injectStyles();
-
   const classes = [
     'ds-helper-text',
     disabled ? 'ds-helper-text--disabled' : '',
