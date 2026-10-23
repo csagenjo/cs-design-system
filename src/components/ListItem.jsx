@@ -14,8 +14,8 @@
  * focus-ring y el truncado con "…" salen gratis de los estados nativos del
  * navegador, sin replicar variantes de Figma en JS.
  *
- * Mensaje de error: mismo patrón que InputText.jsx (icono AlertCircle +
- * texto), reutilizando los tokens de validación de Input — decisión de
+ * Mensaje de error: átomo ValidationMessage, el mismo que InputText.jsx
+ * (icono + texto, tokens de validación de Input) — decisión de
  * Carol: "tratar File Upload como un input" para el error.
  *
  * USO:
@@ -27,7 +27,7 @@ import React, { useEffect, useId, useRef } from 'react';
 import { announce } from './announce';
 import { injectStyles } from './_inputBase';
 import { Icon } from './Icon';
-import { AlertCircle } from 'lucide-react';
+import { ValidationMessage } from './ValidationMessage';
 
 const css = `
 .ds-list-item {
@@ -106,20 +106,8 @@ const css = `
 }
 
 .ds-list-item__validation {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  margin: 0;
+  margin:  0;
   padding: 0 var(--ds-file-upload-list-item-padding-hor-generic);
-  font-size: var(--ds-fontSize-body-sm);
-  line-height: var(--ds-lineHeight-body-sm);
-  color: var(--ds-input-validation-fg-text);
-}
-.ds-list-item__validation-icon {
-  color: var(--ds-input-fg-error);
-  flex-shrink: 0;
-  margin-top: 1px;
-  display: flex;
 }
 `;
 
@@ -188,14 +176,8 @@ export function ListItem({
           <Icon name="x" size="sm" />
         </button>
       </div>
-      {status === 'error' && (
-        <p className="ds-list-item__validation" id={errorId}>
-          <span className="ds-list-item__validation-icon">
-            <AlertCircle size={14} strokeWidth={1.75} aria-hidden="true" />
-          </span>
-          {errorMessage}
-        </p>
-      )}
+      {/* sin región viva: el cambio de estado ya se anuncia con announce() */}
+      <ValidationMessage className="ds-list-item__validation" id={errorId} message={status === 'error' ? errorMessage : ''} live={false} />
     </div>
   );
 }

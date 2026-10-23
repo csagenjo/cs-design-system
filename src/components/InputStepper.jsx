@@ -1,7 +1,8 @@
 import React, { useState, forwardRef, useId } from 'react';
-import { LiveRegion } from './LiveRegion';
 import { Icon } from './Icon';
 import { injectStyles } from './_inputBase';
+import { FieldLabel } from './FieldLabel';
+import { ValidationMessage } from './ValidationMessage';
 
 const css = `
 .ds-input-stepper {
@@ -11,14 +12,7 @@ const css = `
 }
 .ds-input-stepper--full-width { display: flex; width: 100%; }
 
-.ds-input-stepper__label {
-  font-size:     var(--ds-fontSize-label-md);
-  font-weight:   var(--ds-font-weight-bold);
-  color:         var(--ds-input-fg-label);
-  line-height:   var(--ds-lineHeight-label-md);
-  margin-bottom: var(--ds-input-label-gap);
-}
-.ds-input-stepper--disabled .ds-input-stepper__label { color: var(--ds-input-label-fg-disabled); }
+.ds-input-stepper__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper — encima del campo */
 .ds-input-stepper__helper {
@@ -128,22 +122,6 @@ const css = `
 }
 .ds-input-stepper--disabled .ds-input-stepper__value { color: var(--ds-input-fg-disabled); }
 
-/* Validation message — debajo del campo */
-.ds-input-stepper__message {
-  display:     flex;
-  align-items: flex-start;
-  gap:         4px;
-  font-size:   var(--ds-fontSize-body-sm);
-  color:       var(--ds-input-validation-fg-text);
-  margin:      var(--ds-input-validation-gap) 0 0;
-  line-height: var(--ds-lineHeight-body-sm);
-}
-.ds-input-stepper__message-icon {
-  color:       var(--ds-input-fg-error);
-  flex-shrink: 0;
-  margin-top:  1px;
-  display:     flex;
-}
 `;
 
 injectStyles('ds-input-stepper', css);
@@ -197,9 +175,7 @@ export const InputStepper = forwardRef(function InputStepper({
   return (
     <div className={wrapperClass} ref={forwardedRef}>
       {label && (
-        <span className="ds-input-stepper__label" id={`${groupId}-label`}>
-          {label}
-        </span>
+        <FieldLabel as="span" className="ds-input-stepper__label" id={`${groupId}-label`} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
@@ -247,18 +223,7 @@ export const InputStepper = forwardRef(function InputStepper({
           <Icon name="plus" size="sm" />
         </button>
       </div>
-
-      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
-      <LiveRegion>
-        {state === 'error' && errorMessage && (
-          <p className="ds-input-stepper__message" id={messageId}>
-            <span className="ds-input-stepper__message-icon">
-              <Icon name="circle-x" size="2xs" />
-            </span>
-            {errorMessage}
-          </p>
-        )}
-      </LiveRegion>
+      <ValidationMessage id={messageId} message={state === 'error' ? errorMessage : ''} />
     </div>
   );
 });
