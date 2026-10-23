@@ -45,20 +45,18 @@ const css = `
   font-family: inherit;
 }
 
+/* Igual que Figma: cada par = contenido + 8 + Divider (también el último), y
+   8 entre pares. El Divider es el borde inferior del propio grupo, no un <hr>
+   suelto dentro de <dl> (ahí solo valen dt/dd y div que los agrupan, A11y-5).
+   Mismo color y grosor que el átomo Divider. */
 .ds-dl-item {
   display: flex;
   gap:     var(--ds-spacing-md);           /* 8 */
-  padding: var(--ds-spacing-sm) 0;         /* 6 vert */
+  padding-bottom: var(--ds-spacing-md);    /* 8 hasta la línea */
+  border-bottom:  var(--ds-border-width-sm) solid var(--ds-descriptionlist-divider-color);
 }
-/* A11y-5: el separador entre pares es un borde del propio grupo, no un <hr>
-   suelto dentro de <dl> (ahí solo valen dt/dd y div que los agrupan). Mismo
-   color y grosor que el átomo Divider. */
-/* el <hr> anterior llevaba el margen por defecto del navegador (8 px arriba y
-   abajo): se conserva la misma separación para no cambiar el aspecto */
 .ds-dl-item + .ds-dl-item {
-  margin-top:  var(--ds-spacing-md);
-  padding-top: calc(var(--ds-spacing-sm) + var(--ds-spacing-md));
-  border-top:  var(--ds-border-width-sm) solid var(--ds-descriptionlist-divider-color);
+  margin-top: var(--ds-spacing-md);        /* 8 entre pares */
 }
 .ds-dl--landscape .ds-dl-item { flex-direction: row;    align-items: baseline; }
 .ds-dl--portrait  .ds-dl-item { flex-direction: column; }

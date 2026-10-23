@@ -201,9 +201,9 @@ Verified with a new harness (30 checks: headings, list and table names,
 Tooltip hover/Escape including inside a dialog, RangeSlider track clicks and
 drag, Chip target, dialogs at 320 × 568), the A11y-4 (37/37), A11y-3 (40/40)
 and A11y-1 (57/57) harnesses, and pixel diffs of the gallery in light and
-dark. Visual changes: the English defaults above, and DescriptionList's
-separators sit 1 px closer (the old `<hr>` took the browser's default 9 px
-margin; the border uses `spacing/md` = 8).
+dark. Visual changes: the English defaults above, and DescriptionList now
+matches Figma: each item is content + 8 px + divider (the last one too) and
+items sit 8 px apart — the code had 14 px on each side of the line.
 
 **Notes for consumers:**
 - Accordion titles are now `<h3>` by default: set `headingLevel` to fit the page outline.
@@ -392,7 +392,7 @@ there's no `href`. That fixes every consumer at once.
 - ~~SectionHeader: `role="heading" aria-level={2}` hard-coded on a `<div>`.~~ ✅ A11y-5: real `h1`–`h6` via `level` (default 2), `level={null}` = `span` (used inside ListView).
 - ~~Dialog title and ErrorAndEmptyState title are `<p>`; LinkList title is a
   fixed `<h2>` with no styling (see A17).~~ ✅ A11y-1 (Dialog `h2`) + A11y-5: ErrorAndEmptyState `headingLevel` (fullScreen, default 2; popUp always `h2`), LinkList `titleLevel` (default 2) and the `<nav>` is named by its title.
-- ~~DescriptionList: `<hr>` as a direct child of `<dl>`.~~ ✅ A11y-5: the divider is a CSS border between items (8 px instead of the old 9 px from the `<hr>` browser margin).
+- ~~DescriptionList: `<hr>` as a direct child of `<dl>`.~~ ✅ A11y-5: the divider is each item's bottom border, spaced as in Figma (8 px to the line, 8 px between items, a line under the last item too).
 - ~~List: `list-style: none` drops list semantics in Safari (add `role="list"`).~~ ✅ A11y-5.
 - ~~Table: no way to give it a name or caption.~~ ✅ A11y-5: `ariaLabel` / `ariaLabelledBy`, dev warning if neither.
 - ~~StepIndicatorLarge and the PageTitle breadcrumb aren't ordered lists.~~ ✅ A11y-3.
