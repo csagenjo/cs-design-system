@@ -5468,26 +5468,6 @@
     }
   },
   "opacity": {
-    "pressed": {
-      "$type": "color",
-      "$value": {
-        "colorSpace": "srgb",
-        "components": [
-          1,
-          1,
-          1
-        ],
-        "alpha": 1,
-        "hex": "#FFFFFF"
-      },
-      "$extensions": {
-        "com.figma.variableId": "VariableID:9594:1759",
-        "com.figma.scopes": [
-          "FRAME_FILL",
-          "SHAPE_FILL"
-        ]
-      }
-    },
     "hover": {
       "default": {
         "$type": "color",
@@ -5616,6 +5596,108 @@
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:f67a6896055701d5f119e32f647ca12942bd50b8/-1:-1",
             "targetVariableName": "opacity/overlay/default-light",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      }
+    },
+    "shadow": {
+      "ambient": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.019607843831181526,
+            0.019607843831181526,
+            0.0235294122248888
+          ],
+          "alpha": 0.11999999731779099,
+          "hex": "#050506"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32633:27296",
+          "com.figma.scopes": [
+            "EFFECT_COLOR"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:bf3a080e698ba6b16c6d7b09d6e43df08ae96da8/-1:-1",
+            "targetVariableName": "opacity/shadow/ambient-light",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "penumbra": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.019607843831181526,
+            0.019607843831181526,
+            0.0235294122248888
+          ],
+          "alpha": 0.14000000059604645,
+          "hex": "#050506"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32633:27299",
+          "com.figma.scopes": [
+            "EFFECT_COLOR"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:2088b79d203cc94238569bfa5e8d367ff4e8857c/-1:-1",
+            "targetVariableName": "opacity/shadow/penumbra-light",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "umbra": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.019607843831181526,
+            0.019607843831181526,
+            0.0235294122248888
+          ],
+          "alpha": 0.20000000298023224,
+          "hex": "#050506"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32633:27302",
+          "com.figma.scopes": [
+            "EFFECT_COLOR"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:1fc2f1d5240f4f3c060495b38281bef4290d9545/-1:-1",
+            "targetVariableName": "opacity/shadow/umbra-light",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "umbra-strong": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.019607843831181526,
+            0.019607843831181526,
+            0.0235294122248888
+          ],
+          "alpha": 0.23999999463558197,
+          "hex": "#050506"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32633:27305",
+          "com.figma.scopes": [
+            "EFFECT_COLOR"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:ff1d7ac2d1113bf06d84bd3eee54964ee4ff3eed/-1:-1",
+            "targetVariableName": "opacity/shadow/umbra-strong-light",
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }

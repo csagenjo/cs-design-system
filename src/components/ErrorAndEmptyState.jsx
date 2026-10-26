@@ -47,7 +47,7 @@ const css = `
   align-items: center;
   box-sizing: border-box;
   background: var(--ds-dialog-root-bg-generic);
-  box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — añadida 25/08, antes ninguna variante llevaba sombra ni radio (sigue sin radio, cornerRadius 0 en Figma) */
+  box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — añadida 25/08, antes ninguna variante llevaba sombra ni radio (sigue sin radio, cornerRadius 0 en Figma) */
 }
 .ds-error-empty-state--full-screen {
   width: 100%;
