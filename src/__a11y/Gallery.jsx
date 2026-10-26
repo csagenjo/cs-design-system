@@ -311,7 +311,9 @@ export default function Gallery({ mode }) {
               <CTALink key={e} href="#" variant={v} emphasis={e}>{`CTA ${v} ${e}`}</CTALink>
             ))}
             <CTALink href="https://example.com" variant={v} external>{`Externo ${v}`}</CTALink>
-            <CTALink variant={v} disabled>{`Disabled ${v}`}</CTALink>
+            {['low', 'medium', 'high'].map((e) => (
+              <CTALink key={`dis-${e}`} variant={v} emphasis={e} disabled>{`Disabled ${e}`}</CTALink>
+            ))}
             {/* Sin href → <button> con aspecto de CTA (A11y-0, audit §D) */}
             {['low', 'medium', 'high'].map((e) => (
               <CTALink key={`btn-${e}`} variant={v} emphasis={e} onClick={noop}>{`Acción ${v} ${e}`}</CTALink>
@@ -749,6 +751,7 @@ export default function Gallery({ mode }) {
             <Link href="https://example.com" variant={v} external>Enlace externo</Link>
             {/* Sin href → <button> con aspecto de enlace (A11y-0, audit §D) */}
             <Link variant={v} onClick={noop}>{`Acción ${v} (sin href)`}</Link>
+            <Link href="#" variant={v} current>{`Página actual ${v}`}</Link>
             <Link variant={v} emphasis="medium" leftIcon rightIcon={false} onClick={noop}>{`Acción ${v} con icono`}</Link>
           </Row>
         ))}

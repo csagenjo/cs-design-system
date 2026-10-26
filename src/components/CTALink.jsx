@@ -1,37 +1,31 @@
 /**
  * CTALink — Componente atómico
- * CS Design System · v2.0
+ * CS Design System · v4.0 (26/10/2026: alineado 1:1 con Figma)
  *
- * Tokens: --ds-cta-link-* (tokens.css)
- * Sin icono. Talla única. Tres niveles de énfasis + dos variantes.
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
+ * Tokens: --ds-cta-link-* (tokens.css) ← ctaLink/all/* de Figma.
+ * Talla única (Label/lg bold), sin icono.
  *
- * ÉNFASIS (emphasis):
- *   "low"    → texto + underline (estilo inline) · borderRadius 16px
- *   "medium" → pill con borde · borderRadius 24px
- *   "high"   → pill relleno · borderRadius 80px
+ * EJES (igual que el component set `CTA link` de Figma):
+ *   emphasis → 'low' (texto subrayado) | 'medium' (contorno, por defecto) | 'high' (relleno) — Figma `Type`
+ *   variant  → 'default' (negro) | 'accent' (teal)
+ *   disabled → State=Disabled: tokens de disabled (texto, fondo, borde), nunca opacidad
  *
- * VARIANTES (variant):
- *   "default" → negro / borde gris oscuro / fondo negro
- *   "accent"  → teal / borde teal / fondo teal
+ * ESTADOS: Initial · Hover (bgMix encima del fondo; Low además subrayado de
+ *   1,5) · Pressed (:active, opacidad) · Focus (anillo doble) · Disabled.
  *
- * ESTADOS:
- *   Initial  → estilos base
- *   Hover    → overlay bgMix rgba(5,5,6,0.1) · low: underline 1.5px
- *   Focus    → doble focus ring (inner blanco + outer negro)
- *   Pressed  → opacity 0.8
+ * Mide igual en los tres énfasis: padding 6/12 + área de foco de 4 px
+ *   alrededor (margin, `--ds-cta-link-focus-area-padding`), donde va el
+ *   anillo — mismo patrón que Button (el anillo nunca sale del componente).
+ *
+ * SIN `href` o `disabled` → <button type="button"> con el mismo aspecto
+ *   (A11y-0). Un enlace no puede estar deshabilitado: `disabled` pinta un
+ *   <button disabled>, que el lector anuncia como no disponible.
  *
  * USO:
  *   <CTALink href="/ruta">Ver detalle</CTALink>
  *   <CTALink href="/ruta" emphasis="high" variant="accent">Empezar</CTALink>
  *   <CTALink href="https://..." external>Enlace externo</CTALink>
  *   <CTALink disabled>No disponible</CTALink>
- *   <CTALink onClick={guardar}>Guardar</CTALink>   ← sin href: se pinta como <button>
- *
- * SIN `href` o `disabled` → <button type="button"> con el mismo aspecto
- *   (A11y-0, 20/10/2026, audit §D). Un <a> sin href no recibe foco ni tiene
- *   rol. Un enlace no puede estar "deshabilitado": `disabled` pinta un
- *   <button disabled>, que el lector anuncia como no disponible.
  */
 
 import React from 'react';
@@ -44,107 +38,63 @@ const css = `
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
+  margin:          var(--ds-cta-link-focus-area-padding);
+  /* el borde (transparente salvo en Medium) va por dentro: el padding lo descuenta, como el stroke INSIDE de Figma */
+  padding:         calc(var(--ds-cta-link-padding-ver) - var(--ds-cta-link-border-width-medium)) calc(var(--ds-cta-link-padding-hor) - var(--ds-cta-link-border-width-medium));
   font-family:     inherit;
-  font-size:       var(--ds-fontSize-label-lg);    /* Figma: fontSize/label/lg en las 24 variantes */
-  line-height:     var(--ds-lineHeight-label-lg);  /* Figma: fontLheight/label/lg */
-  font-weight:     var(--ds-font-weight-bold);     /* Figma: fontWeight/bold */
+  font-size:       var(--ds-fontSize-label-lg);
+  line-height:     var(--ds-lineHeight-label-lg);
+  font-weight:     var(--ds-font-weight-bold);
   text-decoration: none;
   cursor:          pointer;
-  border:          1px solid transparent;
+  border:          var(--ds-cta-link-border-width-medium) solid transparent;
   box-sizing:      border-box;
-  margin:          0;              /* reset de <button> (sin href) */
-  background:      transparent;    /* idem — low/medium no tienen fondo; high lo pone abajo */
+  background:      transparent;
   appearance:      none;
   white-space:     nowrap;
   transition:      background 0.12s, border-color 0.12s, color 0.12s, opacity 0.12s;
 }
+/* Subrayado por dentro del label (inset): no suma altura, como en Figma */
+.ds-cta-link__label { --_ul: transparent; --_ulw: var(--ds-cta-link-border-bottom-width); box-shadow: inset 0 calc(-1 * var(--_ulw)) 0 var(--_ul); }
 
-/* Focus — doble anillo (solo en Focus state, no en Hover ni Pressed) */
+/* ── Low emphasis: texto subrayado ── */
+.ds-cta-link--low { border-radius: var(--ds-cta-link-border-radius-low); }
+.ds-cta-link--low.ds-cta-link--default { color: var(--ds-cta-link-fg-default); }
+.ds-cta-link--low.ds-cta-link--accent  { color: var(--ds-cta-link-fg-accent); }
+.ds-cta-link--low.ds-cta-link--default .ds-cta-link__label { --_ul: var(--ds-cta-link-border-bottom-default); }
+.ds-cta-link--low.ds-cta-link--accent  .ds-cta-link__label { --_ul: var(--ds-cta-link-border-bottom-accent); }
+.ds-cta-link--low:hover:not(:disabled) .ds-cta-link__label { --_ulw: var(--ds-cta-link-border-bottom-width-hover); }
+
+/* ── Medium emphasis: contorno ── */
+.ds-cta-link--medium { border-radius: var(--ds-cta-link-border-radius-medium); }
+.ds-cta-link--medium.ds-cta-link--default { color: var(--ds-cta-link-fg-default); border-color: var(--ds-cta-link-border-secondary); }
+.ds-cta-link--medium.ds-cta-link--accent  { color: var(--ds-cta-link-fg-accent);  border-color: var(--ds-cta-link-border-accent-secondary); }
+
+/* ── High emphasis: relleno ── */
+.ds-cta-link--high { border-radius: var(--ds-cta-link-border-radius-high); }
+.ds-cta-link--high.ds-cta-link--default { --_fill: var(--ds-cta-link-bg-primary);        color: var(--ds-cta-link-fg-primary);        background: var(--_fill); }
+.ds-cta-link--high.ds-cta-link--accent  { --_fill: var(--ds-cta-link-bg-accent-primary); color: var(--ds-cta-link-fg-accent-primary); background: var(--_fill); }
+
+/* ── Hover: bgMix encima del fondo (Figma: segundo fill del Root) ── */
+.ds-cta-link:hover:not(:disabled) {
+  background: linear-gradient(var(--ds-cta-link-bg-mix-hover), var(--ds-cta-link-bg-mix-hover)), var(--_fill, transparent);
+}
+
+/* ── Pressed ── */
+.ds-cta-link:active:not(:disabled) { opacity: var(--ds-cta-link-opacity-pressed); }
+
+/* ── Focus: anillo doble dentro del área de foco (mismo patrón que Button) ── */
 .ds-cta-link:focus-visible {
-  /* outline transparente: visible solo en colores forzados — audit §F */
-  outline:       var(--ds-border-width-lg) solid transparent;
-  border-radius: var(--ds-cta-link-border-radius-focus);
-  box-shadow:    0 0 0 2px var(--ds-cta-link-focus-inner),
-                 0 0 0 4px var(--ds-cta-link-focus-outer);
+  outline:        var(--ds-cta-link-focus-width) solid var(--ds-cta-link-focus-outer);
+  outline-offset: var(--ds-cta-link-focus-width);
+  box-shadow:     0 0 0 var(--ds-cta-link-focus-width) var(--ds-cta-link-focus-inner);
 }
 
-/* Pressed — opacity token */
-.ds-cta-link:active:not([aria-disabled="true"]) {
-  opacity: var(--ds-cta-link-opacity-pressed);
-}
-
-/* ── Low emphasis ── */
-.ds-cta-link--low {
-  padding:                   2px 0;
-  border-radius:             var(--ds-cta-link-border-radius-low);
-  border-color:              transparent;
-  text-decoration:           underline;
-  text-underline-offset:     3px;
-  text-decoration-thickness: 1px;
-}
-.ds-cta-link--low.ds-cta-link--default {
-  color:                 var(--ds-cta-link-fg-default);
-  text-decoration-color: var(--ds-cta-link-border-bottom-default);
-}
-.ds-cta-link--low.ds-cta-link--accent {
-  color:                 var(--ds-cta-link-fg-accent);
-  text-decoration-color: var(--ds-cta-link-border-bottom-accent);
-}
-/* Low hover: overlay + underline más grueso */
-.ds-cta-link--low:not([aria-disabled="true"]):hover {
-  background:                var(--ds-cta-link-bg-mix-hover);
-  text-decoration-thickness: 1.5px;
-}
-
-/* ── Medium emphasis ── */
-.ds-cta-link--medium {
-  padding:       var(--ds-cta-link-padding-ver) var(--ds-cta-link-padding-hor);
-  border-radius: var(--ds-cta-link-border-radius-medium);
-}
-.ds-cta-link--medium.ds-cta-link--default {
-  color:        var(--ds-cta-link-fg-default);
-  border-color: var(--ds-cta-link-border-secondary);
-}
-.ds-cta-link--medium.ds-cta-link--accent {
-  color:        var(--ds-cta-link-fg-accent);
-  border-color: var(--ds-cta-link-border-accent-secondary);
-}
-.ds-cta-link--medium:not([aria-disabled="true"]):hover {
-  background: var(--ds-cta-link-bg-mix-hover);
-}
-
-/* ── High emphasis ── */
-.ds-cta-link--high {
-  padding:       var(--ds-cta-link-padding-ver) var(--ds-cta-link-padding-hor);
-  border-radius: var(--ds-cta-link-border-radius-high);
-}
-.ds-cta-link--high.ds-cta-link--default {
-  color:        var(--ds-cta-link-fg-primary);
-  background:   var(--ds-cta-link-bg-primary);
-  border-color: var(--ds-cta-link-bg-primary);
-}
-.ds-cta-link--high.ds-cta-link--accent {
-  color:        var(--ds-cta-link-fg-accent-primary);
-  background:   var(--ds-cta-link-bg-accent-primary);
-  border-color: var(--ds-cta-link-bg-accent-primary);
-}
-.ds-cta-link--high.ds-cta-link--default:not([aria-disabled="true"]):hover {
-  background: color-mix(in srgb, var(--ds-cta-link-bg-primary), transparent 10%);
-}
-.ds-cta-link--high.ds-cta-link--accent:not([aria-disabled="true"]):hover {
-  background: color-mix(in srgb, var(--ds-cta-link-bg-accent-primary), transparent 10%);
-}
-
-/* ── Disabled — debe ir al final para ganar conflictos de misma especificidad ── */
-.ds-cta-link[aria-disabled="true"] {
-  color:           var(--ds-cta-link-fg-disabled);
-  cursor:          not-allowed;
-  pointer-events:  none;
-  text-decoration: none;
-  background:      transparent;
-  border-color:    transparent;
-  opacity:         0.6;
-}
+/* ── Disabled: sus tokens, nunca opacidad ── */
+.ds-cta-link:disabled { cursor: not-allowed; color: var(--ds-cta-link-fg-disabled); }
+.ds-cta-link--low:disabled .ds-cta-link__label { --_ul: var(--ds-cta-link-border-disabled); }
+.ds-cta-link--medium:disabled { border-color: var(--ds-cta-link-border-disabled); }
+.ds-cta-link--high:disabled   { --_fill: var(--ds-cta-link-bg-disabled); background: var(--_fill); }
 `;
 
 let _styleInjected = false;
@@ -187,11 +137,10 @@ export function CTALink({
         className={classes}
         onClick={disabled ? undefined : onClick}
         disabled={disabled || undefined}
-        aria-disabled={disabled ? 'true' : undefined}
         aria-label={ariaLabel}
         {...rest}
       >
-        {children}
+        <span className="ds-cta-link__label">{children}</span>
       </button>
     );
   }
@@ -206,40 +155,13 @@ export function CTALink({
       aria-label={ariaLabel}
       {...rest}
     >
-      {children}
+      <span className="ds-cta-link__label">{children}</span>
       {external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
     </a>
   );
 }
 
 export default CTALink;
-
-
-/* ─── Tokens requeridos en tokens.css ────────────────────────────────────────
-
---ds-cta-link-fg-default              #050506
---ds-cta-link-fg-primary              #FFFFFF
---ds-cta-link-fg-accent               #286371
---ds-cta-link-fg-accent-primary       #FFFFFF
---ds-cta-link-fg-disabled             (hereda de --ds-fg-disabled)
---ds-cta-link-bg-primary              #050506
---ds-cta-link-bg-accent-primary       #4BA9C0
---ds-cta-link-bg-mix-hover            rgba(5,5,6,0.1)
---ds-cta-link-border-secondary        #2C2F34
---ds-cta-link-border-accent-secondary #286371
---ds-cta-link-border-bottom-default   #2C2F34
---ds-cta-link-border-bottom-accent    #286371
---ds-cta-link-focus-inner             #FFFFFF
---ds-cta-link-focus-outer             #050506
---ds-cta-link-border-radius-low       16px   ← NUEVO (ctaLink/all/root/borderRadius/lowEmphasis)
---ds-cta-link-border-radius-medium    24px   ← NUEVO (ctaLink/all/root/borderRadius/mediumEmphasis)
---ds-cta-link-border-radius-high      80px   ← ya existía como hardcode, ahora es token
---ds-cta-link-border-radius-focus     80px   ← NUEVO (ctaLink/all/root/borderRadius/focus)
---ds-cta-link-opacity-pressed         0.8    ← NUEVO (ctaLink/all/root/opacity/pressed = 80)
---ds-cta-link-padding-ver             6px    (ctaLink/all/root/paddingVer/generic)
---ds-cta-link-padding-hor             12px   (ctaLink/all/root/paddingHor/generic)
-
-*/
 
 
 /* ─── Ejemplos de uso ──────────────────────────────────────────────────────

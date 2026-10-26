@@ -1,70 +1,61 @@
 /**
  * Link — Componente atómico
- * CS Design System · v2.0
+ * CS Design System · v4.0 (26/10/2026: alineado 1:1 con Figma)
  *
- * Tokens: --ds-link-* (tokens.css) — alineados con arquitectura link/all/ de Figma
- * Iconos: lucide-react (ChevronRight)
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
+ * Tokens: --ds-link-* (tokens.css) ← link/all/* de Figma. Iconos: átomo Icon.
  *
- * VARIANTES:
- *   "default" → label negro, underline negro, icono negro
- *   "accent"  → label teal, underline teal, icono teal · visited: lavanda
+ * EJES (igual que el component set `Link` de Figma):
+ *   variant  → 'default' (negro) | 'accent' (teal)
+ *   emphasis → 'low' (regular) | 'medium' (bold)    — Figma `Type`
+ *   size     → 'xs' | 'sm' (por defecto) | 'md' | 'lg' — texto label xs/sm/md/lg,
+ *              iconos 16 / 20 / 24 / 32
+ *   leftIcon / rightIcon → true (chevron-right) o el nombre de un icono de `Icon`
  *
- * TAMAÑOS: xs · sm (default) · md · lg
+ * ESTADOS (Figma `State`):
+ *   Initial · Hover (bgMix) · Pressed (:active, opacidad) · Focus (anillo doble
+ *   pegado al enlace, 2 + 2 px) · Visited (subrayado lila; Accent también texto
+ *   e icono) · Current → `current` = página actual: SemiBold + aria-current="page"
  *
- * EMPHASIS:
- *   "low"    → fontWeight regular (400)
- *   "medium" → fontWeight bold (700)
+ *   Sin área de foco (decisión de Carol 26/10): el enlace suele ir dentro de
+ *   un texto o de una lista; el anillo se pinta pegado y el contenedor deja aire.
  *
- * ESTADOS:
- *   Initial  → estilos base
- *   Hover    → overlay bgMix rgba(5,5,6,0.1)
- *   Focus    → doble focus ring (inner blanco + outer color de foco del sistema, azul)
- *   Active   → opacity 0.8 + SemiBold
- *   Visited  → lavanda (solo variant accent)
+ * SIN `href` → <button type="button"> con el mismo aspecto (A11y-0): `href` =
+ *   navega (es un enlace); solo `onClick` = acción en la vista (es un botón).
+ *   El aviso "(opens in new tab)" se añade con `external` o con target="_blank".
  *
  * USO:
  *   <Link href="/ruta">Ver detalle</Link>
  *   <Link href="/ruta" variant="accent" size="md" emphasis="medium">Más info</Link>
- *   <Link href="/ruta" leftIcon rightIcon={false}>Anterior</Link>
- *   <Link href="https://..." external>Enlace externo</Link>
- *   <Link onClick={abrirEdicion}>Editar</Link>   ← sin href: se pinta como <button>
- *
- * SIN `href` → <button type="button"> con el mismo aspecto (A11y-0, 20/10/2026).
- *   Un <a> sin href no recibe foco ni tiene rol: con solo `onClick` el enlace
- *   no se podía usar con teclado ni lo anunciaba el lector (audit §D). Regla
- *   de uso: si lleva a otra página/URL → `href` (es un enlace de verdad); si
- *   ejecuta una acción en la misma vista → solo `onClick` (es un botón con
- *   aspecto de enlace). Arregla de una vez TopNavigation (flydown),
- *   DescriptionList (Edit), PageTitle (nav y breadcrumb) y CellActions.
- *   El aviso "(opens in new tab)" se añade con `external` o con target="_blank".
+ *   <Link href="/clientes" current>Clientes</Link>
+ *   <Link onClick={abrirEdicion} rightIcon={false}>Editar</Link>
  */
 
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
+import { Icon } from './Icon';
 import { VisuallyHidden } from './VisuallyHidden';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); --_icon: 12; }
-.ds-link--sm { --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: 14; }
-.ds-link--md { --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md);  --_icon: 16; }
-.ds-link--lg { --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg);  --_icon: 18; }
+.ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); --_icon: var(--ds-link-icon-size-xs); }
+.ds-link--sm { --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-link-icon-size-sm); }
+.ds-link--md { --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-link-icon-size-md); }
+.ds-link--lg { --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-link-icon-size-lg); }
 
 .ds-link {
   display:         inline-flex;
   align-items:     center;
-  gap:             4px;
+  gap:             var(--ds-link-gap);
   font-size:       var(--_fs);
   line-height:     var(--_lh);
   font-weight:     var(--ds-font-weight-regular);
   font-family:     inherit;
   text-decoration: none;
   cursor:          pointer;
-  border-radius:   2px;
+  border-radius:   var(--ds-link-border-radius);
   transition:      background 0.12s, opacity 0.12s;
 }
+.ds-link .ds-link__icon { width: var(--_icon); height: var(--_icon); flex-shrink: 0; }
 
 /* ── Sin href → <button>: quita el aspecto de botón nativo ── */
 .ds-link--as-button {
@@ -76,44 +67,41 @@ const css = `
   appearance:  none;
 }
 
-/* ── Underline sobre el texto ── */
-.ds-link__text {
-  border-bottom: var(--ds-link-border-bottom-width) solid;
-}
+/* ── Subrayado bajo el texto (frame Link de Figma, borde inferior) ── */
+.ds-link__text { box-shadow: inset 0 calc(-1 * var(--ds-link-border-bottom-width)) 0 var(--_ul); } /* por dentro: no suma altura, como en Figma */
 
 /* ── Default ── */
 .ds-link--default                        { color: var(--ds-link-fg-label-default); }
-.ds-link--default .ds-link__text         { border-bottom-color: var(--ds-link-border-bottom-default); }
+.ds-link--default .ds-link__text         { --_ul: var(--ds-link-border-bottom-default); }
 .ds-link--default .ds-link__icon         { color: var(--ds-link-fg-icon-default); }
-.ds-link--default:visited .ds-link__text { border-bottom-color: var(--ds-link-border-bottom-visited); }
+.ds-link--default:visited .ds-link__text { --_ul: var(--ds-link-border-bottom-visited); }
 
 /* ── Accent ── */
 .ds-link--accent                          { color: var(--ds-link-fg-label-accent); }
-.ds-link--accent .ds-link__text           { border-bottom-color: var(--ds-link-border-bottom-accent); }
+.ds-link--accent .ds-link__text           { --_ul: var(--ds-link-border-bottom-accent); }
 .ds-link--accent .ds-link__icon           { color: var(--ds-link-fg-icon-accent); }
 .ds-link--accent:visited                  { color: var(--ds-link-fg-label-accent-visited); }
-.ds-link--accent:visited .ds-link__text   { border-bottom-color: var(--ds-link-border-bottom-visited); }
+.ds-link--accent:visited .ds-link__text   { --_ul: var(--ds-link-border-bottom-visited); }
 .ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-fg-icon-visited); }
 
-/* ── Emphasis ── */
+/* ── Emphasis (Figma Type) ── */
 .ds-link--emphasis-medium { font-weight: var(--ds-font-weight-bold); }
+
+/* ── Current (Figma State=Current): página actual ── */
+.ds-link[aria-current="page"] { font-weight: var(--ds-font-weight-semibold); }
 
 /* ── Hover ── */
 .ds-link:hover { background: var(--ds-link-bg-mix-hover); }
 
-/* ── Focus ── */
-.ds-link:focus-visible {
-  /* outline transparente: invisible normalmente, visible en colores forzados
-     (Windows High Contrast elimina el box-shadow) — audit §F. */
-  outline:    var(--ds-border-width-lg) solid transparent;
-  box-shadow: 0 0 0 2px var(--ds-link-focus-inner),
-              0 0 0 4px var(--ds-link-focus-outer);
-}
+/* ── Pressed ── */
+.ds-link:active { opacity: var(--ds-link-opacity-pressed); }
 
-/* ── Active — opacity + SemiBold ── */
-.ds-link:active {
-  opacity:     var(--ds-link-opacity-pressed);
-  font-weight: var(--ds-font-weight-semibold);
+/* ── Focus: anillo doble pegado al enlace (Focus inner −2, Focus outer −4).
+   outline transparente: visible solo en colores forzados — audit §F. ── */
+.ds-link:focus-visible {
+  outline:    var(--ds-link-focus-width) solid transparent;
+  box-shadow: 0 0 0 var(--ds-link-focus-width) var(--ds-link-focus-inner),
+              0 0 0 calc(2 * var(--ds-link-focus-width)) var(--ds-link-focus-outer);
 }
 `;
 
@@ -135,6 +123,7 @@ export function Link({
   emphasis  = 'low',
   leftIcon  = false,
   rightIcon = true,
+  current   = false,   // Figma State=Current: página actual (aria-current="page")
   external  = false,
   href,
   target,
@@ -144,8 +133,9 @@ export function Link({
   children,
   ...rest
 }) {
-  const iconSize    = { xs: 12, sm: 14, md: 16, lg: 18 }[size];
-  const strokeWidth = emphasis === 'medium' ? 2.5 : 1.75;
+  // Icono por nombre (true = chevron-right); el tamaño lo pone el CSS (--_icon)
+  const iconName = (v) => (v === true ? 'chevron-right' : v);
+  const icon = (v) => v ? <Icon name={iconName(v)} size="2xs" className="ds-link__icon" /> : null;
 
   const resolvedTarget = target ?? (external ? '_blank'              : undefined);
   const resolvedRel    = rel    ?? (external ? 'noopener noreferrer' : undefined);
@@ -163,16 +153,16 @@ export function Link({
 
   const content = (
     <>
-      {leftIcon  && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
+      {icon(leftIcon)}
       <span className="ds-link__text">{children}</span>
-      {rightIcon && <ChevronRight size={iconSize} strokeWidth={strokeWidth} className="ds-link__icon" aria-hidden="true" />}
+      {icon(rightIcon)}
       {opensNewTab && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
     </>
   );
 
   if (!isAnchor) {
     return (
-      <button type="button" className={classes} onClick={onClick} aria-label={ariaLabel} {...rest}>
+      <button type="button" className={classes} onClick={onClick} aria-label={ariaLabel} aria-current={current ? 'page' : undefined} {...rest}>
         {content}
       </button>
     );
@@ -186,6 +176,7 @@ export function Link({
       className={classes}
       onClick={onClick}
       aria-label={ariaLabel}
+      aria-current={current ? 'page' : undefined}
       {...rest}
     >
       {content}
@@ -205,4 +196,5 @@ export default Link;
 <Link href="/ruta" rightIcon={false}>Sin icono</Link>
 <Link href="https://..." external>Enlace externo</Link>
 <Link onClick={() => setEditing(true)}>Editar</Link>      ← <button> con aspecto de enlace
+<Link href="/clientes" current>Clientes</Link>         ← página actual (SemiBold)
 */

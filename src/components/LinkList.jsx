@@ -1,6 +1,13 @@
 import React from 'react';
 import { Link } from './Link';
 
+/**
+ * LinkList — fila(s) de Figma `Link list`: icono de lista (por defecto
+ * chevron-right, intercambiable con `item.icon`) + Link. Aquí se compone una
+ * lista de N filas dentro de <nav>; la separación entre filas es del
+ * contenedor (`gap` sm/md/lg).
+ */
+
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
@@ -13,10 +20,12 @@ const css = `
 }
 
 .ds-link-list__title { margin: 0; color: var(--ds-link-list-title-fg); }
+/* Icono de lista (Figma linkList/all/iconLeft/fg): mismo color en todas las filas, también en Accent */
+.ds-link-list .ds-link > .ds-link__icon:first-child { color: var(--ds-link-list-icon-fg); }
 
-.ds-link-list--gap-sm { gap: var(--ds-spacing-xs); }
-.ds-link-list--gap-md { gap: var(--ds-spacing-md); }
-.ds-link-list--gap-lg { gap: var(--ds-spacing-xl); }
+.ds-link-list--gap-sm { gap: var(--ds-link-list-item-gap-sm); }
+.ds-link-list--gap-md { gap: var(--ds-link-list-item-gap-md); }
+.ds-link-list--gap-lg { gap: var(--ds-link-list-item-gap-lg); }
 `;
 
 let _styleInjected = false;
@@ -65,10 +74,10 @@ export function LinkList({
               href={item.href}
               onClick={item.onClick}
               external={item.external}
-              leftIcon={item.leftIcon ?? true}
+              leftIcon={item.icon ?? item.leftIcon ?? true /* icono de lista (Figma Left icon) */}
               rightIcon={item.rightIcon ?? true}
               ariaLabel={item.ariaLabel}
-              aria-current={item.current ? 'page' : undefined}
+              current={item.current}
             >
               {item.label}
             </Link>
