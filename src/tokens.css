@@ -269,6 +269,11 @@
   --ds-opacity-hover-subtle-inverse: rgba(255,255,255,0.1);
   --ds-opacity-overlay:            rgba(5,5,6,0.3);
   --ds-opacity-pressed:            0.8;
+  /* opacity/shadow/* (26/10) — capas de las sombras (Effect Styles). Negro; en dark el doble de opaco */
+  --ds-opacity-shadow-ambient:      rgba(5,5,6,0.12);
+  --ds-opacity-shadow-penumbra:     rgba(5,5,6,0.14);
+  --ds-opacity-shadow-umbra:        rgba(5,5,6,0.20);
+  --ds-opacity-shadow-umbra-strong: rgba(5,5,6,0.24);
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -793,7 +798,7 @@
   --ds-accordion-fg-text:              var(--ds-fg-default);
   --ds-accordion-fg-icon:              var(--ds-fg-default);
   --ds-accordion-border-color:        var(--ds-borderColor-default);
-  --ds-accordion-border-width:        1px;
+  --ds-accordion-border-width:        var(--ds-border-width-sm);
   --ds-accordion-title-padding-left:  8px;
   --ds-accordion-title-padding-ver:   var(--ds-spacing-sm); /* 6 — paso de compensación: 6+28+6 = 40 (29/09) */
   --ds-accordion-title-padding-right: 16px;
@@ -882,7 +887,7 @@
   /* Effect Style "Slider/Knob Shadow" (local, 28/09 — antes era el estilo remoto "Switch/Thumb Shadow"),
      literal de Componente — mismo criterio que --ds-snackbar-root-shadow. Solo Initial/Hover:
      Figma no la pinta en Focus (el anillo sustituye a la elevación) ni en Disabled. */
-  --ds-slider-knob-shadow:              0 1px 3px 0 rgba(0,0,0,0.2), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.14);
+  --ds-slider-knob-shadow:              0 1px 3px 0 var(--ds-opacity-shadow-umbra), 0 2px 1px -1px var(--ds-opacity-shadow-ambient), 0 1px 1px 0 var(--ds-opacity-shadow-penumbra);
   --ds-slider-knob-focus-inner:         var(--ds-borderColor-focus-inner);
   --ds-slider-knob-focus-outer:         var(--ds-borderColor-focus-outer);
 
@@ -936,7 +941,7 @@
   --ds-combobox-root-border-width-focus: 2px;
   --ds-combobox-picker-bg:              var(--ds-bg-container); /* corregido 14/09 — era bg-default (tono más oscuro en dark), el panel flotante es superficie elevada */
   --ds-combobox-picker-border-radius:   8px;
-  --ds-combobox-picker-shadow:          0 4px 4px rgba(0, 0, 0, 0.25);
+  --ds-combobox-picker-shadow:          0 4px 4px var(--ds-opacity-shadow-umbra-strong); /* Effect Style Picker/Shadow (26/10; antes 25 % literal) */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Popover Sheet (popoverSheet/all/*)
@@ -958,7 +963,7 @@
   --ds-popover-sheet-focus-outer:        var(--ds-borderColor-focus-outer); /* foco del panel al abrir con teclado (A11y-4) */
   --ds-popover-sheet-root-border-radius: 4px;   /* literal, Figma cornerRadius=4 */
   --ds-popover-sheet-root-padding:       8px;   /* spacing/md — consolidado 14/09 desde 6 tokens fragmentados sin enlazar (popoverSheet/web/root/padding*) */
-  --ds-popover-sheet-root-shadow:        0 5px 5px -3px rgba(0, 0, 0, 0.20), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
+  --ds-popover-sheet-root-shadow:        0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
   --ds-popover-sheet-pointer-bg:         var(--ds-bg-container);
   --ds-popover-sheet-pointer-width:      24px;  /* literal, Figma .Pointer 24×12 */
   --ds-popover-sheet-pointer-height:     12px;
@@ -1597,9 +1602,8 @@
   --ds-snackbar-root-padding-ver-single:  var(--ds-spacing-sm);        /* 6 */
   --ds-snackbar-root-padding-ver-multi:   var(--ds-spacing-lg);        /* 12 */
   --ds-snackbar-root-gap-single:          var(--ds-spacing-sm);        /* 6 */
-  --ds-snackbar-root-shadow:              0px 3px 5px -1px rgba(0,0,0,0.2),
-                                           0px 1px 18px 0px rgba(0,0,0,0.12),
-                                           0px 6px 10px 1px rgba(0,0,0,0.14);
+  --ds-dialog-shadow:                     0 24px 24px 0 var(--ds-opacity-shadow-umbra-strong), 0 0 24px 0 var(--ds-opacity-shadow-ambient); /* Effect Style Dialog/DialogShadow (Dialog, DialogSimple, ErrorAndEmptyState) */
+  --ds-snackbar-root-shadow:              0 3px 5px -1px var(--ds-opacity-shadow-umbra), 0 1px 18px 0 var(--ds-opacity-shadow-ambient), 0 6px 10px 1px var(--ds-opacity-shadow-penumbra);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1876,10 +1880,10 @@
      SidebarMenu.jsx — sin límite duro en Child/Gran son (recomendaciones de
      arquitectura de información, no un número, ver CLAUDE.md §9).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-sidebar-menu-title-padding-horizontal: 16px;
-  --ds-sidebar-menu-title-padding-top:        16px;
-  --ds-sidebar-menu-title-padding-bottom:     8px;
-  --ds-sidebar-menu-indent-step:              16px; /* por nivel: Parent=0, Child=1×step, Gran son=2×step */
+  --ds-sidebar-menu-title-padding-horizontal: var(--ds-spacing-xl);
+  --ds-sidebar-menu-title-padding-top:        var(--ds-spacing-xl);
+  --ds-sidebar-menu-title-padding-bottom:     var(--ds-spacing-md);
+  --ds-sidebar-menu-indent-step:              var(--ds-spacing-xl); /* por nivel: Parent=0, Child=1×step, Gran son=2×step */
   --ds-sidebar-menu-chevron-fg-primary:       var(--ds-fg-icon-primary); /* teal #4BA9C0 fijo — pedido explícito de Carol 17/09, el chevron heredaba negro del texto de la fila */
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1950,7 +1954,7 @@
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-card-root-bg:             var(--ds-bg-default); /* #FFFFFF */
   --ds-card-root-border-radius:  4px;
-  --ds-card-root-shadow:         0 5px 5px -3px rgba(0, 0, 0, 0.20), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 8px 10px 1px rgba(0, 0, 0, 0.14);
+  --ds-card-root-shadow:         0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Image (image/all/*)
@@ -2103,6 +2107,14 @@
     --ds-opacity-hover-default: rgba(255,255,255,0.1);
     --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
     --ds-opacity-overlay:       rgba(255,255,255,0.3);
+  --ds-opacity-shadow-ambient:      rgba(5,5,6,0.24);
+  --ds-opacity-shadow-penumbra:     rgba(5,5,6,0.28);
+  --ds-opacity-shadow-umbra:        rgba(5,5,6,0.40);
+  --ds-opacity-shadow-umbra-strong: rgba(5,5,6,0.48);
+    --ds-opacity-shadow-ambient:      rgba(5,5,6,0.24);
+    --ds-opacity-shadow-penumbra:     rgba(5,5,6,0.28);
+    --ds-opacity-shadow-umbra:        rgba(5,5,6,0.40);
+    --ds-opacity-shadow-umbra-strong: rgba(5,5,6,0.48);
 
     /* Link dark */
     --ds-link-fg-label-default:        #FFFFFF;

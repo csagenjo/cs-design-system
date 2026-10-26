@@ -52,7 +52,7 @@ const css = `
   gap: var(--ds-dialog-root-gap-generic);
   border-radius: var(--ds-dialog-root-border-radius-generic);
   overflow: hidden;
-  box-shadow: 0px 24px 24px 0px rgba(0,0,0,0.24), 0px 0px 24px 0px rgba(0,0,0,0.12); /* Dialog/DialogShadow — 25/08: aplicada a todas las variantes, antes solo PopUp */
+  box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — 25/08: aplicada a todas las variantes, antes solo PopUp */
 }
 .ds-dialog--pop-up {
   /* A11y-5 (1.4.10): a 320 px de ancho o con zoom al 400 % se encoge al viewport
