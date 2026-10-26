@@ -1977,7 +1977,7 @@
   --ds-page-title-root-padding-hor:  8px;  /* pageTitle/root/paddingHor — spacing/md */
   --ds-page-title-root-padding-ver:  4px;  /* pageTitle/root/paddingVer — spacing/xs */
   --ds-page-title-root-gap:          12px; /* pageTitle/root/gap — spacing/lg, antes spacing/md(8) — Carol lo subió el 28/09: en local se veía todo muy pegado, la línea de título necesitaba más aire */
-  --ds-page-title-buttons-gap:       20px; /* pageTitle/buttons/gap — sin equivalente en la escala, token propio */
+  --ds-page-title-buttons-gap:       var(--ds-spacing-xl); /* pageTitle/buttons/gap → spacing/xl (26/10; antes 20 literal): + 8 del área de foco de Button = 24 visibles */
   --ds-page-title-nav-icon-fg:       var(--ds-fg-icon-primary); /* pageTitle/nav/icon/fg */
   --ds-page-title-nav-icon-size-mobile:  20px; /* pageTitle/nav/icon/size/mobile — sizing/xs */
   --ds-page-title-nav-icon-size-tablet:  24px; /* pageTitle/nav/icon/size/tablet — sizing/sm */
