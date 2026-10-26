@@ -29,6 +29,7 @@ Rules that apply to every entry:
   Never hard-code colours, spacing or radii.
 - Import from the file path; there is no barrel export.
   Atoms live in `src/components/`, organisms in `src/organisms/`.
+- Hover has two families on purpose: **blue** (`bg/hover-primary`) on selectable surfaces such as rows, options and tabs; **veil** (`opacity/hover`) on controls that sit on any background (Button, Icon Button, Chip, Link, CTA Link).
 - If a piece is listed under **Internal parts**, don't use it directly —
   use the component named next to it.
 
