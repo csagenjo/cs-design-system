@@ -744,7 +744,7 @@ Known gaps: none.
 ## ButtonBar
 
 **Group:** Actions (organism)
-**Figma:** 🟢 Buttons page → `Button Bar` set (Variant Complex / Simple / Forms / Details + `Show Notification`, `Show Previous`, `Show Negative`, `Show Cancel`, `Show Secondary`, `Show Primary`, `Show Next`; created 26/10) · frame *Button Bar — How to use & Accessibility*
+**Figma:** 🟢 Buttons page → `Button Bar` set (Variant Complex / Simple / Form / Detail + `Show Notification`, `Show Previous`, `Show Negative`, `Show Cancel`, `Show Secondary`, `Show Primary`, `Show Next`; created 26/10) · frames *Button Bar* (variants, by Carol) and *Button Bar — How to use & Accessibility*
 **Code:** `src/organisms/ButtonBar.jsx` (organism, v3; composes Button and takes an InlineNotification)
 **Tokens:** `--ds-button-bar-gap`, `--ds-button-bar-notification-gap` (`buttonBar/all/*`)
 
@@ -760,8 +760,8 @@ screen in La Plataforma reads the same.
 - `Complex` → step processes and master-detail. Left: notification above
   Previous + negative actions. Right: Cancel, secondary actions, primary, Next.
 - `Simple` → search and filters. Left: notification. Right: secondary + Search.
-- `Forms` → forms. Left: notification above negative actions. Right: Cancel + primary.
-- `Details` → detail headers. Left: notification. Right: secondary + primary.
+- `Form` → forms. Left: notification above negative actions. Right: Cancel + primary.
+- `Detail` → detail headers. Left: notification. Right: secondary + primary.
 
 **Rules**
 - Buttons are Accent Large. Primary filled, one per bar, last on the right
