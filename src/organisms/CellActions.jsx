@@ -24,8 +24,8 @@
  *     <Link size="sm">Editar</Link>
  *   </CellActions>
  *   <CellActions surface="zebra" lastRow>
- *     <Button variant="ghost" size="small">Editar</Button>
- *     <Button variant="ghost" size="small">Borrar</Button>
+ *     <Button variant="tertiary" size="sm">Editar</Button>
+ *     <Button variant="tertiary" size="sm">Borrar</Button>
  *   </CellActions>
  */
 

@@ -38,11 +38,6 @@
     transition-delay:    0s !important;
     scroll-behavior:     auto !important;
   }
-
-  /* Button: escala al pulsar (0.98) — movimiento sin función. */
-  .ds-btn:active:not(:disabled) {
-    transform: none !important;
-  }
 }
 
 

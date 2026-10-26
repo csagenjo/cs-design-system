@@ -168,12 +168,12 @@ export function DialogSimple({
       {showButtonBar && (primaryButton || secondaryButton) && (
         <div className="ds-dialog-simple__cta">
           {primaryButton && (
-            <Button variant="default" size={btnSize} fullWidth onClick={onPrimaryButton}>
+            <Button type="default" variant="primary" size={btnSize} fullWidth onClick={onPrimaryButton}>
               {primaryButtonLabel}
             </Button>
           )}
           {secondaryButton && (
-            <Button variant="default" outline size={btnSize} fullWidth onClick={onSecondaryButton}>
+            <Button type="default" variant="secondary" size={btnSize} fullWidth onClick={onSecondaryButton}>
               {secondaryButtonLabel}
             </Button>
           )}

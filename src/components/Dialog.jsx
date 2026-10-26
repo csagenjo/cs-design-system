@@ -115,7 +115,7 @@ export function Dialog({
   const titleId = useId();
   useModal({ open: modal, containerRef: ref, onClose });
   const isAccent  = header === 'primary' || header === 'onPrimary';
-  const btnVariant = isAccent ? 'accent' : 'default';
+  const btnType = isAccent ? 'accent' : 'default';
   const widthClass = width === 'fullScreen' ? 'full-screen' : 'pop-up';
 
   const classes = [
@@ -150,12 +150,12 @@ export function Dialog({
       {showButtons && (mainButton || secondaryButton) && (
         <div className="ds-dialog__control-area">
           {mainButton && (
-            <Button variant={btnVariant} size="lg" fullWidth onClick={onMainButton}>
+            <Button type={btnType} variant="primary" size="lg" fullWidth onClick={onMainButton}>
               {mainButtonLabel}
             </Button>
           )}
           {secondaryButton && (
-            <Button variant={btnVariant} outline size="lg" fullWidth onClick={onSecondaryButton}>
+            <Button type={btnType} variant="secondary" size="lg" fullWidth onClick={onSecondaryButton}>
               {secondaryButtonLabel}
             </Button>
           )}

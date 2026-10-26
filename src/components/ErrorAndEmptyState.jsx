@@ -191,12 +191,12 @@ export function ErrorAndEmptyState({
       {showButtons && (primaryButton || secondaryButton) && (
         <div className="ds-error-empty-state__control-area">
           {primaryButton && (
-            <Button variant="default" size="lg" fullWidth onClick={onPrimaryButton}>
+            <Button type="default" variant="primary" size="lg" fullWidth onClick={onPrimaryButton}>
               {primaryButtonLabel}
             </Button>
           )}
           {secondaryButton && (
-            <Button variant="default" outline size="lg" fullWidth onClick={onSecondaryButton}>
+            <Button type="default" variant="secondary" size="lg" fullWidth onClick={onSecondaryButton}>
               {secondaryButtonLabel}
             </Button>
           )}

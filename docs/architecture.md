@@ -170,13 +170,17 @@ History: 1 Oct the ring was moved inside the control (outline with negative offs
 Hover over transparent surfaces uses a `rgba` overlay token, never a solid color.
 ```css
 /* Component token */
---ds-button-bg-mix-hover: var(--ds-opacity-hover-default)
+--ds-link-bg-mix-hover: var(--ds-opacity-hover-default)
 /* JSX */
-background: var(--ds-button-bg-mix-hover)
+background: var(--ds-link-bg-mix-hover)
 ```
 Enables automatic dark mode inversion.
 
-Components using bgMix: `Button` · `Link` · `CTALink` · `Chip` · `InputStepper`
+Components using bgMix: `Link` · `CTALink` · `Chip` · `InputStepper`
+
+Button and Icon Button (26 Oct 2026, as in Figma) put the overlay ON TOP of a
+fill: on hover all three variants take the Primary background with the
+`bgMix` above it — `background: linear-gradient(var(--_mix), var(--_mix)), var(--_fill)`.
 
 ### Common + specific pattern (Input family, Selector family)
 

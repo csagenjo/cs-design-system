@@ -106,7 +106,7 @@ export function FileUpload({
 
       {layout === 'compact' ? (
         <div className="ds-file-upload__compact-files">
-          <Button variant="default" outline size="sm" iconLeft="ChevronLeft" iconRight="ChevronRight" disabled={disabled} onClick={onButtonClick} aria-describedby={describedBy}>
+          <Button type="default" variant="secondary" size="sm" iconLeft="ChevronLeft" iconRight="ChevronRight" disabled={disabled} onClick={onButtonClick} aria-describedby={describedBy}>
             {buttonLabel}
           </Button>
           {files.slice(0, 1).map((file) => (

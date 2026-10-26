@@ -386,7 +386,7 @@ export function TopNavigation({
             })}
           </div>
         </div>
-        <Button variant="ghost" size="lg" iconRight="LogOut" onClick={onExit}>{exitLabel}</Button>
+        <Button variant="tertiary" size="lg" iconRight="LogOut" onClick={onExit}>{exitLabel}</Button>
       </div>
 
       {/* ── Mobile/Tablet, colapsado ────────────────────────────────────── */}

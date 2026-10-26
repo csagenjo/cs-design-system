@@ -402,13 +402,16 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* Geometría */
-  --ds-button-radius:      80px;   /* borderRadius/circle â†’ pill */
-  --ds-button-border-width: 2px;   /* borderWidth/lg â†’ outline + focus */
+  --ds-button-radius:      var(--ds-border-radius-circle);   /* button/all/root/borderRadius/generic → pill */
+  --ds-button-border-width: var(--ds-border-width-lg);      /* button/all/root/borderWidth/generic = 2 */
 
-  /* Padding por tamaÃ±o */
-  --ds-button-px-sm: 8px;
-  --ds-button-px-md: 12px;
-  --ds-button-px-lg: 16px;
+  /* Padding horizontal por tamaño (button/all/root/paddingHor/*) y del label
+     (button/all/label/paddingHor/generic): el texto queda a 12/16/20 del borde
+     y a 4 del icono, igual que Figma (26/10/2026). */
+  --ds-button-padding-hor-small:  var(--ds-spacing-md);  /* 8px */
+  --ds-button-padding-hor-medium: var(--ds-spacing-lg);  /* 12px */
+  --ds-button-padding-hor-large:  var(--ds-spacing-xl);  /* 16px */
+  --ds-button-label-padding-hor:  var(--ds-spacing-xs);  /* 4px */
   /* Alto fijo por token (01/10/2026): 32/40/48 en rejilla de 8 aunque cambie
      el line-height del label — antes salía de padding+line-height (Figma
      daba 32/36/44). button/all/root/height/* → sizing/md|lg|xl. */
@@ -429,19 +432,19 @@
   --ds-button-fg-disabled:        var(--ds-fg-disabled);
 
   /* Bordes */
-  --ds-button-border-accent:        var(--ds-borderColor-accent);
+  --ds-button-border-accent:        var(--ds-borderColor-primary);   /* button/all/root/borderColor/accent-generic (#0A7C92, igual que el texto; antes accent = #13525F) */
   --ds-button-border-default:       var(--ds-borderColor-emphasis);
   --ds-button-border-disabled:      var(--ds-borderColor-disabled);
   --ds-button-border-focus-outer:   var(--ds-borderColor-focus-outer);
   --ds-button-border-focus-inner:   var(--ds-borderColor-focus-inner);
-  --ds-button-focus-width:          2px;   /* button/all/root/borderWidth/focus — anillo por FUERA del botón (08/10/2026) */
+  --ds-button-focus-width:          var(--ds-border-width-lg);   /* button/all/root/borderWidth/focus — anillo por FUERA del botón (08/10/2026) */
   --ds-button-focus-area-padding:   var(--ds-spacing-xs);   /* button/all/root/focusArea/padding — espacio del anillo de foco DENTRO del componente (08/10/2026) */
 
-  /* Negative */
-  --ds-button-fg-negative:          var(--ds-fg-error);
-  --ds-button-border-negative:      var(--ds-borderColor-error);
-  --ds-button-bg-negative-hover:    var(--ds-bg-error-subtle);
-  --ds-button-bg-mix-hover:         var(--ds-opacity-hover-default);
+  /* Hover y Pressed (button/all/root/bgMix/* y opacity/pressed): en Hover las
+     tres variantes toman el fondo de Primary con este velo encima (26/10/2026). */
+  --ds-button-bg-mix-default-hover: var(--ds-opacity-hover-inverse);  /* blanco 10 % sobre negro */
+  --ds-button-bg-mix-accent-hover:  var(--ds-opacity-hover-default);  /* negro 10 % sobre teal */
+  --ds-button-opacity-pressed:      var(--ds-opacity-pressed);        /* 0.8 */
 
   /* Icono — tamaño (button/all/icon/size/*). Sincronizado con Figma 15/07. */
   --ds-button-icon-size-small:      var(--ds-sizing-2xs);   /* 16px */
@@ -455,21 +458,25 @@
        on-outline-default → --ds-button-fg-default-outline (fg/default)
        disabled           → --ds-button-fg-disabled */
 
+  /* ButtonBar (buttonBar/all/*, 26/10/2026) */
+  --ds-button-bar-gap:              var(--ds-spacing-2xl);  /* buttonBar/all/root/gap = 24, entre acciones */
+  --ds-button-bar-notification-gap: var(--ds-spacing-xl);   /* buttonBar/all/notification/gap = 16, notificación → acciones */
+
   /* ==========================================================================
      COMPONENT TOKENS -- IconButton
      ========================================================================== */
 
   /* Geometría (iconButton/all/root/*) */
-  --ds-icon-button-border-radius:          80px;  /* pill → círculo */
-  --ds-icon-button-border-width-primary:   1px;
-  --ds-icon-button-border-width-secondary: 2px;   /* Secondary y Tertiary comparten grosor */
-  --ds-icon-button-opacity-pressed:        0.8;
+  --ds-icon-button-border-radius:          var(--ds-border-radius-circle);  /* pill → círculo */
+  --ds-icon-button-border-width-primary:   var(--ds-border-width-sm);
+  --ds-icon-button-border-width-secondary: var(--ds-border-width-lg);   /* Secondary y Tertiary comparten grosor */
+  --ds-icon-button-opacity-pressed:        var(--ds-opacity-pressed);
 
   /* Padding por tamaño (iconButton/all/icon/padding/*) */
-  --ds-icon-button-padding-small:  8px;
-  --ds-icon-button-padding-medium: 12px;
-  --ds-icon-button-padding-large:  16px;
-  --ds-icon-button-label-padding-hor: 4px;
+  --ds-icon-button-padding-small:  var(--ds-spacing-md);
+  --ds-icon-button-padding-medium: var(--ds-spacing-lg);
+  --ds-icon-button-padding-large:  var(--ds-spacing-xl);
+  --ds-icon-button-label-padding-hor: var(--ds-spacing-xs);
 
   /* Icono — tamaño (iconButton/all/icon/size/*), misma escala que Button */
   --ds-icon-button-icon-size-small:  var(--ds-sizing-2xs);  /* 16px */
@@ -489,7 +496,7 @@
   --ds-icon-button-border-color-disabled:    var(--ds-borderColor-disabled);
   --ds-icon-button-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-icon-button-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-icon-button-focus-width:             2px;   /* iconButton/all/root/borderWidth/focus */
+  --ds-icon-button-focus-width:             var(--ds-border-width-lg);   /* iconButton/all/root/borderWidth/focus */
   --ds-icon-button-focus-area-padding:      var(--ds-spacing-xs);   /* iconButton/all/root/focusArea/padding — espacio del anillo de foco DENTRO del componente (08/10/2026) */
   /* Anillo de foco: SIEMPRE alrededor del círculo, por DENTRO (01/10/2026) —
      también con label (antes envolvía icono+label con radio propio 4/2). */
@@ -521,6 +528,7 @@
      custom properties que Button/IconButton ya consumen (mismo mecanismo que
      el rebind de variables en Figma). Geometría (radio pill, padding, tamaño
      de icono por Size) se hereda sin tocar de Button/IconButton. */
+  --ds-collapsible-fg-on-color: var(--ds-fg-onColor);  /* texto/icono sobre el relleno rosa en Hover/Pressed (Secondary) */
   --ds-collapsible-border-color-default:  var(--ds-borderColor-emphasis);
   --ds-collapsible-border-color-secondary: var(--ds-borderColor-secondary);
   --ds-collapsible-label-fg-default:      var(--ds-fg-label-default);

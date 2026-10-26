@@ -667,7 +667,7 @@ Nodo EXPLORE confirmado: `3109:11663`, variante `Length` = `Single Line` / `Mult
 
 **La acción no lleva tokens propios.** Es una instancia directa de `Button` (`variant="default" size="sm"`) — los paddings de Figma (`paddingHor/small` 8px, `paddingVer/small` 6px) ya coincidían exactamente con el tamaño `sm` existente de Button, sin necesidad de crear ni ajustar nada.
 
-**Shadow como token literal, no como alias de Mode.** `Snackbar/Shadow` es un Effect Style de Figma (no una Variable de color), así que no tiene cascada Component→Mode→Theme→Base que seguir — se escribe como valor `box-shadow` literal en la capa Component, igual que `borderRadius`/`spacing` cuando vienen de un FLOAT de Device en vez de una alias chain de color. Mismo tratamiento que debieron tener `--ds-shadow-md`/`--ds-shadow-lg` (referenciados por `Button.jsx` en `.ds-btn--floating` desde v2, pero nunca definidos en `tokens.css` — gap preexistente, detectado de pasada en esta sesión, sin relación con Snackbar).
+**Shadow como token literal, no como alias de Mode.** `Snackbar/Shadow` es un Effect Style de Figma (no una Variable de color), así que no tiene cascada Component→Mode→Theme→Base que seguir — se escribe como valor `box-shadow` literal en la capa Component, igual que `borderRadius`/`spacing` cuando vienen de un FLOAT de Device en vez de una alias chain de color. (`--ds-shadow-md`/`--ds-shadow-lg`, que `Button.jsx` referenciaba en `floating` sin definirlos nunca, desaparecieron el 26/10/2026 al eliminar `floating`, que no existe en Figma.)
 
 ---
 

@@ -1,40 +1,33 @@
 /**
  * Button — Componente atómico
- * CS Design System · v2.0
+ * CS Design System · v3.0 (26/10/2026: alineado 1:1 con Figma)
  *
- * Tokens: todos los estilos vienen de tokens.css (--ds-button-*)
- * Iconos: lucide-react (misma nomenclatura que CS Design System)
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos  .
+ * Tokens: todos los estilos vienen de tokens.css (--ds-button-*).
+ * Iconos: átomo Icon (Lucide). Sin hex ni px sueltos.
  *
-/**
- * VARIANTES (nomenclatura Figma → prop):
- *   Accent Primary    → variant="accent"
- *   Accent Secondary  → variant="accent" outline
- *   Accent Tertiary   → variant="ghost"
- *   Default Primary   → variant="default"
- *   Default Secondary → variant="default" outline
- *   [extensión CS]    → variant="negative"  (no existe en DS)
+ * EJES (igual que el component set `Button` de Figma):
+ *   type     → 'accent' (teal, por defecto) | 'default' (negro)
+ *   variant  → 'primary' (relleno, por defecto) | 'secondary' (contorno) | 'tertiary' (solo texto)
+ *   size     → 'sm' 32 · 'md' 40 (por defecto) · 'lg' 48
+ *   fullWidth→ Width=Full
+ *   disabled / loading → State=Disabled / State=Loading
+ *   Hover, Pressed, Focus… → pseudo-clases CSS
  *
- * MODIFICADORES:
- *   outline    → versión con borde y fondo transparente
- *   floating   → añade sombra (barras flotantes)
- *   fullWidth  → 100% del contenedor
- *
- * TAMAÑOS:
- *   "sm" → 32px  "md" → 40px (default)  "lg" → 48px
- *
- * ICONOS (nombres del CS Design System / Lucide):
- *   Search, ChevronRight, ChevronLeft, ChevronUp, ChevronDown
- *   ArrowRight, ArrowLeft, ArrowUp, ArrowDown
- *   Copy, Save, Delete, Edit2, Filter, Download
- *   Percent, Coins, Wallet, CreditCard
- *   Check, X, Plus, Upload
+ * Valores antiguos (antes de v3) — siguen funcionando con aviso en desarrollo:
+ *   variant="accent"            → type="accent"  variant="primary"
+ *   variant="accent" outline    → type="accent"  variant="secondary"
+ *   variant="ghost"             → type="accent"  variant="tertiary"
+ *   variant="default" [outline] → type="default" variant="primary"|"secondary"
+ *   variant="negative"          → type="accent"  variant="secondary" (Figma no
+ *                                 tiene botón rojo: lo destructivo va a la
+ *                                 izquierda y con un texto claro)
+ *   floating, iconOnly          → eliminados (no existen en Figma; para un
+ *                                 botón solo icono, IconButton)
  *
  * USO:
- *   <Button variant="accent" iconLeft="Search">Buscar</Button>
- *   <Button variant="default" outline iconLeft="ChevronLeft">Anterior</Button>
- *   <Button variant="negative" iconLeft="Delete">Eliminar</Button>
- *   <Button variant="ghost">Cancelar</Button>
+ *   <Button iconLeft="search">Search</Button>
+ *   <Button type="default" variant="secondary" iconLeft="chevron-left">Back</Button>
+ *   <Button variant="tertiary">Cancel</Button>
  */
 
 import React from 'react';
@@ -47,24 +40,22 @@ import { warnOnce, warnPlaceholderLabel } from './_devWarn';
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-btn--sm { --_h: var(--ds-button-height-small);  --_px: var(--ds-button-px-sm); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-button-icon-size-small);  --_gap: 4px; }
-.ds-btn--md { --_h: var(--ds-button-height-medium); --_px: var(--ds-button-px-md); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-button-icon-size-medium); --_gap: 6px; }
-.ds-btn--lg { --_h: var(--ds-button-height-large);  --_px: var(--ds-button-px-lg); --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-button-icon-size-large);  --_gap: 8px; }
+.ds-btn--sm { --_h: var(--ds-button-height-small);  --_px: var(--ds-button-padding-hor-small);  --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-button-icon-size-small); }
+.ds-btn--md { --_h: var(--ds-button-height-medium); --_px: var(--ds-button-padding-hor-medium); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-button-icon-size-medium); }
+.ds-btn--lg { --_h: var(--ds-button-height-large);  --_px: var(--ds-button-padding-hor-large);  --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-button-icon-size-large); }
 /* Área de foco (08/10/2026, igual que Figma): el componente reserva 4px
    alrededor para que el anillo de foco quede DENTRO de su caja. En Figma es
-   el padding del frame del componente; aquí, margin del <button>. Mide igual
-   en Figma y en código (Large = 48 + 2×4 = 56) y ningún overflow:hidden corta
-   el anillo. */
+   el padding del frame del componente; aquí, margin del <button>. */
 .ds-btn {
   margin:          var(--ds-button-focus-area-padding);
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  gap:             var(--_gap);
+  gap:             0;                 /* Figma: Root sin gap; el label lleva su padding */
   height:          var(--_h);
   padding:         0 var(--_px);
   font-size:       var(--_fs);
-  font-weight:     var(--ds-font-weight-medium);
+  font-weight:     var(--ds-font-weight-bold);
   border-radius:   var(--ds-button-radius);
   border:          var(--ds-button-border-width) solid transparent;
   cursor:          pointer;
@@ -75,93 +66,49 @@ const css = `
   text-decoration: none;
   box-sizing:      border-box;
 }
+/* Label: padding horizontal propio (button/all/label/paddingHor/generic = 4):
+   separa el texto del icono y del borde, igual que el frame Label de Figma. */
+.ds-btn__label { padding: 0 var(--ds-button-label-padding-hor); }
 .ds-btn--full-width { width: calc(100% - 2 * var(--ds-button-focus-area-padding)); }
-/* Foco POR FUERA del botón (08/10/2026, igual que Figma): el borde del botón
-   queda intacto. Interior = hueco de 2px pegado al borde (box-shadow sin
-   blur); exterior = color de foco del sistema 2px más allá (outline con
-   offset). Cabe entero en el área de foco (margin), sin cortarse nunca. */
+/* Foco POR FUERA del botón (08/10/2026, igual que Figma). */
 .ds-btn:focus-visible {
   outline:        var(--ds-button-focus-width) solid var(--ds-button-border-focus-outer);
   outline-offset: var(--ds-button-focus-width);
   box-shadow:     0 0 0 var(--ds-button-focus-width) var(--ds-button-border-focus-inner);
 }
-.ds-btn:active:not(:disabled) { opacity: 0.8; transform: scale(0.98); }
-.ds-btn:disabled,
-.ds-btn--disabled {
-  opacity:        0.4;
-  cursor:         not-allowed;
-  pointer-events: none;
+
+/* ── Enabled ── */
+.ds-btn--accent  { --_fill: var(--ds-button-bg-accent-filled);  --_on: var(--ds-button-fg-accent-filled);  --_mix: var(--ds-button-bg-mix-accent-hover);  --_line: var(--ds-button-border-accent);  --_ink: var(--ds-button-fg-accent-outline); }
+.ds-btn--default { --_fill: var(--ds-button-bg-default-filled); --_on: var(--ds-button-fg-default-filled); --_mix: var(--ds-button-bg-mix-default-hover); --_line: var(--ds-button-border-default); --_ink: var(--ds-button-fg-default-outline); }
+.ds-btn--primary   { background: var(--_fill);   color: var(--_on);  border-color: var(--_fill); }
+.ds-btn--secondary { background: transparent;   color: var(--_ink); border-color: var(--_line); }
+.ds-btn--tertiary  { background: transparent;   color: var(--_ink); border-color: transparent; }
+
+/* ── Hover (y Focus Hover): las tres variantes se rellenan — fondo de la
+   variante Primary + bgMix encima, texto e icono on-color. Feedback fuerte,
+   igual que Figma (CLAUDE.md §4). ── */
+.ds-btn:hover:not(:disabled):not(.ds-btn--loading) {
+  background: linear-gradient(var(--_mix), var(--_mix)), var(--_fill);
+  color:      var(--_on);
 }
-.ds-btn--icon-only { padding: 0; width: var(--_h); }
+.ds-btn--primary:hover:not(:disabled):not(.ds-btn--loading),
+.ds-btn--tertiary:hover:not(:disabled):not(.ds-btn--loading) { border-color: var(--_fill); }
+
+/* ── Pressed: opacidad (button/all/root/opacity/pressed), sin escalar ── */
+.ds-btn:active:not(:disabled):not(.ds-btn--loading) { opacity: var(--ds-button-opacity-pressed); }
+
+/* ── Disabled: sus tokens, nunca opacidad ── */
+.ds-btn:disabled { cursor: not-allowed; color: var(--ds-button-fg-disabled); }
+.ds-btn--primary:disabled   { background: var(--ds-button-bg-disabled); border-color: var(--ds-button-bg-disabled); }
+.ds-btn--secondary:disabled { background: transparent; border-color: var(--ds-button-border-disabled); }
+.ds-btn--tertiary:disabled  { background: transparent; border-color: transparent; }
+
 /* Loading: aspecto de Enabled, como en Figma — no es un botón deshabilitado,
-   es una acción en curso. A11y-4: ya no es \`disabled\` nativo (el foco se
-   perdía al pulsarlo); es aria-disabled y el click no hace nada. */
+   es una acción en curso (aria-disabled, el click no hace nada). */
 .ds-btn--loading { cursor: progress; }
-.ds-btn--loading:active { opacity: 1; transform: none; }
 
-/* Accent filled */
-.ds-btn--accent {
-  background:   var(--ds-button-bg-accent-filled);
-  color:        var(--ds-button-fg-accent-filled);
-  border-color: var(--ds-button-bg-accent-filled);
-}
-.ds-btn--accent:hover:not(:disabled) {
-  background:   color-mix(in srgb, var(--ds-button-bg-accent-filled), black 8%);
-  border-color: color-mix(in srgb, var(--ds-button-bg-accent-filled), black 8%);
-}
-/* Accent outline */
-.ds-btn--accent.ds-btn--outline {
-  background:   transparent;
-  color:        var(--ds-button-fg-accent-outline);
-  border-color: var(--ds-button-border-accent);
-}
-.ds-btn--accent.ds-btn--outline:hover:not(:disabled) {
-  background: var(--ds-button-bg-mix-hover);
-}
-
-/* Default filled */
-.ds-btn--default {
-  background:   var(--ds-button-bg-default-filled);
-  color:        var(--ds-button-fg-default-filled);
-  border-color: var(--ds-button-bg-default-filled);
-}
-.ds-btn--default:hover:not(:disabled) {
-  background:   color-mix(in srgb, var(--ds-button-bg-default-filled), white 8%);
-  border-color: color-mix(in srgb, var(--ds-button-bg-default-filled), white 8%);
-}
-/* Default outline */
-.ds-btn--default.ds-btn--outline {
-  background:   transparent;
-  color:        var(--ds-button-fg-default-outline);
-  border-color: var(--ds-button-border-default);
-}
-.ds-btn--default.ds-btn--outline:hover:not(:disabled) {
-  background: var(--ds-button-bg-mix-hover);
-}
-
-/* Ghost */
-.ds-btn--ghost {
-  background:   transparent;
-  color:        var(--ds-button-fg-accent-outline);
-  border-color: transparent;
-}
-.ds-btn--ghost:hover:not(:disabled) { background: var(--ds-button-bg-mix-hover); }
-
-/* Negative */
-.ds-btn--negative {
-  background:   transparent;
-  color:        var(--ds-button-fg-negative);
-  border-color: var(--ds-button-border-negative);
-}
-.ds-btn--negative:hover:not(:disabled) { background: var(--ds-button-bg-negative-hover); }
-
-/* Floating */
-.ds-btn--floating { box-shadow: var(--ds-shadow-md); }
-.ds-btn--floating:hover:not(:disabled) { box-shadow: var(--ds-shadow-lg); }
-
-/* Loading: el átomo LoadingSpinner en el sitio del icono izquierdo, mismo
-   tamaño que el icono (16/20/24) y color del texto del botón (currentColor =
-   color de icono por contraste de cada variante, igual que Figma). */
+/* LoadingSpinner en el sitio del icono izquierdo, mismo tamaño que el icono
+   (16/20/24) y color de icono por contraste (currentColor). */
 .ds-btn .ds-btn__spinner { width: var(--_icon); height: var(--_icon); }
 `;
 
@@ -176,42 +123,50 @@ function injectStyles() {
 
 /* ─── Button ───────────────────────────────────────────────────────────────── */
 
+const LEGACY = { accent: 1, default: 1, ghost: 1, negative: 1 };
+
+/** Traduce la API anterior a v3 (variant accent/default/ghost/negative + outline). */
+function resolveAxes(type, variant, outline) {
+  if (!LEGACY[variant]) return { type: type || 'accent', variant: variant || 'primary' };
+  warnOnce(`Button.legacy.${variant}${outline ? '.outline' : ''}`,
+    `[DS Button] variant="${variant}"${outline ? ' outline' : ''} es la API anterior a v3. Usa type="accent"|"default" + variant="primary"|"secondary"|"tertiary".`);
+  if (variant === 'ghost')    return { type: 'accent', variant: 'tertiary' };
+  if (variant === 'negative') return { type: 'accent', variant: 'secondary' };
+  return { type: variant, variant: outline ? 'secondary' : 'primary' };
+}
+
 export function Button({
-  variant   = 'accent',
-  size      = 'md',
-  outline   = false,
+  type,                      // 'accent' (por defecto) | 'default'
+  variant,                   // 'primary' (por defecto) | 'secondary' | 'tertiary'
+  size      = 'md',          // 'sm' | 'md' | 'lg'
   iconLeft,
   iconRight,
-  iconOnly  = false,
-  floating  = false,
   fullWidth = false,
   disabled  = false,
   loading   = false,
   onClick,
-  ariaLabel,
-  loadingLabel = 'Loading', // se lee con el botón en `loading` (A11y-3, inglés por defecto)
+  loadingLabel = 'Loading',  // se lee con el botón en `loading` (inglés por defecto)
   htmlType  = 'button',
   children,
+  outline,                   // API anterior a v3 (ver resolveAxes)
+  floating,                  // eliminado: no existe en Figma
+  iconOnly,                  // eliminado: usa IconButton
+  ariaLabel, // eslint-disable-line no-unused-vars -- solo tenía efecto con iconOnly; un aria-label llega por ...rest
   ...rest   // aria-*/data-*/title/handlers de wrappers (Tooltip, PopoverSheet) llegan al <button> real
 }) {
   injectStyles();
+  const axes = resolveAxes(type, variant, outline);
 
-  // Instancia el átomo Icon compartido (nunca reimplementado) — keywords de su
-  // escala --ds-sizing-* (2xs=16/xs=20/sm=24), alineado con Figma button/all/
-  // icon/size (16/20/24). Confirmado en Figma: Button ya instancia el wrapper
-  // Icon compartido, nunca un icono suelto — el código debía hacer lo mismo.
-  const iconSize   = { sm: '2xs', md: 'xs', lg: 'sm' }[size];
+  if (floating) warnOnce('Button.floating', '[DS Button] `floating` se eliminó en v3 (no existe en Figma).');
+  if (iconOnly) warnOnce('Button.iconOnly', '[DS Button] `iconOnly` se eliminó en v3: para un botón solo icono usa IconButton.');
 
-  // A11y-3: avisos de nombre en desarrollo — un botón solo icono sin nombre, o
-  // con el texto de relleno "Button" de Figma (Dialog, DropZone, FileUpload,
-  // InlineNotification… lo traen por defecto).
-  if (iconOnly && !ariaLabel && !rest['aria-label'] && !rest['aria-labelledby']) {
-    warnOnce('Button.iconOnly', '[DS Button] `iconOnly` sin `ariaLabel`: el botón no tiene nombre para el lector de pantalla.');
-  }
-  if (!iconOnly) warnPlaceholderLabel('Button', 'children', children);
-  // A11y-4: "loading" forma parte del nombre ("Save, Loading") y se anuncia
-  // al empezar — un role=status dentro del botón no entraba en el nombre ni se
-  // anunciaba de forma fiable al aparecer.
+  // Instancia el átomo Icon compartido (nunca reimplementado) — 16/20/24 como
+  // Figma button/all/icon/size/*.
+  const iconSize = { sm: '2xs', md: 'xs', lg: 'sm' }[size];
+
+  // A11y-3: aviso si el texto sigue siendo el de relleno "Button" de Figma.
+  warnPlaceholderLabel('Button', 'children', children);
+  // A11y-4: "loading" forma parte del nombre ("Save, Loading") y se anuncia al empezar.
   const wasLoading = React.useRef(loading);
   React.useEffect(() => {
     if (loading && !wasLoading.current) announce(loadingLabel);
@@ -225,13 +180,10 @@ export function Button({
   const classes = [
     'ds-btn',
     `ds-btn--${size}`,
-    `ds-btn--${variant}`,
-    outline    ? 'ds-btn--outline'    : '',
-    iconOnly   ? 'ds-btn--icon-only'  : '',
-    floating   ? 'ds-btn--floating'   : '',
-    fullWidth  ? 'ds-btn--full-width' : '',
-    disabled   ? 'ds-btn--disabled'   : '',
-    loading    ? 'ds-btn--loading'    : '',
+    `ds-btn--${axes.type}`,
+    `ds-btn--${axes.variant}`,
+    fullWidth ? 'ds-btn--full-width' : '',
+    loading   ? 'ds-btn--loading'    : '',
   ].filter(Boolean).join(' ');
 
   return (
@@ -242,13 +194,14 @@ export function Button({
       onClick={handleClick}
       disabled={disabled}
       aria-disabled={loading && !disabled ? 'true' : undefined}
-      aria-label={(iconOnly && ariaLabel) || rest['aria-label']}
-      aria-busy={loading}
+      aria-busy={loading || undefined}
     >
       {loading  && <LoadingSpinner color="current" label="" className="ds-btn__spinner" />}
-      {!loading && iconLeft  && <Icon name={iconLeft}  size={iconSize} />}
-      {!iconOnly && children}
-      {loading && <VisuallyHidden>{`, ${loadingLabel}`}</VisuallyHidden>}
+      {!loading && iconLeft && <Icon name={iconLeft} size={iconSize} />}
+      <span className="ds-btn__label">
+        {children}
+        {loading && <VisuallyHidden>{`, ${loadingLabel}`}</VisuallyHidden>}
+      </span>
       {!loading && iconRight && <Icon name={iconRight} size={iconSize} />}
     </button>
   );
@@ -259,14 +212,11 @@ export default Button;
 
 /* ─── Ejemplos de uso ──────────────────────────────────────────────────────
 
-<Button variant="accent" iconLeft="Search">Buscar</Button>
-<Button variant="accent" iconRight="ArrowRight">Aceptar y continuar</Button>
-<Button variant="accent" outline iconLeft="Download">Descargar</Button>
-<Button variant="default" outline iconLeft="ChevronLeft">Anterior</Button>
-<Button variant="ghost">Cancelar</Button>
-<Button variant="negative" iconLeft="Delete">Eliminar</Button>
-<Button variant="accent" iconLeft="Save" floating>Guardar</Button>
-<Button variant="accent" iconOnly ariaLabel="Filtrar"><Filter /></Button>
-<Button variant="accent" loading>Guardando...</Button>
-<Button variant="accent" disabled>No disponible</Button>
+<Button iconLeft="search">Search</Button>
+<Button iconRight="arrow-right">Accept and continue</Button>
+<Button variant="secondary" iconLeft="download">Download</Button>
+<Button type="default" variant="secondary" iconLeft="chevron-left">Back</Button>
+<Button variant="tertiary">Cancel</Button>
+<Button loading>Saving</Button>
+<Button disabled>Not available</Button>
 */
