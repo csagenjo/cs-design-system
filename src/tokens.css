@@ -1952,7 +1952,7 @@
      Shadow" en la instancia real de Cards). Mismo valor hoy, concepto
      distinto — igual criterio que el caret de Combobox.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-card-root-bg:             var(--ds-bg-default); /* #FFFFFF */
+  --ds-card-root-bg:             var(--ds-bg-container); /* 26/10: antes bg-default — en dark era negro sobre negro (Flydown invisible); bg-container = superficie elevada, blanca en light */
   --ds-card-root-border-radius:  4px;
   --ds-card-root-shadow:         0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
 
