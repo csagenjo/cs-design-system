@@ -1162,7 +1162,7 @@
   --ds-link-fg-icon-default:           var(--ds-fg-icon-default);    /* fg/icon/default-generic */
   --ds-link-fg-icon-accent:            var(--ds-fg-icon-primary);    /* fg/icon/accent-generic */
   --ds-link-fg-icon-visited:           var(--ds-fg-icon-tertiary);   /* fg/icon/accent-visited */
-  --ds-link-border-bottom-default:     var(--ds-borderColor-emphasis); /* borderBottomColor/label/default-generic */
+  --ds-link-border-bottom-default:     var(--ds-borderColor-primary);  /* borderBottomColor/label/default-generic — subrayado teal también en Default (Carol, 26/10) */
   --ds-link-border-bottom-accent:      var(--ds-borderColor-primary);  /* borderBottomColor/label/accent-generic */
   --ds-link-border-bottom-visited:     var(--ds-borderColor-tertiary); /* borderBottomColor/label/default-visited */
   --ds-link-border-bottom-width:       var(--ds-border-width-sm);      /* borderBottomWidth/label/generic */

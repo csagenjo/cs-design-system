@@ -1193,7 +1193,7 @@ with no destination it behaves as a button that looks like a link.
 - `Left icon` / `Right icon` (chevron-right by default).
 
 **Behaviour**
-- Always underlined: colour is never the only clue that it is a link.
+- Always underlined in teal (`borderColor/primary`): colour of the text is never the only clue that it is a link.
 - Visited: lilac underline; Accent also lilac text and icon.
 - Hover adds a soft background; Pressed lowers the opacity.
 
