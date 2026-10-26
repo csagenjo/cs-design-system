@@ -3,13 +3,19 @@
  * CS Design System · v2.0
  *
  * Tokens: todos los estilos vienen de tokens.css (--ds-*)
- * Iconos: lucide-react — Check (selected) · Minus (indeterminate)
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos  .
+ * Iconos: átomo Icon — check (selected) · minus (indeterminate), 16 px
+ * Sin hex ni px sueltos.
+ *
+ * v3 (26/10/2026, alineado con Figma): la fila entera (caja + label) es el
+ * control — hover, pressed y anillo de foco la rodean; área de foco de 4 px
+ * (mismo patrón que Button). La ayuda y el error ya no van en el checkbox:
+ * los pone CheckboxGroup (un check único obligatorio también va en un grupo
+ * con su pregunta, regla de Carol 21/10).
  *
  * ESTADOS (prop state):
  *   "default"  → Initial / Focus manejados por CSS puro
- *   "error"    → Borde + relleno rojo + errorMessage visible
- *   "disabled" → Opacidad reducida, no interactivo
+ *   "error"    → Borde + relleno rojo (el mensaje lo pone CheckboxGroup)
+ *   "disabled" → Colores de disabled, no interactivo
  *
  * BEHAVIORS:
  *   checked=false              → Unselected
@@ -19,35 +25,38 @@
  * USO:
  *   <Checkbox label="Acepto los términos" checked={v} onChange={fn} />
  *   <Checkbox label="Todos" indeterminate />
- *   <Checkbox label="Campo requerido" state="error" errorMessage="Obligatorio" />
+ *   <Checkbox label="Campo requerido" state="error" />
  *   <Checkbox state="disabled" label="No disponible" />
  *   <Checkbox ariaLabel="Seleccionar fila" checked={v} onChange={fn} />
  */
 
 import { CheckboxGroupContext } from './_checkboxGroupContext';
-import { LiveRegion } from './LiveRegion';
 import React, { useRef, useEffect, forwardRef, useId, useContext } from 'react';
-import { Check, Minus } from 'lucide-react';
+import { Icon } from './Icon';
+import { warnOnce } from './_devWarn';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
+/* Raíz = fila entera (caja + label), igual que Figma (26/10/2026):
+   - área de foco de 4 px alrededor (margin), el anillo queda dentro de la caja
+     del componente y mide lo mismo en todos los estados;
+   - padding 2 + gap 6, radio 8; hover = fondo de la fila; pressed = opacidad. */
 .ds-checkbox {
-  display:        inline-flex;
-  flex-direction: column;
-  gap:            4px;
-  font-family:    inherit;
+  position:      relative;
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--ds-checkbox-label-gap);
+  padding:       var(--ds-checkbox-padding);
+  margin:        var(--ds-checkbox-focus-area-padding);
+  border-radius: var(--ds-checkbox-border-radius-row);
+  font-family:   inherit;
+  cursor:        pointer;
+  box-sizing:    border-box;
+  transition:    background 0.12s, opacity 0.12s;
 }
-.ds-checkbox--full-width { display: flex; width: 100%; }
-
-.ds-checkbox__row {
-  position:    relative;
-  display:     inline-flex;
-  align-items: center;
-  gap:         8px;
-  cursor:      pointer;
-}
-.ds-checkbox--disabled .ds-checkbox__row { cursor: not-allowed; }
+.ds-checkbox--full-width { display: flex; width: calc(100% - 2 * var(--ds-checkbox-focus-area-padding)); }
+.ds-checkbox--disabled { cursor: not-allowed; }
 
 /* Visually hidden native input — still focusable and operable */
 .ds-checkbox__input {
@@ -62,109 +71,79 @@ const css = `
   border:      0;
 }
 
-/* Visual box */
-.ds-checkbox__box {
+/* Hueco de 24 (checkbox/all/root/size) con la caja de 20 centrada (.CheckStates) */
+.ds-checkbox__slot {
   flex-shrink:     0;
   width:           var(--ds-checkbox-size);
   height:          var(--ds-checkbox-size);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  pointer-events:  none;
+}
+.ds-checkbox__box {
+  width:           var(--ds-checkbox-box-size);
+  height:          var(--ds-checkbox-box-size);
   border:          var(--ds-checkbox-border-width) solid var(--ds-checkbox-border-default);
   border-radius:   var(--ds-checkbox-border-radius);
   background:      var(--ds-checkbox-bg-default);
   display:         flex;
   align-items:     center;
   justify-content: center;
-  transition:      background 0.12s, border-color 0.12s, opacity 0.12s;
+  transition:      background 0.12s, border-color 0.12s;
   color:           var(--ds-checkbox-icon-fg);
-  pointer-events:  none;
   box-sizing:      border-box;
 }
 
-/* Selected / Indeterminate — teal fill */
-.ds-checkbox__input:checked       + .ds-checkbox__box,
-.ds-checkbox__input:indeterminate + .ds-checkbox__box {
+/* Selected / Indeterminate */
+.ds-checkbox__input:checked       + .ds-checkbox__slot .ds-checkbox__box,
+.ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-selected);
   border-color: var(--ds-checkbox-border-selected);
 }
 
-/* Error — unselected: red border only */
-.ds-checkbox--error .ds-checkbox__box {
-  border-color: var(--ds-checkbox-border-error);
-}
-/* Error — selected/indeterminate: red fill */
-.ds-checkbox--error .ds-checkbox__input:checked       + .ds-checkbox__box,
-.ds-checkbox--error .ds-checkbox__input:indeterminate + .ds-checkbox__box {
+/* Error */
+.ds-checkbox--error .ds-checkbox__box { border-color: var(--ds-checkbox-border-error); }
+.ds-checkbox--error .ds-checkbox__input:checked       + .ds-checkbox__slot .ds-checkbox__box,
+.ds-checkbox--error .ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-error);
   border-color: var(--ds-checkbox-border-error);
 }
 
-/* Disabled — muted surface. Debe ganar a selected/indeterminate (mayor
-   especificidad que .ds-checkbox__input:checked + .ds-checkbox__box) para que
-   el disabled seleccionado se vea gris, no con color de marca. */
+/* Disabled — gana a selected/indeterminate */
 .ds-checkbox--disabled .ds-checkbox__box,
-.ds-checkbox--disabled .ds-checkbox__input:checked       + .ds-checkbox__box,
-.ds-checkbox--disabled .ds-checkbox__input:indeterminate + .ds-checkbox__box {
+.ds-checkbox--disabled .ds-checkbox__input:checked       + .ds-checkbox__slot .ds-checkbox__box,
+.ds-checkbox--disabled .ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-disabled);
   border-color: var(--ds-checkbox-border-disabled);
   color:        var(--ds-checkbox-icon-disabled);
 }
 
-/* Hover — unselected, not disabled */
-.ds-checkbox:not(.ds-checkbox--disabled) .ds-checkbox__row:hover
-  .ds-checkbox__input:not(:checked):not(:indeterminate) + .ds-checkbox__box {
-  border-color: var(--ds-checkbox-border-hover);
-  background:   var(--ds-checkbox-bg-hover);
+/* Hover y pressed: toda la fila (Figma: fill / opacidad del frame Root) */
+.ds-checkbox:not(.ds-checkbox--disabled):hover  { background: var(--ds-checkbox-bg-hover); }
+.ds-checkbox:not(.ds-checkbox--disabled):active { opacity: var(--ds-checkbox-opacity-pressed); }
+
+/* Foco: anillo doble alrededor de la fila, dentro del área de foco */
+.ds-checkbox:has(.ds-checkbox__input:focus-visible) {
+  outline:        var(--ds-checkbox-focus-width) solid var(--ds-checkbox-focus-outer);
+  outline-offset: var(--ds-checkbox-focus-width);
+  box-shadow:     0 0 0 var(--ds-checkbox-focus-width) var(--ds-checkbox-focus-inner);
 }
 
-/* Focus ring on the visual box */
-.ds-checkbox__input:focus-visible + .ds-checkbox__box {
-  outline:        2px solid var(--ds-checkbox-focus-outer);
-  outline-offset: 2px;
-  box-shadow:     0 0 0 4px var(--ds-checkbox-focus-inner);
-}
+/* Iconos — ocultos salvo en su estado */
+.ds-checkbox__icon { display: none; }
+.ds-checkbox__input:checked:not(:indeterminate) + .ds-checkbox__slot .ds-checkbox__icon--check { display: flex; }
+.ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__icon--indeterminate       { display: flex; }
 
-/* Hover + Focus combined */
-.ds-checkbox:not(.ds-checkbox--disabled) .ds-checkbox__row:hover
-  .ds-checkbox__input:focus-visible + .ds-checkbox__box {
-  background:     var(--ds-checkbox-bg-hover);
-  outline:        2px solid var(--ds-checkbox-focus-outer);
-  outline-offset: 2px;
-  box-shadow:     0 0 0 4px var(--ds-checkbox-focus-inner);
-}
-
-/* Icons — hidden by default, shown by state */
-.ds-checkbox__icon {
-  display:         none;
-  align-items:     center;
-  justify-content: center;
-}
-.ds-checkbox__input:checked       + .ds-checkbox__box .ds-checkbox__icon--check         { display: flex; }
-.ds-checkbox__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--indeterminate { display: flex; }
-
-/* Label text */
+/* Label — Label/md regular (fontSize/label/md · fontLheight/label/md) */
 .ds-checkbox__label {
-  font-size:   var(--ds-fontSize-label-sm);
-  font-weight: var(--ds-font-weight-medium);
+  font-size:   var(--ds-fontSize-label-md);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-lineHeight-label-md);
   color:       var(--ds-checkbox-label-fg);
-  line-height: var(--ds-lineHeight-label-sm);
   user-select: none;
 }
 .ds-checkbox--disabled .ds-checkbox__label { color: var(--ds-checkbox-label-disabled); }
-
-/* Helper text */
-.ds-checkbox__description {
-  font-size:   var(--ds-fontSize-annotation-sm);
-  color:       var(--ds-checkbox-description-fg);
-  line-height: var(--ds-lineHeight-annotation-sm);
-  margin:      0;
-}
-
-/* Validation message */
-.ds-checkbox__message {
-  font-size:   var(--ds-fontSize-annotation-sm);
-  line-height: var(--ds-lineHeight-annotation-sm);
-  margin:      0;
-}
-.ds-checkbox__message--error { color: var(--ds-checkbox-validation-fg); }
 `;
 
 let _styleInjected = false;
@@ -195,8 +174,8 @@ export const Checkbox = forwardRef(function Checkbox({
   indeterminate = false,
   state         = 'default',
   label,
-  description,
-  errorMessage,
+  description,   // eliminado en v3: la ayuda va en CheckboxGroup
+  errorMessage,  // eliminado en v3: el error va en CheckboxGroup
   onChange,
   onFocus,
   onBlur,
@@ -226,9 +205,10 @@ export const Checkbox = forwardRef(function Checkbox({
   const generatedId = useId();
   const inputId     = id || generatedId;
 
-  const descId = description                       ? `${inputId}-desc` : null;
-  const msgId  = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
-  const describedBy = [descId, msgId, group?.describedBy].filter(Boolean).join(' ') || undefined;
+  if (description || errorMessage) {
+    warnOnce('Checkbox.helpError', '[DS Checkbox] `description` y `errorMessage` se eliminaron en v3: la ayuda y el error los pone CheckboxGroup.');
+  }
+  const describedBy = group?.describedBy || undefined;
 
   if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
     console.warn('[DS Checkbox] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
@@ -274,38 +254,16 @@ export const Checkbox = forwardRef(function Checkbox({
   }
 
   return (
-    <div className={rootClasses}>
-      <label className="ds-checkbox__row">
-        <input {...inputProps} />
+    <label className={rootClasses}>
+      <input {...inputProps} />
+      <span className="ds-checkbox__slot">
         <span className="ds-checkbox__box">
-          <span className="ds-checkbox__icon ds-checkbox__icon--check">
-            <Check size={14} strokeWidth={2.5} aria-hidden="true" />
-          </span>
-          <span className="ds-checkbox__icon ds-checkbox__icon--indeterminate">
-            <Minus size={14} strokeWidth={2.5} aria-hidden="true" />
-          </span>
+          <span className="ds-checkbox__icon ds-checkbox__icon--check"><Icon name="check" size="2xs" strokeWidth={2} /></span>
+          <span className="ds-checkbox__icon ds-checkbox__icon--indeterminate"><Icon name="minus" size="2xs" strokeWidth={2} /></span>
         </span>
-        {label && <span className="ds-checkbox__label">{label}</span>}
-      </label>
-
-      {description && (
-        <p className="ds-checkbox__description" id={descId}>
-          {description}
-        </p>
-      )}
-
-      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
-      <LiveRegion>
-        {state === 'error' && errorMessage && (
-          <p
-            className="ds-checkbox__message ds-checkbox__message--error"
-            id={msgId}
-          >
-            {errorMessage}
-          </p>
-        )}
-      </LiveRegion>
-    </div>
+      </span>
+      {label && <span className="ds-checkbox__label">{label}</span>}
+    </label>
   );
 });
 
@@ -325,25 +283,11 @@ export default Checkbox;
 // Indeterminado (estado "todos parcialmente seleccionados")
 <Checkbox label="Seleccionar todos" indeterminate checked={false} onChange={fn} />
 
-// Error
-<Checkbox
-  label="Campo obligatorio"
-  state="error"
-  errorMessage="Debes aceptar los términos para continuar"
-  checked={v}
-  onChange={fn}
-/>
+// Error (el mensaje lo pone CheckboxGroup)
+<Checkbox label="Campo obligatorio" state="error" checked={v} onChange={fn} />
 
 // Deshabilitado
 <Checkbox label="No disponible" state="disabled" checked />
-
-// Con descripción
-<Checkbox
-  label="Notificaciones por email"
-  description="Recibirás un resumen diario de actividad"
-  checked={v}
-  onChange={fn}
-/>
 
 // Sin label visible — requiere ariaLabel
 <Checkbox ariaLabel="Seleccionar fila 1" checked={v} onChange={fn} />

@@ -373,8 +373,8 @@ export default function Gallery({ mode }) {
           <Checkbox label="Unchecked" checked={false} onChange={noop} />
           <Checkbox label="Checked" checked onChange={noop} />
           <Checkbox label="Indeterminate" indeterminate checked={false} onChange={noop} />
-          <Checkbox label="Con descripción" description="Recibirás un resumen diario" checked onChange={noop} />
-          <Checkbox label="Error" state="error" errorMessage="Debes aceptar los términos" checked={false} onChange={noop} />
+          <Checkbox label="Error" state="error" checked={false} onChange={noop} />
+          <Checkbox label="Error checked" state="error" checked onChange={noop} />
           <Checkbox label="Disabled" state="disabled" checked={false} onChange={noop} />
           <Checkbox label="Disabled checked" state="disabled" checked onChange={noop} />
           <Checkbox ariaLabel="Seleccionar fila 1" checked onChange={noop} />
@@ -868,8 +868,8 @@ export default function Gallery({ mode }) {
         <Row>
           <Radio label="Opción A" name="a11y-grupo" value="a" checked onChange={noop} />
           <Radio label="Opción B" name="a11y-grupo" value="b" checked={false} onChange={noop} />
-          <Radio label="Con descripción" description="Disponible en 1-2 días hábiles" name="a11y-pago" value="sepa" checked onChange={noop} />
-          <Radio label="Error" name="a11y-err" value="a" state="error" errorMessage="Selecciona una opción" checked={false} onChange={noop} />
+          <Radio label="Error" name="a11y-err" value="a" state="error" checked={false} onChange={noop} />
+          <Radio label="Error checked" name="a11y-err2" value="a" state="error" checked onChange={noop} />
           <Radio label="Disabled" name="a11y-dis" value="c" state="disabled" checked={false} onChange={noop} />
           <Radio label="Disabled checked" name="a11y-dis2" value="c" state="disabled" checked onChange={noop} />
           <Radio ariaLabel="Seleccionar fila 1" showLabel={false} name="a11y-filas" value="1" checked onChange={noop} />

@@ -36,8 +36,8 @@ Rules that apply to every entry:
 
 | Group | Pieces |
 |---|---|
-| Actions | _to be filled_ |
-| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · _rest to be filled_ |
+| Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
+| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · _rest to be filled_ |
 | Data | _to be filled_ |
 | Feedback | _to be filled_ |
 | Navigation | _to be filled (includes Pagination)_ |
@@ -486,8 +486,9 @@ import { CheckboxGroup } from './organisms/CheckboxGroup';
 
 **Check before shipping**
 - Every group has a `label`.
-- At least one option is checked by default in a RadioGroup unless "no
-  answer" is valid.
+- No option is checked or pre-selected by default: the user chooses. If
+  an answer is required, mark the group `required` and show the error
+  when nothing is chosen.
 
 Known gaps: none.
 
@@ -838,3 +839,327 @@ Known gaps: none.
 **Check before shipping**
 - Pass every label in the screen's language.
 - One primary per bar.
+
+---
+
+## Checkbox
+
+**Group:** Forms
+**Figma:** Checkbox page → `Checkbox` set (Behavior Unselected / Selected / Indeterminate × State Initial / Hover / Pressed / Focus / Error / Disabled, 18 variants; rebuilt 26/10 with the 4 px focus area) and `.CheckStates` (internal: the box) · frame *Checkbox — How to use & Accessibility*
+**Code:** `src/components/Checkbox.jsx` (atom, v3)
+**Tokens:** `--ds-checkbox-*`
+
+One option the user can turn on or off. Options always go inside a
+CheckboxGroup, which gives them a question, help and the error message.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Pick any number of options from a list (zero, one or several).
+- Accepting terms: one check inside a Checkbox Group with its question.
+- Only one answer allowed → Radio. Turning a setting on at once → wait for Switch.
+
+**Properties**
+- `Behavior` → Unselected · Selected · Indeterminate ("some of the children are selected").
+- `State` → Initial · Hover · Pressed · Focus · Error · Disabled.
+- `Label` (text) — short, says what checking it means.
+
+**Behaviour**
+- The whole row (box + label) is the control: hover fills the row, pressed lowers its opacity, the focus ring surrounds the row.
+- Help text and error message are not part of the checkbox: use Checkbox Group.
+
+**Sizing**
+- 24 slot with a 20 box, 6 gap to the label, 2 padding, row radius 8.
+- 4 px focus area around it (`checkbox/all/root/focusArea/padding`): with a label the box is 36 high.
+
+### Developers · React
+
+```jsx
+import { Checkbox } from './components/Checkbox';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | string | — | Visible text; it is the name |
+| `ariaLabel` | string | — | Only without `label` (a table row, say) |
+| `checked` / `defaultChecked` | bool | — | Controlled / uncontrolled |
+| `indeterminate` | bool | `false` | Native `.indeterminate` property |
+| `state` | `'default'` \| `'error'` \| `'disabled'` | `'default'` | |
+| `onChange`, `onFocus`, `onBlur` | func | — | |
+| `id`, `name`, `value`, `required` | | | Inside a CheckboxGroup the group sets `name`, checked, required, error and disabled |
+| `fullWidth` | bool | `false` | Row fills the width (minus the focus area) |
+
+`description` and `errorMessage` were removed in v3 (dev warning if passed):
+the group shows help and errors.
+
+```jsx
+<CheckboxGroup label="Notifications" values={v} onChange={setV}>
+  <Checkbox value="email" label="Email" />
+  <Checkbox value="sms" label="SMS" />
+</CheckboxGroup>
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A form question accepts several answers, or a row of a table can be selected.
+
+**Don't pick it when**
+- Only one answer is allowed → RadioGroup.
+- The choice is a filter on a list → Chip `type="filter"`.
+
+**Composition rules**
+- Always inside CheckboxGroup, except a selection checkbox in a table row or a list item (with `ariaLabel`).
+- Never put help or error text next to a single Checkbox; pass them to the group.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus ring around the whole row, inside the component's own box (never clipped).
+- Hover / pressed on the whole row: the click area is the box and the label.
+- Required asterisk only on the group's question, never on the option.
+
+**Your job**
+- Write a label that makes sense on its own ("Email", not "Yes").
+- Mark indeterminate only for a parent that controls a list of children.
+
+### Developers · React
+
+**Semantics**
+- Native `<input type="checkbox">` inside a `<label>`: clicking the text toggles it.
+- Indeterminate via the native property (read as "mixed").
+- `state="error"` → `aria-invalid`; the group's message is linked with `aria-describedby`.
+
+**Keyboard**
+- Tab to reach it, Space to toggle.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every Checkbox has `label` or `ariaLabel`.
+- Errors come from CheckboxGroup `state="error"` + `errorMessage`.
+
+**Don't**
+- Don't build a checkbox from a `div` with `onClick`.
+
+---
+
+## Radio
+
+**Group:** Forms
+**Figma:** Radio button page → `Radio button` set (Behavior Unselected / Selected × State Initial / Hover / Pressed / Focus / Error / Disabled, 12 variants; rebuilt 26/10 with the 4 px focus area) and `.RadioStates` (internal: the circle) · frame *Radio button — How to use & Accessibility*
+**Code:** `src/components/Radio.jsx` (atom, v2)
+**Tokens:** `--ds-radio-*`
+
+One answer out of several. Radios always go inside a RadioGroup, which
+gives them their question, help, error and the arrow-key behaviour.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- One, and only one, answer from 2–6 visible options.
+- More options, or space is tight → Selector / Dropdown.
+- Several answers allowed → Checkbox.
+
+**Properties**
+- `Behavior` → Unselected · Selected.
+- `State` → Initial · Hover · Pressed · Focus · Error · Disabled.
+- `Label` (text) · `Show Label` (hide it only in list items that already have a title).
+
+**Behaviour**
+- The whole row (circle + label) is the control: hover fills the row, pressed lowers its opacity, the focus ring surrounds the row.
+- Help text and error message belong to Radio Group.
+
+**Sizing**
+- 24 slot with a 20 circle and a 10 dot, 6 gap to the label, 2 padding, row radius 8.
+- 4 px focus area around it (`radioButton/all/root/focusArea/padding`): with a label it is 36 high.
+
+### Developers · React
+
+```jsx
+import { Radio } from './components/Radio';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | string | — | Visible text; it is the name |
+| `showLabel` | bool | `true` | `false` needs `ariaLabel` |
+| `ariaLabel` | string | — | Only without a visible label |
+| `value` | string | — | Required inside a RadioGroup |
+| `checked` / `defaultChecked` | bool | — | The group sets it from its `value` |
+| `state` | `'default'` \| `'error'` \| `'disabled'` | `'default'` | |
+| `onChange`, `onFocus`, `onBlur` | func | — | |
+| `id`, `name`, `required` | | | Set by the group |
+| `fullWidth` | bool | `false` | |
+
+`description` and `errorMessage` were removed in v2 (dev warning if passed).
+
+```jsx
+<RadioGroup label="Account type" name="type" value={v} onChange={setV}>
+  <Radio value="personal" label="Personal" />
+  <Radio value="business" label="Business" />
+</RadioGroup>
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A single answer from a short visible list.
+
+**Don't pick it when**
+- Several answers → CheckboxGroup. A long list → Selector. Switching views → SegmentedControl or Tabs.
+
+**Composition rules**
+- Always inside RadioGroup (it gives the shared `name`, the question and the arrow keys).
+- Selectable list items use SelectorListItem, which already contains the Radio.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus ring around the whole row, inside the component's own box.
+- Click area = circle + label.
+- Required asterisk only on the group's question.
+
+**Your job**
+- Labels must be distinct and short; don't rely on order alone.
+- Don't pre-select any option: the user has to choose. A preset answer
+  is easy to miss and gets submitted without being read.
+
+### Developers · React
+
+**Semantics**
+- Native `<input type="radio">` inside a `<label>`.
+- `state="error"` → `aria-invalid`; the group's message is linked with `aria-describedby`.
+
+**Keyboard**
+- Tab enters the group on the selected option; arrows move and select (native radio behaviour).
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- All radios of a question share one RadioGroup.
+- Every Radio has `label` (or `showLabel={false}` + `ariaLabel`).
+
+**Don't**
+- Don't use a lone Radio as an on/off control.
+
+---
+
+## Chip
+
+**Group:** Forms
+**Figma:** Chip page → sets `Chip Choice` (State × Behavior), `Chip Filter` (Variant Selectable / Dismissible × State × Behavior), `Chip Input` (State × Part Chip / Delete) and `.Label` (internal: the "Label:" of Filter Dismissible) — rebuilt 26/10 with the 4 px focus area · frame *Chip — How to use & Accessibility*
+**Code:** `src/components/Chip.jsx` (atom, v2)
+**Tokens:** `--ds-chip-*`
+
+Small, rounded pieces for choosing, filtering or showing entered values.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- `Choice` → pick options in a compact row (tags, quick answers).
+- `Filter Selectable` → turn a filter on or off on a list.
+- `Filter Dismissible` → an applied filter ("Status: Active") that can be removed.
+- `Input` → a value the user entered (Combobox multiple, e-mail recipients), removable with its X.
+- A form question with a label and error → Checkbox / Radio groups instead.
+
+**Properties**
+- `State` → Initial · Hover · Pressed · Focus · Disabled.
+- `Behavior` → Unselected · Selected (Choice, Filter Selectable).
+- `Part` (Input) → Chip (the body) · Delete (the X: hover shows a 1 px border, focus rings the X).
+
+**Behaviour**
+- Selected: filled teal with a check icon.
+- Hover adds `bgMix`; pressed lowers the opacity.
+
+**Sizing**
+- 32 high: padding 4 / 8, gap 4, icons 20, radius 8, label 16 regular.
+- 4 px focus area around it (`chip/all/root/focusArea/padding`): the box is 40 high.
+
+### Developers · React
+
+```jsx
+import { Chip } from './components/Chip';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `type` | `'choice'` \| `'filter'` \| `'input'` | `'choice'` | |
+| `variant` | `'selectable'` \| `'dismissible'` | `'selectable'` | Filter only |
+| `label` | string | — | Choice, Filter Selectable, Input |
+| `selected` / `defaultSelected` | bool | — / `false` | Controlled / uncontrolled |
+| `onSelectedChange` | func(bool) | — | |
+| `filterLabel`, `value` | string | — | Filter Dismissible: "filterLabel: value" |
+| `onRemove` | func | — | Shows the X (Dismissible, Input) |
+| `icon` | node | — | Input: leading icon |
+| `onChipClick` | func | — | Input: makes the body a button |
+| `disabled` | bool | `false` | |
+| `ariaLabel` | string | — | Only without visible text |
+| `removeLabel` | string | `'Remove'` | X name: "Remove Status: Active" |
+| `id`, `name` | | | |
+
+```jsx
+<Chip label="Pending" selected={on} onSelectedChange={setOn} />
+<Chip type="filter" variant="dismissible" filterLabel="Status" value="Active" onRemove={clear} />
+<Chip type="input" label="Spain" onRemove={() => remove('es')} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Compact toggles or filters above a list, or showing removable values.
+
+**Don't pick it when**
+- A form question → CheckboxGroup / RadioGroup. Switching views → SegmentedControl or Tabs. Status display only → BadgeHighlight.
+
+**Composition rules**
+- A row of related chips goes in a container with a name (`role="group"` + `aria-label`).
+- Combobox `multiple` already renders Input chips; don't add them by hand.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus ring outside the chip, inside its own box (never clipped). On Input chips the X has its own ring.
+- The X has a 24 × 24 click area even though the icon is 20.
+- Selected is shown by colour and the check icon, not by colour alone.
+
+**Your job**
+- Keep labels short and unique within the row.
+- Name the row of chips in the spec ("Filters").
+
+### Developers · React
+
+**Semantics**
+- Choice / Filter Selectable: `<button aria-pressed>`.
+- Filter Dismissible: `role="group"` named "filterLabel: value"; the X is a button "Remove filterLabel: value".
+- Input: the body is a button only with `onChipClick`; the X is "Remove {label}".
+
+**Keyboard**
+- Tab to each chip (and to each X), Enter / Space to toggle or remove.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- After removing a chip, move focus to the next chip or the field (Combobox does this already).
+- `removeLabel` is translated if the screen isn't in English.
+
+**Don't**
+- Don't use chips as the only way to submit or navigate.
