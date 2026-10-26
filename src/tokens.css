@@ -2022,7 +2022,7 @@
   :root {
     --ds-fg-default:          #FFFFFF;
     --ds-fg-subtle:           #F1F2F4;
-    --ds-fg-disabled:         #5E6672; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
+    --ds-fg-disabled:         #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-onColor:          #FFFFFF;
     --ds-fg-inverse:          #050506;
     --ds-fg-primary:          #A3D4E2;
@@ -2034,16 +2034,16 @@
        en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
     --ds-fg-label-default:    #FFFFFF;
     --ds-fg-label-secondary:  #FFF8FA; /* añadido 24/08 — Text atom */
-    --ds-fg-label-disabled:   #5E6672; /* añadido 24/08 — Text atom */
+    --ds-fg-label-disabled:   #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-body-default:     #FFFFFF;
     --ds-fg-body-subtle:      #F1F2F4; /* añadido 24/08 — DescriptionText/DetailText atoms */
     --ds-fg-body-secondary:   #FFEEF5; /* añadido 24/08 — DetailText atom */
     --ds-fg-body-tertiary:    #FDF8FF; /* añadido 24/08 — DetailText atom */
-    --ds-fg-body-disabled:    #5E6672; /* añadido 24/08 — DescriptionText/DetailText atoms */
+    --ds-fg-body-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-headline-default: #FFFFFF;
     --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
     --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
-    --ds-fg-title-disabled:   #5E6672;
+    --ds-fg-title-disabled:   #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-title-subtle:     #F1F2F4;
 
     /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
@@ -2058,14 +2058,14 @@
     --ds-fg-icon-primary:     #66AEC0;
     --ds-fg-icon-secondary:   #FFF8FA;
     --ds-fg-icon-tertiary:    #FDF8FF;
-    --ds-fg-icon-disabled:    #5E6672; /* añadido 24/08 — DetailText atom */
+    --ds-fg-icon-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-icon-accent-primary: #66AEC0;
 
     --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
     --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
     --ds-bg-container:        #4C535D;
     --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
-    --ds-bg-disabled:         #676D76; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
+    --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
     --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
     --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
@@ -2095,7 +2095,7 @@
     --ds-borderColor-accent:  #A3D4E2;
     --ds-borderColor-primary: #66AEC0;
     --ds-borderColor-subtle:  #676D76; /* neutral/400 (21/10) — antes #4C535D = bg/container: invisible sobre tarjetas/paneles */
-    --ds-borderColor-disabled: #5E6672; /* añadido 24/08 — ListView atom */
+    --ds-borderColor-disabled: #676D76; /* 26/10: neutral/400 (antes neutral/500) */
     --ds-borderColor-focus-inner: #050506;
     --ds-borderColor-focus-outer: #BDE8FF;
     --ds-borderColor-focus-outer-inverse: #094F78;
@@ -2150,7 +2150,7 @@
 [data-mode="dark"] {
   --ds-fg-default:          #FFFFFF;
   --ds-fg-subtle:           #F1F2F4;
-  --ds-fg-disabled:         #5E6672; /* corregido 24/08 — antes #B9BEC4 (mismo valor que light, sin invertir de verdad) */
+  --ds-fg-disabled:         #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #050506;
   --ds-fg-primary:          #A3D4E2;
@@ -2162,16 +2162,16 @@
      en Headline, Cell, labels de Checkbox/Radio/Chip/Input, Pagination. */
   --ds-fg-label-default:    #FFFFFF;
   --ds-fg-label-secondary:  #FFF8FA; /* añadido 24/08 — Text atom */
-  --ds-fg-label-disabled:   #5E6672; /* añadido 24/08 — Text atom */
+  --ds-fg-label-disabled:   #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-body-default:     #FFFFFF;
   --ds-fg-body-subtle:      #F1F2F4; /* añadido 24/08 — DescriptionText/DetailText atoms */
   --ds-fg-body-secondary:   #FFEEF5; /* añadido 24/08 — DetailText atom */
   --ds-fg-body-tertiary:    #FDF8FF; /* añadido 24/08 — DetailText atom */
-  --ds-fg-body-disabled:    #5E6672; /* añadido 24/08 — DescriptionText/DetailText atoms */
+  --ds-fg-body-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-headline-default: #FFFFFF;
   --ds-fg-title-default:    #FFFFFF;   /* SectionHeader — cadena de alias Figma verificada */
   --ds-fg-title-inverse:    #050506;   /* Dialog header Secondary/Tertiary — invierte con bg/surface/* que se aclara en dark */
-  --ds-fg-title-disabled:   #5E6672;
+  --ds-fg-title-disabled:   #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-title-subtle:     #F1F2F4;
 
   /* *-inverse por tipo — cerrado 11/08 (mismo patrón que --ds-fg-inverse genérico,
@@ -2186,14 +2186,14 @@
   --ds-fg-icon-primary:     #66AEC0;
   --ds-fg-icon-secondary:   #FFF8FA;
   --ds-fg-icon-tertiary:    #FDF8FF;
-  --ds-fg-icon-disabled:    #5E6672; /* añadido 24/08 — DetailText atom */
+  --ds-fg-icon-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-icon-accent-primary: #66AEC0;
 
   --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
   --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
   --ds-bg-container:        #4C535D;
   --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
-  --ds-bg-disabled:         #676D76; /* añadido 11/08 — sin override dark, heredaba el light #EEEFF1 (near-white) en todos los estados disabled */
+  --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
   --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
   --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
@@ -2223,7 +2223,7 @@
   --ds-borderColor-accent:  #A3D4E2;
   --ds-borderColor-primary: #66AEC0;
   --ds-borderColor-subtle:  #676D76; /* neutral/400 (21/10) — antes #4C535D = bg/container: invisible sobre tarjetas/paneles */
-  --ds-borderColor-disabled: #5E6672; /* añadido 24/08 — ListView atom */
+  --ds-borderColor-disabled: #676D76; /* 26/10: neutral/400 (antes neutral/500) */
   --ds-borderColor-focus-inner: #050506;
   --ds-borderColor-focus-outer: #BDE8FF;
   --ds-borderColor-focus-outer-inverse: #094F78;
