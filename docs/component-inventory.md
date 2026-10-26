@@ -270,7 +270,7 @@ language decision (audit §K, pending).
 ## FieldLabel · HelperText · ValidationMessage (Form Elements)
 
 **Group:** Forms
-**Figma:** 🟢 Form Elements page → `Label` (State Generic/Disabled + Required), `Helper` (State Generic/Disabled), `Validation Message` (Vertically Centred · Top Aligned · Counter)
+**Figma:** 🟢 Form Elements page → `Label` (State Generic/Disabled + Required), `Helper` (State Generic/Disabled), `Validation Message` (Vertically Centred · Top Aligned · Counter) · frame *Form Elements — How to use & Accessibility*
 **Code:** `src/components/FieldLabel.jsx`, `src/components/HelperText.jsx`, `src/components/ValidationMessage.jsx` (atoms)
 **Tokens:** `--ds-field-label-*` · `--ds-helper-text-*` · `--ds-validation-message-*`
 
@@ -379,7 +379,7 @@ straight from Device. Since 23/10/2026 they no longer borrow `Input/InputCommon`
 ## RadioGroup · CheckboxGroup
 
 **Group:** Forms
-**Figma:** 🟢 Radio button page → `Radio Group` · 🟢 Checkbox page → `Checkbox Group` (State Initial/Error/Disabled × Orientation Vertical/Horizontal, options in the **Options** slot)
+**Figma:** 🟢 Radio button page → `Radio Group` · 🟢 Checkbox page → `Checkbox Group` (State Initial/Error/Disabled × Orientation Vertical/Horizontal, options in the **Options** slot) · frames *Radio Group — How to use & Accessibility* and *Checkbox Group — How to use & Accessibility*, one on each page
 **Code:** `src/organisms/RadioGroup.jsx`, `src/organisms/CheckboxGroup.jsx` (organisms; shared structure in `_choiceGroup.jsx`)
 **Tokens:** `--ds-choice-group-*` (+ the Form Elements atoms and Radio / Checkbox)
 
