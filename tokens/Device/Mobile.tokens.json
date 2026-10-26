@@ -1206,7 +1206,13 @@
         "com.figma.variableId": "VariableID:30636:67",
         "com.figma.scopes": [
           "STROKE_FLOAT"
-        ]
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:a592c5636a436a07f86e0dd7d98941da48443367/-1:-1",
+          "targetVariableName": "dimension/iconStroke",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
       }
     }
   },
