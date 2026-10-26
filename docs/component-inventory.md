@@ -486,8 +486,9 @@ import { CheckboxGroup } from './organisms/CheckboxGroup';
 
 **Check before shipping**
 - Every group has a `label`.
-- At least one option is checked by default in a RadioGroup unless "no
-  answer" is valid.
+- No option is checked or pre-selected by default: the user chooses. If
+  an answer is required, mark the group `required` and show the error
+  when nothing is chosen.
 
 Known gaps: none.
 
@@ -1031,7 +1032,8 @@ import { Radio } from './components/Radio';
 
 **Your job**
 - Labels must be distinct and short; don't rely on order alone.
-- Preselect an option only when it is a safe default.
+- Don't pre-select any option: the user has to choose. A preset answer
+  is easy to miss and gets submitted without being read.
 
 ### Developers · React
 
