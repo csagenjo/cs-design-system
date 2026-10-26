@@ -1,26 +1,28 @@
-import { LiveRegion } from './LiveRegion';
 import React, { useRef, forwardRef, useId, useContext } from 'react';
 import { RadioGroupContext } from './_radioGroupContext';
+import { warnOnce } from './_devWarn';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
+/* Raíz = fila entera (círculo + label), igual que Figma (26/10/2026): área de
+   foco de 4 px (margin), padding 2 + gap 6, radio 8; hover = fondo de la fila,
+   pressed = opacidad, anillo de foco doble alrededor de la fila. */
 .ds-radio {
-  display:        inline-flex;
-  flex-direction: column;
-  gap:            4px;
-  font-family:    inherit;
+  position:      relative;
+  display:       inline-flex;
+  align-items:   center;
+  gap:           var(--ds-radio-root-gap-generic);
+  padding:       var(--ds-radio-root-padding-generic);
+  margin:        var(--ds-radio-root-focus-area-padding);
+  border-radius: var(--ds-radio-root-border-radius-row);
+  font-family:   inherit;
+  cursor:        pointer;
+  box-sizing:    border-box;
+  transition:    background 0.12s, opacity 0.12s;
 }
-.ds-radio--full-width { display: flex; width: 100%; }
-
-.ds-radio__row {
-  position:    relative;
-  display:     inline-flex;
-  align-items: center;
-  gap:         8px;
-  cursor:      pointer;
-}
-.ds-radio--disabled .ds-radio__row { cursor: not-allowed; }
+.ds-radio--full-width { display: flex; width: calc(100% - 2 * var(--ds-radio-root-focus-area-padding)); }
+.ds-radio--disabled { cursor: not-allowed; }
 
 /* Visually hidden native input — still focusable and operable */
 .ds-radio__input {
@@ -35,27 +37,19 @@ const css = `
   border:      0;
 }
 
-/* Focus ring wrappers — transparent by default, borders appear on focus-visible */
-.ds-radio__focus-ring {
-  flex-shrink:    0;
-  display:        inline-flex;
-  border-radius:  var(--ds-radio-root-border-radius-generic);
-  border:         var(--ds-radio-root-border-width-generic) solid transparent;
-  pointer-events: none;
-}
-
-.ds-radio__control-wrap {
-  display:       inline-flex;
-  border-radius: var(--ds-radio-root-border-radius-generic);
-  border:        var(--ds-radio-root-border-width-generic) solid transparent;
-  padding:       var(--ds-radio-root-gap-generic);
-  transition:    background 0.12s;
-}
-
-/* Visual circle */
-.ds-radio__circle {
+/* Hueco de 24 con el círculo de 20 centrado (.RadioStates) */
+.ds-radio__slot {
+  flex-shrink:     0;
   width:           var(--ds-radio-root-size-generic);
   height:          var(--ds-radio-root-size-generic);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  pointer-events:  none;
+}
+.ds-radio__circle {
+  width:           var(--ds-radio-circle-size);
+  height:          var(--ds-radio-circle-size);
   border:          var(--ds-radio-root-border-width-generic) solid var(--ds-radio-root-border-color-generic);
   border-radius:   var(--ds-radio-root-border-radius-generic);
   background:      var(--ds-radio-root-bg-generic);
@@ -65,82 +59,52 @@ const css = `
   transition:      border-color 0.12s;
   box-sizing:      border-box;
 }
-
-/* Inner indicator dot — fills circle interior, hidden until checked */
+/* Indicador: la mitad del círculo (10 de 20, como el indicator de Figma) */
 .ds-radio__dot {
-  width:         100%;
-  height:        100%;
+  width:         50%;
+  height:        50%;
+  flex-shrink:   0;
   border-radius: var(--ds-radio-indicator-border-radius-generic);
   background:    var(--ds-radio-indicator-fg-generic);
   display:       none;
 }
 
 /* Selected */
-.ds-radio__input:checked + .ds-radio__focus-ring .ds-radio__circle {
-  border-color: var(--ds-radio-root-border-color-selected);
-}
-.ds-radio__input:checked + .ds-radio__focus-ring .ds-radio__dot {
-  display: block;
-}
+.ds-radio__input:checked + .ds-radio__slot .ds-radio__circle { border-color: var(--ds-radio-root-border-color-selected); }
+.ds-radio__input:checked + .ds-radio__slot .ds-radio__dot    { display: block; }
 
 /* Error */
-.ds-radio--error .ds-radio__circle {
-  border-color: var(--ds-radio-root-border-color-error);
-}
-.ds-radio--error .ds-radio__input:checked + .ds-radio__focus-ring .ds-radio__dot {
-  background: var(--ds-radio-indicator-fg-error);
-}
+.ds-radio--error .ds-radio__circle { border-color: var(--ds-radio-root-border-color-error); }
+.ds-radio--error .ds-radio__input:checked + .ds-radio__slot .ds-radio__dot { background: var(--ds-radio-indicator-fg-error); }
 
-/* Disabled — debe ganar a selected (el borde checked tiene más especificidad
-   que .ds-radio--disabled .ds-radio__circle) para que el disabled seleccionado
-   se vea gris, no con el borde de marca. */
+/* Disabled — gana a selected */
 .ds-radio--disabled .ds-radio__circle,
-.ds-radio--disabled .ds-radio__input:checked + .ds-radio__focus-ring .ds-radio__circle {
+.ds-radio--disabled .ds-radio__input:checked + .ds-radio__slot .ds-radio__circle {
   background:   var(--ds-radio-root-bg-disabled);
   border-color: var(--ds-radio-root-border-color-disabled);
 }
-.ds-radio--disabled .ds-radio__input:checked + .ds-radio__focus-ring .ds-radio__dot {
-  background: var(--ds-radio-indicator-fg-disabled);
+.ds-radio--disabled .ds-radio__input:checked + .ds-radio__slot .ds-radio__dot { background: var(--ds-radio-indicator-fg-disabled); }
+
+/* Hover y pressed: toda la fila */
+.ds-radio:not(.ds-radio--disabled):hover  { background: var(--ds-radio-root-bg-hover); }
+.ds-radio:not(.ds-radio--disabled):active { opacity: var(--ds-radio-root-opacity-pressed); }
+
+/* Foco: anillo doble alrededor de la fila, dentro del área de foco */
+.ds-radio:has(.ds-radio__input:focus-visible) {
+  outline:        var(--ds-radio-root-border-width-focus) solid var(--ds-radio-root-border-color-focus-outer);
+  outline-offset: var(--ds-radio-root-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-radio-root-border-width-focus) var(--ds-radio-root-border-color-focus-inner);
 }
 
-/* Hover — bg on control-wrap, not disabled */
-.ds-radio:not(.ds-radio--disabled) .ds-radio__row:hover .ds-radio__control-wrap {
-  background: var(--ds-radio-root-bg-hover);
-}
-
-/* Focus visible — show both ring borders */
-.ds-radio__input:focus-visible + .ds-radio__focus-ring {
-  border-color: var(--ds-radio-root-border-color-focus-outer);
-}
-.ds-radio__input:focus-visible + .ds-radio__focus-ring .ds-radio__control-wrap {
-  border-color: var(--ds-radio-root-border-color-focus-inner);
-}
-
-/* Label text */
+/* Label — Label/md regular */
 .ds-radio__label {
-  font-size:   var(--ds-fontSize-label-sm);
-  font-weight: var(--ds-font-weight-medium);
+  font-size:   var(--ds-fontSize-label-md);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-lineHeight-label-md);
   color:       var(--ds-radio-label-fg-generic);
-  line-height: var(--ds-lineHeight-label-sm);
   user-select: none;
 }
 .ds-radio--disabled .ds-radio__label { color: var(--ds-radio-label-fg-disabled); }
-
-/* Helper text */
-.ds-radio__description {
-  font-size:   var(--ds-fontSize-annotation-sm);
-  color:       var(--ds-radio-description-fg);
-  line-height: var(--ds-lineHeight-annotation-sm);
-  margin:      0;
-}
-
-/* Validation message */
-.ds-radio__message {
-  font-size:   var(--ds-fontSize-annotation-sm);
-  line-height: var(--ds-lineHeight-annotation-sm);
-  margin:      0;
-}
-.ds-radio__message--error { color: var(--ds-radio-validation-fg); }
 `;
 
 let _styleInjected = false;
@@ -170,8 +134,8 @@ export const Radio = forwardRef(function Radio({
   defaultChecked,
   state         = 'default',
   label,
-  description,
-  errorMessage,
+  description,   // eliminado en v2: la ayuda va en RadioGroup
+  errorMessage,  // eliminado en v2: el error va en RadioGroup
   onChange,
   onFocus,
   onBlur,
@@ -201,9 +165,10 @@ export const Radio = forwardRef(function Radio({
   const generatedId = useId();
   const inputId     = id || generatedId;
 
-  const descId = description                       ? `${inputId}-desc` : null;
-  const msgId  = state === 'error' && errorMessage ? `${inputId}-msg`  : null;
-  const describedBy = [descId, msgId, group?.describedBy].filter(Boolean).join(' ') || undefined;
+  if (description || errorMessage) {
+    warnOnce('Radio.helpError', '[DS Radio] `description` y `errorMessage` se eliminaron en v2: la ayuda y el error los pone RadioGroup.');
+  }
+  const describedBy = group?.describedBy || undefined;
 
   if (process.env.NODE_ENV !== 'production' && !(label && showLabel) && !ariaLabel) {
     console.warn('[DS Radio] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
@@ -240,37 +205,15 @@ export const Radio = forwardRef(function Radio({
   }
 
   return (
-    <div className={rootClasses}>
-      <label className="ds-radio__row">
-        <input {...inputProps} />
-        <span className="ds-radio__focus-ring">
-          <span className="ds-radio__control-wrap">
-            <span className="ds-radio__circle">
-              <span className="ds-radio__dot" aria-hidden="true" />
-            </span>
-          </span>
+    <label className={rootClasses}>
+      <input {...inputProps} />
+      <span className="ds-radio__slot">
+        <span className="ds-radio__circle">
+          <span className="ds-radio__dot" aria-hidden="true" />
         </span>
-        {label && showLabel && <span className="ds-radio__label">{label}</span>}
-      </label>
-
-      {description && (
-        <p className="ds-radio__description" id={descId}>
-          {description}
-        </p>
-      )}
-
-      {/* A11y-4: región viva persistente — existe antes de que aparezca el error, así se anuncia */}
-      <LiveRegion>
-        {state === 'error' && errorMessage && (
-          <p
-            className="ds-radio__message ds-radio__message--error"
-            id={msgId}
-          >
-            {errorMessage}
-          </p>
-        )}
-      </LiveRegion>
-    </div>
+      </span>
+      {label && showLabel && <span className="ds-radio__label">{label}</span>}
+    </label>
   );
 });
 
@@ -288,29 +231,16 @@ export default Radio;
 // No controlado
 <Radio label="Recordar" name="pref" value="yes" defaultChecked />
 
-// Error
-<Radio
-  label="Campo obligatorio"
-  name="grupo"
-  value="a"
-  state="error"
-  errorMessage="Selecciona una opción"
-  checked={v === 'a'}
-  onChange={fn}
-/>
+// Error (el mensaje lo pone RadioGroup)
+<Radio label="Campo obligatorio" name="grupo" value="a" state="error" checked={v === 'a'} onChange={fn} />
 
 // Deshabilitado
 <Radio label="No disponible" name="grupo" value="c" state="disabled" />
 
-// Con descripción
-<Radio
-  label="Transferencia SEPA"
-  description="Disponible en 1-2 días hábiles"
-  name="pago"
-  value="sepa"
-  checked={v === 'sepa'}
-  onChange={fn}
-/>
+// Mejor: siempre dentro de un RadioGroup, que pone pregunta, ayuda y error
+<RadioGroup label="Método de pago" helperText="Disponible en 1-2 días hábiles" name="pago" value={v} onChange={setV}>
+  <Radio label="Transferencia SEPA" value="sepa" />
+</RadioGroup>
 
 // Sin label visible — requiere ariaLabel
 <Radio ariaLabel="Seleccionar fila 1" name="filas" value="1" checked={v === '1'} onChange={fn} />

@@ -1045,7 +1045,6 @@
 
   --ds-checkbox-border-default:        var(--ds-borderColor-default);
   --ds-checkbox-border-selected:       var(--ds-borderColor-primary);
-  --ds-checkbox-border-hover:          var(--ds-borderColor-primary);
   --ds-checkbox-border-disabled:       var(--ds-borderColor-disabled);
   --ds-checkbox-border-error:          var(--ds-borderColor-error);
   --ds-checkbox-focus-inner:           var(--ds-borderColor-focus-inner);
@@ -1055,13 +1054,17 @@
   --ds-checkbox-icon-disabled:         var(--ds-fg-disabled);
   --ds-checkbox-label-fg:              var(--ds-fg-label-default);
   --ds-checkbox-label-disabled:        var(--ds-fg-label-disabled);
-  --ds-checkbox-description-fg:        var(--ds-fg-subtle);
-  --ds-checkbox-validation-fg:         var(--ds-fg-error);
 
-  --ds-checkbox-size:                  var(--ds-sizing-sm);
+  --ds-checkbox-size:                  var(--ds-sizing-sm);         /* checkbox/all/root/size/generic — hueco de 24 */
+  --ds-checkbox-box-size:              var(--ds-sizing-xs);         /* caja de 20 dentro del hueco (.CheckStates) */
   --ds-checkbox-border-radius:         var(--ds-border-radius-xs);
   --ds-checkbox-border-width:          var(--ds-border-width-md);
-  --ds-checkbox-label-gap:             8px;
+  --ds-checkbox-label-gap:             var(--ds-spacing-sm);        /* checkbox/all/root/gap/generic (6) */
+  --ds-checkbox-padding:               var(--ds-spacing-2xs);       /* checkbox/all/root/padding/generic (2) */
+  --ds-checkbox-border-radius-row:     var(--ds-border-radius-md);  /* checkbox/all/root/borderRadius/row — fila, hover y foco */
+  --ds-checkbox-focus-area-padding:    var(--ds-spacing-xs);        /* checkbox/all/root/focusArea/padding (4) */
+  --ds-checkbox-focus-width:           var(--ds-border-width-lg);   /* checkbox/all/root/borderWidth/focus (2) */
+  --ds-checkbox-opacity-pressed:       var(--ds-opacity-pressed);   /* checkbox/all/root/bg/pressed */
 
   /* ══════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Radio
@@ -1084,8 +1087,6 @@
 
   --ds-radio-label-fg-generic:              var(--ds-fg-label-default);
   --ds-radio-label-fg-disabled:             var(--ds-fg-label-disabled);
-  --ds-radio-description-fg:                var(--ds-fg-subtle);
-  --ds-radio-validation-fg:                 var(--ds-fg-error);
   --ds-choice-group-gap:                    var(--ds-spacing-md);   /* choiceGroup/all/options/gap/generic — entre opciones de RadioGroup / CheckboxGroup */
   --ds-choice-group-root-gap:               var(--ds-spacing-md);   /* choiceGroup/all/root/gap/generic — pila del grupo: pregunta → ayuda → opciones */
   --ds-choice-group-validation-gap:         var(--ds-spacing-xs);   /* choiceGroup/all/validation/gap/generic — opciones → error */
@@ -1093,7 +1094,13 @@
   --ds-radio-root-size-generic:                var(--ds-sizing-sm);
   --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);
   --ds-radio-root-border-width-generic:        var(--ds-border-width-lg);
-  --ds-radio-root-gap-generic:                 2px;
+  --ds-radio-circle-size:                      var(--ds-sizing-xs);         /* círculo de 20 dentro del hueco (.RadioStates) */
+  --ds-radio-root-gap-generic:                 var(--ds-spacing-sm);        /* radioButton/all/root/gap/generic (6) — círculo → label */
+  --ds-radio-root-padding-generic:             var(--ds-spacing-2xs);       /* radioButton/all/root/padding/generic (2) */
+  --ds-radio-root-border-radius-row:           var(--ds-border-radius-md);  /* radioButton/all/root/borderRadius/row */
+  --ds-radio-root-focus-area-padding:          var(--ds-spacing-xs);        /* radioButton/all/root/focusArea/padding (4) */
+  --ds-radio-root-border-width-focus:          var(--ds-border-width-lg);   /* radioButton/all/root/borderWidth/focus (2) */
+  --ds-radio-root-opacity-pressed:             var(--ds-opacity-pressed);   /* radioButton/all/root/bg/pressed */
   --ds-radio-indicator-border-radius-generic:  var(--ds-border-radius-circle);
 
   /* ══════════════════════════════════════════════════════════════
@@ -1124,16 +1131,15 @@
   --ds-chip-icon-fg-selected:              var(--ds-fg-icon-onColor); /* corregido 11/08 — mismo motivo que label-fg-selected */
   --ds-chip-icon-fg-disabled:              var(--ds-fg-icon-disabled);
   --ds-chip-icon-size-generic:             var(--ds-sizing-xs);
+  --ds-chip-focus-area-padding:            var(--ds-spacing-xs);  /* chip/all/root/focusArea/padding — el anillo de foco cabe dentro del componente */
+  --ds-chip-valuetext-padding-hor:         var(--ds-spacing-xs);  /* chip/all/valueText/paddingHor/generic — Filter e Input */
+  --ds-chip-label-line-height:             var(--ds-lineHeight-label-md);
   --ds-chip-remove-target-size:            var(--ds-sizing-sm);   /* área de clic mínima de la X (A11y-5, WCAG 2.5.8: 24 × 24) — sin cambio visual */
 
-  /* chip/chipFilter/all/ — específicos de type="filter" variant="dismissible" */
+  /* chip/filter/label/* — "Label:" de type="filter" variant="dismissible" */
   --ds-chip-filter-label-font-weight:      var(--ds-font-weight-bold);
   --ds-chip-filter-label-padding-left:     var(--ds-spacing-xs);
   --ds-chip-filter-label-padding-right:    var(--ds-spacing-2xs);
-  --ds-chip-filter-valuetext-padding-hor:  var(--ds-spacing-xs);
-
-  /* chip/chipInput/all/ — específicos de type="input" */
-  --ds-chip-input-valuetext-padding-hor:   var(--ds-spacing-xs);
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Link
