@@ -77,7 +77,9 @@ function injectBarStyles() {
  * NAVEGACIÓN (solo variant="complex"):
  * @param {Function} [props.onPrev]
  * @param {boolean}  [props.prevDisabled]
- * @param {boolean}  [props.nextIsConfirm]   — cambia la acción principal por "Confirm"
+ * @param {boolean}  [props.nextIsConfirm]   — cambia la acción principal por `confirmLabel`
+ * @param {string}   [props.prevLabel]       — default "Previous"
+ * @param {string}   [props.confirmLabel]    — default "Confirm"
  */
 export function ButtonBar({
   variant,
@@ -95,6 +97,8 @@ export function ButtonBar({
   onPrev,
   prevDisabled = false,
   nextIsConfirm = false,
+  prevLabel = 'Previous',   // antes "Anterior" fijo (idioma, A11y K)
+  confirmLabel = 'Confirm',
 }) {
   injectBarStyles();
 
@@ -108,7 +112,7 @@ export function ButtonBar({
         {onPrev && (
           <Button variant="default" outline size={size} iconLeft="arrow-left"
             onClick={onPrev} disabled={prevDisabled}>
-            Anterior
+            {prevLabel}
           </Button>
         )}
         {negativeActions.map((a, i) => (
@@ -146,7 +150,7 @@ export function ButtonBar({
             iconLeft={primaryIcon}
             iconRight={!nextIsConfirm ? 'arrow-right' : undefined}
             onClick={onPrimary}>
-            {nextIsConfirm ? 'Confirm' : (primaryLabel || 'Accept and continue')}
+            {nextIsConfirm ? confirmLabel : (primaryLabel || 'Accept and continue')}
           </Button>
         )}
 
