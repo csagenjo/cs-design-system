@@ -500,8 +500,8 @@ Known gaps: none.
 ## Button
 
 **Group:** Actions
-**Figma:** 🟢 Buttons page → frame `Buttons` (Type × Variant × Size × Width × State, incl. `State=Loading`) · frame *Button — How to use & Accessibility* below it
-**Code:** `src/components/Button.jsx` (atom)
+**Figma:** 🟢 Buttons page → `Button` set in frame `Buttons` (Type × Variant × Size × Width × State, 288 variants: Default and Accent in the three sizes since 26/10) · frame *Button — How to use & Accessibility*
+**Code:** `src/components/Button.jsx` (atom, v3 — same axes as Figma)
 **Tokens:** `--ds-button-*`
 
 The action control of the system: it does something on the current view
@@ -512,24 +512,33 @@ The action control of the system: it does something on the current view
 ### Designers · Figma
 
 **When to use**
-- One action the user starts. One Accent (primary) button per area; the rest
-  Secondary / Tertiary.
-- Destructive action → Negative, always on the left of a bar.
-- Going to another page → Link or CTA Link, not Button.
-- Only an icon, no text → Icon Button.
+- One action the user starts on this view. One Primary per area; the rest
+  Secondary or Tertiary.
+- Destructive action: Secondary, on the left of the bar, with a label that
+  says what it destroys ("Delete account"). There is no red button.
+- Going to another page → Link or CTA Link. Only an icon → Icon Button.
 
 **Properties**
-- `Type` + `Variant` → Accent Primary (filled) · Accent Secondary (outline) ·
-  Accent Tertiary (ghost) · Default Primary · Default Secondary · Negative.
-- `Size` → Small 32 · Medium 40 · Large 48 (labels 14 / 16 / 19).
-- `Width` → Hug or Full.
-- `State` → Enabled · Hover · Pressed · Focus · Disabled · Loading.
-- Icon left / right: Lucide icons through the `Icon` wrapper.
+- `Type` → Accent (teal) · Default (black).
+- `Variant` → Primary (filled) · Secondary (outline) · Tertiary (text only).
+- `Size` → Small 32 · Medium 40 · Large 48 (labels 14 / 16 / 19, bold).
+- `Width` → Flexible · Full.
+- `State` → Enabled · Hover · Pressed · Focus · Focus Hover · Focus Pressed · Disabled · Loading.
+- Icon left / right: `Show Icon Left/Right` + the Lucide icon through the `Icon` wrapper.
+
+**Behaviour**
+- Hover: all three variants fill with the Primary background + `bgMix`, text
+  and icon turn on-colour.
+- Pressed: 80 % opacity (`button/all/root/opacity/pressed`).
+- Disabled: its own tokens (background, border, text), never opacity.
+- Loading: spinner in the left icon slot, label visible, Enabled look.
 
 **Sizing**
-- Every Button reserves a 4 px focus area around it
-  (`button/all/root/focusArea/padding`), so the box is height + 8
-  (Large = 56). Don't remove it: it's where the focus ring lives.
+- Root padding `button/all/root/paddingHor/*` (8 / 12 / 16) + label padding
+  `button/all/label/paddingHor/generic` (4): text 12 / 16 / 20 from the edge,
+  4 from the icon.
+- 4 px focus area around it (`button/all/root/focusArea/padding`): the box is
+  height + 8 (Large = 56). It's where the focus ring lives.
 
 ### Developers · React
 
@@ -539,31 +548,31 @@ import { Button } from './components/Button';
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `'accent'` \| `'default'` \| `'negative'` \| `'ghost'` | `'accent'` | |
-| `outline` | bool | `false` | Secondary (outline) style |
+| `type` | `'accent'` \| `'default'` | `'accent'` | Figma `Type` |
+| `variant` | `'primary'` \| `'secondary'` \| `'tertiary'` | `'primary'` | Figma `Variant` |
 | `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | 32 / 40 / 48 |
 | `iconLeft` / `iconRight` | string | — | `Icon` name |
-| `iconOnly` | bool | `false` | Needs `ariaLabel`; prefer IconButton |
-| `fullWidth` | bool | `false` | Width minus the focus area |
-| `floating` | bool | `false` | Shadow for floating bars |
+| `fullWidth` | bool | `false` | Width=Full (minus the focus area) |
 | `disabled` | bool | `false` | Native `disabled` |
-| `loading` | bool | `false` | Spinner in the left icon slot, label stays |
+| `loading` | bool | `false` | State=Loading |
 | `loadingLabel` | string | `'Loading'` | Added to the name and announced |
 | `htmlType` | `'button'` \| `'submit'` \| `'reset'` | `'button'` | |
-| `ariaLabel` | string | — | Only for `iconOnly` |
 | `...rest` | | | Forwarded to the `<button>` (aria-*, data-*, title) |
 
 ```jsx
-<Button variant="accent" iconLeft="save" loading={saving}>Save</Button>
-<Button variant="default" outline onClick={onBack}>Back</Button>
-<Button variant="negative" iconLeft="trash">Delete</Button>
+<Button iconLeft="save" loading={saving}>Save</Button>
+<Button type="default" variant="secondary" iconLeft="chevron-left">Back</Button>
+<Button variant="tertiary">Cancel</Button>
 ```
 
 **Usage**
 - Write the action as a verb ("Save", "Send request"). The Figma placeholder
   "Button" triggers a dev warning.
-- While saving, use `loading`, not `disabled`: the button keeps its focus and
-  a second click does nothing.
+- While an action runs, use `loading`, not `disabled`: the button keeps its
+  focus and a second click does nothing.
+- API before v3 (`variant="accent|default|ghost|negative"`, `outline`) still
+  renders, mapped to the new axes, with a dev warning. `floating` and
+  `iconOnly` were removed (not in Figma; use IconButton for icon only).
 
 ### AI agents · Claude Code
 
@@ -571,53 +580,51 @@ import { Button } from './components/Button';
 - The user triggers an action on this view.
 
 **Don't pick it when**
-- It navigates → Link / CTALink (`href`).
+- It navigates → Link / CTALink with `href`.
 - Icon only → IconButton.
-- A footer with several actions → ButtonBar.
+- A screen's closing actions → ButtonBar.
 - Choosing between options → Segmented Control, Radio Group, Chip.
 
 **Composition rules**
-- Inside another component, use the configuration that component fixes;
-  never change the variant of a nested Button.
-- Never restyle with hex values; re-theme only through `--ds-button-*`.
+- Inside another component, keep the configuration it fixes; never change the
+  variant of a nested Button.
+- Never restyle with hex values; re-theme only through `--ds-button-*`
+  (Collapsible does it this way).
 
 ## Accessibility
 
 ### Designers · Figma
 
 **Built in**
-- Focus ring outside the control (2 px gap + 2 px ring, `borderColor/focus-outer`,
+- Focus ring outside the control: 2 px gap + 2 px ring (`borderColor/focus-outer`,
   ≥ 3:1 against the background).
-- Icon colour follows the fill by contrast, not by variant.
+- Icon colour by contrast with the fill of each state, not by variant.
 - Loading keeps the Enabled look, so it doesn't read as disabled.
 
 **Your job**
-- Visible label on every button; one primary per area.
-- Don't use colour alone to tell Negative apart: the label says what it does.
+- A visible label on every button; one Primary per area.
+- Destructive actions say what they do; colour is never the only signal.
 
 ### Developers · React
 
 **Semantics**
 - Native `<button type="button">`.
-- `loading` → `aria-busy`, `aria-disabled`, the name becomes "Save, Loading"
-  and `loadingLabel` is announced when it starts. A submit button in loading
+- `loading` → `aria-busy` + `aria-disabled`; the name becomes "Save, Loading"
+  and `loadingLabel` is announced when it starts; a submit button in loading
   doesn't send the form.
 - `disabled` → native `disabled` (removed from the Tab order).
 
 **Keyboard**
 - Tab to focus, Enter / Space to activate.
 
-**Known gaps**
-- `floating` reads `--ds-shadow-md` / `-lg`, which aren't defined yet (no
-  shadow; visual only).
-- Icon–label gap is a literal (4 / 6 / 8 px), not a token yet.
+Known gaps: none.
 
 ### AI agents · Claude Code
 
 **Check before shipping**
 - No button keeps the text "Button".
-- `iconOnly` always has `ariaLabel` (or use IconButton).
 - `loading` instead of `disabled` while an action is running.
+- No dev warnings about the pre-v3 API.
 
 **Don't**
 - Don't render a `<div onClick>` styled as a button.
@@ -628,7 +635,7 @@ import { Button } from './components/Button';
 ## IconButton
 
 **Group:** Actions
-**Figma:** 🟢 Buttons page → frame `Buttons - Icon Button` (Type × Variant × Size × State × with Label) · frame *Icon Button — How to use & Accessibility* below it
+**Figma:** 🟢 Buttons page → `Icon Button` set in frame `Buttons - Icon Button` (Type × Variant × Size × State × with Label, 240 variants; `State=Loading` with spinner since 26/10) · frame *Icon Button — How to use & Accessibility*
 **Code:** `src/components/IconButton.jsx` (atom)
 **Tokens:** `--ds-icon-button-*`
 
@@ -640,20 +647,24 @@ For compact toolbars and repeated actions (close, edit, filter).
 ### Designers · Figma
 
 **When to use**
-- The icon is well known (close, search, edit, add) or the label sits under it.
+- The icon is well known (close, search, edit, add) or a label sits under it.
 - Space is tight: tables, cards, headers.
 - Not well known, or the main action of the page → Button with text.
 
 **Properties**
 - `Type` → Default · Accent.
-- `Variant` → Primary (filled) · Secondary (outline) · Tertiary (ghost).
+- `Variant` → Primary (filled) · Secondary (outline) · Tertiary (icon only).
 - `Size` → Small 32 · Medium 44 · Large 56.
 - `with Label` → None · Yes (label under the circle).
-- `State` → Enabled · Hover · Pressed · Focus · Hover Focus · Focus Pressed · Disabled.
+- `State` → Enabled · Hover · Pressed · Focus · Hover Focus · Focus Pressed · Disabled · Loading.
+
+**Behaviour**
+- Hover: all three variants fill with the Primary background + `bgMix`, icon on-colour.
+- Pressed: Primary background at 80 % (`iconButton/all/root/opacity/pressed`), also in Secondary and Tertiary.
+- Loading: spinner in place of the icon, same size and colour.
 
 **Sizing**
-- 4 px focus area around it (`iconButton/all/root/focusArea/padding`), so
-  the box is size + 8.
+- 4 px focus area around it (`iconButton/all/root/focusArea/padding`): the box is size + 8.
 
 ### Developers · React
 
@@ -670,6 +681,8 @@ import { IconButton } from './components/IconButton';
 | `variant` | `'primary'` \| `'secondary'` \| `'tertiary'` | `'secondary'` | |
 | `size` | `'small'` \| `'medium'` \| `'large'` | `'medium'` | 32 / 44 / 56 |
 | `disabled` | bool | `false` | |
+| `loading` | bool | `false` | State=Loading |
+| `loadingLabel` | string | `'Loading'` | Added to the name and announced |
 | `htmlType`, `id`, `className`, `onClick` | | | |
 | `...rest` | | | Forwarded to the `<button>` |
 
@@ -706,10 +719,11 @@ import { IconButton } from './components/IconButton';
 ### Developers · React
 
 **Semantics**
-- Native `<button>`. Name = visible `label` if there is one (WCAG 2.5.3);
-  `ariaLabel` is used only if it contains that text, otherwise it's ignored
-  with a dev warning. No label and no `ariaLabel` → dev warning.
-- The icon is decorative (hidden from screen readers).
+- Native `<button>`; the icon is decorative.
+- Name = visible `label` if there is one (WCAG 2.5.3); `ariaLabel` is used
+  only if it contains that text, otherwise it's ignored with a dev warning.
+  No label and no `ariaLabel` → dev warning.
+- `loading` → `aria-busy` + `aria-disabled`, ", Loading" in the name, announced.
 
 **Keyboard**
 - Tab, Enter / Space.
@@ -730,12 +744,12 @@ Known gaps: none.
 ## ButtonBar
 
 **Group:** Actions (organism)
-**Figma:** no component — a composition of Button instances (same criterion as Table / CellActions); documented here only
-**Code:** `src/organisms/ButtonBar.jsx` (organism; composes Button)
-**Tokens:** none of its own — Button + Mode borders/background
+**Figma:** 🟢 Buttons page → `Button Bar` set (Variant Complex / Simple / Forms / Details + `Show Notification`, `Show Previous`, `Show Negative`, `Show Cancel`, `Show Secondary`, `Show Primary`, `Show Next`; created 26/10) · frame *Button Bar — How to use & Accessibility*
+**Code:** `src/organisms/ButtonBar.jsx` (organism, v3; composes Button and takes an InlineNotification)
+**Tokens:** `--ds-button-bar-gap`, `--ds-button-bar-notification-gap` (`buttonBar/all/*`)
 
-The row of actions at the bottom of a form, a step process, a search panel
-or a detail view. It fixes the order and the style of each button so every
+The closing actions of a screen: forms, step processes, search panels and
+detail views. It fixes the order and the style of each button so every
 screen in La Plataforma reads the same.
 
 ## How to use
@@ -743,16 +757,22 @@ screen in La Plataforma reads the same.
 ### Designers · Figma
 
 **When to use**
-- `complex` → step processes and master-detail: Previous + negatives on the
-  left, Cancel + secondaries + primary on the right.
-- `simple` → search boxes and filters: secondary + Search.
-- `form` → forms: negatives left, Cancel + Accept right.
-- `detail` → detail headers: secondaries + primary.
+- `Complex` → step processes and master-detail. Left: notification above
+  Previous + negative actions. Right: Cancel, secondary actions, primary, Next.
+- `Simple` → search and filters. Left: notification. Right: secondary + Search.
+- `Forms` → forms. Left: notification above negative actions. Right: Cancel + primary.
+- `Details` → detail headers. Left: notification. Right: secondary + primary.
 
 **Rules**
-- Primary = Accent filled, one per bar, always last on the right.
-- Secondary = Accent outline. Cancel = Tertiary (ghost).
-- Negative actions always on the left.
+- Buttons are Accent Large. Primary filled, one per bar, last on the right
+  (only Next goes after it).
+- Negative actions are Secondary and always on the left.
+- Cancel, Previous and Next are Tertiary.
+- Gap 24 between actions (`buttonBar/all/root/gap`), 16 between the
+  notification and the actions (`buttonBar/all/notification/gap`).
+- No padding, border or background: the screen that holds it sets them.
+- The nested instances are locked: change texts and use the `Show…`
+  properties; never change their variants.
 
 ### Developers · React
 
@@ -763,17 +783,19 @@ import { ButtonBar } from './organisms/ButtonBar';
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `variant` | `'complex'` \| `'simple'` \| `'form'` \| `'detail'` | — | |
-| `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | Size of every Button |
+| `size` | `'sm'` \| `'md'` \| `'lg'` | `'lg'` | Figma uses Large |
+| `notification` | node | — | An InlineNotification |
 | `primaryLabel` / `onPrimary` / `primaryIcon` | | | Primary renders only with `onPrimary` |
-| `secondaryLabel` / `onSecondary` / `secondaryIcon` | | | |
-| `extraSecondary` | `{label, onClick, icon?}[]` | `[]` | complex, detail |
-| `cancelLabel` / `onCancel` | | `'Cancel'` | |
-| `negativeActions` | `{label, onClick, icon?}[]` | `[]` | complex, form |
-| `onPrev` / `prevDisabled` / `prevLabel` | | `'Previous'` | complex |
-| `nextIsConfirm` / `confirmLabel` | bool / string | `false` / `'Confirm'` | Last step of a process |
+| `primaryLoading` / `primaryDisabled` | bool | `false` | |
+| `secondaryLabel` / `onSecondary` / `secondaryIcon` | | | simple, detail, complex |
+| `extraSecondary` | `{label, onClick, icon?, disabled?}[]` | `[]` | complex, detail |
+| `cancelLabel` / `onCancel` | | `'Cancel'` | complex, form |
+| `negativeActions` | `{label, onClick, icon?, disabled?}[]` | `[]` | complex, form |
+| `onPrev` / `prevLabel` / `prevDisabled` | | `'Previous'` | complex |
+| `onNext` / `nextLabel` / `nextDisabled` | | `'Next'` | complex |
+| `ariaLabel` | string | — | Names the group of actions |
 
-Default labels are English ("Accept and continue", "Search", "Accept");
-always pass your own.
+Default labels are English; always pass the screen's own.
 
 ### AI agents · Claude Code
 
@@ -786,30 +808,33 @@ always pass your own.
 
 **Composition rules**
 - Don't build the row by hand with loose Buttons; the order is part of the pattern.
+- Errors of the whole screen go in `notification`, not in a toast.
 
 ## Accessibility
 
 ### Designers · Figma
 
 **Built in**
-- Visual order = DOM order = Tab order (left to right).
+- Visual order = DOM order = Tab order: notification, left actions, right actions.
 
 **Your job**
 - Clear verbs on every label; the primary says what happens ("Send request").
+- Destructive actions say what they destroy.
 
 ### Developers · React
 
 **Semantics**
-- A plain `<div>` with native Buttons; everything from Button applies.
-- `prevDisabled` uses native `disabled`.
+- A `<div>` with native Buttons (with `ariaLabel`, `role="group"`).
+- The notification is an InlineNotification: an error one is `role="alert"`.
+- `prevDisabled` / `nextDisabled` use native `disabled`; `primaryLoading` keeps focus.
 
 **Keyboard**
 - Tab through the buttons in visual order.
 
-**Known gaps**
-- Paddings, gap and separator height are literals (12 / 16, 8, 22 px), not tokens yet (visual, not a11y).
+Known gaps: none.
 
 ### AI agents · Claude Code
 
 **Check before shipping**
-- Pass every label in the screen's language (`prevLabel`, `cancelLabel`, `confirmLabel`…).
+- Pass every label in the screen's language.
+- One primary per bar.

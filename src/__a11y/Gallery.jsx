@@ -290,19 +290,17 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="Button">
-        {['accent', 'default', 'negative', 'ghost'].map((v) => (
-          <Row key={v}>
-            {['sm', 'md', 'lg'].map((s) => <Button key={s} variant={v} size={s}>{`${v} ${s}`}</Button>)}
-            <Button variant={v} outline iconLeft="Download">{`${v} outline`}</Button>
-            <Button variant={v} iconRight="ArrowRight">{`${v} iconRight`}</Button>
-            <Button variant={v} iconOnly iconLeft="Filter" ariaLabel={`Filtrar ${v}`} />
-            <Button variant={v} loading>{`${v} loading`}</Button>
-            <Button variant={v} disabled>{`${v} disabled`}</Button>
+        {['accent', 'default'].flatMap((t) => ['primary', 'secondary', 'tertiary'].map((v) => (
+          <Row key={t + v}>
+            {['sm', 'md', 'lg'].map((s) => <Button key={s} type={t} variant={v} size={s}>{`${t} ${v} ${s}`}</Button>)}
+            <Button type={t} variant={v} iconLeft="Download">{`${t} ${v} iconLeft`}</Button>
+            <Button type={t} variant={v} iconRight="ArrowRight">{`${t} ${v} iconRight`}</Button>
+            <Button type={t} variant={v} loading>{`${t} ${v} loading`}</Button>
+            <Button type={t} variant={v} disabled>{`${t} ${v} disabled`}</Button>
           </Row>
-        ))}
+        )))}
         <Row>
-          <Button variant="accent" iconLeft="Save" floating>Guardar floating</Button>
-          <div style={{ width: 320 }}><Button variant="accent" fullWidth>Full width</Button></div>
+          <div style={{ width: 320 }}><Button fullWidth>Full width</Button></div>
         </Row>
       </Section>
 
@@ -619,6 +617,8 @@ export default function Gallery({ mode }) {
             ))}
             <IconButton type={t} icon="chevron-down" label="Expandir" onClick={noop} />
             <IconButton type={t} size="large" icon="chevron-down" label="Disabled" disabled />
+            <IconButton type={t} icon="plus" ariaLabel={`Add ${t}`} loading />
+            <IconButton type={t} variant="primary" icon="plus" label="Add" loading />
           </Row>
         ))}
       </Section>
@@ -1047,7 +1047,7 @@ export default function Gallery({ mode }) {
             </Tooltip>
           ))}
           <Tooltip label="Eliminar" placement="top" forceVisible>
-            <Button variant="negative" size="sm">Eliminar</Button>
+            <Button variant="secondary" size="sm">Eliminar</Button>
           </Tooltip>
         </Row>
       </Section>
@@ -1078,17 +1078,19 @@ export default function Gallery({ mode }) {
 
       <Section name="ButtonBar">
         <Col>
-          <ButtonBar variant="complex" size="md" negativeActions={[{ label: 'Rechazar', icon: 'x', onClick: noop }]}
-            onPrev={noop} onCancel={noop} extraSecondary={[{ label: 'Guardar borrador', icon: 'download', onClick: noop }]}
-            onPrimary={noop} primaryLabel="Siguiente" />
-          <ButtonBar variant="complex" size="md" onPrev={noop} prevDisabled onCancel={noop} onPrimary={noop}
-            primaryLabel="Confirmar" nextIsConfirm />
-          <ButtonBar variant="simple" size="sm" secondaryLabel="Borrar búsqueda" onSecondary={noop} onPrimary={noop} primaryLabel="Buscar" />
-          <ButtonBar variant="form" negativeActions={[{ label: 'Eliminar', icon: 'trash', onClick: noop }]}
-            onCancel={noop} onPrimary={noop} primaryLabel="Aceptar" />
-          <ButtonBar variant="detail" secondaryLabel="Editar" secondaryIcon="edit" onSecondary={noop}
-            onPrimary={noop} primaryLabel="Enviar a validación" primaryIcon="arrow-right" />
-          <ButtonBar variant="form" size="lg" onCancel={noop} onPrimary={noop} primaryLabel="Large" />
+          <ButtonBar variant="complex" ariaLabel="Step actions"
+            notification={<InlineNotification type="error" style="default" showTitle={false} showButton={false} message="Fix the highlighted fields" />}
+            onPrev={noop} negativeActions={[{ label: 'Reject', onClick: noop }]} onCancel={noop}
+            extraSecondary={[{ label: 'Save draft', onClick: noop }]} primaryLabel="Accept" onPrimary={noop}
+            onNext={noop} />
+          <ButtonBar variant="complex" onPrev={noop} prevDisabled onCancel={noop} primaryLabel="Confirm" onPrimary={noop}
+            onNext={noop} nextDisabled />
+          <ButtonBar variant="simple" secondaryLabel="Clear" onSecondary={noop} primaryLabel="Search" onPrimary={noop}
+            notification={<InlineNotification type="information" style="default" showTitle={false} showButton={false} message="Showing the last 30 days" />} />
+          <ButtonBar variant="form" negativeActions={[{ label: 'Delete', onClick: noop }]}
+            onCancel={noop} primaryLabel="Save" onPrimary={noop} primaryLoading />
+          <ButtonBar variant="detail" secondaryLabel="Edit" onSecondary={noop} primaryLabel="Send for review" onPrimary={noop} />
+          <ButtonBar variant="form" size="md" onCancel={noop} primaryLabel="Medium" onPrimary={noop} />
         </Col>
       </Section>
 
@@ -1101,8 +1103,8 @@ export default function Gallery({ mode }) {
                 <Link href="#" size="sm" rightIcon={false}>Editar</Link>
               </CellActions>
               <CellActions surface={s} align="left" lastRow={i === 2}>
-                <Button variant="ghost" size="sm">Editar</Button>
-                <Button variant="ghost" size="sm">Borrar</Button>
+                <Button variant="tertiary" size="sm">Editar</Button>
+                <Button variant="tertiary" size="sm">Borrar</Button>
               </CellActions>
             </TableRow>
           ))}

@@ -104,7 +104,7 @@ export function Snackbar({
     <div id={id} className={classes}>
       <p className="ds-snackbar__message">{message}</p>
       {showAction && actionLabel && (
-        <Button variant="default" size="sm" onClick={onAction}>
+        <Button type="default" variant="primary" size="sm" onClick={onAction}>
           {actionLabel}
         </Button>
       )}

@@ -38,6 +38,9 @@ const css = `
 .ds-collapsible-icon-btn--secondary {
   --ds-icon-button-border-color-default:       var(--ds-collapsible-border-color-secondary);
   --ds-icon-button-icon-fg-on-outline-default: var(--ds-collapsible-icon-fg-secondary);
+  /* Hover/Pressed rellenan con el fondo de Primary: en Secondary, el rosa. */
+  --ds-icon-button-bg-default-primary:         var(--ds-collapsible-border-color-secondary);
+  --ds-icon-button-icon-fg-on-color-default:   var(--ds-collapsible-fg-on-color);
 }
 `;
 

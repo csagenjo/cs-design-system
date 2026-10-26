@@ -25,7 +25,7 @@
  *
  * USO:
  *   <Tooltip label="Expand"><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
- *   <Tooltip label="Eliminar" placement="right"><Button variant="negative">Eliminar</Button></Tooltip>
+ *   <Tooltip label="Eliminar" placement="right"><Button variant="secondary">Eliminar</Button></Tooltip>
  */
 
 import React from 'react';

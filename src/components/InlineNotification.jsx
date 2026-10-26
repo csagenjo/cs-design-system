@@ -140,7 +140,7 @@ export function InlineNotification({
         )}
         {showButton && (
           <div className="ds-inline-notification__button">
-            <Button variant="default" outline size="sm" onClick={onButtonClick}>
+            <Button type="default" variant="secondary" size="sm" onClick={onButtonClick}>
               {buttonLabel}
             </Button>
           </div>

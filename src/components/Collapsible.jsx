@@ -40,6 +40,10 @@ const css = `
 .ds-collapsible--secondary {
   --ds-button-border-default:     var(--ds-collapsible-border-color-secondary);
   --ds-button-fg-default-outline: var(--ds-collapsible-label-fg-secondary);
+  /* Hover/Pressed: Button rellena con su fondo de Primary — en Secondary ese
+     relleno es el rosa del borde, con texto on-color (26/10/2026). */
+  --ds-button-bg-default-filled:  var(--ds-collapsible-border-color-secondary);
+  --ds-button-fg-default-filled:  var(--ds-collapsible-fg-on-color);
 }
 `;
 
@@ -64,8 +68,8 @@ export function Collapsible({
   return (
     <div className={classes} id={id}>
       <Button
-        variant="default"
-        outline
+        type="default"
+        variant="secondary"
         size={size}
         iconRight={expanded ? 'chevron-up' : 'chevron-down'}
         aria-expanded={expanded}

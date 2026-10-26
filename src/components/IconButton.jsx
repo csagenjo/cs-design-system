@@ -32,6 +32,9 @@ import React from 'react';
 import { injectStyles } from './_inputBase';
 import { warnOnce } from './_devWarn';
 import { Icon } from './Icon';
+import { LoadingSpinner } from './LoadingSpinner';
+import { VisuallyHidden } from './VisuallyHidden';
+import { announce } from './announce';
 
 const ICON_SIZE_BY_BUTTON_SIZE = { small: '2xs', medium: 'xs', large: 'sm' };
 
@@ -95,61 +98,47 @@ const css = `
   outline-offset: var(--ds-icon-button-focus-width);
   box-shadow:     0 0 0 var(--ds-icon-button-focus-width) var(--ds-icon-button-border-color-focus-inner);
 }
-.ds-icon-btn:active:not(:disabled) .ds-icon-btn__circle {
-  opacity: var(--ds-icon-button-opacity-pressed);
-}
 .ds-icon-btn:disabled {
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Primary — relleno */
-.ds-icon-btn--default-primary .ds-icon-btn__circle {
-  background: var(--ds-icon-button-bg-default-primary);
-  color:      var(--ds-icon-button-icon-fg-on-color-default);
-}
-.ds-icon-btn--default-primary:hover:not(:disabled) .ds-icon-btn__circle {
-  background: color-mix(in srgb, var(--ds-icon-button-bg-default-primary), white 8%);
-}
-.ds-icon-btn--accent-primary .ds-icon-btn__circle {
-  background: var(--ds-icon-button-bg-accent-primary);
-  color:      var(--ds-icon-button-icon-fg-on-color-accent);
-}
-.ds-icon-btn--accent-primary:hover:not(:disabled) .ds-icon-btn__circle {
-  background: color-mix(in srgb, var(--ds-icon-button-bg-accent-primary), black 8%);
-}
+/* Colores por tipo: relleno de Primary, velo de hover, línea y tinta de
+   contorno, icono sobre color. */
+.ds-icon-btn--default { --_fill: var(--ds-icon-button-bg-default-primary); --_mix: var(--ds-icon-button-bg-mix-default-hover); --_line: var(--ds-icon-button-border-color-default); --_ink: var(--ds-icon-button-icon-fg-on-outline-default); --_on: var(--ds-icon-button-icon-fg-on-color-default); }
+.ds-icon-btn--accent  { --_fill: var(--ds-icon-button-bg-accent-primary);  --_mix: var(--ds-icon-button-bg-mix-accent-hover);  --_line: var(--ds-icon-button-border-color-accent);  --_ink: var(--ds-icon-button-icon-fg-on-outline-accent);  --_on: var(--ds-icon-button-icon-fg-on-color-accent); }
 
-/* Secondary — contorno */
-.ds-icon-btn--default-secondary .ds-icon-btn__circle {
-  border-width: var(--ds-icon-button-border-width-secondary);
-  border-color: var(--ds-icon-button-border-color-default);
-  color:        var(--ds-icon-button-icon-fg-on-outline-default);
-}
-.ds-icon-btn--default-secondary:hover:not(:disabled) .ds-icon-btn__circle {
-  background: var(--ds-icon-button-bg-mix-default-hover);
-}
+/* Enabled */
+.ds-icon-btn--default-primary .ds-icon-btn__circle,
+.ds-icon-btn--accent-primary .ds-icon-btn__circle { background: var(--_fill); color: var(--_on); }
+.ds-icon-btn--default-secondary .ds-icon-btn__circle,
 .ds-icon-btn--accent-secondary .ds-icon-btn__circle {
   border-width: var(--ds-icon-button-border-width-secondary);
-  border-color: var(--ds-icon-button-border-color-accent);
-  color:        var(--ds-icon-button-icon-fg-on-outline-accent);
+  border-color: var(--_line);
+  color:        var(--_ink);
 }
-.ds-icon-btn--accent-secondary:hover:not(:disabled) .ds-icon-btn__circle {
-  background: var(--ds-icon-button-bg-mix-accent-hover);
-}
+.ds-icon-btn--default-tertiary .ds-icon-btn__circle,
+.ds-icon-btn--accent-tertiary .ds-icon-btn__circle { color: var(--_ink); }
 
-/* Tertiary — ghost, sin borde visible */
-.ds-icon-btn--default-tertiary .ds-icon-btn__circle {
-  color: var(--ds-icon-button-icon-fg-on-outline-default);
+/* Hover (y Focus Hover): las tres variantes se rellenan con el fondo de
+   Primary + bgMix, icono on-color — igual que Figma. */
+.ds-icon-btn:hover:not(:disabled):not(.ds-icon-btn--loading) .ds-icon-btn__circle {
+  background: linear-gradient(var(--_mix), var(--_mix)), var(--_fill);
+  color:      var(--_on);
 }
-.ds-icon-btn--default-tertiary:hover:not(:disabled) .ds-icon-btn__circle {
-  background: var(--ds-icon-button-bg-mix-default-hover);
+/* Pressed: relleno de Primary al 80 % (iconButton/all/root/opacity/pressed),
+   también en Secondary y Tertiary — igual que Figma. */
+.ds-icon-btn:active:not(:disabled):not(.ds-icon-btn--loading) .ds-icon-btn__circle {
+  background: var(--_fill);
+  color:      var(--_on);
+  opacity:    var(--ds-icon-button-opacity-pressed);
 }
-.ds-icon-btn--accent-tertiary .ds-icon-btn__circle {
-  color: var(--ds-icon-button-icon-fg-on-outline-accent);
-}
-.ds-icon-btn--accent-tertiary:hover:not(:disabled) .ds-icon-btn__circle {
-  background: var(--ds-icon-button-bg-mix-accent-hover);
-}
+/* Loading: aspecto de Enabled, spinner en el sitio del icono. */
+.ds-icon-btn--loading { cursor: progress; }
+.ds-icon-btn__spinner { width: var(--_icon); height: var(--_icon); }
+.ds-icon-btn--small  { --_icon: var(--ds-icon-button-icon-size-small); }
+.ds-icon-btn--medium { --_icon: var(--ds-icon-button-icon-size-medium); }
+.ds-icon-btn--large  { --_icon: var(--ds-icon-button-icon-size-large); }
 
 /* Disabled — mismo para las 3 variantes */
 .ds-icon-btn:disabled .ds-icon-btn__circle {
@@ -178,6 +167,8 @@ export function IconButton({
   icon,
   label,
   disabled  = false,
+  loading   = false,          // State=Loading: spinner en el sitio del icono
+  loadingLabel = 'Loading',   // se añade al nombre y se anuncia (inglés por defecto)
   onClick,
   ariaLabel,
   htmlType  = 'button',
@@ -191,6 +182,7 @@ export function IconButton({
     `ds-icon-btn--${type}`,
     `ds-icon-btn--${type}-${variant}`,
     label ? 'ds-icon-btn--has-label' : '',
+    loading ? 'ds-icon-btn--loading' : '',
     className || '',
   ].filter(Boolean).join(' ');
 
@@ -208,20 +200,38 @@ export function IconButton({
     warnOnce('IconButton.unnamed', '[DS IconButton] Sin `label` ni `ariaLabel`: el botón no tiene nombre para el lector de pantalla.');
   }
 
+  // Loading (igual que Button): aria-disabled (no pierde el foco), el click no
+  // hace nada, ", Loading" entra en el nombre y se anuncia al empezar.
+  const wasLoading = React.useRef(loading);
+  React.useEffect(() => {
+    if (loading && !wasLoading.current) announce(loadingLabel);
+    wasLoading.current = loading;
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+  const loadingName = loading && name ? `${name}, ${loadingLabel}` : name;
+
   return (
     <button
       {...rest}
       id={id}
       type={htmlType}
       className={classes}
-      onClick={onClick}
+      onClick={loading ? (e) => e.preventDefault() : onClick}
       disabled={disabled}
-      aria-label={name}
+      aria-disabled={loading && !disabled ? 'true' : undefined}
+      aria-busy={loading || undefined}
+      aria-label={loadingName}
     >
       <span className="ds-icon-btn__circle">
-        <Icon name={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />
+        {loading
+          ? <LoadingSpinner color="current" label="" className="ds-icon-btn__spinner" />
+          : <Icon name={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />}
       </span>
-      {label && <span className="ds-icon-btn__label">{label}</span>}
+      {label && (
+        <span className="ds-icon-btn__label">
+          {label}
+          {loading && <VisuallyHidden>{`, ${loadingLabel}`}</VisuallyHidden>}
+        </span>
+      )}
     </button>
   );
 }

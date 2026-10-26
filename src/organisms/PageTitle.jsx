@@ -269,7 +269,7 @@ export function PageTitle({ nav, title, actions = [], className, style }) {
           <Headline level={1}>{title}</Headline>
           <div className="ds-page-title__actions">
             {actions.map((action, i) => (
-              <Button key={i} variant="default" outline size="sm" iconLeft={action.icon} onClick={action.onClick}>
+              <Button key={i} type="default" variant="secondary" size="sm" iconLeft={action.icon} onClick={action.onClick}>
                 {action.ariaLabel}
               </Button>
             ))}
