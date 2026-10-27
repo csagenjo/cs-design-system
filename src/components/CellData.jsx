@@ -35,6 +35,7 @@ const css = `
   align-items:   center;
   box-sizing:    border-box;
   padding:       var(--ds-cell-common-padding-ver) var(--ds-cell-common-padding-hor); /* 4 / 6 */
+  padding-bottom: calc(var(--ds-cell-common-padding-ver) - var(--ds-cell-common-border-bottom-width)); /* el borde inferior va por dentro, como el stroke INSIDE de Figma */
   gap:           var(--ds-cell-common-gap);        /* 4 */
   font-family:   inherit;
   font-size:     var(--ds-fontSize-body-sm);       /* 16 */
@@ -48,7 +49,7 @@ const css = `
 .ds-cell--right { justify-content: flex-end; text-align: right; }
 
 /* Densidad: basic añade padding vertical propio de Cell */
-.ds-cell--basic { padding-top: var(--ds-cell-data-padding-ver-basic); padding-bottom: var(--ds-cell-data-padding-ver-basic); } /* 6 */
+.ds-cell--basic { padding-top: var(--ds-cell-data-padding-ver-basic); padding-bottom: calc(var(--ds-cell-data-padding-ver-basic) - var(--ds-cell-common-border-bottom-width)); } /* 6 */
 
 /* Superficie: neutral = transparente (sin token) */
 .ds-cell--onSurface { background: var(--ds-cell-common-bg-on-surface); } /* #FFFFFF */

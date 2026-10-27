@@ -39,6 +39,7 @@ const css = `
   align-items:   center;
   box-sizing:    border-box;
   padding:       var(--ds-cell-common-padding-ver) var(--ds-cell-common-padding-hor); /* 4 / 6 */
+  padding-bottom: calc(var(--ds-cell-common-padding-ver) - var(--ds-cell-common-border-bottom-width)); /* el borde inferior va por dentro, como el stroke INSIDE de Figma */
   gap:           var(--ds-cell-common-gap);        /* 4 */
   border-bottom: var(--ds-cell-common-border-bottom-width) solid var(--ds-cell-common-border-bottom-color-subtle);
 }

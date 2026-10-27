@@ -1,6 +1,6 @@
 /**
  * CellMore — Componente atómico (familia Celda)
- * CS Design System · v1.0
+ * CS Design System · v2 (27/10/2026: estados Hover/Pressed/Focus y density, como Figma)
  *
  * Celda disparador de overflow ("More ›") en la columna de acciones de una
  * tabla. A diferencia de CellData/CellHeader (contenedores puros con slot),
@@ -45,6 +45,7 @@ const css = `
   width:           100%;
   margin:          0;
   padding:         var(--ds-cell-common-padding-ver) var(--ds-cell-common-padding-hor); /* 4 / 6 */
+  padding-bottom: calc(var(--ds-cell-common-padding-ver) - var(--ds-cell-common-border-bottom-width)); /* el borde inferior va por dentro, como el stroke INSIDE de Figma */
   gap:             var(--ds-cell-common-gap);        /* 4 */
   font-family:     inherit;
   font-size:       var(--ds-fontSize-body-sm);       /* 16 */
@@ -59,6 +60,18 @@ const css = `
 }
 
 .ds-cell-more:disabled { cursor: not-allowed; }
+.ds-cell-more--basic { padding-top: var(--ds-cell-data-padding-ver-basic); padding-bottom: calc(var(--ds-cell-data-padding-ver-basic) - var(--ds-cell-common-border-bottom-width)); }
+
+/* Estados (27/10, Figma State): velo · opacidad · anillo doble por dentro */
+.ds-cell-more:hover:not(:disabled) {
+  background-image: linear-gradient(var(--ds-cell-common-bg-mix-hover), var(--ds-cell-common-bg-mix-hover));
+}
+.ds-cell-more:active:not(:disabled) { opacity: var(--ds-cell-common-opacity-pressed); }
+.ds-cell-more:focus-visible {
+  outline:        var(--ds-cell-common-focus-width) solid var(--ds-cell-common-focus-outer);
+  outline-offset: calc(var(--ds-cell-common-focus-width) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-cell-common-focus-width) * 2) var(--ds-cell-common-focus-inner);
+}
 
 /* Superficie: neutral = transparente (sin token) */
 .ds-cell-more--onSurface { background: var(--ds-cell-common-bg-on-surface); } /* #FFFFFF */
@@ -90,6 +103,7 @@ export function CellMore({
   label    = 'More',      // rótulo; vacío/falsy → solo chevron (variante Basic)
   ariaLabel,              // nombre con contexto: "More about García" (A11y-3)
   haspopup,               // si abre un menú/diálogo: 'menu' | 'dialog'…
+  density  = 'compact',   // 'compact' | 'basic' — mismo alto que el resto de la fila
   surface  = 'neutral',   // 'neutral' | 'onSurface' | 'zebra'
   lastRow  = false,
   onClick,
@@ -102,6 +116,7 @@ export function CellMore({
 
   const classes = [
     'ds-cell-more',
+    density === 'basic' ? 'ds-cell-more--basic' : '',
     surface !== 'neutral' ? `ds-cell-more--${surface}` : '',
     lastRow ? 'ds-cell-more--last-row' : '',
     className || '',
