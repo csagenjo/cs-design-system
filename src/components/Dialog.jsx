@@ -16,6 +16,11 @@
  *        Esquinas redondeadas y sombra Dialog/DialogShadow en las dos.
  * Back/Close del header = Icon Button Tertiary (ver _dialogBase.jsx).
  *
+ * ¿popUp o fullScreen? popUp en tablet y escritorio (≥ 768) para tareas cortas
+ * que dejan ver la página detrás; fullScreen en móvil (< 768) y, en cualquier
+ * dispositivo, para tareas largas o de varios pasos. Nunca un popUp de 480 en
+ * una pantalla de 375.
+ *
  * children = "Scrollable Content" (slot libre, scroll interno si excede alto).
  *
  * Botones: Button size="lg", igual que Figma (Size=Large). Desde el 01/10/2026

@@ -6,14 +6,17 @@
  * Header Default fijo, solo con botón de cierre (sin flecha, sin título en la
  * barra — el título real vive en el bloque de contenido, centrado).
  *
- * Imagen: instancia el átomo `Image` (1:1, esquinas redondeadas, 160), igual que
+ * Imagen: instancia el átomo `Image` (1:1, esquinas redondeadas, 120), igual que
  * Figma (27/10). `imageSrc` + `imageAlt` (vacío = decorativa). Sin `imageSrc`,
  * Image pinta su fondo de relleno. `icon` (slot antiguo) ya no existe: aviso en dev.
  *
- * variant="fullScreen" — ocupa 100%/100% del contenedor (igual que Dialog
- *                         width="fullScreen"), header/contenido/botones
- *                         repartidos en los extremos.
- * variant="popUp"       — tarjeta compacta centrada. Las dos variantes llevan
+ * variant="fullScreen" — la vista entera está vacía o ha fallado: sustituye al
+ *                         contenido de la página (no es un modal). 100 %/100 % del
+ *                         contenedor; el contenido se centra en el hueco libre y
+ *                         los botones quedan abajo. También en móvil.
+ * variant="popUp"       — una acción dentro de la página no ha devuelto nada o ha
+ *                         fallado y la página sigue detrás. Tablet y escritorio;
+ *                         en móvil, fullScreen. Tarjeta de 359. Las dos variantes llevan
  *                         Dialog/DialogShadow (añadida 25/08, antes ninguna la
  *                         tenía) pero sin radio de esquina — Figma no lo define
  *                         para este componente.
@@ -53,7 +56,7 @@ const css = `
 .ds-error-empty-state--full-screen {
   width: 100%;
   height: 100%;
-  justify-content: space-between;
+  gap: var(--ds-dialog-root-gap-generic);
   padding: var(--ds-dialog-empty-state-padding-generic);
 }
 .ds-error-empty-state--pop-up {
@@ -72,7 +75,7 @@ const css = `
   box-sizing: border-box;
 }
 
-.ds-error-empty-state__image { width: 160px; flex-shrink: 0; } /* Figma: Image 1:1 de 160 */
+.ds-error-empty-state__image { width: 120px; flex-shrink: 0; } /* Figma: Image 1:1 de 120 */
 
 .ds-error-empty-state__text {
   display: flex;
@@ -83,6 +86,7 @@ const css = `
   box-sizing: border-box;
   text-align: center;
 }
+.ds-error-empty-state--full-screen .ds-error-empty-state__content { flex: 1 1 auto; justify-content: center; } /* Figma: Content en fill, centrado en el hueco libre; botones abajo */
 .ds-error-empty-state--full-screen .ds-error-empty-state__text { padding-bottom: var(--ds-dialog-empty-state-text-padding-bottom-full-screen); }
 
 .ds-error-empty-state__title {

@@ -2744,8 +2744,16 @@ Modal surfaces: Dialog for a task or decision, Dialog Simple for a short questio
 - Dialog · Width → PopUp (480, height by content, up to the screen) · Full Screen (fills the screen; sample 375 × 667)
 - Dialog · Show Buttons / Main Button / Secondary Button.
 - Dialog Simple · Default (280, Small buttons) · Expanded (480 × 680, Large buttons)
-- Error and Empty State · Full Screen · Pop up (359) — Image 1:1 + title + paragraph.
-- Header · Back button / Close button (Icon Button Default Tertiary, locked)
+- Error and Empty State · Full Screen · Pop up (359) — Image 1:1 (120) + title + paragraph.
+- Header · Back button / Close button (Icon Button Default Tertiary, locked).
+
+**Full Screen or Pop up**
+- Dialog Pop up → tablet and desktop (≥ 768): a short task that keeps the page visible behind.
+- Dialog Full Screen → mobile (< 768), and on any device for long or multi-step tasks (forms, lists to pick from).
+- Same task on every device: Full Screen on mobile, Pop up from tablet up — never a 480 Pop up on a 375 screen.
+- Dialog Simple → any device: it is 280 wide and only asks one question.
+- Error and Empty State Full Screen → the whole view is empty or failed (it replaces the page content, not a modal).
+- Error and Empty State Pop up → an action inside the page returned nothing or failed and the page stays behind; on mobile use Full Screen.
 
 **Behaviour**
 - Opens over a Scrim; the rest of the page can't be used until it closes.
@@ -2755,7 +2763,7 @@ Modal surfaces: Dialog for a task or decision, Dialog Simple for a short questio
 **Sizing**
 - Header Standard 4 + Icon Button Medium 52 + 4 = 60 · Small 2 + 40 + 2 = 44 (focus area included)
 - Header gap 12 · Control area padding 16, gap 12 · Dialog Simple padding 12, buttons gap 8.
-- Error and Empty State padding 16 · image → text 16 · title → paragraph 8.
+- Error and Empty State padding 16 · image → text 16 · title → paragraph 8 · Full Screen: content centred in the free space, buttons at the bottom.
 
 ### Developers · React
 
@@ -2781,6 +2789,10 @@ Modal surfaces: Dialog for a task or decision, Dialog Simple for a short questio
 **Don't pick it when**
 - Feedback that doesn't need an answer → Snackbar / InlineNotification.
 - Extra content next to a control → PopoverSheet.
+
+**Full Screen or Pop up**
+- Mobile (< 768) → `width="fullScreen"`; tablet / desktop → `popUp`, unless the task is long.
+- ErrorAndEmptyState: `fullScreen` when it replaces a whole view, `popUp` only over a page that stays.
 
 **Composition rules**
 - Mount it only while open; render Scrim behind it.
