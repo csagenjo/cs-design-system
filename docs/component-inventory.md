@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | _to be filled_ |
+| Data | DescriptionList (+ DescriptionListItem, DescriptionListAccount) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Page structure | Accordion, AccordionGroup |
@@ -2487,5 +2487,118 @@ Known gaps: none.
 **Don't**
 - Don't use it for errors that need a decision.
 - Don't change the nested Button's variant.
+
+---
+
+---
+
+## DescriptionList · DescriptionListItem · DescriptionListAccount
+
+**Group:** Data
+**Figma:** 🟢 Description List page → `Description List` set (Variants Text / Not Filled / Link + Icon / Badge / Unordered List / Ordered List / Checkmark List / Account × Orientation Landscape / Portrait; Show Edit, Show icon, Icon, 2nd value/helper txt), `Description List section` (Section Header + pairs + Edit), `.Label` (Weight Regular / Bold) · frame *Description List — How to use & Accessibility* (27/10)
+**Code:** `src/organisms/DescriptionList.jsx` (organism; exports DescriptionList, DescriptionListItem, DescriptionListAccount)
+**Tokens:** `--ds-descriptionlist-*`
+
+Read-only pairs of label and value (customer data, a summary before confirming). The value is a slot for text or other components; Account has its own layout.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Showing data the user reads, not edits in place: a record, a summary step, a details panel.
+- Each value can be text, a Link, a Badge, a List or an Account (name + amount + number).
+- Data to compare across rows → Table · fields to fill in → Inputs.
+
+**Properties**
+- Variants → Text · Not Filled · Link + Icon · Badge · Unordered List · Ordered List · Checkmark List · Account.
+- Orientation → Landscape (label | value) · Portrait (value under the label).
+- Show Edit (Link under the value) · Account: Show icon + Icon, 2nd value/helper txt.
+- .Label Weight → Regular · Bold.
+- Description List section → Section Header + pairs + one Edit for the whole section.
+
+**Behaviour**
+- Static content: the only interactive parts are the Edit links and any Link in a value.
+- Not Filled: the value shows a placeholder text in the subtle colour.
+- Long values wrap; the label column keeps its half.
+
+**Sizing**
+- Each pair: content + 8 + divider line (also under the last one), 8 between pairs — descriptionList/all/gap/generic.
+- Landscape: label and value share the width 50 / 50, aligned on the text baseline · Portrait: value 8 under the label.
+- Edit link 8 under the value · Account values 4 apart (descriptionList/all/account/gap/generic), icon 24.
+- Section: Section Header 19 bold primary + 8 + list + 8 + section Edit.
+
+### Developers · React
+
+```jsx
+import { DescriptionList, DescriptionListItem, DescriptionListAccount } from './organisms/DescriptionList';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `orientation` | `'landscape' \| 'portrait'` | `'landscape'` |  |
+| `title` | `string` | — | Section Header; with it the list is wrapped in <section> |
+| `titleLevel` | `2–6` | `2` | Heading level of the title |
+| `showEdit / onEdit / editLabel` | `bool / func / string` | `false / — / 'Edit'` | Edit for the whole section |
+| `DescriptionListItem` |  | — | label, labelWeight 'regular'\|'bold', emptyText, showEdit, onEdit, editLabel, children (the value) |
+| `DescriptionListAccount` |  | — | name, amount, currency, amountType, amountHighlight ('neutral'), number, helperText, icon (icon name) |
+
+```jsx
+<DescriptionList title="Customer" showEdit onEdit={edit}>
+  <DescriptionListItem label="Name">Jane Doe</DescriptionListItem>
+  <DescriptionListItem label="Phone" emptyText="Not filled" />
+  <DescriptionListItem label="Account"><DescriptionListAccount name="Main account" amount="1,289.00" currency="EUR" number="XX71 0961 2345 6769" /></DescriptionListItem>
+</DescriptionList>
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Read-only record details or a summary before confirming.
+
+**Don't pick it when**
+- Tabular data with several records → Table.
+- Editable form → Inputs / Selectors.
+
+**Composition rules**
+- Values: instantiate Link, BadgeHighlight, List, AmountView — never copy their styles.
+- Account pair → DescriptionListAccount.
+- A titled block → title (+ showEdit for one Edit for the section); several sections stack with the page's spacing.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Real description list: each label is announced together with its value.
+- Each Edit link says what it edits ("Edit Status", hidden text).
+- Empty values show text ("Not filled"), not a blank.
+- The section title is a real heading.
+
+**Your job**
+- Write labels that make sense alone ("Account holder", not "Name 2").
+- Say which heading level the section title takes on each page.
+
+### Developers · React
+
+**Semantics**
+- <dl> with one <div> per pair holding <dt> + <dd>; the divider is the pair's bottom border, not an <hr> (invalid inside <dl>).
+- Section: <section> with SectionHeader (h2 by default, titleLevel) and the list.
+- Edit = Link without href → <button>, name "Edit <label>".
+
+**Keyboard**
+- Only the Edit links and Links inside values are focusable, in reading order.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Set titleLevel to fit the page outline.
+- Pass emptyText instead of leaving a value blank.
+
+**Don't**
+- Don't put form fields inside the values.
+- Don't add an <hr> or Divider between the pairs: the line is built in.
 
 ---
