@@ -38,7 +38,7 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · _rest to be filled_ |
+| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · _rest to be filled_ |
 | Data | _to be filled_ |
 | Feedback | _to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
@@ -1164,6 +1164,682 @@ Known gaps: none.
 
 **Don't**
 - Don't use chips as the only way to submit or navigate.
+
+---
+
+## InputText
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Input Text` set (State Initial / Enabled / Hover / Focus / Error / Read-only / Disabled × Type Single Line / Adaptive, 14 variants) and `.Field` (internal: the box) · frame *Input Text — How to use & Accessibility* (27/10)
+**Code:** `src/components/InputText.jsx` (atom)
+**Tokens:** `--ds-input-*`
+
+A text field: one line, or a box that grows with the text (Adaptive). Optional icons on either side.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Free text the user types: name, reference, search inside a form, a comment.
+- Long text that wraps → Type Adaptive (grows with the content).
+- A date → Input Date · an amount → Input Amount · a phone → Input Telephone · pick one of a list → Input Dropdown or Selector.
+
+**Properties**
+- State → Initial (empty, shows the placeholder) · Enabled (with a value) · Hover · Focus · Error · Read-only · Disabled.
+- Type → Single Line · Adaptive.
+- Label · Description (help text) · Validation text (booleans).
+- On .Field: Show Icon (left) · Show Eye Button (right) · Text.
+
+**Behaviour**
+- Hover darkens the border (borderColor/emphasis).
+- Focus keeps the border and adds a white gap + blue ring outside it.
+- Error: red border + message below with icon.
+- Disabled: grey field, grey text; nothing reacts.
+- Read-only: grey field with normal text — it can be focused, read and copied, not edited.
+- Placeholder text is grey (valueText/fg/placeholder).
+
+**Sizing**
+- Field 56 high, padding 16, radius 8, border 1.5.
+- Label, help (above the field) and error message (below) are Form Elements instances.
+- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+
+### Developers · React
+
+```jsx
+import { InputText } from './components/InputText';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — | Visible label |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `value / defaultValue` | `string` | — | Controlled / uncontrolled |
+| `onChange, onFocus, onBlur` | `func` | — |  |
+| `placeholder` | `string` | `''` | An example, never the label |
+| `type` | `string` | `'text'` | 'email', 'password', 'search'… |
+| `adaptive` | `bool` | `false` | Textarea that grows with the text (Figma Type Adaptive) |
+| `state` | `'default' \| 'error' \| 'read-only' \| 'disabled'` | `'default'` |  |
+| `helperText / errorMessage` | `string` | — | errorMessage shows with state="error" |
+| `iconLeft / iconRight` | `icon name` | — | iconLeftPrimary / iconRightPrimary → teal (an icon that does something) |
+| `required` | `bool` | `false` | Asterisk + native required |
+| `fullWidth` | `bool` | `false` | Fills the width minus the focus area |
+| `id, name, …rest` |  | — | Forwarded to the <input> / <textarea> |
+
+```jsx
+<InputText label="Reference" helperText="As it appears on the invoice" value={v} onChange={e => setV(e.target.value)} />
+<InputText label="Notes" adaptive />
+<InputText label="Email" type="email" state="error" errorMessage="Enter an email like name@company.com" />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user types free text.
+
+**Don't pick it when**
+- Dates, amounts, phone numbers → InputDate, InputAmount, InputTelephone.
+- Choosing from known options → InputDropdown (few), Selector or Combobox (search).
+
+**Composition rules**
+- One InputText per question; group related fields with a heading, not with one label.
+- Use type for the right mobile keyboard (email, tel, url).
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the field; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box.
+- Error is not colour only: icon + text under the field.
+- Required = asterisk on the label in the brand colour (not red).
+
+**Your job**
+- Always show a label; the placeholder is an example, not the label.
+- Write the error as what to do ("Enter a date after today"), not "Invalid".
+
+### Developers · React
+
+**Semantics**
+- label → <label for>; helperText and errorMessage → aria-describedby.
+- state="error" → aria-invalid; the message lives in a persistent live region, so it is announced when it appears.
+- required → asterisk + native required.
+- adaptive renders a <textarea>; read-only uses the native readOnly attribute (focusable).
+
+**Keyboard**
+- Tab to reach it; typing as usual.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every input has label (or ariaLabel when there is truly no visible label).
+- Errors use state="error" + errorMessage, never text placed by hand under the field.
+
+**Don't**
+- Don't use the placeholder as the only label.
+- Don't add your own border or focus style around the field.
+
+---
+
+## InputDropdown
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Input Dropdown` set (State Initial / Enabled / Hover / Focus / Error / Disabled) and `Dropdown` (internal: the box) · frame *Input Dropdown — How to use & Accessibility* (27/10)
+**Code:** `src/components/InputDropdown.jsx` (atom)
+**Tokens:** `--ds-input-*`
+
+A native select: pick one option from a short list. The list is the browser's own.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Pick one option from a short, known list (2–15 options): country of residence, document type.
+- Few options (2–5) that should all be visible → Radio Group.
+- Long lists or options with detail (account, amount) → Selector · typing to search → Combobox.
+
+**Properties**
+- State → Initial (no option yet, shows the placeholder) · Enabled · Hover · Focus · Error · Disabled.
+- Label · Helper Text · Validation (booleans).
+- Text on the Dropdown instance: the selected option or the placeholder.
+
+**Behaviour**
+- Hover darkens the border (borderColor/emphasis).
+- Focus keeps the border and adds a white gap + blue ring outside it.
+- Error: red border + message below with icon.
+- Disabled: grey field, grey text; nothing reacts.
+- The chevron is teal; the open list is the operating system's (not designed in Figma).
+
+**Sizing**
+- Field 56 high, padding 16, radius 8, border 1.5.
+- Label, help (above the field) and error message (below) are Form Elements instances.
+- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+
+### Developers · React
+
+```jsx
+import { InputDropdown } from './components/InputDropdown';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `options` | `{ value, label, disabled? }[]` | `[]` |  |
+| `value / defaultValue` | `string` | — |  |
+| `onChange` | `func` | — | Native change event |
+| `placeholder` | `string` | `'Select an option'` | First option, not selectable |
+| `state` | `'default' \| 'error' \| 'disabled'` | `'default'` |  |
+| `helperText / errorMessage` | `string` | — |  |
+| `required` | `bool` | `false` |  |
+| `fullWidth` | `bool` | `false` |  |
+| `id, name, onFocus, onBlur` |  | — |  |
+
+```jsx
+<InputDropdown label="Document type" options={[{ value: "id", label: "ID card" }, { value: "pp", label: "Passport" }]} value={v} onChange={e => setV(e.target.value)} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- One choice from a short list where the options need no extra detail.
+
+**Don't pick it when**
+- 2–5 options the user should compare → RadioGroup.
+- Options with secondary data or more than ~15 → Selector or Combobox.
+
+**Composition rules**
+- Order options in a meaningful way (alphabetical, frequency); no empty or duplicate labels.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the field; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box.
+- Error is not colour only: icon + text under the field.
+- Required = asterisk on the label in the brand colour (not red).
+
+**Your job**
+- Always show a label; the placeholder is an example, not the label.
+- Write the error as what to do ("Enter a date after today"), not "Invalid".
+
+### Developers · React
+
+**Semantics**
+- label → <label for>; helperText and errorMessage → aria-describedby.
+- state="error" → aria-invalid; the message lives in a persistent live region, so it is announced when it appears.
+- required → asterisk + native required.
+- Native <select>: the list, the keyboard and the screen reader output come from the browser.
+
+**Keyboard**
+- Tab to reach it; Space / Alt+↓ opens the list; arrows change the option; typing jumps to it.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every input has label (or ariaLabel when there is truly no visible label).
+- Errors use state="error" + errorMessage, never text placed by hand under the field.
+
+**Don't**
+- Don't use the placeholder as the only label.
+- Don't add your own border or focus style around the field.
+
+---
+
+## InputDate
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Input Date` set (State Initial / Enabled / Hover / Focus / Error / Disabled) and `Date` (internal: the box) · frame *Input Date — How to use & Accessibility* (27/10)
+**Code:** `src/components/InputDate.jsx` (atom)
+**Tokens:** `--ds-input-*`
+
+A text field for a date typed as text, with the calendar icon as a visual hint.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A date the user knows (date of birth, document expiry): typing is faster than a calendar.
+- Picking a date by looking at a calendar → wait for the Date Picker (not built yet).
+
+**Properties**
+- State → Initial (shows the format dd/mm/yyyy) · Enabled · Hover · Focus · Error · Disabled.
+- Label · Helper Text · Validation (booleans).
+
+**Behaviour**
+- Hover darkens the border (borderColor/emphasis).
+- Focus keeps the border and adds a white gap + blue ring outside it.
+- Error: red border + message below with icon.
+- Disabled: grey field, grey text; nothing reacts.
+- The calendar icon is decorative: it does not open anything.
+
+**Sizing**
+- Field 56 high, padding 16, radius 8, border 1.5.
+- Label, help (above the field) and error message (below) are Form Elements instances.
+- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+
+### Developers · React
+
+```jsx
+import { InputDate } from './components/InputDate';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `value / defaultValue` | `string` | — | Text, as typed |
+| `onChange` | `func` | — |  |
+| `placeholder` | `string` | `'DD/MM/YYYY'` | Also read as the format (formatHint) |
+| `formatHint` | `(format) => string \| null` | ``Format ${fmt}`` | Hidden text so the format is not lost once the user types; null if helperText already says it |
+| `state` | `'default' \| 'error' \| 'disabled'` | `'default'` |  |
+| `helperText / errorMessage` | `string` | — |  |
+| `required` | `bool` | `false` |  |
+| `fullWidth` | `bool` | `false` |  |
+| `id, name, onFocus, onBlur, …rest` |  | — |  |
+
+```jsx
+<InputDate label="Date of birth" value={d} onChange={e => setD(e.target.value)} />
+<InputDate label="Expiry date" state="error" errorMessage="The date must be after today" />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A date the user can type from memory or from a document.
+
+**Don't pick it when**
+- Choosing a date relative to others (a booking, a range) → Date Picker when it exists.
+
+**Composition rules**
+- Validate the format and the range; say in the error which format and which range.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the field; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box.
+- Error is not colour only: icon + text under the field.
+- Required = asterisk on the label in the brand colour (not red).
+- The format is always visible (placeholder) and also read by screen readers.
+
+**Your job**
+- Always show a label; the placeholder is an example, not the label.
+- Write the error as what to do ("Enter a date after today"), not "Invalid".
+
+### Developers · React
+
+**Semantics**
+- label → <label for>; helperText and errorMessage → aria-describedby.
+- state="error" → aria-invalid; the message lives in a persistent live region, so it is announced when it appears.
+- required → asterisk + native required.
+- The format is a hidden description (formatHint), because the placeholder disappears when typing.
+
+**Keyboard**
+- Tab to reach it; typing as usual.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every input has label (or ariaLabel when there is truly no visible label).
+- Errors use state="error" + errorMessage, never text placed by hand under the field.
+
+**Don't**
+- Don't use the placeholder as the only label.
+- Don't add your own border or focus style around the field.
+
+---
+
+## InputStepper
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Stepper` set (State Enabled / Hover / Focus / Error / Read-only / Disabled) and `Stepper Build` (internal: the box with − and +) · frame *Stepper — How to use & Accessibility* (27/10)
+**Code:** `src/components/InputStepper.jsx` (atom, v2)
+**Tokens:** `--ds-input-*`
+
+A small number changed one step at a time with − and +, or with the arrow keys.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A small whole number close to a default: quantity, number of people, copies.
+- Numbers the user types (amounts, IDs) → Input Text or Input Amount.
+
+**Properties**
+- State → Enabled · Hover · Focus · Error · Read-only · Disabled.
+- Label · Helper Text · Validation (booleans).
+
+**Behaviour**
+- Hover darkens the border (borderColor/emphasis).
+- Focus keeps the border and adds a white gap + blue ring outside it.
+- Error: red border + message below with icon.
+- Disabled: grey field, grey text; nothing reacts.
+- − and + are teal; at the minimum / maximum the matching button turns grey.
+- Read-only: grey field, value in normal text, both buttons grey.
+- Focus rings the whole field (the value is the control; the buttons are for the mouse).
+
+**Sizing**
+- Field 56 high, padding 16, radius 8, border 1.5.
+- Label, help (above the field) and error message (below) are Form Elements instances.
+- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+
+### Developers · React
+
+```jsx
+import { InputStepper } from './components/InputStepper';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `value / defaultValue` | `number` | `— / 0` |  |
+| `onChange` | `(value: number) => void` | — |  |
+| `min / max` | `number` | — | Buttons and keys stop there |
+| `step` | `number` | `1` | PageUp / PageDown move 10 steps |
+| `state` | `'default' \| 'error' \| 'read-only' \| 'disabled'` | `'default'` |  |
+| `helperText / errorMessage` | `string` | — |  |
+| `decrementLabel / incrementLabel` | `string` | `'Decrease' / 'Increase'` | Names of the buttons |
+| `fullWidth` | `bool` | `false` |  |
+| `id` | `string` | — | Id of the spinbutton |
+
+```jsx
+<InputStepper label="Guests" min={1} max={8} value={n} onChange={setN} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A small number the user nudges up or down.
+
+**Don't pick it when**
+- Large or exact numbers → InputText (type="number" is not recommended) or InputAmount.
+
+**Composition rules**
+- Always give min and max when they exist; say the range in helperText.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the field; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box.
+- Error is not colour only: icon + text under the field.
+- Required = asterisk on the label in the brand colour (not red).
+- Keyboard users change the value with the arrow keys; the buttons are not separate stops.
+
+**Your job**
+- Always show a label; the placeholder is an example, not the label.
+- Write the error as what to do ("Enter a date after today"), not "Invalid".
+
+### Developers · React
+
+**Semantics**
+- label → <label for>; helperText and errorMessage → aria-describedby.
+- state="error" → aria-invalid; the message lives in a persistent live region, so it is announced when it appears.
+- required → asterisk + native required.
+- The value is role="spinbutton" with aria-valuenow / min / max (APG pattern); read-only → aria-readonly.
+- − and + are buttons out of the tab order; clicking them keeps the focus on the value, so the new value is announced.
+
+**Keyboard**
+- Tab to the value; ↑ / ↓ one step; Page Up / Page Down ten steps; Home / End to min / max.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every input has label (or ariaLabel when there is truly no visible label).
+- Errors use state="error" + errorMessage, never text placed by hand under the field.
+
+**Don't**
+- Don't use the placeholder as the only label.
+- Don't add your own border or focus style around the field.
+
+---
+
+## InputTelephone
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Input Telephone` set (Variant Selectable / Fixed × State Initial / Enabled / Hover - Country / Hover - Telephone / Focus - Country / Focus - Telephone / Error - Country / Error - Telephone / Disabled; Fixed has no Country states) and `Telephone Field` (internal) · frame *Input Telephone — How to use & Accessibility* (27/10)
+**Code:** `src/components/InputTelephone.jsx` (atom, v2)
+**Tokens:** `--ds-input-*`, `--ds-input-telephone-*`
+
+A phone number with its country prefix: two boxes side by side, country (flag + prefix) and number.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Any phone number, so the prefix is never typed by hand.
+- The country can change → Variant Selectable (opens the Country Picker).
+- Only one country is allowed → Variant Fixed.
+
+**Properties**
+- Variant → Selectable (flag + prefix + chevron, it is a button) · Fixed (flag + prefix, no chevron).
+- State → Initial · Enabled · Hover / Focus / Error - Country · Hover / Focus / Error - Telephone · Disabled.
+- Label · Helper Text · Validation (booleans) · on Telephone Field: Country (text), Flag (swap), Selectable.
+
+**Behaviour**
+- Each box has its own border: hover, focus and error mark only the part concerned, and the shared border takes its colour.
+- Hover darkens the border; focus adds the white gap + blue ring outside the part.
+- Error: red border on the wrong part + message below.
+- Disabled: grey field, flag at 40 % opacity.
+
+**Sizing**
+- Field 56 high, padding 16, radius 8, border 1.5.
+- Label, help (above the field) and error message (below) are Form Elements instances.
+- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+
+### Developers · React
+
+```jsx
+import { InputTelephone } from './components/InputTelephone';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `value / defaultValue, onChange` |  | — | The number, without prefix |
+| `placeholder` | `string` | `'600 000 000'` |  |
+| `countryVariant` | `'selectable' \| 'fixed'` | `'selectable'` | Figma Variant |
+| `countryCode` | `string` | `'+34'` | Shown next to the flag and read with the number |
+| `flag` | `node` | — | <CountryFlag country="spain" />; replaces flagEmoji |
+| `onCountryClick` | `func` | — | Open CountryPicker |
+| `countryName / countryExpanded` | `string / bool` | — | Name read on the button; aria-expanded of the picker |
+| `state` | `'default' \| 'error' \| 'disabled'` | `'default'` |  |
+| `errorField` | `'telephone' \| 'country'` | `'telephone'` | Which part shows the error |
+| `helperText / errorMessage` | `string` | — |  |
+| `required, fullWidth, id, name, onFocus, onBlur` |  | — |  |
+
+```jsx
+<InputTelephone label="Mobile" flag={<CountryFlag country={c.slug} />} countryCode={c.dial} countryName={c.name} onCountryClick={() => setOpen(true)} countryExpanded={open} value={p} onChange={e => setP(e.target.value)} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Any phone number.
+
+**Don't pick it when**
+- Don't ask for the prefix in a separate Input Text.
+
+**Composition rules**
+- Selectable → pair it with CountryPicker; update flag, countryCode and countryName from the choice.
+- errorField="country" only for errors about the country itself.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the field; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box.
+- Error is not colour only: icon + text under the field.
+- Required = asterisk on the label in the brand colour (not red).
+- Two tab stops when Selectable: the country button, then the number.
+
+**Your job**
+- Always show a label; the placeholder is an example, not the label.
+- Write the error as what to do ("Enter a date after today"), not "Invalid".
+
+### Developers · React
+
+**Semantics**
+- label → <label for>; helperText and errorMessage → aria-describedby.
+- state="error" → aria-invalid; the message lives in a persistent live region, so it is announced when it appears.
+- required → asterisk + native required.
+- The country is a <button> with aria-haspopup="listbox" and aria-expanded; its name says the prefix and country.
+- The prefix is read as the description of the number field ("600 000 000, +34").
+- <input type="tel" autocomplete="tel-national">.
+
+**Keyboard**
+- Tab: country button (Selectable) → number; Enter / Space on the country opens the picker.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every input has label (or ariaLabel when there is truly no visible label).
+- Errors use state="error" + errorMessage, never text placed by hand under the field.
+
+**Don't**
+- Don't use the placeholder as the only label.
+- Don't add your own border or focus style around the field.
+
+---
+
+## InputAmount
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Input Amount` set (Variant Selectable / Fixed × State Initial / Enabled / Hover - Currency / Hover - Amount / Focus - Currency / Focus - Amount / Error - Currency / Error - Amount / Disabled; Fixed has no Currency states) and `Amount Field` (internal) · frame *Input Amount — How to use & Accessibility* (27/10)
+**Code:** `src/components/InputAmount.jsx` (atom, v2)
+**Tokens:** `--ds-input-*`
+
+An amount of money with its currency: two boxes side by side, currency (ISO code) and amount.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Any amount of money the user types.
+- The currency can change → Variant Selectable (opens the Currency Picker).
+- Only one currency → Variant Fixed.
+- Showing an amount (not editing) → Amount View.
+
+**Properties**
+- Variant → Selectable (ISO code + chevron, it is a button) · Fixed (ISO code only).
+- State → Initial · Enabled · Hover / Focus / Error - Currency · Hover / Focus / Error - Amount · Disabled.
+- Label · Helper Text · Validation (booleans) · on Amount Field: ISO Currency, Amount (texts), Selectable.
+
+**Behaviour**
+- Each box has its own border: hover, focus and error mark only the part concerned, and the shared border takes its colour.
+- Hover darkens the border; focus adds the white gap + blue ring outside the part.
+- Error: red border on the wrong part + message below.
+- Placeholder 0.00 in the user's number format.
+
+**Sizing**
+- Field 56 high, padding 16, radius 8, border 1.5.
+- Label, help (above the field) and error message (below) are Form Elements instances.
+- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+
+### Developers · React
+
+```jsx
+import { InputAmount } from './components/InputAmount';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `value / defaultValue, onChange` |  | — | Text as typed |
+| `locale` | `string` | `'es-ES'` | Format of the placeholder |
+| `currencyVariant` | `'selectable' \| 'fixed'` | `'selectable'` | Figma Variant |
+| `currency` | `string` | `'EUR'` | ISO 4217 code; read with the amount |
+| `onCurrencyClick` | `func` | — | Open CurrencyPicker |
+| `currencyExpanded` | `bool` | — | aria-expanded of the picker |
+| `state` | `'default' \| 'error' \| 'disabled'` | `'default'` |  |
+| `errorField` | `'amount' \| 'currency'` | `'amount'` | Which part shows the error |
+| `helperText / errorMessage` | `string` | — |  |
+| `required, fullWidth, id, name, onFocus, onBlur` |  | — |  |
+
+```jsx
+<InputAmount label="Amount" currency={cur} onCurrencyClick={() => setOpen(true)} currencyExpanded={open} value={a} onChange={e => setA(e.target.value)} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user enters money.
+
+**Don't pick it when**
+- Read-only amounts → AmountView.
+- Quantities that are not money → InputText or InputStepper.
+
+**Composition rules**
+- Selectable → pair it with CurrencyPicker.
+- State limits in helperText ("Up to 10,000 €").
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the field; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box.
+- Error is not colour only: icon + text under the field.
+- Required = asterisk on the label in the brand colour (not red).
+- Two tab stops when Selectable: the currency button, then the amount.
+
+**Your job**
+- Always show a label; the placeholder is an example, not the label.
+- Write the error as what to do ("Enter a date after today"), not "Invalid".
+
+### Developers · React
+
+**Semantics**
+- label → <label for>; helperText and errorMessage → aria-describedby.
+- state="error" → aria-invalid; the message lives in a persistent live region, so it is announced when it appears.
+- required → asterisk + native required.
+- The currency is a <button> with aria-haspopup="listbox" and aria-expanded.
+- The ISO code is read as the description of the amount ("1,250.00, EUR").
+- inputMode="decimal" for the numeric keyboard on mobile.
+
+**Keyboard**
+- Tab: currency button (Selectable) → amount; Enter / Space on the currency opens the picker.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every input has label (or ariaLabel when there is truly no visible label).
+- Errors use state="error" + errorMessage, never text placed by hand under the field.
+
+**Don't**
+- Don't use the placeholder as the only label.
+- Don't add your own border or focus style around the field.
 
 ---
 

@@ -1,6 +1,6 @@
 import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
-import { mergeRefs, injectStyles } from './_inputBase';
+import { mergeRefs, injectStyles, boxStateClass } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
 import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
@@ -11,7 +11,7 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-input-dropdown--full-width { display: flex; width: 100%; }
+.ds-input-dropdown--full-width { display: flex; }
 
 .ds-input-dropdown__label { margin-bottom: var(--ds-input-label-gap); }
 
@@ -26,63 +26,23 @@ const css = `
 }
 
 .ds-input-dropdown__control {
-  box-sizing:         border-box;
   width:              100%;
-  min-height:         var(--ds-input-min-height);
   padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
   padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
-  color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-bg-default);
-  border:             var(--ds-input-border-width) solid var(--ds-input-border-default);
-  border-radius:      var(--ds-input-border-radius);
-  outline:            none;
   cursor:             pointer;
   -webkit-appearance: none;
   appearance:         none;
-  transition:         border-color 0.12s, background 0.12s;
 }
-
-/* Hover */
-.ds-input-dropdown:not(.ds-input-dropdown--disabled):not(.ds-input-dropdown--error)
-  .ds-input-dropdown__control:hover {
-  border-color: var(--ds-input-border-hover);
-}
-
-/* Focus — anillo doble */
-.ds-input-dropdown__control:focus {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Error */
-.ds-input-dropdown--error .ds-input-dropdown__control { border-color: var(--ds-input-border-error); }
-.ds-input-dropdown--error .ds-input-dropdown__control:focus {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Disabled */
-.ds-input-dropdown--disabled .ds-input-dropdown__control {
-  background:   var(--ds-input-bg-disabled);
-  color:        var(--ds-input-fg-disabled);
-  border-color: var(--ds-input-border-disabled);
-  cursor:       not-allowed;
-}
-.ds-input-dropdown--disabled .ds-input-dropdown__control:focus {
-  border-color: var(--ds-input-border-disabled);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
+/* Caja, hover, error, disabled y foco: .ds-input-box (_inputBase) */
+.ds-input-dropdown__control.is-disabled { cursor: not-allowed; }
 
 /* Placeholder option — aplica color subtle cuando no hay valor seleccionado */
-.ds-input-dropdown__control--placeholder { color: var(--ds-input-fg-placeholder); }
+.ds-input-dropdown__control--placeholder:not(.is-disabled),
+.ds-input-dropdown__control:not(.is-disabled):has(option[value=""]:checked) { color: var(--ds-input-fg-placeholder); }
+.ds-input-dropdown__control option { color: var(--ds-input-fg-default); }
 
 /* Icono chevron */
 .ds-input-dropdown__icon {
@@ -134,14 +94,15 @@ export const InputDropdown = forwardRef(function InputDropdown({
   const showingPlaceholder = value === '' || value === undefined || value === null;
 
   const wrapperClass = [
-    'ds-input-dropdown',
+    'ds-input-dropdown ds-input-root',
     state === 'error'    ? 'ds-input-dropdown--error'     : '',
     state === 'disabled' ? 'ds-input-dropdown--disabled'  : '',
-    fullWidth            ? 'ds-input-dropdown--full-width' : '',
+    fullWidth            ? 'ds-input-dropdown--full-width ds-input-root--full-width' : '',
   ].filter(Boolean).join(' ');
 
   const controlClass = [
-    'ds-input-dropdown__control',
+    'ds-input-dropdown__control ds-input-box',
+    boxStateClass(state),
     showingPlaceholder && value !== undefined ? 'ds-input-dropdown__control--placeholder' : '',
   ].filter(Boolean).join(' ');
 

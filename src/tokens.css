@@ -328,6 +328,9 @@
   --ds-sizing-2xl: 56px;
   --ds-sizing-3xl: 64px;
 
+  /* ── Opacity (Device opacity/*) ── */
+  --ds-opacity-read-only: 0.4;   /* opacity/readOnly (40 %) */
+
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      TYPOGRAPHY â€” Device tokens
@@ -1000,9 +1003,9 @@
   --ds-input-label-gap:                     var(--ds-spacing-xs);
   --ds-input-helper-gap:                    var(--ds-spacing-md);   /* gap se queda en Input — layout propio, NO en Helper Text */
   --ds-input-validation-gap:                var(--ds-spacing-xs);
-  --ds-input-fg-placeholder:               var(--ds-fg-subtle);
-  --ds-input-border-hover:                 var(--ds-borderColor-emphasis);
-  --ds-input-bg-readonly:                  var(--ds-bg-page);
+  --ds-input-fg-placeholder:               var(--ds-fg-body-subtle);    /* valueText/fg/placeholder — texto de ejemplo (Initial) */
+  --ds-input-border-hover:                 var(--ds-borderColor-emphasis); /* root/borderColor/hover */
+  --ds-input-focus-area-padding:           var(--ds-spacing-xs);        /* root/focusArea/padding — el anillo de foco cabe dentro del componente (27/10/2026) */
   /* Input/InputCommon — comunes a TODOS los inputs (09/10/2026, igual que Figma) */
   --ds-input-icon-fg:                      var(--ds-fg-icon-subtle);    /* icon/fg/generic — icono informativo (gris) */
   --ds-input-icon-fg-primary:              var(--ds-fg-icon-primary);   /* icon/fg/primary — icono accionable (chevron, calendario, +/−) */
@@ -1024,18 +1027,15 @@
      --ds-input-bg-default/-disabled directamente, igual que el resto de la
      familia Input. */
   --ds-input-telephone-country-padding-ver:        var(--ds-spacing-lg);
-  --ds-input-telephone-icon-flag-size:             var(--ds-sizing-md);
-  --ds-input-telephone-icon-flag-opacity-disabled: 0.4;
-  --ds-input-telephone-divider-color:              var(--ds-borderColor-accent);
+  --ds-input-telephone-icon-flag-size:             var(--ds-sizing-2xs);   /* iconFlag/size/generic (16) */
+  --ds-input-telephone-icon-flag-opacity-disabled: var(--ds-opacity-read-only); /* iconFlag/fg/disabled */
 
   /* â”€â”€ InputAmount â€” importe + moneda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 
 
-  --ds-input-amount-divider-color:                    var(--ds-borderColor-accent);
 
   /* â”€â”€ InputStepper â€” botones âˆ’ / + teal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  --ds-input-stepper-btn-bg-hover:                  var(--ds-opacity-hover-default);
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•

@@ -1,6 +1,23 @@
-import React, { useState, forwardRef, useId } from 'react';
+/**
+ * InputStepper — Componente atómico
+ * CS Design System · v2 (27/10/2026: alineado 1:1 con Figma)
+ *
+ * Figma: `Stepper` (Label + Helper + `Stepper Build` + Validation Message).
+ * Estados (Figma `State`): Enabled · Hover · Focus · Error · Read-only · Disabled.
+ *
+ * Patrón APG "spinbutton": el valor es el control (role="spinbutton", una
+ * parada de Tab, flechas ↑/↓, Inicio/Fin, Re Pág/Av Pág). Los botones − / +
+ * son para el ratón: fuera del orden de Tab y, al pulsarlos, el foco se queda
+ * en el valor — por eso el anillo de foco rodea el campo entero, como en Figma.
+ *
+ * USO:
+ *   <InputStepper label="Quantity" defaultValue={1} min={0} max={10} />
+ *   <InputStepper label="Quantity" state="read-only" value={3} />
+ */
+
+import React, { useState, useRef, forwardRef, useId } from 'react';
 import { Icon } from './Icon';
-import { injectStyles } from './_inputBase';
+import { injectStyles, boxStateClass, mergeRefs } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
 import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
@@ -11,100 +28,42 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-input-stepper--full-width { display: flex; width: 100%; }
+.ds-input-stepper--full-width { display: flex; }
 
-.ds-input-stepper__label { margin-bottom: var(--ds-input-label-gap); }
-
-/* Helper — encima del campo */
+.ds-input-stepper__label   { margin-bottom: var(--ds-input-label-gap); }
 .ds-input-stepper__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-stepper__message { margin-top: var(--ds-input-validation-gap); }
 
-/* Campo: contenedor con borde, fondo, radio — igual que otros inputs */
+/* Caja: .ds-input-box (_inputBase). El anillo aparece con el foco en el valor. */
 .ds-input-stepper__field-wrap {
-  display:       flex;
-  align-items:   stretch;
-  width:         100%;
-  min-height:    var(--ds-input-min-height);
-  background:    var(--ds-input-bg-default);
-  border:        var(--ds-input-border-width) solid var(--ds-input-border-default);
-  border-radius: var(--ds-input-border-radius);
-  overflow:      hidden;
-  transition:    border-color 0.12s, background 0.12s;
+  display:     flex;
+  align-items: stretch;
+  width:       100%;
 }
 
-/* Hover */
-.ds-input-stepper:not(.ds-input-stepper--disabled):not(.ds-input-stepper--error)
-  .ds-input-stepper__field-wrap:hover {
-  border-color: var(--ds-input-border-hover);
-}
-
-/* Focus — anillo doble cuando cualquier botón tiene foco */
-.ds-input-stepper__field-wrap:focus-within {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Error */
-.ds-input-stepper--error .ds-input-stepper__field-wrap {
-  border-color: var(--ds-input-border-error);
-}
-.ds-input-stepper--error .ds-input-stepper__field-wrap:focus-within {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Disabled */
-.ds-input-stepper--disabled .ds-input-stepper__field-wrap {
-  background:   var(--ds-input-bg-disabled);
-  border-color: var(--ds-input-border-disabled);
-}
-.ds-input-stepper--disabled .ds-input-stepper__field-wrap:focus-within {
-  border-color: var(--ds-input-border-disabled);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
-
-/* Botones −/+ */
+/* Botones − / + (Figma: Icon Left / Icon Right, icono primary) */
 .ds-input-stepper__btn {
   display:         flex;
   align-items:     center;
   justify-content: center;
   flex-shrink:     0;
   width:           calc(var(--ds-input-padding-hor) * 2 + var(--ds-input-icon-size));
+  padding:         0;
   border:          none;
   background:      transparent;
   cursor:          pointer;
   color:           var(--ds-input-icon-fg-primary);
-  padding:         0;
-  transition:      color 0.12s, background 0.12s;
 }
-.ds-input-stepper__btn--right { color: var(--ds-input-icon-fg-primary); }
-
-.ds-input-stepper__btn:focus  { outline: none; }
-/* A11y-4: además del anillo del campo, el botón que tiene el foco se marca
-   por dentro — si no, no se sabía si el foco estaba en − o en +. */
-.ds-input-stepper__btn:focus-visible {
-  outline:        var(--ds-border-width-lg) solid var(--ds-input-focus-outer);
-  outline-offset: calc(var(--ds-border-width-lg) * -2);
-}
-
-.ds-input-stepper__btn:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: var(--ds-input-stepper-btn-bg-hover);
-}
-
-.ds-input-stepper__btn:disabled,
-.ds-input-stepper__btn[aria-disabled="true"] {
+.ds-input-stepper__btn:first-child { margin-right: calc(-1 * var(--ds-input-padding-hor) + var(--ds-input-field-icon-gap)); }
+.ds-input-stepper__btn:last-child  { margin-left:  calc(-1 * var(--ds-input-padding-hor) + var(--ds-input-field-icon-gap)); }
+.ds-input-stepper__btn:focus { outline: none; }
+.ds-input-stepper__btn[aria-disabled="true"],
+.ds-input-stepper__btn:disabled {
   color:  var(--ds-input-icon-fg-disabled);
   cursor: not-allowed;
 }
-.ds-input-stepper__btn--right:disabled,
-.ds-input-stepper__btn--right[aria-disabled="true"] { color: var(--ds-input-icon-fg-disabled); }
 
-/* Valor central */
+/* Valor (spinbutton) */
 .ds-input-stepper__value {
   flex:            1;
   display:         flex;
@@ -115,9 +74,9 @@ const css = `
   color:           var(--ds-input-fg-default);
   user-select:     none;
   font-family:     inherit;
+  outline:         none;
 }
 .ds-input-stepper--disabled .ds-input-stepper__value { color: var(--ds-input-fg-disabled); }
-
 `;
 
 injectStyles('ds-input-stepper', css);
@@ -131,7 +90,7 @@ export const InputStepper = forwardRef(function InputStepper({
   min,
   max,
   step          = 1,
-  state         = 'default',
+  state         = 'default',   // default | error | read-only | disabled
   helperText,
   errorMessage,
   fullWidth     = false,
@@ -142,77 +101,118 @@ export const InputStepper = forwardRef(function InputStepper({
 
   const generatedId = useId();
   const groupId     = id || generatedId;
+  const labelId     = label ? `${groupId}-label` : undefined;
   const helperId    = helperText ? `${groupId}-helper` : null;
   const messageId   = state === 'error' && errorMessage ? `${groupId}-msg` : null;
+  const spinRef     = useRef(null);
 
-  // Soporte controlado y no controlado
+  if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
+    console.warn('[DS InputStepper] Necesita `label` o `ariaLabel` para ser accesible.', { id: groupId });
+  }
+
   const [internalValue, setInternalValue] = useState(defaultValue);
   const current = value !== undefined ? value : internalValue;
 
+  const isDisabled = state === 'disabled';
+  const isReadOnly = state === 'read-only';
+  const locked     = isDisabled || isReadOnly;
+
   function update(next) {
+    if (locked) return;
     const clamped = max !== undefined && next > max ? max
                   : min !== undefined && next < min ? min
                   : next;
+    if (clamped === current) return;
     if (value === undefined) setInternalValue(clamped);
     onChange?.(clamped);
   }
 
   const atMin = min !== undefined && current <= min;
   const atMax = max !== undefined && current >= max;
-  const isDisabled = state === 'disabled';
+
+  function onKeyDown(e) {
+    const big = step * 10;
+    const map = {
+      ArrowUp:   () => update(current + step),
+      ArrowDown: () => update(current - step),
+      PageUp:    () => update(current + big),
+      PageDown:  () => update(current - big),
+      Home:      () => min !== undefined && update(min),
+      End:       () => max !== undefined && update(max),
+    };
+    if (map[e.key]) { e.preventDefault(); map[e.key](); }
+  }
+
+  // Los botones no se llevan el foco: se queda (o pasa) al valor
+  function keepFocus(e) {
+    e.preventDefault();
+    if (!isDisabled) spinRef.current?.focus();
+  }
 
   const wrapperClass = [
-    'ds-input-stepper',
-    state === 'error'    ? 'ds-input-stepper--error'     : '',
-    isDisabled           ? 'ds-input-stepper--disabled'  : '',
-    fullWidth            ? 'ds-input-stepper--full-width' : '',
+    'ds-input-stepper ds-input-root',
+    isDisabled ? 'ds-input-stepper--disabled' : '',
+    fullWidth  ? 'ds-input-stepper--full-width ds-input-root--full-width' : '',
   ].filter(Boolean).join(' ');
 
+  const boxClass = ['ds-input-stepper__field-wrap ds-input-box ds-input-box--within', boxStateClass(state)]
+    .filter(Boolean).join(' ');
+
   return (
-    <div className={wrapperClass} ref={forwardedRef}>
+    <div className={wrapperClass}>
       {label && (
-        <FieldLabel as="span" className="ds-input-stepper__label" id={`${groupId}-label`} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel as="span" className="ds-input-stepper__label" id={labelId} disabled={isDisabled}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-stepper__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-stepper__helper" disabled={isDisabled}>{helperText}</HelperText>
       )}
 
-      <div
-        className="ds-input-stepper__field-wrap"
-        role="group"
-        aria-labelledby={label ? `${groupId}-label` : undefined}
-        aria-label={!label ? ariaLabel : undefined}
-        aria-describedby={[helperId, messageId].filter(Boolean).join(' ') || undefined}
-      >
-        {/* A11y-4: al llegar al mínimo/máximo el botón queda aria-disabled (sigue
-            enfocable) — con disabled nativo el foco se perdía al pulsarlo. */}
+      <div className={boxClass}>
         <button
           type="button"
-          className="ds-input-stepper__btn ds-input-stepper__btn--left"
-          onClick={() => { if (!atMin) update(current - step); }}
+          tabIndex={-1}
+          className="ds-input-stepper__btn"
+          onMouseDown={keepFocus}
+          onClick={() => update(current - step)}
           disabled={isDisabled}
-          aria-disabled={!isDisabled && atMin ? 'true' : undefined}
+          aria-disabled={!isDisabled && (atMin || isReadOnly) ? 'true' : undefined}
           aria-label={decrementLabel}
+          aria-controls={groupId}
         >
           <Icon name="minus" size="sm" />
         </button>
 
-        <output
+        <div
+          ref={mergeRefs(spinRef, forwardedRef)}
+          id={groupId}
+          role="spinbutton"
+          tabIndex={isDisabled ? -1 : 0}
           className="ds-input-stepper__value"
-          aria-live="polite"
-          aria-atomic="true"
+          aria-valuenow={current}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-labelledby={labelId}
+          aria-label={!label ? ariaLabel : undefined}
+          aria-describedby={[helperId, messageId].filter(Boolean).join(' ') || undefined}
+          aria-invalid={state === 'error' ? 'true' : undefined}
+          aria-readonly={isReadOnly ? 'true' : undefined}
+          aria-disabled={isDisabled ? 'true' : undefined}
+          onKeyDown={onKeyDown}
         >
           {current}
-        </output>
+        </div>
 
         <button
           type="button"
-          className="ds-input-stepper__btn ds-input-stepper__btn--right"
-          onClick={() => { if (!atMax) update(current + step); }}
+          tabIndex={-1}
+          className="ds-input-stepper__btn"
+          onMouseDown={keepFocus}
+          onClick={() => update(current + step)}
           disabled={isDisabled}
-          aria-disabled={!isDisabled && atMax ? 'true' : undefined}
+          aria-disabled={!isDisabled && (atMax || isReadOnly) ? 'true' : undefined}
           aria-label={incrementLabel}
+          aria-controls={groupId}
         >
           <Icon name="plus" size="sm" />
         </button>

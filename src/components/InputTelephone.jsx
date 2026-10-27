@@ -1,37 +1,26 @@
 /**
  * InputTelephone — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2 (27/10/2026: alineado 1:1 con Figma)
  *
- * Tokens: --ds-input-* + --ds-input-telephone-* (tokens.css)
- * Iconos: átomo Icon — chevron-down (dropdown país) · circle-x (error)
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
+ * Figma: `Input Telephone` (Label + Helper + `Telephone Field` + Validation
+ * Message). El campo son DOS cajas juntas — país y número — cada una con su
+ * borde: hover, foco y error marcan solo la parte afectada (Figma
+ * `Hover|Focus|Error - Country|Telephone`), el borde compartido toma su color.
  *
- * ESTRUCTURA:
- *   Label → Helper → [CountryField | Divider | PhoneField] → ValidationMessage
+ * VARIANTES (countryVariant, Figma `Variant`):
+ *   "selectable" → el país es un botón (abre el Country Picker): bandera + prefijo + chevron
+ *   "fixed"      → el país solo se muestra, sin chevron ni interacción
  *
- * VARIANTES (countryVariant):
- *   "selectable" → país es botón clicable, muestra ChevronDown en teal
- *   "fixed"      → país es solo visual, sin interacción, sin chevron
- *
- * ESTADOS (state):
- *   "default"  → genérico
- *   "error"    → borde rojo + validationMessage visible
- *   "disabled" → campos inactivos, opacidad reducida en flag
- *
- * NOTA: el Country Picker (lista de países) es un componente separado.
- *   Este componente solo dispara onCountryClick — no gestiona el picker.
+ * ESTADOS (state): default · error · disabled
+ *   errorField → qué parte lleva el error: 'telephone' (por defecto) | 'country'
  *
  * USO:
- *   <InputTelephone
- *     label="Teléfono"
- *     flagEmoji="🇪🇸"
- *     countryCode="+34"
- *     value={phone}
- *     onChange={e => setPhone(e.target.value)}
- *   />
- *   <InputTelephone countryVariant="fixed" flagEmoji="🇪🇸" countryCode="+34" />
- *   <InputTelephone state="error" errorMessage="Número inválido" />
- *   <InputTelephone state="disabled" />
+ *   <InputTelephone label="Phone" flag={<CountryFlag country="spain" />} countryCode="+34"
+ *     onCountryClick={openPicker} value={phone} onChange={e => setPhone(e.target.value)} />
+ *   <InputTelephone label="Phone" countryVariant="fixed" countryCode="+34" />
+ *
+ * El Country Picker es un organismo aparte (CountryPicker); este átomo solo
+ * dispara onCountryClick.
  */
 
 import React, { forwardRef, useId } from 'react';
@@ -42,6 +31,8 @@ import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
+/* Cajas, hover, error, disabled, foco y borde compartido: .ds-input-box /
+   .ds-input-split (_inputBase). */
 
 const css = `
 .ds-input-telephone {
@@ -49,165 +40,59 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-input-telephone--full-width { display: flex; width: 100%; }
+.ds-input-telephone--full-width { display: flex; }
 
-/* Label */
-.ds-input-telephone__label { margin-bottom: var(--ds-input-label-gap); }
-
-/* Helper — encima del campo */
+.ds-input-telephone__label   { margin-bottom: var(--ds-input-label-gap); }
 .ds-input-telephone__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-telephone__message { margin-top: var(--ds-input-validation-gap); }
 
-/* Contenedor del campo doble */
-.ds-input-telephone__field-wrap {
-  display:       flex;
-  align-items:   stretch;
-  width:         100%;
-  min-height:    var(--ds-input-subfield-height);   /* campo compuesto: mide lo que un subcampo (Figma subField/height) */
-  border:        var(--ds-input-border-width) solid var(--ds-input-border-default);
-  border-radius: var(--ds-input-border-radius);
-  overflow:      hidden;
-  transition:    border-color 0.12s;
-  box-sizing:    border-box;
-}
-
-/* Hover — solo en estado genérico */
-.ds-input-telephone:not(.ds-input-telephone--disabled):not(.ds-input-telephone--error)
-  .ds-input-telephone__field-wrap:hover {
-  border-color: var(--ds-input-border-hover);
-}
-
-/* Focus — anillo doble via :focus-within */
-.ds-input-telephone__field-wrap:focus-within {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Error */
-.ds-input-telephone--error .ds-input-telephone__field-wrap {
-  border-color: var(--ds-input-border-error);
-}
-.ds-input-telephone--error .ds-input-telephone__field-wrap:focus-within {
-  border-color:   var(--ds-input-border-error);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Disabled */
-.ds-input-telephone--disabled .ds-input-telephone__field-wrap {
-  border-color: var(--ds-input-border-disabled);
-}
-.ds-input-telephone--disabled .ds-input-telephone__field-wrap:focus-within {
-  border-color: var(--ds-input-border-disabled);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
-
-/* ── País ── */
+/* ── País (Figma Country Code) ── */
 .ds-input-telephone__country {
-  display:         flex;
-  align-items:     center;
-  gap:             var(--ds-input-subfield-gap);
-  padding:         var(--ds-input-telephone-country-padding-ver)
-                   var(--ds-input-padding-hor);
-  background:      var(--ds-input-bg-default);
-  border:          none;
-  cursor:          default;
-  font-family:     inherit;
-  flex-shrink:     0;
-  white-space:     nowrap;
-  outline:         none;
-}
-
-/* Selectable: es un botón */
-.ds-input-telephone__country--selectable {
-  cursor: pointer;
-}
-.ds-input-telephone__country--selectable:hover {
-  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
-}
-.ds-input-telephone__country--selectable:focus-visible {
-  /* A11y-4: marca qué parte del campo tiene el foco (el anillo exterior es de todo el campo) */
-  outline:        var(--ds-border-width-lg) solid var(--ds-input-focus-outer);
-  outline-offset: calc(var(--ds-border-width-lg) * -2);
-  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
-}
-
-/* Disabled */
-.ds-input-telephone--disabled .ds-input-telephone__country {
-  background: var(--ds-input-bg-disabled);
-  cursor:     not-allowed;
-}
-
-/* Flag */
-.ds-input-telephone__flag {
-  font-size:   var(--ds-input-telephone-icon-flag-size);
-  line-height: 1;
   display:     flex;
   align-items: center;
+  flex-shrink: 0;
+  gap:         var(--ds-input-subfield-gap);
+  min-height:  var(--ds-input-subfield-height);
+  padding:     var(--ds-input-telephone-country-padding-ver) var(--ds-input-padding-hor);
+  font-family: inherit;
+  white-space: nowrap;
+  cursor:      default;
 }
-.ds-input-telephone--disabled .ds-input-telephone__flag {
-  opacity: var(--ds-input-telephone-icon-flag-opacity-disabled);
-}
+button.ds-input-telephone__country { cursor: pointer; }
+button.ds-input-telephone__country:disabled { cursor: not-allowed; }
 
-/* Código de país */
-.ds-input-telephone__code {
-  font-size:   var(--ds-fontSize-label-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color:       var(--ds-input-fg-default);
+.ds-input-telephone__flag {
+  display:     flex;
+  align-items: center;
+  height:      var(--ds-input-telephone-icon-flag-size);
+  font-size:   var(--ds-input-telephone-icon-flag-size);
   line-height: 1;
 }
-.ds-input-telephone--disabled .ds-input-telephone__code {
-  color: var(--ds-input-fg-disabled);
+.ds-input-telephone__flag img { height: var(--ds-input-telephone-icon-flag-size); width: auto; }
+.ds-input-telephone--disabled .ds-input-telephone__flag { opacity: var(--ds-input-telephone-icon-flag-opacity-disabled); }
+
+/* Prefijo — mismo texto que el valor (valueText, body sm regular) */
+.ds-input-telephone__code {
+  font-size:   var(--ds-fontSize-body-sm);
+  line-height: var(--ds-lineHeight-body-sm);
+  font-weight: var(--ds-font-weight-regular);
+  color:       inherit;
 }
 
-/* Chevron dropdown — solo en selectable */
-.ds-input-telephone__chevron {
-  display:    flex;
-  align-items: center;
-  color:      var(--ds-input-icon-fg-primary);
-}
-.ds-input-telephone--disabled .ds-input-telephone__chevron {
-  color: var(--ds-input-icon-fg-disabled);
-}
+.ds-input-telephone__chevron { display: flex; align-items: center; color: var(--ds-input-icon-fg-primary); }
+.ds-input-telephone--disabled .ds-input-telephone__chevron { color: var(--ds-input-icon-fg-disabled); }
 
-/* ── Divider ── */
-.ds-input-telephone__divider {
-  width:            1px;
-  background-color: var(--ds-input-telephone-divider-color);
-  flex-shrink:      0;
-  align-self:       stretch;
-}
-.ds-input-telephone--disabled .ds-input-telephone__divider {
-  background-color: var(--ds-input-border-disabled);
-}
-
-/* ── Campo de teléfono ── */
+/* ── Número (Figma Telephone) ── */
 .ds-input-telephone__phone {
   flex:               1;
   min-width:          0;
-  padding:            var(--ds-input-padding-ver)
-                      var(--ds-input-padding-hor);
+  min-height:         var(--ds-input-subfield-height);
+  padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
-  color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-bg-default);
-  border:             none;
-  outline:            none;
   -webkit-appearance: none;
 }
-.ds-input-telephone__phone::placeholder { color: var(--ds-input-fg-placeholder); }
-
-.ds-input-telephone--disabled .ds-input-telephone__phone {
-  background: var(--ds-input-bg-disabled);
-  color:      var(--ds-input-fg-disabled);
-  cursor:     not-allowed;
-}
-
 `;
 
 injectStyles('ds-input-telephone', css);
@@ -222,9 +107,10 @@ export const InputTelephone = forwardRef(function InputTelephone({
   defaultValue,
   onChange,
   state            = 'default',
+  errorField       = 'telephone',   // Figma Error - Telephone | Error - Country
   countryVariant   = 'selectable',
   flagEmoji        = '🇪🇸',
-  flag, // slot opcional (p. ej. <CountryFlag country="spain" />) — sustituye a flagEmoji cuando se pasa, para poder mostrar la bandera real seleccionada en un Country Picker en vez de un emoji fijo
+  flag, // slot opcional (p. ej. <CountryFlag country="spain" />) — sustituye a flagEmoji
   countryCode      = '+34',
   onCountryClick,
   countryName,                  // nombre del país (lo que no dice el prefijo solo)
@@ -233,7 +119,7 @@ export const InputTelephone = forwardRef(function InputTelephone({
   helperText,
   errorMessage,
   fullWidth        = false,
-  required        = false, // A11y-4: asterisco visible + `required` nativo
+  required         = false,
   id,
   name,
   onFocus,
@@ -244,59 +130,55 @@ export const InputTelephone = forwardRef(function InputTelephone({
   const inputId      = id || generatedId;
   const helperId     = helperText ? `${inputId}-helper` : null;
   const messageId    = state === 'error' && errorMessage ? `${inputId}-msg` : null;
-  // A11y-3: el prefijo forma parte del número — el campo lo lee como
-  // descripción ("612 345 678, +34").
+  // A11y-3: el prefijo forma parte del número — el campo lo lee como descripción
   const codeId       = `${inputId}-code`;
   const describedBy  = [codeId, helperId, messageId].filter(Boolean).join(' ') || undefined;
   const isDisabled   = state === 'disabled';
-  const isSelectable = countryVariant === 'selectable' && !isDisabled;
+  const isError      = state === 'error';
+  const isSelectable = countryVariant === 'selectable';
 
   if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
     console.warn('[DS InputTelephone] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
   }
 
   const wrapperClass = [
-    'ds-input-telephone',
-    state === 'error'    ? 'ds-input-telephone--error'     : '',
-    isDisabled           ? 'ds-input-telephone--disabled'  : '',
-    fullWidth            ? 'ds-input-telephone--full-width' : '',
+    'ds-input-telephone ds-input-root',
+    isDisabled ? 'ds-input-telephone--disabled' : '',
+    fullWidth  ? 'ds-input-telephone--full-width ds-input-root--full-width' : '',
+  ].filter(Boolean).join(' ');
+
+  const part = (which) => [
+    'ds-input-box',
+    isDisabled ? 'is-disabled' : '',
+    isError && errorField === which ? 'is-error' : '',
   ].filter(Boolean).join(' ');
 
   const CountryTag = isSelectable ? 'button' : 'div';
-  const countryClass = [
-    'ds-input-telephone__country',
-    isSelectable ? 'ds-input-telephone__country--selectable' : '',
-  ].filter(Boolean).join(' ');
 
   return (
     <div className={wrapperClass}>
 
       {label && (
-        <FieldLabel className="ds-input-telephone__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-telephone__label" htmlFor={inputId} required={required} disabled={isDisabled}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-telephone__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-telephone__helper" disabled={isDisabled}>{helperText}</HelperText>
       )}
 
-      <div className="ds-input-telephone__field-wrap">
-
-        {/* País */}
+      <div className="ds-input-split">
         <CountryTag
-          className={countryClass}
-          onClick={isSelectable ? onCountryClick : undefined}
+          className={`ds-input-telephone__country ${part('country')}`}
+          onClick={isSelectable && !isDisabled ? onCountryClick : undefined}
           type={isSelectable ? 'button' : undefined}
           disabled={isSelectable ? isDisabled : undefined}
           aria-label={isSelectable ? countryLabel(countryCode, countryName) : undefined}
           aria-haspopup={isSelectable ? 'listbox' : undefined}
           aria-expanded={isSelectable ? countryExpanded : undefined}
+          aria-invalid={isSelectable && isError && errorField === 'country' ? 'true' : undefined}
         >
-          <span className="ds-input-telephone__flag" aria-hidden="true">
-            {flag ?? flagEmoji}
-          </span>
-          <span className="ds-input-telephone__code" id={codeId}>
-            {countryCode}
-          </span>
+          <span className="ds-input-telephone__flag" aria-hidden="true">{flag ?? flagEmoji}</span>
+          <span className="ds-input-telephone__code" id={codeId}>{countryCode}</span>
           {isSelectable && (
             <span className="ds-input-telephone__chevron" aria-hidden="true">
               <Icon name="chevron-down" size="sm" />
@@ -304,10 +186,6 @@ export const InputTelephone = forwardRef(function InputTelephone({
           )}
         </CountryTag>
 
-        {/* Divider */}
-        <div className="ds-input-telephone__divider" aria-hidden="true" />
-
-        {/* Número */}
         <input
           ref={forwardedRef ? mergeRefs(forwardedRef) : undefined}
           id={inputId}
@@ -322,14 +200,13 @@ export const InputTelephone = forwardRef(function InputTelephone({
           disabled={isDisabled}
           aria-label={!label ? ariaLabel : undefined}
           aria-describedby={describedBy}
-          aria-invalid={state === 'error' ? 'true' : undefined}
+          aria-invalid={isError ? 'true' : undefined}
           required={required}
-          className="ds-input-telephone__phone"
+          className={`ds-input-telephone__phone ${part('telephone')}`}
           autoComplete="tel-national"
         />
-
       </div>
-      <ValidationMessage className="ds-input-telephone__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-telephone__message" id={messageId} message={isError ? errorMessage : ''} />
 
     </div>
   );
