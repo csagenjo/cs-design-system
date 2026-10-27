@@ -31,6 +31,7 @@ export const AccountSelector = forwardRef(function AccountSelector({
   amount,
   currency,
   amountType      = 'positive',
+  amountHighlight = 'emphasis',
   detailText,
   selectedCount,
   onClick,
@@ -81,6 +82,7 @@ export const AccountSelector = forwardRef(function AccountSelector({
         amount={amount}
         currency={currency}
         amountType={amountType}
+        amountHighlight={amountHighlight}
         detailText={detailText}
         selectedCount={selectedCount}
         onClick={onClick}
