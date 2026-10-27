@@ -1,6 +1,6 @@
 /**
  * Snackbar — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (27/10/2026: foco de la acción con focus-*-inverse)
  *
  * Feedback transitorio de una acción realizada o en curso. Puro contenido
  * visual — NO gestiona temporizador de auto-dismiss ni posicionamiento fijo
@@ -9,16 +9,20 @@
  * length="single" — mensaje + acción en una fila.
  * length="multi"  — mensaje en su propia línea, acción debajo alineada a la derecha.
  *
- * La acción es una instancia directa de Button (variant="default" size="sm")
- * — sin tokens propios, los paddings ya coinciden con los de Figma.
+ * La acción es una instancia de Button (Default · Primary · Small), igual que
+ * en Figma. Sobre el fondo invertido el anillo de foco usa
+ * --ds-snackbar-action-focus-* (focus-*-inverse).
+ *
+ * El consumidor decide ancho, posición y cuánto tiempo se muestra: si lleva
+ * acción, no debe cerrarse solo antes de que se pueda alcanzar (WCAG 2.2.1).
  *
  * Tokens: --ds-snackbar-* (Componente→Mode). bg/fg invierten con el modo
  * (bg-inverse/fg-body-inverse) — confirmado en Figma dark mode 12/08.
  *
  * USO:
- *   <Snackbar message="Cambios guardados" />
- *   <Snackbar message="Elemento eliminado" actionLabel="Deshacer" onAction={fn} />
- *   <Snackbar length="multi" message="No se pudo completar la operación. Inténtalo de nuevo más tarde." />
+ *   <Snackbar message="Changes saved" showAction={false} />
+ *   <Snackbar message="Item deleted" actionLabel="Undo" onAction={fn} />
+ *   <Snackbar length="multi" message="The operation could not be completed. Try again later." actionLabel="Retry" onAction={fn} />
  */
 
 import React from 'react';
@@ -58,6 +62,12 @@ const css = `
   line-height: var(--ds-lineHeight-body-sm);          /* 24 */
   color:       var(--ds-snackbar-text-fg-generic);
   word-break:  break-word;
+}
+.ds-snackbar .ds-btn {
+  /* El foco del sistema no contrasta sobre el fondo invertido: el Button
+     anidado toma los focus-*-inverse (mismo mecanismo que Collapsible). */
+  --ds-button-border-focus-inner: var(--ds-snackbar-action-focus-inner);
+  --ds-button-border-focus-outer: var(--ds-snackbar-action-focus-outer);
 }
 .ds-snackbar--single .ds-snackbar__message { flex: 1 0 0; min-width: 0; }
 .ds-snackbar--multi  .ds-snackbar__message { width: 100%; }
@@ -113,11 +123,3 @@ export function Snackbar({
 }
 
 export default Snackbar;
-
-
-/* ─── Ejemplos de uso ──────────────────────────────────────────────────────
-
-<Snackbar message="Cambios guardados" showAction={false} />
-<Snackbar message="Elemento eliminado" actionLabel="Deshacer" onAction={() => {}} />
-<Snackbar length="multi" message="No se pudo completar la operación. Inténtalo de nuevo más tarde." actionLabel="Reintentar" />
-*/

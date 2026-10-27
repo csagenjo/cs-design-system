@@ -41,7 +41,7 @@ Rules that apply to every entry:
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | _to be filled_ |
-| Feedback | _to be filled_ |
+| Feedback | Snackbar · _rest to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
@@ -2381,3 +2381,111 @@ import { CTALink } from './components/CTALink';
 
 **Don't**
 - Don't use CTALink to submit forms.
+
+---
+
+## Snackbar
+
+**Group:** Feedback
+**Figma:** 🟢 Snackbar page → `Snackbar` set (Length Single Line / Multi-Line; Message, Show Action; nested Button exposed and locked — its Label is the action) · frame *Snackbar — How to use & Accessibility* (27/10)
+**Code:** `src/components/Snackbar.jsx` (atom)
+**Tokens:** `--ds-snackbar-*`
+
+Short feedback about an action that has just happened, with an optional action (Undo, Retry). The atom only draws the content: timer and position on screen belong to the consumer.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Confirming an action that already happened ("Changes saved", "Item deleted"), optionally with a quick way back.
+- Something that needs the user's attention or a decision → Inline Notification or Dialog.
+- An error in a form field → Validation Message.
+
+**Properties**
+- Length → Single Line (message and action in one row) · Multi-Line (message on its own line, action below on the right).
+- Message (text) · Show Action (boolean).
+- Button (nested, exposed): edit only its Label; Type / Variant / Size / State stay as they are.
+
+**Behaviour**
+- Background and text invert with the mode: black with white text in light, white with black text in dark.
+- Action: Button Default Primary — hover lightens / darkens with the inverse veil, pressed lowers the opacity.
+- Action focus ring: snackbar/all/action/borderColor/focus-inner | focus-outer (the inverse focus colours), because the system blue does not show on the inverted background.
+- Appears at the bottom of the screen (mobile) or a corner (web) and goes away by itself if it has no action; position and timing are not part of the component.
+
+**Sizing**
+- Padding 12 left and right (snackbar/all/root/paddingHor); 6 top and bottom in Single Line, 12 in Multi-Line (paddingVer); gap 6 message → action (Single Line); radius 8.
+- Message Body sm 16/24 regular; action Button Small (32 + 4 px focus area on each side).
+- Width: the consumer decides (343 in the Figma examples = a mobile screen); the height hugs the message.
+
+### Developers · React
+
+```jsx
+import { Snackbar } from './components/Snackbar';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `message` | `string` | `'Snackbar message'` | What happened |
+| `length` | `'single' \| 'multi'` | `'single'` | Multi when the message needs more than one line |
+| `showAction` | `bool` | `true` |  |
+| `actionLabel` | `string` | `'Undo'` | Verb |
+| `onAction` | `func` | — |  |
+| `id, className` |  | — |  |
+
+```jsx
+<Snackbar message="Item deleted" actionLabel="Undo" onAction={undo} />
+<Snackbar message="Changes saved" showAction={false} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Confirmation of an action that already happened, maybe with Undo / Retry.
+
+**Don't pick it when**
+- Errors that block the task or need a decision → InlineNotification / Dialog.
+- Field errors → ValidationMessage (inside the input).
+
+**Composition rules**
+- Mount it in a fixed container of the page (bottom, above the content); one snackbar at a time.
+- The consumer owns the timer: none if there is an action, or pause it on hover / focus.
+- Do not move the focus to the snackbar.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The message is announced by the screen reader when it appears (polite, through the global live region), without moving the focus.
+- Message and action contrast with the inverted background in both modes (white on black / black on white).
+- The action's focus ring uses the inverse focus colour (light blue on black, dark blue on white), ≥ 10:1.
+
+**Your job**
+- Keep the message short and say what happened ("Item deleted"), not just "Done".
+- If there is an action, specify that the snackbar does not close on its own before it can be reached (or that it stays until dismissed).
+- Never put the only path to something important in a snackbar: it disappears.
+
+### Developers · React
+
+**Semantics**
+- The container is not a live region: message is announced with announce() (polite) when it mounts or changes.
+- The action is a real Button (Default · Primary · Small); its focus ring is re-themed with --ds-snackbar-action-focus-*.
+
+**Keyboard**
+- Tab reaches the action like any other button, Enter / Space runs it.
+- No shortcut to dismiss: the consumer closes it after the action or its timer.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- message says what happened; actionLabel is a verb ("Undo", "Retry").
+- With an action: no auto-dismiss timer shorter than the user needs (WCAG 2.2.1) — pause it on hover and on focus.
+
+**Don't**
+- Don't use it for errors that need a decision.
+- Don't change the nested Button's variant.
+
+---

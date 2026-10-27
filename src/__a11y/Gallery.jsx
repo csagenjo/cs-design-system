@@ -993,9 +993,9 @@ export default function Gallery({ mode }) {
 
       <Section name="Snackbar">
         <Col>
-          <Snackbar message="Cambios guardados" showAction={false} />
-          <Snackbar message="Elemento eliminado" actionLabel="Deshacer" onAction={noop} />
-          <Snackbar length="multi" message="No se pudo completar la operación. Inténtalo de nuevo más tarde." actionLabel="Reintentar" onAction={noop} />
+          <Snackbar message="Changes saved" showAction={false} />
+          <Snackbar message="Item deleted" actionLabel="Undo" onAction={noop} />
+          <Snackbar length="multi" message="The operation could not be completed. Try again later." actionLabel="Retry" onAction={noop} />
         </Col>
       </Section>
 

@@ -1599,8 +1599,8 @@
      que usan fg-label-inverse por ser label de botón; aquí es fg-body-inverse
      porque el mensaje del Snackbar es texto de cuerpo, no label — alias real
      confirmado en Figma: snackbar/all/text/fg/generic → fg/body/inverse.
-     NO fg-onColor). El botón de acción NO lleva tokens propios — instancia
-     directa de Button variant="default" size="sm" (paddings ya coinciden).
+     NO fg-onColor). El botón de acción es una instancia de Button (Default
+     Primary Small); solo re-tematiza el anillo de foco con los -inverse (27/10).
      Shadow es Effect Style de Figma ("Snackbar/Shadow"), no una Variable de
      color — valor literal, mismo tratamiento que --ds-shadow-md/lg de Button.
      ══════════════════════════════════════════════════════════════════════════ */
@@ -1611,6 +1611,8 @@
   --ds-snackbar-root-padding-ver-single:  var(--ds-spacing-sm);        /* 6 */
   --ds-snackbar-root-padding-ver-multi:   var(--ds-spacing-lg);        /* 12 */
   --ds-snackbar-root-gap-single:          var(--ds-spacing-sm);        /* 6 */
+  --ds-snackbar-action-focus-inner:       var(--ds-borderColor-focus-inner-inverse); /* snackbar/all/action/borderColor/focus-inner — negro light / blanco dark (27/10) */
+  --ds-snackbar-action-focus-outer:       var(--ds-borderColor-focus-outer-inverse); /* snackbar/all/action/borderColor/focus-outer — info/200 light / info/700 dark: el foco del sistema no contrasta sobre el fondo invertido */
   --ds-dialog-shadow:                     0 24px 24px 0 var(--ds-opacity-shadow-umbra-strong), 0 0 24px 0 var(--ds-opacity-shadow-ambient); /* Effect Style Dialog/DialogShadow (Dialog, DialogSimple, ErrorAndEmptyState) */
   --ds-snackbar-root-shadow:              0 3px 5px -1px var(--ds-opacity-shadow-umbra), 0 1px 18px 0 var(--ds-opacity-shadow-ambient), 0 6px 10px 1px var(--ds-opacity-shadow-penumbra);
 
