@@ -14,7 +14,6 @@ const css = `
 }
 .ds-input-date--full-width { display: flex; }
 
-.ds-input-date__label { margin-bottom: var(--ds-input-label-gap); }
 
 .ds-input-date__field-wrap {
   position: relative;
@@ -49,7 +48,6 @@ const css = `
 .ds-input-date--disabled .ds-input-date__icon { color: var(--ds-input-icon-fg-disabled); }
 
 /* Helper — aparece ENCIMA del campo */
-.ds-input-date__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-date__message { margin-top: var(--ds-input-validation-gap); }
 
 /* Validación */
@@ -98,11 +96,11 @@ export const InputDate = forwardRef(function InputDate({
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel className="ds-input-date__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-date__label ds-input-label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-date__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-date__helper ds-input-helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-date__field-wrap">

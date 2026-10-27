@@ -39,10 +39,10 @@ const css = `
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-selector-root-gap);
+  gap:         var(--ds-selector-content-gap);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-selector-root-padding) var(--ds-selector-root-padding) var(--ds-selector-root-padding) 0;
+  padding:     var(--ds-selector-content-padding) var(--ds-selector-content-padding) var(--ds-selector-content-padding) 0;
 }
 
 .ds-selector-invoker__center {
@@ -56,9 +56,9 @@ const css = `
 .ds-selector-invoker--empty .ds-selector-invoker__center { gap: 0; }
 
 .ds-selector-invoker__header {
-  font-size:   var(--ds-fontSize-title-sm);
+  font-size:   var(--ds-fontSize-title-md);
   font-weight: var(--ds-font-weight-bold);
-  line-height: var(--ds-lineHeight-title-sm);
+  line-height: var(--ds-lineHeight-title-md);
   color:       var(--ds-selector-header-fg-default);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -98,7 +98,6 @@ const css = `
   outline:        var(--ds-selector-root-border-width-focus) solid var(--ds-selector-root-border-color-focus-outer);
   outline-offset: var(--ds-selector-root-border-width-focus);
   box-shadow:     0 0 0 var(--ds-selector-root-border-width-focus) var(--ds-selector-root-border-color-focus-inner);
-  border-width:   var(--ds-selector-root-border-width-focus);
 }
 
 /* Error */
@@ -192,13 +191,13 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
       {ariaLabel && <VisuallyHidden>{`${ariaLabel}, `}</VisuallyHidden>}
       {showIconLeft && (
         <span className="ds-selector-invoker__icon-left">
-          <Icon name="file-text" size="xs" />
+          <Icon name="file-text" size="sm" />
         </span>
       )}
 
       <span className="ds-selector-invoker__content">
         <span className="ds-selector-invoker__center">
-          <span className="ds-selector-invoker__header">{mask(headerText)}</span>
+          <span className="ds-selector-invoker__header">{isEmpty ? mask(headerText) : headerText}</span>
 
           {!isEmpty && descriptionText && (
             <span className="ds-selector-invoker__description">
@@ -217,7 +216,7 @@ export const SelectorInvoker = forwardRef(function SelectorInvoker({
           {dataSelection === 'multiple' && selectedCount != null && (
             <BadgeNotification color="secondary" size="expanded" label={selectedCount} ariaLabel={selectedCountLabel(selectedCount)} />
           )}
-          <Icon name="chevron-right" size="xs" />
+          <Icon name="chevron-right" size="sm" />
         </span>
       </span>
       {isReadOnly && <VisuallyHidden>{`, ${readOnlyLabel}`}</VisuallyHidden>}

@@ -37,6 +37,12 @@ export function injectStyles(id, css) {
                      su color (Figma: Hover/Focus/Error - Country|Telephone). */
 const INPUT_BOX_CSS = `
 .ds-input-root { margin: var(--ds-input-focus-area-padding); box-sizing: border-box; }
+
+/* Label → ayuda 4 (label/gap), ayuda → campo 8 (helper/gap); sin ayuda, label → campo 8.
+   Figma: frame "Label + Helper" (gap label/gap) dentro de "Base Input" (gap helper/gap). */
+.ds-input-label { margin-bottom: var(--ds-input-helper-gap); }
+.ds-input-label:has(+ .ds-input-helper) { margin-bottom: var(--ds-input-label-gap); }
+.ds-input-helper { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-root--full-width { width: calc(100% - 2 * var(--ds-input-focus-area-padding)); }
 
 .ds-input-box {

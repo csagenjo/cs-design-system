@@ -13,10 +13,8 @@ const css = `
 }
 .ds-input-dropdown--full-width { display: flex; }
 
-.ds-input-dropdown__label { margin-bottom: var(--ds-input-label-gap); }
 
 /* Helper — encima del campo */
-.ds-input-dropdown__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-dropdown__message { margin-top: var(--ds-input-validation-gap); }
 
 .ds-input-dropdown__field-wrap {
@@ -109,11 +107,11 @@ export const InputDropdown = forwardRef(function InputDropdown({
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel className="ds-input-dropdown__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-dropdown__label ds-input-label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-dropdown__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-dropdown__helper ds-input-helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-dropdown__field-wrap">

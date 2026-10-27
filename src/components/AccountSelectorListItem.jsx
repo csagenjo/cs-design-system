@@ -40,10 +40,10 @@ const css = `
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-account-selector-root-gap);
+  gap:         var(--ds-account-selector-content-gap);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-account-selector-root-padding) var(--ds-account-selector-root-padding) var(--ds-account-selector-root-padding) 0;
+  padding:     var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) 0;
 }
 
 .ds-account-selector-list-item__center {
@@ -96,9 +96,16 @@ const css = `
   border-color: var(--ds-account-selector-root-border-color-error);
 }
 
+/* Focus: anillo doble por dentro de la fila (igual que SelectorListItem) */
+.ds-account-selector-list-item:focus-visible,
 .ds-account-selector-list-item:has(:focus-visible) {
-  box-shadow: 0 0 0 var(--ds-account-selector-root-border-width-focus) var(--ds-account-selector-root-border-color-focus-inner);
+  outline:        var(--ds-account-selector-root-border-width-focus) solid var(--ds-account-selector-root-border-color-focus-outer);
+  outline-offset: calc(var(--ds-account-selector-root-border-width-focus) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-account-selector-root-border-width-focus) * 2) var(--ds-account-selector-root-border-color-focus-inner);
 }
+/* El anillo es de la fila (Figma Focus): el Radio/Checkbox de dentro no pinta el suyo */
+.ds-account-selector-list-item .ds-radio:has(:focus-visible),
+.ds-account-selector-list-item .ds-checkbox:has(:focus-visible) { outline: none; box-shadow: none; }
 
 .ds-account-selector-list-item--dataHidden { cursor: default; }
 
@@ -120,6 +127,7 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
   amount,
   currency,
   amountType       = 'positive',
+  amountHighlight  = 'emphasis', // AmountView highlight (Figma: Emphasis)
   detailText,
   selected         = false,
   onSelectedChange,
@@ -158,15 +166,15 @@ export const AccountSelectorListItem = forwardRef(function AccountSelectorListIt
       onClick={handleRowClick}
     >
       <span className="ds-account-selector-list-item__icon-left">
-        <Icon name="file-text" size="xs" />
+        <Icon name="file-text" size="sm" />
       </span>
 
       <span className="ds-account-selector-list-item__content">
         <span className="ds-account-selector-list-item__center">
-          <span className="ds-account-selector-list-item__header">{mask(headerText)}</span>
+          <span className="ds-account-selector-list-item__header">{headerText}</span>
 
-          {amount != null && !isDataHidden && (
-            <AmountView amount={amount} currency={currency} type={amountType} />
+          {amount != null && (
+            <AmountView as="span" amount={mask(amount)} currency={currency} type={amountType} highlight={isDisabled ? 'disabled' : amountHighlight} />
           )}
 
           {detailText && (

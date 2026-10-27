@@ -29,6 +29,7 @@ Rules that apply to every entry:
   Never hard-code colours, spacing or radii.
 - Import from the file path; there is no barrel export.
   Atoms live in `src/components/`, organisms in `src/organisms/`.
+- Fields (inputs and selectors) share the spacing: label → help 4, help → field 8 (label → field 8 without help), field → error 4, and a 4 px focus area around the whole field.
 - Hover has two families on purpose: **blue** (`bg/hover-primary`) on selectable surfaces such as rows, options and tabs; **veil** (`opacity/hover`) on controls that sit on any background (Button, Icon Button, Chip, Link, CTA Link).
 - If a piece is listed under **Internal parts**, don't use it directly —
   use the component named next to it.
@@ -38,7 +39,7 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · _rest to be filled_ |
+| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | _to be filled_ |
 | Feedback | _to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
@@ -1840,6 +1841,239 @@ Known gaps: none.
 **Don't**
 - Don't use the placeholder as the only label.
 - Don't add your own border or focus style around the field.
+
+---
+
+## Selector · SelectorInvoker · SelectorListItem
+
+**Group:** Forms
+**Figma:** 🟢 Selector page → `Selector` set (State Initial / Hover / Focus / Pressed / Error / Read-only / Data Hidden / Disabled), `.SelectorInvoker` (the box: same states × Data Selection Single / Multiple / Empty), `Selector List Item` (State Selected / Unselected / Hover / Focus / Pressed / Error / Data Hidden / Disabled × Data Single / Multiple Selection), `Left Panel`, `Right Panel` · frame *Selector — How to use & Accessibility* (27/10)
+**Code:** `src/components/Selector.jsx`, `SelectorInvoker.jsx`, `SelectorListItem.jsx` (atoms)
+**Tokens:** `--ds-selector-*` (shared with Account in `--ds-selector-common-*`)
+
+A field that shows the chosen item (header, description, detail) and opens a list to change it. SelectorListItem is the row of that list.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Choosing an item that needs more than a word to recognise it (a document, a beneficiary, a contract): header + description + detail.
+- Single (Radio in the list) or multiple selection (Checkbox, badge with the count on the invoker).
+- A bank account with balance → Account Selector · a short list of plain options → Input Dropdown · searching by typing → Combobox.
+
+**Properties**
+- State → Initial · Hover · Focus · Pressed · Error · Read-only · Data Hidden · Disabled.
+- Data Selection (invoker) → Single · Multiple (badge with the count) · Empty (only the header, as a prompt).
+- Label · Helper · Validation (booleans) · Left Panel / Right Panel / Description / Detail (booleans) · Swap Description.
+- List Item: State (Selected, Unselected…) × Data Single / Multiple Selection.
+
+**Behaviour**
+- The whole box is one button that opens the list (dialog, bottom sheet or picker) — the list itself is built by the consumer with List Items.
+- Hover: blue fill (bg/hover-primary); Pressed lowers the opacity.
+- Focus keeps the border and adds a white gap + blue ring outside it.
+- Error: red border + message below · Read-only: grey box, normal text, does not open · Disabled: grey, nothing reacts.
+- Data Hidden: description, amount and detail are masked (••••••••); the header stays.
+- List Item Selected: 2 px teal border; Error: 1 px red; Focus: double ring inside the row.
+
+**Sizing**
+- Invoker: 12 left padding and 12 gap to the icon (selector/root/paddingHor, gapHor); 16 top, right and bottom (selector/content/padding) and 16 between the text and the right panel (selector/content/gap); border 1, radius 8.
+- Icons 24; header Section Header.
+- 4 px focus area around the whole selector (selector/root/focusArea/padding); label, help and error inside it.
+- List items: same padding, no focus area — the focus ring is drawn inside the row because rows are stacked in lists and panels.
+
+### Developers · React
+
+```jsx
+import { Selector } from './components/Selector';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label; read before the value |
+| `headerText / descriptionText / detailText` | `string` | — | What is shown in the box |
+| `dataSelection` | `'single' \| 'multiple' \| 'empty'` | `'single'` |  |
+| `selectedCount` | `number` | — | Badge in multiple |
+| `state` | `'default' \| 'error' \| 'readOnly' \| 'dataHidden' \| 'disabled'` | `'default'` |  |
+| `helperText / errorMessage` | `string` | — |  |
+| `onClick` | `func` | — | Open the list |
+| `expanded / haspopup` | `bool / string` | `— / 'dialog'` | aria-expanded, aria-haspopup |
+| `fullWidth` | `bool` | `false` | Minus the focus area |
+| `id, name` |  | — |  |
+| `SelectorListItem` |  | — | data 'single'\|'multiple', selected, onSelectedChange, state, disabled, icon (slot), showControl, headerText, descriptionText, detailText, name, …rest (role/aria from a listbox) |
+
+```jsx
+<Selector label="Document" headerText={doc.title} descriptionText={doc.type} detailText={doc.ref} onClick={openList} expanded={open} />
+<SelectorListItem data="single" name="doc" headerText="Passport" selected={v==="pp"} onSelectedChange={() => setV("pp")} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user chooses an item described by more than one line.
+- SelectorListItem: the rows of the list the Selector opens (or of a Country / Currency picker).
+
+**Don't pick it when**
+- Accounts with balance → AccountSelector.
+- Plain short list → InputDropdown · filter by typing → Combobox.
+
+**Composition rules**
+- Selector shows the value; the consumer opens a Dialog / Bottom Sheet / picker with SelectorListItems and updates the value.
+- Multiple selection: list in a CheckboxGroup (spacing="none"); single: RadioGroup (spacing="none") or a listbox.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the button; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box (inside the row for list items).
+- Selected rows are marked by the border and by the Radio/Checkbox, never by colour alone.
+- Error is not colour only: icon + text under the field.
+
+**Your job**
+- Always show a label ("Charge account"), and write the header as the chosen value.
+- Say in the spec what opens (list, dialog, sheet) and whether it is single or multiple selection.
+
+### Developers · React
+
+**Semantics**
+- The invoker is a <button> with aria-haspopup (dialog by default) and aria-expanded; its name is the label + the chosen value.
+- helperText and errorMessage → aria-describedby; state="error" → aria-invalid; the message lives in a persistent live region.
+- readOnly → aria-disabled + "read only"; dataHidden reads "hidden" instead of the dots.
+- List item: inside a listbox it is role="option" and its Radio/Checkbox is inert; otherwise the Radio/Checkbox is the control and the ring is drawn on the row.
+
+**Keyboard**
+- Invoker: Tab to reach it, Enter / Space opens the list.
+- List: Tab or arrows (listbox) between rows, Space selects.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every selector has label (or ariaLabel); every list item has a header that makes sense on its own.
+- Pass expanded while the list is open.
+
+**Don't**
+- Don't build the box from a div with onClick.
+- Don't put two interactive controls inside a list item's right panel.
+
+---
+
+## AccountSelector · AccountSelectorInvoker · AccountSelectorListItem
+
+**Group:** Forms
+**Figma:** 🟢 Selector page → `Account Selector` set (State Initial / Hover / Focus / Pressed / Error / Read-only / Data Hidden / Disabled), `.Invoker account` (same states × Data Single / Multiple / Empty), `Account Selector List Item` (State Selected / Unselected / Hover / Focus / Pressed / Error / Data Hidden / Disabled × Data Single / Multiple Selection) · frame *Account Selector — How to use & Accessibility* (27/10)
+**Code:** `src/components/AccountSelector.jsx`, `AccountSelectorInvoker.jsx`, `AccountSelectorListItem.jsx` (atoms)
+**Tokens:** `--ds-account-selector-*` (shared in `--ds-selector-common-*`)
+
+A Selector for bank accounts: header (account name), balance (Amount View) and detail (account number).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Choosing a source or destination account: the user recognises it by name, balance and number.
+- Other items with a description → Selector.
+
+**Properties**
+- State → Initial · Hover · Focus · Pressed · Error · Read-only · Data Hidden · Disabled.
+- Data (invoker) → Single · Multiple (badge) · Empty.
+- Label · Helper · Validation (booleans) · Amount View inside (Highlight Emphasis by default, Disabled when off).
+- List Item: State × Data Single / Multiple Selection.
+
+**Behaviour**
+- The whole box is one button that opens the list (dialog, bottom sheet or picker) — the list itself is built by the consumer with List Items.
+- Hover: blue fill (bg/hover-primary); Pressed lowers the opacity.
+- Focus keeps the border and adds a white gap + blue ring outside it.
+- Error: red border + message below · Read-only: grey box, normal text, does not open · Disabled: grey, nothing reacts.
+- Data Hidden: description, amount and detail are masked (••••••••); the header stays.
+- List Item Selected: 2 px teal border; Error: 1 px red; Focus: double ring inside the row.
+- Header 16 (Selector uses 19).
+
+**Sizing**
+- Invoker: 12 left padding and 12 gap to the icon (selector/root/paddingHor, gapHor); 16 top, right and bottom (selector/content/padding) and 16 between the text and the right panel (selector/content/gap); border 1, radius 8.
+- Icons 24; header Section Header.
+- 4 px focus area around the whole selector (selector/root/focusArea/padding); label, help and error inside it.
+- List items: same padding, no focus area — the focus ring is drawn inside the row because rows are stacked in lists and panels.
+
+### Developers · React
+
+```jsx
+import { AccountSelector } from './components/AccountSelector';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — |  |
+| `ariaLabel` | `string` | — | Only without a visible label |
+| `headerText / detailText` | `string` | — | Account name / number |
+| `amount / currency` | `string` | — | Balance, already formatted |
+| `amountType` | `'positive' \| 'negative'` | `'positive'` |  |
+| `amountHighlight` | `AmountView highlight` | `'emphasis'` | 'disabled' is forced when the selector is disabled |
+| `dataSelection` | `'single' \| 'multiple' \| 'empty'` | `'single'` |  |
+| `selectedCount` | `number` | — |  |
+| `state` | `'default' \| 'error' \| 'readOnly' \| 'dataHidden' \| 'disabled'` | `'default'` |  |
+| `helperText / errorMessage, onClick, expanded, haspopup, fullWidth, id, name` |  | — | As in Selector |
+| `AccountSelectorListItem` |  | — | data, selected, onSelectedChange, state, disabled, headerText, amount, currency, amountType, amountHighlight, detailText, name, …rest |
+
+```jsx
+<AccountSelector label="Charge account" headerText={acc.name} amount={acc.balance} currency="€" detailText={acc.iban} onClick={openList} expanded={open} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user picks a bank account.
+
+**Don't pick it when**
+- Anything that is not an account → Selector.
+
+**Composition rules**
+- Pass the balance already formatted for the user's locale.
+- Data Hidden when the balance and number must not be shown on screen.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible label linked to the button; the help text and the error are read with it.
+- Focus ring in the system focus colour, ≥ 3:1, inside the component's own box (inside the row for list items).
+- Selected rows are marked by the border and by the Radio/Checkbox, never by colour alone.
+- Error is not colour only: icon + text under the field.
+- The balance sign is read ("negative") even without a minus symbol.
+
+**Your job**
+- Always show a label ("Charge account"), and write the header as the chosen value.
+- Say in the spec what opens (list, dialog, sheet) and whether it is single or multiple selection.
+
+### Developers · React
+
+**Semantics**
+- The invoker is a <button> with aria-haspopup (dialog by default) and aria-expanded; its name is the label + the chosen value.
+- helperText and errorMessage → aria-describedby; state="error" → aria-invalid; the message lives in a persistent live region.
+- readOnly → aria-disabled + "read only"; dataHidden reads "hidden" instead of the dots.
+- List item as Selector List Item: option in a listbox, or Radio/Checkbox as the control with the ring on the row.
+
+**Keyboard**
+- Invoker: Tab, Enter / Space opens the list.
+- List: Tab or arrows (listbox), Space selects.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every selector has label (or ariaLabel); every list item has a header that makes sense on its own.
+- Pass expanded while the list is open.
+
+**Don't**
+- Don't build the box from a div with onClick.
+- Don't put two interactive controls inside a list item's right panel.
 
 ---
 

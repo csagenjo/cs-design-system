@@ -54,9 +54,7 @@ const css = `
 }
 .ds-input-combobox--full-width { display: flex; width: 100%; }
 
-.ds-input-combobox__label { margin-bottom: var(--ds-input-label-gap); }
 
-.ds-input-combobox__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-combobox__message { margin-top: var(--ds-input-validation-gap); }
 
 .ds-input-combobox__field-wrap {
@@ -247,11 +245,11 @@ export const InputCombobox = forwardRef(function InputCombobox({
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel className="ds-input-combobox__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-combobox__label ds-input-label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-combobox__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-combobox__helper ds-input-helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-combobox__field-wrap">

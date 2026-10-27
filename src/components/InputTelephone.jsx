@@ -43,7 +43,6 @@ const css = `
 .ds-input-telephone--full-width { display: flex; }
 
 .ds-input-telephone__label   { margin-bottom: var(--ds-input-label-gap); }
-.ds-input-telephone__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-telephone__message { margin-top: var(--ds-input-validation-gap); }
 
 /* ── País (Figma Country Code) ── */
@@ -159,11 +158,11 @@ export const InputTelephone = forwardRef(function InputTelephone({
     <div className={wrapperClass}>
 
       {label && (
-        <FieldLabel className="ds-input-telephone__label" htmlFor={inputId} required={required} disabled={isDisabled}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-telephone__label ds-input-label" htmlFor={inputId} required={required} disabled={isDisabled}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-telephone__helper" disabled={isDisabled}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-telephone__helper ds-input-helper" disabled={isDisabled}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-split">

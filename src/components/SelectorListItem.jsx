@@ -41,10 +41,10 @@ const css = `
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-selector-root-gap);
+  gap:         var(--ds-selector-content-gap);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-selector-root-padding) var(--ds-selector-root-padding) var(--ds-selector-root-padding) 0;
+  padding:     var(--ds-selector-content-padding) var(--ds-selector-content-padding) var(--ds-selector-content-padding) 0;
 }
 
 .ds-selector-list-item__center {
@@ -57,9 +57,9 @@ const css = `
 }
 
 .ds-selector-list-item__header {
-  font-size:   var(--ds-fontSize-title-sm);
+  font-size:   var(--ds-fontSize-title-md);
   font-weight: var(--ds-font-weight-bold);
-  line-height: var(--ds-lineHeight-title-sm);
+  line-height: var(--ds-lineHeight-title-md);
   color:       var(--ds-selector-header-fg-default);
   overflow:    hidden;
   text-overflow: ellipsis;
@@ -103,20 +103,18 @@ const css = `
   border-color: var(--ds-selector-root-border-color-error);
 }
 
-/* Focus — anillo unico blanco, activado cuando el Radio/Checkbox interno recibe foco de teclado.
-   La fila vive dentro de un listado: no lleva el doble anillo aislado del Invoker. */
+/* Focus (Figma: anillo doble POR DENTRO de la fila — va apilada en listas y
+   paneles, por fuera pisaría la vecina y lo recortaría el panel). Vale tanto
+   si la fila es la opción enfocada (listbox) como si el foco está en su Radio. */
+.ds-selector-list-item:focus-visible,
 .ds-selector-list-item:has(:focus-visible) {
-  box-shadow: 0 0 0 var(--ds-selector-root-border-width-focus) var(--ds-selector-root-border-color-focus-inner);
-}
-/* Fila enfocada ella misma (opción de un listbox, A11y-1): doble anillo del
-   sistema DENTRO de la fila (hueco focus-inner + anillo focus-outer) — el
-   anillo blanco solo no se ve sobre un panel blanco, y por dentro no lo
-   recorta el overflow del panel. */
-.ds-selector-list-item:focus-visible {
   outline:        var(--ds-selector-root-border-width-focus) solid var(--ds-selector-root-border-color-focus-outer);
   outline-offset: calc(var(--ds-selector-root-border-width-focus) * -1);
   box-shadow:     inset 0 0 0 calc(var(--ds-selector-root-border-width-focus) * 2) var(--ds-selector-root-border-color-focus-inner);
 }
+/* El anillo es de la fila (Figma Focus): el Radio/Checkbox de dentro no pinta el suyo */
+.ds-selector-list-item .ds-radio:has(:focus-visible),
+.ds-selector-list-item .ds-checkbox:has(:focus-visible) { outline: none; box-shadow: none; }
 
 /* Data hidden */
 .ds-selector-list-item--dataHidden { cursor: default; }
@@ -143,7 +141,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
   onSelectedChange,
   onClick,
   disabled         = false,
-  icon             = <Icon name="file-text" size="xs" />, // slot libre — refleja "Left Panel" de Figma, con el mismo icono de antes por defecto
+  icon             = <Icon name="file-text" size="sm" />, // slot libre — refleja "Left Panel" de Figma, con el mismo icono de antes por defecto
   showControl      = true, // oculta el Radio/Checkbox — refleja "Right Panel" de Figma (p. ej. Country Picker, donde el borde ya es la selección)
   name,          // A11y-4: mismo `name` en las filas de una lista → un grupo de radios (o envolver en RadioGroup)
   id,
@@ -191,7 +189,7 @@ export const SelectorListItem = forwardRef(function SelectorListItem({
 
       <span className="ds-selector-list-item__content">
         <span className="ds-selector-list-item__center">
-          <span className="ds-selector-list-item__header">{mask(headerText)}</span>
+          <span className="ds-selector-list-item__header">{headerText}</span>
 
           {descriptionText && (
             <span className="ds-selector-list-item__description">
