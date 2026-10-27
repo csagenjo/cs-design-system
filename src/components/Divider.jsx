@@ -21,7 +21,7 @@ import { injectStyles } from './_inputBase';
 const css = `
 .ds-divider {
   width:       100%;
-  height:      var(--ds-border-width-sm);            /* 1px */
+  height:      var(--ds-divider-border-width-generic); /* 1px */
   flex:        0 0 auto;
   background:  var(--ds-divider-border-color-generic); /* #EEEFF1 */
   border:      0;

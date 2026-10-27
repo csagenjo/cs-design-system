@@ -1308,6 +1308,7 @@
      ══════════════════════════════════════════════════════════════════════════ */
 
   --ds-divider-border-color-generic:    var(--ds-borderColor-subtle); /* #F1F2F4 */
+  --ds-divider-border-width-generic:    var(--ds-border-width-sm);    /* 1 — divider/all/root/borderWidth/generic */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1323,16 +1324,21 @@
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — DescriptionList (descriptionList/all/*)
-     Organismo contenedor. title/amount/iconAccount NO se replican aquí — los
-     aportan los átomos compuestos (SectionHeader / AmountView).
+     Organismo contenedor. 27/10: alineado con Figma — la sección (SectionHeader +
+     lista + Edit) y el valor Account (DescriptionListAccount) sí van en código.
      ══════════════════════════════════════════════════════════════════════════ */
 
+  --ds-descriptionlist-gap:                   var(--ds-spacing-md);        /* 8 — descriptionList/all/gap/generic: label↔valor, valor↔Edit, contenido↔línea, entre pares, título↔lista */
+  --ds-descriptionlist-account-gap:           var(--ds-spacing-xs);        /* 4 — descriptionList/all/account/gap/generic: nombre/importe/número */
+  --ds-descriptionlist-divider-width:         var(--ds-divider-border-width-generic); /* 1 */
   --ds-descriptionlist-label-fg-generic:      var(--ds-fg-label-default);  /* #050506 */
   --ds-descriptionlist-valuetext-fg-generic:  var(--ds-fg-body-default);   /* #050506 */
   --ds-descriptionlist-valuetext-fg-subtle:   var(--ds-fg-body-subtle);    /* #676D76 — Not Filled */
   --ds-descriptionlist-divider-color:         var(--ds-divider-border-color-generic); /* separador entre pares (A11y-5: borde del grupo, no <hr> dentro de <dl>) — mismo color que el átomo Divider que instancia Figma */
   --ds-descriptionlist-accountname-fg-generic:var(--ds-fg-label-default);  /* #050506 */
   --ds-descriptionlist-iban-fg-generic:       var(--ds-fg-label-subtle);   /* #676D76 */
+  --ds-descriptionlist-icon-account-fg:       var(--ds-fg-icon-warning);   /* descriptionList/all/iconAccount/fg/generic */
+  --ds-descriptionlist-icon-account-size:     var(--ds-sizing-sm);         /* 24 — descriptionList/all/iconAccount/size/generic */
   --ds-descriptionlist-helpertext-fg-generic: var(--ds-fg-label-subtle);   /* #676D76 */
 
 

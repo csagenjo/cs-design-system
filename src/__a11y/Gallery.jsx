@@ -87,7 +87,7 @@ import { CellActions } from '../organisms/CellActions';
 import { Combobox } from '../organisms/Combobox';
 import { CountryPicker } from '../organisms/CountryPicker';
 import { CurrencyPicker } from '../organisms/CurrencyPicker';
-import { DescriptionList, DescriptionListItem } from '../organisms/DescriptionList';
+import { DescriptionList, DescriptionListItem, DescriptionListAccount } from '../organisms/DescriptionList';
 import { FileSelector } from '../organisms/FileSelector';
 import { FileUpload } from '../organisms/FileUpload';
 import { PageTitle } from '../organisms/PageTitle';
@@ -1150,13 +1150,16 @@ export default function Gallery({ mode }) {
         <Row>
           {['landscape', 'portrait'].map((o) => (
             <div key={o} style={{ width: 420 }}>
-              <DescriptionList orientation={o}>
-                <DescriptionListItem label="Cliente">García Fernández</DescriptionListItem>
-                <DescriptionListItem label="Estado" labelWeight="bold" showEdit onEdit={noop}>
-                  <BadgeHighlight variant="positive" label="Activo" />
+              <DescriptionList orientation={o} title="Customer" titleLevel={3} showEdit onEdit={noop}>
+                <DescriptionListItem label="Name">Jane Doe</DescriptionListItem>
+                <DescriptionListItem label="Status" labelWeight="bold" showEdit onEdit={noop}>
+                  <BadgeHighlight variant="positive" label="Active" />
                 </DescriptionListItem>
-                <DescriptionListItem label="Saldo"><AmountView amount="1.250,00" currency="€" /></DescriptionListItem>
-                <DescriptionListItem label="Notas" emptyText="Sin datos" />
+                <DescriptionListItem label="Website"><Link href="#" rightIcon>Open profile</Link></DescriptionListItem>
+                <DescriptionListItem label="Notes" emptyText="Not filled" showEdit onEdit={noop} />
+                <DescriptionListItem label="Account" showEdit onEdit={noop}>
+                  <DescriptionListAccount icon="wallet" name="Main account" amount="1,289.00" currency="EUR" number="XX71 0961 2345 6769" helperText="Opened in 2019" />
+                </DescriptionListItem>
               </DescriptionList>
             </div>
           ))}
