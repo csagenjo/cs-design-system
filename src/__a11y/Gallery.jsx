@@ -655,6 +655,8 @@ export default function Gallery({ mode }) {
             <InputAmount key={s} label={`Importe ${s}`} state={s} currency="EUR" defaultValue="12,50"
               errorMessage="Introduce un importe válido" onCurrencyClick={noop} />
           ))}
+          <InputAmount label="Error en la divisa" state="error" errorField="currency" currency="XYZ" defaultValue="12,50"
+            errorMessage="Elige una divisa" onCurrencyClick={noop} />
           <InputAmount label="Importe fixed" currencyVariant="fixed" currency="USD" defaultValue="99,00" />
           <InputAmount label="Importe con helper" helperText="Máximo 10.000 € por operación" currency="EUR" />
         </div>
@@ -699,7 +701,7 @@ export default function Gallery({ mode }) {
 
       <Section name="InputStepper">
         <div className="a11y-grid">
-          {inputStates.map((s) => (
+          {[...inputStates, 'read-only'].map((s) => (
             <InputStepper key={s} label={`Cantidad ${s}`} state={s} defaultValue={3}
               errorMessage="Cantidad inválida" helperText="Entre 0 y 10" min={0} max={10} />
           ))}
@@ -713,6 +715,8 @@ export default function Gallery({ mode }) {
             <InputTelephone key={s} label={`Teléfono ${s}`} state={s} defaultValue="600 000 000"
               errorMessage="Introduce un número válido" onCountryClick={noop} />
           ))}
+          <InputTelephone label="Error en el país" state="error" errorField="country" defaultValue="600 000 000"
+            errorMessage="Elige un país" onCountryClick={noop} />
           <InputTelephone label="Teléfono fixed" countryVariant="fixed" flagEmoji="🇪🇸" countryCode="+34" />
           <InputTelephone label="Con bandera SVG" flag={<CountryFlag country="united-kingdom" />} countryCode="+44"
             helperText="Usaremos este número solo para verificación" onCountryClick={noop} />

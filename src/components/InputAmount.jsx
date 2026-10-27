@@ -1,31 +1,21 @@
 /**
  * InputAmount — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2 (27/10/2026: alineado 1:1 con Figma)
  *
- * Tokens: --ds-input-* + --ds-input-amount-* (tokens.css)
- * Iconos: átomo Icon — chevron-down (dropdown moneda) · circle-x (error)
- * Sin hex hardcodeados. Sin referencias a Empresa / Sistemas externos.
+ * Figma: `Input Amount` (Label + Helper + `Amount Field` + Validation Message).
+ * Dos cajas juntas — divisa e importe —, cada una con su borde: hover, foco y
+ * error marcan solo la parte afectada (Figma `Hover|Focus|Error - Currency|Amount`).
  *
- * ESTRUCTURA:
- *   Label → Helper → [CurrencyField | AmountField] → ValidationMessage
+ * VARIANTES (currencyVariant, Figma `Variant`):
+ *   "selectable" → la divisa es un botón (abre el Currency Picker): código ISO + chevron
+ *   "fixed"      → la divisa solo se muestra
  *
- * VARIANTES (currencyVariant):
- *   "selectable" → moneda es botón clicable, muestra ChevronDown en teal
- *   "fixed"      → moneda es solo visual, sin interacción, sin chevron
- *
- * ESTADOS (state):
- *   "default"  → genérico
- *   "error"    → borde rojo + validationMessage visible
- *   "disabled" → campos inactivos
- *
- * NOTA: el Currency Picker es un componente separado.
- *   Este componente solo dispara onCurrencyClick — no gestiona el picker.
+ * ESTADOS (state): default · error · disabled
+ *   errorField → qué parte lleva el error: 'amount' (por defecto) | 'currency'
  *
  * USO:
- *   <InputAmount label="Importe" currency="EUR" value={v} onChange={fn} />
- *   <InputAmount currencyVariant="fixed" currency="USD" />
- *   <InputAmount state="error" errorMessage="Importe inválido" />
- *   <InputAmount state="disabled" />
+ *   <InputAmount label="Amount" currency="EUR" value={v} onChange={fn} onCurrencyClick={openPicker} />
+ *   <InputAmount label="Amount" currencyVariant="fixed" currency="USD" />
  */
 
 import React, { forwardRef, useId } from 'react';
@@ -36,6 +26,8 @@ import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
+/* Cajas, hover, error, disabled, foco y borde compartido: .ds-input-box /
+   .ds-input-split (_inputBase). */
 
 const css = `
 .ds-input-amount {
@@ -43,152 +35,48 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-input-amount--full-width { display: flex; width: 100%; }
+.ds-input-amount--full-width { display: flex; }
 
-/* Label */
-.ds-input-amount__label { margin-bottom: var(--ds-input-label-gap); }
-
-/* Helper */
+.ds-input-amount__label   { margin-bottom: var(--ds-input-label-gap); }
 .ds-input-amount__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-amount__message { margin-top: var(--ds-input-validation-gap); }
 
-/* Contenedor del campo doble */
-.ds-input-amount__field-wrap {
-  display:       flex;
-  align-items:   stretch;
-  width:         100%;
-  min-height:    var(--ds-input-subfield-height);   /* campo compuesto: mide lo que un subcampo (Figma subField/height) */
-  border:        var(--ds-input-border-width) solid var(--ds-input-border-default);
-  border-radius: var(--ds-input-border-radius);
-  overflow:      hidden;
-  transition:    border-color 0.12s;
-  box-sizing:    border-box;
-}
-
-/* Hover — solo en estado genérico */
-.ds-input-amount:not(.ds-input-amount--disabled):not(.ds-input-amount--error)
-  .ds-input-amount__field-wrap:hover {
-  border-color: var(--ds-input-border-hover);
-}
-
-/* Focus — anillo doble via :focus-within */
-.ds-input-amount__field-wrap:focus-within {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Error */
-.ds-input-amount--error .ds-input-amount__field-wrap {
-  border-color: var(--ds-input-border-error);
-}
-.ds-input-amount--error .ds-input-amount__field-wrap:focus-within {
-  border-color:   var(--ds-input-border-error);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Disabled */
-.ds-input-amount--disabled .ds-input-amount__field-wrap {
-  border-color: var(--ds-input-border-disabled);
-}
-.ds-input-amount--disabled .ds-input-amount__field-wrap:focus-within {
-  border-color: var(--ds-input-border-disabled);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
-
-/* ── Campo de moneda ── */
+/* ── Divisa (Figma ISO Currency) ── */
 .ds-input-amount__currency {
   display:     flex;
   align-items: center;
-  gap:         var(--ds-input-subfield-gap);
-  padding:     var(--ds-input-padding-ver)
-               var(--ds-input-padding-hor);
-  background:  var(--ds-input-bg-default);
-  border:      none;
-  cursor:      default;
-  font-family: inherit;
   flex-shrink: 0;
+  gap:         var(--ds-input-subfield-gap);
+  min-height:  var(--ds-input-subfield-height);
+  padding:     var(--ds-input-padding-ver) var(--ds-input-padding-hor);
+  font-family: inherit;
   white-space: nowrap;
-  outline:     none;
+  cursor:      default;
 }
+button.ds-input-amount__currency { cursor: pointer; }
+button.ds-input-amount__currency:disabled { cursor: not-allowed; }
 
-.ds-input-amount__currency--selectable {
-  cursor: pointer;
-}
-.ds-input-amount__currency--selectable:hover {
-  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
-}
-.ds-input-amount__currency--selectable:focus-visible {
-  /* A11y-4: marca qué parte del campo tiene el foco (el anillo exterior es de todo el campo) */
-  outline:        var(--ds-border-width-lg) solid var(--ds-input-focus-outer);
-  outline-offset: calc(var(--ds-border-width-lg) * -2);
-  background: color-mix(in srgb, var(--ds-input-bg-default), #000 4%);
-}
-
-.ds-input-amount--disabled .ds-input-amount__currency {
-  background: var(--ds-input-bg-disabled);
-  cursor:     not-allowed;
-}
-
-/* Texto ISO de moneda */
 .ds-input-amount__currency-text {
-  font-size:   var(--ds-fontSize-label-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color:       var(--ds-input-fg-default);
-  line-height: 1;
-}
-.ds-input-amount--disabled .ds-input-amount__currency-text {
-  color: var(--ds-input-fg-disabled);
+  font-size:   var(--ds-fontSize-body-sm);
+  line-height: var(--ds-lineHeight-body-sm);
+  font-weight: var(--ds-font-weight-regular);
+  color:       inherit;
 }
 
-/* Chevron dropdown — solo en selectable */
-.ds-input-amount__chevron {
-  display:     flex;
-  align-items: center;
-  color:       var(--ds-input-icon-fg-primary);
-}
-.ds-input-amount--disabled .ds-input-amount__chevron {
-  color: var(--ds-input-icon-fg-disabled);
-}
+.ds-input-amount__chevron { display: flex; align-items: center; color: var(--ds-input-icon-fg-primary); }
+.ds-input-amount--disabled .ds-input-amount__chevron { color: var(--ds-input-icon-fg-disabled); }
 
-/* ── Divider ── */
-.ds-input-amount__divider {
-  width:            1px;
-  background-color: var(--ds-input-amount-divider-color);
-  flex-shrink:      0;
-  align-self:       stretch;
-}
-.ds-input-amount--disabled .ds-input-amount__divider {
-  background-color: var(--ds-input-border-disabled);
-}
-
-/* ── Campo de importe ── */
+/* ── Importe (Figma Amount) ── */
 .ds-input-amount__amount {
   flex:               1;
   min-width:          0;
-  padding:            var(--ds-input-padding-ver)
-                      var(--ds-input-padding-hor);
+  min-height:         var(--ds-input-subfield-height);
+  padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
-  color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-bg-default);
-  border:             none;
-  outline:            none;
   -webkit-appearance: none;
 }
-.ds-input-amount__amount::placeholder { color: var(--ds-input-fg-placeholder); }
-
-.ds-input-amount--disabled .ds-input-amount__amount {
-  background: var(--ds-input-bg-disabled);
-  color:      var(--ds-input-fg-disabled);
-  cursor:     not-allowed;
-}
-
 `;
 
 injectStyles('ds-input-amount', css);
@@ -203,6 +91,7 @@ export const InputAmount = forwardRef(function InputAmount({
   defaultValue,
   onChange,
   state           = 'default',
+  errorField      = 'amount',     // Figma Error - Amount | Error - Currency
   currencyVariant = 'selectable',
   currency        = 'EUR',
   onCurrencyClick,
@@ -211,70 +100,68 @@ export const InputAmount = forwardRef(function InputAmount({
   helperText,
   errorMessage,
   fullWidth       = false,
-  required        = false, // A11y-4: asterisco visible + `required` nativo
+  required        = false,
   id,
   name,
   onFocus,
   onBlur,
 }, forwardedRef) {
 
-  const getPlaceholder = (locale) =>
-    new Intl.NumberFormat(locale, { minimumFractionDigits: 2 }).format(0);
+  const getPlaceholder = (loc) =>
+    new Intl.NumberFormat(loc, { minimumFractionDigits: 2 }).format(0);
 
   const generatedId = useId();
   const inputId     = id || generatedId;
   const helperId    = helperText ? `${inputId}-helper` : null;
   const messageId   = state === 'error' && errorMessage ? `${inputId}-msg` : null;
   // A11y-3: la moneda forma parte del dato — el campo la lee como descripción
-  // ("1.250,00, EUR").
   const currencyId  = `${inputId}-currency`;
   const describedBy = [currencyId, helperId, messageId].filter(Boolean).join(' ') || undefined;
   const isDisabled  = state === 'disabled';
-  const isSelectable = currencyVariant === 'selectable' && !isDisabled;
+  const isError     = state === 'error';
+  const isSelectable = currencyVariant === 'selectable';
 
   if (process.env.NODE_ENV !== 'production' && !label && !ariaLabel) {
     console.warn('[DS InputAmount] Necesita `label` o `ariaLabel` para ser accesible.', { id: inputId });
   }
 
   const wrapperClass = [
-    'ds-input-amount',
-    state === 'error' ? 'ds-input-amount--error'     : '',
-    isDisabled        ? 'ds-input-amount--disabled'  : '',
-    fullWidth         ? 'ds-input-amount--full-width' : '',
+    'ds-input-amount ds-input-root',
+    isDisabled ? 'ds-input-amount--disabled' : '',
+    fullWidth  ? 'ds-input-amount--full-width ds-input-root--full-width' : '',
+  ].filter(Boolean).join(' ');
+
+  const part = (which) => [
+    'ds-input-box',
+    isDisabled ? 'is-disabled' : '',
+    isError && errorField === which ? 'is-error' : '',
   ].filter(Boolean).join(' ');
 
   const CurrencyTag = isSelectable ? 'button' : 'div';
-  const currencyClass = [
-    'ds-input-amount__currency',
-    isSelectable ? 'ds-input-amount__currency--selectable' : '',
-  ].filter(Boolean).join(' ');
 
   return (
     <div className={wrapperClass}>
 
       {label && (
-        <FieldLabel className="ds-input-amount__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-amount__label" htmlFor={inputId} required={required} disabled={isDisabled}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-amount__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-amount__helper" disabled={isDisabled}>{helperText}</HelperText>
       )}
 
-      <div className="ds-input-amount__field-wrap">
-
-        {/* Moneda */}
+      <div className="ds-input-split">
         <CurrencyTag
-          className={currencyClass}
-          onClick={isSelectable ? onCurrencyClick : undefined}
+          className={`ds-input-amount__currency ${part('currency')}`}
+          onClick={isSelectable && !isDisabled ? onCurrencyClick : undefined}
           type={isSelectable ? 'button' : undefined}
           disabled={isSelectable ? isDisabled : undefined}
           aria-label={isSelectable ? currencyLabel(currency) : undefined}
           aria-haspopup={isSelectable ? 'listbox' : undefined}
           aria-expanded={isSelectable ? currencyExpanded : undefined}
+          aria-invalid={isSelectable && isError && errorField === 'currency' ? 'true' : undefined}
         >
-          <span className="ds-input-amount__currency-text" id={currencyId}>
-            {currency}
-          </span>
+          <span className="ds-input-amount__currency-text" id={currencyId}>{currency}</span>
           {isSelectable && (
             <span className="ds-input-amount__chevron" aria-hidden="true">
               <Icon name="chevron-down" size="sm" />
@@ -282,10 +169,6 @@ export const InputAmount = forwardRef(function InputAmount({
           )}
         </CurrencyTag>
 
-        {/* Divider */}
-        <div className="ds-input-amount__divider" aria-hidden="true" />
-
-        {/* Importe */}
         <input
           ref={forwardedRef ? mergeRefs(forwardedRef) : undefined}
           id={inputId}
@@ -301,14 +184,13 @@ export const InputAmount = forwardRef(function InputAmount({
           disabled={isDisabled}
           aria-label={!label ? ariaLabel : undefined}
           aria-describedby={describedBy}
-          aria-invalid={state === 'error' ? 'true' : undefined}
+          aria-invalid={isError ? 'true' : undefined}
           required={required}
-          className="ds-input-amount__amount"
+          className={`ds-input-amount__amount ${part('amount')}`}
           autoComplete="off"
         />
-
       </div>
-      <ValidationMessage className="ds-input-amount__message" id={messageId} message={state === 'error' ? errorMessage : ''} />
+      <ValidationMessage className="ds-input-amount__message" id={messageId} message={isError ? errorMessage : ''} />
 
     </div>
   );

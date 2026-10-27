@@ -1,7 +1,7 @@
 import { VisuallyHidden } from './VisuallyHidden';
 import React, { forwardRef, useId } from 'react';
 import { Icon } from './Icon';
-import { mergeRefs, injectStyles } from './_inputBase';
+import { mergeRefs, injectStyles, boxStateClass } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
 import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
@@ -12,7 +12,7 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-input-date--full-width { display: flex; width: 100%; }
+.ds-input-date--full-width { display: flex; }
 
 .ds-input-date__label { margin-bottom: var(--ds-input-label-gap); }
 
@@ -23,60 +23,17 @@ const css = `
 }
 
 .ds-input-date__control {
-  box-sizing:         border-box;
   width:              100%;
-  min-height:         var(--ds-input-min-height);
   /* padding-right siempre compensado por el icono calendario */
   padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
   padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
-  color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-bg-default);
-  border:             var(--ds-input-border-width) solid var(--ds-input-border-default);
-  border-radius:      var(--ds-input-border-radius);
-  outline:            none;
-  transition:         border-color 0.12s, background 0.12s;
   -webkit-appearance: none;
 }
-.ds-input-date__control::placeholder { color: var(--ds-input-fg-placeholder); }
-
-/* Hover */
-.ds-input-date:not(.ds-input-date--disabled):not(.ds-input-date--error)
-  .ds-input-date__control:hover {
-  border-color: var(--ds-input-border-hover);
-}
-
-/* Focus — anillo doble */
-.ds-input-date__control:focus {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Error */
-.ds-input-date--error .ds-input-date__control { border-color: var(--ds-input-border-error); }
-.ds-input-date--error .ds-input-date__control:focus {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Disabled */
-.ds-input-date--disabled .ds-input-date__control {
-  background:   var(--ds-input-bg-disabled);
-  color:        var(--ds-input-fg-disabled);
-  border-color: var(--ds-input-border-disabled);
-  cursor:       not-allowed;
-}
-.ds-input-date--disabled .ds-input-date__control:focus {
-  border-color: var(--ds-input-border-disabled);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
+/* Caja, hover, error, disabled y foco: .ds-input-box (_inputBase) */
+.ds-input-date__control.is-disabled { cursor: not-allowed; }
 
 /* Icono calendario */
 .ds-input-date__icon {
@@ -103,7 +60,7 @@ injectStyles('ds-input-date', css);
 export const InputDate = forwardRef(function InputDate({
   label,
   ariaLabel,
-  placeholder   = 'DD/MM/AAAA',
+  placeholder   = 'DD/MM/YYYY',
   value,
   defaultValue,
   onChange,
@@ -132,10 +89,10 @@ export const InputDate = forwardRef(function InputDate({
   }
 
   const wrapperClass = [
-    'ds-input-date',
+    'ds-input-date ds-input-root',
     state === 'error'    ? 'ds-input-date--error'     : '',
     state === 'disabled' ? 'ds-input-date--disabled'  : '',
-    fullWidth            ? 'ds-input-date--full-width' : '',
+    fullWidth            ? 'ds-input-date--full-width ds-input-root--full-width' : '',
   ].filter(Boolean).join(' ');
 
   return (
@@ -165,7 +122,7 @@ export const InputDate = forwardRef(function InputDate({
           aria-describedby={describedBy}
           aria-invalid={state === 'error' ? 'true' : undefined}
           required={required}
-          className="ds-input-date__control"
+          className={['ds-input-date__control ds-input-box', boxStateClass(state)].filter(Boolean).join(' ')}
           {...nativeProps}
         />
         {formatId && <VisuallyHidden id={formatId}>{formatHint(placeholder)}</VisuallyHidden>}

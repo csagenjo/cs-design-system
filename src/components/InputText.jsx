@@ -6,7 +6,7 @@ import React, {
   useId,
 } from 'react';
 import { Icon } from './Icon';
-import { mergeRefs, injectStyles } from './_inputBase';
+import { mergeRefs, injectStyles, boxStateClass } from './_inputBase';
 import { FieldLabel } from './FieldLabel';
 import { HelperText } from './HelperText';
 import { ValidationMessage } from './ValidationMessage';
@@ -20,7 +20,7 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-input-text--full-width { display: flex; width: 100%; }
+.ds-input-text--full-width { display: flex; }
 
 .ds-input-text__label { margin-bottom: var(--ds-input-label-gap); }
 
@@ -31,68 +31,15 @@ const css = `
 }
 
 .ds-input-text__control {
-  box-sizing:         border-box;
   width:              100%;
-  min-height:         var(--ds-input-min-height);
   padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
-  color:              var(--ds-input-fg-default);
-  background:         var(--ds-input-bg-default);
-  border:             var(--ds-input-border-width) solid var(--ds-input-border-default);
-  border-radius:      var(--ds-input-border-radius);
-  outline:            none;
-  transition:         border-color 0.12s, background 0.12s;
   -webkit-appearance: none;
 }
-.ds-input-text__control::placeholder { color: var(--ds-input-fg-placeholder); }
-
-/* Hover — solo en estado genérico */
-.ds-input-text:not(.ds-input-text--disabled):not(.ds-input-text--error):not(.ds-input-text--readonly)
-  .ds-input-text__control:hover {
-  border-color: var(--ds-input-border-hover);
-}
-
-/* Focus — anillo doble */
-.ds-input-text__control:focus {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Error */
-.ds-input-text--error .ds-input-text__control {
-  border-color: var(--ds-input-border-error);
-}
-.ds-input-text--error .ds-input-text__control:focus {
-  border-color:   var(--ds-input-focus-inner);
-  border-width:   var(--ds-input-border-width-focus);
-  outline:        2px solid var(--ds-input-focus-outer);
-  outline-offset: 2px;
-}
-
-/* Read-only */
-.ds-input-text--readonly .ds-input-text__control {
-  background: var(--ds-input-bg-readonly);
-  cursor:     default;
-}
-/* A11y-4: un campo de solo lectura se puede enfocar (para leerlo o copiarlo),
-   así que lleva el mismo anillo de foco que el resto — antes se quitaba. */
-
-/* Disabled */
-.ds-input-text--disabled .ds-input-text__control {
-  background:   var(--ds-input-bg-disabled);
-  color:        var(--ds-input-fg-disabled);
-  border-color: var(--ds-input-border-disabled);
-  cursor:       not-allowed;
-}
-.ds-input-text--disabled .ds-input-text__control:focus {
-  border-color: var(--ds-input-border-disabled);
-  border-width: var(--ds-input-border-width);
-  outline:      none;
-}
+/* Caja, hover, error, read-only, disabled y foco: .ds-input-box (_inputBase) */
+.ds-input-text__control.is-readonly { cursor: default; }
 
 /* Adaptive (textarea) */
 .ds-input-text--adaptive .ds-input-text__control {
@@ -200,12 +147,12 @@ export const InputText = forwardRef(function InputText({
   }
 
   const wrapperClass = [
-    'ds-input-text',
+    'ds-input-text ds-input-root',
     state === 'error'     ? 'ds-input-text--error'     : '',
     state === 'read-only' ? 'ds-input-text--readonly'  : '',
     state === 'disabled'  ? 'ds-input-text--disabled'  : '',
     adaptive              ? 'ds-input-text--adaptive'  : '',
-    fullWidth             ? 'ds-input-text--full-width' : '',
+    fullWidth             ? 'ds-input-text--full-width ds-input-root--full-width' : '',
   ].filter(Boolean).join(' ');
 
   const fieldWrapClass = [
@@ -230,7 +177,7 @@ export const InputText = forwardRef(function InputText({
     'aria-describedby': describedBy,
     'aria-invalid':     state === 'error' ? 'true' : undefined,
     required,
-    className:          'ds-input-text__control',
+    className:          ['ds-input-text__control ds-input-box', boxStateClass(state)].filter(Boolean).join(' '),
     ...nativeProps,
   };
 
