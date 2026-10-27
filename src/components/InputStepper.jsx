@@ -31,7 +31,6 @@ const css = `
 .ds-input-stepper--full-width { display: flex; }
 
 .ds-input-stepper__label   { margin-bottom: var(--ds-input-label-gap); }
-.ds-input-stepper__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-stepper__message { margin-top: var(--ds-input-validation-gap); }
 
 /* Caja: .ds-input-box (_inputBase). El anillo aparece con el foco en el valor. */
@@ -161,11 +160,11 @@ export const InputStepper = forwardRef(function InputStepper({
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel as="span" className="ds-input-stepper__label" id={labelId} disabled={isDisabled}>{label}</FieldLabel>
+        <FieldLabel as="span" className="ds-input-stepper__label ds-input-label" id={labelId} disabled={isDisabled}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-stepper__helper" disabled={isDisabled}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-stepper__helper ds-input-helper" disabled={isDisabled}>{helperText}</HelperText>
       )}
 
       <div className={boxClass}>

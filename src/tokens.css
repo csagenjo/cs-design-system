@@ -1354,18 +1354,21 @@
   --ds-selector-common-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-selector-common-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-selector-common-root-border-width-generic:  var(--ds-border-width-sm);    /* 1px — unificado con Figma */
-  --ds-selector-common-root-border-width-focus:    2px;
+  --ds-selector-common-root-border-width-focus:    var(--ds-border-width-lg); /* selector/root/borderWidth/focus */
   --ds-selector-common-root-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
   --ds-selector-common-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
   --ds-selector-common-root-gap:                   var(--ds-spacing-lg);         /* 12px — unificado con Figma */
-  --ds-selector-common-root-padding:               var(--ds-spacing-lg);         /* 12px — unificado con Figma */
+  --ds-selector-common-root-padding:               var(--ds-spacing-lg);         /* 12px — selector/root/paddingHor (izquierda) */
+  --ds-selector-common-content-padding:            var(--ds-spacing-xl);         /* 16px — selector/content/padding (arriba, derecha, abajo) — 27/10 */
+  --ds-selector-common-content-gap:                var(--ds-spacing-xl);         /* 16px — selector/content/gap (texto → panel derecho) — 27/10 */
+  --ds-selector-common-focus-area-padding:         var(--ds-spacing-xs);         /* 4px — selector/root/focusArea/padding — 27/10 */
   /* Color de icono consolidado — la posición (left/right) nunca determina el color.
      Figma: Selector/iconLeft/fg/* == Selector/iconRight/fg/* (mismo valor) → un único par.
      Mismo patrón que Button (--ds-button-icon-fg-*, sin distinción left/right). */
   --ds-selector-common-icon-fg-primary:            var(--ds-fg-icon-primary);
   --ds-selector-common-icon-fg-disabled:           var(--ds-fg-icon-disabled);
-  --ds-selector-common-icon-left-size:             20px;
-  --ds-selector-common-icon-right-size:            20px;
+  --ds-selector-common-icon-left-size:             var(--ds-sizing-sm);   /* 24 — Left Panel Icon (Figma) */
+  --ds-selector-common-icon-right-size:            var(--ds-sizing-sm);   /* 24 — Right Panel Icon */
   --ds-selector-common-header-fg-default:          var(--ds-fg-default);
   --ds-selector-common-header-fg-disabled:         var(--ds-fg-disabled);
 
@@ -1393,6 +1396,9 @@
   --ds-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
   --ds-selector-root-gap:                   var(--ds-selector-common-root-gap);
   --ds-selector-root-padding:               var(--ds-selector-common-root-padding);
+  --ds-selector-content-padding:            var(--ds-selector-common-content-padding);
+  --ds-selector-content-gap:                var(--ds-selector-common-content-gap);
+  --ds-selector-focus-area-padding:         var(--ds-selector-common-focus-area-padding);
 
   --ds-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
   --ds-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
@@ -1424,6 +1430,9 @@
   --ds-account-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
   --ds-account-selector-root-gap:                   var(--ds-selector-common-root-gap);
   --ds-account-selector-root-padding:               var(--ds-selector-common-root-padding);
+  --ds-account-selector-content-padding:            var(--ds-selector-common-content-padding);
+  --ds-account-selector-content-gap:                var(--ds-selector-common-content-gap);
+  --ds-account-selector-focus-area-padding:         var(--ds-selector-common-focus-area-padding);
 
   --ds-account-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
   --ds-account-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);

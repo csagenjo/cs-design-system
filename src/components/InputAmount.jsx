@@ -38,7 +38,6 @@ const css = `
 .ds-input-amount--full-width { display: flex; }
 
 .ds-input-amount__label   { margin-bottom: var(--ds-input-label-gap); }
-.ds-input-amount__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-amount__message { margin-top: var(--ds-input-validation-gap); }
 
 /* ── Divisa (Figma ISO Currency) ── */
@@ -143,11 +142,11 @@ export const InputAmount = forwardRef(function InputAmount({
     <div className={wrapperClass}>
 
       {label && (
-        <FieldLabel className="ds-input-amount__label" htmlFor={inputId} required={required} disabled={isDisabled}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-amount__label ds-input-label" htmlFor={inputId} required={required} disabled={isDisabled}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-amount__helper" disabled={isDisabled}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-amount__helper ds-input-helper" disabled={isDisabled}>{helperText}</HelperText>
       )}
 
       <div className="ds-input-split">

@@ -22,7 +22,6 @@ const css = `
 }
 .ds-input-text--full-width { display: flex; }
 
-.ds-input-text__label { margin-bottom: var(--ds-input-label-gap); }
 
 .ds-input-text__field-wrap {
   position: relative;
@@ -85,7 +84,6 @@ const css = `
 }
 
 /* Helper text — aparece ENCIMA del campo */
-.ds-input-text__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-text__message { margin-top: var(--ds-input-validation-gap); }
 
 `;
@@ -184,11 +182,11 @@ export const InputText = forwardRef(function InputText({
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel className="ds-input-text__label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-input-text__label ds-input-label" htmlFor={inputId} required={required} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-input-text__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-input-text__helper ds-input-helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <div className={fieldWrapClass}>

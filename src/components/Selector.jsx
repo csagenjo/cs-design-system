@@ -11,11 +11,9 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-selector--full-width { display: flex; width: 100%; }
+.ds-selector--full-width { display: flex; }
 
-.ds-selector__label { margin-bottom: var(--ds-input-label-gap); }
 
-.ds-selector__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-selector__message { margin-top: var(--ds-input-validation-gap); }
 
 `;
@@ -56,19 +54,19 @@ export const Selector = forwardRef(function Selector({
   }
 
   const wrapperClass = [
-    'ds-selector',
+    'ds-selector ds-input-root',
     state === 'disabled' ? 'ds-selector--disabled' : '',
-    fullWidth            ? 'ds-selector--full-width' : '',
+    fullWidth            ? 'ds-selector--full-width ds-input-root--full-width' : '',
   ].filter(Boolean).join(' ');
 
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel className="ds-selector__label" htmlFor={invokerId} id={labelId} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-selector__label ds-input-label" htmlFor={invokerId} id={labelId} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-selector__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-selector__helper ds-input-helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <SelectorInvoker

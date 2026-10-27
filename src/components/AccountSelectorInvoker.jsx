@@ -39,10 +39,10 @@ const css = `
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-account-selector-root-gap);
+  gap:         var(--ds-account-selector-content-gap);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-account-selector-root-padding) var(--ds-account-selector-root-padding) var(--ds-account-selector-root-padding) 0;
+  padding:     var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) 0;
 }
 
 .ds-account-selector-invoker__center {
@@ -87,7 +87,6 @@ const css = `
   outline:        var(--ds-account-selector-root-border-width-focus) solid var(--ds-account-selector-root-border-color-focus-outer);
   outline-offset: var(--ds-account-selector-root-border-width-focus);
   box-shadow:     0 0 0 var(--ds-account-selector-root-border-width-focus) var(--ds-account-selector-root-border-color-focus-inner);
-  border-width:   var(--ds-account-selector-root-border-width-focus);
 }
 
 .ds-account-selector-invoker--error { border-color: var(--ds-account-selector-root-border-color-error); }
@@ -121,6 +120,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
   amount,
   currency,
   amountType     = 'positive',  // 'positive' | 'negative'
+  amountHighlight = 'emphasis', // AmountView highlight (Figma: Emphasis)
   detailText,
   showIconLeft   = true,
   selectedCount,
@@ -176,16 +176,16 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
       {ariaLabel && <VisuallyHidden>{`${ariaLabel}, `}</VisuallyHidden>}
       {showIconLeft && (
         <span className="ds-account-selector-invoker__icon-left">
-          <Icon name="file-text" size="xs" />
+          <Icon name="file-text" size="sm" />
         </span>
       )}
 
       <span className="ds-account-selector-invoker__content">
         <span className="ds-account-selector-invoker__center">
-          <span className="ds-account-selector-invoker__header">{mask(headerText)}</span>
+          <span className="ds-account-selector-invoker__header">{isEmpty ? mask(headerText) : headerText}</span>
 
-          {!isEmpty && amount != null && !isDataHidden && (
-            <AmountView as="span" amount={amount} currency={currency} type={amountType} />
+          {!isEmpty && amount != null && (
+            <AmountView as="span" amount={mask(amount)} currency={currency} type={amountType} highlight={isDisabled ? 'disabled' : amountHighlight} />
           )}
 
           {!isEmpty && detailText && (
@@ -199,7 +199,7 @@ export const AccountSelectorInvoker = forwardRef(function AccountSelectorInvoker
           {dataSelection === 'multiple' && selectedCount != null && (
             <BadgeNotification color="secondary" size="expanded" label={selectedCount} ariaLabel={selectedCountLabel(selectedCount)} />
           )}
-          <Icon name="chevron-right" size="xs" />
+          <Icon name="chevron-right" size="sm" />
         </span>
       </span>
       {isReadOnly && <VisuallyHidden>{`, ${readOnlyLabel}`}</VisuallyHidden>}

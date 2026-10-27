@@ -11,11 +11,9 @@ const css = `
   flex-direction: column;
   font-family:    inherit;
 }
-.ds-account-selector--full-width { display: flex; width: 100%; }
+.ds-account-selector--full-width { display: flex; }
 
-.ds-account-selector__label { margin-bottom: var(--ds-input-label-gap); }
 
-.ds-account-selector__helper  { margin-bottom: var(--ds-input-helper-gap); }
 .ds-account-selector__message { margin-top: var(--ds-input-validation-gap); }
 
 `;
@@ -58,19 +56,19 @@ export const AccountSelector = forwardRef(function AccountSelector({
   }
 
   const wrapperClass = [
-    'ds-account-selector',
+    'ds-account-selector ds-input-root',
     state === 'disabled' ? 'ds-account-selector--disabled' : '',
-    fullWidth             ? 'ds-account-selector--full-width' : '',
+    fullWidth             ? 'ds-account-selector--full-width ds-input-root--full-width' : '',
   ].filter(Boolean).join(' ');
 
   return (
     <div className={wrapperClass}>
       {label && (
-        <FieldLabel className="ds-account-selector__label" htmlFor={invokerId} id={labelId} disabled={state === 'disabled'}>{label}</FieldLabel>
+        <FieldLabel className="ds-account-selector__label ds-input-label" htmlFor={invokerId} id={labelId} disabled={state === 'disabled'}>{label}</FieldLabel>
       )}
 
       {helperText && (
-        <HelperText id={helperId} className="ds-account-selector__helper" disabled={state === 'disabled'}>{helperText}</HelperText>
+        <HelperText id={helperId} className="ds-account-selector__helper ds-input-helper" disabled={state === 'disabled'}>{helperText}</HelperText>
       )}
 
       <AccountSelectorInvoker
