@@ -1150,68 +1150,68 @@
      COMPONENT TOKENS â€” Link
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* fg/label (link/all/fg/label/*) */
+  /* Link (link/all/*) — 26/10/2026 alineado con Figma */
   --ds-link-list-title-fg:              var(--ds-fg-title-default); /* 19/10 — el título heredaba el color de index.css (1.01:1 en dark) */
-  --ds-link-fg-label-default:          var(--ds-fg-label-default);   /* default-generic */
-  --ds-link-fg-label-accent:           var(--ds-fg-label-primary);   /* accent-generic */
-  --ds-link-fg-label-accent-visited:   var(--ds-fg-tertiary);        /* accent-visited */
-
-  /* fg/icon (link/all/fg/icon/*) */
-  --ds-link-fg-icon-default:           var(--ds-fg-icon-default);    /* default-generic */
-  --ds-link-fg-icon-accent:            var(--ds-fg-icon-primary);    /* accent-generic */
-  --ds-link-fg-icon-visited:           var(--ds-fg-icon-tertiary);   /* accent-visited */
-
-  /* borderBottomColor/label (link/all/borderBottomColor/label/*) */
-  --ds-link-border-bottom-default:     var(--ds-borderColor-emphasis);   /* default-generic â† era teal, corregido */
-  --ds-link-border-bottom-accent:      var(--ds-borderColor-accent);         /* accent-generic */
-  --ds-link-border-bottom-visited:     var(--ds-borderColor-tertiary);       /* default-visited */
-  --ds-link-border-bottom-accent-inv:  var(--ds-borderColor-accent-inverse); /* accent-inverse */
-  --ds-link-border-bottom-inverse:     var(--ds-borderColor-inverse);        /* inverse */
-
-  /* borderBottomWidth (link/all/borderBottomWidth/label/*) */
-  --ds-link-border-bottom-width:       1px;       /* generic */
-
-  /* interacciÃ³n (link/all/root/*) */
-  --ds-link-bg-mix-hover:              var(--ds-opacity-hover-default);
-  --ds-link-bg-mix-hover-inverse:      var(--ds-opacity-hover-inverse);
-  --ds-link-opacity-pressed:           0.8;       /* opacity/pressed = 80 */
-  --ds-link-focus-inner:               var(--ds-borderColor-focus-inner);         /* borderColor/default-focus-inner */
-  --ds-link-focus-outer:               var(--ds-borderColor-focus-outer);         /* borderColor/default-focus-outer */
-  --ds-link-focus-inner-inverse:       var(--ds-borderColor-focus-inner-inverse); /* borderColor/invertedDefault-focus-inner */
-  --ds-link-focus-outer-inverse:       var(--ds-borderColor-focus-outer-inverse); /* borderColor/invertedDefault-focus-outer */
+  --ds-link-list-icon-fg:               var(--ds-fg-icon-default);  /* linkList/all/iconLeft/fg/generic — icono de lista */
+  --ds-link-list-item-gap-sm:           var(--ds-spacing-xs);       /* separación entre filas (composición, sin token en Figma) */
+  --ds-link-list-item-gap-md:           var(--ds-spacing-md);
+  --ds-link-list-item-gap-lg:           var(--ds-spacing-xl);
+  --ds-link-fg-label-default:          var(--ds-fg-label-default);   /* fg/label/default-generic */
+  --ds-link-fg-label-accent:           var(--ds-fg-label-primary);   /* fg/label/accent-generic */
+  --ds-link-fg-label-accent-visited:   var(--ds-fg-label-tertiary);  /* fg/label/accent-visited */
+  --ds-link-fg-icon-default:           var(--ds-fg-icon-default);    /* fg/icon/default-generic */
+  --ds-link-fg-icon-accent:            var(--ds-fg-icon-primary);    /* fg/icon/accent-generic */
+  --ds-link-fg-icon-visited:           var(--ds-fg-icon-tertiary);   /* fg/icon/accent-visited */
+  --ds-link-border-bottom-default:     var(--ds-borderColor-primary);  /* borderBottomColor/label/default-generic — subrayado teal también en Default (Carol, 26/10) */
+  --ds-link-border-bottom-accent:      var(--ds-borderColor-primary);  /* borderBottomColor/label/accent-generic */
+  --ds-link-border-bottom-visited:     var(--ds-borderColor-tertiary); /* borderBottomColor/label/default-visited */
+  --ds-link-border-bottom-width:       var(--ds-border-width-sm);      /* borderBottomWidth/label/generic */
+  --ds-link-gap:                       var(--ds-spacing-xs);           /* root/gap/generic — icono ↔ texto (= linkList/all/root/gapHor, icono de lista → enlace) */
+  --ds-link-border-radius:             var(--ds-border-radius-xs);     /* root/borderRadius/focus-inner — fondo de hover */
+  --ds-link-bg-mix-hover:              var(--ds-opacity-hover-subtle); /* root/bgMix/hover */
+  --ds-link-opacity-pressed:           var(--ds-opacity-pressed);      /* root/opacity/pressed */
+  --ds-link-focus-width:               var(--ds-border-width-lg);      /* root/borderWidth/focus */
+  --ds-link-focus-inner:               var(--ds-borderColor-focus-inner); /* root/borderColor/default-focus-inner */
+  --ds-link-focus-outer:               var(--ds-borderColor-focus-outer); /* root/borderColor/default-focus-outer */
+  --ds-link-icon-size-xs:              var(--ds-sizing-2xs);           /* 16 */
+  --ds-link-icon-size-sm:              var(--ds-sizing-xs);            /* 20 */
+  --ds-link-icon-size-md:              var(--ds-sizing-sm);            /* 24 */
+  --ds-link-icon-size-lg:              var(--ds-sizing-md);            /* 32 */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” CTALink
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  --ds-cta-link-fg-default:              var(--ds-fg-default);
-  --ds-cta-link-fg-primary:             var(--ds-fg-label-inverse); /* corregido 11/08 — bg-primary usa bg-inverse (invierte); mismo motivo que Button default-filled */
-  --ds-cta-link-fg-accent:              var(--ds-fg-primary);
-  --ds-cta-link-fg-accent-primary:      var(--ds-fg-onColor);
-  --ds-cta-link-fg-disabled:            var(--ds-fg-disabled);
-
-  --ds-cta-link-bg-primary:             var(--ds-bg-inverse);
-  --ds-cta-link-bg-accent-primary:      var(--ds-bg-primary);
-  --ds-cta-link-bg-mix-hover:           var(--ds-opacity-hover-default);
-
-  --ds-cta-link-border-secondary:        var(--ds-borderColor-emphasis);
-  --ds-cta-link-border-accent-secondary: var(--ds-borderColor-accent);
-  --ds-cta-link-border-bottom-default:   var(--ds-borderColor-emphasis);
-  --ds-cta-link-border-bottom-accent:    var(--ds-borderColor-accent);
+  /* CTALink (ctaLink/all/*) — 26/10/2026 alineado con Figma */
+  --ds-cta-link-fg-default:              var(--ds-fg-label-default);   /* label/fg/default-generic */
+  --ds-cta-link-fg-accent:               var(--ds-fg-label-primary);   /* label/fg/accent-generic */
+  --ds-cta-link-fg-primary:              var(--ds-fg-label-inverse);   /* label/fg/default-highEmphasis (sobre bg-inverse, invierten juntos) */
+  --ds-cta-link-fg-accent-primary:       var(--ds-fg-label-onColor);   /* label/fg/accent-highEmphasis */
+  --ds-cta-link-fg-disabled:             var(--ds-fg-label-disabled);  /* label/fg/disabled */
+  --ds-cta-link-bg-primary:              var(--ds-bg-inverse);         /* root/bg/default-highEmphasis */
+  --ds-cta-link-bg-accent-primary:       var(--ds-bg-primary);         /* root/bg/accent-highEmphasis */
+  --ds-cta-link-bg-disabled:             var(--ds-bg-disabled);        /* root/bg/disabled */
+  --ds-cta-link-bg-mix-hover:            var(--ds-opacity-hover-default); /* root/bgMix/hover */
+  --ds-cta-link-border-secondary:        var(--ds-borderColor-emphasis);  /* root/borderColor/default-mediumEmphasis */
+  --ds-cta-link-border-accent-secondary: var(--ds-borderColor-primary);   /* root/borderColor/accent-mediumEmphasis */
+  --ds-cta-link-border-disabled:         var(--ds-borderColor-disabled);  /* root/borderColor/disabled */
+  --ds-cta-link-border-width-medium:     var(--ds-border-width-sm);       /* root/borderWidth/mediumEmphasis */
+  --ds-cta-link-border-bottom-default:   var(--ds-borderColor-emphasis);  /* label/borderColorBottom/default-lowEmphasis */
+  --ds-cta-link-border-bottom-accent:    var(--ds-borderColor-primary);   /* label/borderColorBottom/accent-lowEmphasis */
+  --ds-cta-link-border-bottom-width:     var(--ds-border-width-sm);       /* label/borderWidthBottom/generic */
+  --ds-cta-link-border-bottom-width-hover: var(--ds-border-width-md);     /* label/borderWidthBottom/hover-lowEmphasis */
   --ds-cta-link-focus-inner:             var(--ds-borderColor-focus-inner);
   --ds-cta-link-focus-outer:             var(--ds-borderColor-focus-outer);
-
-  /* borderRadius por Ã©nfasis (ctaLink/all/root/borderRadius/*) */
-  --ds-cta-link-border-radius-low:       16px;   /* borderRadius/2xl */
-  --ds-cta-link-border-radius-medium:    24px;   /* borderRadius/3xl */
-  --ds-cta-link-border-radius-high:      80px;   /* borderRadius/circle */
-  --ds-cta-link-border-radius-focus:     80px;   /* borderRadius/circle */
-
-  /* Pressed + padding (ctaLink/all/root/opacity + paddingVer/Hor) */
-  --ds-cta-link-opacity-pressed:         0.8;    /* opacity/pressed = 80 */
-  --ds-cta-link-padding-ver:             6px;    /* paddingVer/generic */
-  --ds-cta-link-padding-hor:             12px;   /* paddingHor/generic */
+  --ds-cta-link-focus-width:             var(--ds-border-width-lg);       /* root/borderWidth/focus */
+  --ds-cta-link-focus-area-padding:      var(--ds-spacing-xs);            /* root/focusArea/padding — el anillo cabe dentro del componente */
+  --ds-cta-link-border-radius-low:       var(--ds-border-radius-2xl);     /* 16 */
+  --ds-cta-link-border-radius-medium:    var(--ds-border-radius-3xl);     /* 24 */
+  --ds-cta-link-border-radius-high:      var(--ds-border-radius-circle);  /* 80 */
+  --ds-cta-link-border-radius-focus:     var(--ds-border-radius-circle);
+  --ds-cta-link-opacity-pressed:         var(--ds-opacity-pressed);
+  --ds-cta-link-padding-ver:             var(--ds-spacing-sm);            /* 6 */
+  --ds-cta-link-padding-hor:             var(--ds-spacing-lg);            /* 12 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -2117,13 +2117,6 @@
     --ds-opacity-shadow-umbra-strong: rgba(5,5,6,0.48);
 
     /* Link dark */
-    --ds-link-fg-label-default:        #FFFFFF;
-    --ds-link-fg-label-accent:         #A3D4E2;
-    --ds-link-fg-icon-default:         #FFFFFF;
-    --ds-link-fg-icon-accent:          #66AEC0;
-    --ds-link-border-bottom-default:   #A3D4E2;
-    --ds-link-border-bottom-accent:    #A3D4E2;
-    --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
     /* añadidos 19/10 (A11y-2): tokens de Mode que faltaban en dark y heredaban el valor light */
     --ds-borderColor-accent-inverse: #13525F;
     --ds-borderColor-accent-primary: #66AEC0;
@@ -2243,14 +2236,6 @@
   --ds-opacity-hover-default: rgba(255,255,255,0.1);
   --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
   --ds-opacity-overlay:       rgba(255,255,255,0.3);
-
-  --ds-link-fg-label-default:        #FFFFFF;
-  --ds-link-fg-label-accent:         #A3D4E2;
-  --ds-link-fg-icon-default:         #FFFFFF;
-  --ds-link-fg-icon-accent:          #66AEC0;
-  --ds-link-border-bottom-default:   #A3D4E2;
-  --ds-link-border-bottom-accent:    #A3D4E2;
-  --ds-link-bg-mix-hover:            rgba(255,255,255,0.1);
   /* añadidos 19/10 (A11y-2): tokens de Mode que faltaban en dark y heredaban el valor light */
   --ds-borderColor-accent-inverse: #13525F;
   --ds-borderColor-accent-primary: #66AEC0;

@@ -29,6 +29,7 @@ Rules that apply to every entry:
   Never hard-code colours, spacing or radii.
 - Import from the file path; there is no barrel export.
   Atoms live in `src/components/`, organisms in `src/organisms/`.
+- Hover has two families on purpose: **blue** (`bg/hover-primary`) on selectable surfaces such as rows, options and tabs; **veil** (`opacity/hover`) on controls that sit on any background (Button, Icon Button, Chip, Link, CTA Link).
 - If a piece is listed under **Internal parts**, don't use it directly —
   use the component named next to it.
 
@@ -40,7 +41,7 @@ Rules that apply to every entry:
 | Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · _rest to be filled_ |
 | Data | _to be filled_ |
 | Feedback | _to be filled_ |
-| Navigation | _to be filled (includes Pagination)_ |
+| Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
 | Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss` |
@@ -1163,3 +1164,310 @@ Known gaps: none.
 
 **Don't**
 - Don't use chips as the only way to submit or navigate.
+
+---
+
+## Link
+
+**Group:** Navigation
+**Figma:** 🟢 Links page → `Link` set (Variant Default / Accent × Type Low / Medium Emphasis × Size Extra-small / Small / Medium / Large × State Initial / Visited / Current / Hover / Focus / Pressed, 96 variants; aligned 26/10) · frame *Link — How to use & Accessibility*
+**Code:** `src/components/Link.jsx` (atom, v4)
+**Tokens:** `--ds-link-*`
+
+A text link with an optional chevron. It takes the user to another page;
+with no destination it behaves as a button that looks like a link.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Going to another page or opening a document: "See details", "Terms".
+- Inside a sentence, in lists of links, in tables and in navigation.
+- An action on the same screen with button weight → Button. A highlighted call to action → CTA Link.
+
+**Properties**
+- `Variant` → Default (black) · Accent (teal).
+- `Type` → Low Emphasis (regular) · Medium Emphasis (bold).
+- `Size` → Extra-small · Small · Medium · Large (label xs–lg; icons 16 / 20 / 24 / 32).
+- `State` → Initial · Visited · Current (the page you are on, SemiBold) · Hover · Focus · Pressed.
+- `Left icon` / `Right icon` (chevron-right by default).
+
+**Behaviour**
+- Always underlined in teal (`borderColor/primary`): colour of the text is never the only clue that it is a link.
+- Visited: lilac underline; Accent also lilac text and icon.
+- Hover adds a soft background; Pressed lowers the opacity.
+
+**Sizing**
+- No focus area: the focus ring sits tight around the link (2 + 2 px). Leave at least 4 px of space around it in the layout.
+
+### Developers · React
+
+```jsx
+import { Link } from './components/Link';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `href` | string | — | With `href` → `<a>`; without → `<button type="button">` |
+| `onClick` | func | — | |
+| `variant` | `'default'` \| `'accent'` | `'default'` | |
+| `emphasis` | `'low'` \| `'medium'` | `'low'` | Figma Type |
+| `size` | `'xs'` \| `'sm'` \| `'md'` \| `'lg'` | `'sm'` | |
+| `leftIcon` / `rightIcon` | bool \| icon name | `false` / `true` | `true` = chevron-right |
+| `current` | bool | `false` | Current page: `aria-current="page"`, SemiBold |
+| `external` | bool | `false` | `target="_blank"` + `rel` + hidden "(opens in new tab)" |
+| `target`, `rel`, `ariaLabel` | | | |
+| `...rest` | | | Forwarded to the `<a>` / `<button>` |
+
+```jsx
+<Link href="/clients/42">See details</Link>
+<Link href="/clients" current>Clients</Link>
+<Link onClick={startEditing} rightIcon={false}>Edit</Link>
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user goes somewhere else (another page, a document, an external site).
+
+**Don't pick it when**
+- It runs the main action of the screen → Button.
+- It is a highlighted invitation ("Start now") → CTALink.
+- A list of navigation links → LinkList.
+
+**Composition rules**
+- Text says where it goes ("See invoice 42"), never "Click here".
+- Use `current` on the link to the page being shown (menus, breadcrumbs, lists).
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Underline in every state, so colour is never the only signal.
+- Focus ring in the system focus colour, ≥ 3:1 against the background.
+- Current page shown by weight, not by colour alone.
+
+**Your job**
+- Leave 4 px of space around standalone links so the focus ring is not cut.
+- Mark links that open a new tab or download a file in the spec.
+
+### Developers · React
+
+**Semantics**
+- `<a href>` when it navigates; `<button>` when it only runs an action.
+- `current` → `aria-current="page"`.
+- `external` / `target="_blank"` adds "(opens in new tab)" for screen readers.
+
+**Keyboard**
+- Tab to focus, Enter to follow (Enter / Space when it renders as a button).
+
+**Known gaps**
+- None.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every Link has a clear label, or `ariaLabel` if the text repeats ("Edit" in each row → "Edit Ana López").
+- No `<a>` without `href`.
+
+**Don't**
+- Don't open new tabs without `external`.
+
+---
+
+## LinkList
+
+**Group:** Navigation
+**Figma:** 🟢 Links page → `Link list` set (Size Extra-small / Small / Medium / Large; `List Icon` + swappable `Left icon`) · frame *Link list — How to use & Accessibility*
+**Code:** `src/components/LinkList.jsx` (atom)
+**Tokens:** `--ds-link-list-*` (+ `--ds-link-*` of each Link)
+
+A list of links, each with a list icon in front: quick links, related
+pages, footers and secondary navigation.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Several related destinations stacked: "Quick access", "Related documents".
+- Main navigation of La Plataforma → Top Navigation or Sidebar Menu.
+
+**Properties**
+- `Size` → Extra-small · Small · Medium · Large (the list icon matches the link size).
+- `List Icon` (on / off) · `Left icon` (swap; chevron-right by default).
+- The nested Link keeps its own Variant / Type / State.
+
+**Behaviour**
+- The list icon is always black (`linkList/all/iconLeft/fg/generic`), also for Accent links.
+
+**Sizing**
+- 4 px between the list icon and the link. Space between rows is set by the list (small 4 · medium 8 · large 16).
+
+### Developers · React
+
+```jsx
+import { LinkList } from './components/LinkList';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `items` | array | `[]` | `{ label, href?, onClick?, icon?, variant?, size?, emphasis?, current?, external?, rightIcon?, ariaLabel? }` |
+| `title` | string | — | Visible title; names the `<nav>` |
+| `titleLevel` | 2–6 | `2` | Heading level of the title |
+| `ariaLabel` | string | — | Required without `title` |
+| `gap` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | Space between rows |
+| `fullWidth` | bool | `false` | |
+
+```jsx
+<LinkList title="Quick access" titleLevel={3} items={[
+  { label: 'New operation', href: '/ops/new', variant: 'accent', emphasis: 'medium' },
+  { label: 'History', href: '/ops/history', current: true },
+]} />
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Three or more related links shown together.
+
+**Don't pick it when**
+- One link → Link. Main app navigation → TopNavigation / SidebarMenu.
+
+**Composition rules**
+- Give the list a `title` (or `ariaLabel`): it becomes the name of the navigation region.
+- Mark the page being shown with `current`.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Each row is a real Link (underline, focus ring, Current state).
+- The list icon is decorative.
+
+**Your job**
+- Give every list a visible title, or note its name in the spec.
+
+### Developers · React
+
+**Semantics**
+- `<nav>` named by the title (or `ariaLabel`) with `<ul role="list">` / `<li>`.
+- `current` → `aria-current="page"` on that link.
+
+**Keyboard**
+- Tab moves from link to link.
+
+**Known gaps**
+- None.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- The list has a name (`title` or `ariaLabel`).
+- Two lists on the same page have different names.
+
+**Don't**
+- Don't use LinkList for actions on the screen; use Buttons.
+
+---
+
+## CTALink
+
+**Group:** Navigation
+**Figma:** 🟢 Links page → `CTA link` set (Variant Default / Accent × Type Low / Medium / High emphasis × State Initial / Hover / Focus / Pressed / Disabled, 30 variants; rebuilt 26/10 with the 4 px focus area) · frame *CTA link — How to use & Accessibility*
+**Code:** `src/components/CTALink.jsx` (atom, v4)
+**Tokens:** `--ds-cta-link-*`
+
+A call to action that takes the user somewhere: "Start now",
+"Discover the new plan". Looks like a pill button but it is a link.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Invite the user to a new page or flow, usually one per area.
+- An action that saves or sends something on this screen → Button.
+
+**Properties**
+- `Type` → Low emphasis (underlined text) · Medium emphasis (outline) · High emphasis (filled).
+- `Variant` → Default (black) · Accent (teal).
+- `State` → Initial · Hover · Focus · Pressed · Disabled.
+
+**Behaviour**
+- Hover: `bgMix` over the background; Low also thickens the underline (1.5).
+- Pressed: 80 % opacity. Disabled: its own tokens, never opacity.
+
+**Sizing**
+- Same size in the three types: label lg bold, padding 6 / 12, radius 16 / 24 / pill.
+- 4 px focus area around it (`ctaLink/all/root/focusArea/padding`): the box is 48 high.
+
+### Developers · React
+
+```jsx
+import { CTALink } from './components/CTALink';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `href` | string | — | With `href` → `<a>`; without → `<button>` |
+| `onClick` | func | — | |
+| `emphasis` | `'low'` \| `'medium'` \| `'high'` | `'medium'` | Figma Type |
+| `variant` | `'default'` \| `'accent'` | `'default'` | |
+| `disabled` | bool | `false` | Renders `<button disabled>` |
+| `external` | bool | `false` | New tab + hidden "(opens in new tab)" |
+| `ariaLabel` | string | — | |
+| `...rest` | | | Forwarded to the element |
+
+```jsx
+<CTALink href="/plans" emphasis="high" variant="accent">Discover the new plan</CTALink>
+<CTALink href="/help" emphasis="low">Read the guide</CTALink>
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A highlighted invitation that navigates.
+
+**Don't pick it when**
+- It saves, sends or deletes → Button. A plain text link → Link.
+
+**Composition rules**
+- One High emphasis CTA per area at most.
+- The text says where it leads, as a verb ("Discover…", "Start…").
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus ring inside the component's own box (never clipped).
+- Low emphasis keeps its underline; Disabled uses disabled colours, not opacity.
+
+**Your job**
+- Prefer hiding a CTA that is not available over showing it disabled.
+- Keep the label short and specific.
+
+### Developers · React
+
+**Semantics**
+- `<a href>` when it navigates; `<button>` without `href`.
+- `disabled` → `<button disabled>` (a link cannot be disabled), read as unavailable.
+
+**Keyboard**
+- Tab to focus, Enter to follow.
+
+**Known gaps**
+- None.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every CTA has `href` unless it is a real action.
+- Not more than one High emphasis CTA in the same area.
+
+**Don't**
+- Don't use CTALink to submit forms.
