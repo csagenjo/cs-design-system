@@ -346,12 +346,13 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="CellHeader">
-        <Table ariaLabel="Cabeceras">
+        <Table ariaLabel="Headers">
           {['neutral', 'onSurface', 'zebra'].map((s) => (
             <TableRow key={s}>
-              <CellHeader surface={s}>{`Cliente (${s})`}</CellHeader>
-              <CellHeader surface={s} border="primary" showSort sortDirection="descending" onSort={noop}>Fecha</CellHeader>
-              <CellHeader surface={s} density="basic" align="right">Importe</CellHeader>
+              <CellHeader surface={s}>{`Customer (${s})`}</CellHeader>
+              <CellHeader surface={s} onSort={noop}>Name</CellHeader>
+              <CellHeader surface={s} border="primary" sortDirection="ascending" onSort={noop}>Date</CellHeader>
+              <CellHeader surface={s} density="basic" align="right" sortDirection="descending" onSort={noop}>Amount</CellHeader>
             </TableRow>
           ))}
         </Table>
@@ -361,9 +362,10 @@ export default function Gallery({ mode }) {
         <Table ariaLabel="CellMore">
           {['neutral', 'onSurface', 'zebra'].map((s, i) => (
             <TableRow key={s}>
-              <CellData surface={s}>{`Fila ${s}`}</CellData>
+              <CellData surface={s}>{`Row ${s}`}</CellData>
               <CellMore surface={s} onClick={noop} />
-              <CellMore surface={s} label="" aria-label="Más opciones" onClick={noop} lastRow={i === 2} />
+              <CellMore surface={s} label="" ariaLabel="More options" onClick={noop} lastRow={i === 2} />
+              <CellMore surface={s} density="basic" ariaLabel={`More about ${s}`} onClick={noop} />
               <CellMore surface={s} disabled onClick={noop} />
             </TableRow>
           ))}
@@ -1278,7 +1280,7 @@ export default function Gallery({ mode }) {
       <Section name="Table">
         <Table ariaLabel="Table">
           <TableRow>
-            <CellHeader border="primary" showSort>Cliente</CellHeader>
+            <CellHeader border="primary" sortDirection="ascending" onSort={noop}>Customer</CellHeader>
             <CellHeader>Estado</CellHeader>
             <CellHeader align="right">Importe</CellHeader>
           </TableRow>

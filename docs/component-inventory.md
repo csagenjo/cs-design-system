@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | DescriptionList (+ DescriptionListItem, DescriptionListAccount) · _rest to be filled_ |
+| Data | DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Page structure | Accordion, AccordionGroup |
@@ -2600,5 +2600,120 @@ Known gaps: none.
 **Don't**
 - Don't put form fields inside the values.
 - Don't add an <hr> or Divider between the pairs: the line is built in.
+
+---
+
+---
+
+## Table · TableRow · CellHeader · CellData · CellMore · CellActions
+
+**Group:** Data
+**Figma:** 🟢 Table page → `Column Header` (Type Compact / Basic × Surface Neutral / onSurface / Zebra × Border Subtle / Primary × Alignment × Sort Off / None / Ascending / Descending × State Initial / Hover / Pressed / Focus; Header text), `Column Cell` (Type × Surface × Border Subtle / Last row × Alignment; Cell Data text), `Column More` (Type × Surface × Border × State; Show label, Text) · frame *Table — How to use & Accessibility* (27/10)
+**Code:** `src/organisms/Table.jsx` (Table, TableRow), `src/components/CellHeader.jsx`, `CellData.jsx`, `CellMore.jsx` (atoms), `src/organisms/CellActions.jsx`
+**Tokens:** `--ds-cell-common-*`, `--ds-cell-data-*`, `--ds-cell-header-*`
+
+Tabular data built from cells: column headers (optionally sortable), data cells, a More cell that opens the row's details, and an actions cell. Table and TableRow only lay out and name the grid; the cells carry the look.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Several records compared across the same columns (accounts, movements, customers).
+- One record's details → Description List · a list of selectable rows → List View.
+
+**Properties**
+- Type → Compact (32, inside panels) · Basic (36) — the same in every cell of a row.
+- Surface → Neutral (on the page) · onSurface (on a panel) · Zebra (alternate rows).
+- Border → Subtle · Primary (header of the sorted column) / Last row (closes the table).
+- Alignment → Left · Right (numbers and amounts).
+- Column Header Sort → Off (not sortable) · None (sortable, unsorted) · Ascending · Descending.
+- Column Header / More State → Initial · Hover · Pressed · Focus · Column More: Show label (icon only when off).
+
+**Behaviour**
+- Sortable header: the whole cell is the button; clicking cycles the sort the product defines.
+- Hover: veil over the cell (opacity/hover); Pressed: opacity 0.8; Focus: double ring inside the cell.
+- More: opens the row's details (page, panel or menu); always at the end of the row, right aligned.
+- Actions cell: up to 2 actions (Button / Link / CTA Link).
+
+**Sizing**
+- Compact 32 high (4 + 24 + 4), Basic 36 (Cell 6 + 24 + 6; Header 8 + 24 + 4, text at the bottom) — the bottom line is drawn inside.
+- Padding 6 left and right (table/all/cellCommon/padding/hor), 4 between text and icon; sort and More icons 16.
+- Focus ring 2 + 2 inside the cell (cells sit edge to edge, there is no room outside).
+
+### Developers · React
+
+```jsx
+import { Table, TableRow } from './organisms/Table';
+import { CellHeader } from './components/CellHeader';
+import { CellData } from './components/CellData';
+```
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `Table` |  | — | ariaLabel / ariaLabelledBy, children (TableRow) |
+| `CellHeader` |  | — | align, density 'compact'\|'basic', surface, border 'subtle'\|'primary', onSort (sortable), sortDirection 'none'\|'ascending'\|'descending', children |
+| `CellData` |  | — | align, density, surface, lastRow, children |
+| `CellMore` |  | — | label ('More'; '' = icon only), ariaLabel, haspopup, density, surface, lastRow, onClick, disabled |
+| `CellActions` |  | — | align ('right'), surface, lastRow, children (≤ 2 actions) |
+
+```jsx
+<Table ariaLabelledBy="customers-title">
+  <TableRow><CellHeader border="primary" sortDirection="ascending" onSort={sort}>Customer</CellHeader><CellHeader align="right">Amount</CellHeader></TableRow>
+  <TableRow><CellData>Jane Doe</CellData><CellData align="right">1,250.00 €</CellData></TableRow>
+  <TableRow><CellData lastRow>Total</CellData><CellData lastRow align="right">1,250.00 €</CellData></TableRow>
+</Table>
+```
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Records compared across columns.
+
+**Don't pick it when**
+- Single record → DescriptionList.
+- Selectable list → ListView / SelectorListItem.
+
+**Composition rules**
+- Compose Table > TableRow > cells; Table never clones or injects props — set surface, density and lastRow on each cell.
+- Sorting: one header with border="primary" and sortDirection; the consumer reorders the rows in onSort.
+- Values in cells: instantiate BadgeHighlight, AmountView, Link… — never copy their styles.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Real table semantics: every cell is announced with its column header.
+- Sort state is read ("sorted ascending") and shown by icon + Primary line, not by colour only.
+- Sortable headers and More are real buttons with a visible focus ring.
+- Text and lines contrast on all three surfaces, light and dark.
+
+**Your job**
+- Give every table a visible title; developers link the table to it.
+- More: say what it opens and give each row's More a specific name ("More about García").
+
+### Developers · React
+
+**Semantics**
+- Table = role table + rows; CellHeader = columnheader, CellData / CellActions / CellMore = cell.
+- Sortable header: <button> inside the columnheader, aria-sort on the columnheader (ascending / descending).
+- Name the table: ariaLabelledBy (id of the visible title) or ariaLabel — dev warning without it.
+
+**Keyboard**
+- Tab moves through sortable headers, More buttons and actions in reading order; Enter / Space activates.
+
+Known gaps: none.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every Table has ariaLabelledBy or ariaLabel.
+- Same density in every cell of a row; lastRow on every cell of the last row.
+- CellMore: ariaLabel with the row's context; haspopup when it opens a menu or dialog.
+
+**Don't**
+- Don't use a table for layout.
+- Don't put more than 2 actions in a cell.
 
 ---

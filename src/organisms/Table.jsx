@@ -21,8 +21,8 @@
  * USO:
  *   <Table>
  *     <TableRow>
- *       <CellHeader border="primary" showSort>Cliente</CellHeader>
- *       <CellHeader align="right">Importe</CellHeader>
+ *       <CellHeader border="primary" sortDirection="ascending" onSort={sortByCustomer}>Customer</CellHeader>
+ *       <CellHeader align="right">Amount</CellHeader>
  *     </TableRow>
  *     <TableRow>
  *       <CellData>García Fernández</CellData>

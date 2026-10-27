@@ -1587,9 +1587,12 @@
   --ds-cell-common-bg-zebra:                    var(--ds-bg-page);             /* #FAFBFB */
   --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #0A7C92 — orden columna / hover */
   --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #F1F2F4 — divisor por defecto */
-  --ds-cell-common-border-bottom-width:         1px;                           /* borderWidth/sm */
+  --ds-cell-common-border-bottom-width:         var(--ds-border-width-sm);     /* 1 — borderWidth/sm */
   --ds-cell-common-focus-inner:                 var(--ds-borderColor-focus-inner); /* botón de orden de CellHeader (A11y-3) */
   --ds-cell-common-focus-outer:                 var(--ds-borderColor-focus-outer);
+  --ds-cell-common-focus-width:                 var(--ds-border-width-lg);     /* 2 — table/all/cellCommon/borderWidth/focus (27/10) */
+  --ds-cell-common-bg-mix-hover:                var(--ds-opacity-hover-default); /* velo — table/all/cellCommon/bgMix/hover: cabecera ordenable y More */
+  --ds-cell-common-opacity-pressed:             var(--ds-opacity-pressed);     /* 0.8 — table/all/cellCommon/opacity/pressed */
   /* Específico — NO fusionar con Common */
   --ds-cell-data-padding-ver-basic:             var(--ds-spacing-sm);          /* 6 — solo Cell */
   --ds-cell-header-padding-top-basic:           var(--ds-spacing-md);          /* 8 — solo Header */

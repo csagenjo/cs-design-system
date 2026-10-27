@@ -1,6 +1,6 @@
 /**
  * CellHeader — Componente atómico (familia Celda)
- * CS Design System · v1.0
+ * CS Design System · v2 (27/10/2026: alineado con Figma — Sort Off/None/Ascending/Descending, estados)
  *
  * Celda de encabezado de columna de una tabla. Es un CONTENEDOR: el rótulo es
  * un slot (`children`). Hermano de CellData — comparte los ejes y los tokens
@@ -38,6 +38,7 @@ const css = `
   align-items:   center;
   box-sizing:    border-box;
   padding:       var(--ds-cell-common-padding-ver) var(--ds-cell-common-padding-hor); /* 4 / 6 */
+  padding-bottom: calc(var(--ds-cell-common-padding-ver) - var(--ds-cell-common-border-bottom-width)); /* el borde inferior va por dentro, como el stroke INSIDE de Figma */
   gap:           var(--ds-cell-common-gap);          /* 4 */
   font-family:   inherit;
   font-size:     var(--ds-fontSize-title-sm);        /* 16 */
@@ -54,7 +55,7 @@ const css = `
 .ds-cell-header--basic {
   align-items:    flex-end;
   padding-top:    var(--ds-cell-header-padding-top-basic);    /* 8 */
-  padding-bottom: var(--ds-cell-header-padding-bottom-basic); /* 4 */
+  padding-bottom: calc(var(--ds-cell-header-padding-bottom-basic) - var(--ds-cell-common-border-bottom-width)); /* 4 */
 }
 
 /* Superficie: neutral = transparente (sin token) */
@@ -73,11 +74,15 @@ const css = `
 
 /* Botón de orden (con onSort) — sin aspecto propio, hereda el de la celda */
 .ds-cell-header__sort-button {
-  display:     inline-flex;
+  display:     flex;
+  flex:        1 1 auto;
+  align-self:  stretch;
   align-items: center;
   gap:         inherit;
+  box-sizing:  border-box;
   margin:      0;
-  padding:     0;
+  padding:     var(--ds-cell-common-padding-ver) var(--ds-cell-common-padding-hor);
+  padding-bottom: calc(var(--ds-cell-common-padding-ver) - var(--ds-cell-common-border-bottom-width)); /* el borde inferior va por dentro, como el stroke INSIDE de Figma */
   border:      0;
   background:  transparent;
   color:       inherit;
@@ -85,10 +90,24 @@ const css = `
   text-align:  inherit;
   cursor:      pointer;
 }
+/* Ordenable (27/10, como Figma Sort ≠ Off): toda la celda es el botón. */
+.ds-cell-header--sortable { padding: 0; }
+.ds-cell-header--right .ds-cell-header__sort-button { justify-content: flex-end; }
+.ds-cell-header--basic .ds-cell-header__sort-button {
+  align-items:    flex-end;
+  padding-top:    var(--ds-cell-header-padding-top-basic);
+  padding-bottom: calc(var(--ds-cell-header-padding-bottom-basic) - var(--ds-cell-common-border-bottom-width));
+}
+/* Hover = velo encima del fondo; Pressed = opacidad de toda la celda */
+.ds-cell-header__sort-button:hover {
+  background-image: linear-gradient(var(--ds-cell-common-bg-mix-hover), var(--ds-cell-common-bg-mix-hover));
+}
+.ds-cell-header--sortable:has(.ds-cell-header__sort-button:active) { opacity: var(--ds-cell-common-opacity-pressed); }
+/* Foco: anillo doble POR DENTRO de la celda (las celdas van pegadas) */
 .ds-cell-header__sort-button:focus-visible {
-  outline:        var(--ds-border-width-lg) solid var(--ds-cell-common-focus-outer);
-  outline-offset: var(--ds-border-width-lg);
-  box-shadow:     0 0 0 var(--ds-border-width-lg) var(--ds-cell-common-focus-inner);
+  outline:        var(--ds-cell-common-focus-width) solid var(--ds-cell-common-focus-outer);
+  outline-offset: calc(var(--ds-cell-common-focus-width) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-cell-common-focus-width) * 2) var(--ds-cell-common-focus-inner);
 }
 `;
 
@@ -123,6 +142,7 @@ export function CellHeader({
     density === 'basic'   ? 'ds-cell-header--basic'      : '',
     surface !== 'neutral' ? `ds-cell-header--${surface}` : '',
     border === 'primary'  ? 'ds-cell-header--primary'    : '',
+    onSort                ? 'ds-cell-header--sortable'   : '',
     className || '',
   ].filter(Boolean).join(' ');
 
