@@ -1,9 +1,9 @@
 /**
  * DialogSimple — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (27/10/2026: alineado 1:1 con Figma)
  *
- * Diálogo compacto de pregunta/confirmación — header Default fijo (44px,
- * arrow + title + close), mensaje de cuerpo, hasta 2 botones apilados.
+ * Diálogo compacto de pregunta/confirmación — header Default Small (44, título
+ * a la izquierda + Close, sin flecha), mensaje de cuerpo, hasta 2 botones apilados.
  *
  * variant="default"  — tarjeta compacta 280px, borde sutil + Dialog/DialogShadow
  *                       (mismos valores que el PopUp de Dialog, no una sombra
@@ -12,10 +12,8 @@
  *                       "default" pero sin borde (añadida 25/08, antes sin sombra
  *                       — invisible sobre fondo blanco sin Scrim detrás), botones lg.
  *
- * Border 0.5px de "default": tenía 2 strokes en gradiente sin token (restos de
- * edición) — limpiado en Figma 24/08 a un único stroke sólido enlazado a
- * `borderColor/subtle` (mismo hairline que Divider/Cell), reflejado aquí en
- * `--ds-dialog-simple-border-color-generic`.
+ * Borde de "default": 1 px `borderColor/subtle` (dialog/all/simple/borderWidth,
+ * 27/10 — antes 0,5 px sin token).
  *
  * padding/gap/borderRadius: renombrados 26/08 de `dialog/all/simple/*` a
  * `dialog/all/root/*` en Figma — no eran exclusivos de DialogSimple, Dialog y
@@ -44,6 +42,7 @@ import { injectStyles } from './_inputBase';
 import { useModal } from './_useModal';
 import { DialogHeader } from './_dialogBase';
 import { Button } from './Button';
+import { warnOnce } from './_devWarn';
 
 const css = `
 .ds-dialog-simple {
@@ -54,19 +53,19 @@ const css = `
   background: var(--ds-dialog-root-bg-generic);
   border-radius: var(--ds-dialog-root-border-radius-generic);
   gap: var(--ds-dialog-root-gap-generic);
+  padding: var(--ds-dialog-root-padding-ver-generic) var(--ds-dialog-root-padding-hor-generic); /* Default y Expanded (Figma) */
 }
 .ds-dialog-simple--default {
   width: 280px;
   max-width: 100%;   /* A11y-5 (1.4.10) */
   flex-shrink: 0;
-  padding: var(--ds-dialog-root-padding-ver-generic) var(--ds-dialog-root-padding-hor-generic);
-  border: 0.5px solid var(--ds-dialog-simple-border-color-generic);
+  border: var(--ds-dialog-simple-border-width-generic) solid var(--ds-dialog-simple-border-color-generic);
   box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — mismo valor que Dialog PopUp */
 }
 .ds-dialog-simple--expanded {
   /* A11y-5 (1.4.10): cabe en 320 px / zoom 400 %; si no hay alto, hace scroll por dentro */
   width: min(480px, 100%);
-  min-height: min(680px, 100dvh);
+  min-height: min(680px, 100dvh); /* Figma: Expanded 480 × 680, el contenido ocupa el alto libre */
   max-height: 100dvh;
   overflow-y: auto;
   flex-shrink: 0;
@@ -112,7 +111,7 @@ export function DialogSimple({
   variant              = 'default',  // 'default' | 'expanded'
   title                = 'Dialog Title',
   message              = 'Dialog question or statement',
-  onBack,
+  onBack,               // eliminado 27/10 (Figma: Dialog Simple no tiene flecha) — aviso en dev
   onClose,
   showButtonBar        = true,
   primaryButton        = true,
@@ -122,7 +121,6 @@ export function DialogSimple({
   secondaryButtonLabel = 'Button',
   onSecondaryButton,
   modal                = true,
-  backLabel,
   closeLabel,
   id,
   className,
@@ -132,6 +130,7 @@ export function DialogSimple({
   const messageId = useId();
   useModal({ open: modal, containerRef: ref, onClose });
   const isExpanded = variant === 'expanded';
+  if (onBack) warnOnce('DialogSimple.onBack', '[DS DialogSimple] `onBack` ya no existe: Dialog Simple no tiene flecha de volver (Figma). Usa Dialog si necesitas volver.');
   const btnSize = isExpanded ? 'lg' : 'sm'; /* igual que Figma: Default → Button Small, Expanded → Large */
 
   const classes = [
@@ -155,11 +154,10 @@ export function DialogSimple({
         size="small"
         title={title}
         titleId={titleId}
-        backLabel={backLabel}
         closeLabel={closeLabel}
-        showArrow
+        titleAlign="left"
+        showArrow={false}
         showClose
-        onBack={onBack}
         onClose={onClose}
       />
       <div className="ds-dialog-simple__content">

@@ -261,6 +261,11 @@
   --ds-borderColor-focus-outer:        #094F78; /* color/info/700 — color de foco del sistema (01/10/2026, antes negro) */
   --ds-borderColor-focus-inner-inverse:#050506;
   --ds-borderColor-focus-outer-inverse:#BDE8FF; /* color/info/200 */
+  /* Foco fijo (no cambia con el modo), para controles sobre superficies que tampoco cambian (27/10/2026, Dialog header) */
+  --ds-borderColor-focus-inner-onColor: #050506; /* color/black — sobre bg/surface/primary|secondary|tertiary */
+  --ds-borderColor-focus-outer-onColor: #BDE8FF; /* color/info/200 — 3,7:1 sobre esas superficies */
+  --ds-borderColor-focus-inner-onLight: #FFFFFF; /* color/white — sobre bg/onColor (blanco fijo) */
+  --ds-borderColor-focus-outer-onLight: #094F78; /* color/info/700 — 8,8:1 sobre blanco */
 
   /* â”€â”€ OPACITY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-opacity-hover-default:      rgba(5,5,6,0.1);
@@ -1669,7 +1674,10 @@
 
   --ds-dialog-body-text-fg-generic:            var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
   --ds-dialog-empty-state-body-text-fg-generic:var(--ds-fg-body-subtle);    /* #676D76 */
-  --ds-dialog-empty-state-padding-generic:     16px;                       /* spacing/xl — nuevo 26/08: padding propio de la tarjeta de ErrorAndEmptyState (PopUp y FullScreen, 16px simétrico en las 2 — FullScreen tenía 8px arriba sin token, igualado a 16px por decisión de Carol). NO es el mismo concepto que --ds-dialog-control-area-padding-generic (aunque coincida en valor) ni que --ds-dialog-root-padding-hor/ver-generic de DialogSimple (esos son 12px, valor distinto) */
+  --ds-dialog-empty-state-padding-generic:     var(--ds-spacing-xl);
+  --ds-dialog-empty-state-content-gap:         var(--ds-spacing-xl);       /* imagen → texto, 16 en las dos variantes (27/10) */
+  --ds-dialog-empty-state-text-gap:            var(--ds-spacing-md);       /* título → párrafo */
+  --ds-dialog-empty-state-text-padding-bottom-full-screen: var(--ds-spacing-2xl); /* 24 */
 
   /* Header — bg */
   --ds-dialog-header-bg-default:               var(--ds-bg-default);       /* #FFFFFF / #050506 dark — invierte */
@@ -1689,25 +1697,36 @@
   --ds-dialog-header-icon-fg-on-primary:       var(--ds-fg-icon-onSurface-static-primary);  /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
   --ds-dialog-header-icon-fg-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
   --ds-dialog-header-icon-fg-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
+  /* Header — foco de Back/Close (Icon Button re-tematizado): el anillo contrasta con el fondo de cada header (27/10) */
+  --ds-dialog-header-icon-focus-inner-default:    var(--ds-borderColor-focus-inner);
+  --ds-dialog-header-icon-focus-outer-default:    var(--ds-borderColor-focus-outer);
+  --ds-dialog-header-icon-focus-inner-primary:    var(--ds-borderColor-focus-inner-onColor);
+  --ds-dialog-header-icon-focus-outer-primary:    var(--ds-borderColor-focus-outer-onColor);
+  --ds-dialog-header-icon-focus-inner-on-primary: var(--ds-borderColor-focus-inner-onLight);
+  --ds-dialog-header-icon-focus-outer-on-primary: var(--ds-borderColor-focus-outer-onLight);
+  --ds-dialog-header-icon-focus-inner-secondary:  var(--ds-borderColor-focus-inner-onColor);
+  --ds-dialog-header-icon-focus-outer-secondary:  var(--ds-borderColor-focus-outer-onColor);
+  --ds-dialog-header-icon-focus-inner-tertiary:   var(--ds-borderColor-focus-inner-onColor);
+  --ds-dialog-header-icon-focus-outer-tertiary:   var(--ds-borderColor-focus-outer-onColor);
   /* Header — layout */
-  --ds-dialog-header-padding-hor:              6px;                        /* spacing/sm */
-  --ds-dialog-header-padding-ver-regular:      8px;                        /* spacing/md — renombrado 26/08 (antes sin sufijo), pareja de -small */
-  --ds-dialog-header-padding-ver-small:        12px;                       /* spacing/lg — nuevo 26/08: el header Size=Small (44px, usado por DialogSimple/ErrorAndEmptyState) tenía su paddingVer prestado de root/paddingVer en Figma, sin token propio. También se corrigió en Figma un outlier real: Color=Secondary,Size=Standard estaba mal enlazado a este mismo préstamo (12px) en vez de -regular (8px) — todas las Standard quedan ahora en 8px */
+  --ds-dialog-header-padding-hor:              var(--ds-spacing-2xs);      /* 2 — 27/10: con el área de foco de 4 del Icon Button, el círculo queda a 6 del borde */
+  --ds-dialog-header-padding-ver-regular:      var(--ds-spacing-xs);       /* 4 + Icon Button Medium 52 + 4 = 60 (27/10) */
+  --ds-dialog-header-padding-ver-small:        var(--ds-spacing-2xs);      /* 2 + Icon Button Small 40 + 2 = 44 (27/10) */
 
   /* Root / Scrim */
   --ds-dialog-root-bg-generic:                 var(--ds-bg-default);       /* #FFFFFF / #050506 dark */
-  --ds-dialog-root-gap-generic:                12px;                       /* spacing/lg — sync 26/08, existía en Figma sin sincronizar; antes el código tomaba prestado simple-padding-ver para esto */
-  --ds-dialog-root-padding-hor-generic:        12px;                       /* spacing/lg — renombrado 26/08 desde simple/paddingHor, es compartido (Dialog family), no exclusivo de DialogSimple */
-  --ds-dialog-root-padding-ver-generic:        12px;                       /* spacing/lg — renombrado 26/08 desde simple/paddingVer, idem */
-  --ds-dialog-root-border-radius-generic:      4px;                        /* borderRadius/sm — renombrado 26/08 desde simple/borderRadius, compartido (Dialog + DialogSimple) */
-  --ds-dialog-control-area-padding-generic:    16px;                       /* spacing/xl — nuevo 26/08: en Figma el padding del Control Area (botones del Dialog) no tenía variable, iba suelto; un solo token para los 4 lados (los 4 valen igual, sin separar Hor/Ver innecesariamente) */
+  --ds-dialog-root-gap-generic:                var(--ds-spacing-lg);                       /* spacing/lg — sync 26/08, existía en Figma sin sincronizar; antes el código tomaba prestado simple-padding-ver para esto */
+  --ds-dialog-root-padding-hor-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingHor, es compartido (Dialog family), no exclusivo de DialogSimple */
+  --ds-dialog-root-padding-ver-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingVer, idem */
+  --ds-dialog-root-border-radius-generic:      var(--ds-border-radius-sm);                        /* borderRadius/sm — renombrado 26/08 desde simple/borderRadius, compartido (Dialog + DialogSimple) */
+  --ds-dialog-control-area-padding-generic:    var(--ds-spacing-xl);                       /* spacing/xl — nuevo 26/08: en Figma el padding del Control Area (botones del Dialog) no tenía variable, iba suelto; un solo token para los 4 lados (los 4 valen igual, sin separar Hor/Ver innecesariamente) */
   --ds-dialog-scrim-bg-generic:                var(--ds-bg-overlay);       /* rgba negro 30% light / blanco 30% dark */
 
   /* DialogSimple */
-  --ds-dialog-simple-icon-fg-generic:          var(--ds-fg-icon-default);  /* invierte — huérfano, sin consumidor en código */
-  --ds-dialog-simple-border-color-generic:     var(--ds-borderColor-subtle); /* hairline 0.5px, verificado 24/08 — antes gradiente sin token, limpiado en Figma */
-  --ds-dialog-simple-content-gap-generic:      12px;                       /* spacing/lg */
-  --ds-dialog-simple-cta-gap-generic:          8px;                        /* spacing/md — nuevo 26/08: el gap entre botones apilados de DialogSimple iba suelto en Figma (8px, distinto del gap de 12px del Control Area de Dialog — no es el mismo valor, no se puede fusionar con root/gap) */
+  --ds-dialog-simple-border-color-generic:     var(--ds-borderColor-subtle);
+  --ds-dialog-simple-border-width-generic:     var(--ds-border-width-sm);  /* dialog/all/simple/borderWidth/generic — 27/10, antes 0,5 px sin token */
+  --ds-dialog-simple-content-gap-generic:      var(--ds-spacing-lg);                       /* spacing/lg */
+  --ds-dialog-simple-cta-gap-generic:          var(--ds-spacing-md);                        /* spacing/md — nuevo 26/08: el gap entre botones apilados de DialogSimple iba suelto en Figma (8px, distinto del gap de 12px del Control Area de Dialog — no es el mismo valor, no se puede fusionar con root/gap) */
 
   /* Título compartido (DialogSimple / ErrorAndEmptyState) */
   --ds-dialog-title-fg-generic:                var(--ds-fg-title-default); /* invierte */

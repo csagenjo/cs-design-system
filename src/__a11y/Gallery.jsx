@@ -475,33 +475,36 @@ export default function Gallery({ mode }) {
         <Col>
           {['default', 'primary', 'onPrimary', 'secondary', 'tertiary'].map((h) => (
             <Dialog modal={false} key={h} header={h} title={`Dialog ${h}`} onBack={noop} onClose={noop}
-              mainButtonLabel="Aceptar" secondaryButtonLabel="Cancelar" onMainButton={noop} onSecondaryButton={noop}>
-              <p>Contenido scrollable del diálogo ({h}).</p>
+              mainButtonLabel="Accept" secondaryButtonLabel="Cancel" onMainButton={noop} onSecondaryButton={noop}>
+              <p>Scrollable content ({h}).</p>
             </Dialog>
           ))}
-          <Dialog modal={false} size="small" header="primary" title="Dialog small" onClose={noop} onMainButton={noop} onSecondaryButton={noop}>
-            <p>Header small.</p>
-          </Dialog>
+          {['default', 'primary', 'onPrimary', 'secondary', 'tertiary'].map((h) => (
+            <Dialog modal={false} key={`s-${h}`} size="small" header={h} title={`Dialog small ${h}`} onBack={noop} onClose={noop}
+              onMainButton={noop} onSecondaryButton={noop}>
+              <p>Small header.</p>
+            </Dialog>
+          ))}
           <Contain height={420} style={{ maxWidth: 720 }}>
             <Dialog modal={false} width="fullScreen" header="default" title="Dialog fullScreen" onClose={noop}
-              mainButtonLabel="Aceptar" secondaryButtonLabel="Cancelar" onMainButton={noop} onSecondaryButton={noop}>
-              <p>Variante a pantalla completa.</p>
+              mainButtonLabel="Accept" secondaryButtonLabel="Cancel" onMainButton={noop} onSecondaryButton={noop}>
+              <p>Full screen variant.</p>
             </Dialog>
           </Contain>
-          <Dialog modal={false} header="tertiary" title="Sin cruz ni flecha" crossButton={false} showArrow={false} showButtons={false}>
-            <p>Sin botones.</p>
+          <Dialog modal={false} header="tertiary" title="No back, no close" crossButton={false} showArrow={false} showButtons={false}>
+            <p>No buttons.</p>
           </Dialog>
         </Col>
       </Section>
 
       <Section name="DialogSimple">
         <Row>
-          <DialogSimple modal={false} message="¿Seguro que quieres eliminar este elemento?" onClose={noop}
+          <DialogSimple modal={false} message="Do you want to delete this item?" onClose={noop}
+            primaryButtonLabel="Delete" secondaryButtonLabel="Cancel" onPrimaryButton={noop} onSecondaryButton={noop} />
+          <DialogSimple modal={false} variant="expanded" title="Confirm operation" message="This action can't be undone."
+            primaryButtonLabel="Confirm" secondaryButtonLabel="Cancel" onClose={noop}
             onPrimaryButton={noop} onSecondaryButton={noop} />
-          <DialogSimple modal={false} variant="expanded" title="Confirmar operación" message="Esta acción no se puede deshacer."
-            primaryButtonLabel="Confirmar" secondaryButtonLabel="Cancelar" onBack={noop} onClose={noop}
-            onPrimaryButton={noop} onSecondaryButton={noop} />
-          <DialogSimple modal={false} message="Sin botones" showButtonBar={false} onClose={noop} />
+          <DialogSimple modal={false} message="No buttons" showButtonBar={false} onClose={noop} />
         </Row>
       </Section>
 
@@ -549,13 +552,12 @@ export default function Gallery({ mode }) {
       <Section name="ErrorAndEmptyState">
         <Row>
           <Contain height={520} style={{ width: 480 }}>
-            <ErrorAndEmptyState modal={false} title="No se pudo cargar la información" description="Inténtalo de nuevo más tarde."
+            <ErrorAndEmptyState modal={false} title="We couldn't load the data" description="Try again in a few minutes."
               onClose={noop} onPrimaryButton={noop} onSecondaryButton={noop} />
           </Contain>
-          <ErrorAndEmptyState modal={false} variant="popUp" title="Sin resultados" description="Prueba a cambiar los filtros."
-            secondaryButton={false} primaryButtonLabel="Reintentar" onPrimaryButton={noop} onClose={noop}
-            icon={<Icon name="alert-circle" size="3xl" />} />
-          <ErrorAndEmptyState modal={false} variant="popUp" title="Sin botones" showButtons={false} onClose={noop} />
+          <ErrorAndEmptyState modal={false} variant="popUp" title="No results" description="Try changing the filters."
+            secondaryButton={false} primaryButtonLabel="Retry" onPrimaryButton={noop} onClose={noop} />
+          <ErrorAndEmptyState modal={false} variant="popUp" title="No buttons" showButtons={false} onClose={noop} />
         </Row>
       </Section>
 
