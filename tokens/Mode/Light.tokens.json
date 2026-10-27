@@ -6256,6 +6256,106 @@
         }
       }
     },
+    "focus-inner-onColor": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.019607843831181526,
+          0.019607843831181526,
+          0.0235294122248888
+        ],
+        "alpha": 1,
+        "hex": "#050506"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32699:69",
+        "com.figma.scopes": [
+          "STROKE"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:acc78828a045a0d59f6f0f950099f1ee6c353d79/-1:-1",
+          "targetVariableName": "borderColor/focus-inner-onColor-light",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
+    "focus-outer-onColor": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7411764860153198,
+          0.9098039269447327,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#BDE8FF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32699:72",
+        "com.figma.scopes": [
+          "STROKE"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c0dd347e54cb82694072424f5c484b8b81ecc26a/-1:-1",
+          "targetVariableName": "borderColor/focus-outer-onColor-light",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
+    "focus-inner-onLight": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32699:75",
+        "com.figma.scopes": [
+          "STROKE"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:022bfdba7ce8e9f29acf86a457069358b147e066/-1:-1",
+          "targetVariableName": "borderColor/focus-inner-onLight-light",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
+    "focus-outer-onLight": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.03529411926865578,
+          0.30980393290519714,
+          0.47058823704719543
+        ],
+        "alpha": 1,
+        "hex": "#094F78"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32699:78",
+        "com.figma.scopes": [
+          "STROKE"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f09823dacb7658a1302602a3bb39f62c5b3c9479/-1:-1",
+          "targetVariableName": "borderColor/focus-outer-onLight-light",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
     "onSurface": {
       "default": {
         "$type": "color",
