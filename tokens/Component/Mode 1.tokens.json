@@ -17775,6 +17775,62 @@
             }
           }
         }
+      },
+      "action": {
+        "borderColor": {
+          "focus-inner": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.019607843831181526,
+                0.019607843831181526,
+                0.0235294122248888
+              ],
+              "alpha": 1,
+              "hex": "#050506"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32681:67",
+              "com.figma.hiddenFromPublishing": true,
+              "com.figma.scopes": [
+                "STROKE"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:1a89bbb470c339f57d6d76ed804a032cb252e4fb/-1:-1",
+                "targetVariableName": "borderColor/focus-inner-inverse",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          },
+          "focus-outer": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7411764860153198,
+                0.9098039269447327,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#BDE8FF"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32681:68",
+              "com.figma.hiddenFromPublishing": true,
+              "com.figma.scopes": [
+                "STROKE"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:19593110e7548d1335467848c6327b210cf0b69c/-1:-1",
+                "targetVariableName": "borderColor/focus-outer-inverse",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        }
       }
     }
   },
