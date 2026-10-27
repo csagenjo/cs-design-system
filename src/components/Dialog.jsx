@@ -1,6 +1,6 @@
 /**
  * Dialog — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (27/10/2026: alineado 1:1 con Figma)
  *
  * Modal que informa de una tarea y puede requerir una decisión. Puro contenido
  * visual — NO gestiona portal ni posicionamiento fijo en pantalla, ni el Scrim
@@ -11,10 +11,15 @@
  * default/secondary/tertiary, "accent" para primary/onPrimary), reutilizando
  * Button.jsx tal cual, sin tokens propios.
  * size: "standard" (header 60px) | "small" (header 44px).
- * width: "popUp" (480px fijo) | "fullScreen" (100%/100% del contenedor — el
- *        consumidor decide el tamaño real del overlay). Esquinas redondeadas
- *        y sombra Dialog/DialogShadow en las dos — actualizado 25/08, antes
- *        fullScreen no las llevaba; Carol las añadió a las 20 variantes en Figma.
+ * width: "popUp" (480 de ancho, alto por contenido hasta la pantalla) |
+ *        "fullScreen" (100%/100% del contenedor; Figma lo muestra a 375 × 667).
+ *        Esquinas redondeadas y sombra Dialog/DialogShadow en las dos.
+ * Back/Close del header = Icon Button Tertiary (ver _dialogBase.jsx).
+ *
+ * ¿popUp o fullScreen? popUp en tablet y escritorio (≥ 768) para tareas cortas
+ * que dejan ver la página detrás; fullScreen en móvil (< 768) y, en cualquier
+ * dispositivo, para tareas largas o de varios pasos. Nunca un popUp de 480 en
+ * una pantalla de 375.
  *
  * children = "Scrollable Content" (slot libre, scroll interno si excede alto).
  *
@@ -55,18 +60,17 @@ const css = `
   box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — 25/08: aplicada a todas las variantes, antes solo PopUp */
 }
 .ds-dialog--pop-up {
-  /* A11y-5 (1.4.10): a 320 px de ancho o con zoom al 400 % se encoge al viewport
-     en vez de obligar a hacer scroll en dos direcciones; el contenido hace scroll */
+  /* Ancho 480; el alto lo da el contenido, como mucho la pantalla (27/10).
+     A11y-5 (1.4.10): a 320 px o con zoom al 400 % se encoge al viewport y el
+     contenido hace scroll por dentro, nunca en dos direcciones. */
   width: min(480px, 100%);
   max-height: 100dvh;
   flex-shrink: 0;
 }
-.ds-dialog--pop-up.ds-dialog--standard { height: 616px; }
-.ds-dialog--pop-up.ds-dialog--small    { height: 628px; }
 .ds-dialog--full-screen { width: 100%; height: 100%; }
 
 .ds-dialog__content {
-  flex: 1 0 0;
+  flex: 1 1 auto;
   min-height: 0;
   width: 100%;
   overflow-y: auto;

@@ -1,19 +1,22 @@
 /**
  * ErrorAndEmptyState — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (27/10/2026: alineado 1:1 con Figma)
  *
  * Feedback de error o de "sin datos" a pantalla completa o en tarjeta PopUp.
  * Header Default fijo, solo con botón de cierre (sin flecha, sin título en la
  * barra — el título real vive en el bloque de contenido, centrado).
  *
- * `icon`: slot libre (ReactNode) — NO es el átomo Image (prohibido, ver
- * CLAUDE.md §9 "No construir"). Por defecto un Lucide genérico dentro de un
- * círculo de superficie sutil, sustituible por cualquier ilustración real.
+ * Imagen: instancia el átomo `Image` (1:1, esquinas redondeadas, 120), igual que
+ * Figma (27/10). `imageSrc` + `imageAlt` (vacío = decorativa). Sin `imageSrc`,
+ * Image pinta su fondo de relleno. `icon` (slot antiguo) ya no existe: aviso en dev.
  *
- * variant="fullScreen" — ocupa 100%/100% del contenedor (igual que Dialog
- *                         width="fullScreen"), header/contenido/botones
- *                         repartidos en los extremos.
- * variant="popUp"       — tarjeta compacta centrada. Las dos variantes llevan
+ * variant="fullScreen" — la vista entera está vacía o ha fallado: sustituye al
+ *                         contenido de la página (no es un modal). 100 %/100 % del
+ *                         contenedor; el contenido se centra en el hueco libre y
+ *                         los botones quedan abajo. También en móvil.
+ * variant="popUp"       — una acción dentro de la página no ha devuelto nada o ha
+ *                         fallado y la página sigue detrás. Tablet y escritorio;
+ *                         en móvil, fullScreen. Tarjeta de 359. Las dos variantes llevan
  *                         Dialog/DialogShadow (añadida 25/08, antes ninguna la
  *                         tenía) pero sin radio de esquina — Figma no lo define
  *                         para este componente.
@@ -24,12 +27,12 @@
  *   atrapado, fondo inert, Escape → `onClose`, foco de vuelta al cerrar),
  *   nombre = el título (h2). `modal={false}` solo para mostrarlo estático.
  *   fullScreen = contenido de página, no un diálogo: sin role, título h2.
- *   El icono por defecto es decorativo (aria-hidden).
+ *   La imagen es decorativa salvo que se pase `imageAlt`.
  *
  * USO:
  *   <ErrorAndEmptyState title="No hay resultados" description="Prueba a cambiar los filtros." />
  *   {open && <ErrorAndEmptyState variant="popUp" title="Sin resultados" onClose={close} />}
- *   <ErrorAndEmptyState variant="popUp" icon={<AlertTriangle />} onClose={fn} />
+ *   <ErrorAndEmptyState variant="popUp" imageSrc={url} onClose={fn} />
  */
 
 import React, { useId, useRef, useEffect } from 'react';
@@ -38,7 +41,8 @@ import { injectStyles } from './_inputBase';
 import { useModal } from './_useModal';
 import { DialogHeader } from './_dialogBase';
 import { Button } from './Button';
-import { ImageOff } from 'lucide-react';
+import { Image } from './Image';
+import { warnOnce } from './_devWarn';
 
 const css = `
 .ds-error-empty-state {
@@ -52,11 +56,11 @@ const css = `
 .ds-error-empty-state--full-screen {
   width: 100%;
   height: 100%;
-  justify-content: space-between;
+  gap: var(--ds-dialog-root-gap-generic);
   padding: var(--ds-dialog-empty-state-padding-generic);
 }
 .ds-error-empty-state--pop-up {
-  max-width: 359px;
+  width: min(359px, 100%); /* Figma: Pop up 359 */
   flex-shrink: 0;
   gap: var(--ds-dialog-root-gap-generic);
   padding: var(--ds-dialog-empty-state-padding-generic);
@@ -66,34 +70,24 @@ const css = `
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ds-dialog-root-gap-generic);
+  gap: var(--ds-dialog-empty-state-content-gap);
   width: 100%;
   box-sizing: border-box;
 }
-.ds-error-empty-state--pop-up .ds-error-empty-state__content { gap: 16px; }
 
-.ds-error-empty-state__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: var(--ds-bg-subtle);
-  color: var(--ds-fg-icon-subtle);
-  flex-shrink: 0;
-}
+.ds-error-empty-state__image { width: 120px; flex-shrink: 0; } /* Figma: Image 1:1 de 120 */
 
 .ds-error-empty-state__text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: var(--ds-dialog-empty-state-text-gap);
   width: 100%;
   box-sizing: border-box;
   text-align: center;
 }
-.ds-error-empty-state--full-screen .ds-error-empty-state__text { padding-bottom: 24px; }
+.ds-error-empty-state--full-screen .ds-error-empty-state__content { flex: 1 1 auto; justify-content: center; } /* Figma: Content en fill, centrado en el hueco libre; botones abajo */
+.ds-error-empty-state--full-screen .ds-error-empty-state__text { padding-bottom: var(--ds-dialog-empty-state-text-padding-bottom-full-screen); }
 
 .ds-error-empty-state__title {
   margin: 0;
@@ -132,7 +126,9 @@ injectStyles('ds-error-empty-state', css);
 
 export function ErrorAndEmptyState({
   variant              = 'fullScreen', // 'fullScreen' | 'popUp'
-  icon,
+  imageSrc,
+  imageAlt             = '',     // vacío = decorativa
+  icon,                          // eliminado 27/10 — aviso en dev
   title                = 'Here comes your title',
   description          = 'Here comes the paragraphy. Tell the story you want the user to know.',
   onClose,
@@ -151,6 +147,7 @@ export function ErrorAndEmptyState({
   className,
 }) {
   const isFullScreen = variant !== 'popUp';
+  if (icon) warnOnce('ErrorAndEmptyState.icon', '[DS ErrorAndEmptyState] `icon` ya no existe: la ilustración es el átomo Image (`imageSrc`, `imageAlt`), como en Figma.');
   const isDialog = !isFullScreen;
   const TitleTag = isDialog ? 'h2' : `h${Math.min(6, Math.max(1, headingLevel))}`;
   const ref = useRef(null);
@@ -180,9 +177,7 @@ export function ErrorAndEmptyState({
     >
       <DialogHeader color="default" size="standard" title="" showArrow={false} showClose onClose={onClose} closeLabel={closeLabel} />
       <div className="ds-error-empty-state__content">
-        <div className="ds-error-empty-state__icon" aria-hidden="true">
-          {icon || <ImageOff size={64} strokeWidth={1.5} aria-hidden="true" />}
-        </div>
+        <Image className="ds-error-empty-state__image" size="1:1" src={imageSrc} alt={imageAlt} />
         <div className="ds-error-empty-state__text">
           <TitleTag id={titleId} className="ds-error-empty-state__title">{title}</TitleTag>
           <p id={descriptionId} className="ds-error-empty-state__description">{description}</p>

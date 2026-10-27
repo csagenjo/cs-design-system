@@ -43,9 +43,10 @@ Rules that apply to every entry:
 | Data | DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
-| Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss` |
+| Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss`, `_dialogBase` (use Dialog / DialogSimple / ErrorAndEmptyState) |
 
 ---
 
@@ -2715,5 +2716,130 @@ Known gaps: none.
 **Don't**
 - Don't use a table for layout.
 - Don't put more than 2 actions in a cell.
+
+---
+
+## Dialog · DialogSimple · ErrorAndEmptyState · Scrim
+
+**Group:** Overlays
+**Figma:** 🟢 Dialog page → `Dialog` (Width PopUp / Full Screen × Size Standard / Small × Header Default / Primary / onPrimary / Secondary / Tertiary; Show Buttons, Main Button, Secondary Button), `Dialog Simple` (Default / Expanded), `.Header` (Color × Size; Title, Back button, Close button — Icon Button instances), `Error and Empty State` (Full Screen / Pop up), `Scrim`, `Dialog with Scrim` · frame *Dialog — How to use & Accessibility* (27/10)
+**Code:** `src/components/Dialog.jsx`, `DialogSimple.jsx`, `ErrorAndEmptyState.jsx`, `Scrim.jsx`, shared header `_dialogBase.jsx` (internal)
+**Tokens:** `--ds-dialog-*` (header colours, focus per header, root, control area, simple, empty state), `--ds-borderColor-focus-*-onColor|onLight`
+
+Modal surfaces: Dialog for a task or decision, Dialog Simple for a short question, Error and Empty State for an empty or failed view, Scrim behind them. They share one header (title + Back and Close as Icon Buttons).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A task or decision that needs the user's full attention before going back to the page (Dialog)
+- A short question or confirmation with one or two answers (Dialog Simple)
+- Nothing to show or an error loading a view (Error and Empty State)
+- Short, non-blocking feedback → Snackbar or Inline Notification.
+
+**Properties**
+- Dialog · Header → Default · Primary · onPrimary · Secondary · Tertiary (colour of the header bar)
+- Dialog · Size → Standard (header 60) · Small (header 44)
+- Dialog · Width → PopUp (480, height by content, up to the screen) · Full Screen (fills the screen; sample 375 × 667)
+- Dialog · Show Buttons / Main Button / Secondary Button.
+- Dialog Simple · Default (280, Small buttons) · Expanded (480 × 680, Large buttons)
+- Error and Empty State · Full Screen · Pop up (359) — Image 1:1 (120) + title + paragraph.
+- Header · Back button / Close button (Icon Button Default Tertiary, locked).
+
+**Full Screen or Pop up**
+- Dialog Pop up → tablet and desktop (≥ 768): a short task that keeps the page visible behind.
+- Dialog Full Screen → mobile (< 768), and on any device for long or multi-step tasks (forms, lists to pick from).
+- Same task on every device: Full Screen on mobile, Pop up from tablet up — never a 480 Pop up on a 375 screen.
+- Dialog Simple → any device: it is 280 wide and only asks one question.
+- Error and Empty State Full Screen → the whole view is empty or failed (it replaces the page content, not a modal).
+- Error and Empty State Pop up → an action inside the page returned nothing or failed and the page stays behind; on mobile use Full Screen.
+
+**Behaviour**
+- Opens over a Scrim; the rest of the page can't be used until it closes.
+- Close (X), Escape or an answer closes it; focus goes back to what opened it.
+- Content scrolls inside; header and buttons stay in place.
+
+**Sizing**
+- Header Standard 4 + Icon Button Medium 52 + 4 = 60 · Small 2 + 40 + 2 = 44 (focus area included)
+- Header gap 12 · Control area padding 16, gap 12 · Dialog Simple padding 12, buttons gap 8.
+- Error and Empty State padding 16 · image → text 16 · title → paragraph 8 · Full Screen: content centred in the free space, buttons at the bottom.
+
+### Developers · React
+
+**Import**
+- `import { Dialog } from './components/Dialog'; DialogSimple, ErrorAndEmptyState, Scrim from './components/*'`
+
+**Props**
+- Dialog · header, size 'standard'|'small', width 'popUp'|'fullScreen', title, showArrow + onBack, crossButton + onClose, showButtons, mainButton(+Label, onMainButton), secondaryButton(+Label, onSecondaryButton), children, modal, backLabel, closeLabel.
+- DialogSimple · variant 'default'|'expanded', title, message, onClose, showButtonBar, primaryButton / secondaryButton (+Label, on…), modal, closeLabel.
+- ErrorAndEmptyState · variant 'fullScreen'|'popUp', imageSrc, imageAlt, title, description, onClose, showButtons, primary/secondary button props, headingLevel, announceOnMount.
+- Scrim · onClick (optional mouse close)
+
+**Example**
+- `{open && (<div className="overlay"><Scrim onClick={close} />`
+- `<Dialog header="primary" title="Edit address" onClose={close} mainButtonLabel="Save" onMainButton={save} secondaryButtonLabel="Cancel" onSecondaryButton={close}>…</Dialog></div>)}`
+- The consumer owns the portal, the fixed position and the open state: mounted = open.
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A blocking task or decision → Dialog; a yes/no question → DialogSimple; empty or failed view → ErrorAndEmptyState.
+
+**Don't pick it when**
+- Feedback that doesn't need an answer → Snackbar / InlineNotification.
+- Extra content next to a control → PopoverSheet.
+
+**Full Screen or Pop up**
+- Mobile (< 768) → `width="fullScreen"`; tablet / desktop → `popUp`, unless the task is long.
+- ErrorAndEmptyState: `fullScreen` when it replaces a whole view, `popUp` only over a page that stays.
+
+**Composition rules**
+- Mount it only while open; render Scrim behind it.
+- Never rebuild the header buttons: Back/Close are IconButton inside DialogHeader.
+- Main action = Primary button, the other = Secondary; header colour decides Default or Accent buttons.
+- Use `modal={false}` only for static documentation.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus moves into the dialog, stays inside while it is open and returns to the trigger on close.
+- Escape closes; the page behind can't be reached.
+- The title names the dialog; Dialog Simple also reads its question.
+- Back and Close have a visible focus ring that contrasts with every header colour.
+- Text and icons contrast on all header colours, light and dark.
+
+**Your job**
+- Write a title that says what the dialog is for.
+- Label buttons with the action ("Delete", "Save"), not "OK".
+- Error and Empty State image: decorative unless it adds information.
+
+### Developers · React
+
+**Semantics**
+- Dialog / Error and Empty State Pop up = role dialog + aria-modal, named by the h2 title.
+- Dialog Simple = role alertdialog, aria-describedby = the message.
+- Error and Empty State Full Screen = page content: heading (headingLevel), title + text announced on mount.
+- Back / Close = IconButton with backLabel / closeLabel ('Back' / 'Close').
+
+**Keyboard**
+- Tab / Shift+Tab cycle inside; Escape → onClose; Enter / Space activate buttons.
+
+**Known gaps**
+- None.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every Dialog has a title (or an explicit aria-label)
+- onClose is wired: Escape and X must close it.
+- imageAlt set when the image carries meaning.
+
+**Don't**
+- Don't open a dialog from another dialog.
+- Don't put the only way to close it in the content.
+- Don't change the variant properties of the header's Icon Buttons.
 
 ---

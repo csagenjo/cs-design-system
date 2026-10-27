@@ -2,26 +2,29 @@
  * DialogHeader — pieza interna compartida por Dialog / DialogSimple / ErrorAndEmptyState.
  * NO se exporta como componente público del sistema (mismo criterio que _inputBase.js).
  *
+ * Back y Close son Icon Button (Default · Tertiary · Medium/Small), nunca un botón propio (27/10).
+ *
  * 5 variantes de color (default/primary/onPrimary/secondary/tertiary): bg + title + icon
  * deben invertir (o no) JUNTOS con el modo — ver comentario largo en tokens.css junto a
  * --ds-dialog-header-*. default/secondary/tertiary invierten; primary/onPrimary son fijos.
  */
 import React from 'react';
 import { injectStyles } from './_inputBase';
-import { Icon } from './Icon';
+import { IconButton } from './IconButton';
 
 const css = `
 .ds-dialog-header {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--ds-dialog-root-gap-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
   padding: 0 var(--ds-dialog-header-padding-hor);
 }
-.ds-dialog-header--standard { height: 60px; padding-top: var(--ds-dialog-header-padding-ver-regular); padding-bottom: var(--ds-dialog-header-padding-ver-regular); }
-.ds-dialog-header--small    { height: 44px; padding-top: var(--ds-dialog-header-padding-ver-small); padding-bottom: var(--ds-dialog-header-padding-ver-small); }
+/* Alto = padding + Icon Button con su área de foco: 4 + 52 + 4 = 60 / 2 + 40 + 2 = 44 */
+.ds-dialog-header--standard { padding-top: var(--ds-dialog-header-padding-ver-regular); padding-bottom: var(--ds-dialog-header-padding-ver-regular); }
+.ds-dialog-header--small    { padding-top: var(--ds-dialog-header-padding-ver-small);   padding-bottom: var(--ds-dialog-header-padding-ver-small); }
 
 .ds-dialog-header--standard .ds-dialog-header__title { font-size: var(--ds-fontSize-title-lg); line-height: var(--ds-lineHeight-title-lg); }
 .ds-dialog-header--small    .ds-dialog-header__title { font-size: var(--ds-fontSize-title-md); line-height: var(--ds-lineHeight-title-md); }
@@ -38,40 +41,50 @@ const css = `
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ds-dialog-header--left .ds-dialog-header__title { text-align: left; }
 
-.ds-dialog-header__icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 10px;
-  background: transparent;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-}
-.ds-dialog-header__icon-btn:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
-.ds-dialog-header__icon-btn--placeholder  { visibility: hidden; pointer-events: none; }
-
+/* Back y Close = Icon Button Default Tertiary (Medium en Standard, Small en Small).
+   Se re-tematiza redefiniendo sus variables, como Collapsible: color del icono
+   y anillo de foco que contrastan con el fondo de cada header. */
 .ds-dialog-header--default    { background: var(--ds-dialog-header-bg-default); }
-.ds-dialog-header--default    .ds-dialog-header__title    { color: var(--ds-dialog-header-title-fg-default); }
-.ds-dialog-header--default    .ds-dialog-header__icon-btn  { color: var(--ds-dialog-header-icon-fg-default); }
+.ds-dialog-header--default    .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-default); }
+.ds-dialog-header--default    .ds-icon-btn {
+  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-default);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-default);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-default);
+}
 
 .ds-dialog-header--primary    { background: var(--ds-dialog-header-bg-primary); }
-.ds-dialog-header--primary    .ds-dialog-header__title    { color: var(--ds-dialog-header-title-fg-primary); }
-.ds-dialog-header--primary    .ds-dialog-header__icon-btn  { color: var(--ds-dialog-header-icon-fg-primary); }
+.ds-dialog-header--primary    .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-primary); }
+.ds-dialog-header--primary    .ds-icon-btn {
+  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-primary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-primary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-primary);
+}
 
 .ds-dialog-header--on-primary { background: var(--ds-dialog-header-bg-on-primary); }
-.ds-dialog-header--on-primary .ds-dialog-header__title    { color: var(--ds-dialog-header-title-fg-on-primary); }
-.ds-dialog-header--on-primary .ds-dialog-header__icon-btn  { color: var(--ds-dialog-header-icon-fg-on-primary); }
+.ds-dialog-header--on-primary .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-on-primary); }
+.ds-dialog-header--on-primary .ds-icon-btn {
+  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-on-primary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-on-primary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-on-primary);
+}
 
 .ds-dialog-header--secondary  { background: var(--ds-dialog-header-bg-secondary); }
-.ds-dialog-header--secondary  .ds-dialog-header__title    { color: var(--ds-dialog-header-title-fg-secondary); }
-.ds-dialog-header--secondary  .ds-dialog-header__icon-btn  { color: var(--ds-dialog-header-icon-fg-secondary); }
+.ds-dialog-header--secondary  .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-secondary); }
+.ds-dialog-header--secondary  .ds-icon-btn {
+  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-secondary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-secondary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-secondary);
+}
 
 .ds-dialog-header--tertiary   { background: var(--ds-dialog-header-bg-tertiary); }
-.ds-dialog-header--tertiary   .ds-dialog-header__title    { color: var(--ds-dialog-header-title-fg-tertiary); }
-.ds-dialog-header--tertiary   .ds-dialog-header__icon-btn  { color: var(--ds-dialog-header-icon-fg-tertiary); }
+.ds-dialog-header--tertiary   .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-tertiary); }
+.ds-dialog-header--tertiary   .ds-icon-btn {
+  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-tertiary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-tertiary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-tertiary);
+}
 `;
 
 injectStyles('ds-dialog-header', css);
@@ -88,6 +101,7 @@ export function DialogHeader({
   color = 'default',
   size = 'standard',      // 'standard' | 'small'
   title = 'Dialog Title',
+  titleAlign = 'center',  // 'center' | 'left' (Dialog Simple, como en Figma)
   showArrow = true,
   showClose = true,
   onBack,
@@ -100,28 +114,23 @@ export function DialogHeader({
     'ds-dialog-header',
     `ds-dialog-header--${size}`,
     `ds-dialog-header--${COLOR_CLASS[color] || 'default'}`,
-  ].join(' ');
+    titleAlign === 'left' ? 'ds-dialog-header--left' : '',
+  ].filter(Boolean).join(' ');
+  const btnSize = size === 'small' ? 'small' : 'medium';
 
+  // Un botón oculto no deja hueco (igual que Figma: la capa oculta sale del auto-layout).
   return (
     <div className={classes}>
-      {showArrow ? (
-        <button type="button" className="ds-dialog-header__icon-btn" onClick={onBack} aria-label={backLabel}>
-          <Icon name="ArrowLeft" size="sm" />
-        </button>
-      ) : (
-        <span className="ds-dialog-header__icon-btn ds-dialog-header__icon-btn--placeholder" aria-hidden="true" />
+      {showArrow && (
+        <IconButton type="default" variant="tertiary" size={btnSize} icon="arrow-left" ariaLabel={backLabel} onClick={onBack} />
       )}
       {/* Título = encabezado real (h2) para que el lector lo anuncie y el diálogo
           lo use como nombre. Sin título (ErrorAndEmptyState) solo queda el hueco. */}
       {title
         ? <h2 id={titleId} className="ds-dialog-header__title">{title}</h2>
         : <span className="ds-dialog-header__title" aria-hidden="true" />}
-      {showClose ? (
-        <button type="button" className="ds-dialog-header__icon-btn" onClick={onClose} aria-label={closeLabel}>
-          <Icon name="X" size="sm" />
-        </button>
-      ) : (
-        <span className="ds-dialog-header__icon-btn ds-dialog-header__icon-btn--placeholder" aria-hidden="true" />
+      {showClose && (
+        <IconButton type="default" variant="tertiary" size={btnSize} icon="x" ariaLabel={closeLabel} onClick={onClose} />
       )}
     </div>
   );
