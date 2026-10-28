@@ -312,6 +312,7 @@
   --ds-border-width-sm:     1px;
   --ds-border-width-md:     1.5px;
   --ds-border-width-lg:     2px;
+  --ds-border-width-xl:     4px;   /* borderWidth/xl — ribbon de List View */
 
   /* ── Border Radius ── */
   --ds-border-radius-xs:     2px;
@@ -1080,6 +1081,36 @@
      COMPONENT TOKENS — Radio
      ══════════════════════════════════════════════════════════════ */
 
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Switch (switch/all/*) · 28/10/2026
+     Misma estructura que Checkbox v3: la fila (label + switch) es el control,
+     área de foco de 4, hover azul, pressed por opacidad, doble anillo de foco.
+     Track 44 × 24 (2 + pulgar 20 + 2, ancho = 2 pulgares + 2 paddings).
+     Read-only como los inputs: fondo de disabled con el pulgar en color normal.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-switch-track-bg-on:             var(--ds-bg-success);        /* switch/all/track/bg/on */
+  --ds-switch-track-bg-off:            var(--ds-bg-inverse);        /* switch/all/track/bg/off */
+  --ds-switch-track-bg-disabled:       var(--ds-bg-disabled);
+  --ds-switch-track-bg-read-only:      var(--ds-bg-disabled);       /* switch/all/track/bg/readOnly */
+  --ds-switch-thumb-fg-generic:        var(--ds-fg-inverse);        /* contrasta con on (verde) y off (negro/blanco), invierte con el track */
+  --ds-switch-thumb-fg-disabled:       var(--ds-fg-disabled);
+  --ds-switch-thumb-fg-read-only:      var(--ds-fg-default);        /* switch/all/thumb/fg/readOnly */
+  --ds-switch-track-height:            var(--ds-sizing-sm);         /* 24 */
+  --ds-switch-thumb-size:              var(--ds-sizing-xs);         /* 20 */
+  --ds-switch-track-padding:           var(--ds-spacing-2xs);       /* 2 */
+  --ds-switch-track-border-radius:     var(--ds-border-radius-xl);  /* 12 = alto / 2 */
+  --ds-switch-label-fg:                var(--ds-fg-label-default);
+  --ds-switch-label-disabled:          var(--ds-fg-label-disabled);
+  --ds-switch-gap:                     var(--ds-spacing-sm);        /* switch/all/container/gap/generic (6) */
+  --ds-switch-padding:                 var(--ds-spacing-2xs);       /* switch/all/container/padding/generic (2) */
+  --ds-switch-border-radius-row:       var(--ds-border-radius-md);  /* switch/all/container/borderRadius/generic (8) */
+  --ds-switch-bg-hover:                var(--ds-bg-hover-primary);  /* switch/all/container/bg/hover */
+  --ds-switch-opacity-pressed:         var(--ds-opacity-pressed);   /* switch/all/container/opacity/pressed */
+  --ds-switch-focus-area-padding:      var(--ds-spacing-xs);        /* switch/all/root/focusArea/padding (4) */
+  --ds-switch-focus-width:             var(--ds-border-width-lg);   /* switch/all/root/borderWidth/focus (2) */
+  --ds-switch-focus-inner:             var(--ds-borderColor-focus-inner);
+  --ds-switch-focus-outer:             var(--ds-borderColor-focus-outer);
+
   --ds-radio-root-bg-generic:               var(--ds-bg-default);
   --ds-radio-root-bg-hover:                 var(--ds-bg-hover-primary);
   --ds-radio-root-bg-disabled:              var(--ds-bg-disabled);
@@ -1789,20 +1820,20 @@
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-list-view-root-bg-generic:          var(--ds-bg-default);        /* #FFFFFF / #050506 dark */
   --ds-list-view-root-bg-hover:            var(--ds-bg-hover-primary);  /* #BDE8FF / #016398 dark */
-  --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);       /* #F1F2F4 / #9AA1AA dark */
-  --ds-list-view-root-opacity-pressed:     var(--ds-opacity-pressed);   /* 0.8 */
-  --ds-list-view-root-border-color-generic:  var(--ds-borderColor-subtle);   /* divider — #F1F2F4 / #676D76 dark */
-  --ds-list-view-root-border-color-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
-  --ds-list-view-root-border-color-disabled: var(--ds-borderColor-disabled); /* #AAAFB5 / #7B8490 dark */
+  --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);
+  --ds-list-view-root-opacity-pressed:     var(--ds-opacity-pressed);   /* listView/all/root/opacity/pressed (antes bg/pressed) */
+  --ds-list-view-root-padding:             var(--ds-spacing-xl);        /* listView/all/root/padding/generic — 16: izquierda de la fila; arriba/derecha/abajo del contenido */
+  --ds-list-view-root-gap:                 var(--ds-spacing-xl);        /* listView/all/root/gap/generic — 16: panel izquierdo → contenido → panel derecho */
+  --ds-list-view-center-gap:               var(--ds-spacing-xs);        /* listView/all/center/gap/generic — 4: header → descripción → detalle */
+  --ds-list-view-divider-color-generic:    var(--ds-borderColor-subtle);   /* listView/all/divider/borderColor/generic (28/10, antes tomaba prestado el de Divider) */
+  --ds-list-view-divider-color-disabled:   var(--ds-borderColor-disabled);
+  --ds-list-view-divider-width:            var(--ds-border-width-sm);      /* 1 en los tres divisores (All Sides era 1,5) */
   --ds-list-view-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-list-view-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-list-view-root-border-width-generic:  1.5px;
-  --ds-list-view-root-border-width-focus:    2px;
-  --ds-list-view-root-border-radius-focus-inner: 8px;
-  --ds-list-view-root-border-radius-focus-outer: 10px;
+  --ds-list-view-root-border-width-focus:  var(--ds-border-width-lg);   /* 2 — doble anillo POR DENTRO (filas apiladas) */
   --ds-list-view-ribbon-border-color-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
   --ds-list-view-ribbon-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-list-view-ribbon-border-width-selected: 4px;
+  --ds-list-view-ribbon-border-width-selected: var(--ds-border-width-xl);  /* 4 — borderWidth/xl */
   --ds-list-view-icon-left-fg-generic:     var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
   --ds-list-view-icon-left-fg-disabled:    var(--ds-fg-icon-disabled);
   --ds-list-view-icon-chevron-fg-generic:  var(--ds-fg-icon-subtle);    /* #676D76 / #EEEFF1 dark */

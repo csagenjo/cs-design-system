@@ -96,6 +96,7 @@ import { StepIndicatorLarge } from '../organisms/StepIndicatorLarge';
 import { StepIndicatorSmall } from '../organisms/StepIndicatorSmall';
 import { StepNavigator } from '../organisms/StepNavigator';
 import { SubstepNavigator } from '../organisms/SubstepNavigator';
+import { Switch } from '../components/Switch';
 import { Table, TableRow } from '../organisms/Table';
 import { Tabs, TabPanel } from '../organisms/Tabs';
 import { TopNavigation } from '../organisms/TopNavigation';
@@ -798,16 +799,23 @@ export default function Gallery({ mode }) {
 
       <Section name="ListView">
         <Col style={{ maxWidth: 520 }}>
-          <ListView header="García Fernández" descriptionText="Cliente nº 4521" detailText="Alta: 12/03/2026" leftIcon={<Icon name="file-text" />} onClick={noop} />
-          <ListView header="Cuenta corriente" descriptionText="ES00 0000 0000 0000 0000"
-            rightPanelContent={<AmountView amount="1.250,00" currency="€" />} divider="fullBottom" onClick={noop} />
-          <ListView header="Fila seleccionada" selected swapDescription={<Text chevron>Ver más</Text>} onClick={noop} />
+          <ListView header="Jane Doe" descriptionText="Customer 4521" detailText="Since 12/03/2026" leftIcon={<Icon name="file-text" />} onClick={noop} />
+          <ListView header="Current account" descriptionText="ES00 0000 0000 0000 0000"
+            rightPanelContent={<AmountView amount="1,250.00" currency="EUR" />} divider="fullBottom" onClick={noop} />
+          <ListView header="Selected row" selected swapDescription={<Text chevron>See more</Text>} onClick={noop} />
           {['secondary', 'tertiary'].map((c) => (
             <ListView key={c} header={`Detail ${c}`} detailColor={c} divider="partialBottom" onClick={noop} />
           ))}
           <ListView header="All sides" divider="allSides" onClick={noop} />
-          <ListView header="Disabled" disabled onClick={noop} />
-          <ListView header="Sin paneles" leftPanel={false} rightPanel={false} description={false} detail={false} onClick={noop} />
+          <ListView header="Disabled" disabled divider="fullBottom" onClick={noop} />
+          <ListView header="No panels" leftPanel={false} rightPanel={false} description={false} detail={false} onClick={noop} />
+          <ListView header="Email alerts" control="checkbox" checked onClick={noop} />
+          <div role="radiogroup" aria-label="Delivery">
+            <ListView header="Standard" control="radio" checked divider="partialBottom" onClick={noop} />
+            <ListView header="Express" control="radio" divider="partialBottom" onClick={noop} />
+          </div>
+          <ListView header="Notifications" control="switch" controlPlacement="right" checked onClick={noop} />
+          <ListView header="Notifications off" control="switch" controlPlacement="right" disabled onClick={noop} />
         </Col>
       </Section>
 
@@ -1277,6 +1285,19 @@ export default function Gallery({ mode }) {
             </div>
           ))}
         </Row>
+      </Section>
+
+      <Section name="Switch">
+        <Col>
+          <Switch label="Notifications" checked onChange={noop} />
+          <Switch label="Auto-renew" onChange={noop} />
+          <Switch label="Read only on" checked state="readOnly" />
+          <Switch label="Read only off" state="readOnly" />
+          <Switch label="Disabled on" checked state="disabled" />
+          <Switch label="Disabled off" state="disabled" />
+          <Switch ariaLabel="Dark mode" onChange={noop} />
+          <div style={{ maxWidth: 320 }}><Switch label="Full width" fullWidth checked onChange={noop} /></div>
+        </Col>
       </Section>
 
       <Section name="Table">
