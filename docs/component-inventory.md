@@ -39,8 +39,8 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
+| Forms | Switch · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
@@ -2841,5 +2841,201 @@ Modal surfaces: Dialog for a task or decision, Dialog Simple for a short questio
 - Don't open a dialog from another dialog.
 - Don't put the only way to close it in the content.
 - Don't change the variant properties of the header's Icon Buttons.
+
+---
+
+## Switch
+
+**Group:** Forms
+**Figma:** 🟢 Switch page → `Switch` (State Initial / Hover / Pressed / Focus / Read-only / Disabled × Behavior Selected / Unselected; Show Label, Label), `.Switch` (track + thumb, State Initial / Read-only / Disabled × Behavior On / Off) · frame *Switch — How to use & Accessibility* (28/10)
+**Code:** `src/components/Switch.jsx`
+**Tokens:** `--ds-switch-*`
+
+An on/off control that applies a setting immediately. Same structure as Checkbox: the whole row (label + switch) is the control, with a 4 px focus area.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A setting that takes effect at once, without Save (notifications on, auto-renew)
+- A choice inside a form that is saved with the form → Checkbox.
+- One of several options → Radio Group or Segmented Control.
+
+**Properties**
+- State → Initial · Hover · Pressed · Focus · Read-only · Disabled.
+- Behavior → Selected (on) · Unselected (off)
+- Show Label / Label — the label sits on the left.
+
+**Behaviour**
+- The whole row (label + switch) is the control: hover fills the row, pressed lowers its opacity.
+- Read-only: shows the value but can't be changed — disabled background, thumb in the normal colour.
+- On = green track, thumb right · Off = dark track, thumb left (position also tells the state)
+
+**Sizing**
+- Track 44 × 24 (2 + thumb 20 + 2) · row padding 2, label → switch 6, radius 8.
+- Focus area 4 around the row: double ring inside the component, its size never changes.
+
+### Developers · React
+
+**Import**
+- `import { Switch } from './components/Switch'`
+
+**Props**
+- checked / defaultChecked, onChange, label, showLabel, ariaLabel (when there's no visible label), state 'default'|'readOnly'|'disabled', readOnlyLabel ('read only'), name, value, id, fullWidth.
+
+**Example**
+- `<Switch label="Notifications" checked={on} onChange={(e) => setOn(e.target.checked)} />`
+- `<Switch label="Auto-renew" checked state="readOnly" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- An on/off setting applied immediately.
+
+**Don't pick it when**
+- The value is submitted with a form → Checkbox.
+- More than two options → RadioGroup / SegmentedControl.
+
+**Composition rules**
+- Label says what is switched on, not the action ("Notifications", not "Turn on notifications")
+- Inside a List View row use ListView control="switch", never a Switch inside the row.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Read as "switch, on / off"; Space toggles it.
+- State shown by colour and thumb position, never colour alone.
+- Visible double focus ring around the row.
+- Read-only stays reachable with the keyboard and says "read only".
+
+**Your job**
+- Every switch has a visible label (or a name for screen readers)
+- Show the result of the change somewhere if it isn't obvious.
+
+### Developers · React
+
+**Semantics**
+- `<input type="checkbox" role="switch"> inside a <label>; aria-checked comes from the native checked state`
+- Read-only: aria-readonly, the change is blocked; a hidden ", read only" is added to the name.
+- Disabled: native disabled, out of the Tab order.
+- Without label: ariaLabel (dev warning if missing)
+
+**Keyboard**
+- Tab focuses it, Space toggles it.
+
+**Known gaps**
+- None.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every Switch has label or ariaLabel.
+- onChange applies the setting immediately (no Save button for it)
+
+**Don't**
+- Don't use a Switch for a form field that is submitted later.
+- Don't put a Switch inside a clickable row.
+
+---
+
+## ListView
+
+**Group:** Data
+**Figma:** 🟢 List View page → `List View` (State × Divider; Selected, Description, Detail, Left Panel, Right Panel, Swap Description), `.Left Panel`, `.Right Panel` · frame *List View — How to use & Accessibility* (28/10)
+**Code:** `src/components/ListView.jsx`
+**Tokens:** `--ds-list-view-*`
+
+A clickable row in a list: header, description and detail, with an optional left panel (icon or selection control) and right panel (amount, badge, icon…).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A list of records the user opens or selects (search results, accounts, menu items)
+- Data compared across columns → Table · one record's details → Description List.
+
+**Properties**
+- State → Initial · Hover · Pressed · Focus · Disabled.
+- Divider → None · Partial Bottom (leaves the left panel free) · Full Bottom · All Sides — 1 px.
+- Selected → 4 px ribbon on the left · Description / Detail on or off · Swap Description (Text)
+- Left Panel → Icon · Checkbox · Radio Button · Switch · Loading Indicator.
+- Right Panel → Amount View · Amount Two · Highlight Badge · Badge with Icon · Icon · Loading Indicator · Checkbox · Radio Button · Switch.
+
+**Behaviour**
+- The whole row is one control: it opens the item, or with Checkbox / Radio / Switch the row is that control.
+- The control in a panel is only the indicator: it is not focusable on its own.
+- Hover blue, pressed opacity 0.8, focus double ring inside the row (rows are stacked)
+
+**Sizing**
+- Row padding-left 16, gap 16 · content padding 16 top/right/bottom · header → description → detail 4.
+- Dividers and focus are drawn inside: the row height never changes.
+
+### Developers · React
+
+**Import**
+- `import { ListView } from './components/ListView'`
+
+**Props**
+- header, description + descriptionText, swapDescription, detail + detailText + detailColor, leftPanel + leftIcon, rightPanel + rightPanelContent, control 'checkbox'|'radio'|'switch', controlPlacement 'left'|'right', checked, selected + current, divider 'none'|'partialBottom'|'fullBottom'|'allSides', disabled, onClick.
+
+**Example**
+- `<ListView header="Current account" descriptionText="ES00 0000 …" rightPanelContent={<AmountView amount="1,250.00" currency="EUR" />} divider="fullBottom" onClick={open} />`
+- `<ListView header="Email alerts" control="switch" controlPlacement="right" checked={on} onClick={() => setOn(!on)} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Rows that open something or are selected one by one.
+
+**Don't pick it when**
+- A dropdown or picker list → SelectorListItem.
+- Columns of data → Table.
+
+**Composition rules**
+- rightPanelContent: static content only (AmountView, BadgeHighlight, Icon, LoadingSpinner) — no buttons or links.
+- Selection: use control, never a Checkbox / Radio / Switch inside rightPanelContent.
+- Radio rows: wrap them in an element with role="radiogroup" and a name.
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Each row is one stop in the Tab order and reads its header, description and detail.
+- Selected row is announced as current; selection rows announce checked / not checked.
+- Focus ring visible on every background, inside the row.
+- Text, icons and dividers contrast in light and dark.
+
+**Your job**
+- Keep the header short and unique in the list.
+- Don't design a second action inside the row: put it outside the list.
+
+### Developers · React
+
+**Semantics**
+- Root = <button>; with control → role checkbox / radio / switch + aria-checked.
+- selected → aria-current (current, 'page' in navigation)
+- The control indicator is inert and aria-hidden; the row carries the name.
+- Dev warning when rightPanelContent / swapDescription contain an interactive element.
+
+**Keyboard**
+- Tab between rows; Enter / Space activate (or toggle with control)
+
+**Known gaps**
+- None.
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- onClick on every row (or control + checked + onClick)
+- Radio rows inside role="radiogroup" with aria-label.
+
+**Don't**
+- Don't nest buttons or links in the row.
+- Don't use selected for checked state: selected = current item, checked = control.
 
 ---
