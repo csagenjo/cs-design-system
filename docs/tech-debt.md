@@ -6,7 +6,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs. Siguientes: Page Title, Combobox; después el resto, críticos primero. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title. Siguientes: Combobox; después el resto, críticos primero. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 
@@ -15,7 +15,6 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **Popover: geometría compartida.** El cierre (Escape, click fuera) ya es común (`_popoverDismiss.js`); la posición no: Combobox, Country/Currency Picker y PopoverSheet calculan la suya, sin "flip" en el borde del viewport. Construirlo cuando un caso real lo pida.
 - **Drawer: icono + título en la misma fila del toggle.** Hoy el título de SidebarMenu va como primera línea del contenido.
 - **SidebarMenu: límites conocidos.** Colapsado oculta el árbol entero (sin vista solo iconos con tooltip) y no tiene slot de pie (perfil, salir, versión).
-- **PageTitle: tamaño de icono responsive.** `pageTitle/nav/icon/size/*` (20/24/32) no tiene token Device; si otro componente lo necesita, crear `sizing/icon/*` responsive.
 - **Country Picker / Selector: verificar.** Dos notas antiguas sin comprobar tras A11y-1: focus-inner en teal en las filas, y tokens `iconLeft/fg` / `borderColor/focus-inner` de Selector pendientes de crear.
 
 ## Tokens

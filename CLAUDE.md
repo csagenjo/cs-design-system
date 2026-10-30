@@ -65,9 +65,9 @@ Detalle de cada uno en `docs/component-notes.md`.
 
 **Átomos (`src/components/`)** — Button v3 · IconButton v1.1 · Checkbox v3 · Radio v2 · Switch v1 · Chip v2 · Link v4 · LinkList v1 · CTALink v4 · VisuallyHidden v1 · LiveRegion v1 · FieldLabel v1 · HelperText v1 · ValidationMessage v1 · InputText v2 · InputDate v2 · InputDropdown v2 · InputStepper v2 · InputTelephone v2 · InputAmount v2 · InputCombobox v1 · Selector v2 (+ SelectorInvoker, SelectorListItem) · AccountSelector v2 (+ invoker, list item) · BadgeNotification v1 · BadgeHighlight v1 · AmountView v2 · Pagination v1 · Headline v2 · SectionHeader v1 · Text v1 · DescriptionText v1 · DetailText v1 · List v1 · Divider v1 · CellData v1.1 · CellHeader v2 · CellMore v2 · ListView v2 · Snackbar v1.1 · InlineNotification v1 · Tooltip v1 · LoadingSpinner v1 · ProgressBar v1 · Dialog v1.1 · DialogSimple v1.1 · ErrorAndEmptyState v1.1 · Scrim v1 · PopoverSheet v1.1 · Drawer v1 · Card v1 · Image v1 · TabItem v3 · SegmentedControl v1 · Accordion v1 · Collapsible v1 · CollapsibleIconButton v1 · Slider v1 · RangeSlider v1 · SteppedSlider v1 · DropZone v2 · DocumentItem v2 · LabelDescription v1 · CountryFlag v1 · Node v1 · StepHor v1 · StepVer v1
 
-**Organismos (`src/organisms/`)** — ButtonBar v3 · Table v1 · CellActions v1 · DescriptionList v2 · FileUpload v2 · FileSelector v1 · Tabs v3 · RadioGroup v1 · CheckboxGroup v1 · AccordionGroup v1 · Combobox v1.1 · CountryPicker v1.1 · CurrencyPicker v1 · SidebarMenu v1 · TopNavigation v1 · PageTitle v1 · StepIndicatorLarge v1 · StepIndicatorSmall v1 · StepNavigator v1 · SubstepNavigator v1
+**Organismos (`src/organisms/`)** — ButtonBar v3 · Table v1 · CellActions v1 · DescriptionList v2 · FileUpload v2 · FileSelector v1 · Tabs v3 · RadioGroup v1 · CheckboxGroup v1 · AccordionGroup v1 · Combobox v1.1 · CountryPicker v1.1 · CurrencyPicker v1 · SidebarMenu v1 · TopNavigation v1 · PageTitle v2 · StepIndicatorLarge v1 · StepIndicatorSmall v1 · StepNavigator v1 · SubstepNavigator v1
 
-**Siguientes:** documentar Page Title y Combobox (ver `docs/tech-debt.md`). Backlog: Bottom Navigation, Bottom Sheet, Videoplayer.
+**Siguientes:** documentar Combobox (ver `docs/tech-debt.md`). Backlog: Bottom Navigation, Bottom Sheet, Videoplayer.
 
 ## 7. Workflow
 

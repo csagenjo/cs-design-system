@@ -2051,14 +2051,26 @@
      responsive ya lo resuelve Headline.jsx por CSS, no hace falta token
      propio aquí. Iconos y gaps sí escalan por device.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-page-title-root-padding-hor:  8px;  /* pageTitle/root/paddingHor — spacing/md */
-  --ds-page-title-root-padding-ver:  4px;  /* pageTitle/root/paddingVer — spacing/xs */
-  --ds-page-title-root-gap:          12px; /* pageTitle/root/gap — spacing/lg, antes spacing/md(8) — Carol lo subió el 28/09: en local se veía todo muy pegado, la línea de título necesitaba más aire */
-  --ds-page-title-buttons-gap:       var(--ds-spacing-xl); /* pageTitle/buttons/gap → spacing/xl (26/10; antes 20 literal): + 8 del área de foco de Button = 24 visibles */
+  --ds-page-title-root-padding-hor:  var(--ds-spacing-md);  /* 8 — pageTitle/root/paddingHor (Mobile/Tablet) */
+  --ds-page-title-root-padding-ver:  var(--ds-spacing-xs);  /* 4 — pageTitle/root/paddingVer */
+  --ds-page-title-root-gap:          var(--ds-spacing-lg);  /* 12 — pageTitle/root/gap (subido de 8 por Carol, 28/09) */
+  --ds-page-title-buttons-gap:       var(--ds-spacing-xl);  /* 16 — pageTitle/buttons/gap: + 8 del área de foco de Button = 24 visibles */
   --ds-page-title-nav-icon-fg:       var(--ds-fg-icon-primary); /* pageTitle/nav/icon/fg */
-  --ds-page-title-nav-icon-size-mobile:  20px; /* pageTitle/nav/icon/size/mobile — sizing/xs */
-  --ds-page-title-nav-icon-size-tablet:  24px; /* pageTitle/nav/icon/size/tablet — sizing/sm */
-  --ds-page-title-nav-icon-size-desktop: 32px; /* pageTitle/nav/icon/size/desktop — sizing/md */
+  --ds-page-title-nav-icon-size-mobile:  var(--ds-sizing-xs);  /* 20 — en Figma la variante del Icon sigue al token desde el 30/10 */
+  --ds-page-title-nav-icon-size-tablet:  var(--ds-sizing-sm);  /* 24 */
+  --ds-page-title-nav-icon-size-desktop: var(--ds-sizing-md);  /* 32 */
+  /* Iconos de nav y acciones: padding 2 = hueco del anillo de foco doble (30/10) */
+  --ds-page-title-nav-padding:           var(--ds-spacing-2xs);          /* pageTitle/nav/padding/generic */
+  --ds-page-title-nav-focus-outer:       var(--ds-borderColor-focus-outer); /* pageTitle/nav/focusRing/borderColor/outer */
+  --ds-page-title-nav-focus-inner:       var(--ds-borderColor-focus-inner); /* pageTitle/nav/focusRing/borderColor/inner */
+  --ds-page-title-nav-focus-width:       var(--ds-border-width-lg);       /* 2 */
+  /* Desktop (30/10: antes sueltos en Figma; el código usaba los de móvil) */
+  --ds-page-title-desktop-root-padding-hor: var(--ds-spacing-xl);  /* 16 — pageTitle/desktop/root/paddingHor */
+  --ds-page-title-desktop-root-padding-top: var(--ds-spacing-xl);  /* 16 — pageTitle/desktop/root/paddingTop (abajo 0) */
+  --ds-page-title-desktop-root-gap:         var(--ds-spacing-md);  /* 8  — breadcrumb → título */
+  --ds-page-title-desktop-content-padding-ver: var(--ds-spacing-xl); /* 16 — pageTitle/desktop/content/paddingVer */
+  --ds-page-title-desktop-content-gap:      var(--ds-spacing-xl);  /* 16 — título → acciones */
+  --ds-page-title-desktop-breadcrumb-gap:   var(--ds-spacing-md);  /* 8 */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Top Navigation (topNavigation/all/*)
