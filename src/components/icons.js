@@ -9,7 +9,7 @@ import {
   FileText, Link as LinkIcon,
   ArrowUpAZ, ArrowDownZA, ArrowUpDown, Loader2,
   CircleX, Info, CircleCheck,
-  Menu, LogOut, Share2, Heart,
+  Menu, LogOut, Share2, Heart, MapPin,
 } from 'lucide-react';
 
 /**
@@ -64,4 +64,5 @@ export const ICONS = {
   LogOut, 'log-out': LogOut,
   Share2, 'share2': Share2, 'share': Share2,
   Heart, 'heart': Heart,
+  MapPin, 'map-pin': MapPin,
 };

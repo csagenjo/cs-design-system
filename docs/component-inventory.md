@@ -42,7 +42,7 @@ Rules that apply to every entry:
 | Forms | Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
-| Navigation | Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Navigation | PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
@@ -3248,3 +3248,107 @@ A row of tabs that switches between views of the same content, one panel visible
 - Don't use items[].disabled (removed): hide the tab instead
 - Don't put links or buttons inside a tab label
 - Don't use Tabs for page navigation
+
+## PageTitle
+
+**Group:** Navigation
+**Figma:** 🟢 Page Title page → `Page Title` (Device Mobile / Tablet / Desktop × Nav Close / Back / Link / Text / TextBold / TextDisabled / None / Breadcrumb; Show action 1 / 2 / 3) · frame *Page Title — How to use & Accessibility* (30/10)
+**Code:** `src/organisms/PageTitle.jsx`
+**Tokens:** `--ds-page-title-*` (`pageTitle/root|buttons|nav|desktop/*`)
+
+The header of a page: its only h1, a way back or out, and up to three page-level actions. Mobile/Tablet and Desktop have different layouts.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- The top of every page: says where the user is (one h1), how to leave and what they can do with the whole page
+- Actions on a single item of the page → put them next to that item, not here
+
+**Properties**
+- Device → Mobile · Tablet · Desktop (pick the one of the frame; the title size follows the device)
+- Nav (Mobile / Tablet) → Close · Back · Link · Text · TextBold · TextDisabled · None
+- Nav (Desktop) → Breadcrumb: location pin (decorative) + links + current page
+- Show action 1 / 2 / 3 — neutral placeholders (holder icon on Mobile/Tablet, "Action" button on Desktop)
+
+**Actions: what to put in the placeholders**
+- Page-level actions only, most used first: Share, Add to favourites, Search in the page, Download, Print, Edit, More options
+- At most 3; if there are more, keep 2 and move the rest to a "More options" action
+- Mobile / Tablet show only the icon: choose icons that are clear on their own
+
+**Behaviour**
+- Mobile / Tablet: nav left, actions right, title below; icons 20 (Mobile) / 24 (Tablet) with a double focus ring
+- Desktop: breadcrumb above; title left and actions (Button Default Tertiary Medium) right
+- The title wraps to more lines, never truncates
+
+**Sizing**
+- Mobile / Tablet padding 4 / 8, nav → title 12 · Desktop padding 16 (no bottom), breadcrumb → title 8, title row 16 top/bottom, title → actions 16
+
+### Developers · React
+
+**Import**
+- `import { PageTitle } from './organisms/PageTitle'`
+
+**Props**
+- title (string, always <h1>)
+- nav · { type: 'icon', icon, ariaLabel, onClick } · { type: 'link', label, href?, onClick? } · { type: 'text', label, weight?, disabled? } · { type: 'breadcrumb', items: [{ label, href?, onClick? }], ariaLabel? } · undefined = None
+- actions · [{ icon, label, onClick }] — label is the accessible name (icon only on Mobile/Tablet) and the button text on Desktop
+
+**Example**
+- `<PageTitle title="Payment details" nav={{ type: 'breadcrumb', items: [{ label: 'Accounts', href: '/accounts' }, { label: 'Payment details' }] }} actions={[{ icon: 'share', label: 'Share', onClick: share }]} />`
+- Mobile / Tablet and Desktop render both layouts; a 1024 px media query shows one
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Any page of La Plataforma: exactly one per page, at the top
+
+**Don't pick it when**
+- Section titles inside the page → SectionHeader or Headline level 2+
+- Titles inside a Dialog → the Dialog title
+
+**Composition rules**
+- One PageTitle per page; never a second h1
+- Breadcrumb only on Desktop; on Mobile/Tablet give a Back icon or link
+- Actions: page-level, max 3, label always set (it becomes the name of the icon button)
+- Use neutral icon names for the placeholders only in documentation; real pages use the icon of the action
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The title is the page's only h1, same level on every device
+- Icons on Mobile/Tablet are real buttons with a visible double focus ring
+- Breadcrumb is a navigation landmark; the current page is announced as current
+- The location pin is decorative and isn't read
+
+**Your job**
+- Write a title that matches the page and the browser tab
+- Pick icons that make sense without text on Mobile/Tablet; their label is what is read
+
+### Developers · React
+
+**Semantics**
+- title → Headline level 1 (h1)
+- Icon nav and actions → <button> with aria-label (nav.ariaLabel / action.label)
+- Breadcrumb → <nav aria-label="Breadcrumb"> + <ol>; last item aria-current="page"; pin aria-hidden
+- Hidden layout uses display:none, so only one h1 is in the accessibility tree
+
+**Keyboard**
+- Tab: nav, actions (and breadcrumb links on Desktop); Enter / Space activate
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label on every action and ariaLabel on icon nav
+- Breadcrumb last item without href (it is the current page)
+
+**Don't**
+- Don't add another h1 to the page
+- Don't use the breadcrumb pin as a button
+- Don't put more than 3 actions

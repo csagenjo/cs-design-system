@@ -114,7 +114,7 @@ const css = `
   box-sizing: border-box;
   font-family: var(--ds-fontFamily-default, var(--sans));
 }
-.a11y-gallery h1 { font-size: 28px; margin: 0 0 24px; color: var(--ds-fg-default); letter-spacing: 0; }
+.a11y-gallery h1:not(.ds-headline) { font-size: 28px; margin: 0 0 24px; color: var(--ds-fg-default); letter-spacing: 0; }
 .a11y-gallery > section {
   border-top: 1px solid var(--ds-borderColor-subtle, currentColor);
   padding: 24px 0;
@@ -1220,19 +1220,20 @@ export default function Gallery({ mode }) {
 
       <Section name="PageTitle">
         <Col>
-          <PageTitle nav={{ type: 'icon', icon: 'X', ariaLabel: 'Cerrar', onClick: noop }} title="Título con icono"
+          <PageTitle nav={{ type: 'icon', icon: 'x', ariaLabel: 'Close', onClick: noop }} title="Payment details"
             actions={[
-              { icon: 'Share2', ariaLabel: 'Compartir', onClick: noop },
-              { icon: 'Heart', ariaLabel: 'Favorito', onClick: noop },
-              { icon: 'Search', ariaLabel: 'Buscar', onClick: noop },
+              { icon: 'share', label: 'Share', onClick: noop },
+              { icon: 'heart', label: 'Add to favourites', onClick: noop },
+              { icon: 'search', label: 'Search', onClick: noop },
             ]} />
           <PageTitle nav={{ type: 'breadcrumb', items: [
-            { label: 'Nivel 1', onClick: noop }, { label: 'Nivel 2', onClick: noop }, { label: 'Página actual' },
-          ] }} title="Título con breadcrumb" actions={[{ icon: 'Share2', ariaLabel: 'Compartir', onClick: noop }]} />
-          <PageTitle nav={{ type: 'link', label: 'Volver', onClick: noop }} title="Título con link" />
-          <PageTitle nav={{ type: 'text', label: 'Texto bold', weight: 'bold' }} title="Título con texto" />
-          <PageTitle nav={{ type: 'text', label: 'Texto disabled', disabled: true }} title="Título texto disabled" />
-          <PageTitle title="Título sin nav" />
+            { label: 'Accounts', onClick: noop }, { label: 'Current account', onClick: noop }, { label: 'Payment details' },
+          ] }} title="Payment details" actions={[{ icon: 'share', label: 'Share', onClick: noop }, { icon: 'download', label: 'Download', onClick: noop }]} />
+          <PageTitle nav={{ type: 'icon', icon: 'arrow-left', ariaLabel: 'Back', onClick: noop }} title="Back with icon" />
+          <PageTitle nav={{ type: 'link', label: 'Back', onClick: noop }} title="With link" />
+          <PageTitle nav={{ type: 'text', label: 'Step 2 of 3', weight: 'bold' }} title="With bold text" />
+          <PageTitle nav={{ type: 'text', label: 'Draft', disabled: true }} title="With disabled text" />
+          <PageTitle title="Without nav" />
         </Col>
       </Section>
 
