@@ -2,7 +2,7 @@
  * FileSelector — Organismo
  * CS Design System · v1.0
  *
- * Wrapper puro: DropZone + N × ListItem en columna. Sin chrome propio (no
+ * Wrapper puro: DropZone + N × DocumentItem en columna. Sin chrome propio (no
  * existe "File Selector" como componente visual distinto en Figma, solo la
  * composición) — mismo criterio que CellActions/ButtonBar/Table. El número
  * de ficheros lo decide `files.length`, no se replican las 6 variantes
@@ -21,7 +21,7 @@ import React, { useEffect, useRef } from 'react';
 import { announce } from '../components/announce';
 import { injectStyles } from '../components/_inputBase';
 import { DropZone } from '../components/DropZone';
-import { ListItem } from '../components/ListItem';
+import { DocumentItem } from '../components/DocumentItem';
 
 const css = `
 .ds-file-selector {
@@ -42,6 +42,8 @@ export function FileSelector({
   onButtonClick,
   onFilesDrop,
   buttonLabel,        // texto del botón de la DropZone (antes no llegaba: siempre "Button")
+  instruction,        // textos de la DropZone (Figma: Instruction / Hover Instruction)
+  hoverInstruction,
   describedBy,
   removeLabel,
   nameLabel,
@@ -68,7 +70,7 @@ export function FileSelector({
     files.filter((f) => !beforeIds.has(f.id)).forEach((f) => announce(addedLabel(f.name)));
     before.filter((f) => !nowIds.has(f.id)).forEach((f) => announce(removedLabel(f.name)));
     if (focusAfterRemove.current != null) {
-      const closes = rootRef.current?.querySelectorAll('.ds-list-item__close') || [];
+      const closes = rootRef.current?.querySelectorAll('.ds-document-item__close') || [];
       const target = closes[Math.min(focusAfterRemove.current, closes.length - 1)]
         || rootRef.current?.querySelector('.ds-drop-zone button');
       target?.focus();
@@ -78,9 +80,9 @@ export function FileSelector({
 
   return (
     <div id={id} className={classes} ref={rootRef}>
-      <DropZone disabled={disabled} onButtonClick={onButtonClick} onFilesDrop={onFilesDrop} buttonLabel={buttonLabel} describedBy={describedBy} />
+      <DropZone disabled={disabled} onButtonClick={onButtonClick} onFilesDrop={onFilesDrop} buttonLabel={buttonLabel} instruction={instruction} hoverInstruction={hoverInstruction} describedBy={describedBy} />
       {files.map((file, index) => (
-        <ListItem
+        <DocumentItem
           key={file.id}
           status={file.status}
           documentName={file.name}

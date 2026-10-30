@@ -52,7 +52,7 @@ import { LabelDescription } from '../components/LabelDescription';
 import { Link } from '../components/Link';
 import { LinkList } from '../components/LinkList';
 import { List } from '../components/List';
-import { ListItem } from '../components/ListItem';
+import { DocumentItem } from '../components/DocumentItem';
 import { ListView } from '../components/ListView';
 import { LiveRegion } from '../components/LiveRegion';
 import { LoadingSpinner } from '../components/LoadingSpinner';
@@ -545,8 +545,8 @@ export default function Gallery({ mode }) {
 
       <Section name="DropZone">
         <Row>
-          <DropZone onButtonClick={noop} buttonLabel="Seleccionar archivo" />
-          <DropZone disabled buttonLabel="Seleccionar archivo" />
+          <div style={{ width: 288 }}><DropZone onButtonClick={noop} buttonLabel="Choose files" /></div>
+          <div style={{ width: 288 }}><DropZone disabled buttonLabel="Choose files" /></div>
         </Row>
       </Section>
 
@@ -744,8 +744,8 @@ export default function Gallery({ mode }) {
 
       <Section name="LabelDescription">
         <Row>
-          <LabelDescription label="Documentos" description="Formatos aceptados: PDF, JPG (máx. 10MB)" />
-          <LabelDescription align="right" label="Adjuntar factura" description="Sube el justificante en PDF" />
+          <LabelDescription label="Documents" description="PDF or JPG, up to 10 MB" />
+          <LabelDescription align="right" label="Invoice" description="Upload the receipt as a PDF" />
         </Row>
       </Section>
 
@@ -789,11 +789,11 @@ export default function Gallery({ mode }) {
         </Row>
       </Section>
 
-      <Section name="ListItem">
-        <Col style={{ maxWidth: 480 }}>
-          <ListItem status="uploading" documentName="factura.pdf" onRemove={noop} />
-          <ListItem status="uploaded" documentName="factura.pdf" onNameChange={noop} onRemove={noop} />
-          <ListItem status="error" documentName="factura.pdf" errorMessage="El archivo supera el tamaño máximo" onRemove={noop} />
+      <Section name="DocumentItem">
+        <Col style={{ width: 288 }}>
+          <DocumentItem status="uploading" documentName="invoice.pdf" onRemove={noop} />
+          <DocumentItem status="uploaded" documentName="invoice.pdf" onNameChange={noop} onRemove={noop} />
+          <DocumentItem status="error" documentName="invoice.pdf" errorMessage="The file is larger than 10 MB" onNameChange={noop} onRemove={noop} />
         </Col>
       </Section>
 
@@ -1180,33 +1180,42 @@ export default function Gallery({ mode }) {
 
       <Section name="FileSelector">
         <Row>
-          <div style={{ width: 420 }}>
-            <FileSelector files={[
-              { id: '1', name: 'factura.pdf', status: 'uploaded' },
-              { id: '2', name: 'contrato.pdf', status: 'uploading' },
-              { id: '3', name: 'otro.exe', status: 'error', errorMessage: 'Formato no soportado' },
+          <div style={{ width: 288 }}>
+            <FileSelector buttonLabel="Choose files" files={[
+              { id: '1', name: 'invoice.pdf', status: 'uploaded' },
+              { id: '2', name: 'contract.pdf', status: 'uploading' },
+              { id: '3', name: 'setup.exe', status: 'error', errorMessage: 'Format not supported' },
             ]} onFileNameChange={noop} onFileRemove={noop} onButtonClick={noop} />
           </div>
-          <div style={{ width: 420 }}><FileSelector disabled files={[]} onButtonClick={noop} /></div>
+          <div style={{ width: 288 }}><FileSelector disabled buttonLabel="Choose files" files={[]} onButtonClick={noop} /></div>
         </Row>
       </Section>
 
       <Section name="FileUpload">
         <Col>
-          <FileUpload layout="wide" label="Documentos" description="Formatos: PDF, JPG"
-            files={[{ id: '1', name: 'factura.pdf', status: 'uploaded' }]}
-            onFileNameChange={noop} onFileRemove={noop} onButtonClick={noop} />
-          <div style={{ maxWidth: 480 }}>
-            <FileUpload layout="stacked" label="Documentos" description="Formatos: PDF, JPG"
+          <div style={{ width: 547 }}>
+            <FileUpload layout="wide" label="Documents" description="PDF or JPG, up to 10 MB" buttonLabel="Choose files"
+              files={[{ id: '1', name: 'invoice.pdf', status: 'uploaded' }]}
+              onFileNameChange={noop} onFileRemove={noop} onButtonClick={noop} />
+          </div>
+          <div style={{ width: 288 }}>
+            <FileUpload layout="stacked" label="Documents" description="PDF or JPG, up to 10 MB" buttonLabel="Choose files"
               files={[
-                { id: '1', name: 'factura.pdf', status: 'uploaded' },
-                { id: '2', name: 'contrato.pdf', status: 'error', errorMessage: 'Formato no soportado' },
+                { id: '1', name: 'invoice.pdf', status: 'uploaded' },
+                { id: '2', name: 'contract.pdf', status: 'error', errorMessage: 'Format not supported' },
               ]} onFileNameChange={noop} onFileRemove={noop} onButtonClick={noop} />
           </div>
-          <FileUpload layout="compact" label="Factura" description="Sube el PDF"
-            files={[{ id: '1', name: 'factura.pdf', status: 'uploaded' }]} onButtonClick={noop} onFileRemove={noop} />
-          <FileUpload layout="compact" label="Factura vacía" description="Sube el PDF" files={[]} onButtonClick={noop} />
-          <FileUpload layout="wide" label="Disabled" disabled files={[]} onButtonClick={noop} />
+          <div style={{ width: 288 }}>
+            <FileUpload layout="compact" label="Invoice" description="Upload the PDF" buttonLabel="Choose file"
+              files={[{ id: '1', name: 'invoice.pdf', status: 'uploaded' }]} onButtonClick={noop} onFileRemove={noop} />
+          </div>
+          <FileUpload layout="compact" label="Invoice" description="Upload the PDF" buttonLabel="Choose file" files={[]} onButtonClick={noop} />
+          <div style={{ width: 288 }}>
+            <FileUpload layout="stacked" showLabel={false} buttonLabel="Choose files for the claim" files={[]} onButtonClick={noop} />
+          </div>
+          <div style={{ width: 547 }}>
+            <FileUpload layout="wide" label="Disabled" buttonLabel="Choose files" disabled files={[]} onButtonClick={noop} />
+          </div>
         </Col>
       </Section>
 

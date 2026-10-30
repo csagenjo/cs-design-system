@@ -653,7 +653,7 @@ Notification — no rebind pass needed.
 
 **The recurring fg/bg inversion bug, checked proactively this time.** Given how many times this project has
 caught a token pair where one side inverts with dark mode and its partner doesn't (Chip, Pagination, Button
-default-filled, CTALink primary — see CLAUDE.md §10), Tooltip's bg/fg were checked *before* writing
+default-filled, CTALink primary — see docs/changelog.md (registro de deuda)), Tooltip's bg/fg were checked *before* writing
 `tokens.css`, not after a visual bug report. Used `use_figma` to resolve the actual variable bindings and
 alias chains on the component's fill properties (not the single resolved hex `get_variable_defs` returns
 for the current mode) — `tooltip/all/root/bg/generic` → `bg/inverse`, `tooltip/all/text/fg/generic` →
@@ -679,7 +679,7 @@ without any extra JS), dark mode inverts bg/fg together as predicted, and the me
 with an icon-only trigger (`IconButton`) and a text trigger (`Button`).
 
 **Deliberately left undone:** `CollapsibleIconButton` still uses its own local tooltip markup instead of
-instancing this new atom — migrating it is real, tracked debt (CLAUDE.md §10), kept out of this session's
+instancing this new atom — migrating it is real, tracked debt (docs/changelog.md (registro de deuda)), kept out of this session's
 scope so closing that debt doesn't get mixed with landing the new Sprint 4 piece.
 
 ### Loading Spinner built — second Sprint 4 piece (2 September 2026)
@@ -736,7 +736,7 @@ class of duplication as `CollapsibleIconButton`'s local tooltip. Not migrated in
 spinner leans on `currentColor` to automatically match whatever text/icon color each `variant`/`state`
 combination already resolves to, while `LoadingSpinner` takes an explicit `color` prop — migrating cleanly
 would need mapping every Button variant/outline combination to `primary` or `onColor` first, which is its
-own piece of work, tracked in CLAUDE.md §10.
+own piece of work, tracked in docs/changelog.md (registro de deuda).
 
 ### Progress Bar built — third Sprint 4 piece, the most collaborative session yet (3 September 2026)
 

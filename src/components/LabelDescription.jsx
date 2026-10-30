@@ -22,7 +22,7 @@ const css = `
 .ds-label-description {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--ds-input-label-gap); /* label → ayuda 4, igual que los campos (Figma: Input/InputCommon/label/gap) */
   box-sizing: border-box;
 }
 .ds-label-description--right { align-items: flex-end; text-align: right; }

@@ -25,7 +25,7 @@
    depender de ellos).
 
    Lo que NO se toca, a propósito: las animaciones de carga (LoadingSpinner y
-   el spinner de ListItem). Son el único aviso visual de que algo está en
+   el spinner de DocumentItem). Son el único aviso visual de que algo está en
    curso — movimiento esencial, permitido por 2.3.3. */
 @media (prefers-reduced-motion: reduce) {
   [class^="ds-"],
