@@ -1043,7 +1043,6 @@ export default function Gallery({ mode }) {
         {['line', 'contained'].map((v) => (
           <div key={v} role="tablist" aria-label={`Tabs ${v}`} className="a11y-row">
             {['s', 'm', 'l'].map((s) => <TabItem key={s} size={s} variant={v} selected={s === 'm'} onClick={noop}>{`Tab ${v} ${s}`}</TabItem>)}
-            <TabItem variant={v} disabled onClick={noop}>Disabled</TabItem>
           </div>
         ))}
       </Section>

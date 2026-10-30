@@ -1,6 +1,6 @@
 /**
  * Tabs — Organismo
- * CS Design System · v2.0
+ * CS Design System · v3.0
  *
  * Barra de N × `TabItem` desde un array (`items`), sin límite de número (en
  * Figma hay 8 ranuras con `Show tab 3…8` por comodidad de diseño; aquí no).
@@ -8,6 +8,8 @@
  * `size`: 's' | 'm' | 'l' — 40 / 48 / 56, FIJO (29/09, sustituye a `device`).
  * `type`: 'fixed' reparte el ancho a partes iguales · 'scrollable' deja cada
  *         pestaña a su ancho natural y hace scroll horizontal si desborda.
+ * 30/10/2026: `items[].disabled` eliminado (Figma no tiene pestañas
+ * deshabilitadas); la línea inferior de Line toma su grosor por token.
  * `variant`: 'line' (línea inferior bajo la barra, ribbon inferior) |
  *            'contained' (pestañas con fondo/contorno que se unen a un panel
  *            de contenido — el panel lo pone el consumidor, no es parte de
@@ -34,7 +36,7 @@ const css = `
   width: 100%;
 }
 .ds-tabs--line {
-  box-shadow: inset 0 -1px 0 var(--ds-tabs-root-border-bottom-color-generic); /* línea bajo la barra, sin sumar altura */
+  box-shadow: inset 0 calc(-1 * var(--ds-tabs-root-border-bottom-width-generic)) 0 var(--ds-tabs-root-border-bottom-color-generic); /* línea bajo la barra, sin sumar altura */
 }
 .ds-tabs--contained {
   /* se solapa 1px con el panel que va debajo: el borde superior del panel
@@ -90,7 +92,6 @@ export function Tabs({
     count: items.length,
     activeIndex: selectedIndex < 0 ? 0 : selectedIndex,
     onActiveIndexChange: (i) => onChange?.(items[i].id),
-    isItemDisabled: (i) => !!items[i]?.disabled,
   });
   if (!ariaLabel && !ariaLabelledBy) warnOnce('Tabs.unnamed', '[DS Tabs] Necesita `ariaLabel` o `ariaLabelledBy` para nombrar las pestañas.');
 
@@ -104,7 +105,6 @@ export function Tabs({
           size={size}
           variant={variant}
           selected={item.id === selectedId}
-          disabled={item.disabled}
           onClick={() => onChange?.(item.id)}
           {...getItemProps(i)}
         >

@@ -42,7 +42,7 @@ Rules that apply to every entry:
 | Forms | Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
-| Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Navigation | Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
@@ -3145,3 +3145,106 @@ Lets the user attach documents to a form: a drop area with a button, and one row
 **Don't**
 - Don't hide the button while dragging (it only disables during the drop)
 - Don't show errors only in red: always errorMessage
+
+## Tabs · TabItem · TabPanel
+
+**Group:** Navigation
+**Figma:** 🟢 Tabs page → `Tabs` (Type Fixed / Scrollable × Size S / M / L × Style Line / Contained; Show tab 3…8), `Tab Item` (Size × Style × State Initial / Hover / Pressed / Selected / Focus / Focus Selected) · frame *Tabs — How to use & Accessibility* (30/10)
+**Code:** `src/organisms/Tabs.jsx` (Tabs, TabPanel) · `src/components/TabItem.jsx`
+**Tokens:** `--ds-tabs-*` (`tabs/all/*`, `tabs/contained/*`)
+
+A row of tabs that switches between views of the same content, one panel visible at a time.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Switch between views of the same subject without leaving the page (Summary · Movements · Documents)
+- Steps of a process → Step Indicator · options that filter one list → Segmented Control · main navigation → Top Navigation
+
+**Properties**
+- Tabs · Type → Fixed (tabs share the width) · Scrollable (natural width, scrolls when it overflows)
+- Tabs · Size → S 40 · M 48 · L 56 (fixed, chosen by context, not by device)
+- Tabs · Style → Line (navigation of a page, line under the bar) · Contained (tabs joined to a panel below)
+- Tabs · Show tab 3…8 — Figma only; in code any number
+- Tab Item · State → Initial · Hover · Pressed · Selected · Focus · Focus Selected
+
+**Behaviour**
+- Selected: bold label + 4 px teal ribbon (bottom in Line, top in Contained); a Contained tab loses its bottom border and joins the panel
+- Hover blue, Pressed grey, focus double ring inside the tab
+- No disabled tabs: if a section doesn't apply, don't show its tab
+
+**Sizing**
+- Padding 12 / 14 / 16 vertical, 16 horizontal · label 12 / 14 / 16
+- Borders, ribbon and focus are drawn inside: the height never changes
+
+### Developers · React
+
+**Import**
+- `import { Tabs, TabPanel } from './organisms/Tabs'; TabItem from './components/TabItem'`
+
+**Props**
+- Tabs · items [{ id, label }], selectedId, onChange(id), size 's'|'m'|'l', type 'fixed'|'scrollable', variant 'line'|'contained', ariaLabel / ariaLabelledBy, id (links each tab to its TabPanel)
+- TabPanel · tabsId, itemId, hidden, children
+- TabItem · size, variant, selected, onClick, role (null = plain button, used by Top Navigation)
+
+**Example**
+- `<Tabs id="account" ariaLabel="Account" items={[{ id: 'sum', label: 'Summary' }, { id: 'mov', label: 'Movements' }]} selectedId={tab} onChange={setTab} />`
+- `<TabPanel tabsId="account" itemId={tab}>…</TabPanel>`
+- Contained: the consumer draws the panel below; Tabs overlaps it by the border width
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Two or more views of the same content, one visible at a time
+
+**Don't pick it when**
+- Moving between pages of the app → Top Navigation / Sidebar Menu
+- Filtering a list → Segmented Control or Chips
+- A sequence the user must follow → Step Indicator
+
+**Composition rules**
+- Always pass id + one TabPanel per tab, or ariaLabel at least
+- Short labels (one or two words); don't mix icons
+- Fixed for 2–5 tabs that fit; Scrollable when they may not fit
+- Never use TabItem alone as a tab outside a tablist: as a nav button pass role={null}
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The bar is one stop in the Tab order: arrows change tab, Home / End go to first / last
+- The selected tab is announced as selected; the panel is named by its tab
+- Selection shown by weight and ribbon, never colour alone
+- Focus ring double and inside, visible on white and dark
+
+**Your job**
+- Name the set of tabs ("Account"), and give every tab a distinct label
+- Keep the content of each panel independent: nothing the user must see in another tab first
+
+### Developers · React
+
+**Semantics**
+- Tabs = role tablist with aria-label; TabItem = <button role="tab"> with aria-selected and aria-controls
+- TabPanel = role tabpanel, aria-labelledby its tab, tabIndex 0
+- Automatic activation: arrows select (APG tabs pattern); one stop in the Tab order (roving tabindex)
+- Dev warning when Tabs has no name
+
+**Keyboard**
+- Tab enters the selected tab · ← → change tab · Home / End · Tab again goes into the panel
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- ariaLabel or ariaLabelledBy on Tabs
+- id on Tabs and a TabPanel for the selected tab
+
+**Don't**
+- Don't use items[].disabled (removed): hide the tab instead
+- Don't put links or buttons inside a tab label
+- Don't use Tabs for page navigation
