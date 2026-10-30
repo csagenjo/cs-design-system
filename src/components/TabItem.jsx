@@ -1,6 +1,6 @@
 /**
  * TabItem — Componente atómico
- * CS Design System · v2.0
+ * CS Design System · v3.0
  *
  * Pestaña individual. `<button role="tab">` real — Hover/Pressed/Focus se
  * resuelven vía pseudo-clases CSS nativas (mismo criterio que Checkbox/
@@ -25,8 +25,16 @@
  *
  * Peso por ESTADO: Regular en Initial/Hover/Focus, Bold en Selected/Pressed.
  * Fondo por estado (ambos estilos): Initial blanco · Hover azul · Pressed gris.
- * Bordes y foco pintados por dentro (box-shadow inset / outline con offset
- * negativo) — nunca suman altura: 40/48/56 exactos, igual que Figma.
+ * Bordes y foco pintados por dentro — nunca suman altura: 40/48/56 exactos.
+ *
+ * 30/10/2026, alineado 1:1 con Figma (set "Tab Item", Size × Style × State):
+ *   · Foco = anillo doble POR DENTRO, como las filas apiladas: `focus-outer`
+ *     de 2 en el borde + hueco `focus-inner` de 2 (Figma: rects Focus outer /
+ *     Focus inner). Antes era un anillo simple.
+ *   · Sin `disabled`: Figma no tiene estado Disabled (decisión de Carol). Si
+ *     una sección no aplica, la pestaña no se muestra. La prop se ignora con
+ *     aviso en desarrollo.
+ *   · Grosores por token (ribbon 4 = borderWidth/xl, foco 2 = borderWidth/lg).
  *
  * USO:
  *   <TabItem size="m" selected>Resumen</TabItem>
@@ -35,6 +43,7 @@
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
+import { warnOnce } from './_devWarn';
 
 const css = `
 .ds-tab-item {
@@ -65,13 +74,22 @@ const css = `
   font-weight: var(--ds-font-weight-bold);
 }
 
-.ds-tab-item:hover:not(:disabled) { background: var(--ds-tabs-root-bg-hover); }
-.ds-tab-item:active:not(:disabled) { background: var(--ds-tabs-root-bg-pressed); }
+.ds-tab-item:hover { background: var(--ds-tabs-root-bg-hover); }
+.ds-tab-item:active { background: var(--ds-tabs-root-bg-pressed); }
+/* Foco doble por dentro: outline (focus-outer) en el borde + hueco focus-inner.
+   El hueco va en ::after para no pisar el box-shadow de los bordes de Contained. */
 .ds-tab-item:focus-visible {
   outline: var(--ds-tabs-root-border-width-focus) solid var(--ds-tabs-root-border-color-focus);
   outline-offset: calc(-1 * var(--ds-tabs-root-border-width-focus));
 }
-.ds-tab-item:disabled { cursor: default; }
+.ds-tab-item:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: var(--ds-tabs-root-border-width-focus);
+  box-shadow: inset 0 0 0 var(--ds-tabs-root-border-width-focus) var(--ds-tabs-root-border-color-focus-inner);
+  pointer-events: none;
+  z-index: 1;
+}
 
 .ds-tab-item__ribbon {
   position: absolute;
@@ -94,8 +112,8 @@ const css = `
   /* sin borde inferior: se une al panel */
   box-shadow: inset var(--_bw) 0 0 var(--_bc), inset calc(-1 * var(--_bw)) 0 0 var(--_bc), inset 0 var(--_bw) 0 var(--_bc);
 }
-.ds-tab-item--contained:hover:not(:disabled) { background: var(--ds-tabs-root-bg-hover); }
-.ds-tab-item--contained:active:not(:disabled) { background: var(--ds-tabs-root-bg-pressed); }
+.ds-tab-item--contained:hover { background: var(--ds-tabs-root-bg-hover); }
+.ds-tab-item--contained:active { background: var(--ds-tabs-root-bg-pressed); }
 .ds-tab-item--contained .ds-tab-item__ribbon {
   top: 0;
   bottom: auto;
@@ -108,7 +126,7 @@ export function TabItem({
   size = 'm',          // 's' | 'm' | 'l'
   variant = 'line',    // 'line' | 'contained'
   selected = false,
-  disabled = false,
+  disabled,            // eliminado 30/10 (Figma no tiene Disabled) — se ignora
   onClick,
   children,
   id,
@@ -116,6 +134,7 @@ export function TabItem({
   role = 'tab',   // A11y-1: TopNavigation la usa como botón de navegación (role={null}), no como pestaña
   ...rest         // A11y-1: aria-expanded/aria-controls/ref/onKeyDown… llegan al <button>
 }) {
+  if (disabled !== undefined) warnOnce('TabItem.disabled', '[DS TabItem] `disabled` ya no existe (Figma no tiene estado Disabled): si la pestaña no aplica, no la muestres.');
   const classes = [
     'ds-tab-item',
     `ds-tab-item--${size}`,
@@ -130,7 +149,6 @@ export function TabItem({
       type="button"
       className={classes}
       onClick={onClick}
-      disabled={disabled}
       role={role || undefined}
       aria-selected={role === 'tab' ? selected : undefined}
     >
