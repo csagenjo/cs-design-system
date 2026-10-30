@@ -1,14 +1,18 @@
 /**
  * DropZone — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2.0
  *
  * Área de arrastrar-y-soltar de File Upload — borde discontinuo + texto +
- * botón de selección manual.
+ * botón de selección manual (Button Default Secondary Small).
  *
- * Hover: el botón se queda visible pero pasa a Disabled (mismo tamaño de
- * caja que Initial, sin encogerse ni desplazar nada) y el texto cambia a
- * "Drag & drop your files here" en negrita, sin el "or" (no tiene sentido
- * ofrecer una alternativa clicable mientras se arrastra un fichero encima).
+ * 28/10/2026, alineado 1:1 con Figma: texto `instruction` ("Drag & drop
+ * your files here") y `hoverInstruction` ("Drop your files here", negrita),
+ * las dos propiedades de texto de Figma; el borde sigue discontinuo en Hover
+ * (antes pasaba a sólido); texto → botón 8 (`common/stackGap`).
+ *
+ * Hover (= hay un fichero arrastrándose encima): fondo azul y el botón pasa a
+ * Disabled sin cambiar de tamaño — no tiene sentido pulsarlo mientras se
+ * suelta un fichero.
  * Decisión de Carol tras probar la alternativa (26/08): mantener el hueco
  * del botón siempre reservado, nunca colapsarlo — tocar el `disabled` real
  * de Button.jsx requiere estado en React (CSS no puede cambiar props de un
@@ -43,16 +47,17 @@ const css = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-file-upload-drop-zone-gap-generic);
+  gap: var(--ds-file-upload-common-stack-gap-generic);
   width: 100%;
   box-sizing: border-box;
-  padding: var(--ds-file-upload-drop-zone-padding-ver-generic) var(--ds-file-upload-drop-zone-padding-hor-generic);
+  /* el borde va por dentro (Figma INSIDE): el padding lo descuenta → 104 de alto */
+  padding: calc(var(--ds-file-upload-drop-zone-padding-ver-generic) - var(--ds-file-upload-drop-zone-border-width-generic))
+           calc(var(--ds-file-upload-drop-zone-padding-hor-generic) - var(--ds-file-upload-drop-zone-border-width-generic));
   border: var(--ds-file-upload-drop-zone-border-width-generic) dashed var(--ds-file-upload-drop-zone-border-color-generic);
   border-radius: var(--ds-file-upload-common-border-radius-generic);
   text-align: center;
 }
 .ds-drop-zone--hovering {
-  border-style: solid;
   background: var(--ds-file-upload-common-bg-hover);
 }
 
@@ -73,6 +78,8 @@ injectStyles('ds-drop-zone', css);
 export function DropZone({
   disabled = false,
   buttonLabel = 'Button',
+  instruction = 'Drag & drop your files here',
+  hoverInstruction = 'Drop your files here',
   onButtonClick,
   onFilesDrop,
   describedBy,    // ids extra que describen el botón (p. ej. label + descripción de FileUpload)
@@ -113,7 +120,7 @@ export function DropZone({
       {...dragHandlers}
     >
       <p id={textId} className="ds-drop-zone__text">
-        {hovering ? 'Drag & drop your files here' : 'Drag & drop your files here or'}
+        {hovering ? hoverInstruction : instruction}
       </p>
       <Button type="default" variant="secondary" size="sm" disabled={disabled || hovering} onClick={onButtonClick} aria-describedby={[describedBy, textId].filter(Boolean).join(' ')}>
         {buttonLabel}

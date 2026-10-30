@@ -16,7 +16,7 @@
  * Accesibilidad (A11y-4): el error vive dentro de una región viva que existe
  * siempre (`LiveRegion`), así se anuncia cuando aparece. El contador NO es
  * región viva (se anunciaría en cada pulsación); `live={false}` también para
- * quien ya anuncia por su cuenta (ListItem usa `announce()`).
+ * quien ya anuncia por su cuenta (DocumentItem usa `announce()`).
  *
  * PROPS:
  *   id        para `aria-describedby` del control

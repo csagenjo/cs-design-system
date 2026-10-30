@@ -1,28 +1,25 @@
 /**
  * FileUpload — Organismo
- * CS Design System · v1.0
+ * CS Design System · v2.0
  *
- * Compone LabelDescription + FileSelector. 3 layouts:
+ * Compone LabelDescription + FileSelector (DropZone + N × DocumentItem).
+ * 28/10/2026, alineado 1:1 con Figma (set "File Upload", Layout × State +
+ * booleana "Show Label + Desc" → `showLabel`). Gap 24 entre bloques
+ * (`fileUpload/root/gap/generic`).
  *
- * `layout="wide"`    — LabelDescription y FileSelector lado a lado
- *                       (horizontal), como en el Figma original.
- * `layout="stacked"` — todo en una sola columna: LabelDescription arriba,
- *                       Drop Zone real + ficheros apilados debajo. Variante
- *                       nueva (26/08), no existía en Sistema Origen — Carol
- *                       la pidió porque "Wide" no cubría el caso de columna
- *                       única con Drop Zone visible.
- * `layout="compact"` — máximo 1 fichero. No muestra el Drop Zone real: en su
- *                       lugar, un botón (con chevron a cada lado, tal cual
- *                       en Figma — no se ha simplificado, aunque Carol tiene
- *                       dudas sobre si sobra una vez subido el fichero. NO
- *                       tocar ese botón sin que ella lo decida). Si hay un
- *                       fichero, se añade su ListItem debajo del botón.
+ * `layout="wide"`    — Label + Description (alineado a la derecha, 235 de
+ *                       ancho) y el selector lado a lado.
+ * `layout="stacked"` — una columna: Label + Description, Drop Zone y los
+ *                       ficheros debajo.
+ * `layout="compact"` — máximo 1 fichero y sin Drop Zone: Label + Description,
+ *                       el botón (Default Secondary Small, sin iconos) y, si
+ *                       hay fichero, su DocumentItem — los tres a 24.
  *
  * USO:
- *   <FileUpload layout="wide" label="Documentos" description="PDF, JPG"
+ *   <FileUpload layout="wide" label="Documents" description="PDF or JPG"
  *     files={[...]} onFileNameChange={fn} onFileRemove={fn} onButtonClick={fn} />
  *
- *   <FileUpload layout="compact" label="Factura" description="Sube el PDF"
+ *   <FileUpload layout="compact" label="Invoice" description="Upload the PDF"
  *     files={file ? [file] : []} onButtonClick={fn} onFileRemove={fn} />
  */
 
@@ -30,13 +27,13 @@ import React from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { LabelDescription } from '../components/LabelDescription';
 import { FileSelector } from './FileSelector';
-import { ListItem } from '../components/ListItem';
+import { DocumentItem } from '../components/DocumentItem';
 import { Button } from '../components/Button';
 
 const css = `
 .ds-file-upload {
   display: flex;
-  gap: 24px;
+  gap: var(--ds-file-upload-root-gap-generic);
   box-sizing: border-box;
 }
 .ds-file-upload--wide {
@@ -48,21 +45,17 @@ const css = `
   flex-direction: column;
   align-items: stretch;
 }
+.ds-file-upload--compact { align-items: flex-start; }
+.ds-file-upload--compact .ds-document-item { width: 100%; }
 
 .ds-file-upload__label {
   flex-shrink: 0;
 }
-.ds-file-upload--wide .ds-file-upload__label { width: 235px; }
+.ds-file-upload--wide .ds-file-upload__label { width: var(--ds-file-upload-label-width-wide); }
 
 .ds-file-upload__selector {
   flex: 1 0 0;
   min-width: 0;
-}
-
-.ds-file-upload__compact-files {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-file-upload-common-stack-gap-generic);
 }
 `;
 
@@ -78,6 +71,9 @@ export function FileUpload({
   onButtonClick,
   onFilesDrop,
   buttonLabel = 'Button',
+  instruction,
+  hoverInstruction,
+  showLabel = true,
   removeLabel,
   nameLabel,
   disabled = false,
@@ -89,7 +85,9 @@ export function FileUpload({
   const baseId = React.useId();
   const labelId = `${baseId}-label`;
   const descriptionId = `${baseId}-description`;
-  const describedBy = `${labelId} ${descriptionId}`;
+  // Sin Label + Description visible, el botón no se describe con ids ausentes:
+  // el consumidor nombra el botón con buttonLabel.
+  const describedBy = showLabel ? `${labelId} ${descriptionId}` : undefined;
   const classes = [
     'ds-file-upload',
     `ds-file-upload--${layout}`,
@@ -100,17 +98,19 @@ export function FileUpload({
 
   return (
     <div id={id} className={classes}>
-      <div className="ds-file-upload__label">
-        <LabelDescription align={align} label={label} description={description} labelId={labelId} descriptionId={descriptionId} />
-      </div>
+      {showLabel && (
+        <div className="ds-file-upload__label">
+          <LabelDescription align={align} label={label} description={description} labelId={labelId} descriptionId={descriptionId} />
+        </div>
+      )}
 
       {layout === 'compact' ? (
-        <div className="ds-file-upload__compact-files">
-          <Button type="default" variant="secondary" size="sm" iconLeft="ChevronLeft" iconRight="ChevronRight" disabled={disabled} onClick={onButtonClick} aria-describedby={describedBy}>
+        <>
+          <Button type="default" variant="secondary" size="sm" disabled={disabled} onClick={onButtonClick} aria-describedby={describedBy}>
             {buttonLabel}
           </Button>
           {files.slice(0, 1).map((file) => (
-            <ListItem
+            <DocumentItem
               key={file.id}
               status={file.status}
               documentName={file.name}
@@ -121,7 +121,7 @@ export function FileUpload({
               nameLabel={nameLabel}
             />
           ))}
-        </div>
+        </>
       ) : (
         <div className="ds-file-upload__selector">
           <FileSelector
@@ -132,6 +132,8 @@ export function FileUpload({
             onButtonClick={onButtonClick}
             onFilesDrop={onFilesDrop}
             buttonLabel={buttonLabel}
+            instruction={instruction}
+            hoverInstruction={hoverInstruction}
             describedBy={describedBy}
             removeLabel={removeLabel}
             nameLabel={nameLabel}
@@ -147,7 +149,7 @@ export default FileUpload;
 
 /* ─── Ejemplos de uso ──────────────────────────────────────────────────────
 
-<FileUpload layout="wide" label="Documentos" description="Formatos: PDF, JPG"
+<FileUpload layout="wide" label="Documents" description="PDF or JPG"
   files={[{ id: '1', name: 'factura.pdf', status: 'uploaded' }]}
   onFileNameChange={(id, name) => {}} onFileRemove={(id) => {}} onButtonClick={() => {}} />
 

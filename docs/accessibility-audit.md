@@ -214,7 +214,7 @@ items sit 8 px apart — the code had 14 px on each side of the line.
 
 ## A · Colour contrast (tokens)
 
-> **Status 19/10/2026: ✅ fixed (A1–A17).** Contrast-based Base palette, dark-mode Theme alias rules and new Component tokens (BadgeHighlight labels, ProgressBar onColor text) in Figma — 478 token pairs × 2 modes, 0 failures. `tokens.css` synced; axe scan of all 84 pieces: colour-contrast 317 → 0 outside disabled states (exempt). See CLAUDE.md §10.
+> **Status 19/10/2026: ✅ fixed (A1–A17).** Contrast-based Base palette, dark-mode Theme alias rules and new Component tokens (BadgeHighlight labels, ProgressBar onColor text) in Figma — 478 token pairs × 2 modes, 0 failures. `tokens.css` synced; axe scan of all 84 pieces: colour-contrast 317 → 0 outside disabled states (exempt). See docs/changelog.md (registro de deuda).
 
 Figma and code share the same colour tokens, so these fixes are made in
 Figma first (Theme / Mode layers), re-exported, and then synced to

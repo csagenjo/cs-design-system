@@ -39,7 +39,7 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | Switch · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
+| Forms | Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
 | Navigation | Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
@@ -3039,3 +3039,109 @@ A clickable row in a list: header, description and detail, with an optional left
 - Don't use selected for checked state: selected = current item, checked = control.
 
 ---
+
+## FileUpload · FileSelector · DropZone · DocumentItem · LabelDescription
+
+**Group:** Forms
+**Figma:** 🟢 File Upload page → `File Upload` (Layout Wide / Compact / Stacked × State Initial / Active; Show Label + Desc), `File Selector`, `Drop Zone` (State Initial / Hover / Disabled; Instruction, Hover Instruction), `Document Item` (Status Uploading / Uploaded / Error × State Initial / Hover / Focus — renamed from "List Item" on 28/10 so it isn't confused with List View), `Label + Description` · frame *File Upload — How to use & Accessibility* (28/10)
+**Code:** `src/organisms/FileUpload.jsx`, `FileSelector.jsx` · `src/components/DropZone.jsx`, `DocumentItem.jsx` (was `ListItem.jsx`), `LabelDescription.jsx`
+**Tokens:** `--ds-file-upload-*` (`fileUpload/common|documentItem|dropZone|root/*`)
+
+Lets the user attach documents to a form: a drop area with a button, and one row per file with its status.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- The user attaches one or more documents to a form (invoices, ID, contracts)
+- Wide → forms with labels on the left (desktop) · Stacked → one column (mobile, narrow panels) · Compact → exactly one file, no drop area
+
+**Pieces**
+- Label + Description → the question and its rules (format, size)
+- Drop Zone → dashed area + Button Default Secondary Small; Instruction / Hover Instruction texts
+- Document Item → one uploaded file: icon (spinner while uploading), editable name, remove X
+- File Selector → Drop Zone + the Document Items below (8 between them)
+
+**Properties**
+- File Upload · Layout → Wide · Compact · Stacked · State → Initial · Active (with files) · Show Label + Desc
+- Drop Zone · State → Initial · Hover (a file is dragged over it) · Disabled
+- Document Item · Status → Uploading · Uploaded · Error · State → Initial · Hover · Focus
+
+**Behaviour**
+- Hover on the Drop Zone = a file is being dragged over it: blue background, bold "Drop your files here", button disabled
+- Uploading: spinner and grey name, which can't be edited yet
+- Error: red 1 px border around the document and the message below — never colour alone
+
+**Sizing**
+- Document Item 36 high (padding 4 + icon 24; name and X padding 2 for the focus ring) · icon → name → X gap 12
+- Drop Zone padding 16/12, text → button 8, border 1.5 dashed · blocks 24 apart · Wide label 235
+
+### Developers · React
+
+**Import**
+- `import { FileUpload } from './organisms/FileUpload'; FileSelector from './organisms/FileSelector'; DropZone, DocumentItem, LabelDescription from './components/*'`
+
+**Props**
+- FileUpload · layout 'wide'|'stacked'|'compact', label, description, showLabel, files [{ id, name, status, errorMessage }], onButtonClick, onFilesDrop, onFileNameChange(id, name), onFileRemove(id), buttonLabel, instruction, hoverInstruction, disabled, removeLabel, nameLabel
+- DocumentItem · status 'uploading'|'uploaded'|'error', documentName, onNameChange, onRemove, errorMessage, nameLabel, removeLabel(name), statusLabels
+- DropZone · onButtonClick, onFilesDrop(files), buttonLabel, instruction, hoverInstruction, disabled
+
+**Example**
+- `<FileUpload layout="wide" label="Documents" description="PDF or JPG, up to 10 MB" buttonLabel="Choose files" files={files} onButtonClick={pick} onFilesDrop={add} onFileNameChange={rename} onFileRemove={remove} />`
+- The consumer owns the <input type="file">, the upload and each file's status
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user must attach files to a form → FileUpload (layout by width; compact for a single file)
+
+**Don't pick it when**
+- Showing documents already stored → List View or Description List
+
+**Composition rules**
+- Keep status in sync: 'uploading' while sending, then 'uploaded' or 'error' with errorMessage
+- Give every file a stable id; never reuse ids
+- Name the button with the action ("Choose files"), not "Button"
+- Without visible label (showLabel={false}) the buttonLabel must say what is being uploaded
+- Never rebuild a file row: use DocumentItem (renamed from ListItem — not List View)
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The button is described by the label and description
+- Dropping is never the only way: the button always works with mouse and keyboard
+- Upload finished, errors, added and removed files are announced
+- Removing a file moves focus to the next X (or the button), focus is never lost
+- Visible double focus ring on the name and on the X; error shown by border + icon + text
+
+**Your job**
+- Write the rules (format, size, how many) in the description
+- Error messages say what to do ("Use a PDF under 10 MB")
+
+### Developers · React
+
+**Semantics**
+- Button = Button Default Secondary Small with aria-describedby = label + description + instruction
+- File name = <input type="text"> named "File name"; read-only while uploading; aria-invalid + aria-describedby the error
+- X = <button> named "Remove {file name}"
+- Status changes and added / removed files through announce() (polite)
+
+**Keyboard**
+- Tab: the button, then the name and the X of each file; Enter / Space press; typing renames
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- buttonLabel set (dev warning for "Button")
+- Every file has id, name and status; errors have errorMessage
+- onFileRemove removes the file from state (focus handling depends on it)
+
+**Don't**
+- Don't hide the button while dragging (it only disables during the drop)
+- Don't show errors only in red: always errorMessage
