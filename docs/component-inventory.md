@@ -39,7 +39,7 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
+| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
 | Navigation | PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
@@ -3352,3 +3352,103 @@ The header of a page: its only h1, a way back or out, and up to three page-level
 - Don't add another h1 to the page
 - Don't use the breadcrumb pin as a button
 - Don't put more than 3 actions
+
+## Combobox · InputCombobox
+
+**Group:** Forms
+**Figma:** 🟢 Combobox page → `Input Combobox` (State Initial / Enabled / Hover / Focus / Error / Read-only / Disabled; Label, Helper, Validation, Icon), `.Combobox` (the field: State × Input Type Text / Input Chip), `Selection Cells`, `Picker`, `.Combobox Open` (field + picker) · frame *Combobox — How to use & Accessibility* (03/11)
+**Code:** `src/organisms/Combobox.jsx` · `src/components/InputCombobox.jsx`
+**Tokens:** the common input box (`--ds-input-*`, Figma `Input/InputCommon/*`) + `--ds-combobox-*` (`combobox/all/*`: buttons and chips gap, caret, autosuggest, clear icon, picker)
+
+A text field that filters a list as the user types and picks one value (text) or several (chips).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Choose one or several values from a long list by typing to filter it (countries, accounts, tags)
+- Short list (up to ~7 options) → Input Dropdown or Radio Group · free text → Input Text · a rich list with details → Selector
+
+**Properties**
+- Input Combobox · State → Initial · Enabled · Hover · Focus · Error · Read-only · Disabled · Label, Helper, Validation, Icon
+- Combobox field · Input Type → Text (one value) · Input Chip (several values, one chip each)
+- Picker → the open list below the field (Results 1–5 in Figma; any number in code)
+
+**Behaviour**
+- Typing filters the list; the best match is suggested in grey after the cursor (autosuggest) — Tab or Enter accepts it
+- The field is the same box as every input: hover border, focus ring outside, error border, read-only and disabled backgrounds
+- Read-only shows the value(s) but doesn't open or remove anything
+- With chips each one has its own X; the field grows to more lines when they don't fit
+
+**Sizing**
+- Field 56 min (padding 16, icon → text 12, X → chevron 4) · chips 8 apart · label → helper 4, helper → field 8 · focus area 4 around the component
+- Picker below the field: radius 8, container background, Picker shadow
+
+### Developers · React
+
+**Import**
+- `import { Combobox } from './organisms/Combobox' (field + picker + behaviour); InputCombobox from './components/InputCombobox' (field only)`
+
+**Props**
+- Combobox · options [{ value, label, description? }], value + onChange (single) or multiple + selectedValues + onSelectedValuesChange, label / ariaLabel, placeholder, helperText, state 'default'|'error'|'read-only'|'disabled', errorMessage, iconLeft, required, fullWidth, emptyMessage ('No results')
+- InputCombobox · controlled field: value, onValueChange, autoSuggestText, multiple + selectedChips + onRemoveChip, open + onToggleOpen, onClear, clearLabel, toggleLabel, readOnlyLabel
+
+**Example**
+- `<Combobox label="Country" options={countries} value={country} onChange={setCountry} placeholder="Search a country" />`
+- `<Combobox label="Tags" multiple options={tags} selectedValues={selected} onSelectedValuesChange={setSelected} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- More than ~7 options and the user knows what they're looking for
+
+**Don't pick it when**
+- Few options → InputDropdown / RadioGroup
+- Options need comparing (amounts, details) → Selector or AccountSelector
+
+**Composition rules**
+- Use the Combobox organism; InputCombobox alone only if you build your own list (then pass aria-controls and aria-activedescendant)
+- Always a label (or ariaLabel); options with unique labels
+- Don't put actions or links inside the options
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus stays in the text field; arrows move through the options and the highlighted one is read
+- "No results" is announced
+- Selection is shown by the border of the option and by chips, never colour alone
+- Visible focus ring on the field and on the clear X
+- Read-only is still reachable with the keyboard and reads "read only"
+
+**Your job**
+- Write labels that say what to choose ("Country")
+- Error messages say how to fix it ("Choose a country from the list")
+
+### Developers · React
+
+**Semantics**
+- APG combobox: <input role="combobox"> with aria-expanded, aria-controls (listbox id), aria-activedescendant (highlighted option), aria-autocomplete="both"
+- Picker = role listbox; options = SelectorListItem with role option and aria-selected
+- Clear X = button "Clear {label}"; chevron = "Show options", out of the Tab order
+- Error linked by aria-describedby and announced; required = asterisk + native required
+
+**Keyboard**
+- ↓ / ↑ open and move · Enter selects · Escape closes and restores the text · Tab accepts the suggestion and moves on (no trap)
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label or ariaLabel
+- emptyMessage in the user's language if not English
+- state="read-only" (not disabled) when the value must be readable but not changed
+
+**Don't**
+- Don't open the list on page load
+- Don't trap Tab inside the field
+- Don't rebuild the field: InputCombobox uses the common input box
