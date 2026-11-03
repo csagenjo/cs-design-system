@@ -8,7 +8,10 @@
  * izquierdo, a todo el ancho) y su foco es el anillo doble POR DENTRO de esa
  * franja, como las filas — no tapa el contenido (Carol; un primer intento con
  * el anillo alrededor de todo el Drawer tapaba el contenido pegado al borde).
- * Figma: booleana "Focus" con Focus outer/inner sobre la franja.
+ * Figma: la franja es el componente ".Drawer Toggle" (instancia expuesta) con
+ * State Initial / Hover (azul, como las filas) / Pressed (opacidad) / Focus;
+ * aquí son :hover / :active / :focus-visible del botón. Borde del riel →
+ * icono = 20 (`--ds-drawer-toggle-padding-center`), fijo aunque cambie el ancho.
  *
  * Riel lateral/superior colapsable — contenedor simple, sin header ni
  * contenido propios (los aporta el consumidor vía `children`, mismo criterio
@@ -135,8 +138,11 @@ const css = `
   width:           100%;
   height:          calc(var(--ds-drawer-icon-size) + 2 * var(--ds-drawer-icon-padding));
   justify-content: flex-start;
-  padding-left:    calc((var(--ds-drawer-collapsed-size) - var(--ds-drawer-icon-size)) / 2);
+  padding-left:    var(--ds-drawer-toggle-padding-center);
 }
+/* Hover azul (como las filas: el toggle es superficie del riel) y pressed por opacidad */
+button.ds-drawer__icon:hover  { background: var(--ds-drawer-toggle-bg-hover); }
+button.ds-drawer__icon:active { background: var(--ds-drawer-toggle-bg-hover); opacity: var(--ds-drawer-toggle-opacity-pressed); }
 .ds-drawer--anchor-top .ds-drawer__icon {
   width:  calc(var(--ds-drawer-icon-size) + 2 * var(--ds-drawer-icon-padding));
   height: var(--ds-drawer-collapsed-size);

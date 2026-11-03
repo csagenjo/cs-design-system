@@ -3457,7 +3457,7 @@ A text field that filters a list as the user types and picks one value (text) or
 ## Drawer
 
 **Group:** Layout
-**Figma:** 🟢 Drawer page → `Drawer` (Color × Style × State × Anchor × Icon Placement; Show Divider, Focus) · frame *Drawer — How to use & Accessibility* (03/11)
+**Figma:** 🟢 Drawer page → `Drawer` (Color × Style × State × Anchor × Icon Placement; Show Divider) with the nested `.Drawer Toggle` (Anchor × State) · frame *Drawer — How to use & Accessibility* (03/11)
 **Code:** `src/components/Drawer.jsx`
 **Tokens:** `--ds-drawer-*` (`drawer/all/*`)
 
@@ -3475,15 +3475,17 @@ A side or top panel that can collapse to a rail; the frame of Sidebar Menu.
 - Style → Dismissable (opens and closes) · Standard (always open, the icon is a free slot)
 - State → Collapsed · Expanded (Dismissable) · Default (Standard)
 - Anchor → Left (vertical rail) · Top (horizontal bar) · Color → Primary (default background) · Secondary (page background)
-- Icon Placement → Top / Bottom (Left anchor) · Left / Right (Top anchor) · No Icon · Show Divider · Focus
+- Icon Placement → Top / Bottom (Left anchor) · Left / Right (Top anchor) · No Icon · Show Divider
+- Toggle (nested `.Drawer Toggle`, exposed) → State Initial · Hover · Pressed · Focus; change only its State and icon, never its size
 
 **Behaviour**
 - The icon strip is the toggle: menu icon when collapsed, an arrow pointing to the anchored edge when expanded
 - Collapsed hides the content; background, border and radius stay the same in both states
-- Focus: double ring inside the icon strip, never over the content
+- Toggle states like the rows: Hover blue (bg/hover-primary) · Pressed opacity · Focus double ring inside the strip, never over the content
+- Visual example of every state: frame *Drawer — Toggle states* on the Drawer page (Left, Left expanded, Top)
 
 **Sizing**
-- Rail 72 collapsed / 240 expanded (sample sizes, the consumer can change them) · icon 32 in a 64 strip (16 + 32 + 16), centred in the collapsed rail
+- Rail 72 collapsed / 240 expanded (sample sizes, the consumer can change them) · icon 32 in a 64 strip (16 + 32 + 16), 20 from the rail edge
 - Border 1.5 · radius 8 only on the side opposite the anchor
 
 ### Developers · React
@@ -3564,6 +3566,7 @@ The side navigation of La Plataforma, up to three levels.
 **When to use**
 - The main side navigation of La Plataforma: up to 3 levels (Parent · Child · Grand son)
 - Navigation between pages at the top → Top Navigation · views of the same page → Tabs
+- Mobile and tablet (< 1024 px): it is also the menu of Top Navigation Collapsed — the same sections, opened from the menu button in a modal panel (see TopNavigation)
 
 **Composition (no component of its own)**
 - Drawer (Dismissable, Left) + Headline (title) + List View rows; Parent rows with children carry a chevron
@@ -3573,6 +3576,11 @@ The side navigation of La Plataforma, up to three levels.
 - A row with children only opens/closes its branch (chevron down → up); a row without children navigates
 - The branch of the selected page opens on load; the selected row shows the List View ribbon
 - Collapsed hides the whole tree (no icon-only view yet); outside click or Escape collapses it
+
+**Inside Top Navigation Collapsed (mobile and tablet)**
+- Built from Top Navigation's menuItems: each section → Parent row, its flydown links → Child rows (group titles and Featured images are left out), Log out → last row
+- Opens expanded at the panel width (320); the current section is marked, as on desktop
+- Choosing a page, Escape or the scrim closes the whole panel; focus goes back to the menu button
 
 **Sizing**
 - Drawer 72 collapsed / 240 expanded · title padding 16 / 16 / 8 · indent 16 per level
@@ -3587,7 +3595,7 @@ The side navigation of La Plataforma, up to three levels.
 
 **Example**
 - `<SidebarMenu title="Account management" items={tree} selectedId={page} onSelect={go} collapsed={c} onToggleCollapse={() => setC(!c)} />`
-- Inside Top Navigation's mobile panel it fills the panel width (--ds-drawer-expanded-size: 100%)
+- Inside Top Navigation's mobile panel it fills the panel width (--ds-drawer-expanded-size: 100%); TopNavigation builds it from menuItems and passes selectedId and collapseOnDismiss={false} — don't add a second SidebarMenu on those breakpoints
 
 ### AI agents · Claude Code
 
@@ -3653,7 +3661,7 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 
 **When to use**
 - The top bar of every page of La Plataforma on the web: logo, main sections and Log out
-- Below 1024 px it collapses to logo + menu button that opens the Sidebar Menu in a panel
+- Below 1024 px (mobile and tablet) it collapses to logo + menu button that opens the Sidebar Menu in a modal panel — see SidebarMenu → "Inside Top Navigation Collapsed"
 
 **Properties**
 - Layout → Desktop (Logo slot + Tabs Line L scrollable + Button Accent Tertiary Large "Log out") · Collapsed (Logo + Icon Button Default Tertiary Medium)
@@ -3662,7 +3670,8 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 **Behaviour**
 - A tab with children opens its flydown on hover, click or Enter; Escape or moving away closes it
 - Only the tabs navigate; the flydown links take you to the second level
-- The Collapsed menu is a modal panel: focus stays inside until it closes
+- The Collapsed menu is a modal panel (320 over a Scrim) holding a Sidebar Menu: sections → Parent rows, flydown links → Child rows, Log out → last row; focus stays inside until it closes
+- Design the sections once: the same menuItems feed the desktop tabs and the mobile menu
 
 **Sizing**
 - Bar 56 · padding layout/margin · logo → tabs layout/gutter · flydown padding layout/margin, columns 160, groups 16 apart
@@ -3684,7 +3693,7 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 - The main bar of any La Plataforma page
 
 **Don't pick it when**
-- Navigation inside a page → Tabs · side navigation → SidebarMenu
+- Navigation inside a page → Tabs · side navigation on desktop → SidebarMenu (on mobile and tablet TopNavigation already shows its own SidebarMenu)
 
 **Composition rules**
 - One per page, above Page Title

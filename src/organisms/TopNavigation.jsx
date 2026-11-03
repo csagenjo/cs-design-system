@@ -419,8 +419,9 @@ export function TopNavigation({
             aria-modal="true"
             aria-label={menuLabel}
           >
-            {/* dentro del panel móvil el menú ocupa todo su ancho */}
-            <SidebarMenu items={sidebarItems} onSelect={handleSidebarSelect} collapseOnDismiss={false}
+            {/* dentro del panel móvil el menú ocupa todo su ancho; la sección
+                actual se marca igual que en escritorio (selectedId) */}
+            <SidebarMenu items={sidebarItems} selectedId={selectedId} onSelect={handleSidebarSelect} collapseOnDismiss={false}
               style={{ '--ds-drawer-expanded-size': '100%' }} />
           </div>
         </div>
