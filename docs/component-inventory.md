@@ -3482,11 +3482,22 @@ A side or top panel that can collapse to a rail; the frame of Sidebar Menu.
 - The icon strip is the toggle: menu icon when collapsed, an arrow pointing to the anchored edge when expanded
 - Collapsed hides the content; background, border and radius stay the same in both states
 - Toggle states like the rows: Hover blue (bg/hover-primary) · Pressed opacity · Focus double ring inside the strip, never over the content
-- Visual example of every state: frame *Drawer — Toggle states* on the Drawer page (Left, Left expanded, Top)
+- Visual example of every state and the `.Drawer Toggle` variants: section *Toggle* of the Drawer doc frame
 
 **Sizing**
 - Rail 72 collapsed / 240 expanded (sample sizes, the consumer can change them) · icon 32 in a 64 strip (16 + 32 + 16), 20 from the rail edge
 - Border 1.5 · radius 8 only on the side opposite the anchor
+
+**Toggle — `.Drawer Toggle`** (section *Toggle* of the doc frame)
+- Private component (dot prefix): the open / close button of a Dismissable Drawer — the whole icon strip is the button; nested and exposed in every Dismissable variant, never placed on its own
+- Anchor → Left (full rail width × 64) · Top (64 × 72) · State → Initial · Hover · Pressed · Focus · Icon → instance swap (menu collapsed, arrow to the anchored edge expanded)
+- Initial → no background · Hover → `drawer/all/toggle/bg/hover` → `bg/hover-primary` · Pressed → hover + `drawer/all/toggle/opacity/pressed` · Focus → Focus outer + inner 2 + 2 inside the strip
+- Icon 32 · 16 along the rail (`drawer/all/toggle/padding/generic`) · 20 from the rail edge (`drawer/all/toggle/padding/center` → Base `dimension/250`) · only the corner that touches the Drawer's rounded corner
+- From a Drawer instance change only its State and icon; never resize, move it or change its corner
+
+**Toggle — *Drawer — Toggle states*** (same section)
+- The four states inside real Drawer instances: Left collapsed, Left expanded, Top collapsed — copy one to show interaction in a flow or prototype
+- Hover and Pressed paint only the strip, never the content; the focus ring follows the Drawer's rounded corner
 
 ### Developers · React
 
