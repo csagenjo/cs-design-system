@@ -168,9 +168,9 @@ const dropdownOptions = [
   { value: 'b', label: 'Opción B' },
 ];
 const comboboxOptions = [
-  { value: 'es', label: 'España' },
-  { value: 'fr', label: 'Francia' },
-  { value: 'de', label: 'Alemania' },
+  { value: 'es', label: 'Spain' },
+  { value: 'fr', label: 'France' },
+  { value: 'de', label: 'Germany' },
 ];
 const countries = [
   { value: 'es', label: 'SP | Spain (+34)', flag: 'spain' },
@@ -669,18 +669,20 @@ export default function Gallery({ mode }) {
 
       <Section name="InputCombobox">
         <div className="a11y-grid" style={{ paddingBottom: 16 }}>
-          {inputStates.map((s) => (
-            <InputCombobox key={s} label={`Buscar ${s}`} state={s} value="Mad" onValueChange={noop}
-              errorMessage="Sin coincidencias" helperText="Escribe para buscar" />
+          {['default', 'error', 'read-only', 'disabled'].map((s) => (
+            <InputCombobox key={s} label={`Country ${s}`} state={s} value="Spain" onValueChange={noop} onClear={noop}
+              errorMessage="No matches" helperText="Type to search" iconLeft="search" />
           ))}
-          <InputCombobox label="Con autosuggest" value="Mad" autoSuggestText="Madrid" onValueChange={noop} iconLeft="search" />
+          <InputCombobox label="With suggestion" value="Fra" autoSuggestText="France" onValueChange={noop} onClear={noop} iconLeft="search" />
           {/* Abierto: el átomo no pinta la lista — el consumidor (Combobox) le pasa aria-controls con el id de su listbox */}
-          <InputCombobox label="Abierto" value="" placeholder="Buscar país" open onToggleOpen={noop} onValueChange={noop} aria-controls="gal-input-combobox-list" />
-          <div id="gal-input-combobox-list" role="listbox" aria-label="Países">
-            <div role="option" aria-selected="false">España</div>
+          <InputCombobox label="Open" value="" placeholder="Search a country" open onToggleOpen={noop} onValueChange={noop} aria-controls="gal-input-combobox-list" />
+          <div id="gal-input-combobox-list" role="listbox" aria-label="Countries">
+            <div role="option" aria-selected="false">Spain</div>
           </div>
-          <InputCombobox label="Etiquetas (multiple)" multiple value="" onValueChange={noop}
-            selectedChips={[{ value: 'es', label: 'España' }, { value: 'fr', label: 'Francia' }]} onRemoveChip={noop} />
+          {['default', 'read-only', 'disabled'].map((s) => (
+            <InputCombobox key={'m' + s} label={`Tags ${s}`} state={s} multiple value="" onValueChange={noop}
+              selectedChips={[{ value: 'es', label: 'Spain' }, { value: 'fr', label: 'France' }]} onRemoveChip={noop} />
+          ))}
         </div>
       </Section>
 
@@ -1131,11 +1133,12 @@ export default function Gallery({ mode }) {
 
       <Section name="Combobox">
         <div className="a11y-grid">
-          <Combobox label="País" ariaLabel="País" options={comboboxOptions} value="" onChange={noop} placeholder="Busca un país" />
-          <Combobox label="Etiquetas" multiple options={comboboxOptions} selectedValues={['es', 'fr']} onSelectedValuesChange={noop} />
-          <Combobox label="Error" state="error" errorMessage="Selecciona un país" options={comboboxOptions} value="" onChange={noop} />
+          <Combobox label="Country" options={comboboxOptions} value="" onChange={noop} placeholder="Search a country" />
+          <Combobox label="Tags" multiple options={comboboxOptions} selectedValues={['es', 'fr']} onSelectedValuesChange={noop} />
+          <Combobox label="Error" state="error" errorMessage="Choose a country" options={comboboxOptions} value="" onChange={noop} />
+          <Combobox label="Read-only" state="read-only" options={comboboxOptions} value="es" onChange={noop} />
           <Combobox label="Disabled" state="disabled" options={comboboxOptions} value="es" onChange={noop} />
-          <Combobox label="Con helper" helperText="Escribe para filtrar" iconLeft="search" options={comboboxOptions} value="" onChange={noop} />
+          <Combobox label="With helper" helperText="Type to filter" iconLeft="search" options={comboboxOptions} value="" onChange={noop} />
         </div>
       </Section>
 

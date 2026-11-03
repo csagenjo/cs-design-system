@@ -6,11 +6,10 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title. Siguientes: Combobox; después el resto, críticos primero. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox. Siguientes: el resto, críticos primero. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 
-- **InputCombobox con el foco antiguo.** No usa la caja común de los inputs: borde blanco en foco, sin área de foco ni Hover de Figma.
 - **Área de foco de Button / Icon Button en otros componentes.** Las instancias crecieron 8 px (08/10). Revisar cada padre (InlineNotification, Collapsible, TopNavigation, PageTitle…); si un gap se diseñó con el botón pegado al borde, restar 4 en el token del padre, nunca quitar el área.
 - **Popover: geometría compartida.** El cierre (Escape, click fuera) ya es común (`_popoverDismiss.js`); la posición no: Combobox, Country/Currency Picker y PopoverSheet calculan la suya, sin "flip" en el borde del viewport. Construirlo cuando un caso real lo pida.
 - **Drawer: icono + título en la misma fila del toggle.** Hoy el título de SidebarMenu va como primera línea del contenido.

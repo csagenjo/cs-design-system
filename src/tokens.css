@@ -931,25 +931,16 @@
      no bloquear en construir antes un mecanismo compartido (eso le toca a
      Popover Sheet, Sprint 5 Pri 8, cuando llegue su turno).
      ========================================================================== */
-  --ds-combobox-icon-fg:                var(--ds-fg-primary);
-  --ds-combobox-icon-fg-disabled:       var(--ds-fg-disabled);
-  --ds-combobox-buttons-gap:            var(--ds-spacing-xs);   /* combobox/all/buttons/gap — x ↔ chevron (09/10/2026) */
-  --ds-combobox-text-fg:                var(--ds-fg-default);
-  --ds-combobox-text-fg-disabled:       var(--ds-fg-disabled);
-  --ds-combobox-caret-color:            var(--ds-fg-primary);
-  --ds-combobox-autosuggest-fg:         var(--ds-fg-subtle);
-  --ds-combobox-icondelete-fg:          var(--ds-fg-subtle);
-  --ds-combobox-root-bg:                var(--ds-bg-default);
-  --ds-combobox-root-bg-disabled:       var(--ds-bg-disabled);
-  --ds-combobox-root-border-color:      var(--ds-fg-subtle);
-  --ds-combobox-root-border-color-error: var(--ds-borderColor-error);
-  --ds-combobox-root-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-combobox-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-combobox-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-combobox-root-border-width:      1.5px;
-  --ds-combobox-root-border-width-focus: 2px;
-  --ds-combobox-picker-bg:              var(--ds-bg-container); /* corregido 14/09 — era bg-default (tono más oscuro en dark), el panel flotante es superficie elevada */
-  --ds-combobox-picker-border-radius:   8px;
+  /* 03/11/2026: la caja del campo es la común de los inputs (_inputBase, tokens
+     --ds-input-*): se borran combobox/all/root/*, icon/fg/* y text/fg/* en Figma.
+     Aquí quedan solo los tokens propios de Combobox. */
+  --ds-combobox-buttons-gap:            var(--ds-spacing-xs);   /* combobox/all/buttons/gap — x ↔ chevron */
+  --ds-combobox-chips-gap:              var(--ds-spacing-md);   /* combobox/all/chips/gap — entre chips (8 + área de foco de cada chip) */
+  --ds-combobox-caret-color:            var(--ds-borderColor-primary); /* combobox/all/caret/borderColor/generic */
+  --ds-combobox-autosuggest-fg:         var(--ds-fg-label-subtle);     /* combobox/all/autoSuggestText/fg/generic */
+  --ds-combobox-icondelete-fg:          var(--ds-fg-subtle);           /* combobox/all/iconDelete/fg/generic */
+  --ds-combobox-picker-bg:              var(--ds-bg-container); /* combobox/all/picker/bg/generic (antes root/bg/generic) — superficie elevada */
+  --ds-combobox-picker-border-radius:   var(--ds-border-radius-md); /* combobox/all/picker/borderRadius (03/11) */
   --ds-combobox-picker-shadow:          0 4px 4px var(--ds-opacity-shadow-umbra-strong); /* Effect Style Picker/Shadow (26/10; antes 25 % literal) */
 
   /* ══════════════════════════════════════════════════════════════════════════

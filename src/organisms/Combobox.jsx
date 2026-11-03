@@ -166,13 +166,15 @@ export function Combobox({
   });
   const highlighted = listbox.activeIndex;
 
+  const locked = state === 'disabled' || state === 'read-only'; // 03/11: read-only no abre
   function openPicker() {
+    if (locked) return;
     setOpen(true);
     listbox.setActiveIndex(0);
   }
 
   // "Sin resultados" solo se ve; el lector no se entera si no se anuncia.
-  const noResults = open && state !== 'disabled' && filtered.length === 0;
+  const noResults = open && !locked && filtered.length === 0;
   useEffect(() => {
     if (noResults) announce(emptyMessage);
   }, [noResults, emptyMessage]);
@@ -283,7 +285,7 @@ export function Combobox({
           dispara onFocus -> openPicker de nuevo, reabriendo el panel con la
           opción recién elegida como único resultado filtrado — patrón
           estándar para paneles de combobox/autocomplete. */}
-      {open && state !== 'disabled' && (
+      {open && !locked && (
         <div className="ds-combobox__picker" onMouseDown={(e) => e.preventDefault()}>
           {filtered.length === 0 ? (
             <div className="ds-combobox__empty">{emptyMessage}</div>
