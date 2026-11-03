@@ -1932,10 +1932,15 @@
   --ds-drawer-root-bg-primary:            var(--ds-bg-default); /* #FFFFFF / #050506 dark */
   --ds-drawer-root-bg-secondary:          var(--ds-bg-page);    /* #FAFBFB / #464B53 dark */
   --ds-drawer-root-border-color-generic:  var(--ds-borderColor-subtle);
-  --ds-drawer-root-border-width-generic:  1.5px;                /* borderWidth/md */
-  --ds-drawer-root-border-radius-generic: 8px;                  /* literal, Figma — solo en el borde opuesto al anclaje */
+  --ds-drawer-root-border-width-generic:  var(--ds-border-width-md);  /* 1.5 — drawer/all/root/border/width/generic */
+  --ds-drawer-root-border-radius-generic: var(--ds-border-radius-md); /* 8 — drawer/all/root/border/radius/generic (03/11), solo en el borde opuesto al anclaje */
+  --ds-drawer-root-focus-outer:           var(--ds-borderColor-focus-outer); /* drawer/all/root/focus/borderColor/outer */
+  --ds-drawer-root-focus-inner:           var(--ds-borderColor-focus-inner); /* drawer/all/root/focus/borderColor/inner */
+  --ds-drawer-root-focus-width:           var(--ds-border-width-lg);         /* 2 */
+  --ds-drawer-icon-size:                  var(--ds-sizing-md);               /* 32 */
+  --ds-drawer-icon-padding:               var(--ds-spacing-xl);              /* 16 — franja del icono: 16 + 32 + 16 = 64 a lo largo del riel */
   --ds-drawer-icon-fg-generic:            var(--ds-fg-icon-primary); /* #0A7C92 fijo */
-  --ds-drawer-collapsed-size:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — sobreescribible por el consumidor */
+  --ds-drawer-collapsed-size:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — tamaño de muestra de Figma, sin variable; sobreescribible por el consumidor */
   --ds-drawer-expanded-size:              240px; /* ídem en Expanded/Standard */
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -2088,9 +2093,11 @@
   --ds-top-navigation-flydown-tab-title-fg-generic: var(--ds-headline-fg-default); /* topNavigation/flydown/tabTitle/fg/generic — nuevo 24/09, nombra el tab del flydown abierto; antes saltaba directo a headline/fg/default (Mode) */
   --ds-top-navigation-breakpoint:       1024px;
   --ds-top-navigation-flydown-gap:      var(--ds-layout-gutter); /* topNavigation/flydown/column/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap horizontal entre columnas (reusado tal cual para el margin-bottom de apilado vertical dentro de una columna) */
-  --ds-top-navigation-flydown-title-gap: 16px; /* topNavigation/flydown/root/gap/generic — spacing/xl, gap vertical Tab title → columnas */
-  --ds-top-navigation-flydown-links-group-gap: 16px; /* topNavigation/flydown/linksGroup/gap/generic — spacing/xl, uniforme título↔link y link↔link (antes 8px, desincronizado) */
-  --ds-top-navigation-flydown-links-group-padding: 8px; /* topNavigation/flydown/linksGroup/padding/generic — spacing/md, padding interno de cada grupo (.FlydownLinks) */
+  --ds-top-navigation-flydown-title-gap: var(--ds-spacing-xl); /* 16 — topNavigation/flydown/root/gap/generic, Tab title → columnas */
+  --ds-top-navigation-flydown-links-group-gap: var(--ds-spacing-xl); /* 16 — topNavigation/flydown/linksGroup/gap/generic, título↔link y link↔link */
+  --ds-top-navigation-flydown-links-group-padding: var(--ds-spacing-md); /* 8 — topNavigation/flydown/linksGroup/padding/generic */
+  --ds-top-navigation-flydown-link-underline-hover: var(--ds-borderColor-primary); /* subrayado de los links del flydown en hover/foco (03/11: antes Mode directo en el JSX) */
+  --ds-top-navigation-mobile-panel-width:  320px; /* panel del menú en móvil/tablet — ancho de muestra, sin variable en Figma */
   --ds-top-navigation-flydown-height:       400px; /* aproximado, a propósito ("de un vistazo") — nunca garantía matemática para cualquier volumen de contenido. Ancho ya NO acotado aquí — desde 25/09 el flydown es mega-menú a ancho completo (ver --ds-top-navigation-flydown-column-width y el CSS de .ds-top-navigation__flydown) */
   --ds-top-navigation-flydown-column-width: 160px;
   --ds-top-navigation-flydown-padding:      var(--ds-layout-margin); /* topNavigation/flydown/root/padding/generic — layout/margin (01/10, antes spacing/2xl) */

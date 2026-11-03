@@ -1,6 +1,6 @@
 /**
  * TopNavigation — Organismo
- * CS Design System · v1
+ * CS Design System · v1.1
  *
  * Barra de navegación principal para Web (genérico — no ata a un consumidor
  * concreto, mismo criterio que Page Title). Reemplaza las 576 variantes
@@ -206,8 +206,8 @@ const css = `
 }
 .ds-top-navigation__group-links .ds-link:hover,
 .ds-top-navigation__group-links .ds-link:focus-visible {
-  --ds-link-border-bottom-default: var(--ds-borderColor-primary);
-  --ds-link-border-bottom-accent:  var(--ds-borderColor-primary);
+  --ds-link-border-bottom-default: var(--ds-top-navigation-flydown-link-underline-hover);
+  --ds-link-border-bottom-accent:  var(--ds-top-navigation-flydown-link-underline-hover);
 }
 
 .ds-top-navigation__scrim-wrap {
@@ -220,7 +220,7 @@ const css = `
   top: 0;
   left: 0;
   bottom: 0;
-  width: 320px;
+  width: var(--ds-top-navigation-mobile-panel-width);
   z-index: 31;
   background: var(--ds-top-navigation-root-bg-generic);
 }
@@ -246,6 +246,7 @@ function flydownToSidebarChildren(flydown, onSelectLeaf, parentId) {
 export function TopNavigation({
   logo,
   menuItems = [],
+  selectedId,              // 03/11: sección actual → pestaña seleccionada (ribbon) + aria-current="page"
   exitLabel = 'Log out',   // A11y-5 (K): textos por defecto en inglés
   onExit,
   ariaLabel = 'Main',            // nombre del landmark <nav> (inglés por defecto, decisión 20/10)
@@ -343,6 +344,8 @@ export function TopNavigation({
                   <TabItem
                     size="l"
                     role={null}
+                    selected={item.id === selectedId}
+                    aria-current={item.id === selectedId ? 'page' : undefined}
                     ref={(el) => { triggerRefs.current[item.id] = el; }}
                     aria-expanded={hasFlydown ? isOpen : undefined}
                     aria-controls={hasFlydown ? flydownId(item.id) : undefined}
@@ -386,7 +389,7 @@ export function TopNavigation({
             })}
           </div>
         </div>
-        <Button variant="tertiary" size="lg" iconRight="LogOut" onClick={onExit}>{exitLabel}</Button>
+        <Button type="accent" variant="tertiary" size="lg" iconRight="log-out" onClick={onExit}>{exitLabel}</Button>
       </div>
 
       {/* ── Mobile/Tablet, colapsado ────────────────────────────────────── */}
@@ -416,7 +419,9 @@ export function TopNavigation({
             aria-modal="true"
             aria-label={menuLabel}
           >
-            <SidebarMenu items={sidebarItems} onSelect={handleSidebarSelect} collapseOnDismiss={false} />
+            {/* dentro del panel móvil el menú ocupa todo su ancho */}
+            <SidebarMenu items={sidebarItems} onSelect={handleSidebarSelect} collapseOnDismiss={false}
+              style={{ '--ds-drawer-expanded-size': '100%' }} />
           </div>
         </div>
       )}
