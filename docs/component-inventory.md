@@ -3457,7 +3457,7 @@ A text field that filters a list as the user types and picks one value (text) or
 ## Drawer
 
 **Group:** Layout
-**Figma:** 🟢 Drawer page → `Drawer` (Color × Style × State × Anchor × Icon Placement; Show Divider) with the nested `.Drawer Toggle` (Anchor × State) · frame *Drawer — How to use & Accessibility* (03/11)
+**Figma:** 🟢 Drawer page → `Drawer` (Color × Style × State × Anchor × Icon Placement; Show Divider) with the nested `.Drawer Toggle` (Anchor × State, own table with description under the Drawer table) · frame *Drawer — How to use & Accessibility* (03/11)
 **Code:** `src/components/Drawer.jsx`
 **Tokens:** `--ds-drawer-*` (`drawer/all/*`)
 
