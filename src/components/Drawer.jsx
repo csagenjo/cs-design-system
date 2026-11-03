@@ -1,6 +1,17 @@
 /**
  * Drawer — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2.0
+ *
+ * 03/11/2026, alineado 1:1 con Figma: franja del icono 16 + 32 + 16 = 64 a lo
+ * largo del riel (antes 72) y centrada en el ancho del riel colapsado; radio
+ * y borde por token; la franja del icono entera es el botón (en el riel
+ * izquierdo, a todo el ancho) y su foco es el anillo doble POR DENTRO de esa
+ * franja, como las filas — no tapa el contenido (Carol; un primer intento con
+ * el anillo alrededor de todo el Drawer tapaba el contenido pegado al borde).
+ * Figma: la franja es el componente ".Drawer Toggle" (instancia expuesta) con
+ * State Initial / Hover (azul, como las filas) / Pressed (opacidad) / Focus;
+ * aquí son :hover / :active / :focus-visible del botón. Borde del riel →
+ * icono = 20 (`--ds-drawer-toggle-padding-center`), fijo aunque cambie el ancho.
  *
  * Riel lateral/superior colapsable — contenedor simple, sin header ni
  * contenido propios (los aporta el consumidor vía `children`, mismo criterio
@@ -81,6 +92,7 @@ import { Divider } from './Divider';
 
 const css = `
 .ds-drawer {
+  position:      relative;
   box-sizing:    border-box;
   display:       flex;
   overflow:      hidden;
@@ -110,16 +122,42 @@ const css = `
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           var(--ds-drawer-collapsed-size);
-  height:          var(--ds-drawer-collapsed-size);
+  margin:          0;
   padding:         0;
   background:      transparent;
   border:          none;
+  border-radius:   0;
   color:           var(--ds-drawer-icon-fg-generic);
   cursor:          pointer;
 }
-.ds-drawer__icon:disabled { cursor: default; }
-.ds-drawer__icon:focus-visible { outline: 2px solid var(--ds-drawer-icon-fg-generic); outline-offset: -2px; }
+.ds-drawer__icon svg { width: var(--ds-drawer-icon-size); height: var(--ds-drawer-icon-size); }
+/* Franja del icono: 64 a lo largo del riel; en el riel izquierdo ocupa todo
+   el ancho y el icono queda centrado en el ancho del riel colapsado. */
+.ds-drawer--anchor-left .ds-drawer__icon-row { align-self: stretch; }
+.ds-drawer--anchor-left .ds-drawer__icon {
+  width:           100%;
+  height:          calc(var(--ds-drawer-icon-size) + 2 * var(--ds-drawer-icon-padding));
+  justify-content: flex-start;
+  padding-left:    var(--ds-drawer-toggle-padding-center);
+}
+/* Hover azul (como las filas: el toggle es superficie del riel) y pressed por opacidad */
+button.ds-drawer__icon:hover  { background: var(--ds-drawer-toggle-bg-hover); }
+button.ds-drawer__icon:active { background: var(--ds-drawer-toggle-bg-hover); opacity: var(--ds-drawer-toggle-opacity-pressed); }
+.ds-drawer--anchor-top .ds-drawer__icon {
+  width:  calc(var(--ds-drawer-icon-size) + 2 * var(--ds-drawer-icon-padding));
+  height: var(--ds-drawer-collapsed-size);
+}
+/* Foco: anillo doble por dentro de la franja del icono */
+.ds-drawer__icon:focus-visible {
+  outline:        var(--ds-drawer-root-focus-width) solid var(--ds-drawer-root-focus-outer);
+  outline-offset: calc(-1 * var(--ds-drawer-root-focus-width));
+  box-shadow:     inset 0 0 0 calc(2 * var(--ds-drawer-root-focus-width)) var(--ds-drawer-root-focus-inner);
+}
+/* La franja toca la esquina redondeada del Drawer: el anillo la sigue */
+.ds-drawer--anchor-left.ds-drawer--placement-start .ds-drawer__icon { border-top-right-radius: var(--ds-drawer-root-border-radius-generic); }
+.ds-drawer--anchor-left.ds-drawer--placement-end .ds-drawer__icon   { border-bottom-right-radius: var(--ds-drawer-root-border-radius-generic); }
+.ds-drawer--anchor-top.ds-drawer--collapsed.ds-drawer--placement-start .ds-drawer__icon { border-bottom-left-radius: var(--ds-drawer-root-border-radius-generic); }
+.ds-drawer--anchor-top.ds-drawer--collapsed.ds-drawer--placement-end .ds-drawer__icon   { border-bottom-right-radius: var(--ds-drawer-root-border-radius-generic); }
 
 /* El icono NUNCA se centra — confirmado por dato en Figma: x fijo (20px
    anchor=left, 16px anchor=top) igual en Collapsed y Expanded, no un cálculo
@@ -132,6 +170,7 @@ const css = `
    column-reverse arriba) — el icono se queda alineado a la izquierda igual
    que en "start". En anchor="top" sí es alineación horizontal real. */
 .ds-drawer--anchor-top.ds-drawer--placement-end .ds-drawer__icon-row { justify-content: flex-end; }
+.ds-drawer--anchor-top .ds-drawer__icon-row { align-self: stretch; }
 
 .ds-drawer__content {
   flex:       1 1 auto;

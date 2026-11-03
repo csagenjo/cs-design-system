@@ -42,7 +42,8 @@ Rules that apply to every entry:
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
 | Feedback | Snackbar · _rest to be filled_ |
-| Navigation | PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Layout | Drawer · _rest to be filled_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
 | Page structure | Accordion, AccordionGroup |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
@@ -3452,3 +3453,295 @@ A text field that filters a list as the user types and picks one value (text) or
 - Don't open the list on page load
 - Don't trap Tab inside the field
 - Don't rebuild the field: InputCombobox uses the common input box
+
+## Drawer
+
+**Group:** Layout
+**Figma:** 🟢 Drawer page → `Drawer` (Color × Style × State × Anchor × Icon Placement; Show Divider) with the nested `.Drawer Toggle` (Anchor × State) · frame *Drawer — How to use & Accessibility* (03/11)
+**Code:** `src/components/Drawer.jsx`
+**Tokens:** `--ds-drawer-*` (`drawer/all/*`)
+
+A side or top panel that can collapse to a rail; the frame of Sidebar Menu.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A side (or top) panel that holds navigation or tools and can collapse to a rail to give the page more room
+- Navigation of La Plataforma → Sidebar Menu (built on Drawer) · temporary content over the page → Dialog or Popover Sheet
+
+**Properties**
+- Style → Dismissable (opens and closes) · Standard (always open, the icon is a free slot)
+- State → Collapsed · Expanded (Dismissable) · Default (Standard)
+- Anchor → Left (vertical rail) · Top (horizontal bar) · Color → Primary (default background) · Secondary (page background)
+- Icon Placement → Top / Bottom (Left anchor) · Left / Right (Top anchor) · No Icon · Show Divider
+- Toggle (nested `.Drawer Toggle`, exposed) → State Initial · Hover · Pressed · Focus; change only its State and icon, never its size
+
+**Behaviour**
+- The icon strip is the toggle: menu icon when collapsed, an arrow pointing to the anchored edge when expanded
+- Collapsed hides the content; background, border and radius stay the same in both states
+- Toggle states like the rows: Hover blue (bg/hover-primary) · Pressed opacity · Focus double ring inside the strip, never over the content
+- Visual example of every state and the `.Drawer Toggle` variants: section *Toggle* of the Drawer doc frame
+
+**Sizing**
+- Rail 72 collapsed / 240 expanded (sample sizes, the consumer can change them) · icon 32 in a 64 strip (16 + 32 + 16), 20 from the rail edge
+- Border 1.5 · radius 8 only on the side opposite the anchor
+
+**Toggle — `.Drawer Toggle`** (section *Toggle* of the doc frame)
+- Private component (dot prefix): the open / close button of a Dismissable Drawer — the whole icon strip is the button; nested and exposed in every Dismissable variant, never placed on its own
+- Anchor → Left (full rail width × 64) · Top (64 × 72) · State → Initial · Hover · Pressed · Focus · Icon → instance swap (menu collapsed, arrow to the anchored edge expanded)
+- Initial → no background · Hover → `drawer/all/toggle/bg/hover` → `bg/hover-primary` · Pressed → hover + `drawer/all/toggle/opacity/pressed` · Focus → Focus outer + inner 2 + 2 inside the strip
+- Icon 32 · 16 along the rail (`drawer/all/toggle/padding/generic`) · 20 from the rail edge (`drawer/all/toggle/padding/center` → Base `dimension/250`) · only the corner that touches the Drawer's rounded corner
+- From a Drawer instance change only its State and icon; never resize, move it or change its corner
+
+**Toggle — *Drawer — Toggle states*** (same section)
+- The four states inside real Drawer instances: Left collapsed, Left expanded, Top collapsed — copy one to show interaction in a flow or prototype
+- Hover and Pressed paint only the strip, never the content; the focus ring follows the Drawer's rounded corner
+
+### Developers · React
+
+**Import**
+- `import { Drawer } from './components/Drawer'`
+
+**Props**
+- anchor 'left'|'top', color 'primary'|'secondary', dismissable, collapsed, onToggleCollapse, icon, expandedIcon, iconPlacement 'start'|'end'|'none', iconLabel ('Toggle panel'), showDivider, children
+- Sizes: CSS custom properties --ds-drawer-collapsed-size / --ds-drawer-expanded-size
+
+**Example**
+- `<Drawer collapsed={c} onToggleCollapse={() => setC(!c)} icon={<Icon name="menu" />} expandedIcon={<Icon name="arrow-left" />}>…</Drawer>`
+- forwardRef on the root: consumers can close it on outside click (usePopoverDismiss)
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A persistent side area that can collapse
+
+**Don't pick it when**
+- Main navigation of La Plataforma → SidebarMenu (already uses Drawer)
+- Content that must interrupt → Dialog
+
+**Composition rules**
+- Pass both icons for Dismissable (collapsed / expanded)
+- Change sizes only through the CSS custom properties
+- Content padding is the consumer's: Drawer adds none
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The toggle is a button that says whether the panel is open (expanded / collapsed) and which content it controls
+- Visible double focus ring inside the icon strip
+- Collapsed content is hidden from screen readers too
+
+**Your job**
+- Give the toggle a name that says what it opens ("Account menu") if "Toggle panel" is too generic
+
+### Developers · React
+
+**Semantics**
+- Toggle = <button> with aria-expanded and aria-controls (content id); iconLabel is its name
+- Standard: the icon is decorative (aria-hidden), no button
+- Collapsed: content display:none
+
+**Keyboard**
+- Tab reaches the toggle; Enter / Space open and close; Escape / outside click close it when the consumer wires usePopoverDismiss (SidebarMenu does)
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- iconLabel specific when there is more than one Drawer
+- Focus stays on the toggle after opening/closing
+
+**Don't**
+- Don't put the only way to close it inside the content
+- Don't use Drawer as a modal: it doesn't trap focus
+
+## SidebarMenu
+
+**Group:** Navigation
+**Figma:** 🟢 Sidebar Menu page → composition of Drawer + Headline + List View (no component set) · frame *Sidebar Menu — How to use & Accessibility* (03/11)
+**Code:** `src/organisms/SidebarMenu.jsx`
+**Tokens:** `--ds-sidebar-menu-*` (`sidebarMenu/all/*`)
+
+The side navigation of La Plataforma, up to three levels.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- The main side navigation of La Plataforma: up to 3 levels (Parent · Child · Grand son)
+- Navigation between pages at the top → Top Navigation · views of the same page → Tabs
+- Mobile and tablet (< 1024 px): it is also the menu of Top Navigation Collapsed — the same sections, opened from the menu button in a modal panel (see TopNavigation)
+
+**Composition (no component of its own)**
+- Drawer (Dismissable, Left) + Headline (title) + List View rows; Parent rows with children carry a chevron
+- Max 8 Parent items (the collapsed rail shows them all); Child / Grand son without a fixed limit — group by task, balance branches, avoid a single child
+
+**Behaviour**
+- A row with children only opens/closes its branch (chevron down → up); a row without children navigates
+- The branch of the selected page opens on load; the selected row shows the List View ribbon
+- Collapsed hides the whole tree (no icon-only view yet); outside click or Escape collapses it
+
+**Inside Top Navigation Collapsed (mobile and tablet)**
+- Built from Top Navigation's menuItems: each section → Parent row, its flydown links → Child rows (group titles and Featured images are left out), Log out → last row
+- Opens expanded at the panel width (320); the current section is marked, as on desktop
+- Choosing a page, Escape or the scrim closes the whole panel; focus goes back to the menu button
+
+**Sizing**
+- Drawer 72 collapsed / 240 expanded · title padding 16 / 16 / 8 · indent 16 per level
+
+### Developers · React
+
+**Import**
+- `import { SidebarMenu } from './organisms/SidebarMenu'`
+
+**Props**
+- items [{ id, label, children? }], selectedId, onSelect(id), title, collapsed, onToggleCollapse, collapseOnDismiss (true), ariaLabel, toggleLabel
+
+**Example**
+- `<SidebarMenu title="Account management" items={tree} selectedId={page} onSelect={go} collapsed={c} onToggleCollapse={() => setC(!c)} />`
+- Inside Top Navigation's mobile panel it fills the panel width (--ds-drawer-expanded-size: 100%); TopNavigation builds it from menuItems and passes selectedId and collapseOnDismiss={false} — don't add a second SidebarMenu on those breakpoints
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Hierarchical navigation of the app, always available on the side
+
+**Don't pick it when**
+- More than 8 top-level sections → regroup first
+- Actions (not pages) → buttons or a menu
+
+**Composition rules**
+- Leaf ids unique across the tree; selectedId must be a leaf
+- Never navigate from a row that has children: it only opens its branch
+- Don't add icons per row (leftPanel is off on purpose)
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- A navigation landmark with nested lists; open branches announce "expanded"
+- The current page is announced as current
+- Rows show focus and hover like every List View row
+
+**Your job**
+- Write labels that match the page titles
+- Keep the tree shallow: 3 levels at most
+
+### Developers · React
+
+**Semantics**
+- `<nav aria-label> with nested <ul>; parents are buttons with aria-expanded and aria-controls; leaves are rows with aria-current="page" when selected`
+- Toggle of the Drawer: toggleLabel
+
+**Keyboard**
+- Tab through rows; Enter / Space open a branch or go to a page; Escape collapses the menu
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- ariaLabel ("Main") and a title
+- selectedId set to the current page
+
+**Don't**
+- Don't use role="tree": it's links in lists
+- Don't exceed 8 Parent items (dev warning)
+
+## TopNavigation
+
+**Group:** Navigation
+**Figma:** 🟢 Top Navigation page → `Top Navigation` (Layout Desktop / Collapsed), `Flydown` (Default / Featured), `.FlydownLinks`, `.Featured` · frame *Top Navigation — How to use & Accessibility* (03/11)
+**Code:** `src/organisms/TopNavigation.jsx`
+**Tokens:** `--ds-top-navigation-*` (`topNavigation/*`)
+
+The top bar of every page: logo, main sections with optional mega-menu, Log out; a menu button and panel below 1024 px.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- The top bar of every page of La Plataforma on the web: logo, main sections and Log out
+- Below 1024 px (mobile and tablet) it collapses to logo + menu button that opens the Sidebar Menu in a modal panel — see SidebarMenu → "Inside Top Navigation Collapsed"
+
+**Properties**
+- Layout → Desktop (Logo slot + Tabs Line L scrollable + Button Accent Tertiary Large "Log out") · Collapsed (Logo + Icon Button Default Tertiary Medium)
+- Flydown → full-width mega-menu under a tab with children: Tab title + up to 5 columns of link groups · Featured variant with 1–2 images
+
+**Behaviour**
+- A tab with children opens its flydown on hover, click or Enter; Escape or moving away closes it
+- Only the tabs navigate; the flydown links take you to the second level
+- The Collapsed menu is a modal panel (320 over a Scrim) holding a Sidebar Menu: sections → Parent rows, flydown links → Child rows, Log out → last row; focus stays inside until it closes
+- Design the sections once: the same menuItems feed the desktop tabs and the mobile menu
+
+**Sizing**
+- Bar 56 · padding layout/margin · logo → tabs layout/gutter · flydown padding layout/margin, columns 160, groups 16 apart
+
+### Developers · React
+
+**Import**
+- `import { TopNavigation } from './organisms/TopNavigation'`
+
+**Props**
+- logo (node), menuItems [{ id, label, onClick?, flydown?: [{ groupTitle?, links: [{ label, href?, onClick? }] } | { featured }] }], selectedId, onExit, exitLabel ('Log out'), ariaLabel ('Main'), openMenuLabel, menuLabel
+
+**Example**
+- `<TopNavigation logo={<Logo />} selectedId="billing" onExit={logout} menuItems={[{ id: 'customers', label: 'Customers', onClick: goCustomers }, { id: 'billing', label: 'Billing', flydown: [{ groupTitle: 'Billing', links: [{ label: 'Invoices', href: '/invoices' }] }] }]} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The main bar of any La Plataforma page
+
+**Don't pick it when**
+- Navigation inside a page → Tabs · side navigation on desktop → SidebarMenu (on mobile and tablet TopNavigation already shows its own SidebarMenu)
+
+**Composition rules**
+- One per page, above Page Title
+- A tab with flydown doesn't navigate itself: put its page in the flydown
+- Featured groups are decorative: they don't appear in the mobile menu
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- A navigation landmark; tabs with a flydown say whether it is open
+- Flydown and mobile panel return focus to where they were opened
+- Visible focus on tabs, links and buttons
+
+**Your job**
+- Keep tab labels short (one or two words)
+- Name the logo link as the home page
+
+### Developers · React
+
+**Semantics; the current section has aria-current="page" and the selected ribbon**
+- `<nav aria-label="Main">, items in a list; tab with flydown = button with aria-expanded and aria-controls (disclosure pattern); the flydown sits right after its tab in the Tab order`
+- Mobile: menu button with aria-expanded and aria-haspopup="dialog"; the panel is a modal dialog (useModal)
+
+**Keyboard**
+- Tab through tabs and flydown links · Enter / Space open a flydown · Escape closes the flydown or the panel and returns focus
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- selectedId on the current section
+- exitLabel and labels in the user's language
+
+**Don't**
+- Don't open flydowns only on hover
+- Don't put more than 5 columns in a flydown
