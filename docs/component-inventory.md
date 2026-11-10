@@ -2694,6 +2694,100 @@ A short hint about an element, shown on hover and on keyboard focus.
 - Don't use it as the only label of a control: the control needs its own accessible name
 
 
+## LoadingSpinner
+
+**Group:** Feedback
+**Figma:** 🟢 Loading Spinner page → `Loading Spinner` set (Color Primary / onColor × Size Extra-small / Small / Medium / Large) · frame *Loading Spinner — How to use & Accessibility* (10/11)
+**Code:** `src/components/LoadingSpinner.jsx` (atom)
+**Tokens:** `--ds-loading-spinner-*` (`loadingSpinner/all/*`)
+
+A rotating indicator for a wait of unknown length.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Something is loading or a process is running and you can't say how long it will take: a table loading, a file uploading, a button that is saving
+- You know the progress (steps, percentage) → Progress Bar · the whole page is loading → a spinner in the area that loads, not over the whole screen
+
+**Properties**
+- Color → Primary (teal, on light and dark surfaces) · onColor (white, on a colour fill such as a primary button or a dark banner)
+- Size → Extra-small 16 · Small 24 · Medium 32 · Large 48
+
+**Behaviour**
+- Rotates continuously, also with reduced motion: it's the only sign that something is happening (WCAG 2.3.3 allows essential motion)
+- Inside Button and Icon Button (loading) it takes the colour of the button's icon
+
+**Sizing**
+- Stroke = size / 8 (2 · 3 · 4 · 6) · arc 3/4 of the circle, rounded ends · Extra-small next to text 16, Small in rows (Document Item), Medium in cards, Large for a whole area
+
+### Developers · React
+
+**Import**
+- `import { LoadingSpinner } from './components/LoadingSpinner'`
+
+**Props**
+- size 'extraSmall'|'small'|'medium'|'large', color 'primary'|'onColor'|'current', label ('Loading')
+- color="current" takes the text colour of the parent (used by Button and Icon Button)
+
+**Example**
+- `<LoadingSpinner size="large" label="Loading invoices" />`
+- `<LoadingSpinner size="small" label="" />  // decorative: the context already says it's loading`
+
+**Drawing**
+- Figma draws a static vector; code draws an SVG circle (viewBox 16, r 7, stroke 2, pathLength 100, dasharray 75 25) rotating 360° every 0.7 s
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Waiting time is unknown and short
+
+**Don't pick it when**
+- Progress is known → ProgressBar
+- The wait is long or may fail → show text with what is happening, and an action
+
+**Composition rules**
+- One spinner per loading area; never several at once
+- Put it where the content will appear
+- onColor only on colour fills; Primary everywhere else
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Screen readers hear the label ("Loading") once, politely, when the spinner appears
+- The drawing itself is hidden from screen readers
+- Teal and white keep 3:1 contrast against their backgrounds
+
+**Your job**
+- Say what is loading when it helps ("Loading invoices")
+- When it finishes, show the result or a message: don't leave the user guessing
+
+### Developers · React
+
+**Semantics**
+- `<span role="status"> with the label in VisuallyHidden; the <svg> is aria-hidden`
+- label="" → only the svg (decorative), no status: use it when a parent already announces the state (Button aria-busy, Document Item)
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label describes what loads, in the user's language
+- Decorative (label="") only when something else announces the loading
+
+**Don't**
+- Don't put two spinners with a label on the same screen: both get announced
+- Don't hide content behind a spinner for more than a few seconds without a message
+
+
 ## BadgeNotification
 
 **Group:** Feedback

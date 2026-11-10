@@ -838,8 +838,8 @@ export default function Gallery({ mode }) {
 
       <Section name="LoadingSpinner">
         <Row>
-          {['extraSmall', 'small', 'medium', 'large'].map((s) => <LoadingSpinner key={s} size={s} label={`Cargando ${s}`} />)}
-          <div className="a11y-onsurface"><LoadingSpinner size="large" color="onColor" label="Guardando" /></div>
+          {['extraSmall', 'small', 'medium', 'large'].map((s) => <LoadingSpinner key={s} size={s} label={`Loading ${s}`} />)}
+          <div className="a11y-onsurface"><LoadingSpinner size="large" color="onColor" label="Saving" /></div>
           <span style={{ color: 'var(--ds-fg-default)' }}><LoadingSpinner color="current" label="Current" /></span>
         </Row>
       </Section>

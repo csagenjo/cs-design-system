@@ -1,6 +1,6 @@
 /**
  * LoadingSpinner — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (10/11: tamaños por token sizing/*)
  *
  * Indicador de carga circular. `<circle>` SVG con `stroke-dasharray` (75%
  * trazo / 25% hueco) rotando vía CSS — el vector "Progress (Stroke)" de
@@ -9,12 +9,12 @@
  * por dato: strokeWeight de Figma = size/8 exacto en las 4 variantes).
  *
  * `color="onColor"` es para usar sobre una superficie de color (p.ej.
- * dentro de un Button en `loading` — ver deuda en CLAUDE.md §10) — blanco
+ * encima de una superficie de color) — blanco
  * fijo en los dos modos, nunca el fondo de página.
  *
  * USO:
  *   <LoadingSpinner />
- *   <LoadingSpinner size="large" color="onColor" label="Guardando" />
+ *   <LoadingSpinner size="large" color="onColor" label="Saving" />
  */
 
 import { VisuallyHidden } from './VisuallyHidden';
@@ -96,5 +96,5 @@ export default LoadingSpinner;
 
 <LoadingSpinner />
 <LoadingSpinner size="extraSmall" />
-<LoadingSpinner size="large" color="onColor" label="Guardando" />
+<LoadingSpinner size="large" color="onColor" label="Saving" />
 */

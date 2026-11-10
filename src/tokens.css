@@ -643,13 +643,13 @@
      LoadingSpinner.jsx — cambio de API pública en un átomo ya mergeado en
      main (`color="inverted"` → `color="onColor"`), documentado como tal.
      ========================================================================== */
-  --ds-loading-spinner-size-xs:  16px;
-  --ds-loading-spinner-size-sm:  24px;
-  --ds-loading-spinner-size-md:  32px;
-  --ds-loading-spinner-size-lg:  48px;
+  --ds-loading-spinner-size-xs:  var(--ds-sizing-2xs); /* 16 — root/size/extraSmall */
+  --ds-loading-spinner-size-sm:  var(--ds-sizing-sm);  /* 24 — root/size/small */
+  --ds-loading-spinner-size-md:  var(--ds-sizing-md);  /* 32 — root/size/medium */
+  --ds-loading-spinner-size-lg:  var(--ds-sizing-xl);  /* 48 — root/size/large */
   --ds-loading-spinner-color-primary:   var(--ds-fg-icon-primary); /* teal, no invierte */
   --ds-loading-spinner-color-on-color:  var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
-  --ds-loading-spinner-duration: 0.7s;
+  --ds-loading-spinner-duration: 0.7s; /* una vuelta; Figma es estático (sin variable de movimiento) */
 
 
   /* ==========================================================================
