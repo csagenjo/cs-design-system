@@ -22,6 +22,8 @@
  *     que quien usa teclado sin lector también pueda verlo; muestra el anillo
  *     de foco del sistema. Sin tooltip, no es enfocable.
  *   · Si el tooltip repite el texto del badge, no se anuncia dos veces.
+ *   · El tooltip se separa 8 del badge (`--ds-badge-highlight-tooltip-gap`: 4 del
+ *     anillo de foco, que va por fuera, + 4 de aire) para que la flecha no lo toque.
  *
  * USO:
  *   <BadgeHighlight variant="positive" label="Paid" />
@@ -55,6 +57,8 @@ const css = `
   outline-offset: var(--ds-badge-highlight-focus-width);
   box-shadow:     0 0 0 var(--ds-badge-highlight-focus-width) var(--ds-badge-highlight-focus-inner);
 }
+
+.ds-badge-highlight-tooltip { --ds-tooltip-offset: var(--ds-badge-highlight-tooltip-gap); }
 
 .ds-badge-highlight__icon {
   flex-shrink: 0;
@@ -131,7 +135,7 @@ export function BadgeHighlight({
   // si el tooltip repite lo que ya lee el lector, no lo describe otra vez
   const spoken = srText || label;
   return (
-    <Tooltip label={tooltip} placement={tooltipPlacement} describe={tooltip !== spoken}>
+    <Tooltip label={tooltip} placement={tooltipPlacement} describe={tooltip !== spoken} className="ds-badge-highlight-tooltip">
       {badge}
     </Tooltip>
   );

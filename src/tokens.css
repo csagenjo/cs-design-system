@@ -610,6 +610,7 @@
   --ds-tooltip-gap:           var(--ds-spacing-sm);       /* 6 — root/gap/generic; sin efecto visible hoy (un solo hijo) */
   --ds-tooltip-arrow-base:    8px;  /* vector "arrow" de Figma, sin variable — ancho de la base del triángulo */
   --ds-tooltip-arrow-length:  6px;  /* ídem — profundidad, también offset burbuja↔trigger */
+  --ds-tooltip-offset:        0px;  /* punta de la flecha ↔ trigger; los padres lo redefinen (BadgeHighlight: 8) */
 
 
   /* ==========================================================================
@@ -1301,6 +1302,7 @@
   --ds-badge-highlight-focus-outer:        var(--ds-borderColor-focus-outer);
   --ds-badge-highlight-focus-inner:        var(--ds-borderColor-focus-inner);
   --ds-badge-highlight-focus-width:        var(--ds-border-width-lg);      /* 2 */
+  --ds-badge-highlight-tooltip-gap:        var(--ds-spacing-md);           /* 8 — tooltip/gap/generic: 4 del anillo de foco + 4 de aire */
 
 
   /* ══════════════════════════════════════════════════════════════════════════

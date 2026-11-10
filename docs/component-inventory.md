@@ -2722,6 +2722,7 @@ A short status label (Paid, Overdue, New) with an optional icon and tooltip.
 
 **Sizing**
 - Height 24 · padding 2 / 8 · icon 16 · icon → label 4 · radius 4 · label 14/20 · no border
+- Tooltip 8 above the badge (arrow tip → badge edge): 4 for the focus ring + 4 clear, so the arrow never touches the ring
 
 ### Developers · React
 
