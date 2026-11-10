@@ -308,22 +308,6 @@
     }
   },
   "opacity": {
-    "hover": {
-      "$type": "number",
-      "$value": 30,
-      "$extensions": {
-        "com.figma.variableId": "VariableID:2073:755",
-        "com.figma.scopes": [
-          "OPACITY"
-        ],
-        "com.figma.aliasData": {
-          "targetVariableId": "VariableID:c7f2e8bb8de20d1921ac1eff13a2462859d63d15/-1:-1",
-          "targetVariableName": "opacity/hover",
-          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-          "targetVariableSetName": "Theme"
-        }
-      }
-    },
     "readOnly": {
       "$type": "number",
       "$value": 40,
@@ -335,22 +319,6 @@
         "com.figma.aliasData": {
           "targetVariableId": "VariableID:37b1455579bb02bd80d0d3fb78a47aac0cf92d01/-1:-1",
           "targetVariableName": "opacity/readOnly",
-          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-          "targetVariableSetName": "Theme"
-        }
-      }
-    },
-    "overlay": {
-      "$type": "number",
-      "$value": 70,
-      "$extensions": {
-        "com.figma.variableId": "VariableID:2073:757",
-        "com.figma.scopes": [
-          "OPACITY"
-        ],
-        "com.figma.aliasData": {
-          "targetVariableId": "VariableID:ca22deb7be202a946c131bbdb5f9253edbe8d2ba/-1:-1",
-          "targetVariableName": "opacity/overlay",
           "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
           "targetVariableSetName": "Theme"
         }
