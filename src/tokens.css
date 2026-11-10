@@ -1534,7 +1534,7 @@
   --ds-pagination-dots-fg-primary:           var(--ds-fg-label-default);
   --ds-pagination-dots-fg-secondary:         var(--ds-fg-label-secondary);
   --ds-pagination-dots-fg-disabled:          var(--ds-fg-label-disabled);
-  --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* {icon.fg.onColor} */
+  --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* fg/icon/onColor — 10/11: en Figma apuntaba a icon/fg/onColor, variable borrada; re-enlazado a Mode */
   --ds-pagination-dots-bg-hover-primary:       var(--ds-bg-primary);
   --ds-pagination-dots-bg-hover-secondary:     var(--ds-bg-secondary);
   --ds-pagination-dots-opacity-pressed:      var(--ds-opacity-pressed);

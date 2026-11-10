@@ -384,7 +384,7 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   found and fixed in both Figma and code (Button, CTALink, Chip ×2, BadgeNotification, Pagination ×2).
   Dead tokens removed: `bg-quaternary` (all variants), `bg-hover-secondary/tertiary`, `bg-completed`,
   `bg-done`. Full detail in `token-architecture.md`.
-- **Audit technique:** Tokens Studio re-exports reorder JSON keys, producing diffs of hundreds of lines
+- **Audit technique:** Figma's native re-exports (Export modes, DTCG) reorder JSON keys, producing diffs of hundreds of lines
   that are pure noise. Diffing by flattened `path → (hex, alias)` instead of raw text/line position
   separates real changes from cosmetic reordering — used to verify a 428-line Theme file diff was 100%
   cosmetic before committing it.
