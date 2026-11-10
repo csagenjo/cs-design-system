@@ -1,6 +1,8 @@
 /**
  * ProgressBar — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2.0 (10/11: label y texto de ayuda = átomos FieldLabel y
+ * HelperText de Form Elements, como Figma — se deprecan los Label/Helper text propios;
+ * alto de la barra, gap y radio por token)
  *
  * Indicador de progreso lineal. `variant` decide sobre qué SUPERFICIE va el
  * progress bar, no un color de marca alternativo — el indicator es siempre
@@ -14,7 +16,7 @@
  * (rosa), donde el indicator es ese mismo rosa de marca y se funde con el
  * fondo. Nunca sobre `bg/page` o `bg/default` directamente tampoco (bajo
  * contraste del track).
- * Texto en onColor: desde 19/10 (A11y-2) Label/Helper usan
+ * Texto en onColor: desde 19/10 (A11y-2) Label/Helper (hoy FieldLabel/HelperText, recoloreados con sus variables) usan
  * `progressBar/all/text/fg/onColor` (→ fg/onColor, blanco) — los rellenos
  * de color pasan 4.5:1 con blanco tras la paleta por contraste. Excepción:
  * sobre `bg/inverse` en dark (blanco) no usar onColor.
@@ -29,6 +31,8 @@
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
+import { FieldLabel } from './FieldLabel';
+import { HelperText } from './HelperText';
 
 const css = `
 .ds-progress-bar {
@@ -37,26 +41,20 @@ const css = `
   gap: var(--ds-progress-bar-gap);
   width: 100%;
 }
-.ds-progress-bar__label {
-  margin: 0;
-  font-family: inherit;                        /* Nunito (fontFamily/default) */
-  font-size: var(--ds-fontSize-label-md);       /* 16 */
-  font-weight: var(--ds-font-weight-regular);   /* 400 */
-  line-height: var(--ds-lineHeight-label-md);         /* 24 */
-  color: var(--ds-progress-bar-text-fg);
-}
 .ds-progress-bar__track {
   width: 100%;
-  height: 8px;
+  height: var(--ds-progress-bar-track-height);
   border-radius: var(--ds-progress-bar-root-border-radius);
   overflow: hidden;
 }
 .ds-progress-bar--default .ds-progress-bar__track {
   background: var(--ds-progress-bar-root-bg-default);
 }
-.ds-progress-bar--onColor .ds-progress-bar__label,
-.ds-progress-bar--onColor .ds-progress-bar__helper-text {
-  color: var(--ds-progress-bar-text-fg-on-color);
+.ds-progress-bar--onColor {
+  /* Label y Helper son los átomos de Form Elements: sobre relleno de color se
+     redefinen sus variables desde aquí (regla de instancias anidadas) */
+  --ds-field-label-fg-generic: var(--ds-progress-bar-text-fg-on-color);
+  --ds-helper-text-fg-generic: var(--ds-progress-bar-text-fg-on-color);
 }
 .ds-progress-bar--onColor .ds-progress-bar__track {
   background: var(--ds-progress-bar-root-bg-on-color);
@@ -66,14 +64,6 @@ const css = `
   border-radius: inherit;
   background: var(--ds-progress-bar-indicator-bg);
   transition: width 0.2s ease;
-}
-.ds-progress-bar__helper-text {
-  margin: 0;
-  font-family: inherit;
-  font-size: var(--ds-fontSize-body-2xs);       /* 12 */
-  font-weight: var(--ds-font-weight-regular);   /* 400 */
-  line-height: var(--ds-lineHeight-body-2xs);        /* 16 */
-  color: var(--ds-progress-bar-text-fg);
 }
 `;
 
@@ -106,7 +96,7 @@ export function ProgressBar({
 
   return (
     <div id={id} className={classes}>
-      {showLabel && <p className="ds-progress-bar__label" id={labelId}>{label}</p>}
+      {showLabel && <FieldLabel as="p" id={labelId}>{label}</FieldLabel>}
       <div
         className="ds-progress-bar__track"
         role="progressbar"
@@ -119,7 +109,7 @@ export function ProgressBar({
       >
         <div className="ds-progress-bar__indicator" style={{ width: `${clamped}%` }} />
       </div>
-      {showHelperText && <p className="ds-progress-bar__helper-text" id={helperId}>{helperText}</p>}
+      {showHelperText && <HelperText id={helperId}>{helperText}</HelperText>}
     </div>
   );
 }

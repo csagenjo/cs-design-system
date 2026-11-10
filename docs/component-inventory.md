@@ -2494,6 +2494,587 @@ Known gaps: none.
 
 ---
 
+## InlineNotification
+
+**Group:** Feedback
+**Figma:** 🟢 Inline Notification page → `Inline Notification` set (Type × Style; Show Title, Message, Show Message, Show Button; nested `.Title`, Button locked) · frame *Inline Notification — How to use & Accessibility* (10/11)
+**Code:** `src/components/InlineNotification.jsx` (atom)
+**Tokens:** `--ds-inline-notification-*` (`inlineNotification/all/*`)
+
+A contextual message that stays in place: icon and border by Type, optional title, message and one action.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A message about the page, a card or a dialog that stays in place until the situation changes (a failed save, a limit reached, new data available)
+- Temporary feedback after an action → Snackbar · an error on one field → the field's Validation Message · a decision that blocks the flow → Dialog
+
+**Properties**
+- Type → Error · Success · Information · Warning (icon and colour)
+- Style → Default (white with a 1.5 border in the Type colour) · Borderless (white, no border) · Simple (no background or border: only icon + text)
+- Show Title · Show Message · Show Button; Message is a text property, the title is edited in the nested .Title
+- Button = Button Default Secondary Small, locked: don't change its variant
+
+**Behaviour**
+- Icon by Type: Error circle-x · Success circle-check · Information info · Warning alert-circle
+- The Type colour tints only the icon and the border; title and message are always the default text colour
+- Button aligned to the start, under the text; it does one action related to the message ("Retry", "Review")
+
+**Sizing**
+- Padding 8 · icon 24 · icon → text 4 · text → button 8 · radius 4 · border 1.5 inside (doesn't add height)
+- Title 16/24 bold · message 16/24 regular · width = its container
+
+### Developers · React
+
+**Import**
+- `import { InlineNotification } from './components/InlineNotification'`
+
+**Props**
+- type 'error'|'success'|'information'|'warning', style 'default'|'borderless'|'simple', title, showTitle, message, showMessage, buttonLabel, onButtonClick, showButton, typeLabels
+
+**Example**
+- `<InlineNotification type="error" title="Couldn't save" message="Try again in a few minutes." buttonLabel="Retry" onButtonClick={retry} />`
+- `<InlineNotification type="information" style="simple" showTitle={false} showButton={false} message="Showing the last 30 days" />`
+- Render it when the situation happens; remove it when it no longer applies
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Something about the current view needs the user's attention and must stay visible
+
+**Don't pick it when**
+- Confirmation of a finished action → Snackbar
+- Error on one field → ValidationMessage of that input
+- The user must decide before going on → Dialog
+
+**Composition rules**
+- Error only for things that went wrong; Warning for risks; Information for neutral facts; Success for completed states that stay relevant
+- Default style by default; Borderless or Simple inside cards and panels that already have a border
+- Button label = the action, never "Button"; hide the button when there is no action
+- Never more than one Inline Notification of the same Type in a block: merge the messages
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The type is read before the text ("Error: …"), so it never depends on colour alone
+- Error is announced at once (alert); the other types politely (status)
+- The icon is decorative; the button is a real button with visible focus
+
+**Your job**
+- Write a title and message that say what happened and what to do
+- Don't show it on page load if nothing changed: an alert there interrupts the screen reader
+
+### Developers · React
+
+**Semantics**
+- Root role="alert" for error, role="status" for the rest
+- Visually hidden prefix "Error: " / "Success: " / "Information: " / "Warning: " (typeLabels to translate)
+- Icon aria-hidden; button = <Button> Default Secondary Small
+
+**Keyboard**
+- Tab reaches the button; Enter / Space press it. Nothing else is focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Message says what to do, not only what failed
+- buttonLabel set when showButton is on
+- typeLabels in the user's language if the app isn't in English
+
+**Don't**
+- Don't use colour or the icon alone to say it's an error
+- Don't stack several error notifications: merge them
+
+
+## Tooltip
+
+**Group:** Feedback
+**Figma:** 🟢 Tooltip page → `Tooltip` set (Placement Top / Bottom / Left / Right; Text) · frame *Tooltip — How to use & Accessibility* (10/11)
+**Code:** `src/components/Tooltip.jsx` (atom)
+**Tokens:** `--ds-tooltip-*` (`tooltip/all/*`)
+
+A short hint about an element, shown on hover and on keyboard focus.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A short hint about an element: the name of an icon-only button, the full text of a truncated label, a value while dragging a slider
+- Information the user needs to finish the task → put it on the page (Helper Text, Inline Notification) · rich content or actions → Popover Sheet
+
+**Properties**
+- Placement → Top · Bottom · Left · Right: the side where the bubble appears; the arrow always points to the element
+- Text → the tooltip text (one line)
+
+**Behaviour**
+- Appears on hover and on keyboard focus; stays while the pointer moves onto it; Escape hides it
+- Doesn't hold buttons or links: it can't be focused
+- Used inside Collapsible Icon Button and the Slider knob
+
+**Sizing**
+- Padding 2 / 6 · radius 4 · arrow 8 × 6, touching the element's edge · text label/xs 12/16 · one line, no maximum width: keep it short
+
+### Developers · React
+
+**Import**
+- `import { Tooltip } from './components/Tooltip'`
+
+**Props**
+- label, placement 'top'|'bottom'|'left'|'right', describe (true), forceVisible, children (the trigger: one focusable element)
+
+**Example**
+- `<Tooltip label="Deletes the selected rows"><Button variant="secondary">Delete</Button></Tooltip>`
+- `<Tooltip label="Copy" describe={false}><IconButton icon="copy" ariaLabel="Copy" /></Tooltip>`
+- Positioned inside its wrapper (no portal): a parent with overflow hidden can clip it
+
+**Arrow**
+- In Figma the arrow is a vector shape named "arrow": an isosceles triangle, base 8 × height 6, filled with `tooltip/all/root/bg/generic`, rotated per Placement (Top 0°, Right −90°, Bottom 180°, Left 90°). It has no size variable
+- In code it is a CSS border triangle, no SVG: a 0 × 0 span with two transparent borders of half the base (4) and one solid border of the length (6) in `--ds-tooltip-bg` — e.g. Top: `border-left/right: 4px solid transparent; border-top: 6px solid var(--ds-tooltip-bg)`
+- Tokens: `--ds-tooltip-arrow-base` (8) and `--ds-tooltip-arrow-length` (6), literals in `tokens.css` with a comment because Figma has no variable for them
+- Placement: centred on the side of the bubble that faces the element; the bubble sits arrow-length away from the element, so the tip touches its edge
+
+### AI agents · Claude Code
+
+**Pick it when**
+- An icon-only control needs its name visible on hover, or an element needs a one-line hint
+
+**Don't pick it when**
+- The text is essential, long or has links → show it on the page or use Popover Sheet
+- Touch-only screens: there's no hover; don't hide needed information in a tooltip
+
+**Composition rules**
+- Wrap exactly one focusable element
+- describe={false} when the label repeats the trigger's accessible name (icon buttons)
+- Pick the placement that keeps the bubble inside the viewport and away from overflow: hidden
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Shows on keyboard focus, not only on hover
+- You can move the pointer onto the bubble without it closing; Escape closes it without moving focus (WCAG 1.4.13)
+- Screen readers read its text as the element's description
+- Inverse colours: dark bubble in light mode, light bubble in dark mode
+
+**Your job**
+- Keep it to a few words
+- Never put the only copy of important information in a tooltip
+
+### Developers · React
+
+**Semantics**
+- Bubble role="tooltip" with an id; the trigger gets aria-describedby (added to any it already has)
+- describe={false}: no aria-describedby and the bubble is aria-hidden, so the name isn't read twice
+- CSS :hover / :focus-within show it; Escape listener in the capture phase stops the Escape before a parent dialog closes
+
+**Keyboard**
+- Tab to the trigger shows it · Escape hides it until focus or pointer leave
+- The bubble itself is never focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- The trigger is focusable (button, link, input)
+- describe={false} on icon buttons whose ariaLabel equals the label
+
+**Don't**
+- Don't put interactive content inside
+- Don't use it as the only label of a control: the control needs its own accessible name
+
+
+## LoadingSpinner
+
+**Group:** Feedback
+**Figma:** 🟢 Loading Spinner page → `Loading Spinner` set (Color Primary / onColor × Size Extra-small / Small / Medium / Large) · frame *Loading Spinner — How to use & Accessibility* (10/11)
+**Code:** `src/components/LoadingSpinner.jsx` (atom)
+**Tokens:** `--ds-loading-spinner-*` (`loadingSpinner/all/*`)
+
+A rotating indicator for a wait of unknown length.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Something is loading or a process is running and you can't say how long it will take: a table loading, a file uploading, a button that is saving
+- You know the progress (steps, percentage) → Progress Bar · the whole page is loading → a spinner in the area that loads, not over the whole screen
+
+**Properties**
+- Color → Primary (teal, on light and dark surfaces) · onColor (white, on a colour fill such as a primary button or a dark banner)
+- Size → Extra-small 16 · Small 24 · Medium 32 · Large 48
+
+**Behaviour**
+- Rotates continuously, also with reduced motion: it's the only sign that something is happening (WCAG 2.3.3 allows essential motion)
+- Inside Button and Icon Button (loading) it takes the colour of the button's icon
+
+**Sizing**
+- Stroke = size / 8 (2 · 3 · 4 · 6) · arc 3/4 of the circle, rounded ends · Extra-small next to text 16, Small in rows (Document Item), Medium in cards, Large for a whole area
+
+### Developers · React
+
+**Import**
+- `import { LoadingSpinner } from './components/LoadingSpinner'`
+
+**Props**
+- size 'extraSmall'|'small'|'medium'|'large', color 'primary'|'onColor'|'current', label ('Loading')
+- color="current" takes the text colour of the parent (used by Button and Icon Button)
+
+**Example**
+- `<LoadingSpinner size="large" label="Loading invoices" />`
+- `<LoadingSpinner size="small" label="" />  // decorative: the context already says it's loading`
+
+**Drawing**
+- Figma draws a static vector; code draws an SVG circle (viewBox 16, r 7, stroke 2, pathLength 100, dasharray 75 25) rotating 360° every 0.7 s
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Waiting time is unknown and short
+
+**Don't pick it when**
+- Progress is known → ProgressBar
+- The wait is long or may fail → show text with what is happening, and an action
+
+**Composition rules**
+- One spinner per loading area; never several at once
+- Put it where the content will appear
+- onColor only on colour fills; Primary everywhere else
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Screen readers hear the label ("Loading") once, politely, when the spinner appears
+- The drawing itself is hidden from screen readers
+- Teal and white keep 3:1 contrast against their backgrounds
+
+**Your job**
+- Say what is loading when it helps ("Loading invoices")
+- When it finishes, show the result or a message: don't leave the user guessing
+
+### Developers · React
+
+**Semantics**
+- `<span role="status"> with the label in VisuallyHidden; the <svg> is aria-hidden`
+- label="" → only the svg (decorative), no status: use it when a parent already announces the state (Button aria-busy, Document Item)
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label describes what loads, in the user's language
+- Decorative (label="") only when something else announces the loading
+
+**Don't**
+- Don't put two spinners with a label on the same screen: both get announced
+- Don't hide content behind a spinner for more than a few seconds without a message
+
+
+## ProgressBar
+
+**Group:** Feedback
+**Figma:** 🟢 Progress Bar page → `Progress Bar` set (Variant Default / onColor × Percentage; Show Label, Show Helper Text; nested Form Elements Label and Helper) · frame *Progress Bar — How to use & Accessibility* (10/11)
+**Code:** `src/components/ProgressBar.jsx` (atom; instances FieldLabel and HelperText)
+**Tokens:** `--ds-progress-bar-*` (`progressBar/all/*`) · track `bg/track`
+
+A linear bar for the progress of a task with a known length.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A task whose progress you can measure: a file upload, an import, a multi-step process saving
+- Unknown duration → Loading Spinner · steps the user moves through → Step Indicator
+
+**Properties**
+- Variant → Default (on light surfaces) · onColor (on colour fills: white track and white text)
+- Percentage → 0 · 20 · 50 · 80 · 100 are sample values; code accepts any value 0–100
+- Show Label · Show Helper Text
+- Label and Helper are the Form Elements Label and Helper (nested, exposed): edit their text there; in onColor their text is white
+
+**Behaviour**
+- The indicator grows from the start; the track shows what's left
+- onColor works on medium or subtle colour fills (primary, tertiary, error, success, info, inverse) — not on the secondary pink fill: the indicator is the same pink and disappears
+
+**Sizing**
+- Label 16/24 bold · label → bar 4 · bar 8 high (sizing/3xs), fully rounded · bar → helper 4 · helper 16/24 · width = its container
+
+### Developers · React
+
+**Import**
+- `import { ProgressBar } from './components/ProgressBar'`
+
+**Props**
+- value (0–100), variant 'default'|'onColor', label, showLabel, helperText, showHelperText, ariaLabel
+- Label = <FieldLabel as="p">, helper = <HelperText>; onColor redefines their colour variables
+
+**Example**
+- `<ProgressBar value={percent} label="Uploading invoices" helperText={`${percent}%`} />`
+- `<ProgressBar value={80} variant="onColor" label="Import" helperText="4 of 5 files" />`
+- The consumer owns the value; the bar only draws it (width transition 0.2 s)
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Progress can be measured and the user is waiting for it
+
+**Don't pick it when**
+- Duration is unknown → LoadingSpinner
+- It's a step-by-step flow → StepIndicator
+
+**Composition rules**
+- Always a label that says what is in progress
+- helperText with the number (percentage or count): the bar is never the only way to read the progress
+- onColor only on the colour fills listed; never on the secondary pink fill
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- A real progress bar for screen readers: name from the label, value from 0 to 100, helper text as its description
+- Without a visible label it still has a name (the label text or ariaLabel)
+- Indicator ≥ 3:1 against the track in both modes: the track uses bg/track (neutral/100 light, neutral/200 dark)
+
+**Your job**
+- Write a label that says what is happening ("Uploading invoices")
+- Show the value in the helper text
+- Show the result when it reaches 100: a message or the next screen
+
+### Developers · React
+
+**Semantics**
+- Track role="progressbar" aria-valuenow/min/max (0–100, clamped); aria-labelledby the label or aria-label; aria-describedby the helper text
+- Value changes aren't announced on every step: announce milestones from the consumer (announce()) if the wait is long
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label set even with showLabel={false}
+- value is a number between 0 and 100
+- helperText shows the value
+
+**Don't**
+- Don't use it for a step flow
+- Don't announce every percentage change
+
+
+## BadgeNotification
+
+**Group:** Feedback
+**Figma:** 🟢 Badge page → `badgeNotification` set (Color Default / Primary / Secondary / Tertiary / Disabled × Size Small / Expanded; Label) · block *Notification* · frame *Badge Notification — How to use & Accessibility* (10/11)
+**Code:** `src/components/BadgeNotification.jsx` (atom)
+**Tokens:** `--ds-badge-notification-*` (`badgeNotification/all/*`)
+
+A counter of pending or selected items, on top of or next to another element.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A count of pending items next to an icon, a tab or a menu entry (unread messages, tasks to review), or a selection count in an invoker
+- A word status (Paid, Overdue) → Badge Highlight · a message → Inline Notification or Snackbar
+
+**Properties**
+- Color → Default (red: items that need action) · Primary · Secondary · Tertiary · Disabled (inside disabled controls)
+- Size → Small (16 high, next to icons and tabs) · Expanded (24 high, min 24 wide, in invokers and lists)
+- Label → the number; above 99 show "99+"
+
+**Behaviour**
+- Not interactive: it belongs to the element it sits on
+- Selector and Account Selector invokers use Secondary Expanded for the number of selected items
+
+**Sizing**
+- Padding 6 left and right in both sizes · Small 16 high, no minimum width · Expanded 4 + 16 + 4 = 24 high, min width 24 · fully rounded · text 12/16 bold
+
+### Developers · React
+
+**Import**
+- `import { BadgeNotification } from './components/BadgeNotification'`
+
+**Props**
+- label, ariaLabel, color 'default'|'primary'|'secondary'|'tertiary', size 'small'|'expanded' ('default' still works as small), disabled
+
+**Example**
+- `<BadgeNotification label="3" ariaLabel="3 unread messages" />`
+- `<BadgeNotification color="secondary" size="expanded" label="12" ariaLabel="12 selected" />`
+- Cap the number yourself: `label={n > 99 ? '99+' : n}`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A number of pending or selected items must be visible on another element
+
+**Don't pick it when**
+- The status is a word → BadgeHighlight
+- Zero items → don't render the badge
+
+**Composition rules**
+- Always pass ariaLabel with what it counts
+- Default (red) only for things that need action; brand colours for neutral counts
+- One badge per element
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- With ariaLabel the screen reader hears "3 unread messages", not only "3"
+- White text on the colour fill passes contrast in light and dark
+
+**Your job**
+- Say what is counted in the label of the element or in ariaLabel
+- Don't rely on the red alone to say something is urgent
+
+### Developers · React
+
+**Semantics**
+- `<span>; with ariaLabel the visible number is aria-hidden and the full text goes in VisuallyHidden`
+- No role or live region: if the count changes while the user is on the page, announce it from the consumer (announce())
+
+**Keyboard**
+- Not focusable; it's read with the element it belongs to
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- ariaLabel set ("{n} unread messages")
+- Hidden when the count is 0
+- 99+ cap applied
+
+**Don't**
+- Don't put it on its own without the element it counts for
+- Don't animate it to call attention
+
+
+## BadgeHighlight
+
+**Group:** Feedback
+**Figma:** 🟢 Badge page → `badgeHighlight` set (Variant Neutral / Positive / Negative / Emphasis / Disabled; Icon, Show Label, Label, Tooltip, Focus) · block *Highlight* · frame *Badge Highlight — How to use & Accessibility* (10/11)
+**Code:** `src/components/BadgeHighlight.jsx` (atom)
+**Tokens:** `--ds-badge-highlight-*` (`badgeHighlight/all/*`)
+
+A short status label (Paid, Overdue, New) with an optional icon and tooltip.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A short status next to an item: Paid, Overdue, New, Locked — in table cells, List View rows, Description Lists and cards
+- A count of pending items → Badge Notification · a message with explanation → Inline Notification · something the user can click → Chip or Button
+
+**Properties**
+- Variant → Neutral (default) · Positive · Negative · Emphasis (brand, for new or featured) · Disabled (inside disabled rows or cards)
+- Icon (on/off + swap) · Show Label (on/off) · Label · Tooltip (on/off) · Focus (on/off, only to show the focused state)
+
+**Behaviour**
+- Not interactive: no hover or pressed
+- Show Label off = icon-only: turn Tooltip on so mouse users can read it; never turn off both Icon and Show Label
+- With Tooltip on, the badge can get keyboard focus (code): Focus shows the system ring 2 + 2 outside
+
+**Sizing**
+- Height 24 · padding 2 / 8 · icon 16 · icon → label 4 · radius 4 · label 14/20 · no border
+- Tooltip 8 above the badge (arrow tip → badge edge): 4 for the focus ring + 4 clear, so the arrow never touches the ring
+
+### Developers · React
+
+**Import**
+- `import { BadgeHighlight } from './components/BadgeHighlight'`
+
+**Props**
+- variant 'neutral'|'positive'|'negative'|'emphasis', disabled, label, showLabel (true), icon (icon name or node), tooltip, tooltipPlacement ('top'), ariaLabel
+
+**Example**
+- `<BadgeHighlight variant="positive" label="Paid" />`
+- `<BadgeHighlight variant="negative" icon="alert-circle" label="Overdue" tooltip="Payment 12 days late" />`
+- `<BadgeHighlight icon="lock" label="Locked" showLabel={false} tooltip="Locked" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A row, cell or card needs a one- or two-word status
+
+**Don't pick it when**
+- The status needs a sentence → Inline Notification
+- The user can act on it → Chip, Link or Button
+- Counting things → Badge Notification
+
+**Composition rules**
+- The label says the status in words; colour only reinforces it
+- Positive for done/OK, Negative for problems, Emphasis for new or featured, Neutral for everything else
+- Icon-only badges always carry label (read by screen readers) and tooltip
+- One badge per item; keep labels to one or two words
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Screen readers always get the badge text, also when it's icon-only (hidden label)
+- The tooltip is never the only source of the text
+- With a tooltip it's reachable with Tab and shows the system focus ring, for keyboard users who don't use a screen reader
+- The icon is decorative
+
+**Your job**
+- Write a label that makes sense without the colour ("Overdue", not "Red")
+- Prefer a visible label; use icon-only only where space is really short
+
+### Developers · React
+
+**Semantics**
+- `<span>; icon aria-hidden; label as text, or VisuallyHidden when showLabel={false}`
+- ariaLabel replaces the text for screen readers ("Paid on 3 November")
+- tooltip → wrapped in Tooltip, tabIndex=0, aria-describedby only when the tooltip adds something different from the text
+- No role: it's plain content inside its row or cell
+
+**Keyboard**
+- Without tooltip: not focusable · With tooltip: Tab shows the tooltip, Escape hides it
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label always set, also for icon-only
+- tooltip set when showLabel={false}
+- ariaLabel when the visible label is ambiguous out of context
+
+**Don't**
+- Don't use colour as the only difference between statuses
+- Don't put a tooltip on every badge: it adds a Tab stop each
+
+
 ## DescriptionList · DescriptionListItem · DescriptionListAccount
 
 **Group:** Data

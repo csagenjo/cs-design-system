@@ -1,6 +1,6 @@
 /**
  * Tooltip — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (10/11: geometría por token, como Figma)
  *
  * Envuelve un trigger y muestra una burbuja de texto al hover/focus, vía
  * :hover/:focus-within puro en CSS — sin JS de estado, sin timer/portal
@@ -14,6 +14,10 @@
  * §9/§10) — mismos valores (bg-inverse/fg-label-inverse, fontSize/label/xs,
  * padding 2px 6px, radius 4px), ahora como único punto de mantenimiento.
  *
+ * `--ds-tooltip-offset` (0 por defecto) separa la punta de la flecha del
+ * trigger: lo usa BadgeHighlight (8) para no tocar su anillo de foco, que va por
+ * fuera; los botones ya llevan su área de foco dentro del trigger.
+ *
  * `placement` decide en qué lado aparece la burbuja respecto al trigger — la
  * flecha siempre apunta HACIA el trigger, en el lado opuesto a `placement`.
  *
@@ -24,8 +28,8 @@
  * aplicar aunque el drag siga activo).
  *
  * USO:
- *   <Tooltip label="Expand"><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
- *   <Tooltip label="Eliminar" placement="right"><Button variant="secondary">Eliminar</Button></Tooltip>
+ *   <Tooltip label="Expand" describe={false}><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
+ *   <Tooltip label="Deletes the selected rows" placement="right"><Button variant="secondary">Delete</Button></Tooltip>
  */
 
 import React from 'react';
@@ -67,7 +71,7 @@ const css = `
 .ds-tooltip__bubble::before {
   content: '';
   position: absolute;
-  inset: calc(-1 * var(--ds-tooltip-arrow-length));
+  inset: calc(-1 * (var(--ds-tooltip-arrow-length) + var(--ds-tooltip-offset)));
 }
 /* Escape la oculta hasta que el puntero o el foco salgan del trigger */
 .ds-tooltip--dismissed .ds-tooltip__bubble:not(.ds-tooltip__bubble--force-visible) {
@@ -83,7 +87,7 @@ const css = `
 .ds-tooltip__bubble--top {
   bottom: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(calc(-1 * var(--ds-tooltip-arrow-length)));
+  transform: translateX(-50%) translateY(calc(-1 * (var(--ds-tooltip-arrow-length) + var(--ds-tooltip-offset))));
 }
 .ds-tooltip__bubble--top .ds-tooltip__arrow {
   top: 100%;
@@ -97,7 +101,7 @@ const css = `
 .ds-tooltip__bubble--bottom {
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(var(--ds-tooltip-arrow-length));
+  transform: translateX(-50%) translateY(calc(var(--ds-tooltip-arrow-length) + var(--ds-tooltip-offset)));
 }
 .ds-tooltip__bubble--bottom .ds-tooltip__arrow {
   bottom: 100%;
@@ -111,7 +115,7 @@ const css = `
 .ds-tooltip__bubble--left {
   right: 100%;
   top: 50%;
-  transform: translateY(-50%) translateX(calc(-1 * var(--ds-tooltip-arrow-length)));
+  transform: translateY(-50%) translateX(calc(-1 * (var(--ds-tooltip-arrow-length) + var(--ds-tooltip-offset))));
 }
 .ds-tooltip__bubble--left .ds-tooltip__arrow {
   left: 100%;
@@ -125,7 +129,7 @@ const css = `
 .ds-tooltip__bubble--right {
   left: 100%;
   top: 50%;
-  transform: translateY(-50%) translateX(var(--ds-tooltip-arrow-length));
+  transform: translateY(-50%) translateX(calc(var(--ds-tooltip-arrow-length) + var(--ds-tooltip-offset)));
 }
 .ds-tooltip__bubble--right .ds-tooltip__arrow {
   right: 100%;
@@ -208,13 +212,13 @@ export default Tooltip;
 
 /* ─── Ejemplos de uso ──────────────────────────────────────────────────────
 
-<Tooltip label="Expand"><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
+<Tooltip label="Expand" describe={false}><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
 
-<Tooltip label="Eliminar" placement="right">
-  <IconButton icon="trash-2" ariaLabel="Eliminar" />
+<Tooltip label="Delete" placement="right" describe={false}>
+  <IconButton icon="trash-2" ariaLabel="Delete" />
 </Tooltip>
 
-<Tooltip label="Configuración" placement="bottom">
-  <IconButton icon="settings" ariaLabel="Configuración" />
+<Tooltip label="Deletes the selected rows" placement="bottom">
+  <Button variant="secondary" size="sm">Delete</Button>
 </Tooltip>
 */

@@ -6,17 +6,18 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation. Siguientes (no críticos, por familias): Feedback, Datos, Steps, resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa). Siguientes (no críticos, por familias): Datos, Steps, resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 
-- **Área de foco de Button / Icon Button en otros componentes.** Las instancias crecieron 8 px (08/10). Revisar cada padre (InlineNotification, Collapsible, TopNavigation, PageTitle…); si un gap se diseñó con el botón pegado al borde, restar 4 en el token del padre, nunca quitar el área.
+- **Área de foco de Button / Icon Button en otros componentes.** Las instancias crecieron 8 px (08/10). Revisar cada padre (Collapsible, TopNavigation, PageTitle…; InlineNotification revisado 10/11: Figma ya cuenta el área en el Button Container); si un gap se diseñó con el botón pegado al borde, restar 4 en el token del padre, nunca quitar el área.
 - **Popover: geometría compartida.** El cierre (Escape, click fuera) ya es común (`_popoverDismiss.js`); la posición no: Combobox, Country/Currency Picker y PopoverSheet calculan la suya, sin "flip" en el borde del viewport. Construirlo cuando un caso real lo pida.
 - **Drawer: icono + título en la misma fila del toggle.** Hoy el título de SidebarMenu va como primera línea del contenido.
 - **SidebarMenu: límites conocidos.** Colapsado oculta el árbol entero (sin vista solo iconos con tooltip) y no tiene slot de pie (perfil, salir, versión).
 - **Country Picker / Selector: verificar.** Dos notas antiguas sin comprobar tras A11y-1: focus-inner en teal en las filas, y tokens `iconLeft/fg` / `borderColor/focus-inner` de Selector pendientes de crear.
 
 ## Tokens
+
 
 - **Auditar a fondo Mode, Theme y Device.** `tokens:check` ya las cubre en enlaces y capas; falta revisar nombres y valores con el mismo método que Component.
 

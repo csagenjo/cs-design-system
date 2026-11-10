@@ -88,6 +88,8 @@ const css = `
 .ds-stepped-slider__indicator--secondary {
   background: var(--ds-slider-indicator-bg-secondary);
 }
+.ds-stepped-slider--disabled .ds-stepped-slider__line { background: var(--ds-slider-track-bg-disabled); }
+.ds-stepped-slider--disabled .ds-stepped-slider__dot:not(.ds-stepped-slider__dot--active) { background: var(--ds-slider-track-bg-disabled); }
 .ds-stepped-slider--disabled .ds-stepped-slider__indicator {
   background: var(--ds-slider-indicator-bg-disabled);
 }

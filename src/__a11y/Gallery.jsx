@@ -275,18 +275,24 @@ export default function Gallery({ mode }) {
             <BadgeHighlight key={v} variant={v} label={v} />
           ))}
           {['emphasis', 'neutral', 'positive', 'negative'].map((v) => (
-            <BadgeHighlight key={'i' + v} variant={v} label={`${v} icon`} icon={<Icon name="info" size="2xs" />} />
+            <BadgeHighlight key={'i' + v} variant={v} label={`${v} icon`} icon="lock" />
           ))}
-          <BadgeHighlight disabled label="disabled" />
+          <BadgeHighlight disabled icon="lock" label="Disabled" />
+        </Row>
+        <Row style={{ paddingTop: 40 }}>
+          <BadgeHighlight variant="negative" icon="alert-circle" label="Overdue" tooltip="Payment 12 days late" />
+          <BadgeHighlight variant="neutral" icon="lock" label="Locked" showLabel={false} tooltip="Locked" />
+          <BadgeHighlight variant="positive" label="Paid" ariaLabel="Paid on 3 November" />
         </Row>
       </Section>
 
       <Section name="BadgeNotification">
         <Row>
-          {['default', 'primary', 'secondary', 'tertiary'].flatMap((c) => ['default', 'expanded'].map((s) => (
-            <BadgeNotification key={c + s} color={c} size={s} label={s === 'expanded' ? '99+' : '3'} ariaLabel={`${c} ${s} notificaciones`} />
-          )))}
-          <BadgeNotification disabled label="3" ariaLabel="disabled notificaciones" />
+          {['default', 'primary', 'secondary', 'tertiary'].flatMap((c) => ['small', 'expanded'].flatMap((s) => ['3', '99+'].map((n) => (
+            <BadgeNotification key={c + s + n} color={c} size={s} label={n} ariaLabel={`${n} unread messages`} />
+          ))))}
+          <BadgeNotification disabled label="3" ariaLabel="3 unread messages" />
+          <BadgeNotification disabled size="expanded" label="3" ariaLabel="3 unread messages" />
         </Row>
       </Section>
 
@@ -644,13 +650,13 @@ export default function Gallery({ mode }) {
           <div className="a11y-grid" key={st} style={{ marginBottom: 16 }}>
             {['error', 'success', 'information', 'warning'].map((t) => (
               <InlineNotification key={t} type={t} style={st} title={`${t} ${st}`}
-                message="Mensaje de notificación inline" onButtonClick={noop} />
+                message="Your changes could not be saved. Try again in a few minutes." buttonLabel="Retry" onButtonClick={noop} />
             ))}
           </div>
         ))}
         <div className="a11y-grid">
-          <InlineNotification type="warning" style="simple" showTitle={false} message="Revisa este campo" showButton={false} />
-          <InlineNotification type="information" title="Solo título" showMessage={false} showButton={false} />
+          <InlineNotification type="warning" style="simple" showTitle={false} message="Check this field before you continue" showButton={false} />
+          <InlineNotification type="information" title="Title only" showMessage={false} showButton={false} />
         </div>
       </Section>
 
@@ -832,8 +838,8 @@ export default function Gallery({ mode }) {
 
       <Section name="LoadingSpinner">
         <Row>
-          {['extraSmall', 'small', 'medium', 'large'].map((s) => <LoadingSpinner key={s} size={s} label={`Cargando ${s}`} />)}
-          <div className="a11y-onsurface"><LoadingSpinner size="large" color="onColor" label="Guardando" /></div>
+          {['extraSmall', 'small', 'medium', 'large'].map((s) => <LoadingSpinner key={s} size={s} label={`Loading ${s}`} />)}
+          <div className="a11y-onsurface"><LoadingSpinner size="large" color="onColor" label="Saving" /></div>
           <span style={{ color: 'var(--ds-fg-default)' }}><LoadingSpinner color="current" label="Current" /></span>
         </Row>
       </Section>
@@ -881,7 +887,7 @@ export default function Gallery({ mode }) {
         <Col style={{ maxWidth: 480 }}>
           {[0, 20, 50, 80, 100].map((v) => <ProgressBar key={v} value={v} label="Uploading" helperText={`${v}%`} />)}
           <div className="a11y-onsurface"><ProgressBar value={80} variant="onColor" label="Uploading" helperText="80%" /></div>
-          <ProgressBar value={100} showLabel={false} showHelperText={false} />
+          <ProgressBar value={100} label="Upload complete" showLabel={false} showHelperText={false} />
         </Col>
       </Section>
 
@@ -1066,8 +1072,11 @@ export default function Gallery({ mode }) {
               <IconButton icon="info" ariaLabel={`Info ${p}`} />
             </Tooltip>
           ))}
-          <Tooltip label="Eliminar" placement="top" forceVisible>
-            <Button variant="secondary" size="sm">Eliminar</Button>
+          <Tooltip label="Deletes the selected rows" placement="top" forceVisible>
+            <Button variant="secondary" size="sm">Delete</Button>
+          </Tooltip>
+          <Tooltip label="Copy" placement="bottom" describe={false} forceVisible>
+            <IconButton icon="copy" ariaLabel="Copy" />
           </Tooltip>
         </Row>
       </Section>

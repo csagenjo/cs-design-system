@@ -197,6 +197,7 @@
   --ds-bg-page:             #FAFBFB;
   --ds-bg-container:        #FFFFFF; /* superficie elevada (tarjeta/panel) — diverge de bg-default en dark, ver §10 onSurface */
   --ds-bg-subtle:           #F1F2F4;
+  --ds-bg-track:            #F1F2F4; /* 10/11: bg/track → neutral/100 — parte vacía de progress bar / slider */
   --ds-bg-disabled:         #F1F2F4;
   --ds-bg-inverse:          #050506;
   --ds-bg-onColor:          #FFFFFF;
@@ -327,6 +328,7 @@
   --ds-border-radius-circle: 80px;
 
   /* ── Sizing ── */
+  --ds-sizing-3xs: 8px;
   --ds-sizing-2xs: 16px;
   --ds-sizing-xs:  20px;
   --ds-sizing-sm:  24px;
@@ -557,22 +559,30 @@
      COMPONENT TOKENS -- InlineNotification
      ========================================================================== */
   /* Geometría (inlineNotification/all/root/*, content/*) */
-  --ds-inline-notification-border-radius: 4px;
-  --ds-inline-notification-border-width:  1.5px;
-  --ds-inline-notification-gap:           4px;   /* icono ↔ content, root */
+  --ds-inline-notification-border-radius: var(--ds-border-radius-sm); /* 4 — root/borderRadius/default */
+  --ds-inline-notification-border-width:  var(--ds-border-width-md);  /* 1.5 — root/borderWidth/default */
+  --ds-inline-notification-gap:           var(--ds-spacing-xs);       /* 4 — icono ↔ content, root */
   --ds-inline-notification-padding-hor:   var(--ds-spacing-md); /* 8 — 29/09 (antes 6 literal; Figma: izq 6 token + der 12 directo a spacing/lg, unificado) */
   --ds-inline-notification-padding-ver:   var(--ds-spacing-md); /* 8 — 29/09 */
   --ds-inline-notification-content-gap:   var(--ds-spacing-md);   /* title/message/button, vertical */
   --ds-inline-notification-icon-size:     var(--ds-sizing-sm); /* 24px */
 
-  /* Fondos (inlineNotification/all/root/bg/*) — default y borderless comparten valor */
-  --ds-inline-notification-bg: var(--ds-bg-default);
+  /* Fondos (inlineNotification/all/root/bg/default|borderless) — mismo valor, tokens separados como en Figma */
+  --ds-inline-notification-bg:            var(--ds-bg-default);
+  --ds-inline-notification-bg-borderless: var(--ds-bg-default);
 
-  /* Borde e icono — color por Type (inlineNotification/all/root/borderColor/*, icon/fg/*) */
+  /* Borde por Type (inlineNotification/all/root/borderColor/*) */
   --ds-inline-notification-color-error:       var(--ds-borderColor-error);
   --ds-inline-notification-color-success:     var(--ds-borderColor-success);
   --ds-inline-notification-color-information: var(--ds-borderColor-info);
   --ds-inline-notification-color-warning:     var(--ds-borderColor-warning);
+
+  /* Icono por Type (inlineNotification/all/icon/fg/*) — 10/11: separado del borde;
+     en dark no coinciden (fg/error #FDBCBB vs borderColor/error #FB7F7D) */
+  --ds-inline-notification-icon-fg-error:       var(--ds-fg-error);
+  --ds-inline-notification-icon-fg-success:     var(--ds-fg-success);
+  --ds-inline-notification-icon-fg-information: var(--ds-fg-info);
+  --ds-inline-notification-icon-fg-warning:     var(--ds-fg-warning);
 
   /* Texto (inlineNotification/all/{title,text}/fg/generic) — fijo, no varía por Type */
   --ds-inline-notification-title-fg: var(--ds-fg-title-default);
@@ -596,12 +606,13 @@
      ========================================================================== */
   --ds-tooltip-bg:            var(--ds-bg-inverse);
   --ds-tooltip-fg:            var(--ds-fg-label-inverse);
-  --ds-tooltip-border-radius: 4px;
-  --ds-tooltip-padding-hor:   6px;
-  --ds-tooltip-padding-ver:   2px;
-  --ds-tooltip-gap:           6px;  /* sin efecto visible hoy — un solo hijo, mismo caso que IconButton gap */
-  --ds-tooltip-arrow-base:    8px;  /* ancho de la base del triángulo */
-  --ds-tooltip-arrow-length:  6px;  /* profundidad — también offset burbuja↔trigger */
+  --ds-tooltip-border-radius: var(--ds-border-radius-sm); /* 4 — tooltip/all/root/borderRadius/generic */
+  --ds-tooltip-padding-hor:   var(--ds-spacing-sm);       /* 6 — root/paddingHor/generic */
+  --ds-tooltip-padding-ver:   var(--ds-spacing-2xs);      /* 2 — root/paddingVer/generic */
+  --ds-tooltip-gap:           var(--ds-spacing-sm);       /* 6 — root/gap/generic; sin efecto visible hoy (un solo hijo) */
+  --ds-tooltip-arrow-base:    8px;  /* vector "arrow" de Figma, sin variable — ancho de la base del triángulo */
+  --ds-tooltip-arrow-length:  6px;  /* ídem — profundidad, también offset burbuja↔trigger */
+  --ds-tooltip-offset:        0px;  /* punta de la flecha ↔ trigger; los padres lo redefinen (BadgeHighlight: 8) */
 
 
   /* ==========================================================================
@@ -634,13 +645,13 @@
      LoadingSpinner.jsx — cambio de API pública en un átomo ya mergeado en
      main (`color="inverted"` → `color="onColor"`), documentado como tal.
      ========================================================================== */
-  --ds-loading-spinner-size-xs:  16px;
-  --ds-loading-spinner-size-sm:  24px;
-  --ds-loading-spinner-size-md:  32px;
-  --ds-loading-spinner-size-lg:  48px;
+  --ds-loading-spinner-size-xs:  var(--ds-sizing-2xs); /* 16 — root/size/extraSmall */
+  --ds-loading-spinner-size-sm:  var(--ds-sizing-sm);  /* 24 — root/size/small */
+  --ds-loading-spinner-size-md:  var(--ds-sizing-md);  /* 32 — root/size/medium */
+  --ds-loading-spinner-size-lg:  var(--ds-sizing-xl);  /* 48 — root/size/large */
   --ds-loading-spinner-color-primary:   var(--ds-fg-icon-primary); /* teal, no invierte */
   --ds-loading-spinner-color-on-color:  var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
-  --ds-loading-spinner-duration: 0.7s;
+  --ds-loading-spinner-duration: 0.7s; /* una vuelta; Figma es estático (sin variable de movimiento) */
 
 
   /* ==========================================================================
@@ -686,13 +697,14 @@
      (a). Nunca sobre bg/page o bg/default directamente tampoco (bajo
      contraste del track, ~1.1–2.6:1 en light mode, confirmado con captura).
      ========================================================================== */
-  --ds-progress-bar-root-bg-default:    var(--ds-bg-subtle);
+  --ds-progress-bar-root-bg-default:    var(--ds-bg-track);      /* 10/11: antes bg-subtle (en dark el indicador daba 1,19:1) */
   --ds-progress-bar-root-bg-on-color:   var(--ds-bg-onColor);
-  --ds-progress-bar-root-border-radius: 80px;
+  --ds-progress-bar-root-border-radius: var(--ds-border-radius-circle); /* 80 — root/borderRadius/generic */
   --ds-progress-bar-indicator-bg:       var(--ds-bg-secondary);
-  --ds-progress-bar-text-fg:            var(--ds-fg-default);
+  --ds-progress-bar-text-fg:            var(--ds-fg-default);     /* text/fg/generic */
   --ds-progress-bar-text-fg-on-color:   var(--ds-fg-onColor);   /* Figma progressBar/all/text/fg/onColor — 19/10 A11y-2 */
-  --ds-progress-bar-gap:                4px;
+  --ds-progress-bar-gap:                var(--ds-spacing-xs);     /* 4 — root/gap/generic (nuevo 10/11) */
+  --ds-progress-bar-track-height:       var(--ds-sizing-3xs);     /* 8 — track/height/generic (nuevo 10/11) */
 
 
   /* ==========================================================================
@@ -879,7 +891,8 @@
   --ds-slider-root-padding-ver:         12px;
   --ds-slider-root-padding-ver-with-icon: 6px;
 
-  --ds-slider-track-bg:                 var(--ds-bg-subtle);   /* tambien disabled -- mismo valor, sin token propio (rectificado por Carol) */
+  --ds-slider-track-bg:                 var(--ds-bg-track);    /* slider/all/track/bg/generic → bg/track (10/11: antes bg-subtle; en dark el relleno no llegaba a 3:1) */
+  --ds-slider-track-bg-disabled:        var(--ds-bg-disabled); /* slider/all/track/bg/disabled (10/11: separado; antes compartía el de arriba) */
   --ds-slider-track-bg-hover:           var(--ds-bg-default);
   --ds-slider-track-border-radius:      8px;
   --ds-slider-track-height:             8px;
@@ -1252,14 +1265,13 @@
   --ds-badge-notification-bg-secondary:          var(--ds-bg-secondary);  /* #D61E74 */
   --ds-badge-notification-bg-tertiary:           var(--ds-bg-tertiary);   /* #8B619E */
   --ds-badge-notification-bg-disabled:           var(--ds-bg-disabled);   /* #F1F2F4 */
-  --ds-badge-notification-fg-label:              var(--ds-fg-onColor);
-  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-disabled);   /* #AAAFB5 */
+  --ds-badge-notification-fg-label:              var(--ds-fg-label-onColor);   /* label/fg/generic */
+  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-label-disabled);  /* label/fg/disabled */
   --ds-badge-notification-border-radius:         var(--ds-border-radius-circle);
-  --ds-badge-notification-gap:                   var(--ds-spacing-sm);    /* 6px — reservado para variante con icono, sin uso actual */
-  --ds-badge-notification-padding-hor-default:   var(--ds-spacing-xs);   /* 4px */
-  --ds-badge-notification-padding-hor-expanded:  var(--ds-spacing-sm);   /* 6px */
-  --ds-badge-notification-padding-ver-expanded:  var(--ds-spacing-2xs);  /* 2px — "Number container" py-2 en Figma */
-  --ds-badge-notification-min-width:             24px;
+  --ds-badge-notification-gap:                   var(--ds-spacing-sm);    /* 6 — root/gap/generic; un solo hijo hoy */
+  --ds-badge-notification-padding-hor:           var(--ds-spacing-sm);    /* 6 — root/paddingHor/expanded: Figma lo usa en los dos tamaños (10/11: Small era 4 en código) */
+  --ds-badge-notification-padding-ver-expanded:  var(--ds-spacing-xs);    /* 4 — root/paddingVer/expanded (10/11: 2 + 2 del Number container unificados) → alto 24 */
+  --ds-badge-notification-min-width-expanded:    var(--ds-sizing-sm);     /* 24 — root/minWidth/expanded; Small no tiene mínimo */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1272,22 +1284,28 @@
   --ds-badge-highlight-bg-negative:        var(--ds-bg-error-subtle);      /* #FEF8F8 */
   --ds-badge-highlight-bg-disabled:        var(--ds-bg-disabled);          /* #F1F2F4 */
   --ds-badge-highlight-border-radius:      var(--ds-border-radius-sm);     /* 4px */
-  --ds-badge-highlight-height:             24px;
+  --ds-badge-highlight-height:             var(--ds-sizing-sm);           /* 24 — root/height/generic */
   --ds-badge-highlight-gap:                var(--ds-spacing-xs);           /* 4px */
   --ds-badge-highlight-padding-ver:        var(--ds-spacing-2xs);          /* 2px */
   --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
 
-  --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16px — reducido en Figma (sizing/xs -> sizing/2xs) */
-  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #D61E74 */
-  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #676D76 */
-  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #0E6D1A */
+  --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16 — Figma: instancia del set Icon a 16 desde el 10/11 (antes Icon/20 huérfano) */
+  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-icon-secondary);    /* fg/icon/secondary — 10/11: antes fg-secondary (en dark no coincide) */
+  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-icon-subtle);       /* fg/icon/subtle */
+  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-icon-success);      /* fg/icon/success — 10/11: antes fg-success (en dark no coincide) */
   --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D23435 */
   --ds-badge-highlight-icon-fg-disabled:   var(--ds-fg-icon-disabled);     /* #AAAFB5 */
 
-  --ds-badge-highlight-label-fg:           var(--ds-fg-default);
+  --ds-badge-highlight-label-fg:           var(--ds-fg-label-default);     /* label/fg/generic */
   --ds-badge-highlight-label-fg-positive:  var(--ds-fg-success);           /* Figma badgeHighlight/all/label/fg/positive — 19/10 A11y-2 */
   --ds-badge-highlight-label-fg-negative:  var(--ds-fg-error);             /* Figma badgeHighlight/all/label/fg/negative — 19/10 A11y-2 */
-  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-disabled);          /* #AAAFB5 */
+  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-label-disabled);    /* label/fg/disabled */
+
+  /* Foco — solo cuando lleva tooltip (tabIndex=0): anillo del sistema 2 + 2 por fuera */
+  --ds-badge-highlight-focus-outer:        var(--ds-borderColor-focus-outer);
+  --ds-badge-highlight-focus-inner:        var(--ds-borderColor-focus-inner);
+  --ds-badge-highlight-focus-width:        var(--ds-border-width-lg);      /* 2 */
+  --ds-badge-highlight-tooltip-gap:        var(--ds-spacing-md);           /* 8 — tooltip/gap/generic: 4 del anillo de foco + 4 de aire */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -2162,6 +2180,7 @@
     --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
     --ds-bg-container:        #4C535D;
     --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+    --ds-bg-track:            #DBDEE1; /* 10/11: neutral/200 — más claro que bg-subtle para que el indicador rosa tenga 3,3:1 */
     --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
     --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
     --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
@@ -2291,6 +2310,7 @@
   --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
   --ds-bg-container:        #4C535D;
   --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+  --ds-bg-track:            #DBDEE1; /* 10/11: neutral/200 — más claro que bg-subtle para que el indicador rosa tenga 3,3:1 */
   --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
   --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
   --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
