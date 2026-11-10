@@ -18,7 +18,6 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Tokens
 
-- **Colisión token/grupo en Theme: `opacity/hover` y `opacity/overlay`.** Son token y grupo a la vez; el export DTCG pierde el token y `tokens:check` marca Device `opacity/hover|overlay` como alias rotos. Decidir qué se renombra.
 - **Auditar a fondo Mode, Theme y Device.** `tokens:check` ya las cubre en enlaces y capas; falta revisar nombres y valores con el mismo método que Component.
 
 - **Youth sin implementar en código.** `tokens.css` solo tiene Retail; Youth existe en Figma (102 tokens de Theme distintos) y mantiene sus alias antiguos de la paleta por contraste.
