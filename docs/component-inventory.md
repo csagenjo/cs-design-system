@@ -2694,6 +2694,104 @@ A short hint about an element, shown on hover and on keyboard focus.
 - Don't use it as the only label of a control: the control needs its own accessible name
 
 
+## BadgeHighlight
+
+**Group:** Feedback
+**Figma:** 🟢 Badge page → `badgeHighlight` set (Variant Neutral / Positive / Negative / Emphasis / Disabled; Icon, Show Label, Label, Tooltip, Focus) · block *Highlight* · frame *Badge Highlight — How to use & Accessibility* (10/11)
+**Code:** `src/components/BadgeHighlight.jsx` (atom)
+**Tokens:** `--ds-badge-highlight-*` (`badgeHighlight/all/*`)
+
+A short status label (Paid, Overdue, New) with an optional icon and tooltip.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A short status next to an item: Paid, Overdue, New, Locked — in table cells, List View rows, Description Lists and cards
+- A count of pending items → Badge Notification · a message with explanation → Inline Notification · something the user can click → Chip or Button
+
+**Properties**
+- Variant → Neutral (default) · Positive · Negative · Emphasis (brand, for new or featured) · Disabled (inside disabled rows or cards)
+- Icon (on/off + swap) · Show Label (on/off) · Label · Tooltip (on/off) · Focus (on/off, only to show the focused state)
+
+**Behaviour**
+- Not interactive: no hover or pressed
+- Show Label off = icon-only: turn Tooltip on so mouse users can read it; never turn off both Icon and Show Label
+- With Tooltip on, the badge can get keyboard focus (code): Focus shows the system ring 2 + 2 outside
+
+**Sizing**
+- Height 24 · padding 2 / 8 · icon 16 · icon → label 4 · radius 4 · label 14/20 · no border
+
+### Developers · React
+
+**Import**
+- `import { BadgeHighlight } from './components/BadgeHighlight'`
+
+**Props**
+- variant 'neutral'|'positive'|'negative'|'emphasis', disabled, label, showLabel (true), icon (icon name or node), tooltip, tooltipPlacement ('top'), ariaLabel
+
+**Example**
+- `<BadgeHighlight variant="positive" label="Paid" />`
+- `<BadgeHighlight variant="negative" icon="alert-circle" label="Overdue" tooltip="Payment 12 days late" />`
+- `<BadgeHighlight icon="lock" label="Locked" showLabel={false} tooltip="Locked" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A row, cell or card needs a one- or two-word status
+
+**Don't pick it when**
+- The status needs a sentence → Inline Notification
+- The user can act on it → Chip, Link or Button
+- Counting things → Badge Notification
+
+**Composition rules**
+- The label says the status in words; colour only reinforces it
+- Positive for done/OK, Negative for problems, Emphasis for new or featured, Neutral for everything else
+- Icon-only badges always carry label (read by screen readers) and tooltip
+- One badge per item; keep labels to one or two words
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Screen readers always get the badge text, also when it's icon-only (hidden label)
+- The tooltip is never the only source of the text
+- With a tooltip it's reachable with Tab and shows the system focus ring, for keyboard users who don't use a screen reader
+- The icon is decorative
+
+**Your job**
+- Write a label that makes sense without the colour ("Overdue", not "Red")
+- Prefer a visible label; use icon-only only where space is really short
+
+### Developers · React
+
+**Semantics**
+- `<span>; icon aria-hidden; label as text, or VisuallyHidden when showLabel={false}`
+- ariaLabel replaces the text for screen readers ("Paid on 3 November")
+- tooltip → wrapped in Tooltip, tabIndex=0, aria-describedby only when the tooltip adds something different from the text
+- No role: it's plain content inside its row or cell
+
+**Keyboard**
+- Without tooltip: not focusable · With tooltip: Tab shows the tooltip, Escape hides it
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label always set, also for icon-only
+- tooltip set when showLabel={false}
+- ariaLabel when the visible label is ambiguous out of context
+
+**Don't**
+- Don't use colour as the only difference between statuses
+- Don't put a tooltip on every badge: it adds a Tab stop each
+
+
 ## DescriptionList · DescriptionListItem · DescriptionListAccount
 
 **Group:** Data

@@ -1280,22 +1280,27 @@
   --ds-badge-highlight-bg-negative:        var(--ds-bg-error-subtle);      /* #FEF8F8 */
   --ds-badge-highlight-bg-disabled:        var(--ds-bg-disabled);          /* #F1F2F4 */
   --ds-badge-highlight-border-radius:      var(--ds-border-radius-sm);     /* 4px */
-  --ds-badge-highlight-height:             24px;
+  --ds-badge-highlight-height:             var(--ds-sizing-sm);           /* 24 — root/height/generic */
   --ds-badge-highlight-gap:                var(--ds-spacing-xs);           /* 4px */
   --ds-badge-highlight-padding-ver:        var(--ds-spacing-2xs);          /* 2px */
   --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
 
-  --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16px — reducido en Figma (sizing/xs -> sizing/2xs) */
-  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-secondary);         /* #D61E74 */
-  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-subtle);            /* #676D76 */
-  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-success);           /* #0E6D1A */
+  --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16 — Figma: instancia del set Icon a 16 desde el 10/11 (antes Icon/20 huérfano) */
+  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-icon-secondary);    /* fg/icon/secondary — 10/11: antes fg-secondary (en dark no coincide) */
+  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-icon-subtle);       /* fg/icon/subtle */
+  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-icon-success);      /* fg/icon/success — 10/11: antes fg-success (en dark no coincide) */
   --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D23435 */
   --ds-badge-highlight-icon-fg-disabled:   var(--ds-fg-icon-disabled);     /* #AAAFB5 */
 
-  --ds-badge-highlight-label-fg:           var(--ds-fg-default);
+  --ds-badge-highlight-label-fg:           var(--ds-fg-label-default);     /* label/fg/generic */
   --ds-badge-highlight-label-fg-positive:  var(--ds-fg-success);           /* Figma badgeHighlight/all/label/fg/positive — 19/10 A11y-2 */
   --ds-badge-highlight-label-fg-negative:  var(--ds-fg-error);             /* Figma badgeHighlight/all/label/fg/negative — 19/10 A11y-2 */
-  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-disabled);          /* #AAAFB5 */
+  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-label-disabled);    /* label/fg/disabled */
+
+  /* Foco — solo cuando lleva tooltip (tabIndex=0): anillo del sistema 2 + 2 por fuera */
+  --ds-badge-highlight-focus-outer:        var(--ds-borderColor-focus-outer);
+  --ds-badge-highlight-focus-inner:        var(--ds-borderColor-focus-inner);
+  --ds-badge-highlight-focus-width:        var(--ds-border-width-lg);      /* 2 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════

@@ -275,9 +275,14 @@ export default function Gallery({ mode }) {
             <BadgeHighlight key={v} variant={v} label={v} />
           ))}
           {['emphasis', 'neutral', 'positive', 'negative'].map((v) => (
-            <BadgeHighlight key={'i' + v} variant={v} label={`${v} icon`} icon={<Icon name="info" size="2xs" />} />
+            <BadgeHighlight key={'i' + v} variant={v} label={`${v} icon`} icon="lock" />
           ))}
-          <BadgeHighlight disabled label="disabled" />
+          <BadgeHighlight disabled icon="lock" label="Disabled" />
+        </Row>
+        <Row style={{ paddingTop: 40 }}>
+          <BadgeHighlight variant="negative" icon="alert-circle" label="Overdue" tooltip="Payment 12 days late" />
+          <BadgeHighlight variant="neutral" icon="lock" label="Locked" showLabel={false} tooltip="Locked" />
+          <BadgeHighlight variant="positive" label="Paid" ariaLabel="Paid on 3 November" />
         </Row>
       </Section>
 
