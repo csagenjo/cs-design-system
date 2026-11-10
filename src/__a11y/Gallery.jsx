@@ -183,14 +183,14 @@ const currencies = [
   { code: 'GBP', name: 'British Pound' },
 ];
 const sidebarItems = [
-  { id: 'cuentas', label: 'Cuentas', children: [
-    { id: 'corrientes', label: 'Cuentas corrientes' },
-    { id: 'ahorro', label: 'Cuentas de ahorro', children: [
-      { id: 'ahorro-1', label: 'Plazo fijo' },
+  { id: 'cuentas', label: 'Accounts', children: [
+    { id: 'corrientes', label: 'Current accounts' },
+    { id: 'ahorro', label: 'Savings accounts', children: [
+      { id: 'ahorro-1', label: 'Fixed-term deposits' },
     ] },
   ] },
-  { id: 'clientes', label: 'Clientes' },
-  { id: 'informes', label: 'Informes' },
+  { id: 'clientes', label: 'Customers' },
+  { id: 'informes', label: 'Reports' },
 ];
 const sizes3 = ['small', 'medium', 'large'];
 const inputStates = ['default', 'error', 'disabled'];
@@ -524,7 +524,7 @@ export default function Gallery({ mode }) {
             </Contain>
           )))}
           <Contain height={260} style={{ width: 260 }}>
-            <Drawer dismissable={false} icon={<Icon name="wallet" />} iconLabel="Panel fijo">
+            <Drawer dismissable={false} icon={<Icon name="wallet" />} iconLabel="Fixed panel">
               <Text>Standard (no dismissable)</Text>
             </Drawer>
           </Contain>
@@ -1243,10 +1243,10 @@ export default function Gallery({ mode }) {
       <Section name="SidebarMenu">
         <Row>
           <Contain height={420} style={{ width: 300 }}>
-            <SidebarMenu title="Gestión de cuentas" items={sidebarItems} selectedId="ahorro-1" onSelect={noop} collapsed={false} onToggleCollapse={noop} />
+            <SidebarMenu title="Account management" items={sidebarItems} selectedId="ahorro-1" onSelect={noop} collapsed={false} onToggleCollapse={noop} />
           </Contain>
           <Contain height={420} style={{ width: 300 }}>
-            <SidebarMenu title="Colapsado" items={sidebarItems} selectedId="clientes" onSelect={noop} collapsed onToggleCollapse={noop} />
+            <SidebarMenu title="Collapsed" items={sidebarItems} selectedId="clientes" onSelect={noop} collapsed onToggleCollapse={noop} />
           </Contain>
         </Row>
       </Section>
@@ -1360,15 +1360,15 @@ export default function Gallery({ mode }) {
         <Contain height={120}>
           <TopNavigation
             logo={<Text>La Plataforma</Text>}
-            exitLabel="Salir"
             onExit={noop}
+            selectedId="clientes"
             menuItems={[
-              { id: 'clientes', label: 'Clientes' },
-              { id: 'facturacion', label: 'Facturación y servicios', flydown: [
-                { groupTitle: 'Facturación', links: [{ label: 'Facturas', onClick: noop }] },
-                { groupTitle: 'Sistema de pago', links: [{ label: 'Cobros', onClick: noop }] },
+              { id: 'clientes', label: 'Customers' },
+              { id: 'facturacion', label: 'Billing and services', flydown: [
+                { groupTitle: 'Billing', links: [{ label: 'Invoices', onClick: noop }] },
+                { groupTitle: 'Payments', links: [{ label: 'Collections', onClick: noop }] },
               ] },
-              { id: 'informes', label: 'Informes' },
+              { id: 'informes', label: 'Reports' },
             ]}
           />
         </Contain>

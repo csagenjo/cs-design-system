@@ -227,7 +227,7 @@ export function SidebarMenu({
       iconLabel={toggleLabel}
       icon={<Icon name="Menu" />}
       expandedIcon={<Icon name="ArrowLeft" />}
-      style={{ '--ds-drawer-collapsed-size': '56px', '--ds-drawer-expanded-size': '312px', ...style }}
+      style={style} /* 03/11: tamaños del Drawer por defecto (72/240), como la composición de Figma; antes 56/312 sin respaldo en Figma */
     >
       {title && (
         <div className="ds-sidebar-menu__title">
