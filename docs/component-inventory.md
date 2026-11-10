@@ -2635,6 +2635,12 @@ A short hint about an element, shown on hover and on keyboard focus.
 - `<Tooltip label="Copy" describe={false}><IconButton icon="copy" ariaLabel="Copy" /></Tooltip>`
 - Positioned inside its wrapper (no portal): a parent with overflow hidden can clip it
 
+**Arrow**
+- In Figma the arrow is a vector shape named "arrow": an isosceles triangle, base 8 × height 6, filled with `tooltip/all/root/bg/generic`, rotated per Placement (Top 0°, Right −90°, Bottom 180°, Left 90°). It has no size variable
+- In code it is a CSS border triangle, no SVG: a 0 × 0 span with two transparent borders of half the base (4) and one solid border of the length (6) in `--ds-tooltip-bg` — e.g. Top: `border-left/right: 4px solid transparent; border-top: 6px solid var(--ds-tooltip-bg)`
+- Tokens: `--ds-tooltip-arrow-base` (8) and `--ds-tooltip-arrow-length` (6), literals in `tokens.css` with a comment because Figma has no variable for them
+- Placement: centred on the side of the bubble that faces the element; the bubble sits arrow-length away from the element, so the tip touches its edge
+
 ### AI agents · Claude Code
 
 **Pick it when**
