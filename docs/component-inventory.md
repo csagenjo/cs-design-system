@@ -2593,6 +2593,101 @@ A contextual message that stays in place: icon and border by Type, optional titl
 - Don't stack several error notifications: merge them
 
 
+## Tooltip
+
+**Group:** Feedback
+**Figma:** 🟢 Tooltip page → `Tooltip` set (Placement Top / Bottom / Left / Right; Text) · frame *Tooltip — How to use & Accessibility* (10/11)
+**Code:** `src/components/Tooltip.jsx` (atom)
+**Tokens:** `--ds-tooltip-*` (`tooltip/all/*`)
+
+A short hint about an element, shown on hover and on keyboard focus.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A short hint about an element: the name of an icon-only button, the full text of a truncated label, a value while dragging a slider
+- Information the user needs to finish the task → put it on the page (Helper Text, Inline Notification) · rich content or actions → Popover Sheet
+
+**Properties**
+- Placement → Top · Bottom · Left · Right: the side where the bubble appears; the arrow always points to the element
+- Text → the tooltip text (one line)
+
+**Behaviour**
+- Appears on hover and on keyboard focus; stays while the pointer moves onto it; Escape hides it
+- Doesn't hold buttons or links: it can't be focused
+- Used inside Collapsible Icon Button and the Slider knob
+
+**Sizing**
+- Padding 2 / 6 · radius 4 · arrow 8 × 6, touching the element's edge · text label/xs 12/16 · one line, no maximum width: keep it short
+
+### Developers · React
+
+**Import**
+- `import { Tooltip } from './components/Tooltip'`
+
+**Props**
+- label, placement 'top'|'bottom'|'left'|'right', describe (true), forceVisible, children (the trigger: one focusable element)
+
+**Example**
+- `<Tooltip label="Deletes the selected rows"><Button variant="secondary">Delete</Button></Tooltip>`
+- `<Tooltip label="Copy" describe={false}><IconButton icon="copy" ariaLabel="Copy" /></Tooltip>`
+- Positioned inside its wrapper (no portal): a parent with overflow hidden can clip it
+
+### AI agents · Claude Code
+
+**Pick it when**
+- An icon-only control needs its name visible on hover, or an element needs a one-line hint
+
+**Don't pick it when**
+- The text is essential, long or has links → show it on the page or use Popover Sheet
+- Touch-only screens: there's no hover; don't hide needed information in a tooltip
+
+**Composition rules**
+- Wrap exactly one focusable element
+- describe={false} when the label repeats the trigger's accessible name (icon buttons)
+- Pick the placement that keeps the bubble inside the viewport and away from overflow: hidden
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Shows on keyboard focus, not only on hover
+- You can move the pointer onto the bubble without it closing; Escape closes it without moving focus (WCAG 1.4.13)
+- Screen readers read its text as the element's description
+- Inverse colours: dark bubble in light mode, light bubble in dark mode
+
+**Your job**
+- Keep it to a few words
+- Never put the only copy of important information in a tooltip
+
+### Developers · React
+
+**Semantics**
+- Bubble role="tooltip" with an id; the trigger gets aria-describedby (added to any it already has)
+- describe={false}: no aria-describedby and the bubble is aria-hidden, so the name isn't read twice
+- CSS :hover / :focus-within show it; Escape listener in the capture phase stops the Escape before a parent dialog closes
+
+**Keyboard**
+- Tab to the trigger shows it · Escape hides it until focus or pointer leave
+- The bubble itself is never focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- The trigger is focusable (button, link, input)
+- describe={false} on icon buttons whose ariaLabel equals the label
+
+**Don't**
+- Don't put interactive content inside
+- Don't use it as the only label of a control: the control needs its own accessible name
+
+
 ## DescriptionList · DescriptionListItem · DescriptionListAccount
 
 **Group:** Data

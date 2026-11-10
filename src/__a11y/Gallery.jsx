@@ -1066,8 +1066,11 @@ export default function Gallery({ mode }) {
               <IconButton icon="info" ariaLabel={`Info ${p}`} />
             </Tooltip>
           ))}
-          <Tooltip label="Eliminar" placement="top" forceVisible>
-            <Button variant="secondary" size="sm">Eliminar</Button>
+          <Tooltip label="Deletes the selected rows" placement="top" forceVisible>
+            <Button variant="secondary" size="sm">Delete</Button>
+          </Tooltip>
+          <Tooltip label="Copy" placement="bottom" describe={false} forceVisible>
+            <IconButton icon="copy" ariaLabel="Copy" />
           </Tooltip>
         </Row>
       </Section>

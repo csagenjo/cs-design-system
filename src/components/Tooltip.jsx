@@ -1,6 +1,6 @@
 /**
  * Tooltip — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (10/11: geometría por token, como Figma)
  *
  * Envuelve un trigger y muestra una burbuja de texto al hover/focus, vía
  * :hover/:focus-within puro en CSS — sin JS de estado, sin timer/portal
@@ -24,8 +24,8 @@
  * aplicar aunque el drag siga activo).
  *
  * USO:
- *   <Tooltip label="Expand"><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
- *   <Tooltip label="Eliminar" placement="right"><Button variant="secondary">Eliminar</Button></Tooltip>
+ *   <Tooltip label="Expand" describe={false}><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
+ *   <Tooltip label="Deletes the selected rows" placement="right"><Button variant="secondary">Delete</Button></Tooltip>
  */
 
 import React from 'react';
@@ -208,13 +208,13 @@ export default Tooltip;
 
 /* ─── Ejemplos de uso ──────────────────────────────────────────────────────
 
-<Tooltip label="Expand"><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
+<Tooltip label="Expand" describe={false}><IconButton icon="chevron-down" ariaLabel="Expand" /></Tooltip>
 
-<Tooltip label="Eliminar" placement="right">
-  <IconButton icon="trash-2" ariaLabel="Eliminar" />
+<Tooltip label="Delete" placement="right" describe={false}>
+  <IconButton icon="trash-2" ariaLabel="Delete" />
 </Tooltip>
 
-<Tooltip label="Configuración" placement="bottom">
-  <IconButton icon="settings" ariaLabel="Configuración" />
+<Tooltip label="Deletes the selected rows" placement="bottom">
+  <Button variant="secondary" size="sm">Delete</Button>
 </Tooltip>
 */

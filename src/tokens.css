@@ -604,12 +604,12 @@
      ========================================================================== */
   --ds-tooltip-bg:            var(--ds-bg-inverse);
   --ds-tooltip-fg:            var(--ds-fg-label-inverse);
-  --ds-tooltip-border-radius: 4px;
-  --ds-tooltip-padding-hor:   6px;
-  --ds-tooltip-padding-ver:   2px;
-  --ds-tooltip-gap:           6px;  /* sin efecto visible hoy — un solo hijo, mismo caso que IconButton gap */
-  --ds-tooltip-arrow-base:    8px;  /* ancho de la base del triángulo */
-  --ds-tooltip-arrow-length:  6px;  /* profundidad — también offset burbuja↔trigger */
+  --ds-tooltip-border-radius: var(--ds-border-radius-sm); /* 4 — tooltip/all/root/borderRadius/generic */
+  --ds-tooltip-padding-hor:   var(--ds-spacing-sm);       /* 6 — root/paddingHor/generic */
+  --ds-tooltip-padding-ver:   var(--ds-spacing-2xs);      /* 2 — root/paddingVer/generic */
+  --ds-tooltip-gap:           var(--ds-spacing-sm);       /* 6 — root/gap/generic; sin efecto visible hoy (un solo hijo) */
+  --ds-tooltip-arrow-base:    8px;  /* vector "arrow" de Figma, sin variable — ancho de la base del triángulo */
+  --ds-tooltip-arrow-length:  6px;  /* ídem — profundidad, también offset burbuja↔trigger */
 
 
   /* ==========================================================================
