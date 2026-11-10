@@ -887,7 +887,7 @@ export default function Gallery({ mode }) {
         <Col style={{ maxWidth: 480 }}>
           {[0, 20, 50, 80, 100].map((v) => <ProgressBar key={v} value={v} label="Uploading" helperText={`${v}%`} />)}
           <div className="a11y-onsurface"><ProgressBar value={80} variant="onColor" label="Uploading" helperText="80%" /></div>
-          <ProgressBar value={100} showLabel={false} showHelperText={false} />
+          <ProgressBar value={100} label="Upload complete" showLabel={false} showHelperText={false} />
         </Col>
       </Section>
 

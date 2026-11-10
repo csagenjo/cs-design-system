@@ -197,6 +197,7 @@
   --ds-bg-page:             #FAFBFB;
   --ds-bg-container:        #FFFFFF; /* superficie elevada (tarjeta/panel) — diverge de bg-default en dark, ver §10 onSurface */
   --ds-bg-subtle:           #F1F2F4;
+  --ds-bg-track:            #F1F2F4; /* 10/11: bg/track → neutral/100 — parte vacía de progress bar / slider */
   --ds-bg-disabled:         #F1F2F4;
   --ds-bg-inverse:          #050506;
   --ds-bg-onColor:          #FFFFFF;
@@ -327,6 +328,7 @@
   --ds-border-radius-circle: 80px;
 
   /* ── Sizing ── */
+  --ds-sizing-3xs: 8px;
   --ds-sizing-2xs: 16px;
   --ds-sizing-xs:  20px;
   --ds-sizing-sm:  24px;
@@ -695,13 +697,14 @@
      (a). Nunca sobre bg/page o bg/default directamente tampoco (bajo
      contraste del track, ~1.1–2.6:1 en light mode, confirmado con captura).
      ========================================================================== */
-  --ds-progress-bar-root-bg-default:    var(--ds-bg-subtle);
+  --ds-progress-bar-root-bg-default:    var(--ds-bg-track);      /* 10/11: antes bg-subtle (en dark el indicador daba 1,19:1) */
   --ds-progress-bar-root-bg-on-color:   var(--ds-bg-onColor);
-  --ds-progress-bar-root-border-radius: 80px;
+  --ds-progress-bar-root-border-radius: var(--ds-border-radius-circle); /* 80 — root/borderRadius/generic */
   --ds-progress-bar-indicator-bg:       var(--ds-bg-secondary);
-  --ds-progress-bar-text-fg:            var(--ds-fg-default);
+  --ds-progress-bar-text-fg:            var(--ds-fg-default);     /* text/fg/generic */
   --ds-progress-bar-text-fg-on-color:   var(--ds-fg-onColor);   /* Figma progressBar/all/text/fg/onColor — 19/10 A11y-2 */
-  --ds-progress-bar-gap:                4px;
+  --ds-progress-bar-gap:                var(--ds-spacing-xs);     /* 4 — root/gap/generic (nuevo 10/11) */
+  --ds-progress-bar-track-height:       var(--ds-sizing-3xs);     /* 8 — track/height/generic (nuevo 10/11) */
 
 
   /* ==========================================================================
@@ -2176,6 +2179,7 @@
     --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
     --ds-bg-container:        #4C535D;
     --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+    --ds-bg-track:            #DBDEE1; /* 10/11: neutral/200 — más claro que bg-subtle para que el indicador rosa tenga 3,3:1 */
     --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
     --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
     --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
@@ -2305,6 +2309,7 @@
   --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
   --ds-bg-container:        #4C535D;
   --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+  --ds-bg-track:            #DBDEE1; /* 10/11: neutral/200 — más claro que bg-subtle para que el indicador rosa tenga 3,3:1 */
   --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
   --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
   --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */

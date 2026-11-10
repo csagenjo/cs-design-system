@@ -6,7 +6,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner. Siguientes (no críticos, por familias): Feedback, Datos, Steps, resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa). Siguientes (no críticos, por familias): Datos, Steps, resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 
@@ -17,6 +17,8 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **Country Picker / Selector: verificar.** Dos notas antiguas sin comprobar tras A11y-1: focus-inner en teal en las filas, y tokens `iconLeft/fg` / `borderColor/focus-inner` de Selector pendientes de crear.
 
 ## Tokens
+
+- **Slider, Range Slider, Stepped Slider: fondo de la barra en dark.** Usan `bg/subtle` (#5E6672) y el relleno de marca no llega a 3:1 en dark. Pasarlos a `bg/track` (creado 10/11 para Progress Bar) cuando se documente la familia.
 
 - **Auditar a fondo Mode, Theme y Device.** `tokens:check` ya las cubre en enlaces y capas; falta revisar nombres y valores con el mismo método que Component.
 

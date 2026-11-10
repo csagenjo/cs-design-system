@@ -2788,6 +2788,102 @@ A rotating indicator for a wait of unknown length.
 - Don't hide content behind a spinner for more than a few seconds without a message
 
 
+## ProgressBar
+
+**Group:** Feedback
+**Figma:** 🟢 Progress Bar page → `Progress Bar` set (Variant Default / onColor × Percentage; Show Label, Show Helper Text; nested Form Elements Label and Helper) · frame *Progress Bar — How to use & Accessibility* (10/11)
+**Code:** `src/components/ProgressBar.jsx` (atom; instances FieldLabel and HelperText)
+**Tokens:** `--ds-progress-bar-*` (`progressBar/all/*`) · track `bg/track`
+
+A linear bar for the progress of a task with a known length.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A task whose progress you can measure: a file upload, an import, a multi-step process saving
+- Unknown duration → Loading Spinner · steps the user moves through → Step Indicator
+
+**Properties**
+- Variant → Default (on light surfaces) · onColor (on colour fills: white track and white text)
+- Percentage → 0 · 20 · 50 · 80 · 100 are sample values; code accepts any value 0–100
+- Show Label · Show Helper Text
+- Label and Helper are the Form Elements Label and Helper (nested, exposed): edit their text there; in onColor their text is white
+
+**Behaviour**
+- The indicator grows from the start; the track shows what's left
+- onColor works on medium or subtle colour fills (primary, tertiary, error, success, info, inverse) — not on the secondary pink fill: the indicator is the same pink and disappears
+
+**Sizing**
+- Label 16/24 bold · label → bar 4 · bar 8 high (sizing/3xs), fully rounded · bar → helper 4 · helper 16/24 · width = its container
+
+### Developers · React
+
+**Import**
+- `import { ProgressBar } from './components/ProgressBar'`
+
+**Props**
+- value (0–100), variant 'default'|'onColor', label, showLabel, helperText, showHelperText, ariaLabel
+- Label = <FieldLabel as="p">, helper = <HelperText>; onColor redefines their colour variables
+
+**Example**
+- `<ProgressBar value={percent} label="Uploading invoices" helperText={`${percent}%`} />`
+- `<ProgressBar value={80} variant="onColor" label="Import" helperText="4 of 5 files" />`
+- The consumer owns the value; the bar only draws it (width transition 0.2 s)
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Progress can be measured and the user is waiting for it
+
+**Don't pick it when**
+- Duration is unknown → LoadingSpinner
+- It's a step-by-step flow → StepIndicator
+
+**Composition rules**
+- Always a label that says what is in progress
+- helperText with the number (percentage or count): the bar is never the only way to read the progress
+- onColor only on the colour fills listed; never on the secondary pink fill
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- A real progress bar for screen readers: name from the label, value from 0 to 100, helper text as its description
+- Without a visible label it still has a name (the label text or ariaLabel)
+- Indicator ≥ 3:1 against the track in both modes: the track uses bg/track (neutral/100 light, neutral/200 dark)
+
+**Your job**
+- Write a label that says what is happening ("Uploading invoices")
+- Show the value in the helper text
+- Show the result when it reaches 100: a message or the next screen
+
+### Developers · React
+
+**Semantics**
+- Track role="progressbar" aria-valuenow/min/max (0–100, clamped); aria-labelledby the label or aria-label; aria-describedby the helper text
+- Value changes aren't announced on every step: announce milestones from the consumer (announce()) if the wait is long
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- label set even with showLabel={false}
+- value is a number between 0 and 100
+- helperText shows the value
+
+**Don't**
+- Don't use it for a step flow
+- Don't announce every percentage change
+
+
 ## BadgeNotification
 
 **Group:** Feedback
