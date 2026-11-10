@@ -2694,6 +2694,98 @@ A short hint about an element, shown on hover and on keyboard focus.
 - Don't use it as the only label of a control: the control needs its own accessible name
 
 
+## BadgeNotification
+
+**Group:** Feedback
+**Figma:** 🟢 Badge page → `badgeNotification` set (Color Default / Primary / Secondary / Tertiary / Disabled × Size Small / Expanded; Label) · block *Notification* · frame *Badge Notification — How to use & Accessibility* (10/11)
+**Code:** `src/components/BadgeNotification.jsx` (atom)
+**Tokens:** `--ds-badge-notification-*` (`badgeNotification/all/*`)
+
+A counter of pending or selected items, on top of or next to another element.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A count of pending items next to an icon, a tab or a menu entry (unread messages, tasks to review), or a selection count in an invoker
+- A word status (Paid, Overdue) → Badge Highlight · a message → Inline Notification or Snackbar
+
+**Properties**
+- Color → Default (red: items that need action) · Primary · Secondary · Tertiary · Disabled (inside disabled controls)
+- Size → Small (16 high, next to icons and tabs) · Expanded (24 high, min 24 wide, in invokers and lists)
+- Label → the number; above 99 show "99+"
+
+**Behaviour**
+- Not interactive: it belongs to the element it sits on
+- Selector and Account Selector invokers use Secondary Expanded for the number of selected items
+
+**Sizing**
+- Padding 6 left and right in both sizes · Small 16 high, no minimum width · Expanded 4 + 16 + 4 = 24 high, min width 24 · fully rounded · text 12/16 bold
+
+### Developers · React
+
+**Import**
+- `import { BadgeNotification } from './components/BadgeNotification'`
+
+**Props**
+- label, ariaLabel, color 'default'|'primary'|'secondary'|'tertiary', size 'small'|'expanded' ('default' still works as small), disabled
+
+**Example**
+- `<BadgeNotification label="3" ariaLabel="3 unread messages" />`
+- `<BadgeNotification color="secondary" size="expanded" label="12" ariaLabel="12 selected" />`
+- Cap the number yourself: `label={n > 99 ? '99+' : n}`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A number of pending or selected items must be visible on another element
+
+**Don't pick it when**
+- The status is a word → BadgeHighlight
+- Zero items → don't render the badge
+
+**Composition rules**
+- Always pass ariaLabel with what it counts
+- Default (red) only for things that need action; brand colours for neutral counts
+- One badge per element
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- With ariaLabel the screen reader hears "3 unread messages", not only "3"
+- White text on the colour fill passes contrast in light and dark
+
+**Your job**
+- Say what is counted in the label of the element or in ariaLabel
+- Don't rely on the red alone to say something is urgent
+
+### Developers · React
+
+**Semantics**
+- `<span>; with ariaLabel the visible number is aria-hidden and the full text goes in VisuallyHidden`
+- No role or live region: if the count changes while the user is on the page, announce it from the consumer (announce())
+
+**Keyboard**
+- Not focusable; it's read with the element it belongs to
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- ariaLabel set ("{n} unread messages")
+- Hidden when the count is 0
+- 99+ cap applied
+
+**Don't**
+- Don't put it on its own without the element it counts for
+- Don't animate it to call attention
+
+
 ## BadgeHighlight
 
 **Group:** Feedback

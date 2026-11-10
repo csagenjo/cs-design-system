@@ -288,10 +288,11 @@ export default function Gallery({ mode }) {
 
       <Section name="BadgeNotification">
         <Row>
-          {['default', 'primary', 'secondary', 'tertiary'].flatMap((c) => ['default', 'expanded'].map((s) => (
-            <BadgeNotification key={c + s} color={c} size={s} label={s === 'expanded' ? '99+' : '3'} ariaLabel={`${c} ${s} notificaciones`} />
-          )))}
-          <BadgeNotification disabled label="3" ariaLabel="disabled notificaciones" />
+          {['default', 'primary', 'secondary', 'tertiary'].flatMap((c) => ['small', 'expanded'].flatMap((s) => ['3', '99+'].map((n) => (
+            <BadgeNotification key={c + s + n} color={c} size={s} label={n} ariaLabel={`${n} unread messages`} />
+          ))))}
+          <BadgeNotification disabled label="3" ariaLabel="3 unread messages" />
+          <BadgeNotification disabled size="expanded" label="3" ariaLabel="3 unread messages" />
         </Row>
       </Section>
 

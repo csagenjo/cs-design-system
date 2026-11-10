@@ -1261,14 +1261,13 @@
   --ds-badge-notification-bg-secondary:          var(--ds-bg-secondary);  /* #D61E74 */
   --ds-badge-notification-bg-tertiary:           var(--ds-bg-tertiary);   /* #8B619E */
   --ds-badge-notification-bg-disabled:           var(--ds-bg-disabled);   /* #F1F2F4 */
-  --ds-badge-notification-fg-label:              var(--ds-fg-onColor);
-  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-disabled);   /* #AAAFB5 */
+  --ds-badge-notification-fg-label:              var(--ds-fg-label-onColor);   /* label/fg/generic */
+  --ds-badge-notification-fg-label-disabled:     var(--ds-fg-label-disabled);  /* label/fg/disabled */
   --ds-badge-notification-border-radius:         var(--ds-border-radius-circle);
-  --ds-badge-notification-gap:                   var(--ds-spacing-sm);    /* 6px — reservado para variante con icono, sin uso actual */
-  --ds-badge-notification-padding-hor-default:   var(--ds-spacing-xs);   /* 4px */
-  --ds-badge-notification-padding-hor-expanded:  var(--ds-spacing-sm);   /* 6px */
-  --ds-badge-notification-padding-ver-expanded:  var(--ds-spacing-2xs);  /* 2px — "Number container" py-2 en Figma */
-  --ds-badge-notification-min-width:             24px;
+  --ds-badge-notification-gap:                   var(--ds-spacing-sm);    /* 6 — root/gap/generic; un solo hijo hoy */
+  --ds-badge-notification-padding-hor:           var(--ds-spacing-sm);    /* 6 — root/paddingHor/expanded: Figma lo usa en los dos tamaños (10/11: Small era 4 en código) */
+  --ds-badge-notification-padding-ver-expanded:  var(--ds-spacing-xs);    /* 4 — root/paddingVer/expanded (10/11: 2 + 2 del Number container unificados) → alto 24 */
+  --ds-badge-notification-min-width-expanded:    var(--ds-sizing-sm);     /* 24 — root/minWidth/expanded; Small no tiene mínimo */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
