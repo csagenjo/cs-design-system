@@ -5163,6 +5163,33 @@
         }
       }
     },
+    "track": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9450980424880981,
+          0.9490196108818054,
+          0.95686274766922
+        ],
+        "alpha": 1,
+        "hex": "#F1F2F4"
+      },
+      "$description": "Track of progress bars and sliders: the empty part. Light neutral/100, dark neutral/200 — lighter than bg/subtle in dark so the brand indicator keeps 3:1 against it.",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32808:69",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:1a8566899b3fa60cce7d450af5f547d96e4bffb3/-1:-1",
+          "targetVariableName": "bg/track-light",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
     "surface": {
       "primary-bold": {
         "$type": "color",
