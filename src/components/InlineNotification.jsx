@@ -1,6 +1,7 @@
 /**
  * InlineNotification — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (10/11: icono con sus tokens icon/fg/* — en dark no
+ * coinciden con el borde —, botón alineado a la izquierda como Figma, geometría por token)
  *
  * Alerta contextual en línea (no flotante, no timer/portal — eso es
  * responsabilidad de La Plataforma, mismo criterio que Snackbar). Icono +
@@ -8,7 +9,7 @@
  * `Show Title`/`Show Message`/`Show Button` — mismas 3 props booleanas que en
  * Figma.
  *
- * `type` fija el color (icono + borde) y el icono: error→circle-x,
+ * `type` fija el color (icono y borde, con tokens propios) y el icono: error→circle-x,
  * information→info, success→circle-check, warning→alert-circle (átomo `Icon`
  * compartido, nunca reimplementado).
  *
@@ -52,19 +53,17 @@ const css = `
   box-shadow: inset 0 0 0 var(--ds-inline-notification-border-width) var(--_border, transparent);
   box-sizing: border-box;
 }
-.ds-inline-notification--default,
-.ds-inline-notification--borderless {
-  background: var(--ds-inline-notification-bg);
-}
+.ds-inline-notification--default    { background: var(--ds-inline-notification-bg); }
+.ds-inline-notification--borderless { background: var(--ds-inline-notification-bg-borderless); }
 .ds-inline-notification--default.ds-inline-notification--error       { --_border: var(--ds-inline-notification-color-error); }
 .ds-inline-notification--default.ds-inline-notification--success     { --_border: var(--ds-inline-notification-color-success); }
 .ds-inline-notification--default.ds-inline-notification--information { --_border: var(--ds-inline-notification-color-information); }
 .ds-inline-notification--default.ds-inline-notification--warning     { --_border: var(--ds-inline-notification-color-warning); }
 
-.ds-inline-notification__icon--error       { color: var(--ds-inline-notification-color-error); }
-.ds-inline-notification__icon--success     { color: var(--ds-inline-notification-color-success); }
-.ds-inline-notification__icon--information { color: var(--ds-inline-notification-color-information); }
-.ds-inline-notification__icon--warning     { color: var(--ds-inline-notification-color-warning); }
+.ds-inline-notification__icon--error       { color: var(--ds-inline-notification-icon-fg-error); }
+.ds-inline-notification__icon--success     { color: var(--ds-inline-notification-icon-fg-success); }
+.ds-inline-notification__icon--information { color: var(--ds-inline-notification-icon-fg-information); }
+.ds-inline-notification__icon--warning     { color: var(--ds-inline-notification-icon-fg-warning); }
 .ds-inline-notification__icon { flex-shrink: 0; }
 
 .ds-inline-notification__content {
@@ -94,8 +93,9 @@ const css = `
   text-align: left;
 }
 .ds-inline-notification__button {
+  /* 10/11: a la izquierda, como Figma (Button Container alineado al inicio) */
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 `;
 

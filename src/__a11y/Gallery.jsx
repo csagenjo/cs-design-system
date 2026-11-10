@@ -644,13 +644,13 @@ export default function Gallery({ mode }) {
           <div className="a11y-grid" key={st} style={{ marginBottom: 16 }}>
             {['error', 'success', 'information', 'warning'].map((t) => (
               <InlineNotification key={t} type={t} style={st} title={`${t} ${st}`}
-                message="Mensaje de notificación inline" onButtonClick={noop} />
+                message="Your changes could not be saved. Try again in a few minutes." buttonLabel="Retry" onButtonClick={noop} />
             ))}
           </div>
         ))}
         <div className="a11y-grid">
-          <InlineNotification type="warning" style="simple" showTitle={false} message="Revisa este campo" showButton={false} />
-          <InlineNotification type="information" title="Solo título" showMessage={false} showButton={false} />
+          <InlineNotification type="warning" style="simple" showTitle={false} message="Check this field before you continue" showButton={false} />
+          <InlineNotification type="information" title="Title only" showMessage={false} showButton={false} />
         </div>
       </Section>
 

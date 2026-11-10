@@ -2494,6 +2494,105 @@ Known gaps: none.
 
 ---
 
+## InlineNotification
+
+**Group:** Feedback
+**Figma:** 🟢 Inline Notification page → `Inline Notification` set (Type × Style; Show Title, Message, Show Message, Show Button; nested `.Title`, Button locked) · frame *Inline Notification — How to use & Accessibility* (10/11)
+**Code:** `src/components/InlineNotification.jsx` (atom)
+**Tokens:** `--ds-inline-notification-*` (`inlineNotification/all/*`)
+
+A contextual message that stays in place: icon and border by Type, optional title, message and one action.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A message about the page, a card or a dialog that stays in place until the situation changes (a failed save, a limit reached, new data available)
+- Temporary feedback after an action → Snackbar · an error on one field → the field's Validation Message · a decision that blocks the flow → Dialog
+
+**Properties**
+- Type → Error · Success · Information · Warning (icon and colour)
+- Style → Default (white with a 1.5 border in the Type colour) · Borderless (white, no border) · Simple (no background or border: only icon + text)
+- Show Title · Show Message · Show Button; Message is a text property, the title is edited in the nested .Title
+- Button = Button Default Secondary Small, locked: don't change its variant
+
+**Behaviour**
+- Icon by Type: Error circle-x · Success circle-check · Information info · Warning alert-circle
+- The Type colour tints only the icon and the border; title and message are always the default text colour
+- Button aligned to the start, under the text; it does one action related to the message ("Retry", "Review")
+
+**Sizing**
+- Padding 8 · icon 24 · icon → text 4 · text → button 8 · radius 4 · border 1.5 inside (doesn't add height)
+- Title 16/24 bold · message 16/24 regular · width = its container
+
+### Developers · React
+
+**Import**
+- `import { InlineNotification } from './components/InlineNotification'`
+
+**Props**
+- type 'error'|'success'|'information'|'warning', style 'default'|'borderless'|'simple', title, showTitle, message, showMessage, buttonLabel, onButtonClick, showButton, typeLabels
+
+**Example**
+- `<InlineNotification type="error" title="Couldn't save" message="Try again in a few minutes." buttonLabel="Retry" onButtonClick={retry} />`
+- `<InlineNotification type="information" style="simple" showTitle={false} showButton={false} message="Showing the last 30 days" />`
+- Render it when the situation happens; remove it when it no longer applies
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Something about the current view needs the user's attention and must stay visible
+
+**Don't pick it when**
+- Confirmation of a finished action → Snackbar
+- Error on one field → ValidationMessage of that input
+- The user must decide before going on → Dialog
+
+**Composition rules**
+- Error only for things that went wrong; Warning for risks; Information for neutral facts; Success for completed states that stay relevant
+- Default style by default; Borderless or Simple inside cards and panels that already have a border
+- Button label = the action, never "Button"; hide the button when there is no action
+- Never more than one Inline Notification of the same Type in a block: merge the messages
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The type is read before the text ("Error: …"), so it never depends on colour alone
+- Error is announced at once (alert); the other types politely (status)
+- The icon is decorative; the button is a real button with visible focus
+
+**Your job**
+- Write a title and message that say what happened and what to do
+- Don't show it on page load if nothing changed: an alert there interrupts the screen reader
+
+### Developers · React
+
+**Semantics**
+- Root role="alert" for error, role="status" for the rest
+- Visually hidden prefix "Error: " / "Success: " / "Information: " / "Warning: " (typeLabels to translate)
+- Icon aria-hidden; button = <Button> Default Secondary Small
+
+**Keyboard**
+- Tab reaches the button; Enter / Space press it. Nothing else is focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Message says what to do, not only what failed
+- buttonLabel set when showButton is on
+- typeLabels in the user's language if the app isn't in English
+
+**Don't**
+- Don't use colour or the icon alone to say it's an error
+- Don't stack several error notifications: merge them
+
+
 ## DescriptionList · DescriptionListItem · DescriptionListAccount
 
 **Group:** Data

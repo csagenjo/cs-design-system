@@ -557,22 +557,30 @@
      COMPONENT TOKENS -- InlineNotification
      ========================================================================== */
   /* Geometría (inlineNotification/all/root/*, content/*) */
-  --ds-inline-notification-border-radius: 4px;
-  --ds-inline-notification-border-width:  1.5px;
-  --ds-inline-notification-gap:           4px;   /* icono ↔ content, root */
+  --ds-inline-notification-border-radius: var(--ds-border-radius-sm); /* 4 — root/borderRadius/default */
+  --ds-inline-notification-border-width:  var(--ds-border-width-md);  /* 1.5 — root/borderWidth/default */
+  --ds-inline-notification-gap:           var(--ds-spacing-xs);       /* 4 — icono ↔ content, root */
   --ds-inline-notification-padding-hor:   var(--ds-spacing-md); /* 8 — 29/09 (antes 6 literal; Figma: izq 6 token + der 12 directo a spacing/lg, unificado) */
   --ds-inline-notification-padding-ver:   var(--ds-spacing-md); /* 8 — 29/09 */
   --ds-inline-notification-content-gap:   var(--ds-spacing-md);   /* title/message/button, vertical */
   --ds-inline-notification-icon-size:     var(--ds-sizing-sm); /* 24px */
 
-  /* Fondos (inlineNotification/all/root/bg/*) — default y borderless comparten valor */
-  --ds-inline-notification-bg: var(--ds-bg-default);
+  /* Fondos (inlineNotification/all/root/bg/default|borderless) — mismo valor, tokens separados como en Figma */
+  --ds-inline-notification-bg:            var(--ds-bg-default);
+  --ds-inline-notification-bg-borderless: var(--ds-bg-default);
 
-  /* Borde e icono — color por Type (inlineNotification/all/root/borderColor/*, icon/fg/*) */
+  /* Borde por Type (inlineNotification/all/root/borderColor/*) */
   --ds-inline-notification-color-error:       var(--ds-borderColor-error);
   --ds-inline-notification-color-success:     var(--ds-borderColor-success);
   --ds-inline-notification-color-information: var(--ds-borderColor-info);
   --ds-inline-notification-color-warning:     var(--ds-borderColor-warning);
+
+  /* Icono por Type (inlineNotification/all/icon/fg/*) — 10/11: separado del borde;
+     en dark no coinciden (fg/error #FDBCBB vs borderColor/error #FB7F7D) */
+  --ds-inline-notification-icon-fg-error:       var(--ds-fg-error);
+  --ds-inline-notification-icon-fg-success:     var(--ds-fg-success);
+  --ds-inline-notification-icon-fg-information: var(--ds-fg-info);
+  --ds-inline-notification-icon-fg-warning:     var(--ds-fg-warning);
 
   /* Texto (inlineNotification/all/{title,text}/fg/generic) — fijo, no varía por Type */
   --ds-inline-notification-title-fg: var(--ds-fg-title-default);
