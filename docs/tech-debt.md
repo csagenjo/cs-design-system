@@ -18,7 +18,6 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Tokens
 
-- **Slider, Range Slider, Stepped Slider: fondo de la barra en dark.** Usan `bg/subtle` (#5E6672) y el relleno de marca no llega a 3:1 en dark. Pasarlos a `bg/track` (creado 10/11 para Progress Bar) cuando se documente la familia.
 
 - **Auditar a fondo Mode, Theme y Device.** `tokens:check` ya las cubre en enlaces y capas; falta revisar nombres y valores con el mismo método que Component.
 

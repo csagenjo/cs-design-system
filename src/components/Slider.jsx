@@ -112,6 +112,7 @@ const css = `
 .ds-slider__indicator--secondary {
   background: var(--ds-slider-indicator-bg-secondary);
 }
+.ds-slider--disabled .ds-slider__track { background: var(--ds-slider-track-bg-disabled); }
 .ds-slider--disabled .ds-slider__indicator {
   background: var(--ds-slider-indicator-bg-disabled);
 }

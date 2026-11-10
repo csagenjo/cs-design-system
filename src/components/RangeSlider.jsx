@@ -72,6 +72,7 @@ const css = `
 .ds-range-slider__indicator--secondary {
   background: var(--ds-slider-indicator-bg-secondary);
 }
+.ds-range-slider--disabled .ds-range-slider__track { background: var(--ds-slider-track-bg-disabled); }
 .ds-range-slider--disabled .ds-range-slider__indicator {
   background: var(--ds-slider-indicator-bg-disabled);
 }
