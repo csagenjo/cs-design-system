@@ -1083,3 +1083,23 @@ Scope `GAP`, ocultos en la publicación (internos del componente, como el resto 
 - **Placeholder/Placeholder** (node 2355:4239) — descripción del contenedor de iconos apunta a dominio interno. Pendiente de borrar en Figma.
 - **Component tokens publicados (30/09/2026)** — 249 de 874 sin `hiddenFromPublishing` en el export actual (en junio solo ~41 accent/visited). Decidir si se vuelven a ocultar.
 - **Youth sin implementar en código (30/09/2026)** — `tokens.css` solo tiene Retail; no hay selector de tema.
+
+
+---
+
+## Auditoría del pipeline y `tokens:check` (10/11/2026) — DesignOps
+
+**Export.** Nativo de Figma: panel de Variables → clic derecho en la colección → Export modes (un ZIP por colección, DTCG). No se usa Tokens Studio. El hex o número de `$value` es el valor resuelto que Figma añade por comodidad; el enlace real está en `$extensions.com.figma.aliasData` (o en `{a.b.c}` si apunta a la misma colección). Un token hardcodeado sería uno sin `aliasData` ni referencia.
+
+**Resultado sobre el export de Component (897).** 894 enlazados a otra colección (Mode 515 · Device 365 · Base 14), 3 referencias internas, 0 literales. Theme → Base 812/812, Mode → Theme 258/258, Device → Theme 102/102, Base 177 literales (lo esperado).
+
+**Corregido en Figma.**
+- `pagination/pageDots/fg/hover` apuntaba a `icon/fg/onColor`, una variable borrada → re-enlazado a Mode `fg/icon/onColor` (mismo valor; el CSS ya lo resolvía bien). Barrido en vivo: ninguna otra variable local apunta a una borrada.
+- Los 15 saltos Component → Base (14 del export + `drawer/all/toggle/padding/center`), sin excepciones (decisión de Carol: corregir todo):
+  - Escala de spacing ampliada con dos pasos intermedios, misma cadena que el resto: Device `spacing/lg-xl` (14) y `spacing/xl-2xl` (20) → Theme `…-mobile|-tablet|-desktop` → Base `dimension/175` / `dimension/250`. Fijos en los 3 devices, como todo `spacing/*`.
+  - Tabs: paddingVer s → `spacing/lg`, m → `spacing/lg-xl`, l y paddingHor → `spacing/xl`. Drawer Toggle → `spacing/xl-2xl`.
+  - Tipografía de la documentación: Device `fontSize/doc/*` y `fontLheight/doc/*` (display-xl 128/160, display-lg 64/80, title-lg 40/48, title-md 28/36, title-sm 24/28) → Theme `…-mobile|-tablet|-desktop` → Base `typography/*`. Mismo valor en los 3 devices (las páginas de documentación no cambian por dispositivo). `doc/all/*` apunta a ellos.
+
+**Pendiente de decisión.** En Theme, `opacity/hover` y `opacity/overlay` son token y grupo a la vez (`opacity/hover/default-light`…). Figma lo permite; DTCG no, así que el export pierde los dos tokens y Device `opacity/hover|overlay` quedan apuntando a nada en el JSON. Hay que renombrar uno de los dos.
+
+**`npm run tokens:check`** (`scripts/tokens-check.mjs`) — en cada re-export valida: (1) todo alias resuelve (y avisa de colisiones token/grupo), (2) 0 valores sin enlace fuera de Base, (3) cada colección solo apunta a la siguiente (Component → Mode|Device · Mode/Device → Theme · Theme → Base), salvo lo escrito en `tokens/layer-exceptions.json` (hoy vacío). Sale con código 1 si algo falla.

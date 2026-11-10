@@ -1,0 +1,4 @@
+{
+  "$description": "Saltos de capa aceptados a propósito. Cada entrada: token (nombre en Figma), target (colección destino, opcional) y reason. Vacía desde el 10/11/2026: los 15 saltos a Base se corrigieron en Figma (spacing/lg-xl, spacing/xl-2xl, fontSize|fontLheight/doc/*).",
+  "exceptions": []
+}
