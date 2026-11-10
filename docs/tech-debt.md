@@ -18,6 +18,8 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Tokens
 
+- **Auditar a fondo Mode, Theme y Device.** `tokens:check` ya las cubre en enlaces y capas; falta revisar nombres y valores con el mismo método que Component.
+
 - **Youth sin implementar en código.** `tokens.css` solo tiene Retail; Youth existe en Figma (102 tokens de Theme distintos) y mantiene sus alias antiguos de la paleta por contraste.
 - **249 Component tokens publicados en la librería.** Decidir si es intencionado o hay que ocultarlos (en junio solo se publicaban ~41).
 - **`borderColor/*` en dark.** Corregidos `subtle` (21/10) y `disabled` (26/10); falta auditar el resto de la familia contra Figma.

@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "a11y": "vite build --config vite.a11y.config.js && node scripts/a11y-scan.mjs"
+    "a11y": "vite build --config vite.a11y.config.js && node scripts/a11y-scan.mjs",
+    "tokens:check": "node scripts/tokens-check.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.17.0",

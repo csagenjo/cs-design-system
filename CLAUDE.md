@@ -17,7 +17,7 @@ Nunca nombres reales: **La Empresa** (organización de origen) · **Sistema Orig
 
 ## 2. Stack y estructura
 
-Node.js v24 · Vite · React 19 · lucide-react · `npm run dev` (http://localhost:5173) · `npm run build` · `npm run a11y`
+Node.js v24 · Vite · React 19 · lucide-react · `npm run dev` (http://localhost:5173) · `npm run build` · `npm run a11y` · `npm run tokens:check`
 
 ```
 src/components/   Capa 1: átomos puros (solo tokens --ds-{componente}-*)
@@ -38,7 +38,7 @@ tokens/           exports de Figma: Base/ Theme/ Mode/ Component/ Device/
 - **Spacing:** `spacing/*` fijo en los 3 devices; solo `layout/margin|gutter` es responsive. Rejilla de 4/8 validada en el tamaño exterior del componente.
 - **Nombres:** color de icono por el contraste que resuelve (`on-color`, `on-outline-default`), nunca por la Variant de origen. Eje de color entre variantes = `default` (sin marca) / `secondary` (con marca), nunca `primary`; `generic` solo si el valor es igual en todas las variantes.
 - **Icono sobre superficie de color:** `fg/icon/onColor` (blanco en los dos modos), nunca `fg/icon/inverse` (pasa a negro en dark).
-- **Exportar tokens:** Carol exporta a `~/Downloads/DDMMAAAA/` (zip, el último del día). Al oír "exportados": pedir acceso a `~/Downloads`, descomprimir en `tokens/<Colección>/` de la rama, revisar el diff por nombre de token (el orden de Figma cambia) y subirlo a la PR. Nunca tocar el repo de su Mac.
+- **Exportar tokens:** Carol exporta a `~/Downloads/DDMMAAAA/` (zip, el último del día). Al oír "exportados": pedir acceso a `~/Downloads`, descomprimir en `tokens/<Colección>/` de la rama, revisar el diff por nombre de token (el orden de Figma cambia), pasar `npm run tokens:check` (alias que resuelven, 0 valores sin enlace, 0 saltos de capa fuera de `tokens/layer-exceptions.json`) y subirlo a la PR. Nunca tocar el repo de su Mac. Export nativo de Figma (Variables → Export modes, DTCG), no Tokens Studio: el hex de `$value` es el valor resuelto; el enlace real va en `aliasData`.
 
 ## 4. Reglas de componente
 

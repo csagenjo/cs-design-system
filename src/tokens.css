@@ -290,7 +290,9 @@
   --ds-spacing-sm:  6px;
   --ds-spacing-md:  8px;
   --ds-spacing-lg:  12px;
+  --ds-spacing-lg-xl:  14px; /* 10/11: paso intermedio (Theme spacing/lg-xl-* → dimension/175) — Tabs M */
   --ds-spacing-xl:  16px;
+  --ds-spacing-xl-2xl: 20px; /* 10/11: paso intermedio (Theme spacing/xl-2xl-* → dimension/250) — Drawer Toggle */
   --ds-spacing-2xl: 24px;
   --ds-spacing-3xl: 32px;
 
@@ -1534,7 +1536,7 @@
   --ds-pagination-dots-fg-primary:           var(--ds-fg-label-default);
   --ds-pagination-dots-fg-secondary:         var(--ds-fg-label-secondary);
   --ds-pagination-dots-fg-disabled:          var(--ds-fg-label-disabled);
-  --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* {icon.fg.onColor} */
+  --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* fg/icon/onColor — 10/11: en Figma apuntaba a icon/fg/onColor, variable borrada; re-enlazado a Mode */
   --ds-pagination-dots-bg-hover-primary:       var(--ds-bg-primary);
   --ds-pagination-dots-bg-hover-secondary:     var(--ds-bg-secondary);
   --ds-pagination-dots-opacity-pressed:      var(--ds-opacity-pressed);
@@ -1899,12 +1901,12 @@
   --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #0A7C92 fijo */
   --ds-tabs-ribbon-border-width-selected: var(--ds-border-width-xl);     /* 4 */
 
-  /* Size S/M/L — fijos (Base dimension/150|175|200), texto label xs/sm/md:
+  /* Size S/M/L — escala de spacing (10/11: antes saltaban a Base dimension/*), texto label xs/sm/md:
      S 12+16+12 = 40 · M 14+20+14 = 48 · L 16+24+16 = 56 */
-  --ds-tabs-root-padding-ver-s:           12px;
-  --ds-tabs-root-padding-ver-m:           14px;
-  --ds-tabs-root-padding-ver-l:           16px;
-  --ds-tabs-root-padding-hor-generic:     16px;
+  --ds-tabs-root-padding-ver-s:           var(--ds-spacing-lg);    /* 12 */
+  --ds-tabs-root-padding-ver-m:           var(--ds-spacing-lg-xl); /* 14 */
+  --ds-tabs-root-padding-ver-l:           var(--ds-spacing-xl);    /* 16 */
+  --ds-tabs-root-padding-hor-generic:     var(--ds-spacing-xl);    /* 16 */
 
   /* Style Contained (tabs/contained/*) */
   --ds-tabs-contained-root-bg-generic:    var(--ds-bg-default);          /* pestaña no seleccionada: blanca con contorno */
@@ -1943,7 +1945,7 @@
   /* .Drawer Toggle (03/11): la franja del icono es el botón, con estados como las filas */
   --ds-drawer-toggle-bg-hover:            var(--ds-bg-hover-primary); /* drawer/all/toggle/bg/hover — azul, como las filas */
   --ds-drawer-toggle-opacity-pressed:     var(--ds-opacity-pressed);  /* drawer/all/toggle/opacity/pressed */
-  --ds-drawer-toggle-padding-center:      20px; /* drawer/all/toggle/padding/center → Base dimension/250 (sin token de spacing de 20): borde del riel → icono */
+  --ds-drawer-toggle-padding-center:      var(--ds-spacing-xl-2xl); /* 20 — drawer/all/toggle/padding/center → spacing/xl-2xl: borde del riel → icono */
   --ds-drawer-collapsed-size:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — tamaño de muestra de Figma, sin variable; sobreescribible por el consumidor */
   --ds-drawer-expanded-size:              240px; /* ídem en Expanded/Standard */
 

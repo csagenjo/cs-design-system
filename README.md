@@ -140,7 +140,7 @@ The code only ever consumes Component tokens — never Mode, Base or Theme direc
 - **React 19** + Vite 8
 - **lucide-react** for icons — same naming convention as Figma DS. External Lucide Icons library activated in Figma (`figma.com/community/file/1204720733890022011`) with CS Design System variables mapped for color control.
 - **CSS custom properties** — no CSS-in-JS, no Tailwind
-- Tokens compiled from Figma variable exports (Tokens Studio)
+- Tokens compiled from Figma's native variable export (Variables panel → collection → Export modes; one DTCG zip per collection)
 
 ---
 
