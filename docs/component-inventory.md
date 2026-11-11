@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · _in progress: Card, Image, CountryFlag, Divider_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · _in progress: Image, CountryFlag, Divider_ |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
@@ -3261,6 +3261,89 @@ Short, scannable points instead of a block of text: requirements, benefits, step
 **Don't**
 - Don't use a checkmark list as a set of checkboxes
 - Don't put the only action of a view inside a list item
+
+
+## Card
+
+**Group:** Data
+**Figma:** 🟢 Cards page → `Cards` set (Variant Full / Basic) · frame *Card — How to use & Accessibility* (11/11)
+**Code:** `src/components/Card.jsx` (atom)
+**Tokens:** `--ds-card-root-*` (`cards/all/root/*`, Effect Style `Card/Shadow`)
+
+An empty surface that groups related content: background, radius and shadow. What goes inside, and its padding, is up to the content.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Basic → a raised panel over the page: a summary, a flydown menu
+- Full → a flat block of the layout, edge to edge
+- A clickable tile (no hover/focus states) or a dialog → not a Card (Dialog, Popover Sheet)
+
+**Properties**
+- Variant → Full · Basic
+
+**Sizing**
+- No padding or gap of its own: the content sets them · width from the layout
+- Basic: radius 4 (borderRadius/sm) + Card/Shadow (colours bound to opacity/shadow/*)
+- Background bg/container: in dark it's lighter than the page; in light Full is white on white, so use it on a grey surface
+
+### Developers · React
+
+**Import**
+- `import { Card } from './components/Card'`
+
+**Props**
+- variant 'basic' (default) | 'full', as 'div' (default) | 'section' | 'article', children; className, id, style and aria-* pass through
+
+**Example**
+- `<Card style={{ padding: 'var(--ds-spacing-xl)' }}>…</Card>`
+- `<Card variant="full" as="section" aria-labelledby="summary-title"><SectionHeader id="summary-title">Summary</SectionHeader>…</Card>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Content needs its own surface, raised (basic) or flat (full)
+
+**Don't pick it when**
+- The whole thing is clickable → a Button or Link inside, not a clickable card
+- It's a modal or floating panel → Dialog, PopoverSheet
+
+**Composition rules**
+- Padding with spacing tokens on the content or via style, never px
+- A card with a heading → as="section" + aria-labelledby
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Shadow and background are decoration only
+- Forced colours: Basic gets a 1 px outline so the panel edge stays visible
+
+**Your job**
+- Give each card with its own topic a visible heading (Section Header)
+
+### Developers · React
+
+**Semantics**
+- div by default; as="section" + aria-labelledby makes a named region; as="article" for content that stands alone
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- npm run a11y passes for both variants
+- Section cards have a heading linked by aria-labelledby
+
+**Don't**
+- Don't put role="button" or onClick on the Card
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount

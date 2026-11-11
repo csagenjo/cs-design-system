@@ -331,9 +331,12 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="Card">
-        <Card style={{ padding: 16, maxWidth: 320 }}>
-          <Text>Contenido de tarjeta</Text>
-        </Card>
+        {['basic', 'full'].map((v) => (
+          <Card key={v} variant={v} as="section" aria-labelledby={`card-${v}`} style={{ padding: 'var(--ds-spacing-xl)', maxWidth: '20rem' }}>
+            <SectionHeader id={`card-${v}`} level={3}>{v === 'full' ? 'Full card' : 'Basic card'}</SectionHeader>
+            <Text>Card content</Text>
+          </Card>
+        ))}
       </Section>
 
       <Section name="CellData">
