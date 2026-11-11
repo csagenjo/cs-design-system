@@ -8896,37 +8896,13 @@
               "com.figma.variableId": "VariableID:3254:4269",
               "com.figma.hiddenFromPublishing": true,
               "com.figma.scopes": [
-                "ALL_SCOPES"
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "STROKE"
               ],
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:5bd37f70a080657cedaefdc016ba7645324dfc05/-1:-1",
                 "targetVariableName": "borderColor/subtle",
-                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
-                "targetVariableSetName": "Mode"
-              }
-            }
-          },
-          "disabled": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "srgb",
-              "components": [
-                0.6666666865348816,
-                0.686274528503418,
-                0.7098039388656616
-              ],
-              "alpha": 1,
-              "hex": "#AAAFB5"
-            },
-            "$extensions": {
-              "com.figma.variableId": "VariableID:4926:38297",
-              "com.figma.hiddenFromPublishing": true,
-              "com.figma.scopes": [
-                "ALL_SCOPES"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:68ac0b7c3b668d8bc047f66430a1019af991195d/-1:-1",
-                "targetVariableName": "borderColor/disabled",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
               }
@@ -8941,7 +8917,8 @@
               "com.figma.variableId": "VariableID:3254:4270",
               "com.figma.hiddenFromPublishing": true,
               "com.figma.scopes": [
-                "ALL_SCOPES"
+                "WIDTH_HEIGHT",
+                "STROKE_FLOAT"
               ],
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:97b45c221ccaca468f6b8156ca416217975eec95/-1:-1",
@@ -10976,6 +10953,74 @@
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:56dd5911eac7d0619816ba6a9b339db2e0518f47/-1:-1",
                 "targetVariableName": "fg/body/subtle",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        }
+      },
+      "root": {
+        "gap": {
+          "generic": {
+            "$type": "number",
+            "$value": 8,
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32837:208",
+              "com.figma.scopes": [
+                "GAP"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:79fa87d22d5983b8c82cd33cfc2156ea890cdeee/-1:-1",
+                "targetVariableName": "spacing/md",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
+              }
+            }
+          }
+        }
+      },
+      "frame": {
+        "borderRadius": {
+          "roundedCorners": {
+            "$type": "number",
+            "$value": 4,
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32837:209",
+              "com.figma.scopes": [
+                "CORNER_RADIUS"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:4797fdf40ff3bf39c39ca1c9e886b3538d5de4c7/-1:-1",
+                "targetVariableName": "borderRadius/sm",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
+              }
+            }
+          }
+        },
+        "bg": {
+          "generic": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9450980424880981,
+                0.9490196108818054,
+                0.95686274766922
+              ],
+              "alpha": 1,
+              "hex": "#F1F2F4"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32837:210",
+              "com.figma.scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:9a108136b583ea5d18ced1928e0b22a91450acc2/-1:-1",
+                "targetVariableName": "bg/subtle",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
               }
@@ -21874,6 +21919,31 @@
               "targetVariableName": "spacing/xl",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
+            }
+          }
+        }
+      }
+    }
+  },
+  "countryFlag": {
+    "all": {
+      "root": {
+        "borderRadius": {
+          "generic": {
+            "$type": "number",
+            "$value": 2,
+            "$description": "Corner radius of the 22×16 flags (CountryFlag set, Lucide Icons library file).",
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32842:67",
+              "com.figma.scopes": [
+                "CORNER_RADIUS"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:c0accc5fdcf330848f602f118089585645633201/-1:-1",
+                "targetVariableName": "borderRadius/xs",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
+              }
             }
           }
         }
