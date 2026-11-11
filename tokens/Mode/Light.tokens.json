@@ -6175,6 +6175,32 @@
         }
       }
     },
+    "elevated": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "$description": "Hairline around raised surfaces (Card Basic). Light: white, invisible — the shadow does the job. Dark: neutral/700, because a black shadow does not show on dark backgrounds.",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32834:69",
+        "com.figma.scopes": [
+          "STROKE"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:047f1b40e228764ade2d8b55a08815c39474b01d/-1:-1",
+          "targetVariableName": "borderColor/elevated-light",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
     "onSurface": {
       "default": {
         "$type": "color",

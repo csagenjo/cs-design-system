@@ -181,6 +181,8 @@ Dos familias que no se mezclan. **Elevación** = dónde se apoya el contenido (d
 
 Los tintes se invierten en dark; base y bold no cambian porque llevan texto blanco encima. Se mantienen los 12 aunque no todos tengan consumidor hoy: son la paleta para componer pantallas de contenido. Antes de la regla, 6 de ellos no tenían valor dark en `tokens.css` (caían al light) y en Figma el orden en dark era arbitrario (p. ej. primary-bold dark = primary/50).
 
+**Filete de lo elevado — `borderColor/elevated`** (nuevo 11/11): white en light (no se ve; la sombra separa) · neutral/700 en dark (1,72:1 contra `bg/default`). La sombra es negra y en dark no se ve; un halo claro se descartó porque se lee como brillo o estado. Hoy lo usa la Card Basic (`cards/all/root/borderColor/basic`); candidatos: Popover Sheet, pickers, Dialog.
+
 **Estado e interacción** — `success`, `success-subtle`, `error`, `error-subtle`, `hover-primary`: sin cambio.
 
 **Borrados (11/11)** — sin consumidores: `bg/primary`, `bg/secondary`, `bg/tertiary` (duplicados exactos de `bg/surface/*`), `bg/accent-primary`, `bg/accent-secondary`, `bg/highlight`, `bg/info`, `bg/warning` (mal nombrados: info era sólido y warning un tinte). 19 nodos de documentación re-enlazados antes (Changelog, Token Architecture, Cover); 18 variables de Theme que solo los alimentaban, borradas también. Si hace falta un fondo de info/warning, se crea como par `X` / `X-subtle` igual que success y error.

@@ -32,3 +32,4 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **Copia de la librería de Sistema Origen en la cuenta de Figma.** Revisar y archivar.
 - **Barrido de `Placeholder/Placeholder` y `Notification Count`.** Descripciones con el dominio interno de Sistema Origen; solo se limpió Description List.
 - **Instancia suelta de `Image`** en la página 🟢 Image, fuera de cualquier frame. Confirmar si se borra.
+- **Filete `borderColor/elevated` en el resto de superficies flotantes** (Popover Sheet, picker de Combobox, Dialog, Drawer primary): en dark su sombra negra tampoco se ve. Hoy solo la Card Basic lo lleva (11/11).

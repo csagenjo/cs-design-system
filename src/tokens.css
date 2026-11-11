@@ -232,6 +232,7 @@
   --ds-borderColor-default:        #676D76;
   --ds-borderColor-emphasis:       #292C31;
   --ds-borderColor-subtle:         #F1F2F4;
+  --ds-borderColor-elevated:       #FFFFFF;   /* 11/11: white — en light el borde no se ve, la sombra hace el trabajo */
   --ds-borderColor-disabled:       #AAAFB5;
   --ds-borderColor-inverse:        #FFFFFF;
   --ds-borderColor-onColor:        #FFFFFF;
@@ -2061,6 +2062,8 @@
      distinto — igual criterio que el caret de Combobox.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-card-root-bg:             var(--ds-bg-container); /* 26/10: antes bg-default — en dark era negro sobre negro (Flydown invisible); bg-container = superficie elevada, blanca en light */
+  --ds-card-root-border-color-basic: var(--ds-borderColor-elevated); /* cards/all/root/borderColor/basic */
+  --ds-card-root-border-width-basic: var(--ds-border-width-sm);     /* cards/all/root/borderWidth/basic */
   --ds-card-root-border-radius:  var(--ds-border-radius-sm); /* 4 — cards/all/root/borderRadius/basic (11/11: enlazado en Figma, antes literal) */
   /* sombra = Effect Style Card/Shadow: offsets/blur/spread son literales de Figma (sin variable), colores enlazados a opacity/shadow/* */
   --ds-card-root-shadow:         0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
@@ -2224,6 +2227,7 @@
     --ds-borderColor-accent:  #A3D4E2;
     --ds-borderColor-primary: #66AEC0;
     --ds-borderColor-subtle:  #676D76; /* neutral/400 (21/10) — antes #4C535D = bg/container: invisible sobre tarjetas/paneles */
+    --ds-borderColor-elevated: #3B4047; /* 11/11: neutral/700 — filete de lo que flota (Card Basic): la sombra negra no se ve sobre fondo oscuro */
     --ds-borderColor-disabled: #676D76; /* 26/10: neutral/400 (antes neutral/500) */
     --ds-borderColor-focus-inner: #050506;
     --ds-borderColor-focus-outer: #BDE8FF;
@@ -2355,6 +2359,7 @@
   --ds-borderColor-accent:  #A3D4E2;
   --ds-borderColor-primary: #66AEC0;
   --ds-borderColor-subtle:  #676D76; /* neutral/400 (21/10) — antes #4C535D = bg/container: invisible sobre tarjetas/paneles */
+  --ds-borderColor-elevated: #3B4047; /* 11/11: neutral/700 — filete de lo que flota (Card Basic): la sombra negra no se ve sobre fondo oscuro */
   --ds-borderColor-disabled: #676D76; /* 26/10: neutral/400 (antes neutral/500) */
   --ds-borderColor-focus-inner: #050506;
   --ds-borderColor-focus-outer: #BDE8FF;
