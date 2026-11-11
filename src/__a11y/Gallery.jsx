@@ -266,6 +266,7 @@ export default function Gallery({ mode }) {
         <Row>
           {['xs', 'sm', 'md', 'lg'].map((s) => <AmountView key={s} amount="99,00" currency="USD" size={s} />)}
           <AmountView amount="99,00" currency="USD" isoPlacement="left" amountWeight="bold" />
+          <AmountView amount="99,00" currency="USD" size="lg" amountWeight="bold" />
         </Row>
       </Section>
 
@@ -330,9 +331,12 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="Card">
-        <Card style={{ padding: 16, maxWidth: 320 }}>
-          <Text>Contenido de tarjeta</Text>
-        </Card>
+        {['basic', 'full'].map((v) => (
+          <Card key={v} variant={v} as="section" aria-labelledby={`card-${v}`} style={{ padding: 'var(--ds-spacing-xl)', maxWidth: '20rem' }}>
+            <SectionHeader id={`card-${v}`} level={3}>{v === 'full' ? 'Full card' : 'Basic card'}</SectionHeader>
+            <Text>Card content</Text>
+          </Card>
+        ))}
       </Section>
 
       <Section name="CellData">
@@ -791,9 +795,15 @@ export default function Gallery({ mode }) {
 
       <Section name="List">
         <Row>
-          <List variant="unordered" items={['Uno', 'Dos', 'Tres']} />
-          <List variant="ordered" items={[{ number: '1.', content: 'Primero' }, { number: '2.', content: 'Segundo' }]} />
-          <List variant="checkmark" items={['Incluido', 'También esto']} />
+          {['xs', 'sm', 'md', 'lg'].map((s) => (
+            <List key={'u' + s} variant="unordered" size={s} items={['Invoices', 'Payments']} />
+          ))}
+          {['xs', 'md', 'lg'].map((s) => (
+            <List key={'o' + s} variant="ordered" size={s} items={[{ content: 'Review the totals', items: [{ content: 'Check the dates', items: ['Due date', 'Issue date'] }, 'Check the amounts'] }, 'Approve the batch']} />
+          ))}
+          {['xs', 'sm', 'md', 'lg'].map((s) => (
+            <List key={'c' + s} variant="checkmark" size={s} items={['No monthly fees', 'Instant transfers']} />
+          ))}
         </Row>
       </Section>
 

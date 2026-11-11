@@ -1337,14 +1337,30 @@
      expone un único "16"). ordered reusa el gap de unordered (Figma no da token propio).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-list-bodytext-fg-generic:        var(--ds-fg-default);        /* #050506 */
-  --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* #0A7C92 — bullet teal */
-  --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* #0A7C92 — check teal (currentColor) */
-  --ds-list-gap-unordered:              var(--ds-spacing-md);        /* 8 — bullet/number ↔ texto */
-  --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — icono ↔ texto */
-  --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 */
-  --ds-list-ordered-indent-level2:      var(--ds-sizing-sm);         /* 24 — columna del número (Figma list/all/orderedList/indent/level2-16) */
-  --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — separación entre items (29/09: 6→8, filas de 24/28 caen en rejilla de 4/8) */
+  --ds-list-bodytext-fg-generic:        var(--ds-fg-default);        /* list/all/bodyText/fg/generic */
+  --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* list/all/bullet/fg/generic — teal */
+  --ds-list-ordered-marker-fg-generic:    var(--ds-fg-primary);   /* list/all/orderedList/marker/fg/generic — teal de texto, regular */
+  --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* list/all/iconCheckmark/fg/generic — teal */
+  --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — root/paddingBottom/{generic,16,19}: entre items */
+  /* Unordered */
+  --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 — root/paddingLeft/unorderedList */
+  --ds-list-gap-unordered-xs:           var(--ds-spacing-sm);        /* 6 — root/gap/unorderedList-12 */
+  --ds-list-gap-unordered-sm:           var(--ds-spacing-sm);        /* 6 — -14 */
+  --ds-list-gap-unordered-md:           var(--ds-spacing-md);        /* 8 — -16 */
+  --ds-list-gap-unordered-lg:           var(--ds-spacing-md);        /* 8 — -19 */
+  /* Ordered: columna del marcador = sangría del nivel siguiente (orderedList/indent/level2-*);
+     el nivel 3 (level3-*) sale solo al anidar: 20+20, 24+24, 32+32 */
+  --ds-list-ordered-indent-xs:          var(--ds-sizing-xs);         /* 20 — level2-12 */
+  --ds-list-ordered-indent-sm:          var(--ds-sizing-sm);         /* 24 — level2-14 */
+  --ds-list-ordered-indent-md:          var(--ds-sizing-sm);         /* 24 — level2-16 */
+  --ds-list-ordered-indent-lg:          var(--ds-sizing-md);         /* 32 — level2-19 */
+  /* Checkmark (11/11: tamaño y padding nuevos en Figma) */
+  --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — root/gap/checkmarkList */
+  --ds-list-icon-checkmark-padding-ver: var(--ds-spacing-2xs);       /* 2 — iconCheckmark/paddingVer/generic */
+  --ds-list-icon-checkmark-size-xs:     var(--ds-sizing-2xs);        /* 16 — iconCheckmark/size/12 */
+  --ds-list-icon-checkmark-size-sm:     var(--ds-sizing-xs);         /* 20 — /14 */
+  --ds-list-icon-checkmark-size-md:     var(--ds-sizing-sm);         /* 24 — /16 */
+  --ds-list-icon-checkmark-size-lg:     var(--ds-sizing-md);         /* 32 — /19 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -2050,7 +2066,8 @@
      distinto — igual criterio que el caret de Combobox.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-card-root-bg:             var(--ds-bg-container); /* 26/10: antes bg-default — en dark era negro sobre negro (Flydown invisible); bg-container = superficie elevada, blanca en light */
-  --ds-card-root-border-radius:  4px;
+  --ds-card-root-border-radius:  var(--ds-border-radius-sm); /* 4 — cards/all/root/borderRadius/basic (11/11: enlazado en Figma, antes literal) */
+  /* sombra = Effect Style Card/Shadow: offsets/blur/spread son literales de Figma (sin variable), colores enlazados a opacity/shadow/* */
   --ds-card-root-shadow:         0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
 
   /* ══════════════════════════════════════════════════════════════════════════

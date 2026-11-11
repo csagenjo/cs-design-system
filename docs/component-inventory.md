@@ -40,8 +40,8 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
-| Feedback | Snackbar · _rest to be filled_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · _in progress: Image, CountryFlag, Divider_ |
+| Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
@@ -3073,6 +3073,277 @@ A short status label (Paid, Overdue, New) with an optional icon and tooltip.
 **Don't**
 - Don't use colour as the only difference between statuses
 - Don't put a tooltip on every badge: it adds a Tab stop each
+
+
+## AmountView
+
+**Group:** Data
+**Figma:** 🟢 Amount View page → `Amount View` set (Highlight × Type) with nested `.Amount` (Size × ISO Placement × Amount Weight; Show ISO, ISO, Amount) · frame *Amount View — How to use & Accessibility* (11/11)
+**Code:** `src/components/AmountView.jsx` (atom)
+**Tokens:** `--ds-amount-view-*` (`amountView/all/*`)
+
+A money amount with its currency, in a pill that tells whether it's a credit or a debit.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Any money amount: balances, totals, movements in a table, a List View or a Description List
+- A plain number that isn't money → Text · a count of items → Badge Notification
+
+**Pieces**
+- .Amount → the text: amount + ISO code; Size 12 · 14 · 16 · 19, ISO Placement Left / Right, Amount Weight Bold / Regular, Show ISO
+- Amount View → .Amount inside a pill that tells the type: Highlight × Type
+
+**Properties**
+- Highlight → Neutral (default) · Emphasis (solid fill, for the key amount of a view) · Subtle (pale fill) · Disabled
+- Type → Positive · Negative
+- Neutral positive has no fill; Neutral negative gets a grey fill so debits stand out without red; Disabled negative keeps its grey fill
+- Amount Weight Bold makes only the amount bold; the ISO code stays regular
+
+**Sizing**
+- Padding 2 / 4 · amount → ISO 4 · radius 4 · Size = label xs / sm / md / lg (12/16 · 14/20 · 16/24 · 19/28)
+
+### Developers · React
+
+**Import**
+- `import { AmountView } from './components/AmountView'`
+
+**Props**
+- amount, currency, highlight 'neutral'|'emphasis'|'subtle'|'disabled', type 'positive'|'negative', size 'xs'|'sm'|'md'|'lg', isoPlacement 'right'|'left', amountWeight 'regular'|'bold', negativeLabel ('negative'), as ('div' | 'span')
+
+**Example**
+- `<AmountView amount="1.250,00" currency="EUR" highlight="emphasis" type="positive" />`
+- `<AmountView amount="-40,00" currency="EUR" type="negative" size="md" amountWeight="bold" />`
+- Format the number before passing it (locale, decimals, sign); as="span" inside buttons and inline text
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing an amount of money
+
+**Don't pick it when**
+- Editing an amount → InputAmount
+- Counting items → BadgeNotification
+
+**Composition rules**
+- type="negative" for debits and losses; write the minus sign in amount when the context needs it
+- emphasis only for the one amount that matters most on the view
+- Same size and isoPlacement for all amounts in a column; align the column to the end
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- A negative amount without a minus sign is read as "…, negative": colour is never the only clue
+- Text on every fill keeps 4.5:1 in light and dark
+
+**Your job**
+- Use the ISO code (EUR, USD) or a symbol the user knows
+- Keep the minus sign when the amount is shown without colour context
+
+### Developers · React
+
+**Semantics**
+- `<div> or <span> (as) with the amount and the currency as text`
+- negativeLabel (VisuallyHidden) added when type="negative" and the amount doesn't start with − or -
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- amount already formatted for the user's locale
+- negativeLabel translated if the app isn't in English
+- as="span" when it's inside a button or a label
+
+**Don't**
+- Don't rely on red or green alone
+- Don't round amounts that the user has to reconcile
+
+
+## List
+
+**Group:** Data
+**Figma:** 🟢 List page → `Unordered List`, `Ordered List` (Level 1st / 2nd / 3rd) and `Checkmark List` sets, each in Size 12 · 14 · 16 · 19 · frame *List — How to use & Accessibility* (11/11)
+**Code:** `src/components/List.jsx` (atom)
+**Tokens:** `--ds-list-*` (`list/all/*`)
+
+Short, scannable points instead of a block of text: requirements, benefits, steps.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Unordered → points with no order · Ordered → steps or a sequence · Checkmark → benefits or things that are included
+- Interactive rows → List View · label–value pairs → Description List
+
+**Properties**
+- Size → 12 · 14 · 16 · 19 (text body 2xs · xs · sm · md)
+- Ordered · Level → 1st (1.) · 2nd (a.) · 3rd (i)
+
+**Anatomy**
+- Unordered → teal bold bullet (label xs–lg) + text
+- Ordered → teal number (fg/primary, regular, same size as the text) + text
+- Checkmark → teal check icon + text
+
+**Sizing**
+- 8 below each item (none after the last)
+- Unordered: 2 to the left; bullet → text 6 (12, 14) · 8 (16, 19)
+- Ordered: number column 20 · 24 · 24 · 32; each level starts where the text above starts
+- Checkmark: icon 16 · 20 · 24 · 32 with 2 above and below, centred on the text; icon → text 6
+
+### Developers · React
+
+**Import**
+- `import { List } from './components/List'`
+
+**Props**
+- variant 'unordered'|'ordered'|'checkmark', size 'xs'|'sm'|'md'|'lg' (12/14/16/19, default 'md'), items, className
+- items: strings or `{ content, number?, items? }` — items nests the next ordered level (up to 3); number replaces the automatic marker
+
+**Example**
+- `<List variant="ordered" size="sm" items={[{ content: 'Review the totals', items: ['Check the dates'] }, 'Approve the batch']} />`
+- `<List variant="checkmark" items={['No monthly fees', 'Instant transfers']} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Text breaks into separate points or steps
+
+**Don't pick it when**
+- The rows are clickable → ListView
+- Label and value pairs → DescriptionList
+
+**Composition rules**
+- Variant by meaning: sequence → ordered; benefits / included → checkmark; anything else → unordered
+- size matches the surrounding text (body sm → md); one size per list
+- Don't type the markers into the text; nested levels only on ordered lists, at most 3
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The screen reader announces the list and its length ("list, 3 items")
+- Bullet, number and check are decoration; text uses fg/default and the teal number fg/primary (4.87:1 light · 12.7:1 dark)
+
+**Your job**
+- One idea per item; the text must make sense without the marker
+- Don't use a checkmark list to show done / not done
+
+### Developers · React
+
+**Semantics**
+- `<ul>` (unordered, checkmark) or `<ol>` (ordered), one `<li>` per item; a nested level is an `<ol>` inside the parent `<li>`
+- `role="list"` kept because `list-style: none` makes Safari/VoiceOver drop the list role
+- Markers and the check icon are `aria-hidden="true"`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- npm run a11y passes for every variant and size
+- Text reads well without the markers
+
+**Don't**
+- Don't use a checkmark list as a set of checkboxes
+- Don't put the only action of a view inside a list item
+
+
+## Card
+
+**Group:** Data
+**Figma:** 🟢 Cards page → `Cards` set (Variant Full / Basic) · frame *Card — How to use & Accessibility* (11/11)
+**Code:** `src/components/Card.jsx` (atom)
+**Tokens:** `--ds-card-root-*` (`cards/all/root/*`, Effect Style `Card/Shadow`)
+
+An empty surface that groups related content: background, radius and shadow. What goes inside, and its padding, is up to the content.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Basic → a raised panel over the page: a summary, a flydown menu
+- Full → a flat block of the layout, edge to edge
+- A clickable tile (no hover/focus states) or a dialog → not a Card (Dialog, Popover Sheet)
+
+**Properties**
+- Variant → Full · Basic
+
+**Sizing**
+- No padding or gap of its own: the content sets them · width from the layout
+- Basic: radius 4 (borderRadius/sm) + Card/Shadow (colours bound to opacity/shadow/*)
+- Background bg/container: in dark it's lighter than the page; in light Full is white on white, so use it on a grey surface
+
+### Developers · React
+
+**Import**
+- `import { Card } from './components/Card'`
+
+**Props**
+- variant 'basic' (default) | 'full', as 'div' (default) | 'section' | 'article', children; className, id, style and aria-* pass through
+
+**Example**
+- `<Card style={{ padding: 'var(--ds-spacing-xl)' }}>…</Card>`
+- `<Card variant="full" as="section" aria-labelledby="summary-title"><SectionHeader id="summary-title">Summary</SectionHeader>…</Card>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Content needs its own surface, raised (basic) or flat (full)
+
+**Don't pick it when**
+- The whole thing is clickable → a Button or Link inside, not a clickable card
+- It's a modal or floating panel → Dialog, PopoverSheet
+
+**Composition rules**
+- Padding with spacing tokens on the content or via style, never px
+- A card with a heading → as="section" + aria-labelledby
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Shadow and background are decoration only
+- Forced colours: Basic gets a 1 px outline so the panel edge stays visible
+
+**Your job**
+- Give each card with its own topic a visible heading (Section Header)
+
+### Developers · React
+
+**Semantics**
+- div by default; as="section" + aria-labelledby makes a named region; as="article" for content that stands alone
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- npm run a11y passes for both variants
+- Section cards have a heading linked by aria-labelledby
+
+**Don't**
+- Don't put role="button" or onClick on the Card
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount

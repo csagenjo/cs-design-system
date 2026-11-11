@@ -1,46 +1,64 @@
 /**
  * Card — Átomo
- * CS Design System · v1
+ * CS Design System · v2 (11/11/2026, alineado con Figma `Cards`)
  *
- * Contenedor genérico con fondo, radio y sombra — solo la variante `basic`
- * de Figma (`Cards`, node real). Nace como carcasa del panel flydown de Top
- * Navigation, pero es un slot libre (`children`), reutilizable donde haga
- * falta una superficie elevada simple.
+ * Superficie vacía que agrupa contenido: fondo, radio y sombra. Las dos
+ * variantes de Figma (`Cards`, 2455:62023):
+ *   · Full  — plana: sin radio ni sombra (borde a borde, p. ej. una sección en mobile)
+ *   · Basic — elevada: radio 4 (`cards/all/root/borderRadius/basic`) + Effect Style
+ *             "Card/Shadow" (p. ej. el flydown de Top Navigation)
+ * Fondo `cards/all/root/bg/generic` → bg/container (blanco en light; en dark
+ * se separa del fondo de página, decisión 26/10).
  *
- * Sombra propia (`--ds-card-root-shadow`, Effect Style real "Card/Shadow" en
- * Figma) — hasta el 23/09 aliasaba a Popover Sheet (mismo valor por
- * coincidencia); Carol decidió desacoplarla en Figma para que Card no
- * dependa de otro componente.
+ * Contenido = slot libre (`children`): Card no pone padding ni layout; lo pone
+ * lo que va dentro (en Figma la Card también es un contenedor vacío).
  *
- * NOTA (23/09, Carol) — solo en FIGMA: el Flydown de Top Navigation ahí NO
- * instancia el componente `Cards` (es rígido, `ABSOLUTE`, no se ajusta al
- * contenido real) — su root simula el mismo fill/radius/shadow a mano. En
- * CÓDIGO no aplica ese problema (`Card.jsx` no tiene esa rigidez, es un CSS
- * normal) — `TopNavigation.jsx` sigue instanciando este átomo tal cual.
+ * `as` cambia la etiqueta: 'section' (con aria-labelledby a su título) o
+ * 'article' cuando el contenido se entiende solo; por defecto 'div'.
+ *
+ * NOTA (23/09) — solo en FIGMA: el Flydown de Top Navigation no instancia
+ * `Cards` (es rígido, ABSOLUTE); simula fill/radius/shadow a mano. En código
+ * TopNavigation sí instancia este átomo.
  *
  * USO:
  *   <Card>{children}</Card>
+ *   <Card variant="full" as="section" aria-labelledby="summary-title">…</Card>
  */
 import React from 'react';
 import { injectStyles } from './_inputBase';
 
 const css = `
 .ds-card {
-  background:    var(--ds-card-root-bg);
+  background: var(--ds-card-root-bg);
+  box-sizing: border-box;
+}
+.ds-card--basic {
   border-radius: var(--ds-card-root-border-radius);
   box-shadow:    var(--ds-card-root-shadow);
-  box-sizing:    border-box;
+}
+/* Colores forzados: la sombra desaparece → borde para que se vea el panel */
+@media (forced-colors: active) {
+  .ds-card--basic { outline: var(--ds-border-width-sm) solid CanvasText; }
 }
 `;
 
 injectStyles('ds-card', css);
 
-export function Card({ children, className, style, id }) {
+export function Card({
+  variant = 'basic',   // 'basic' | 'full'
+  as: Tag = 'div',     // 'div' | 'section' | 'article' | …
+  children,
+  className,
+  ...rest              // id, style, aria-labelledby, aria-label…
+}) {
+  const classes = ['ds-card', `ds-card--${variant === 'full' ? 'full' : 'basic'}`, className || '']
+    .filter(Boolean).join(' ');
   return (
-    <div id={id} className={`ds-card ${className || ''}`} style={style}>
+    <Tag className={classes} {...rest}>
       {children}
-    </div>
+    </Tag>
   );
 }
 
+Card.displayName = 'Card';
 export default Card;
