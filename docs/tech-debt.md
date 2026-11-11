@@ -6,7 +6,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa). Siguientes (no críticos, por familias): Datos, Steps, resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa), Amount View. Siguientes (no críticos, por familias): Datos (List, Card, Image, Country Flag, Divider), Steps, Contenido (Headline, Section Header, Text, Description Text, Detail Text), resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 

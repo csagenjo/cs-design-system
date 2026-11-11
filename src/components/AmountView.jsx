@@ -1,5 +1,5 @@
 /**
- * AmountView — Componente atómico · v2
+ * AmountView — Componente atómico · v2.1 (11/11: Amount Weight=Bold solo en el importe, como Figma)
  * CS Design System
  *
  * Dos capas del mismo componente de Figma:
@@ -62,9 +62,9 @@ const css = `
   color:          var(--ds-amount-view-fg-generic); /* neutral/subtle → texto negro */
 }
 
-/* amountWeight */
-.ds-amount-view--bold    { font-weight: var(--ds-font-weight-bold);    }
-.ds-amount-view--regular { font-weight: var(--ds-font-weight-regular); }
+/* amountWeight: solo el importe — el ISO siempre en regular (Figma .Amount) */
+.ds-amount-view { font-weight: var(--ds-font-weight-regular); }
+.ds-amount-view--bold .ds-amount-view__amount { font-weight: var(--ds-font-weight-bold); }
 
 /* isoPlacement: left invierte el orden visual amount ↔ iso */
 .ds-amount-view--iso-left { flex-direction: row-reverse; }
@@ -112,7 +112,7 @@ export function AmountView({
 
   return (
     <Tag className={className} style={typo}>
-      <span>{amount}</span>
+      <span className="ds-amount-view__amount">{amount}</span>
       {currency != null && <span>{currency}</span>}
       {/* A11y-3 (1.4.1): el rojo no es la única pista — un importe negativo sin
           signo se lee "1.250,00 EUR, negative". Con "-" o "−" ya se entiende. */}

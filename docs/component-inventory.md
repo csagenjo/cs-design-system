@@ -40,8 +40,8 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · _rest to be filled_ |
-| Feedback | Snackbar · _rest to be filled_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · _in progress: List, Card, Image, CountryFlag, Divider_ |
+| Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
@@ -3073,6 +3073,99 @@ A short status label (Paid, Overdue, New) with an optional icon and tooltip.
 **Don't**
 - Don't use colour as the only difference between statuses
 - Don't put a tooltip on every badge: it adds a Tab stop each
+
+
+## AmountView
+
+**Group:** Data
+**Figma:** 🟢 Amount View page → `Amount View` set (Highlight × Type) with nested `.Amount` (Size × ISO Placement × Amount Weight; Show ISO, ISO, Amount) · frame *Amount View — How to use & Accessibility* (11/11)
+**Code:** `src/components/AmountView.jsx` (atom)
+**Tokens:** `--ds-amount-view-*` (`amountView/all/*`)
+
+A money amount with its currency, in a pill that tells whether it's a credit or a debit.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Any money amount: balances, totals, movements in a table, a List View or a Description List
+- A plain number that isn't money → Text · a count of items → Badge Notification
+
+**Pieces**
+- .Amount → the text: amount + ISO code; Size 12 · 14 · 16 · 19, ISO Placement Left / Right, Amount Weight Bold / Regular, Show ISO
+- Amount View → .Amount inside a pill that tells the type: Highlight × Type
+
+**Properties**
+- Highlight → Neutral (default) · Emphasis (solid fill, for the key amount of a view) · Subtle (pale fill) · Disabled
+- Type → Positive · Negative
+- Neutral positive has no fill; Neutral negative gets a grey fill so debits stand out without red; Disabled negative keeps its grey fill
+- Amount Weight Bold makes only the amount bold; the ISO code stays regular
+
+**Sizing**
+- Padding 2 / 4 · amount → ISO 4 · radius 4 · Size = label xs / sm / md / lg (12/16 · 14/20 · 16/24 · 19/28)
+
+### Developers · React
+
+**Import**
+- `import { AmountView } from './components/AmountView'`
+
+**Props**
+- amount, currency, highlight 'neutral'|'emphasis'|'subtle'|'disabled', type 'positive'|'negative', size 'xs'|'sm'|'md'|'lg', isoPlacement 'right'|'left', amountWeight 'regular'|'bold', negativeLabel ('negative'), as ('div' | 'span')
+
+**Example**
+- `<AmountView amount="1.250,00" currency="EUR" highlight="emphasis" type="positive" />`
+- `<AmountView amount="-40,00" currency="EUR" type="negative" size="md" amountWeight="bold" />`
+- Format the number before passing it (locale, decimals, sign); as="span" inside buttons and inline text
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing an amount of money
+
+**Don't pick it when**
+- Editing an amount → InputAmount
+- Counting items → BadgeNotification
+
+**Composition rules**
+- type="negative" for debits and losses; write the minus sign in amount when the context needs it
+- emphasis only for the one amount that matters most on the view
+- Same size and isoPlacement for all amounts in a column; align the column to the end
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- A negative amount without a minus sign is read as "…, negative": colour is never the only clue
+- Text on every fill keeps 4.5:1 in light and dark
+
+**Your job**
+- Use the ISO code (EUR, USD) or a symbol the user knows
+- Keep the minus sign when the amount is shown without colour context
+
+### Developers · React
+
+**Semantics**
+- `<div> or <span> (as) with the amount and the currency as text`
+- negativeLabel (VisuallyHidden) added when type="negative" and the amount doesn't start with − or -
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- amount already formatted for the user's locale
+- negativeLabel translated if the app isn't in English
+- as="span" when it's inside a button or a label
+
+**Don't**
+- Don't rely on red or green alone
+- Don't round amounts that the user has to reconcile
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount

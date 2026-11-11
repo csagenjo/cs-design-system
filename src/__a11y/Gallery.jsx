@@ -266,6 +266,7 @@ export default function Gallery({ mode }) {
         <Row>
           {['xs', 'sm', 'md', 'lg'].map((s) => <AmountView key={s} amount="99,00" currency="USD" size={s} />)}
           <AmountView amount="99,00" currency="USD" isoPlacement="left" amountWeight="bold" />
+          <AmountView amount="99,00" currency="USD" size="lg" amountWeight="bold" />
         </Row>
       </Section>
 
