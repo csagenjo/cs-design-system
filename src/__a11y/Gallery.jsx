@@ -461,7 +461,7 @@ export default function Gallery({ mode }) {
           {['spain', 'france', 'united-kingdom', 'germany', 'italy', 'portugal'].map((c) => (
             <CountryFlag key={c} country={c} />
           ))}
-          <CountryFlag country="spain" size={32} />
+          <CountryFlag country="spain" label="Spain" />
         </Row>
       </Section>
 
@@ -520,7 +520,8 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="Divider">
-        <div style={{ maxWidth: 480 }}><Divider /></div>
+        <div style={{ maxWidth: '30rem' }}><Divider /></div>
+        <div style={{ maxWidth: '30rem' }}><Divider decorative /></div>
       </Section>
 
       <Section name="Drawer">
@@ -643,9 +644,9 @@ export default function Gallery({ mode }) {
       <Section name="Image">
         <Row>
           {['1:1', '3:2', '4:3', '16:9'].map((s) => (
-            <div key={s} style={{ width: 200 }}><Image size={s} alt="" caption={`Imagen ${s}`} /></div>
+            <div key={s} style={{ width: '12.5rem' }}><Image size={s} alt="" caption={`Image ${s}`} /></div>
           ))}
-          <div style={{ width: 120 }}><Image size="1:1" variant="circle" alt="Foto de perfil" showCaption={false} /></div>
+          <div style={{ width: '7.5rem' }}><Image size="1:1" variant="circle" alt="Profile photo" showCaption={false} /></div>
         </Row>
       </Section>
 

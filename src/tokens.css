@@ -1880,7 +1880,7 @@
   --ds-file-upload-common-stack-gap-generic:     var(--ds-spacing-md);       /* 8 — spacing/md — gap vertical entre bloques apilados (DocumentItem root↔Validation Message; FileSelector: DropZone↔lista) */
   --ds-file-upload-common-border-radius-generic: var(--ds-border-radius-sm);  /* 4 — borderRadius/sm */
   --ds-file-upload-common-bg-hover:              var(--ds-bg-hover-primary); /* #BDE8FF / #016398 dark */
-  --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* #0A7C92 fijo */
+  --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* fileUpload/common/icon/fg/generic → fg/icon/primary (11/11: en Figma apuntaba a icon/Primary de la librería de iconos) */
 
   --ds-file-upload-root-gap-generic:             var(--ds-spacing-2xl);      /* 24 — fileUpload/root/gap/generic: label ↔ selector / botón ↔ fichero */
   --ds-file-upload-label-width-wide:             235px;                      /* ancho de Label + Description en Wide (Figma: Helper fijo a 235, sin variable) */
@@ -2078,6 +2078,15 @@
      variantes, corregido desde FIT el mismo día).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #676D76 — image/all/caption/fg/generic */
+  --ds-image-gap:                       var(--ds-spacing-md);      /* 8 — image/all/root/gap/generic (11/11; antes 9 suelto en Figma y código) */
+  --ds-image-frame-border-radius:       var(--ds-border-radius-sm);/* 4 — image/all/frame/borderRadius/roundedCorners (11/11; antes reusaba el de Card) */
+  --ds-image-frame-bg-generic:          var(--ds-bg-subtle);       /* image/all/frame/bg/generic — gris mientras carga o sin src (11/11; antes bg-subtle directo en JSX) */
+
+  /* ══ COMPONENT TOKENS — Country Flag (countryFlag/all/*) · 11/11 ══
+     El set vive en la librería de iconos (archivo aparte, 201 variantes 22×16). */
+  --ds-country-flag-border-radius: var(--ds-border-radius-xs); /* 2 — countryFlag/all/root/borderRadius/generic */
+  --ds-country-flag-width:         22px; /* literal de Figma sin variable: tamaño intrínseco del asset (no está en la escala sizing) */
+  --ds-country-flag-height:        16px; /* literal de Figma sin variable */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — PageTitle (pageTitle/*)
@@ -2129,7 +2138,7 @@
   --ds-top-navigation-root-gap-generic: var(--ds-layout-gutter); /* topNavigation/root/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap real entre Logo y Tabs */
   --ds-top-navigation-root-padding-horizontal: var(--ds-layout-margin); /* topNavigation/root/paddingHor/generic — layout/margin (01/10, antes spacing/2xl), ahora bindeado en Figma (antes literal sin variable) */
   --ds-top-navigation-flydown-group-title-fg-generic: var(--ds-fg-subtle); /* topNavigation/flydown/groupTitle/fg/generic — corregido 24/09: Carol recoloreó el título de grupo a gris (fg/subtle) en Figma; el alias a fg/default (negro) quedó desincronizado */
-  --ds-top-navigation-flydown-tab-title-fg-generic: var(--ds-headline-fg-default); /* topNavigation/flydown/tabTitle/fg/generic — nuevo 24/09, nombra el tab del flydown abierto; antes saltaba directo a headline/fg/default (Mode) */
+  --ds-top-navigation-flydown-tab-title-fg-generic: var(--ds-fg-headline-default); /* topNavigation/flydown/tabTitle/fg/generic → Mode fg/headline/default (11/11: antes apuntaba a otro token de componente, headline/fg/default) */
   --ds-top-navigation-breakpoint:       1024px;
   --ds-top-navigation-flydown-gap:      var(--ds-layout-gutter); /* topNavigation/flydown/column/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap horizontal entre columnas (reusado tal cual para el margin-bottom de apilado vertical dentro de una columna) */
   --ds-top-navigation-flydown-title-gap: var(--ds-spacing-xl); /* 16 — topNavigation/flydown/root/gap/generic, Tab title → columnas */

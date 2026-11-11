@@ -1,42 +1,55 @@
 /**
  * CountryFlag — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v2 (11/11/2026, alineado con Figma `CountryFlag`)
  *
- * A diferencia de Icon.jsx (wrapper de lucide-react, iconos de un color vía
- * currentColor), esto renderiza banderas reales multicolor desde el registro
- * `flags.js` (201 países, exportados 1:1 desde Figma `CountryFlag`, node
- * `30831:2867`, fileKey `QiWDJdMPB5pfY3vHy9CqZv`) — no encajan en el
- * mecanismo de Icon, que asume un solo color de trazo.
+ * Bandera real a color desde el registro `flags.js` (201 países). En Figma:
+ * página 🟢 Country Flag, set `CountryFlag` (32843:3274, movido desde la
+ * librería de iconos el 11/11): 201 variantes `Country=…`, todas 22×16, radio 2,
+ * recortadas. No es un icono: no usa currentColor. Los colores del dibujo son
+ * parte del asset (como una foto): sin tokens de color.
+ *
+ * Un solo tamaño, como Figma (v2 quita `size`, que no existía en Figma).
+ * Tamaño y radio por token: --ds-country-flag-width/height (literales de
+ * Figma, el asset no está en la escala sizing) y --ds-country-flag-border-radius
+ * → border-radius/xs (`countryFlag/all/root/borderRadius/generic`, nuevo).
  *
  * El SVG se inyecta vía data URI en un <img>, nunca dangerouslySetInnerHTML.
- * El radio de esquina (2px sobre el viewBox 22×16 real de Figma) se aplica
- * aquí en el wrapper, no depende de que cada SVG traiga su propio clipPath
- * interno — así las 201 banderas quedan visualmente consistentes aunque
- * alguna (p. ej. saudi-arabia, cuyo SVG excede el límite de export en lote
- * y se obtuvo por una vía distinta) no incluya ese recorte por su cuenta.
+ *
+ * Accesibilidad: decorativa por defecto (va junto al nombre o al prefijo);
+ * `label` ("Spain") solo cuando la bandera es la única pista del país.
+ *
+ * USO:
+ *   <CountryFlag country="spain" />
+ *   <CountryFlag country="france" label="France" />
  */
 import React from 'react';
+import { injectStyles } from './_inputBase';
 import { FLAGS } from './flags';
 
-const ASPECT_RATIO = 16 / 22;
+const css = `
+.ds-country-flag {
+  display:       block;
+  flex-shrink:   0;
+  width:         var(--ds-country-flag-width);
+  height:        var(--ds-country-flag-height);
+  border-radius: var(--ds-country-flag-border-radius);
+}
+`;
 
-// A11y-3: `label` ("Spain") cuando la bandera es la única pista del país;
-// sin label sigue siendo decorativa (lo normal: va junto al nombre o prefijo).
-export function CountryFlag({ country, size = 22, label, className }) {
+injectStyles('ds-country-flag', css);
+
+export function CountryFlag({ country, label, className }) {
   const svg = FLAGS[country];
   if (!svg) return null;
-  const height = Math.round(size * ASPECT_RATIO);
   return (
     <img
       src={`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`}
-      width={size}
-      height={height}
       alt={label || ''}
       aria-hidden={label ? undefined : 'true'}
-      className={className}
-      style={{ borderRadius: 2, display: 'block', flexShrink: 0 }}
+      className={['ds-country-flag', className || ''].filter(Boolean).join(' ')}
     />
   );
 }
 
+CountryFlag.displayName = 'CountryFlag';
 export default CountryFlag;

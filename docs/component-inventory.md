@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · _in progress: Image, CountryFlag, Divider_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
@@ -3344,6 +3344,242 @@ An empty surface that groups related content: background, radius and shadow. Wha
 
 **Don't**
 - Don't put role="button" or onClick on the Card
+
+
+## Image
+
+**Group:** Data
+**Figma:** 🟢 Image page → `Image` set (Variant Rounded Corners / Circle (only 1:1) × Size 1:1 / 3:2 / 4:3 / 16:9; Show Caption, Caption) · frame *Image — How to use & Accessibility* (11/11)
+**Code:** `src/components/Image.jsx` (atom)
+**Tokens:** `--ds-image-*` (`image/all/*`)
+
+A photo or illustration in a fixed-ratio frame, with an optional caption.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A photo or illustration that supports the content: a featured item in a menu, an empty state, an avatar
+- Icons → Icon · flags → CountryFlag
+
+**Properties**
+- Size → 1:1 · 3:2 · 4:3 · 16:9 (width from the layout)
+- Variant → Rounded Corners · Circle (only 1:1)
+- Show Caption + Caption
+
+**Behaviour**
+- The image always fills the frame and is cropped, never letterboxed
+- Grey bg/subtle while it loads or without an image
+
+**Sizing**
+- Radius 4 (borderRadius/sm) · Circle 50 % · frame → caption 8 · caption body sm, fg/body/subtle
+
+### Developers · React
+
+**Import**
+- `import { Image } from './components/Image'`
+
+**Props**
+- size '1:1'|'3:2'|'4:3'|'16:9', variant 'roundedCorners'|'circle', src, alt ('' by default = decorative), caption, showCaption, className, style
+
+**Example**
+- `<Image size="16:9" src={photo} alt="Team at the Madrid office" caption="Our Madrid office" />`
+- `<Image size="1:1" variant="circle" src={avatar} alt="Laura Pérez" showCaption={false} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing a photo or illustration
+
+**Don't pick it when**
+- It's an icon → Icon · a country → CountryFlag
+
+**Composition rules**
+- Always decide alt; alt="" only when the image adds nothing to the text around it
+- circle only with 1:1
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- With a caption it's a figure: the caption is linked to the image
+
+**Your job**
+- Write the alt for every meaningful image in the spec; mark decorative ones
+- No text baked into images
+
+### Developers · React
+
+**Semantics**
+- `<img alt>` in a frame; with a caption, `<figure>` + `<figcaption>`
+
+**Keyboard**
+- Not focusable (if it's inside a link, the link carries the name)
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every non-decorative image has a meaningful alt (not the file name, not "image of")
+
+**Don't**
+- Don't use the caption as a replacement for alt
+
+
+## Divider
+
+**Group:** Data
+**Figma:** 🟢 Divider page → `Divider` component (one line, full width) · frame *Divider — How to use & Accessibility* (11/11)
+**Code:** `src/components/Divider.jsx` (atom)
+**Tokens:** `--ds-divider-*` (`divider/all/root/*`)
+
+A 1 px horizontal line that separates groups of content.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Between groups of content inside a panel, a card or a form
+- Not between rows: List View, Table cells and Description List draw their own lines
+- Not under titles as decoration: use spacing
+
+**Properties**
+- None: one line, full width of its container
+
+**Sizing**
+- Height 1 (borderWidth/sm) · borderColor/subtle (neutral/100 light, neutral/400 dark) · spacing around it comes from the layout
+
+### Developers · React
+
+**Import**
+- `import { Divider } from './components/Divider'`
+
+**Props**
+- decorative (false) · className
+
+**Example**
+- `<Divider />` · `<Divider decorative />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Two groups of content have no other visual separation
+
+**Don't pick it when**
+- The container already has a border or the rows draw their own lines
+
+**Composition rules**
+- decorative when headings or lists already show the grouping
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Announced as "separator" unless decorative
+
+**Your job**
+- Mark it decorative when it only repeats a grouping the headings already show
+
+### Developers · React
+
+**Semantics**
+- `<hr>` (implicit separator); decorative → `aria-hidden="true"`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- The content is still understood without the line
+
+**Don't**
+- Don't stack it next to a border or another divider
+
+
+## CountryFlag
+
+**Group:** Data
+**Figma:** 🟢 Country Flag page → `CountryFlag` set (32843:3274, Country = 201 variants, 22×16; moved from the icons library on 11/11) · frame *Country Flag — How to use & Accessibility* (11/11)
+**Code:** `src/components/CountryFlag.jsx` (atom) + `src/components/flags.js` (201 SVGs)
+**Tokens:** `--ds-country-flag-*` (`countryFlag/all/root/borderRadius/generic`)
+
+A country's flag in full colour, next to its name or dial code.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Next to a country name or a phone prefix: Country Picker, Input Telephone, Selector list items
+- Not as a language selector (a language is not a country)
+
+**Properties**
+- Country → 201 variants
+
+**Sizing**
+- 22×16, radius 2 (borderRadius/xs) · it's not an icon: it keeps its own colours
+- Artwork colours are part of the asset (like a photo): no colour tokens, same in light and dark
+
+### Developers · React
+
+**Import**
+- `import { CountryFlag } from './components/CountryFlag'`
+
+**Props**
+- country (slug from `flags.js`, e.g. 'spain', 'united-kingdom'), label, className
+
+**Example**
+- `<CountryFlag country="spain" />` · `<CountryFlag country="france" label="France" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing a country next to its name or prefix
+
+**Don't pick it when**
+- You need a language → text · an icon → Icon
+
+**Composition rules**
+- Always next to the country name or prefix; label only when the flag stands alone
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Decorative by default: the country name next to it carries the meaning
+
+**Your job**
+- Never use the flag as the only way to tell the country
+
+### Developers · React
+
+**Semantics**
+- `<img>` with `alt=""` + aria-hidden; with `label` → `alt={label}`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every flag has its country name or prefix visible, or a label
+
+**Don't**
+- Don't pass a size: there is one size, like Figma
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount
