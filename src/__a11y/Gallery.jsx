@@ -792,9 +792,15 @@ export default function Gallery({ mode }) {
 
       <Section name="List">
         <Row>
-          <List variant="unordered" items={['Uno', 'Dos', 'Tres']} />
-          <List variant="ordered" items={[{ number: '1.', content: 'Primero' }, { number: '2.', content: 'Segundo' }]} />
-          <List variant="checkmark" items={['Incluido', 'También esto']} />
+          {['xs', 'sm', 'md', 'lg'].map((s) => (
+            <List key={'u' + s} variant="unordered" size={s} items={['Invoices', 'Payments']} />
+          ))}
+          {['xs', 'md', 'lg'].map((s) => (
+            <List key={'o' + s} variant="ordered" size={s} items={[{ content: 'Review the totals', items: [{ content: 'Check the dates', items: ['Due date', 'Issue date'] }, 'Check the amounts'] }, 'Approve the batch']} />
+          ))}
+          {['xs', 'sm', 'md', 'lg'].map((s) => (
+            <List key={'c' + s} variant="checkmark" size={s} items={['No monthly fees', 'Instant transfers']} />
+          ))}
         </Row>
       </Section>
 
