@@ -2,10 +2,11 @@
  * CountryFlag — Componente atómico
  * CS Design System · v2 (11/11/2026, alineado con Figma `CountryFlag`)
  *
- * Bandera real a color desde el registro `flags.js` (201 países). En Figma el
- * set `CountryFlag` (704:9237) vive en la librería de iconos (archivo
- * ITpZmEHLpvXDLCnalyGCmj), no en el archivo del DS: 201 variantes `Country=…`,
- * todas 22×16, radio 2, recortadas. No es un icono: no usa currentColor.
+ * Bandera real a color desde el registro `flags.js` (201 países). En Figma:
+ * página 🟢 Country Flag, set `CountryFlag` (32843:3274, movido desde la
+ * librería de iconos el 11/11): 201 variantes `Country=…`, todas 22×16, radio 2,
+ * recortadas. No es un icono: no usa currentColor. Los colores del dibujo son
+ * parte del asset (como una foto): sin tokens de color.
  *
  * Un solo tamaño, como Figma (v2 quita `size`, que no existía en Figma).
  * Tamaño y radio por token: --ds-country-flag-width/height (literales de

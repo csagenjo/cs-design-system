@@ -3509,7 +3509,7 @@ A 1 px horizontal line that separates groups of content.
 ## CountryFlag
 
 **Group:** Data
-**Figma:** Icons library file (`ITpZmEHLpvXDLCnalyGCmj`) → `CountryFlag` set (704:9237, Country = 201 variants, 22×16) · frame *Country Flag — How to use & Accessibility* (pending)
+**Figma:** 🟢 Country Flag page → `CountryFlag` set (32843:3274, Country = 201 variants, 22×16; moved from the icons library on 11/11) · frame *Country Flag — How to use & Accessibility* (11/11)
 **Code:** `src/components/CountryFlag.jsx` (atom) + `src/components/flags.js` (201 SVGs)
 **Tokens:** `--ds-country-flag-*` (`countryFlag/all/root/borderRadius/generic`)
 
@@ -3528,6 +3528,7 @@ A country's flag in full colour, next to its name or dial code.
 
 **Sizing**
 - 22×16, radius 2 (borderRadius/xs) · it's not an icon: it keeps its own colours
+- Artwork colours are part of the asset (like a photo): no colour tokens, same in light and dark
 
 ### Developers · React
 
@@ -3570,7 +3571,7 @@ A country's flag in full colour, next to its name or dial code.
 - Not focusable
 
 **Known gaps**
-- None in code; in Figma the radius waits for the DS library to be published to bind it
+- None
 
 ### AI agents · Claude Code
 
