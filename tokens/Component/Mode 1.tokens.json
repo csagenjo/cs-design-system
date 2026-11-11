@@ -9294,12 +9294,27 @@
         "fg": {
           "generic": {
             "$type": "color",
-            "$value": "{icon.Primary}",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.03921568766236305,
+                0.48627451062202454,
+                0.572549045085907
+              ],
+              "alpha": 1,
+              "hex": "#0A7C92"
+            },
             "$extensions": {
               "com.figma.variableId": "VariableID:31551:113",
               "com.figma.scopes": [
                 "ALL_SCOPES"
-              ]
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:d51031329c9a4b9aad2c5bde1e525e3be378280e/-1:-1",
+                "targetVariableName": "fg/icon/primary",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
             }
           }
         }
@@ -21233,12 +21248,27 @@
         "fg": {
           "generic": {
             "$type": "color",
-            "$value": "{headline.fg.default}",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.019607843831181526,
+                0.019607843831181526,
+                0.0235294122248888
+              ],
+              "alpha": 1,
+              "hex": "#050506"
+            },
             "$extensions": {
               "com.figma.variableId": "VariableID:32306:803",
               "com.figma.scopes": [
                 "TEXT_FILL"
-              ]
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:47b1b4e3e41548288bd423c8f2bf9be0d98e743f/-1:-1",
+                "targetVariableName": "fg/headline/default",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
             }
           }
         }
