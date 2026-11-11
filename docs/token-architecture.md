@@ -145,19 +145,45 @@ Uso: Advanced Selector, Account Selector, Table rows.
 - `bg/error` → para fondos sólidos de estado negativo/error
 - `bg/error-subtle` → para superficies suaves de estado negativo
 
-### `bg/default` · `bg/page` · `bg/container` — escalera de elevación (11/08/2026)
+### `Mode/bg/*` — escalera de elevación y rellenos (revisada 11/11/2026)
 
-Tres tokens neutros que en **light** son casi indistinguibles pero en **dark** revelan una escalera de elevación real — cuanto más elevada la superficie, más clara en dark mode:
+Dos familias que no se mezclan. **Elevación** = dónde se apoya el contenido (de abajo arriba). **Rellenos** = colores dentro de una superficie.
+
+**Elevación**
 
 | Token | Light | Dark | Rol |
 |---|---|---|---|
-| `bg/default` | `#FFFFFF` | `#050506` | lienzo base de la app (el más oscuro en dark) |
-| `bg/page` | `#F9FAFA` | `#464B53` | área de contenido, un nivel por encima |
-| `bg/container` | `#FFFFFF` | `#606772` | superficie de tarjeta/panel elevada (scope `FRAME_FILL`/`SHAPE_FILL`, el más claro en dark) |
+| `bg/page` | neutral/50 `#FAFBFB` | black `#050506` | lienzo de la pantalla (lo más hundido) |
+| `bg/default` | white | neutral/900 `#161719` | superficie base: inputs, tablas, tabs, list view |
+| `bg/container` | white | neutral/800 `#292C31` | lo que flota: Card, Popover Sheet, Dialog, Drawer primary, Top Navigation, Bottom Sheet/Navigation, pickers |
 
-**Origen del hallazgo:** `table/all/cellCommon/bg/onSurface` estaba aliasado a `bg/default` en vez de `bg/container` — coincidía en light (`#FFFFFF`) pero en dark habría puesto las celdas "onSurface" casi negras (el lienzo base) en vez de leerse como tarjeta elevada. Mismo patrón que la trampa `inverse`/`onColor` de arriba, pero en la familia `bg/*` en vez de `fg/*`. Corregido el alias en Figma a `bg/container`. `--ds-bg-container` no existía en absoluto en `tokens.css` — añadido al Mode layer (antes faltaba, probablemente la razón original por la que `onSurface` cayó en `bg/default` como sustituto).
+- En dark cada escalón es más claro (page → default 1,14:1 · → container 1,45:1): la elevación se ve por el color, la sombra no hace falta (es negra y sobre negro no se ve).
+- En light la escalera es casi plana (page n50 frente a blanco = 1,04:1) **a propósito**: con `bg/page` = neutral/100 el texto de marca 500 (fg/primary, secondary, tertiary, warning) baja a 4,35:1 sobre la página. Decisión de Carol (11/11): mantener n50; en light la Card Basic se separa por su sombra.
+- Antes (11/08–11/11) dark iba al revés: page n700 más claro que default (negro), así que inputs y tablas parecían hundidos; y Dialog/Drawer/Top Navigation usaban `bg/default` (negro sobre página gris).
 
-**De paso, auditada y corregida toda la escala neutra en dark de `tokens.css`** (estaba desincronizada de Figma, en algunos casos con el orden invertido): `bg-default` `#191C1F`→`#050506` · `bg-page` `#050506`→`#464B53` · `bg-subtle` `#2C2F34`→`#7B8490` · `bg-disabled` sin override→`#9AA1AA` (heredaba el light `#EEEFF1`, casi blanco, en todos los estados disabled del sistema).
+**Rellenos neutros**
+
+| Token | Light | Dark |
+|---|---|---|
+| `bg/subtle` | neutral/100 | neutral/600 |
+| `bg/disabled` | neutral/100 | neutral/700 (era n800 = container) |
+| `bg/track` | neutral/100 | neutral/200 (por contraste del indicador) |
+| `bg/inverse` · `bg/onColor` · `bg/overlay` | sin cambio | sin cambio |
+
+**Marca — `bg/surface/{primary,secondary,tertiary}-*`** (en código `--ds-bg-{color}-*`). Regla única para los tres colores y los dos themes (Youth conserva su cruce primary↔secondary):
+
+| Paso | Light | Dark |
+|---|---|---|
+| subtle | 50 | 900 |
+| medium | 200 | 800 |
+| (base) | 500 | 500 |
+| bold | 700 | 700 |
+
+Los tintes se invierten en dark; base y bold no cambian porque llevan texto blanco encima. Se mantienen los 12 aunque no todos tengan consumidor hoy: son la paleta para componer pantallas de contenido. Antes de la regla, 6 de ellos no tenían valor dark en `tokens.css` (caían al light) y en Figma el orden en dark era arbitrario (p. ej. primary-bold dark = primary/50).
+
+**Estado e interacción** — `success`, `success-subtle`, `error`, `error-subtle`, `hover-primary`: sin cambio.
+
+**Borrados (11/11)** — sin consumidores: `bg/primary`, `bg/secondary`, `bg/tertiary` (duplicados exactos de `bg/surface/*`), `bg/accent-primary`, `bg/accent-secondary`, `bg/highlight`, `bg/info`, `bg/warning` (mal nombrados: info era sólido y warning un tinte). 19 nodos de documentación re-enlazados antes (Changelog, Token Architecture, Cover); 18 variables de Theme que solo los alimentaban, borradas también. Si hace falta un fondo de info/warning, se crea como par `X` / `X-subtle` igual que success y error.
 
 ### `*/inverse` vs `*/onColor` — trampa de dark mode ⚠️ (confirmada y cerrada 11/08/2026)
 
