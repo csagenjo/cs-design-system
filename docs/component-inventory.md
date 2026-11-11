@@ -3286,8 +3286,8 @@ An empty surface that groups related content: background, radius and shadow. Wha
 
 **Sizing**
 - No padding or gap of its own: the content sets them · width from the layout
-- Basic: radius 4 (borderRadius/sm) + Card/Shadow (colours bound to opacity/shadow/*)
-- Background bg/container: in dark it's lighter than the page; in light Full is white on white, so use it on a grey surface
+- Basic: radius 4 (borderRadius/sm) + Card/Shadow (colours bound to opacity/shadow/*) + 1 px inside hairline borderColor/elevated: white in light (invisible, the shadow does the job), neutral/700 in dark (a black shadow does not show on dark backgrounds)
+- Background bg/container (white / neutral/800): in dark it's a step above bg/default and bg/page; in light Full is white on white, so use it on a grey surface
 
 ### Developers · React
 
@@ -3320,7 +3320,7 @@ An empty surface that groups related content: background, radius and shadow. Wha
 
 **Built in**
 - Shadow and background are decoration only
-- Forced colours: Basic gets a 1 px outline so the panel edge stays visible
+- Forced colours: the shadow disappears and the Basic hairline turns CanvasText, so the panel edge stays visible
 
 **Your job**
 - Give each card with its own topic a visible heading (Section Header)
