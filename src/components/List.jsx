@@ -4,7 +4,7 @@
  *
  * Tres sets de Figma (página 🟢 List):
  *   · Unordered List (3338:33178) — bullet "•" teal bold — <ul>
- *   · Ordered List   (3338:33117) — marcador regular del color del texto, 3 niveles — <ol>
+ *   · Ordered List   (3338:33117) — marcador regular teal (fg/primary, 11/11), 3 niveles — <ol>
  *   · Checkmark List (3338:33191) — icono check teal — <ul>
  *
  * `size` = Size de Figma: 'xs' 12 · 'sm' 14 · 'md' 16 (por defecto) · 'lg' 19.
@@ -57,8 +57,7 @@ const css = `
 
 .ds-list__body { min-width: 0; flex: 1 1 auto; }
 
-.ds-list__body,
-.ds-list--ordered .ds-list__marker {
+.ds-list__body {
   font-weight: var(--ds-font-weight-regular);
   color:       var(--ds-list-bodytext-fg-generic);
 }
@@ -70,6 +69,8 @@ const css = `
 .ds-list--ordered .ds-list__marker {
   flex-shrink: 0;
   box-sizing:  border-box;
+  font-weight: var(--ds-font-weight-regular);
+  color:       var(--ds-list-ordered-marker-fg-generic);
 }
 
 .ds-list__icon {

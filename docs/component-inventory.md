@@ -3191,7 +3191,7 @@ Short, scannable points instead of a block of text: requirements, benefits, step
 
 **Anatomy**
 - Unordered → teal bold bullet (label xs–lg) + text
-- Ordered → number in the same style as the text + text
+- Ordered → teal number (fg/primary, regular, same size as the text) + text
 - Checkmark → teal check icon + text
 
 **Sizing**
@@ -3233,7 +3233,7 @@ Short, scannable points instead of a block of text: requirements, benefits, step
 
 **Built in**
 - The screen reader announces the list and its length ("list, 3 items")
-- Bullet, number and check are decoration; text uses fg/default (≥ 4.5:1 light and dark)
+- Bullet, number and check are decoration; text uses fg/default and the teal number fg/primary (4.87:1 light · 12.7:1 dark)
 
 **Your job**
 - One idea per item; the text must make sense without the marker

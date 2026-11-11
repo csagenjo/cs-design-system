@@ -1339,6 +1339,7 @@
 
   --ds-list-bodytext-fg-generic:        var(--ds-fg-default);        /* list/all/bodyText/fg/generic */
   --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* list/all/bullet/fg/generic — teal */
+  --ds-list-ordered-marker-fg-generic:    var(--ds-fg-primary);   /* list/all/orderedList/marker/fg/generic — teal de texto, regular */
   --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* list/all/iconCheckmark/fg/generic — teal */
   --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — root/paddingBottom/{generic,16,19}: entre items */
   /* Unordered */
