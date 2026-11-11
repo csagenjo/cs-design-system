@@ -520,7 +520,8 @@ export default function Gallery({ mode }) {
       </Section>
 
       <Section name="Divider">
-        <div style={{ maxWidth: 480 }}><Divider /></div>
+        <div style={{ maxWidth: '30rem' }}><Divider /></div>
+        <div style={{ maxWidth: '30rem' }}><Divider decorative /></div>
       </Section>
 
       <Section name="Drawer">

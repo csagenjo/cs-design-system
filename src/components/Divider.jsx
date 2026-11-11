@@ -1,6 +1,6 @@
 /**
  * Divider — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (11/11/2026: alineado con Figma `Divider` 30156:87202 — alto enlazado al token, scopes, token disabled sin uso borrado)
  *
  * Barra divisoria horizontal. En Figma (node 30156:87202) es una barra sólida
  * de 1px de alto pintada con fill, no un border-bottom — así se replica aquí
@@ -23,7 +23,7 @@ const css = `
   width:       100%;
   height:      var(--ds-divider-border-width-generic); /* 1px */
   flex:        0 0 auto;
-  background:  var(--ds-divider-border-color-generic); /* #EEEFF1 */
+  background:  var(--ds-divider-border-color-generic); /* borderColor/subtle — n100 light / n400 dark */
   border:      0;
 }
 `;
@@ -34,8 +34,8 @@ injectStyles('ds-divider', css);
 // p. ej. entre items de una <dl>) → oculta al lector. A11y-3.
 export function Divider({ decorative = false, className }) {
   const classes = ['ds-divider', className || ''].filter(Boolean).join(' ');
-  if (decorative) return <hr className={classes} aria-hidden="true" />;
-  return <hr className={classes} role="separator" aria-orientation="horizontal" />;
+  // <hr> ya es role="separator" horizontal: no hace falta repetirlo.
+  return <hr className={classes} aria-hidden={decorative ? 'true' : undefined} />;
 }
 
 Divider.displayName = 'Divider';

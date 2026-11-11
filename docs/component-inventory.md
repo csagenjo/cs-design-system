@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · _in progress: CountryFlag, Divider_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · _in progress: CountryFlag_ |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
@@ -3428,6 +3428,82 @@ A photo or illustration in a fixed-ratio frame, with an optional caption.
 
 **Don't**
 - Don't use the caption as a replacement for alt
+
+
+## Divider
+
+**Group:** Data
+**Figma:** 🟢 Divider page → `Divider` component (one line, full width) · frame *Divider — How to use & Accessibility* (11/11)
+**Code:** `src/components/Divider.jsx` (atom)
+**Tokens:** `--ds-divider-*` (`divider/all/root/*`)
+
+A 1 px horizontal line that separates groups of content.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Between groups of content inside a panel, a card or a form
+- Not between rows: List View, Table cells and Description List draw their own lines
+- Not under titles as decoration: use spacing
+
+**Properties**
+- None: one line, full width of its container
+
+**Sizing**
+- Height 1 (borderWidth/sm) · borderColor/subtle (neutral/100 light, neutral/400 dark) · spacing around it comes from the layout
+
+### Developers · React
+
+**Import**
+- `import { Divider } from './components/Divider'`
+
+**Props**
+- decorative (false) · className
+
+**Example**
+- `<Divider />` · `<Divider decorative />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Two groups of content have no other visual separation
+
+**Don't pick it when**
+- The container already has a border or the rows draw their own lines
+
+**Composition rules**
+- decorative when headings or lists already show the grouping
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Announced as "separator" unless decorative
+
+**Your job**
+- Mark it decorative when it only repeats a grouping the headings already show
+
+### Developers · React
+
+**Semantics**
+- `<hr>` (implicit separator); decorative → `aria-hidden="true"`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- The content is still understood without the line
+
+**Don't**
+- Don't stack it next to a border or another divider
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount
