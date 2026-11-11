@@ -194,7 +194,7 @@
 
   /* â”€â”€ BACKGROUND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-bg-default:          #FFFFFF;
-  --ds-bg-page:             #FAFBFB;
+  --ds-bg-page:              #FAFBFB; /* neutral/50 — 11/11: se probó neutral/100 para la escalera en light, pero el texto de marca (fg/primary, secondary, tertiary, warning 500) baja a 4,35:1; Carol mantiene n50 (la Card Basic se separa por la sombra) */
   --ds-bg-container:        #FFFFFF; /* superficie elevada (tarjeta/panel) — diverge de bg-default en dark, ver §10 onSurface */
   --ds-bg-subtle:           #F1F2F4;
   --ds-bg-track:            #F1F2F4; /* 10/11: bg/track → neutral/100 — parte vacía de progress bar / slider */
@@ -205,30 +205,25 @@
 
   /* bg marca */
   --ds-bg-primary:          #0A7C92;
-  --ds-bg-primary-bold:     #13525F; /* corregido 11/08 — antes #36879C, desincronizado de Figma bg/surface/primary-bold (sin consumidores hoy) */
+  --ds-bg-primary-bold:      #13525F; /* primary/700 */
   --ds-bg-primary-medium:   #CBE7EE;
   --ds-bg-primary-subtle:   #F6FAFB;
   --ds-bg-secondary:        #D61E74;
-  --ds-bg-secondary-bold:   #B4175E;
-  --ds-bg-secondary-medium: #FFEEF5;
+  --ds-bg-secondary-bold:    #8C1C4C; /* 11/11: regla surface — bold = 700 (era 600) */
+  --ds-bg-secondary-medium:  #FED8E8; /* 11/11: regla surface — medium = 200 (era 100) */
   --ds-bg-secondary-subtle: #FFF8FA;
   --ds-bg-tertiary:         #8B619E;
   --ds-bg-tertiary-bold:    #66367D;
-  --ds-bg-tertiary-medium:  #E1C2EE;
+  --ds-bg-tertiary-medium:   #EEDBF8; /* 11/11: regla surface — medium = 200 (era 300) */
   --ds-bg-tertiary-subtle:  #FDF8FF;
 
   /* bg accent (para usar como bg de chips, badges...) */
-  --ds-bg-accent-primary:   #A3D4E2;
-  --ds-bg-accent-secondary: #FEB9D6;
 
   /* bg feedback */
   --ds-bg-error:            #D23435;
   --ds-bg-error-subtle:     #FEF8F8;
   --ds-bg-success:          #0E6D1A;
   --ds-bg-success-subtle:   #F6FAF6;
-  --ds-bg-warning:          #FCF9F2;
-  --ds-bg-info:             #0B6298;
-  --ds-bg-highlight:        #F4FAFE;
 
   /* bg hover — un único hover aplicado igual en todos los themes, no hay variante por color */
   --ds-bg-hover-primary:    #BDE8FF;
@@ -1738,7 +1733,7 @@
   --ds-dialog-empty-state-text-padding-bottom-full-screen: var(--ds-spacing-2xl); /* 24 */
 
   /* Header — bg */
-  --ds-dialog-header-bg-default:               var(--ds-bg-default);       /* #FFFFFF / #050506 dark — invierte */
+  --ds-dialog-header-bg-default:               var(--ds-bg-container);   /* 11/11: superficie flotante → bg/container (Figma dialog/all/header/bg/default) */
   --ds-dialog-header-bg-primary:               var(--ds-bg-primary);       /* #0A7C92 fijo */
   --ds-dialog-header-bg-on-primary:            var(--ds-bg-onColor);       /* #FFFFFF fijo */
   --ds-dialog-header-bg-secondary:             var(--ds-bg-secondary);     /* #D61E74 / #EE8FB9 dark */
@@ -1772,7 +1767,7 @@
   --ds-dialog-header-padding-ver-small:        var(--ds-spacing-2xs);      /* 2 + Icon Button Small 40 + 2 = 44 (27/10) */
 
   /* Root / Scrim */
-  --ds-dialog-root-bg-generic:                 var(--ds-bg-default);       /* #FFFFFF / #050506 dark */
+  --ds-dialog-root-bg-generic:                 var(--ds-bg-container);   /* 11/11: bg/container (Figma dialog/all/root/bg/default) */
   --ds-dialog-root-gap-generic:                var(--ds-spacing-lg);                       /* spacing/lg — sync 26/08, existía en Figma sin sincronizar; antes el código tomaba prestado simple-padding-ver para esto */
   --ds-dialog-root-padding-hor-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingHor, es compartido (Dialog family), no exclusivo de DialogSimple */
   --ds-dialog-root-padding-ver-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingVer, idem */
@@ -1965,7 +1960,7 @@
      8 a la derecha; Anchor=Top: 0 arriba, 8 abajo) — el riel queda a ras del
      borde de pantalla al que se ancla.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-drawer-root-bg-primary:            var(--ds-bg-default); /* #FFFFFF / #050506 dark */
+  --ds-drawer-root-bg-primary:            var(--ds-bg-container); /* 11/11: bg/container — panel flotante */
   --ds-drawer-root-bg-secondary:          var(--ds-bg-page);    /* #FAFBFB / #464B53 dark */
   --ds-drawer-root-border-color-generic:  var(--ds-borderColor-subtle);
   --ds-drawer-root-border-width-generic:  var(--ds-border-width-md);  /* 1.5 — drawer/all/root/border/width/generic */
@@ -2127,7 +2122,7 @@
      `Link` "manchaba" el panel flotante con muchos enlaces densos en
      columna (hallazgo real de Carol, confirmado visualmente).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-top-navigation-root-bg-generic:  var(--ds-bg-default); /* #FFFFFF — topNavigation/root/bg/generic */
+  --ds-top-navigation-root-bg-generic:  var(--ds-bg-container); /* 11/11: bg/container — topNavigation/root/bg/generic */
   --ds-top-navigation-root-gap-generic: var(--ds-layout-gutter); /* topNavigation/root/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap real entre Logo y Tabs */
   --ds-top-navigation-root-padding-horizontal: var(--ds-layout-margin); /* topNavigation/root/paddingHor/generic — layout/margin (01/10, antes spacing/2xl), ahora bindeado en Figma (antes literal sin variable) */
   --ds-top-navigation-flydown-group-title-fg-generic: var(--ds-fg-subtle); /* topNavigation/flydown/groupTitle/fg/generic — corregido 24/09: Carol recoloreó el título de grupo a gris (fg/subtle) en Figma; el alias a fg/default (negro) quedó desincronizado */
@@ -2193,12 +2188,12 @@
     --ds-fg-icon-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-icon-accent-primary: #66AEC0;
 
-    --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
-    --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
-    --ds-bg-container:        #4C535D;
-    --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+    --ds-bg-default:           #161719; /* 11/11: neutral/900 (era black) — escalera page < default < container */
+    --ds-bg-page:              #050506; /* 11/11: black (era neutral/700) — el lienzo es lo más oscuro */
+    --ds-bg-container:         #292C31; /* 11/11: neutral/800 (era neutral/600) */
+    --ds-bg-subtle:            #4C535D; /* 11/11: neutral/600 (era neutral/500) */
     --ds-bg-track:            #DBDEE1; /* 10/11: neutral/200 — más claro que bg-subtle para que el indicador rosa tenga 3,3:1 */
-    --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
+    --ds-bg-disabled:          #3B4047; /* 11/11: neutral/700 (era neutral/800, igual que container) */
     --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
     --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
@@ -2207,21 +2202,22 @@
        override y caía al valor light. Todos los valores son la resolución real
        en vivo desde Figma (cadena de alias, no el JSON cacheado). */
     --ds-bg-primary:          #0A7C92; /* corregido — antes #286371 (swap con primary-bold) */
-    --ds-bg-primary-bold:     #F6FAFB; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
-    --ds-bg-primary-medium:   #163B44;
+    --ds-bg-primary-bold:      #13525F; /* 11/11: bold 700 en los dos modos (era primary/50) */
+    --ds-bg-primary-medium:    #163B44; /* medium 800 */
     --ds-bg-secondary:        #D61E74;
-    --ds-bg-secondary-medium: #631C39;
+    --ds-bg-secondary-medium:  #631C39; /* medium 800 */
+    --ds-bg-primary-subtle:    #152428; /* 11/11: subtle 900 — antes sin override (caía al valor light) */
+    --ds-bg-secondary-subtle:  #371724; /* 11/11: subtle 900 — antes sin override */
+    --ds-bg-secondary-bold:    #8C1C4C; /* 11/11: bold 700 — antes sin override */
+    --ds-bg-tertiary-subtle:   #2D1A36; /* 11/11: subtle 900 — antes sin override */
+    --ds-bg-tertiary-medium:   #4A2959; /* 11/11: medium 800 — antes sin override */
+    --ds-bg-tertiary-bold:     #66367D; /* 11/11: bold 700 — antes sin override */
     --ds-bg-tertiary:         #8B619E;
     --ds-bg-error:            #D23435;
     --ds-bg-error-subtle:     #61221F; /* mismo valor que bg-error en dark — así resuelve Figma */
     --ds-bg-success:          #01831B;
     --ds-bg-success-subtle:   #123F15; /* mismo valor que bg-success en dark — así resuelve Figma */
     --ds-bg-hover-primary:    #094F78;
-    --ds-bg-accent-primary:   #163B44;
-    --ds-bg-accent-secondary: #631C39;
-    --ds-bg-warning:          #4B3203;
-    --ds-bg-info:             #0777B4;
-    --ds-bg-highlight:        #094F78; /* sin consumidores hoy — reservado para InlineNotification */
 
     --ds-borderColor-default: #AAAFB5;
     --ds-borderColor-emphasis:#FFFFFF;
@@ -2323,12 +2319,12 @@
   --ds-fg-icon-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-icon-accent-primary: #66AEC0;
 
-  --ds-bg-default:          #050506; /* corregido 11/08 — antes #191C1F, desincronizado de Figma */
-  --ds-bg-page:             #3B4047; /* corregido 11/08 — antes #050506, desincronizado de Figma */
-  --ds-bg-container:        #4C535D;
-  --ds-bg-subtle:           #5E6672; /* corregido 11/08 — antes #2C2F34, desincronizado de Figma */
+  --ds-bg-default:           #161719; /* 11/11: neutral/900 (era black) — escalera page < default < container */
+  --ds-bg-page:              #050506; /* 11/11: black (era neutral/700) — el lienzo es lo más oscuro */
+  --ds-bg-container:         #292C31; /* 11/11: neutral/800 (era neutral/600) */
+  --ds-bg-subtle:            #4C535D; /* 11/11: neutral/600 (era neutral/500) */
   --ds-bg-track:            #DBDEE1; /* 10/11: neutral/200 — más claro que bg-subtle para que el indicador rosa tenga 3,3:1 */
-  --ds-bg-disabled:         #292C31; /* 26/10: neutral/800 — texto disabled encima 6,3:1 (antes neutral/400, 1,1:1) */
+  --ds-bg-disabled:          #3B4047; /* 11/11: neutral/700 (era neutral/800, igual que container) */
   --ds-bg-inverse:          #FFFFFF; /* añadido 11/08 — Button default-filled/CTALink primary quedaban invisibles (negro sobre negro) */
   --ds-bg-overlay:          rgba(255,255,255,0.3); /* añadido 24/08 — sin override dark hasta ahora; Figma: bg/overlay dark = color/opacity/white/30% */
 
@@ -2337,21 +2333,22 @@
      override y caía al valor light. Todos los valores son la resolución real
      en vivo desde Figma (cadena de alias, no el JSON cacheado). */
   --ds-bg-primary:          #0A7C92; /* corregido — antes #286371 (swap con primary-bold) */
-  --ds-bg-primary-bold:     #F6FAFB; /* corregido — antes #4BA9C0 (swap con primary); sin consumidores hoy */
-  --ds-bg-primary-medium:   #163B44;
+  --ds-bg-primary-bold:      #13525F; /* 11/11: bold 700 en los dos modos (era primary/50) */
+  --ds-bg-primary-medium:    #163B44; /* medium 800 */
   --ds-bg-secondary:        #D61E74;
-  --ds-bg-secondary-medium: #631C39;
+  --ds-bg-secondary-medium:  #631C39; /* medium 800 */
+  --ds-bg-primary-subtle:    #152428; /* 11/11: subtle 900 — antes sin override (caía al valor light) */
+  --ds-bg-secondary-subtle:  #371724; /* 11/11: subtle 900 — antes sin override */
+  --ds-bg-secondary-bold:    #8C1C4C; /* 11/11: bold 700 — antes sin override */
+  --ds-bg-tertiary-subtle:   #2D1A36; /* 11/11: subtle 900 — antes sin override */
+  --ds-bg-tertiary-medium:   #4A2959; /* 11/11: medium 800 — antes sin override */
+  --ds-bg-tertiary-bold:     #66367D; /* 11/11: bold 700 — antes sin override */
   --ds-bg-tertiary:         #8B619E;
   --ds-bg-error:            #D23435;
   --ds-bg-error-subtle:     #61221F; /* mismo valor que bg-error en dark — así resuelve Figma */
   --ds-bg-success:          #01831B;
   --ds-bg-success-subtle:   #123F15; /* mismo valor que bg-success en dark — así resuelve Figma */
   --ds-bg-hover-primary:    #094F78;
-  --ds-bg-accent-primary:   #163B44;
-  --ds-bg-accent-secondary: #631C39;
-  --ds-bg-warning:          #4B3203;
-  --ds-bg-info:             #0777B4;
-  --ds-bg-highlight:        #094F78; /* sin consumidores hoy — reservado para InlineNotification */
 
   --ds-borderColor-default: #AAAFB5;
   --ds-borderColor-emphasis:#FFFFFF;
