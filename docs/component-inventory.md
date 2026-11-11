@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · _in progress: CountryFlag_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
@@ -3504,6 +3504,81 @@ A 1 px horizontal line that separates groups of content.
 
 **Don't**
 - Don't stack it next to a border or another divider
+
+
+## CountryFlag
+
+**Group:** Data
+**Figma:** Icons library file (`ITpZmEHLpvXDLCnalyGCmj`) → `CountryFlag` set (704:9237, Country = 201 variants, 22×16) · frame *Country Flag — How to use & Accessibility* (pending)
+**Code:** `src/components/CountryFlag.jsx` (atom) + `src/components/flags.js` (201 SVGs)
+**Tokens:** `--ds-country-flag-*` (`countryFlag/all/root/borderRadius/generic`)
+
+A country's flag in full colour, next to its name or dial code.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Next to a country name or a phone prefix: Country Picker, Input Telephone, Selector list items
+- Not as a language selector (a language is not a country)
+
+**Properties**
+- Country → 201 variants
+
+**Sizing**
+- 22×16, radius 2 (borderRadius/xs) · it's not an icon: it keeps its own colours
+
+### Developers · React
+
+**Import**
+- `import { CountryFlag } from './components/CountryFlag'`
+
+**Props**
+- country (slug from `flags.js`, e.g. 'spain', 'united-kingdom'), label, className
+
+**Example**
+- `<CountryFlag country="spain" />` · `<CountryFlag country="france" label="France" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing a country next to its name or prefix
+
+**Don't pick it when**
+- You need a language → text · an icon → Icon
+
+**Composition rules**
+- Always next to the country name or prefix; label only when the flag stands alone
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Decorative by default: the country name next to it carries the meaning
+
+**Your job**
+- Never use the flag as the only way to tell the country
+
+### Developers · React
+
+**Semantics**
+- `<img>` with `alt=""` + aria-hidden; with `label` → `alt={label}`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None in code; in Figma the radius waits for the DS library to be published to bind it
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every flag has its country name or prefix visible, or a label
+
+**Don't**
+- Don't pass a size: there is one size, like Figma
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount

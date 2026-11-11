@@ -461,7 +461,7 @@ export default function Gallery({ mode }) {
           {['spain', 'france', 'united-kingdom', 'germany', 'italy', 'portugal'].map((c) => (
             <CountryFlag key={c} country={c} />
           ))}
-          <CountryFlag country="spain" size={32} />
+          <CountryFlag country="spain" label="Spain" />
         </Row>
       </Section>
 

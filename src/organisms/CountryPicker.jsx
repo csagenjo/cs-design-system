@@ -101,7 +101,7 @@ export function CountryPicker({
           {...getOptionProps(i)}
           data="single"
           headerText={country.label}
-          icon={<CountryFlag country={country.flag} size={22} />}
+          icon={<CountryFlag country={country.flag} />}
           showControl={false}
           selected={country.value === value}
         />

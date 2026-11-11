@@ -2082,6 +2082,12 @@
   --ds-image-frame-border-radius:       var(--ds-border-radius-sm);/* 4 — image/all/frame/borderRadius/roundedCorners (11/11; antes reusaba el de Card) */
   --ds-image-frame-bg-generic:          var(--ds-bg-subtle);       /* image/all/frame/bg/generic — gris mientras carga o sin src (11/11; antes bg-subtle directo en JSX) */
 
+  /* ══ COMPONENT TOKENS — Country Flag (countryFlag/all/*) · 11/11 ══
+     El set vive en la librería de iconos (archivo aparte, 201 variantes 22×16). */
+  --ds-country-flag-border-radius: var(--ds-border-radius-xs); /* 2 — countryFlag/all/root/borderRadius/generic */
+  --ds-country-flag-width:         22px; /* literal de Figma sin variable: tamaño intrínseco del asset (no está en la escala sizing) */
+  --ds-country-flag-height:        16px; /* literal de Figma sin variable */
+
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — PageTitle (pageTitle/*)
      Sprint 5. Device real (Mobile/Tablet/Desktop) — el nivel semántico del
