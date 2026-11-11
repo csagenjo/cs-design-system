@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · _in progress: Image, CountryFlag, Divider_ |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · _in progress: CountryFlag, Divider_ |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
 | Layout | Drawer · _rest to be filled_ |
@@ -3344,6 +3344,90 @@ An empty surface that groups related content: background, radius and shadow. Wha
 
 **Don't**
 - Don't put role="button" or onClick on the Card
+
+
+## Image
+
+**Group:** Data
+**Figma:** 🟢 Image page → `Image` set (Variant Rounded Corners / Circle (only 1:1) × Size 1:1 / 3:2 / 4:3 / 16:9; Show Caption, Caption) · frame *Image — How to use & Accessibility* (11/11)
+**Code:** `src/components/Image.jsx` (atom)
+**Tokens:** `--ds-image-*` (`image/all/*`)
+
+A photo or illustration in a fixed-ratio frame, with an optional caption.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A photo or illustration that supports the content: a featured item in a menu, an empty state, an avatar
+- Icons → Icon · flags → CountryFlag
+
+**Properties**
+- Size → 1:1 · 3:2 · 4:3 · 16:9 (width from the layout)
+- Variant → Rounded Corners · Circle (only 1:1)
+- Show Caption + Caption
+
+**Behaviour**
+- The image always fills the frame and is cropped, never letterboxed
+- Grey bg/subtle while it loads or without an image
+
+**Sizing**
+- Radius 4 (borderRadius/sm) · Circle 50 % · frame → caption 8 · caption body sm, fg/body/subtle
+
+### Developers · React
+
+**Import**
+- `import { Image } from './components/Image'`
+
+**Props**
+- size '1:1'|'3:2'|'4:3'|'16:9', variant 'roundedCorners'|'circle', src, alt ('' by default = decorative), caption, showCaption, className, style
+
+**Example**
+- `<Image size="16:9" src={photo} alt="Team at the Madrid office" caption="Our Madrid office" />`
+- `<Image size="1:1" variant="circle" src={avatar} alt="Laura Pérez" showCaption={false} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing a photo or illustration
+
+**Don't pick it when**
+- It's an icon → Icon · a country → CountryFlag
+
+**Composition rules**
+- Always decide alt; alt="" only when the image adds nothing to the text around it
+- circle only with 1:1
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- With a caption it's a figure: the caption is linked to the image
+
+**Your job**
+- Write the alt for every meaningful image in the spec; mark decorative ones
+- No text baked into images
+
+### Developers · React
+
+**Semantics**
+- `<img alt>` in a frame; with a caption, `<figure>` + `<figcaption>`
+
+**Keyboard**
+- Not focusable (if it's inside a link, the link carries the name)
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every non-decorative image has a meaningful alt (not the file name, not "image of")
+
+**Don't**
+- Don't use the caption as a replacement for alt
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount

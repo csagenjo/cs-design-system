@@ -2078,6 +2078,9 @@
      variantes, corregido desde FIT el mismo día).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #676D76 — image/all/caption/fg/generic */
+  --ds-image-gap:                       var(--ds-spacing-md);      /* 8 — image/all/root/gap/generic (11/11; antes 9 suelto en Figma y código) */
+  --ds-image-frame-border-radius:       var(--ds-border-radius-sm);/* 4 — image/all/frame/borderRadius/roundedCorners (11/11; antes reusaba el de Card) */
+  --ds-image-frame-bg-generic:          var(--ds-bg-subtle);       /* image/all/frame/bg/generic — gris mientras carga o sin src (11/11; antes bg-subtle directo en JSX) */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — PageTitle (pageTitle/*)

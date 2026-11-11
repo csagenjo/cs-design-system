@@ -1,24 +1,23 @@
 /**
  * Image — Átomo
- * CS Design System · v1
+ * CS Design System · v2 (11/11/2026, alineado con Figma `Image` 32318:269)
  *
- * Contenedor de foto/ilustración a proporción fija — `size` (1:1/3:2/4:3/
- * 16:9) × `variant` (roundedCorners/circle, circle solo válido con 1:1),
- * mismo eje real que `.Container` en Figma antes de fusionarse dentro del
- * component set `Image` (24/09, ver CLAUDE.md §10). `objectFit: cover`
- * (`scaleMode=FILL` en Figma, corregido el 24/09 desde FIT — que dejaba
- * huecos de letterbox con fotos reales) — la imagen SIEMPRE rellena el
- * marco, recortando lo que sobre, nunca al revés.
+ * Foto o ilustración en un marco de proporción fija — `size` (1:1/3:2/4:3/
+ * 16:9) × `variant` (roundedCorners/circle; circle solo con 1:1). La imagen
+ * SIEMPRE rellena el marco (`object-fit: cover` = scaleMode FILL de Figma):
+ * recorta lo que sobra, nunca deja franjas.
  *
- * A diferencia de CountryFlag (SVG inyectado, un asset fijo por país), aquí
- * `src` es libre — cualquier foto real que pase el consumidor.
+ * Tokens propios (11/11): gap 8 (`image/all/root/gap/generic`, antes 9 suelto),
+ * radio 4 (`…/frame/borderRadius/roundedCorners`, antes reusaba el de Card),
+ * gris de espera `…/frame/bg/generic` → bg/subtle (antes bg-subtle desde JSX;
+ * en Figma el gris no existía y se ha añadido debajo de la imagen).
  *
- * `caption`/`showCaption` — mismos component properties que expone el
- * component set real de Figma (`Show Caption` bool, `Caption` texto).
+ * Accesibilidad: `alt` describe la imagen; `alt=""` solo si es decorativa
+ * (por defecto). Con caption se renderiza <figure> + <figcaption>.
  *
  * USO:
- *   <Image size="16:9" src="/promo.jpg" alt="" caption="Nueva hipoteca" />
- *   <Image size="1:1" variant="circle" src="/avatar.jpg" alt="Foto de perfil" showCaption={false} />
+ *   <Image size="16:9" src="/promo.jpg" alt="Team at the office" caption="Our Madrid office" />
+ *   <Image size="1:1" variant="circle" src="/avatar.jpg" alt="Profile photo" showCaption={false} />
  */
 import React from 'react';
 import { injectStyles } from './_inputBase';
@@ -32,67 +31,70 @@ const ASPECT_RATIO = {
 
 const css = `
 .ds-image {
-  display: flex;
+  display:        flex;
   flex-direction: column;
-  gap: 9px;
+  gap:            var(--ds-image-gap);
+  margin:         0;
 }
 .ds-image__frame {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: var(--ds-card-root-border-radius);
-  overflow: hidden;
-  background: var(--ds-bg-subtle);
+  width:         100%;
+  border-radius: var(--ds-image-frame-border-radius);
+  overflow:      hidden;
+  background:    var(--ds-image-frame-bg-generic);
 }
-.ds-image--circle .ds-image__frame {
-  border-radius: 50%;
-}
+${Object.entries(ASPECT_RATIO).map(([k, v]) =>
+  `.ds-image--${k.replace(':', '-')} .ds-image__frame { aspect-ratio: ${v}; }`).join('\n')}
+.ds-image--circle .ds-image__frame { border-radius: 50%; }
 .ds-image__img {
-  display: block;
-  width: 100%;
-  height: 100%;
+  display:    block;
+  width:      100%;
+  height:     100%;
   object-fit: cover;
 }
 .ds-image__caption {
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
-  font-size: var(--ds-fontSize-body-sm);
+  font-size:   var(--ds-fontSize-body-sm);
   line-height: var(--ds-lineHeight-body-sm);
-  color: var(--ds-image-caption-fg-generic);
+  color:       var(--ds-image-caption-fg-generic);
 }
 `;
 
 injectStyles('ds-image', css);
 
 export function Image({
-  size = '1:1',
+  size = '1:1',               // '1:1' | '3:2' | '4:3' | '16:9'
   variant = 'roundedCorners', // 'roundedCorners' | 'circle' — circle solo con size="1:1"
   src,
-  alt = '',
+  alt = '',                   // describe la imagen; '' = decorativa
   caption,
   showCaption = true,
   className,
   style,
 }) {
   if (process.env.NODE_ENV !== 'production' && variant === 'circle' && size !== '1:1') {
-    console.warn('[DS Image] variant="circle" solo es válido con size="1:1" — revisa si es intencional.');
+    console.warn('[DS Image] variant="circle" solo es válido con size="1:1".');
   }
+  const ratio = ASPECT_RATIO[size] ? size : '1:1';
+  const withCaption = showCaption && caption;
+  const Tag = withCaption ? 'figure' : 'div';
 
   const classes = [
     'ds-image',
+    `ds-image--${ratio.replace(':', '-')}`,
     variant === 'circle' ? 'ds-image--circle' : '',
     className || '',
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={classes} style={style}>
-      <div className="ds-image__frame" style={{ aspectRatio: ASPECT_RATIO[size] }}>
+    <Tag className={classes} style={style}>
+      <div className="ds-image__frame">
         {src && <img className="ds-image__img" src={src} alt={alt} />}
       </div>
-      {showCaption && caption && (
-        <span className="ds-image__caption">{caption}</span>
-      )}
-    </div>
+      {withCaption && <figcaption className="ds-image__caption">{caption}</figcaption>}
+    </Tag>
   );
 }
 
+Image.displayName = 'Image';
 export default Image;
