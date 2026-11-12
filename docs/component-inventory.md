@@ -38,18 +38,18 @@ Rules that apply to every entry:
 
 | Group | Pieces |
 |---|---|
-| Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · CountryPicker, CurrencyPicker |
+| Actions | Button, IconButton, ButtonBar · Collapsible, CollapsibleIconButton (see Page structure) |
+| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector (+ SelectorInvoker, SelectorListItem), AccountSelector (+ AccountSelectorInvoker, AccountSelectorListItem) · CountryPicker, CurrencyPicker |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
-| Layout | Drawer · _rest to be filled_ |
+| Layout | Drawer (+ its toggle) · Card · Divider (see Data) |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · PopoverSheet |
 | Page structure | Accordion, AccordionGroup · Collapsible, CollapsibleIconButton |
-| Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
-| Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss`, `_dialogBase` (use Dialog / DialogSimple / ErrorAndEmptyState) |
+| Foundations | Icon · VisuallyHidden, LiveRegion (+ `announce`) |
+| Internal parts | Not for direct use — use the component named in brackets. `_inputBase` (common input box and `injectStyles`; use any Input) · `_requiredMark` (FieldLabel `required`) · `_choiceGroup`, `_radioGroupContext`, `_checkboxGroupContext` (RadioGroup / CheckboxGroup) · `_dialogBase`, `_useModal`, `_focus` (Dialog / DialogSimple / ErrorAndEmptyState / Drawer) · `_rovingFocus` (`useRovingFocus`, `useListbox`: keyboard for Tabs, SegmentedControl, pickers, Combobox) · `_popoverDismiss`, `_floating` (close and flip of PopoverSheet, Combobox and pickers) · `_pickerPanel`, `_usePickerListbox` (Combobox / CountryPicker / CurrencyPicker) · `_sliderKnob` (Slider / RangeSlider / SteppedSlider) · `_stepStatus`, `_stepAppearance` (Steps family) · `_devWarn` (dev-only console warnings) · `icons.js` (Icon) · `flags` (CountryFlag) |
 
 ---
 
@@ -5779,3 +5779,64 @@ The floating lists that Input Telephone (countries, with flag) and Input Amount 
 
 **Don't**
 - Don't add a search field here: for searching, Combobox
+
+
+## Icon
+
+**Group:** Foundations
+**Figma:** 🟢 Icon page → `Icon` (Icon Size 16 · 20 · 24 · 32 · 40 · 48 · 56 · 64, Icon swap from the Lucide library) · frame *Icon — How to use & Accessibility* (12/11)
+**Code:** `src/components/Icon.jsx` (atom) + `src/components/icons.js` (the only map of Lucide icons)
+**Tokens:** none of its own: size mirrors `--ds-sizing-*`, colour is `currentColor`, stroke mirrors Lucide's `icon-stroke` (2)
+
+Every icon in the system. Lucide icons, one size scale, a fixed 2 stroke and the colour of whatever contains it.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Inside other components (Button, inputs, rows…) through their icon slots · on its own only for decoration next to text
+- Lucide is an external library enabled for the team: never draw local icons
+
+**Properties**
+- Icon Size → 16 · 20 · 24 · 32 · 40 · 48 · 56 · 64 · Icon → swap any Lucide icon
+
+**Anatomy**
+- Square box of the size, Lucide outline icon, stroke 2 at every size
+
+### Developers · React
+
+**Import**
+- `import { Icon } from './components/Icon'`
+
+**Props**
+- name (kebab or PascalCase key in `icons.js`) · size '2xs' | 'xs' | 'sm' (default, 24) | 'md' | 'lg' | 'xl' | '2xl' | '3xl' · label (only when the icon alone carries meaning) · className
+
+**Example**
+- `<Icon name="download" size="2xs" />` · `<Icon name="info" label="Information" />`
+
+### AI agents · Claude Code
+
+**Composition rules**
+- Always through Icon, never `lucide-react` directly · a missing icon is added to `icons.js` (both keys), not imported in the component
+- Never set its colour: style the parent (`color` from the component's own token)
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Same stroke at every size, so small icons stay legible · colour follows the text or state it sits in
+
+### Developers · React
+
+**Semantics**
+- Without label: aria-hidden and not focusable (decoration) · with label: role="img" + aria-label
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't use an icon as the only content of a button without a name: the button needs ariaLabel (Icon Button does it)

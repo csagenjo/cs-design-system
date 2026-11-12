@@ -258,8 +258,8 @@ export const Checkbox = forwardRef(function Checkbox({
       <input {...inputProps} />
       <span className="ds-checkbox__slot">
         <span className="ds-checkbox__box">
-          <span className="ds-checkbox__icon ds-checkbox__icon--check"><Icon name="check" size="2xs" strokeWidth={2} /></span>
-          <span className="ds-checkbox__icon ds-checkbox__icon--indeterminate"><Icon name="minus" size="2xs" strokeWidth={2} /></span>
+          <span className="ds-checkbox__icon ds-checkbox__icon--check"><Icon name="check" size="2xs" /></span>
+          <span className="ds-checkbox__icon ds-checkbox__icon--indeterminate"><Icon name="minus" size="2xs" /></span>
         </span>
       </span>
       {label && <span className="ds-checkbox__label">{label}</span>}

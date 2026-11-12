@@ -1,10 +1,13 @@
 /**
  * Icon — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: trazo fijo de 2 en todos los tamaños, como Figma)
  *
- * Wrapper genérico para iconos Lucide. Punto único de mantenimiento para
- * tamaño (Button.jsx e InputText.jsx aún no lo adoptan — mantienen su propia
- * lógica local hasta una sesión de migración aparte).
+ * Wrapper genérico para iconos Lucide (mapa único en `icons.js`). Desde el
+ * 10/11 todo el sistema pasa por aquí: ningún componente importa lucide-react.
+ *
+ * Trazo (12/11, decisión de Carol): fijo de 2 en todos los tamaños, como la
+ * variable `icon-stroke` de la librería Lucide en Figma (`absoluteStrokeWidth`).
+ * Antes era 1,75 y escalaba con el tamaño (a 16 quedaba en ~1,2 px).
  *
  * Tamaño: prop `size`, keyword de la escala --ds-sizing-* (2xs..3xl).
  * Color: SIEMPRE heredado vía currentColor desde el contenedor — Icon no fija
@@ -17,6 +20,9 @@
  */
 import React from 'react';
 import { ICONS } from './icons';
+
+// Espejo de icon-stroke (librería Lucide en Figma): 2 px reales en cualquier tamaño.
+const STROKE = 2;
 
 const SIZE_PX = {
   '2xs': 16,
@@ -31,13 +37,14 @@ const SIZE_PX = {
 
 // A11y-3: `label` para el raro caso de un icono con significado propio (sin
 // texto al lado) → role="img" + aria-label. Sin label es decorativo.
-export function Icon({ name, size = 'sm', strokeWidth = 1.75, label, className }) {
+export function Icon({ name, size = 'sm', label, className }) {
   const IconComponent = ICONS[name];
   if (!IconComponent) return null;
   return (
     <IconComponent
       size={SIZE_PX[size] ?? SIZE_PX.sm}
-      strokeWidth={strokeWidth}
+      strokeWidth={STROKE}
+      absoluteStrokeWidth
       className={className}
       aria-hidden={label ? undefined : 'true'}
       role={label ? 'img' : undefined}

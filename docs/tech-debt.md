@@ -6,7 +6,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa), Amount View, List, Card, Image, Divider, Country Flag (familia Datos completa), Step Elements, Step Navigator + Substep, Step Indicator Large + Small (familia Steps completa), Slider (Continuous, Range, Segmented), Headline, Section Header, Text, Description Text, Detail Text (familia Contenido completa), Collapsible + Collapsible Icon Button, Pagination, Segmented Control, Popover Sheet, Country Picker, Currency Picker. Siguientes (no críticos, por familias): resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **Inventario completo (12/11).** Todas las piezas tienen entrada en `component-inventory.md` y frame en Figma, más el índice `component-index.md`. Al tocar un componente, actualizar los tres.
 
 ## Componentes
 
