@@ -1,6 +1,6 @@
 /**
  * StepNavigator — Organismo
- * CS Design System · v1
+ * CS Design System · v1.1 (12/11/2026: alineado con Figma — fila de 56 (rejilla de 8), fondo Active, título regular en Incomplete, foco por dentro)
  *
  * Una fila del menú vertical de progreso — instancia `StepVer` (círculo +
  * conectores verticales) + título. `Variation="chapter"` añade el chevron
@@ -43,6 +43,7 @@ const css = `
   align-items:    center;
   gap:            var(--ds-steps-navigator-root-gap);
   width:          100%;
+  min-height:     var(--ds-steps-navigator-root-height);
   padding:        0 var(--ds-steps-navigator-root-padding-horizontal);
   border:         none;
   background:     var(--ds-steps-root-bg-on-default-incomplete);
@@ -54,6 +55,12 @@ const css = `
 .ds-step-navigator--on-page {
   background: var(--ds-steps-root-bg-on-page-incomplete);
 }
+.ds-step-navigator--active {
+  background: var(--ds-steps-root-bg-on-default-active);
+}
+.ds-step-navigator--active.ds-step-navigator--on-page {
+  background: var(--ds-steps-root-bg-on-page-active);
+}
 .ds-step-navigator:hover {
   background: var(--ds-steps-root-bg-hover);
 }
@@ -63,8 +70,9 @@ const css = `
 .ds-step-navigator:focus-visible {
   outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
   outline-offset: calc(var(--ds-border-width-lg) * -1);
-  box-shadow: 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-inner) inset,
-              0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
+  /* Fila apilada: anillo doble POR DENTRO (12/11, CLAUDE.md §4; Figma: rects Focus outer/inner) */
+  box-shadow: inset 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-outer),
+              inset 0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-inner);
 }
 .ds-step-navigator--selected {
   background: var(--ds-steps-root-bg-on-default-completed-selected);
@@ -78,12 +86,14 @@ const css = `
   font-family: inherit;
   font-size:   var(--ds-fontSize-label-lg);
   font-weight: var(--ds-font-weight-bold);
-  color:       var(--ds-fg-default);
+  line-height: var(--ds-lineHeight-label-lg);
+  color:       var(--ds-steps-label-fg-generic);
 }
+.ds-step-navigator--incomplete .ds-step-navigator__title { font-weight: var(--ds-font-weight-regular); }
 .ds-step-navigator__chevron {
   display:    flex;
   flex-shrink: 0;
-  color:      var(--ds-fg-icon-primary);
+  color:      var(--ds-steps-icon-fg-generic); /* steps/common/all/icon/fg/generic — negro, como los iconos de Substep */
   transition: transform 0.15s ease;
 }
 .ds-step-navigator__chevron--expanded {
@@ -119,7 +129,7 @@ export function StepNavigator({
   return (
     <button
       type="button"
-      className={`ds-step-navigator ${styleAxis === 'onPage' ? 'ds-step-navigator--on-page' : ''} ${selected ? 'ds-step-navigator--selected' : ''} ${className || ''}`}
+      className={`ds-step-navigator ds-step-navigator--${state} ${styleAxis === 'onPage' ? 'ds-step-navigator--on-page' : ''} ${selected ? 'ds-step-navigator--selected' : ''} ${className || ''}`}
       style={inlineStyle}
       onClick={isChapter ? onToggleExpand : onClick}
       aria-current={currentFor(state, selected)}

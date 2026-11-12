@@ -6,7 +6,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa), Amount View, List, Card, Image, Divider, Country Flag (familia Datos completa). Siguientes (no críticos, por familias): Steps, Contenido (Headline, Section Header, Text, Description Text, Detail Text), resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa), Amount View, List, Card, Image, Divider, Country Flag (familia Datos completa), Step Elements, Step Navigator + Substep, Step Indicator Large + Small (familia Steps completa). Siguientes (no críticos, por familias): Contenido (Headline, Section Header, Text, Description Text, Detail Text), resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 
@@ -33,3 +33,4 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **Barrido de `Placeholder/Placeholder` y `Notification Count`.** Descripciones con el dominio interno de Sistema Origen; solo se limpió Description List.
 - **Instancia suelta de `Image`** en la página 🟢 Image, fuera de cualquier frame. Confirmar si se borra.
 - **Filete `borderColor/elevated` en el resto de superficies flotantes** (Popover Sheet, picker de Combobox, Dialog, Drawer primary): en dark su sombra negra tampoco se ve. Hoy solo la Card Basic lo lleva (11/11).
+- **Familia Slider — padding** (visto 12/11): en código los tres sliders llevan `16px` horizontal suelto; en Figma cada set va distinto (Continuous y Segmented 12 a los lados con el token `slider/all/root/paddingVer/generic` mal nombrado; Range 16 y gap 16 sin token; Segmented 20 arriba y abajo sin token). Resolver al documentar la familia Slider, no con un parche.

@@ -1,6 +1,6 @@
 /**
  * StepHor — Átomo
- * CS Design System · v1
+ * CS Design System · v1.1 (12/11/2026: nombre del paso label lg, negrita salvo Incomplete; gap y padding por token, como Figma)
  *
  * Envuelve un `Node` con conectores IZQUIERDA/DERECHA horizontales y un
  * label debajo — la pieza que `StepIndicatorLarge` encadena para formar el
@@ -30,7 +30,8 @@ const css = `
   display:        flex;
   flex-direction: column;
   align-items:    center;
-  gap:            8px;
+  gap:            var(--ds-steps-indicator-step-hor-gap);
+  padding:        var(--ds-steps-indicator-step-hor-padding-ver) 0;
   min-width:      0;
 }
 .ds-step-hor__indicator {
@@ -48,12 +49,13 @@ const css = `
 }
 .ds-step-hor__label {
   font-family: inherit;
-  font-size:   var(--ds-fontSize-label-sm);
-  font-weight: var(--ds-font-weight-regular);
-  line-height: var(--ds-lineHeight-label-sm);
-  color:       var(--ds-fg-default);
+  font-size:   var(--ds-fontSize-label-lg);
+  font-weight: var(--ds-font-weight-bold);
+  line-height: var(--ds-lineHeight-label-lg);
+  color:       var(--ds-steps-label-fg-generic);
   text-align:  center;
 }
+.ds-step-hor--incomplete .ds-step-hor__label { font-weight: var(--ds-font-weight-regular); }
 `;
 
 injectStyles('ds-step-hor', css);
@@ -70,7 +72,7 @@ export function StepHor({
   style,
 }) {
   return (
-    <div className={`ds-step-hor ${className || ''}`} style={style}>
+    <div className={`ds-step-hor ds-step-hor--${state} ${className || ''}`} style={style}>
       <div className="ds-step-hor__indicator">
         <span className={`ds-step-hor__connector ${!showLeftConnector ? 'ds-step-hor__connector--hidden' : ''}`} aria-hidden="true" />
         <Node state={state} number={number} stepLabel={stepLabel} statusLabels={statusLabels} />
