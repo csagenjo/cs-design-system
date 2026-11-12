@@ -59,7 +59,7 @@ Font family: **Nunito** (default)
 | `body` | 12px | 14px | 16px | 19px |
 | `title` | — | 16px | 19px | 24px |
 
-Line heights: `--ds-fontLheight-{3xs → 3xl}` (18px → 72px)
+Line heights: `--ds-lineHeight-{3xs → 3xl}` (18px → 72px)
 
 ---
 
@@ -648,7 +648,7 @@ with Dialog and Inline Notification — found instead by walking the file's page
 component set, `2570:396`, containing 4 `Placement` variants (Top/Bottom/Left/Right). `get_variable_defs`
 returned a clean, small set — 8 tokens under `tooltip/all/*`, all `generic` (no color-varying axis):
 `root/bg`, `text/fg`, `root/gap`, `root/paddingHor`, `root/paddingVer`, `root/borderRadius`, plus Device
-typography (`fontSize/label/xs`, `fontWeight/regular`, `fontLheight/3xs`). Same favorable case as Inline
+typography (`fontSize/label/xs`, `fontWeight/regular`, `lineHeight/3xs`). Same favorable case as Inline
 Notification — no rebind pass needed.
 
 **The recurring fg/bg inversion bug, checked proactively this time.** Given how many times this project has

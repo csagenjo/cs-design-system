@@ -377,7 +377,7 @@
   --ds-font-weight-semibold: 600;   /* fontWeight/semibold — Link Active (09/10/2026) */
   --ds-font-weight-bold:    700;
 
-  /* lineHeight — emparejado por ROL (Figma fontLheight/{familia}/{tamaño}), uno por cada fontSize:
+  /* lineHeight — emparejado por ROL (Figma lineHeight/{familia}/{tamaño}; antes fontLheight, renombrado 12/11), uno por cada fontSize:
      si el tamaño cambia por device, su line-height cambia con él. Lectura (body/label/annotation/title)
      = 1.5×; headline/subheadline = 1.25× — ambos redondeados al múltiplo de 4 más cercano
      (empate → abajo), sin decimales (29/09, rejilla de 4 de tipografía dentro de la de 8). Sustituye a la escala genérica --ds-lineHeight-xs…2xl

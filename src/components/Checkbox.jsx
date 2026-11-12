@@ -135,7 +135,7 @@ const css = `
 .ds-checkbox__input:checked:not(:indeterminate) + .ds-checkbox__slot .ds-checkbox__icon--check { display: flex; }
 .ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__icon--indeterminate       { display: flex; }
 
-/* Label — Label/md regular (fontSize/label/md · fontLheight/label/md) */
+/* Label — Label/md regular (fontSize/label/md · lineHeight/label/md) */
 .ds-checkbox__label {
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-regular);
