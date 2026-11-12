@@ -1167,6 +1167,22 @@ Revisados nombre, valor, alcance (scope), uso en Figma (las 60 páginas, enlaces
 - Figma: borrados los 12 tokens `…/onContainer…quaternary*` y `…/onContainerShape/primary-onQuaternary*` y sus 24 variables de Theme: apuntaban a una superficie "quaternary" que no existe (bg/surface solo tiene primary, secondary y tertiary). Ninguno tenía uso.
 - Figma: alcances ajustados (solo filtran el selector, no cambian enlaces): `fg/*` base → texto, formas y trazo (antes también fondo de frame); `bg/surface/*` → frame y formas (antes también texto); `fg/icon/*` → formas y trazo (antes también texto y frame).
 
-**Sin uso, se quedan a propósito** (decisión de Carol, como en Device: sirven para componer pantallas de contenido sobre las superficies de marca).
-- 132 tokens sin ningún uso: las familias `onSurface/*`, `onContainer/*`, `onContainerShape/*` de headline, subheadline, title, label, body, icon y borderColor; `fg/subheadline/*`; `fg/secondary`, `fg/tertiary`, `fg/headline/subtle|tertiary`, `fg/title/subtle`; `borderColor/accent*`, `onColor`, `tertiary-inverse`, `info-inverse`; `bg/surface/secondary-bold`; `opacity/hover/subtle-inverse`, `opacity/overlay/default` (este sí lo usa el código).
+**Familias "encima de superficie" borradas** (decisión de Carol, 12/11). `fg/{headline,subheadline,title,label,body,icon}/onSurface/*`, `…/onContainer/*`, `…/onContainerShape/*` y `borderColor/onSurface/*`: 119 tokens de Mode y 237 de Theme.
+- Repetían el mismo valor en cada rol (headline = title = label = body sobre una misma superficie) y algunos fallaban en dark: `…/onSurface/secondary-bold` era negro sobre el magenta #8C1C4C, que no cambia con el modo (2,4:1).
+- Antes de borrar, los 4 que se usaban en páginas de Figma se re-enlazaron a su equivalente con el mismo valor en los dos modos (1.103 enlaces): `fg/title/onSurface/default` → `fg/title/default`, `fg/label/onSurface/default` → `fg/label/default`, `fg/body/onSurface/default` → `fg/body/default`, `fg/label/onSurface/primary` → `fg/label/onColor`.
+- Se quedan los 4 que tienen uso real sin equivalente: `fg/title|icon/onSurface/static-primary` (teal fijo de la cabecera onPrimary de Dialog) y `fg/title/onSurface/secondary-subtle|tertiary-subtle` (títulos de las plantillas de página de la documentación).
+
+**Regla para texto, iconos y bordes sobre superficies de marca** (sustituye a esas familias):
+
+| Superficie | Light | Dark | Texto e iconos | Ejemplo |
+|---|---|---|---|---|
+| `bg/surface/*-subtle` (50 / 900) | muy clara | muy oscura | `fg/default`, `fg/icon/default` (y sus roles: `fg/label/default`, `fg/body/default`…) | Banda suave con un párrafo |
+| `bg/surface/*-medium` (200 / 800) | clara | oscura | igual que subtle | Tarjeta destacada |
+| `bg/surface/*` base (500) | marca | marca | `fg/onColor`, `fg/icon/onColor` (blanco en los dos modos) | Banner teal |
+| `bg/surface/*-bold` (700) | marca oscura | marca oscura | igual que base | Banner magenta oscuro |
+
+Bordes: en subtle y medium, los `borderColor/*` normales; en base y bold, `borderColor/onColor`.
+
+**Sin uso, se quedan a propósito** (como en Device: reservas baratas para contenido).
+- `fg/subheadline/*`, `fg/secondary`, `fg/tertiary`, `fg/headline/subtle|tertiary`, `fg/title/subtle`; `borderColor/accent*`, `onColor`, `tertiary-inverse`, `info-inverse`; `bg/surface/secondary-bold`; `opacity/hover/subtle-inverse`, `opacity/overlay/default` (este sí lo usa el código).
 - `opacity/hover/subtle` y `subtle-inverse` valen lo mismo que `default` y `default-inverse`.
