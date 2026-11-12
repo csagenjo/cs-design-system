@@ -1,6 +1,6 @@
 /**
  * StepNavigator — Organismo
- * CS Design System · v1.1 (12/11/2026: alineado con Figma — fila de 60, fondo Active, título regular en Incomplete, foco por dentro)
+ * CS Design System · v1.1 (12/11/2026: alineado con Figma — fila de 56 (rejilla de 8), fondo Active, título regular en Incomplete, foco por dentro)
  *
  * Una fila del menú vertical de progreso — instancia `StepVer` (círculo +
  * conectores verticales) + título. `Variation="chapter"` añade el chevron

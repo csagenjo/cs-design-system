@@ -14,8 +14,8 @@
  * del flujo, solo se deja de pintar).
  *
  * Los conectores rellenan el alto que deja el Node en la fila (12/11, Figma
- * igual): en Step Navigator la fila mide 60 → 10 + 40 + 10. Antes medían
- * 12 fijos en código y 11 en Figma (62, se salía de la fila).
+ * igual): en Step Navigator la fila mide 56 → 8 + 40 + 8 (rejilla de 8). Antes
+ * medían 12 fijos en código y 11 en Figma (62, se salía de la fila de 60).
  *
  * USO (nunca aislado — ver StepNavigator):
  *   <StepVer state="completed" />

@@ -3610,7 +3610,7 @@ The building blocks of the Steps family: the step circle and the connectors that
 **Sizing**
 - Node 40 (36 circle + 2 outside stroke, padding 2) · connectors 2, borderColor/emphasis
 - `.StepHor`: node → name 8, 2 above and below (80 tall) · name label lg, bold except Incomplete
-- `.StepVer`: connectors fill the row (60 in Step Navigator → 10 + 40 + 10); a hidden connector keeps its space
+- `.StepVer`: connectors fill the row (56 in Step Navigator → 8 + 40 + 8); a hidden connector keeps its space
 
 ### Developers · React
 
@@ -3675,9 +3675,10 @@ A vertical list of the steps of a long process; chapter rows expand into substep
 - Variation → Page · Chapter - Collapsed · Chapter - Expanded
 - Style → On default (white surface) · On page (grey surface)
 - State → Incomplete · Active · Completed · Selected · Hover · Focus
+- All 36 combinations exist (6 × 6 grid on the page)
 
 **Sizing**
-- Row 60, padding 16, gap 16 · title label lg, bold in Active, Completed and Selected
+- Row 56 (8 + 40 + 8), padding 16, gap 16 · title label lg, bold in Active, Completed and Selected
 - Substep 40, 16 left, 24 right, line → text 16, icon → text 8, icon 20, label md
 
 **States**

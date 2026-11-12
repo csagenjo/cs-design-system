@@ -2049,7 +2049,7 @@
      --ds-steps-label-fg-generic (12/11: navigator/root/fg/label borrado).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-steps-navigator-root-gap:                 var(--ds-spacing-xl);      /* 16 — root/gap */
-  --ds-steps-navigator-root-height:              60px; /* literal de Figma sin variable: alto de fila (40 del Node + 10 + 10 de conectores); en la rejilla de 4 */
+  --ds-steps-navigator-root-height:              var(--ds-sizing-2xl); /* 56 — steps/navigator/all/root/height/generic (12/11): 8 + 40 + 8, rejilla de 8 (antes 60) */
   --ds-steps-navigator-root-padding-horizontal:  var(--ds-spacing-xl);      /* 16 — root/paddingHor (también padding izq. de Substep) */
   --ds-steps-navigator-substep-padding-right:    var(--ds-spacing-2xl);     /* 24 — subStep/paddingRight (12/11) */
   --ds-steps-navigator-substep-gap:              var(--ds-spacing-md);      /* 8 — subStep/gap: icono → texto (12/11) */
