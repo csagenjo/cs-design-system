@@ -2009,47 +2009,54 @@
      lo consume tal cual. `root/opacity-pressed` es opacidad (0.8), no color
      — mismo patrón ya usado en Accordion/Icon Button/Segmented Control.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-steps-node-bg-active:                    var(--ds-bg-primary);      /* #0A7C92 */
-  --ds-steps-node-bg-completed:                  var(--ds-bg-success);      /* #0E6D1A */
-  --ds-steps-node-fg-incomplete:                 var(--ds-fg-default);      /* #050506 */
-  --ds-steps-node-fg-active:                     var(--ds-fg-onColor);      /* #FFFFFF */
-  --ds-steps-node-fg-completed:                  var(--ds-fg-onColor);      /* #FFFFFF */
-  --ds-steps-node-border-color-incomplete:       var(--ds-borderColor-emphasis); /* #292C31 */
-  --ds-steps-node-border-color-active:           var(--ds-borderColor-primary);  /* #0A7C92 — mismo valor que el bg, el borde no aporta contraste extra aquí */
-  --ds-steps-node-border-color-completed:        var(--ds-borderColor-success);  /* #0E6D1A — ídem */
-  --ds-steps-border-width:                       2px;
-  --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* #292C31, mismo gris que el borde Incomplete */
+  --ds-steps-node-bg-active:                    var(--ds-bg-primary);      /* steps/common/all/node/bg/active → bg/surface/primary */
+  --ds-steps-node-bg-completed:                  var(--ds-bg-success);      /* node/bg/completed */
+  --ds-steps-node-fg-incomplete:                 var(--ds-fg-title-default);/* node/fg/incomplete — número del círculo */
+  --ds-steps-node-fg-active:                     var(--ds-fg-title-onColor);/* node/fg/active */
+  --ds-steps-node-fg-completed:                  var(--ds-fg-title-onColor);/* node/fg/completed */
+  --ds-steps-node-border-color-incomplete:       var(--ds-borderColor-emphasis);
+  --ds-steps-node-border-color-active:           var(--ds-borderColor-primary);
+  --ds-steps-node-border-color-completed:        var(--ds-borderColor-success);
+  --ds-steps-node-size:                          var(--ds-sizing-lg);       /* 40 — node/size/generic (12/11) */
+  --ds-steps-node-padding:                       var(--ds-spacing-2xs);     /* 2 — node/padding/generic (12/11): en Figma, hueco del trazo exterior; en código el círculo ocupa los 40 con el borde dentro */
+  --ds-steps-border-width:                       var(--ds-border-width-lg); /* 2 — steps/common/all/borderWidth/generic (círculo y conectores; 12/11 el de StepHor era 3 suelto en Figma) */
+  --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* connector/borderColor/generic */
+  --ds-steps-label-fg-generic:                   var(--ds-fg-title-default);/* steps/common/all/label/fg/generic (12/11): texto de todas las etiquetas; antes cada pieza usaba fg-default desde JSX o node/fg/incomplete */
 
-  --ds-steps-root-bg-on-default-incomplete:         var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-on-default-active:             var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-on-default-completed:          var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-on-default-completed-selected: var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-on-page-incomplete:       var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-on-page-active:           var(--ds-bg-default);      /* #FFFFFF */
-  --ds-steps-root-bg-on-page-completed:        var(--ds-bg-page);         /* #FAFBFB */
-  --ds-steps-root-bg-on-page-completed-selected: var(--ds-bg-default);    /* #FFFFFF */
-  --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);/* #BDE8FF */
-  --ds-steps-root-opacity-pressed:               0.8;
-  --ds-steps-root-border-width-focus:            2px;
-  --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner); /* #FFFFFF */
-  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer); /* #094F78 light / #B8E6FE dark */
+  --ds-steps-root-bg-on-default-incomplete:         var(--ds-bg-default);
+  --ds-steps-root-bg-on-default-active:             var(--ds-bg-page);
+  --ds-steps-root-bg-on-default-completed:          var(--ds-bg-default);
+  --ds-steps-root-bg-on-default-completed-selected: var(--ds-bg-page);
+  --ds-steps-root-bg-on-page-incomplete:       var(--ds-bg-page);
+  --ds-steps-root-bg-on-page-active:           var(--ds-bg-default);
+  --ds-steps-root-bg-on-page-completed:        var(--ds-bg-page);
+  --ds-steps-root-bg-on-page-completed-selected: var(--ds-bg-default);
+  --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);
+  --ds-steps-root-opacity-pressed:               var(--ds-opacity-pressed); /* root/bg/pressed → opacity/pressed */
+  --ds-steps-root-border-width-focus:            var(--ds-border-width-lg); /* root/borderWidth/focus */
+  --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner);
+  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer);
+
+  /* ══ Steps Indicator (steps/indicator/all/*) · 12/11 ══ */
+  --ds-steps-indicator-step-hor-gap:             var(--ds-spacing-md);      /* 8 — stepHor/gap: nodo → nombre */
+  --ds-steps-indicator-step-hor-padding-ver:     var(--ds-spacing-2xs);     /* 2 — stepHor/paddingVer */
+  --ds-steps-indicator-small-padding:            var(--ds-spacing-lg);      /* 12 — small/padding (antes 8/16 en código) */
+  --ds-steps-indicator-small-gap:                var(--ds-spacing-md);      /* 8 — small/gap (antes 12 en código) */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Steps Navigator (steps/navigator/all/*)
-     Exclusivo de la jerarquía de menú/wizard vertical — nada de esto lo
-     consume Step Indicator. `root/fg-label` es el texto de fila de Substep
-     Navigator: tenía un binding heredado real de `node/fg/incomplete` (el
-     color del NÚMERO del círculo, coincidía en negro por casualidad) —
-     separado en su propio token 17/09 para no depender de un valor que en
-     realidad describe otra cosa.
+     Exclusivo del menú vertical. El texto de las filas usa ya el token común
+     --ds-steps-label-fg-generic (12/11: navigator/root/fg/label borrado).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-steps-navigator-root-gap:                 16px; /* spacing/xl */
-  --ds-steps-navigator-root-padding-horizontal:  16px; /* spacing/xl */
-  --ds-steps-navigator-root-fg-label:            var(--ds-fg-default); /* #050506 */
-  --ds-steps-navigator-substep-icon-fg-incomplete: var(--ds-fg-default);  /* #050506 */
-  --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* #0A7C92 */
-  --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-success);      /* #0E6D1A */
-  --ds-steps-navigator-substep-icon-size:        20px;
+  --ds-steps-navigator-root-gap:                 var(--ds-spacing-xl);      /* 16 — root/gap */
+  --ds-steps-navigator-root-height:              60px; /* literal de Figma sin variable: alto de fila (40 del Node + 10 + 10 de conectores); en la rejilla de 4 */
+  --ds-steps-navigator-root-padding-horizontal:  var(--ds-spacing-xl);      /* 16 — root/paddingHor (también padding izq. de Substep) */
+  --ds-steps-navigator-substep-padding-right:    var(--ds-spacing-2xl);     /* 24 — subStep/paddingRight (12/11) */
+  --ds-steps-navigator-substep-gap:              var(--ds-spacing-md);      /* 8 — subStep/gap: icono → texto (12/11) */
+  --ds-steps-navigator-substep-icon-fg-incomplete: var(--ds-fg-icon-default);
+  --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* también el chevron de Chapter (Figma) */
+  --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-icon-success);
+  --ds-steps-navigator-substep-icon-size:        var(--ds-sizing-xs);       /* 20 */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Card (basic variant, cards/all/*)

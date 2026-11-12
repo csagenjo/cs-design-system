@@ -1,6 +1,6 @@
 /**
  * SubstepNavigator — Organismo
- * CS Design System · v1
+ * CS Design System · v1.1 (12/11/2026: espaciado y foco como Figma)
  *
  * Fila hija de un `StepNavigator` en `variation="chapter"` — sin `Node`
  * propio, solo una línea vertical de paso (la continuación visual del
@@ -13,7 +13,10 @@
  * monta debajo del `StepNavigator` cuando `expanded` es true, igual que
  * SidebarMenu con sus filas hijas.
  *
- * La línea vive en una columna de 40px — el mismo ancho que la columna de
+ * Espaciado como Figma (12/11): 16 a la izquierda, 24 a la derecha, 16 entre
+ * línea y bloque, 8 entre icono y texto; foco doble por dentro.
+ *
+ * La línea vive en una columna de 40 — el mismo ancho que la columna de
  * `Node`/`StepVer` — para que quede exactamente alineada con el conector
  * de las filas de `StepNavigator` de arriba y abajo, sin depender de
  * calcular el centro a mano.
@@ -38,8 +41,8 @@ const css = `
   align-items:    center;
   gap:            var(--ds-steps-navigator-root-gap);
   width:          100%;
-  min-height:     40px;
-  padding:        0 var(--ds-steps-navigator-root-padding-horizontal);
+  min-height:     var(--ds-steps-node-size);
+  padding:        0 var(--ds-steps-navigator-substep-padding-right) 0 var(--ds-steps-navigator-root-padding-horizontal);
   border:         none;
   background:     var(--ds-steps-root-bg-on-default-incomplete);
   cursor:         pointer;
@@ -62,8 +65,9 @@ const css = `
 .ds-substep-navigator:focus-visible {
   outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
   outline-offset: calc(var(--ds-border-width-lg) * -1);
-  box-shadow: 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-inner) inset,
-              0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
+  /* Fila apilada: anillo doble POR DENTRO (12/11, CLAUDE.md §4; Figma: rects Focus outer/inner) */
+  box-shadow: inset 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-outer),
+              inset 0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-inner);
 }
 .ds-substep-navigator--selected {
   background: var(--ds-steps-root-bg-on-default-completed-selected);
@@ -73,7 +77,7 @@ const css = `
 }
 .ds-substep-navigator__line-col {
   flex-shrink:     0;
-  width:           40px;
+  width:           var(--ds-steps-node-size);
   align-self:      stretch;
   display:         flex;
   justify-content: center;
@@ -82,22 +86,41 @@ const css = `
   width:      var(--ds-steps-border-width);
   background: var(--ds-steps-connector-border-color);
 }
+.ds-substep-navigator__section {
+  display:     flex;
+  align-items: center;
+  gap:         var(--ds-steps-navigator-substep-gap);
+  min-width:   0;
+}
 .ds-substep-navigator__icon {
   display:     flex;
   flex-shrink: 0;
   color:       var(--ds-steps-navigator-substep-icon-fg-incomplete);
 }
-.ds-substep-navigator--active .ds-substep-navigator__icon {
+.ds-substep-navigator--active .ds-substep-navigator__section {
+  display:     flex;
+  align-items: center;
+  gap:         var(--ds-steps-navigator-substep-gap);
+  min-width:   0;
+}
+.ds-substep-navigator__icon {
   color: var(--ds-steps-navigator-substep-icon-fg-active);
 }
-.ds-substep-navigator--completed .ds-substep-navigator__icon {
+.ds-substep-navigator--completed .ds-substep-navigator__section {
+  display:     flex;
+  align-items: center;
+  gap:         var(--ds-steps-navigator-substep-gap);
+  min-width:   0;
+}
+.ds-substep-navigator__icon {
   color: var(--ds-steps-navigator-substep-icon-fg-completed);
 }
 .ds-substep-navigator__label {
   font-family: inherit;
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-regular);
-  color:       var(--ds-steps-navigator-root-fg-label);
+  line-height: var(--ds-lineHeight-label-md);
+  color:       var(--ds-steps-label-fg-generic);
 }
 .ds-substep-navigator--active .ds-substep-navigator__label,
 .ds-substep-navigator--completed .ds-substep-navigator__label,
@@ -132,10 +155,12 @@ export function SubstepNavigator({
       <span className="ds-substep-navigator__line-col">
         <span className="ds-substep-navigator__line" aria-hidden="true" />
       </span>
-      <span className="ds-substep-navigator__icon" aria-hidden="true">
-        <Icon name={STATE_ICON[state] ?? STATE_ICON.incomplete} size="xs" />
+      <span className="ds-substep-navigator__section">
+        <span className="ds-substep-navigator__icon" aria-hidden="true">
+          <Icon name={STATE_ICON[state] ?? STATE_ICON.incomplete} size="xs" />
+        </span>
+        <span className="ds-substep-navigator__label">{label}</span>
       </span>
-      <span className="ds-substep-navigator__label">{label}</span>
       <VisuallyHidden>, {stepStatusText(state, statusLabels)}</VisuallyHidden>
     </button>
   );

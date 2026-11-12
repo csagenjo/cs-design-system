@@ -1,6 +1,6 @@
 /**
  * StepVer — Átomo
- * CS Design System · v1
+ * CS Design System · v1.1 (12/11/2026: conectores que rellenan el alto de la fila, como Figma)
  *
  * Envuelve un `Node` con conectores ARRIBA/ABAJO verticales — la pieza que
  * `StepNavigator` instancia en cada fila para dar la sensación de una línea
@@ -12,6 +12,10 @@
  * perseguimos en Figma: `visible=false` en auto-layout colapsa el hueco y
  * recoloca el círculo — aquí no puede pasar porque el conector nunca sale
  * del flujo, solo se deja de pintar).
+ *
+ * Los conectores rellenan el alto que deja el Node en la fila (12/11, Figma
+ * igual): en Step Navigator la fila mide 60 → 10 + 40 + 10. Antes medían
+ * 12 fijos en código y 11 en Figma (62, se salía de la fila).
  *
  * USO (nunca aislado — ver StepNavigator):
  *   <StepVer state="completed" />
@@ -26,10 +30,11 @@ const css = `
   display:        flex;
   flex-direction: column;
   align-items:    center;
+  align-self:     stretch;
 }
 .ds-step-ver__connector {
+  flex:   1 1 0;
   width:  var(--ds-steps-border-width);
-  height: 12px;
   background: var(--ds-steps-connector-border-color);
 }
 .ds-step-ver__connector--hidden {

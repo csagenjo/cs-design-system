@@ -43,6 +43,7 @@ Rules that apply to every entry:
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer · _rest to be filled_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
 | Page structure | Accordion, AccordionGroup |
@@ -3580,6 +3581,223 @@ A country's flag in full colour, next to its name or dial code.
 
 **Don't**
 - Don't pass a size: there is one size, like Figma
+
+
+## Step Elements · Node · StepHor · StepVer
+
+**Group:** Steps
+**Figma:** 🟢 Steps page → `.Node`, `.StepHor`, `.StepVer` (private, locked inside Step Indicator and Step Navigator) · frame *Step Elements — How to use & Accessibility* (12/11)
+**Code:** `src/components/Node.jsx`, `StepHor.jsx`, `StepVer.jsx` (atoms) + `_stepStatus.js`
+**Tokens:** `--ds-steps-node-*`, `--ds-steps-border-width`, `--ds-steps-connector-border-color`, `--ds-steps-label-fg-generic`, `--ds-steps-indicator-step-hor-*`
+
+The building blocks of the Steps family: the step circle and the connectors that join steps.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Never on their own: `.StepHor` and `.Node` build Step Indicator, `.StepVer` builds Step Navigator
+
+**Properties**
+- `.Node` → States Incomplete · Active · Completed + Number
+- `.StepHor` → Step name, Left connector, Right connector
+- `.StepVer` → Indicator, Show Top connector, Show Bottom connector
+
+**Anatomy**
+- Incomplete = outline + number · Active = teal fill + white number · Completed = green fill + white check
+
+**Sizing**
+- Node 40 (36 circle + 2 outside stroke, padding 2) · connectors 2, borderColor/emphasis
+- `.StepHor`: node → name 8, 2 above and below (80 tall) · name label lg, bold except Incomplete
+- `.StepVer`: connectors fill the row (60 in Step Navigator → 10 + 40 + 10); a hidden connector keeps its space
+
+### Developers · React
+
+**Import**
+- `import { Node } from './components/Node'` · `StepHor` · `StepVer`
+
+**Props**
+- Node: state 'incomplete'|'active'|'completed', number, stepLabel, statusLabels, srLabel
+- StepHor: + label, showLeftConnector, showRightConnector · StepVer: + showTopConnector, showBottomConnector
+
+**Example**
+- `<StepHor state="active" number="2" label="Address" />` · `<StepVer state="completed" showTopConnector={false} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Never directly: use StepIndicatorLarge, StepIndicatorSmall or StepNavigator
+
+**Composition rules**
+- First step hides the left / top connector, last step the right / bottom one
+- Translate the spoken texts with stepLabel and statusLabels
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- State changes shape too (outline, fill + number, check), not only colour; active and completed names are bold
+
+### Developers · React
+
+**Semantics**
+- Circle and connectors are aria-hidden; Node adds a visually hidden "{stepLabel} {number}, {status}" (English by default: not started · in progress · completed); `srLabel` replaces it
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Status texts translated when the UI is not in English
+
+
+## StepNavigator · SubstepNavigator
+
+**Group:** Steps
+**Figma:** 🟢 Steps page → `Step Navigator` (Variation Page / Chapter - Collapsed / Chapter - Expanded × Style On default / On page × State) and `Substep Navigator` · frame *Step Navigator — How to use & Accessibility* (12/11)
+**Code:** `src/organisms/StepNavigator.jsx`, `SubstepNavigator.jsx` (organisms)
+**Tokens:** `--ds-steps-root-*`, `--ds-steps-navigator-*`, `--ds-steps-label-fg-generic`
+
+A vertical list of the steps of a long process; chapter rows expand into substeps.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A long process shown beside the form, with chapters that group substeps
+- A short horizontal process → Step Indicator
+
+**Properties**
+- Variation → Page · Chapter - Collapsed · Chapter - Expanded
+- Style → On default (white surface) · On page (grey surface)
+- State → Incomplete · Active · Completed · Selected · Hover · Focus
+
+**Sizing**
+- Row 60, padding 16, gap 16 · title label lg, bold in Active, Completed and Selected
+- Substep 40, 16 left, 24 right, line → text 16, icon → text 8, icon 20, label md
+
+**States**
+- Active and Selected sit one surface step away · Hover bg/hover-primary · Pressed opacity · Focus double ring inside the row
+
+### Developers · React
+
+**Import**
+- `import { StepNavigator } from './organisms/StepNavigator'` · `SubstepNavigator`
+
+**Props**
+- StepNavigator: variation 'page'|'chapter', appearance 'onDefault'|'onPage', state 'incomplete'|'active'|'completed'|'selected', number, title, showTopConnector, showBottomConnector, expanded, onToggleExpand, controls, onClick, stepLabel, statusLabels
+- SubstepNavigator: state, appearance, label, selected, onClick, statusLabels
+
+**Example**
+- `<StepNavigator state="active" number="2" title="Address" onClick={go} />`
+- `<StepNavigator variation="chapter" title="Documents" expanded={open} onToggleExpand={toggle} controls="docs-steps" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A process has many steps or chapters and needs a persistent list
+
+**Don't pick it when**
+- 2–7 steps in a row → StepIndicatorLarge / StepIndicatorSmall
+
+**Composition rules**
+- Render substeps under an expanded chapter, inside the element whose id goes in `controls`
+- First row showTopConnector={false}, last row showBottomConnector={false}
+- Wrap the list in a `<nav>` with an aria-label · appearance matches the background
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Current step shown by bold title, filled node and surface: three cues
+- Focus ring inside the row, never clipped
+
+### Developers · React
+
+**Semantics**
+- Each row is a `<button>`; Active → aria-current="step", Selected → aria-current="page"; Chapter → aria-expanded + aria-controls; Substep reads its status after the label
+
+**Keyboard**
+- Tab between rows · Enter / Space activate or expand
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Only one row with aria-current="page" · the list sits in a labelled nav
+
+
+## StepIndicatorLarge · StepIndicatorSmall
+
+**Group:** Steps
+**Figma:** 🟢 Steps page → `Step Indicator Large` (Number of steps 2–7) and `Step Indicator small` (States) · frame *Step Indicator — How to use & Accessibility* (12/11)
+**Code:** `src/organisms/StepIndicatorLarge.jsx`, `StepIndicatorSmall.jsx` (organisms)
+**Tokens:** `--ds-steps-indicator-*`, `--ds-steps-node-*`, `--ds-steps-label-fg-generic`
+
+Where the user is in a process of 2 to 7 steps: every step in a row (Large) or one compact row (Small).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Large on wide screens, Small on narrow ones; more than 7 steps or chapters → Step Navigator
+
+**Properties**
+- Large → Number of steps 2–7 · Small → Step number, Step name, States Incomplete · Completed · Active · Selected · Hover · Focus
+
+**Sizing**
+- Large: every step the same width, `.StepHor` 80 tall
+- Small: 72 tall, padding 12, node → text 8 · "Step X of Y" label sm, name label lg bold
+
+### Developers · React
+
+**Import**
+- `import { StepIndicatorLarge } from './organisms/StepIndicatorLarge'` · `StepIndicatorSmall`
+
+**Props**
+- Large: steps [{ state, number?, label, id? }], ariaLabel ('Progress'), stepLabel, statusLabels
+- Small: state, number, step, total, label, selected, onClick (without it, static), formatStep, statusLabels
+
+**Example**
+- `<StepIndicatorLarge steps={[{ state: 'completed', label: 'Personal details' }, { state: 'active', label: 'Address' }]} />`
+- `<StepIndicatorSmall state="active" number="2" step={2} total={4} label="Address" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing progress through a short process
+
+**Composition rules**
+- Large on desktop, Small on mobile — never both · onClick on Small only when it opens the list of steps · translate formatStep and statusLabels
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Current step announced; state shown by shape and weight, not only colour
+
+### Developers · React
+
+**Semantics**
+- Large: `<ol aria-label="Progress">`, one `<li>` per step, aria-current="step" on the active one
+- Small: `<button>` with onClick, otherwise `<div>`; "Step 2 of 4" is visible, so the node only adds the status
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- ariaLabel names the process when there is more than one on the page
 
 
 ## DescriptionList · DescriptionListItem · DescriptionListAccount

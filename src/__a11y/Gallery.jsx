@@ -1032,17 +1032,17 @@ export default function Gallery({ mode }) {
 
       <Section name="StepHor">
         <Row>
-          <div style={{ display: 'flex', width: 480 }}>
-            <StepHor state="completed" label="Datos personales" showLeftConnector={false} />
-            <StepHor state="active" number="2" label="Dirección" />
-            <StepHor state="incomplete" number="3" label="Confirmación" showRightConnector={false} />
+          <div style={{ display: 'flex', width: '30rem' }}>
+            <StepHor state="completed" label="Personal details" showLeftConnector={false} />
+            <StepHor state="active" number="2" label="Address" />
+            <StepHor state="incomplete" number="3" label="Confirmation" showRightConnector={false} />
           </div>
         </Row>
       </Section>
 
       <Section name="StepVer">
         <Row>
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(var(--ds-steps-navigator-root-height) * 3)' }}>
             <StepVer state="completed" showTopConnector={false} />
             <StepVer state="active" number="2" />
             <StepVer state="incomplete" number="3" showBottomConnector={false} />
@@ -1273,33 +1273,33 @@ export default function Gallery({ mode }) {
 
       <Section name="StepIndicatorLarge">
         <StepIndicatorLarge steps={[
-          { state: 'completed', label: 'Datos personales' },
-          { state: 'active', number: '2', label: 'Dirección' },
-          { state: 'incomplete', number: '3', label: 'Documentación' },
-          { state: 'incomplete', number: '4', label: 'Confirmación' },
+          { state: 'completed', label: 'Personal details' },
+          { state: 'active', number: '2', label: 'Address' },
+          { state: 'incomplete', number: '3', label: 'Documents' },
+          { state: 'incomplete', number: '4', label: 'Confirmation' },
         ]} />
       </Section>
 
       <Section name="StepIndicatorSmall">
-        <Col style={{ maxWidth: 360 }}>
-          <StepIndicatorSmall state="completed" number="1" step={1} total={4} label="Datos personales" onClick={noop} />
-          <StepIndicatorSmall state="active" number="2" step={2} total={4} label="Dirección" selected onClick={noop} />
-          <StepIndicatorSmall state="incomplete" number="3" step={3} total={4} label="Confirmación" onClick={noop} />
+        <Col style={{ maxWidth: '22.5rem' }}>
+          <StepIndicatorSmall state="completed" number="1" step={1} total={4} label="Personal details" onClick={noop} />
+          <StepIndicatorSmall state="active" number="2" step={2} total={4} label="Address" selected onClick={noop} />
+          <StepIndicatorSmall state="incomplete" number="3" step={3} total={4} label="Confirmation" onClick={noop} />
         </Col>
       </Section>
 
       <Section name="StepNavigator">
         <Row>
           {['onDefault', 'onPage'].map((st) => (
-            <div key={st} style={{ width: 360 }}>
-              <StepNavigator {...stepNavAppearance(st)} state="completed" number="1" title={`Completado (${st})`} showTopConnector={false} onClick={noop} />
-              <StepNavigator {...stepNavAppearance(st)} state="selected" number="2" title="Seleccionado" onClick={noop} />
-              <StepNavigator {...stepNavAppearance(st)} state="active" number="3" title="Activo" onClick={noop} />
-              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="4" title="Capítulo expandido"
+            <div key={st} style={{ width: '22.5rem' }}>
+              <StepNavigator {...stepNavAppearance(st)} state="completed" number="1" title={`Completed (${st})`} showTopConnector={false} onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} state="selected" number="2" title="Selected" onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} state="active" number="3" title="Active" onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="4" title="Chapter expanded"
                 expanded onToggleExpand={noop} onClick={noop} />
-              <SubstepNavigator {...substepAppearance(st)} state="completed" label="Substep completado" onClick={noop} />
-              <SubstepNavigator {...substepAppearance(st)} state="active" label="Substep activo" selected onClick={noop} />
-              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="5" title="Capítulo colapsado"
+              <SubstepNavigator {...substepAppearance(st)} state="completed" label="Substep completed" onClick={noop} />
+              <SubstepNavigator {...substepAppearance(st)} state="active" label="Substep active" selected onClick={noop} />
+              <StepNavigator {...stepNavAppearance(st)} variation="chapter" state="incomplete" number="5" title="Chapter collapsed"
                 expanded={false} onToggleExpand={noop} showBottomConnector={false} onClick={noop} />
             </div>
           ))}
@@ -1309,7 +1309,7 @@ export default function Gallery({ mode }) {
       <Section name="SubstepNavigator">
         <Row>
           {['onDefault', 'onPage'].map((st) => (
-            <div key={st} style={{ width: 360 }}>
+            <div key={st} style={{ width: '22.5rem' }}>
               {['incomplete', 'active', 'completed'].map((s) => (
                 <SubstepNavigator key={s} {...substepAppearance(st)} state={s} label={`Substep ${s} (${st})`} onClick={noop} />
               ))}

@@ -1,6 +1,6 @@
 /**
  * Node — Átomo
- * CS Design System · v1
+ * CS Design System · v1.1 (12/11/2026: tamaño por token, círculo de 40 como el visual de Figma)
  *
  * Círculo con número o icono que representa el estado de un paso —
  * `Incomplete` (contorno, número negro), `Active` (relleno teal, número
@@ -9,10 +9,11 @@
  * y directamente en `StepIndicatorSmall`) — un único punto de mantenimiento
  * para el círculo, nunca reimplementado en cada sitio.
  *
- * Caja de 40×40 con la elipse de 36×36 centrada (2px de margen) — el margen
- * existe para que el borde `OUTSIDE` de 2px de la elipse nunca quede
- * recortado si algún contenedor activa `overflow: hidden` (bug real
- * encontrado y corregido en Figma, ver CLAUDE.md §9 Step Navigator/Indicator).
+ * Caja de 40×40 (`steps/common/all/node/size/generic` → sizing/lg). En Figma
+ * es una elipse de 36 con trazo EXTERIOR de 2 y 2 de padding
+ * (`node/padding/generic`), así que lo que se ve mide 40. En código el
+ * círculo ocupa los 40 con el borde de 2 por dentro: mismo resultado visual.
+ * (Hasta v1 el círculo medía 36 en total: 4 px más pequeño que Figma.)
  *
  * USO:
  *   <Node state="completed" />
@@ -26,8 +27,8 @@ import { stepStatusText } from './_stepStatus';
 
 const css = `
 .ds-node {
-  width: 40px;
-  height: 40px;
+  width: var(--ds-steps-node-size);
+  height: var(--ds-steps-node-size);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -35,8 +36,8 @@ const css = `
   box-sizing: border-box;
 }
 .ds-node__circle {
-  width: 36px;
-  height: 36px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   display: flex;
   align-items: center;

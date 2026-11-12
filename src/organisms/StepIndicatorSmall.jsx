@@ -1,6 +1,6 @@
 /**
  * StepIndicatorSmall — Organismo
- * CS Design System · v1
+ * CS Design System · v1.1 (12/11/2026: padding 12, gap 8 y textos label sm / lg como Figma; foco por dentro)
  *
  * Variante compacta de una sola fila — `Node` a la izquierda + dos líneas
  * de texto ("Step X of Y" / nombre del paso), sin conectores (a diferencia
@@ -28,9 +28,9 @@ const css = `
 .ds-step-indicator-small {
   display:        flex;
   align-items:    center;
-  gap:            12px;
+  gap:            var(--ds-steps-indicator-small-gap);
   width:          100%;
-  padding:        8px var(--ds-steps-navigator-root-padding-horizontal);
+  padding:        var(--ds-steps-indicator-small-padding);
   border:         none;
   border-radius:  0;
   background:     var(--ds-steps-root-bg-on-default-incomplete);
@@ -48,8 +48,9 @@ const css = `
 .ds-step-indicator-small:focus-visible {
   outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
   outline-offset: calc(var(--ds-border-width-lg) * -1);
-  box-shadow: 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-inner) inset,
-              0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-outer);
+  /* Fila apilada: anillo doble POR DENTRO (12/11, CLAUDE.md §4; Figma: rects Focus outer/inner) */
+  box-shadow: inset 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-outer),
+              inset 0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-inner);
 }
 .ds-step-indicator-small--selected {
   background: var(--ds-steps-root-bg-on-default-completed-selected);
@@ -57,20 +58,21 @@ const css = `
 .ds-step-indicator-small__text {
   display:        flex;
   flex-direction: column;
-  gap:            2px;
   min-width:      0;
 }
 .ds-step-indicator-small__meta {
   font-family: inherit;
-  font-size:   var(--ds-fontSize-label-xs);
+  font-size:   var(--ds-fontSize-label-sm);
   font-weight: var(--ds-font-weight-regular);
-  color:       var(--ds-fg-default);
+  line-height: var(--ds-lineHeight-label-sm);
+  color:       var(--ds-steps-label-fg-generic);
 }
 .ds-step-indicator-small__label {
   font-family: inherit;
-  font-size:   var(--ds-fontSize-label-sm);
+  font-size:   var(--ds-fontSize-label-lg);
   font-weight: var(--ds-font-weight-bold);
-  color:       var(--ds-fg-default);
+  line-height: var(--ds-lineHeight-label-lg);
+  color:       var(--ds-steps-label-fg-generic);
 }
 `;
 
