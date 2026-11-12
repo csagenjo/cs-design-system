@@ -1,12 +1,12 @@
 /**
  * Pagination — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: eje default/secondary, números 14, área de foco 4, icono vía Icon, tokens)
  *
  * Muestra en qué página está el usuario y cuántas quedan. Reconstruido desde
  * las .Parts de Figma (18/07/2026), una por elemento con estructura consistente:
  *
- *   Previous / Next  → flechas chevron (antes arrowLeft / arrowRight)
- *   ActivePage       → Link de texto subrayado (resto de páginas)
+ *   Previous / Next  → flechas chevron 16 (átomo Icon)
+ *   ActivePage       → número subrayado (resto de páginas; en Figma ya no es un Link anidado, 12/11)
  *   SelectedPage     → círculo relleno de la página actual
  *   Dots             → "…" de truncamiento (botón: salta siblingCount páginas)
  *
@@ -21,10 +21,17 @@
  * USO:
  *   <Pagination currentPage={1} totalPages={4} onPageChange={setPage} />
  *   <Pagination variant="secondary" currentPage={7} totalPages={20} onPageChange={setPage} />
+ *
+ * 12/11 (decisiones de Carol): números en label/sm 14 (bold solo la página
+ * actual), hover rellena el círculo en todas las piezas, y cada Part es un
+ * círculo de 32 dentro de un área de foco de 4 — el anillo 2 + 2 cae dentro y
+ * entre círculos quedan 8, sin gap propio.
  */
 
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { injectStyles } from './_inputBase';
+import { Icon } from './Icon';
+import { warnOnce } from './_devWarn';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
@@ -32,101 +39,94 @@ const css = `
 .ds-pgn {
   display:     inline-flex;
   align-items: center;
-  gap:         var(--ds-pagination-gap);
 }
 
+/* Cada Part: círculo de 32 dentro de un área de foco de 4 (margin, en todos
+   los estados) — 8 visibles entre círculos, como Figma (12/11). */
 .ds-pgn__item {
+  position:         relative;
   width:            var(--ds-pagination-container-size);
   height:           var(--ds-pagination-container-size);
+  margin:           var(--ds-pagination-root-focus-area);
   display:          inline-flex;
   align-items:      center;
   justify-content:  center;
   box-sizing:       border-box;
   padding:          0;
-  margin:           0;
   border:           none;
   background:       transparent;
   border-radius:    var(--ds-pagination-item-radius);
   font-family:      inherit;
   font-size:        var(--ds-pagination-number-font-size);
-  font-weight:      var(--ds-pagination-number-font-weight);
-  line-height:      1;
+  line-height:      var(--ds-pagination-number-line-height);
+  font-weight:      var(--ds-font-weight-regular);
   cursor:           pointer;
-  transition:       background 0.12s, color 0.12s, opacity 0.12s;
 }
+/* Anillo 2 + 2 por fuera del círculo, dentro del área de foco */
 .ds-pgn__item:focus-visible {
-  outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
+  outline:    var(--ds-pagination-root-border-width-focus) solid transparent; /* visible solo en colores forzados — audit §F */
   box-shadow: 0 0 0 var(--ds-pagination-root-border-width-focus) var(--ds-pagination-root-border-color-focus-inner),
               0 0 0 calc(var(--ds-pagination-root-border-width-focus) * 2) var(--ds-pagination-root-border-color-focus-outer);
 }
 
 /* ── Previous / Next (flechas) ────────────────────────────────────────────── */
-.ds-pgn--primary   .ds-pgn__nav--prev { color: var(--ds-pagination-previous-fg-primary); }
+.ds-pgn--default   .ds-pgn__nav--prev { color: var(--ds-pagination-previous-fg-default); }
 .ds-pgn--secondary .ds-pgn__nav--prev { color: var(--ds-pagination-previous-fg-secondary); }
-.ds-pgn--primary   .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-primary); }
+.ds-pgn--default   .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-default); }
 .ds-pgn--secondary .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-secondary); }
 
-.ds-pgn--primary   .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-primary);   color: var(--ds-pagination-previous-fg-hover); }
+.ds-pgn--default   .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-default);   color: var(--ds-pagination-previous-fg-hover); }
 .ds-pgn--secondary .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-secondary); color: var(--ds-pagination-previous-fg-hover); }
-.ds-pgn--primary   .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-primary);       color: var(--ds-pagination-next-fg-hover); }
+.ds-pgn--default   .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-default);       color: var(--ds-pagination-next-fg-hover); }
 .ds-pgn--secondary .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-secondary);     color: var(--ds-pagination-next-fg-hover); }
 
-/* Cada flecha usa su propio token de opacidad al pulsar — antes Next reusaba el de Previous */
 .ds-pgn__nav--prev:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-previous-opacity-pressed); }
 .ds-pgn__nav--next:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-next-opacity-pressed); }
 
+.ds-pgn__nav--prev:disabled, .ds-pgn__nav--prev[aria-disabled="true"] { color: var(--ds-pagination-previous-fg-disabled); }
+.ds-pgn__nav--next:disabled, .ds-pgn__nav--next[aria-disabled="true"] { color: var(--ds-pagination-next-fg-disabled); }
 .ds-pgn__nav:disabled,
-.ds-pgn__nav[aria-disabled="true"] {
-  color:          var(--ds-pagination-previous-fg-disabled);
-  cursor:         not-allowed;
-  pointer-events: none;
-}
+.ds-pgn__nav[aria-disabled="true"] { cursor: not-allowed; }
 
-/* ── ActivePage (Link subrayado) ──────────────────────────────────────────── */
-.ds-pgn--primary   .ds-pgn__page { color: var(--ds-pagination-active-fg-primary); }
+/* ── ActivePage (número subrayado) ────────────────────────────────────────── */
+.ds-pgn--default   .ds-pgn__page { color: var(--ds-pagination-active-fg-default); }
 .ds-pgn--secondary .ds-pgn__page { color: var(--ds-pagination-active-fg-secondary); }
 .ds-pgn__page {
   text-decoration:           underline;
-  text-underline-offset:     3px;
   text-decoration-thickness: var(--ds-pagination-active-border-bottom-width);
 }
-.ds-pgn--primary   .ds-pgn__page:hover { background: var(--ds-pagination-active-bg-hover-primary);   color: var(--ds-pagination-active-fg-hover); }
+.ds-pgn--default   .ds-pgn__page:hover { background: var(--ds-pagination-active-bg-hover-default);   color: var(--ds-pagination-active-fg-hover); }
 .ds-pgn--secondary .ds-pgn__page:hover { background: var(--ds-pagination-active-bg-hover-secondary); color: var(--ds-pagination-active-fg-hover); }
 .ds-pgn__page:active { opacity: var(--ds-pagination-active-opacity-pressed); }
 
-/* ── SelectedPage (círculo actual) ────────────────────────────────────────── */
-.ds-pgn--primary   .ds-pgn__current { background: var(--ds-pagination-selected-bg-primary); }
-.ds-pgn--secondary .ds-pgn__current { background: var(--ds-pagination-selected-bg-secondary); }
+/* ── SelectedPage (círculo actual, bold) ──────────────────────────────────── */
+.ds-pgn--default   .ds-pgn__current { background-color: var(--ds-pagination-selected-bg-default); }
+.ds-pgn--secondary .ds-pgn__current { background-color: var(--ds-pagination-selected-bg-secondary); }
 .ds-pgn__current {
-  color:  var(--ds-pagination-root-text-fg-selected);
-  cursor: default;
+  color:       var(--ds-pagination-root-text-fg-selected);
+  font-weight: var(--ds-font-weight-bold);
 }
+.ds-pgn__current:hover  { background-image: linear-gradient(var(--ds-pagination-selected-bg-hover), var(--ds-pagination-selected-bg-hover)); }
+.ds-pgn__current:active { opacity: var(--ds-pagination-selected-opacity-pressed); }
 
 /* ── Dots ("…" — botón: salta un bloque de siblingCount páginas) ──────────── */
-.ds-pgn--primary   .ds-pgn__dots { color: var(--ds-pagination-dots-fg-primary); }
+.ds-pgn--default   .ds-pgn__dots { color: var(--ds-pagination-dots-fg-default); }
 .ds-pgn--secondary .ds-pgn__dots { color: var(--ds-pagination-dots-fg-secondary); }
-.ds-pgn--primary   .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-primary);   color: var(--ds-pagination-dots-fg-hover); }
+.ds-pgn--default   .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-default);   color: var(--ds-pagination-dots-fg-hover); }
 .ds-pgn--secondary .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-secondary); color: var(--ds-pagination-dots-fg-hover); }
 .ds-pgn__dots:active:not(:disabled) { opacity: var(--ds-pagination-dots-opacity-pressed); }
-.ds-pgn__dots:disabled { cursor: not-allowed; pointer-events: none; }
 
 /* ── Disabled global ──────────────────────────────────────────────────────── */
-.ds-pgn--disabled .ds-pgn__page,
-.ds-pgn--disabled .ds-pgn__dots    { color: var(--ds-pagination-active-fg-disabled); pointer-events: none; }
+.ds-pgn--disabled .ds-pgn__item { cursor: not-allowed; pointer-events: none; }
+.ds-pgn--disabled .ds-pgn__page { color: var(--ds-pagination-active-fg-disabled); }
+.ds-pgn--disabled .ds-pgn__dots { color: var(--ds-pagination-dots-fg-disabled); }
 .ds-pgn--disabled .ds-pgn__current {
   background: var(--ds-pagination-selected-bg-disabled);
   color:      var(--ds-pagination-root-text-fg-disabled);
 }
 `;
 
-let injected = false;
-function injectStyles() {
-  if (injected || typeof document === 'undefined') return;
-  const s = document.createElement('style');
-  s.textContent = css;
-  document.head.appendChild(s);
-  injected = true;
-}
+injectStyles('ds-pagination', css);
 
 /* ─── Lógica de truncamiento ─────────────────────────────────────────────────
  * Devuelve la secuencia de items a renderizar: números de página o 'dots'.
@@ -187,7 +187,7 @@ function buildPageItems(current, total, maxSlots = 7) {
 /* ─── Pagination ─────────────────────────────────────────────────────────────*/
 
 export function Pagination({
-  variant     = 'primary',   // 'primary' | 'secondary'
+  variant     = 'default',   // 'default' | 'secondary' ('primary' = alias antiguo de default)
   currentPage = 1,
   totalPages  = 1,
   onPageChange,
@@ -206,18 +206,18 @@ export function Pagination({
     laterPages: 'Later pages',
     ...labels,
   };
-  injectStyles();
-
   const go = (page) => {
     if (disabled || page < 1 || page > totalPages || page === currentPage) return;
     onPageChange?.(page);
   };
 
+  if (variant === 'primary') warnOnce('Pagination.primary', '[DS Pagination] variant="primary" ahora se llama "default".');
+  const v = variant === 'secondary' ? 'secondary' : 'default';
   const items = buildPageItems(currentPage, totalPages, maxSlots);
 
   const rootClasses = [
     'ds-pgn',
-    `ds-pgn--${variant}`,
+    `ds-pgn--${v}`,
     disabled ? 'ds-pgn--disabled' : '',
   ].filter(Boolean).join(' ');
 
@@ -236,7 +236,7 @@ export function Pagination({
         aria-disabled={!disabled && atFirst ? 'true' : undefined}
         aria-label={t.previous}
       >
-        <ChevronLeft width={20} height={20} strokeWidth={1.75} aria-hidden="true" />
+        <Icon name="chevron-left" size="2xs" />
       </button>
 
       {items.map((item, i) => {
@@ -289,7 +289,7 @@ export function Pagination({
         aria-disabled={!disabled && atLast ? 'true' : undefined}
         aria-label={t.next}
       >
-        <ChevronRight width={20} height={20} strokeWidth={1.75} aria-hidden="true" />
+        <Icon name="chevron-right" size="2xs" />
       </button>
     </nav>
   );

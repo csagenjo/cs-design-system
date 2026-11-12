@@ -871,9 +871,9 @@ export default function Gallery({ mode }) {
 
       <Section name="Pagination">
         <Col>
-          <Pagination currentPage={1} totalPages={4} onPageChange={noop} ariaLabel="Pagination, primera" />
+          <Pagination currentPage={1} totalPages={4} onPageChange={noop} ariaLabel="Pagination, first page" />
           <Pagination variant="secondary" currentPage={7} totalPages={20} onPageChange={noop} ariaLabel="Pagination, secondary" />
-          <Pagination currentPage={20} totalPages={20} onPageChange={noop} ariaLabel="Pagination, última" />
+          <Pagination currentPage={20} totalPages={20} onPageChange={noop} ariaLabel="Pagination, last page" />
           <Pagination currentPage={3} totalPages={10} disabled onPageChange={noop} ariaLabel="Pagination, disabled" />
         </Col>
       </Section>
@@ -972,9 +972,9 @@ export default function Gallery({ mode }) {
       <Section name="SegmentedControl">
         <Col>
           {sizes3.map((s) => (
-            <SegmentedControl key={s} size={s} segments={['Día', 'Semana', 'Mes']} selectedIndex={1} onChange={noop} ariaLabel={`Periodo ${s}`} />
+            <SegmentedControl key={s} size={s} segments={['Day', 'Week', 'Month']} selectedIndex={1} onChange={noop} ariaLabel={`Period ${s}`} />
           ))}
-          <SegmentedControl segments={['A', 'B', 'C', 'D', 'E', 'F', 'G']} selectedIndex={0} onChange={noop} ariaLabel="Siete segmentos" />
+          <SegmentedControl segments={['A', 'B', 'C', 'D', 'E', 'F', 'G']} selectedIndex={0} onChange={noop} ariaLabel="Seven segments" />
         </Col>
       </Section>
 
