@@ -39,10 +39,10 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
+| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
-| Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer · _rest to be filled_ |
@@ -5500,3 +5500,145 @@ The trigger that shows or hides a chunk of extra content. With a label it's a Bu
 
 **Don't**
 - Don't change the nested Button variant to recolour it: use variant
+
+
+## Pagination
+
+**Group:** Navigation
+**Figma:** 🟢 Pagination page → `Pagination` (Variant Default · Secondary × Number 4 · 7+ pages) built from `.Parts` (SelectedPage · ActivePage · Dots · Previous · Next × State × Variant, Number text) · frame *Pagination — How to use & Accessibility* (12/11)
+**Code:** `src/components/Pagination.jsx` (atom)
+**Tokens:** `--ds-pagination-*` (Figma `pagination/all/*`)
+
+Shows which page of a list the user is on and lets them move between pages.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Under a table or list split into pages · for steps of a process use Step Indicator; for "load more" use a Button
+
+**Properties**
+- Variant → Default (teal) · Secondary (pink) · `.Parts` State → Initial · Hover · Focus · Pressed · Disabled · Number (the page text)
+
+**Anatomy**
+- Previous · first page · … · pages around the current one · … · last page · Next
+- Current page = filled circle, bold · other pages = underlined number · … jumps a block of pages
+
+**Sizing**
+- Each part is a 32 circle inside a 4 focus area (40): 8 between circles, no extra gap · numbers label sm (14) · arrows 16
+- Up to 7 page items (maxSlots); 8 only when hiding a single page would save no space
+
+### Developers · React
+
+**Import**
+- `import { Pagination } from './components/Pagination'`
+
+**Props**
+- currentPage · totalPages · onPageChange · variant 'default' | 'secondary' · disabled · maxSlots (7) · siblingCount · ariaLabel · labels { previous, next, page(n), earlierPages, laterPages }
+
+**Example**
+- `<Pagination currentPage={page} totalPages={20} onPageChange={setPage} ariaLabel="Invoices pages" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The data is split into numbered pages the user can jump between
+
+**Composition rules**
+- Keep currentPage in the parent and update it in onPageChange · one ariaLabel per Pagination when there are two on a page
+- Translate labels when the UI is not in English
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Current page is filled and bold, not only coloured · focus ring 2 + 2 outside the circle, inside the focus area
+- Hover fills the circle with white content (≥ 4.5:1)
+
+### Developers · React
+
+**Semantics**
+- `<nav>` with a name · every item is a button with a spoken name ("Page 3", "Previous page") · the current one has aria-current="page"
+- At the first / last page the arrow stays focusable with aria-disabled, so focus is never lost
+
+**Keyboard**
+- Tab through the items, Enter / Space activates
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't hide the arrows at the ends: they go disabled
+- Don't use it for fewer than 2 pages
+
+
+## SegmentedControl
+
+**Group:** Forms
+**Figma:** 🟢 Segmented Controls page → `Segmented Controls` (Number 2–5 × Selected) built from `.Segment` (States × Behavior Selected · Unselected × Size Small · Medium · Large) · frame *Segmented Control — How to use & Accessibility* (12/11)
+**Code:** `src/components/SegmentedControl.jsx` (atom)
+**Tokens:** `--ds-segmented-control-*`
+
+Pick one option out of a few, shown side by side as pills. Usually switches the view of what is under it.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- 2–5 short options that change a view (Day · Week · Month) · more options → Dropdown · content in panels → Tabs
+
+**Properties**
+- Size → Small · Medium · Large (32 · 40 · 48 tall) · Behavior → Selected · Unselected · States → Initial · Hover · Focus · Pressed
+
+**Anatomy**
+- Grey track (bg/subtle, radius 8) → segments with a 2 focus area each → the selected one is inverse (black, white text)
+
+**Sizing**
+- Text label sm 14 · md 16 · lg 19 · padding 4/12 · 6/12 · 8/16 · 4 between segments
+
+### Developers · React
+
+**Import**
+- `import { SegmentedControl } from './components/SegmentedControl'`
+
+**Props**
+- segments (array of labels) · selectedIndex · onChange(i) · size 'small' | 'medium' | 'large' · ariaLabel | ariaLabelledBy
+
+**Example**
+- `<SegmentedControl segments={['Day', 'Week', 'Month']} selectedIndex={i} onChange={setI} ariaLabel="Period" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- One choice among few, applied right away · not for submitting a form value that needs a label and validation (use RadioGroup)
+
+**Composition rules**
+- Short labels (one or two words) · always name the group
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Selected = inverse fill, not only colour · focus ring: inner 2 inside the segment + outer 2 in the focus area
+
+### Developers · React
+
+**Semantics**
+- role="radiogroup" with a name, each segment role="radio" with aria-checked
+
+**Keyboard**
+- One Tab stop (the selected segment) · arrow keys move and select
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't use it for actions (buttons) or for more than 5 options

@@ -731,16 +731,17 @@
      todo el segmento, mismo mecanismo que `--ds-icon-button-opacity-pressed`.
      ========================================================================== */
   --ds-segmented-control-root-bg:              var(--ds-bg-subtle);
-  --ds-segmented-control-root-gap:             4px;
-  --ds-segmented-control-root-border-radius:   8px;
+  --ds-segmented-control-root-gap:             var(--ds-spacing-xs);         /* root/gap/generic (4) */
+  --ds-segmented-control-root-border-radius:   var(--ds-border-radius-md);   /* root/borderRadius/generic */
   --ds-segmented-control-segment-bg:           var(--ds-bg-subtle);
   --ds-segmented-control-segment-bg-selected:  var(--ds-bg-inverse);
-  --ds-segmented-control-segment-border-radius: 8px;
-  --ds-segmented-control-segment-padding-hor-sm: 12px; /* Small y Medium comparten */
-  --ds-segmented-control-segment-padding-hor-lg: 16px; /* Large */
-  --ds-segmented-control-segment-padding-ver-sm: 4px;
-  --ds-segmented-control-segment-padding-ver-md: 6px;
-  --ds-segmented-control-segment-padding-ver-lg: 8px;
+  --ds-segmented-control-segment-border-radius: var(--ds-border-radius-md); /* rootSegment/borderRadius/generic */
+  --ds-segmented-control-segment-focus-area:   var(--ds-spacing-2xs);        /* 12/11: rootSegment/focusArea/padding (2) — alrededor de cada segmento, en todos los estados; deja sitio al anillo exterior */
+  --ds-segmented-control-segment-padding-hor-sm: var(--ds-spacing-lg); /* rootSegment/paddingHor/generic (12) — Small y Medium */
+  --ds-segmented-control-segment-padding-hor-lg: var(--ds-spacing-xl); /* rootSegment/paddingHor/large (16) */
+  --ds-segmented-control-segment-padding-ver-sm: var(--ds-spacing-xs); /* rootSegment/paddingVer/small (4) */
+  --ds-segmented-control-segment-padding-ver-md: var(--ds-spacing-sm); /* rootSegment/paddingVer/medium (6) */
+  --ds-segmented-control-segment-padding-ver-lg: var(--ds-spacing-md); /* rootSegment/paddingVer/large (8) */
   --ds-segmented-control-label-fg:             var(--ds-fg-label-default);
   --ds-segmented-control-label-fg-selected:    var(--ds-fg-label-inverse);
   --ds-segmented-control-bgmix-hover:          var(--ds-opacity-hover-default);
@@ -748,8 +749,7 @@
   --ds-segmented-control-opacity-pressed:      var(--ds-opacity-pressed);
   --ds-segmented-control-focus-inner:          var(--ds-borderColor-focus-inner);
   --ds-segmented-control-focus-outer:          var(--ds-borderColor-focus-outer);
-  --ds-segmented-control-focus-width:          2px;
-  --ds-segmented-control-focus-gap:            2px; /* hueco entre los dos anillos */
+  --ds-segmented-control-focus-width:          var(--ds-border-width-lg); /* rootSegment/borderWidth/focus: inner 2 por dentro del segmento + outer 2 en el área de foco */
 
 
   /* ==========================================================================
@@ -1513,7 +1513,7 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Pagination (pagination/*)
+     COMPONENT TOKENS — Pagination (pagination/all/* — 12/11: antes pagination/*, eje primary → default)
      Usado por Pagination.jsx. Sincronizado con Figma 18/07/2026 tras la
      reconstrucción de .Parts (nomenclatura por Part, no por intuición).
 
@@ -1530,69 +1530,64 @@
      modos), nunca inverse de icono (se invierte a negro en dark).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  /* Root — geometría, foco y textos compartidos */
-  --ds-pagination-container-size:            var(--ds-sizing-md);          /* 32×32 por Part */
-  --ds-pagination-item-radius:               var(--ds-border-radius-circle); /* 80 → círculo */
-  --ds-pagination-gap:                       4px;                          /* separación entre Parts (sin token Figma) */
-  --ds-pagination-number-font-size:          var(--ds-fontSize-label-md);  /* nº/… — sin token Figma, escala label */
-  --ds-pagination-number-font-weight:        var(--ds-font-weight-medium);
+  /* Root — geometría, foco y textos compartidos (12/11: alineado con Figma) */
+  --ds-pagination-container-size:            var(--ds-sizing-md);          /* root/size/generic — círculo de 32 */
+  --ds-pagination-item-radius:               var(--ds-border-radius-circle); /* root/borderRadius/generic */
+  --ds-pagination-root-focus-area:           var(--ds-spacing-xs);         /* root/focusArea/padding (4) — alrededor de cada Part, en todos los estados: 8 visibles entre círculos, sin gap propio */
+  --ds-pagination-number-font-size:          var(--ds-fontSize-label-sm);  /* 12/11: label/sm (14) en Figma y código (antes 12 en Figma, 16 en código) */
+  --ds-pagination-number-line-height:        var(--ds-lineHeight-label-sm);
 
-  --ds-pagination-root-border-width-focus:   2px;                          /* borderWidth/lg */
+  --ds-pagination-root-border-width-focus:   var(--ds-border-width-lg);    /* root/borderWidth/focus — anillo 2 + 2 por fuera, dentro del área de foco */
   --ds-pagination-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-pagination-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  /* root/text/fg/selectedPage: resuelto 11/08 — Figma exportaba fg/label/default
-     (oscuro, invierte con el modo) sobre un bg que NO invierte (bg/surface/primary);
-     corregido en Figma a fg/label/onColor (blanco fijo) y aquí a juego.
-     DEUDA restante: blanco sobre teal = 2.7:1, no cumple AA — decisión de Carol de
-     dejarlo así por ahora (ver nota en tokens.css junto a selectedPage-bg-primary). */
-  --ds-pagination-root-text-fg-selected:     var(--ds-fg-label-onColor);
+  --ds-pagination-root-text-fg-selected:     var(--ds-fg-label-onColor);   /* root/text/fg/selectedPage — blanco sobre bg/surface/primary|secondary */
   --ds-pagination-root-text-fg-disabled:     var(--ds-fg-label-disabled);
 
   /* Previous — flecha izquierda */
-  --ds-pagination-previous-fg-primary:       var(--ds-fg-icon-primary);
+  --ds-pagination-previous-fg-default:       var(--ds-fg-icon-primary);
   --ds-pagination-previous-fg-secondary:     var(--ds-fg-icon-secondary);
   --ds-pagination-previous-fg-disabled:      var(--ds-fg-icon-disabled);
   --ds-pagination-previous-fg-hover:         var(--ds-fg-icon-onColor);    /* blanco sobre relleno */
-  --ds-pagination-previous-bg-hover-primary:   var(--ds-bg-primary);
+  --ds-pagination-previous-bg-hover-default:   var(--ds-bg-primary);
   --ds-pagination-previous-bg-hover-secondary: var(--ds-bg-secondary);
   --ds-pagination-previous-opacity-pressed:  var(--ds-opacity-pressed);
 
   /* Next — flecha derecha (idéntico a previous, se mantiene separado como en input iconLeft/Right) */
-  --ds-pagination-next-fg-primary:           var(--ds-fg-icon-primary);
+  --ds-pagination-next-fg-default:           var(--ds-fg-icon-primary);
   --ds-pagination-next-fg-secondary:         var(--ds-fg-icon-secondary);
   --ds-pagination-next-fg-disabled:          var(--ds-fg-icon-disabled);
   --ds-pagination-next-fg-hover:             var(--ds-fg-icon-onColor);
-  --ds-pagination-next-bg-hover-primary:       var(--ds-bg-primary);
+  --ds-pagination-next-bg-hover-default:       var(--ds-bg-primary);
   --ds-pagination-next-bg-hover-secondary:     var(--ds-bg-secondary);
   --ds-pagination-next-opacity-pressed:      var(--ds-opacity-pressed);
 
   /* Dots — el "…" de truncamiento (usa tokens de label, no de icono) */
-  --ds-pagination-dots-fg-primary:           var(--ds-fg-label-default);
+  --ds-pagination-dots-fg-default:           var(--ds-fg-label-default);
   --ds-pagination-dots-fg-secondary:         var(--ds-fg-label-secondary);
   --ds-pagination-dots-fg-disabled:          var(--ds-fg-label-disabled);
   --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* fg/icon/onColor — 10/11: en Figma apuntaba a icon/fg/onColor, variable borrada; re-enlazado a Mode */
-  --ds-pagination-dots-bg-hover-primary:       var(--ds-bg-primary);
+  --ds-pagination-dots-bg-hover-default:       var(--ds-bg-primary);
   --ds-pagination-dots-bg-hover-secondary:     var(--ds-bg-secondary);
   --ds-pagination-dots-opacity-pressed:      var(--ds-opacity-pressed);
 
   /* SelectedPage — círculo relleno de la página actual (texto vía root/text/fg/selected) */
-  --ds-pagination-selected-bg-primary:       var(--ds-bg-primary);
+  --ds-pagination-selected-bg-default:       var(--ds-bg-primary);
   --ds-pagination-selected-bg-secondary:     var(--ds-bg-secondary);
   --ds-pagination-selected-bg-disabled:      var(--ds-bg-disabled);
   --ds-pagination-selected-bg-hover:         var(--ds-opacity-hover-default);
   --ds-pagination-selected-opacity-pressed:  var(--ds-opacity-pressed);
 
-  /* ActivePage — Link de texto subrayado (resto de páginas) */
-  --ds-pagination-active-fg-primary:         var(--ds-fg-label-default);
+  /* ActivePage — número subrayado (resto de páginas) */
+  --ds-pagination-active-fg-default:         var(--ds-fg-label-default);
   --ds-pagination-active-fg-secondary:       var(--ds-fg-label-secondary);
   --ds-pagination-active-fg-hover:           var(--ds-fg-label-onColor);   /* blanco sobre relleno hover — corregido 11/08, bg-hover-primary/secondary no invierten */
   --ds-pagination-active-fg-disabled:        var(--ds-fg-label-disabled);
-  --ds-pagination-active-bg-hover-primary:     var(--ds-bg-primary);
+  --ds-pagination-active-bg-hover-default:     var(--ds-bg-primary);
   --ds-pagination-active-bg-hover-secondary:   var(--ds-bg-secondary);
   --ds-pagination-active-opacity-pressed:    var(--ds-opacity-pressed);
-  --ds-pagination-active-border-bottom-width: 1px;                         /* borderWidth/sm */
-  /* borderBottomColor/{secondary,hover} de Figma se absorben en currentColor:
-     el subrayado siempre iguala el color del texto del estado (§4). */
+  --ds-pagination-active-border-bottom-width: var(--ds-border-width-sm);   /* activePage/borderBottomWidth/generic — grosor del subrayado */
+  /* El subrayado es text-decoration del número (Figma: texto con Underline, 12/11 —
+     antes una instancia de Link): toma el color del texto en cada estado. */
 
 
   /* ══════════════════════════════════════════════════════════════════════════

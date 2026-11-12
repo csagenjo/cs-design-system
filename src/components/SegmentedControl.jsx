@@ -1,6 +1,6 @@
 /**
  * SegmentedControl — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: área de foco 2, texto por tamaño, anillo como Figma, tokens)
  *
  * Grupo de selección única en forma de píldoras. Compone N `segments` a
  * partir de un array + índice seleccionado — Figma enumeraba cada
@@ -13,14 +13,16 @@
  * inverse`, pareja que invierte junta con el modo) — no varía por tamaño.
  *
  * Estados vía pseudo-clases CSS nativas (`<button>` real, sin JS de estado
- * propio): `:hover` con `::before` (mismo mecanismo que Chip), `:active`
- * con `opacity` (mismo mecanismo que Icon Button), `:focus-visible` con
- * anillo doble (mismo mecanismo que Icon Button: `outline` + `box-shadow`
- * combinados, sin necesidad de las 2 capas que hizo falta en Figma).
+ * propio): `:hover` con `::before` (velo, mismo mecanismo que Chip), `:active`
+ * con `opacity`, `:focus-visible` con el anillo de Figma: inner 2 por dentro
+ * del segmento (box-shadow inset) + outer 2 pegado por fuera (outline), que
+ * cae en el área de foco de 2 que rodea cada segmento en todos los estados
+ * (`.Segment` en Figma, 12/11). El texto crece con el tamaño: label sm 14 ·
+ * md 16 · lg 19, como Figma.
  *
  * USO:
  *   <SegmentedControl
- *     segments={['Día', 'Semana', 'Mes']}
+ *     segments={['Day', 'Week', 'Month']}
  *     selectedIndex={selected}
  *     onChange={setSelected}
  *   />
@@ -35,6 +37,7 @@ import { injectStyles } from './_inputBase';
 const css = `
 .ds-segmented-control {
   display: inline-flex;
+  width: fit-content;   /* hug, también dentro de un padre flex en columna */
   gap: var(--ds-segmented-control-root-gap);
   background: var(--ds-segmented-control-root-bg);
   border-radius: var(--ds-segmented-control-root-border-radius);
@@ -48,11 +51,10 @@ const css = `
   border: none;
   background: var(--ds-segmented-control-segment-bg);
   color: var(--ds-segmented-control-label-fg);
+  margin: var(--ds-segmented-control-segment-focus-area);
   border-radius: var(--ds-segmented-control-segment-border-radius);
   font-family: inherit;                       /* Nunito (fontFamily/default) */
-  font-size: var(--ds-fontSize-label-sm);      /* 14 */
   font-weight: var(--ds-font-weight-regular);  /* 400 */
-  line-height: var(--ds-lineHeight-label-sm);       /* 20 */
   cursor: pointer;
   box-sizing: border-box;
   white-space: nowrap;
@@ -80,18 +82,21 @@ const css = `
 }
 .ds-segmented-control__segment:focus-visible {
   outline: var(--ds-segmented-control-focus-width) solid var(--ds-segmented-control-focus-outer);
-  outline-offset: 1px;
-  box-shadow: 0 0 0 4px var(--ds-segmented-control-focus-inner);
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 var(--ds-segmented-control-focus-width) var(--ds-segmented-control-focus-inner);
 }
 
 .ds-segmented-control__segment--small {
   padding: var(--ds-segmented-control-segment-padding-ver-sm) var(--ds-segmented-control-segment-padding-hor-sm);
+  font-size: var(--ds-fontSize-label-sm); line-height: var(--ds-lineHeight-label-sm); /* 14/20 → 32 con el área */
 }
 .ds-segmented-control__segment--medium {
   padding: var(--ds-segmented-control-segment-padding-ver-md) var(--ds-segmented-control-segment-padding-hor-sm);
+  font-size: var(--ds-fontSize-label-md); line-height: var(--ds-lineHeight-label-md); /* 16/24 → 40 */
 }
 .ds-segmented-control__segment--large {
   padding: var(--ds-segmented-control-segment-padding-ver-lg) var(--ds-segmented-control-segment-padding-hor-lg);
+  font-size: var(--ds-fontSize-label-lg); line-height: var(--ds-lineHeight-label-lg); /* 19/28 → 48 */
 }
 `;
 
@@ -145,7 +150,7 @@ export default SegmentedControl;
 
 const [selected, setSelected] = useState(0);
 
-<SegmentedControl segments={['Día', 'Semana', 'Mes']} selectedIndex={selected} onChange={setSelected} />
+<SegmentedControl segments={['Day', 'Week', 'Month']} selectedIndex={selected} onChange={setSelected} ariaLabel="Period" />
 
 <SegmentedControl segments={['A', 'B']} selectedIndex={0} onChange={fn} size="large" />
 */
