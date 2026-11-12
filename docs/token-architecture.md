@@ -712,7 +712,7 @@ El texto de título de sección (teal, bold, 19px) estaba **duplicado 4 veces** 
 | | SectionHeader | Headline |
 |---|---|---|
 | Device family | `fontSize/title/*` | `fontSize/headline/*` |
-| lineHeight | `fontLheight/sm` (28.5, propio) | escala headline propia |
+| lineHeight | `lineHeight/sm` (28.5, propio) | escala headline propia |
 | weight | siempre Bold-capable (prop `weight`) | siempre Regular |
 
 Tokens Component: `--ds-section-header-text-fg-default/primary/disabled` → Mode `fg/title/default/primary/disabled`. La nomenclatura de Figma para el color "normal" era **"Subtle"** (confuso — no es un gris apagado, resuelve al mismo `#050506`/`#FFFFFF` que cualquier texto de contraste completo) — renombrado a `default` en código, siguiendo la regla de nombrar por lo que resuelve, no por la etiqueta heredada.
@@ -875,9 +875,9 @@ Fila interactiva real (`<button>`), no un listado pasivo — confirmado por los 
 
 Primitivos nuevos en Base: `typography/fontSize/22`, `typography/fontSize/40`.
 
-### Line-height emparejado por rol (`fontLheight/{familia}/{tamaño}`)
+### Line-height emparejado por rol (`lineHeight/{familia}/{tamaño}`; en Figma `fontLheight/*` hasta el 12/11)
 
-Un token de line-height **por cada** `fontSize/*` (27), no una escala genérica: si el tamaño cambia por device, su line-height cambia con él. Los 9 genéricos `fontLheight/3xs…3xl` se retiraron (y sus 27 variables Theme).
+Un token de line-height **por cada** `fontSize/*` (27), no una escala genérica: si el tamaño cambia por device, su line-height cambia con él. Los 9 genéricos `lineHeight/3xs…3xl` se retiraron (y sus 27 variables Theme).
 
 - **Texto de lectura** (body, label, annotation, title): 1.5 × tamaño.
 - **Headline / subheadline**: 1.25 × tamaño (regla única de titulares, 29/09 — antes cada nivel tenía una proporción distinta, de 1.13 a 1.33, ajustada a mano).
@@ -897,7 +897,7 @@ Un token de line-height **por cada** `fontSize/*` (27), no una escala genérica:
 | 40 | — | 48 |
 | 48 | — | 60 |
 
-Primitivos de line-height en Base **nombrados por valor** (`typography/fontLheight/24`), igual que `typography/fontSize/*` — antes eran escalones (`50`=18 … `800`=72) sin relación con el valor. Escala final: 16 · 20 · 24 · 28 · 32 · 36 · 40 · 44 · 48 · 60 (todos múltiplos de 4).
+Primitivos de line-height en Base **nombrados por valor** (`typography/lineHeight/24`), igual que `typography/fontSize/*` — antes eran escalones (`50`=18 … `800`=72) sin relación con el valor. Escala final: 16 · 20 · 24 · 28 · 32 · 36 · 40 · 44 · 48 · 60 (todos múltiplos de 4).
 
 Re-enlace en Figma: ~1.600 nodos de texto + 121 overrides de instancia. **Lección real:** `setBoundVariable('lineHeight')` a nivel de nodo NO sustituye un binding de rango ya existente (el nodo queda con 2 entradas y el segmento sigue usando la vieja) — usar `setRangeBoundVariable(start, end, …)` por segmento.
 
@@ -957,7 +957,7 @@ Grupo propio en Component tokens para los frames de documentación de Figma — 
 | `doc/all/fontSize|lineHeight/title-sm` | 24 / 28 | etiquetas de portada (.Status, .Kind of file, Bottom row) |
 | `doc/all/fg/text/default` | → Mode `fg/default` | color de esos títulos (dark mode) |
 
-Tipografía → Base directo (misma regla de line-height de titulares: 1.25× en rejilla de 4). Primitivos nuevos en Base: `typography/fontSize/64`, `/128`, `typography/fontLheight/80`, `/160`. El texto corriente de la doc (cuerpo 14/16, etiquetas 12) usa los tokens Device constantes (`body/xs`, `body/sm`, `label/xs`), que no cambian por device.
+Tipografía → Base directo (misma regla de line-height de titulares: 1.25× en rejilla de 4). Primitivos nuevos en Base: `typography/fontSize/64`, `/128`, `typography/lineHeight/80`, `/160`. El texto corriente de la doc (cuerpo 14/16, etiquetas 12) usa los tokens Device constantes (`body/xs`, `body/sm`, `label/xs`), que no cambian por device.
 
 ---
 
@@ -1126,10 +1126,29 @@ Scope `GAP`, ocultos en la publicación (internos del componente, como el resto 
 - Los 15 saltos Component → Base (14 del export + `drawer/all/toggle/padding/center`), sin excepciones (decisión de Carol: corregir todo):
   - Escala de spacing ampliada con dos pasos intermedios, misma cadena que el resto: Device `spacing/lg-xl` (14) y `spacing/xl-2xl` (20) → Theme `…-mobile|-tablet|-desktop` → Base `dimension/175` / `dimension/250`. Fijos en los 3 devices, como todo `spacing/*`.
   - Tabs: paddingVer s → `spacing/lg`, m → `spacing/lg-xl`, l y paddingHor → `spacing/xl`. Drawer Toggle → `spacing/xl-2xl`.
-  - Tipografía de la documentación: Device `fontSize/doc/*` y `fontLheight/doc/*` (display-xl 128/160, display-lg 64/80, title-lg 40/48, title-md 28/36, title-sm 24/28) → Theme `…-mobile|-tablet|-desktop` → Base `typography/*`. Mismo valor en los 3 devices (las páginas de documentación no cambian por dispositivo). `doc/all/*` apunta a ellos.
+  - Tipografía de la documentación: Device `fontSize/doc/*` y `lineHeight/doc/*` (display-xl 128/160, display-lg 64/80, title-lg 40/48, title-md 28/36, title-sm 24/28) → Theme `…-mobile|-tablet|-desktop` → Base `typography/*`. Mismo valor en los 3 devices (las páginas de documentación no cambian por dispositivo). `doc/all/*` apunta a ellos.
 
 **Colisión token/grupo (resuelta 10/11).** En Theme, `opacity/hover` (30) y `opacity/overlay` (70) eran números y a la vez grupos de color (`opacity/hover/default-light`…). Figma lo permite; DTCG no, así que el export perdía los números. No los usaba nada (ni variables, ni capas en las 59 páginas, ni el código): el hover del sistema es el velo de color del 10 % y el overlay real es negro 30 %. Se borraron en Theme y Device (Carol + Claude). Siguen `opacity/pressed` (80, 22 tokens) y `opacity/readOnly` (40).
 
 **`npm run tokens:check`** (`scripts/tokens-check.mjs`) — en cada re-export valida: (1) todo alias resuelve (y avisa de colisiones token/grupo), (2) 0 valores sin enlace fuera de Base, (3) cada colección solo apunta a la siguiente (Component → Mode|Device · Mode/Device → Theme · Theme → Base), salvo lo escrito en `tokens/layer-exceptions.json` (hoy vacío). Sale con código 1 si algo falla.
 
 **`bg/track` (10/11, Mode).** Parte vacía de Progress Bar y de los sliders. Light → Theme `bg/track-light` → neutral/100 (igual que bg/subtle); dark → `bg/track-dark` → neutral/200, más claro que bg/subtle (#5E6672) para que el relleno de marca tenga ≥ 3:1 (rosa 3,3, teal 3,5). Decisión de Carol: aclarar el gris, no oscurecerlo.
+
+## Auditoría de Device (12/11/2026) — mismo método que Component
+
+Revisados nombre, valor, alcance (scope), uso en Figma (las 60 páginas, enlaces de nodo y de texto) y uso en código, en los 3 modos (Mobile · Tablet · Desktop). 112 tokens.
+
+**Bien, sin cambios.**
+- Tipografía: los 32 `fontSize/*` y 32 `lineHeight/*` de código (`tokens.css` + `@media` 768 / 1024) coinciden al 100 % con Figma en los 3 modos. Solo faltan en código los `doc/*`, a propósito: son de las páginas de documentación de Figma.
+- `spacing/*`, `sizing/*`, `borderWidth/*`, `borderRadius/*`: fijos en los 3 modos, como dice la regla; responsive solo `layout/margin|gutter` (16/24/32 · 24/32/32) y la tipografía de titulares, subtítulos y `title/lg|xl`, `body/lg`.
+- Alcances correctos en todos (GAP, WIDTH_HEIGHT, CORNER_RADIUS, STROKE_FLOAT, FONT_*, OPACITY); ninguno en ALL_SCOPES.
+- `spacing/lg-xl` (14) se sale de la rejilla de 4, pero solo lo usa el padding vertical de Tabs M y el tamaño exterior del tab sí cae en rejilla (regla: se valida el exterior).
+
+**Cambiado.**
+- `fontLheight/*` → `lineHeight/*` en Device (32), Theme (96) y Base (`typography/lineHeight/*`, 12), para que Figma y código se llamen igual (decisión de Carol). Renombrar no rompe enlaces.
+
+**Sin uso, se quedan a propósito** (decisión de Carol: sirven para crear contenido más adelante; documentados aquí, no son deuda).
+- `fontStyle/italic`, `fontDecor/underline` (0 usos), `fontWeight/medium` (0 usos; existe en código), `fontFamily/narrow` (= Nunito), `fontFamily/annotation`, `fontFamily/web/fallback`.
+- Escala sin usar: `fontSize|lineHeight/subheadline/*` (solo en la página de Calendar, descartado), `title/xl`, `annotation/*`; `spacing/3xl` y `sizing/3xl` solo en páginas de documentación.
+- `dimension/iconStroke` (2,67): solo en decoraciones de Cover y portadas. No es el trazo de los iconos (ese es `icon-stroke` de la librería Lucide, 2).
+- `opacity/readOnly` (40): solo la usa `Input/InputTelephone/iconFlag/fg/disabled` (la bandera es una imagen y no se puede recolorear; único caso de disabled por opacidad).
