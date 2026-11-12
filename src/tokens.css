@@ -542,7 +542,7 @@
      custom properties que Button/IconButton ya consumen (mismo mecanismo que
      el rebind de variables en Figma). Geometría (radio pill, padding, tamaño
      de icono por Size) se hereda sin tocar de Button/IconButton. */
-  --ds-collapsible-fg-on-color: var(--ds-fg-onColor);  /* texto/icono sobre el relleno rosa en Hover/Pressed (Secondary) */
+  --ds-collapsible-fg-on-color: var(--ds-fg-onColor);  /* collapsible/all/root/fg/onColor (12/11) — texto/icono sobre el relleno rosa en Hover/Pressed (Secondary) */
   --ds-collapsible-border-color-default:  var(--ds-borderColor-emphasis);
   --ds-collapsible-border-color-secondary: var(--ds-borderColor-secondary);
   --ds-collapsible-label-fg-default:      var(--ds-fg-label-default);

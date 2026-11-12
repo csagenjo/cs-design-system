@@ -443,7 +443,7 @@ export default function Gallery({ mode }) {
             )))}
           </Row>
         ))}
-        <Row><Collapsible labels={{ expand: 'Ver más', collapse: 'Ver menos' }} expanded onToggle={noop} /></Row>
+        <Row><Collapsible labels={{ expand: 'Show more', collapse: 'Show less' }} expanded onToggle={noop} /></Row>
       </Section>
 
       <Section name="CollapsibleIconButton">
