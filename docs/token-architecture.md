@@ -1152,3 +1152,38 @@ Revisados nombre, valor, alcance (scope), uso en Figma (las 60 páginas, enlaces
 - Escala sin usar: `fontSize|lineHeight/subheadline/*` (solo en la página de Calendar, descartado), `title/xl`, `annotation/*`; `spacing/3xl` y `sizing/3xl` solo en páginas de documentación.
 - `dimension/iconStroke` (2,67): solo en decoraciones de Cover y portadas. No es el trazo de los iconos (ese es `icon-stroke` de la librería Lucide, 2).
 - `opacity/readOnly` (40): solo la usa `Input/InputTelephone/iconFlag/fg/disabled` (la bandera es una imagen y no se puede recolorear; único caso de disabled por opacidad).
+
+## Auditoría de Mode (12/11/2026) — mismo método
+
+252 tokens (fg 180 · borderColor 37 · bg 26 · opacity 9), light y dark. Revisados nombre, valor, alcance, uso en las 60 páginas de Figma (nodos, rellenos, trazos, efectos y estilos de efecto), alias desde Component y uso en código.
+
+**Bien.**
+- Los 114 tokens de Mode que tiene `tokens.css` coinciden al 100 % con Figma en light y dark. Incluye toda la familia `borderColor/*` en dark: la deuda "auditar `borderColor/*` en dark" queda cerrada.
+- Contraste de bordes en dark sobre bg/default · page · container: `default` 8,1 · `emphasis` 17,9 · `focus-outer` 13,8 · marca y estados ≥ 5,5. `subtle` (3,4) y `disabled` (2,7 sobre container) son decorativo y exento.
+
+**Cambiado.**
+- Código: `--ds-opacity-hover-inverse` → `--ds-opacity-hover-default-inverse` y `--ds-opacity-overlay` → `--ds-opacity-overlay-default`, como se llaman en Figma (`opacity/hover/default-inverse`, `opacity/overlay/default`).
+- Figma: `borderColor/info-inverse` no se invertía en dark (azul claro en los dos modos); ahora en dark apunta al mismo azul oscuro que `focus-outer-inverse`.
+- Figma: borrados los 12 tokens `…/onContainer…quaternary*` y `…/onContainerShape/primary-onQuaternary*` y sus 24 variables de Theme: apuntaban a una superficie "quaternary" que no existe (bg/surface solo tiene primary, secondary y tertiary). Ninguno tenía uso.
+- Figma: alcances ajustados (solo filtran el selector, no cambian enlaces): `fg/*` base → texto, formas y trazo (antes también fondo de frame); `bg/surface/*` → frame y formas (antes también texto); `fg/icon/*` → formas y trazo (antes también texto y frame).
+
+**Familias "encima de superficie" borradas** (decisión de Carol, 12/11). `fg/{headline,subheadline,title,label,body,icon}/onSurface/*`, `…/onContainer/*`, `…/onContainerShape/*` y `borderColor/onSurface/*`: 123 tokens de Mode y 245 de Theme.
+- Repetían el mismo valor en cada rol (headline = title = label = body sobre una misma superficie) y algunos fallaban en dark: `…/onSurface/secondary-bold` era negro sobre el magenta #8C1C4C, que no cambia con el modo (2,4:1).
+- Antes de borrar, los 4 que se usaban en páginas de Figma se re-enlazaron a su equivalente con el mismo valor en los dos modos (1.103 enlaces): `fg/title/onSurface/default` → `fg/title/default`, `fg/label/onSurface/default` → `fg/label/default`, `fg/body/onSurface/default` → `fg/body/default`, `fg/label/onSurface/primary` → `fg/label/onColor`.
+- Los 4 restantes también se borraron tras moverlos (decisión de Carol): el teal fijo de la cabecera onPrimary de Dialog (`fg/title|icon/onSurface/static-primary`) pasa a `bg/surface/primary`, el único token con #0A7C92 en los dos modos (en dark `fg/*/primary` es teal claro y sobre la cabecera blanca daría 1,6:1); los títulos de tarjeta de los frames *How to use & Accessibility* (`…/secondary-subtle|tertiary-subtle`) pasan a dos tokens de documentación nuevos, `doc/all/card/title/fg/designers` → `fg/secondary` y `…/developers` → `fg/tertiary`.
+- Resultado: ya no queda ningún token `onSurface`, `onContainer` ni `onContainerShape` en Mode.
+
+**Regla para texto, iconos y bordes sobre superficies de marca** (sustituye a esas familias):
+
+| Superficie | Light | Dark | Texto e iconos | Ejemplo |
+|---|---|---|---|---|
+| `bg/surface/*-subtle` (50 / 900) | muy clara | muy oscura | `fg/default`, `fg/icon/default` (y sus roles: `fg/label/default`, `fg/body/default`…) | Banda suave con un párrafo |
+| `bg/surface/*-medium` (200 / 800) | clara | oscura | igual que subtle | Tarjeta destacada |
+| `bg/surface/*` base (500) | marca | marca | `fg/onColor`, `fg/icon/onColor` (blanco en los dos modos) | Banner teal |
+| `bg/surface/*-bold` (700) | marca oscura | marca oscura | igual que base | Banner magenta oscuro |
+
+Bordes: en subtle y medium, los `borderColor/*` normales; en base y bold, `borderColor/onColor`.
+
+**Sin uso, se quedan a propósito** (como en Device: reservas baratas para contenido).
+- `fg/subheadline/*`, `fg/secondary`, `fg/tertiary`, `fg/headline/subtle|tertiary`, `fg/title/subtle`; `borderColor/accent*`, `onColor`, `tertiary-inverse`, `info-inverse`; `bg/surface/secondary-bold`; `opacity/hover/subtle-inverse`, `opacity/overlay/default` (este sí lo usa el código).
+- `opacity/hover/subtle` y `subtle-inverse` valen lo mismo que `default` y `default-inverse`.

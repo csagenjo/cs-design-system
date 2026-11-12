@@ -136,8 +136,6 @@
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #FFFFFF;
   --ds-fg-primary:          #0A7C92;   /* primary/500 — reducción profundidad 15/07 (era 700 #286371) */
-  --ds-fg-title-onSurface-static-primary: #0A7C92; /* teal fijo en los dos modos (Figma fg/{title,icon}/onSurface/static-primary) — 19/10 */
-  --ds-fg-icon-onSurface-static-primary:  #0A7C92; /* idem */
   --ds-fg-secondary:        #D61E74;   /* secondary/500 — reducción profundidad 15/07 (era 600 #B71B60) */
   --ds-fg-tertiary:         #8B619E;
   --ds-fg-info:             #094F78;
@@ -266,10 +264,10 @@
 
   /* â”€â”€ OPACITY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   --ds-opacity-hover-default:      rgba(5,5,6,0.1);
-  --ds-opacity-hover-inverse:      rgba(255,255,255,0.1);
+  --ds-opacity-hover-default-inverse:      rgba(255,255,255,0.1);
   --ds-opacity-hover-subtle:       rgba(5,5,6,0.1);
   --ds-opacity-hover-subtle-inverse: rgba(255,255,255,0.1);
-  --ds-opacity-overlay:            rgba(5,5,6,0.3);
+  --ds-opacity-overlay-default:            rgba(5,5,6,0.3);
   --ds-opacity-pressed:            0.8;
   /* opacity/shadow/* (26/10) — capas de las sombras (Effect Styles). Negro; en dark el doble de opaco */
   --ds-opacity-shadow-ambient:      rgba(5,5,6,0.12);
@@ -456,7 +454,7 @@
 
   /* Hover y Pressed (button/all/root/bgMix/* y opacity/pressed): en Hover las
      tres variantes toman el fondo de Primary con este velo encima (26/10/2026). */
-  --ds-button-bg-mix-default-hover: var(--ds-opacity-hover-inverse);  /* blanco 10 % sobre negro */
+  --ds-button-bg-mix-default-hover: var(--ds-opacity-hover-default-inverse);  /* blanco 10 % sobre negro */
   --ds-button-bg-mix-accent-hover:  var(--ds-opacity-hover-default);  /* negro 10 % sobre teal */
   --ds-button-opacity-pressed:      var(--ds-opacity-pressed);        /* 0.8 */
 
@@ -501,7 +499,7 @@
   --ds-icon-button-bg-default-primary:  var(--ds-bg-inverse);
   --ds-icon-button-bg-accent-primary:   var(--ds-bg-primary);
   --ds-icon-button-bg-disabled:         var(--ds-bg-disabled);
-  --ds-icon-button-bg-mix-default-hover: var(--ds-opacity-hover-inverse);
+  --ds-icon-button-bg-mix-default-hover: var(--ds-opacity-hover-default-inverse);
   --ds-icon-button-bg-mix-accent-hover:  var(--ds-opacity-hover-default);
 
   /* Bordes (iconButton/all/root/borderColor/*, Variant=Secondary/Tertiary/outline) */
@@ -745,7 +743,7 @@
   --ds-segmented-control-label-fg:             var(--ds-fg-label-default);
   --ds-segmented-control-label-fg-selected:    var(--ds-fg-label-inverse);
   --ds-segmented-control-bgmix-hover:          var(--ds-opacity-hover-default);
-  --ds-segmented-control-bgmix-hover-selected: var(--ds-opacity-hover-inverse);
+  --ds-segmented-control-bgmix-hover-selected: var(--ds-opacity-hover-default-inverse);
   --ds-segmented-control-opacity-pressed:      var(--ds-opacity-pressed);
   --ds-segmented-control-focus-inner:          var(--ds-borderColor-focus-inner);
   --ds-segmented-control-focus-outer:          var(--ds-borderColor-focus-outer);
@@ -1189,7 +1187,7 @@
   --ds-chip-root-bg-disabled:              var(--ds-bg-disabled);
   --ds-chip-root-opacity-pressed:          var(--ds-opacity-pressed);
   --ds-chip-root-bgmix-hover:              var(--ds-opacity-hover-default);
-  --ds-chip-root-bgmix-hover-selected:     var(--ds-opacity-hover-inverse);
+  --ds-chip-root-bgmix-hover-selected:     var(--ds-opacity-hover-default-inverse);
   --ds-chip-root-border-color-generic:     var(--ds-borderColor-default);
   --ds-chip-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-chip-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
@@ -1770,13 +1768,13 @@
   /* Header — title */
   --ds-dialog-header-title-fg-default:         var(--ds-fg-title-default); /* pairs con bg-default — invierte */
   --ds-dialog-header-title-fg-primary:         var(--ds-fg-title-onColor); /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-title-fg-on-primary:      var(--ds-fg-title-onSurface-static-primary); /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
+  --ds-dialog-header-title-fg-on-primary:      var(--ds-bg-primary); /* 12/11: Figma → bg/surface/primary (teal fijo en los dos modos; antes fg/title/onSurface/static-primary, borrado) */
   --ds-dialog-header-title-fg-secondary:       var(--ds-fg-title-inverse); /* pairs con bg-secondary — invierte */
   --ds-dialog-header-title-fg-tertiary:        var(--ds-fg-title-inverse); /* pairs con bg-tertiary — corregido 24/08, antes fg-title-default */
   /* Header — icon */
   --ds-dialog-header-icon-fg-default:          var(--ds-fg-icon-default);  /* pairs con bg-default — corregido 24/08, antes fg-icon-inverse (blanco sobre blanco en light); luego se descubrió además mal enlazado a la capa de Primary en Figma — ver token-architecture.md */
   --ds-dialog-header-icon-fg-primary:          var(--ds-fg-icon-onColor);  /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-icon-fg-on-primary:       var(--ds-fg-icon-onSurface-static-primary);  /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
+  --ds-dialog-header-icon-fg-on-primary:       var(--ds-bg-primary);  /* 12/11: Figma → bg/surface/primary (antes fg/icon/onSurface/static-primary, borrado) */
   --ds-dialog-header-icon-fg-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
   --ds-dialog-header-icon-fg-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
   /* Header — foco de Back/Close (Icon Button re-tematizado): el anillo contrasta con el fondo de cada header (27/10) */
@@ -2280,8 +2278,8 @@
     --ds-borderColor-focus-outer-inverse: #094F78;
 
     --ds-opacity-hover-default: rgba(255,255,255,0.1);
-    --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
-    --ds-opacity-overlay:       rgba(255,255,255,0.3);
+    --ds-opacity-hover-default-inverse: rgba(5,5,6,0.1);
+    --ds-opacity-overlay-default:       rgba(255,255,255,0.3);
   --ds-opacity-shadow-ambient:      rgba(5,5,6,0.24);
   --ds-opacity-shadow-penumbra:     rgba(5,5,6,0.28);
   --ds-opacity-shadow-umbra:        rgba(5,5,6,0.40);
@@ -2412,8 +2410,8 @@
   --ds-borderColor-focus-outer-inverse: #094F78;
 
   --ds-opacity-hover-default: rgba(255,255,255,0.1);
-  --ds-opacity-hover-inverse: rgba(5,5,6,0.1);
-  --ds-opacity-overlay:       rgba(255,255,255,0.3);
+  --ds-opacity-hover-default-inverse: rgba(5,5,6,0.1);
+  --ds-opacity-overlay-default:       rgba(255,255,255,0.3);
   /* añadidos 19/10 (A11y-2): tokens de Mode que faltaban en dark y heredaban el valor light */
   --ds-borderColor-accent-inverse: #13525F;
   --ds-borderColor-accent-primary: #66AEC0;
