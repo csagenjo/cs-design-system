@@ -8,6 +8,7 @@ Repo: https://github.com/csagenjo/cs-design-system · Figma fileKey `QiWDJdMPB5p
 - `docs/component-index.md` — una línea por componente para elegir (el agente lo lee primero)
 - `docs/component-inventory.md` — cómo usar cada componente y su accesibilidad (diseño, React, agentes)
 - `docs/component-notes.md` — detalle y decisiones por componente
+- `docs/layouts.md` — los 6 layouts de La Plataforma traducidos al sistema (base del agente de layouts, paso 5)
 - `docs/token-architecture.md` · `docs/architecture.md` — tokens y arquitectura completas
 - `docs/accessibility-audit.md` — auditoría WCAG 2.2 AA y plan A11y
 - `docs/tech-debt.md` — deuda abierta · `docs/changelog.md` — historia (sprints, deuda resuelta)
