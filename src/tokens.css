@@ -136,8 +136,6 @@
   --ds-fg-onColor:          #FFFFFF;
   --ds-fg-inverse:          #FFFFFF;
   --ds-fg-primary:          #0A7C92;   /* primary/500 — reducción profundidad 15/07 (era 700 #286371) */
-  --ds-fg-title-onSurface-static-primary: #0A7C92; /* teal fijo en los dos modos (Figma fg/{title,icon}/onSurface/static-primary) — 19/10 */
-  --ds-fg-icon-onSurface-static-primary:  #0A7C92; /* idem */
   --ds-fg-secondary:        #D61E74;   /* secondary/500 — reducción profundidad 15/07 (era 600 #B71B60) */
   --ds-fg-tertiary:         #8B619E;
   --ds-fg-info:             #094F78;
@@ -1770,13 +1768,13 @@
   /* Header — title */
   --ds-dialog-header-title-fg-default:         var(--ds-fg-title-default); /* pairs con bg-default — invierte */
   --ds-dialog-header-title-fg-primary:         var(--ds-fg-title-onColor); /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-title-fg-on-primary:      var(--ds-fg-title-onSurface-static-primary); /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
+  --ds-dialog-header-title-fg-on-primary:      var(--ds-bg-primary); /* 12/11: Figma → bg/surface/primary (teal fijo en los dos modos; antes fg/title/onSurface/static-primary, borrado) */
   --ds-dialog-header-title-fg-secondary:       var(--ds-fg-title-inverse); /* pairs con bg-secondary — invierte */
   --ds-dialog-header-title-fg-tertiary:        var(--ds-fg-title-inverse); /* pairs con bg-tertiary — corregido 24/08, antes fg-title-default */
   /* Header — icon */
   --ds-dialog-header-icon-fg-default:          var(--ds-fg-icon-default);  /* pairs con bg-default — corregido 24/08, antes fg-icon-inverse (blanco sobre blanco en light); luego se descubrió además mal enlazado a la capa de Primary en Figma — ver token-architecture.md */
   --ds-dialog-header-icon-fg-primary:          var(--ds-fg-icon-onColor);  /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-icon-fg-on-primary:       var(--ds-fg-icon-onSurface-static-primary);  /* pairs con bg-on-primary — teal fijo en los dos modos (19/10) */
+  --ds-dialog-header-icon-fg-on-primary:       var(--ds-bg-primary);  /* 12/11: Figma → bg/surface/primary (antes fg/icon/onSurface/static-primary, borrado) */
   --ds-dialog-header-icon-fg-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
   --ds-dialog-header-icon-fg-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
   /* Header — foco de Back/Close (Icon Button re-tematizado): el anillo contrasta con el fondo de cada header (27/10) */

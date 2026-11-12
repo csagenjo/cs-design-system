@@ -1167,10 +1167,11 @@ Revisados nombre, valor, alcance (scope), uso en Figma (las 60 páginas, enlaces
 - Figma: borrados los 12 tokens `…/onContainer…quaternary*` y `…/onContainerShape/primary-onQuaternary*` y sus 24 variables de Theme: apuntaban a una superficie "quaternary" que no existe (bg/surface solo tiene primary, secondary y tertiary). Ninguno tenía uso.
 - Figma: alcances ajustados (solo filtran el selector, no cambian enlaces): `fg/*` base → texto, formas y trazo (antes también fondo de frame); `bg/surface/*` → frame y formas (antes también texto); `fg/icon/*` → formas y trazo (antes también texto y frame).
 
-**Familias "encima de superficie" borradas** (decisión de Carol, 12/11). `fg/{headline,subheadline,title,label,body,icon}/onSurface/*`, `…/onContainer/*`, `…/onContainerShape/*` y `borderColor/onSurface/*`: 119 tokens de Mode y 237 de Theme.
+**Familias "encima de superficie" borradas** (decisión de Carol, 12/11). `fg/{headline,subheadline,title,label,body,icon}/onSurface/*`, `…/onContainer/*`, `…/onContainerShape/*` y `borderColor/onSurface/*`: 123 tokens de Mode y 245 de Theme.
 - Repetían el mismo valor en cada rol (headline = title = label = body sobre una misma superficie) y algunos fallaban en dark: `…/onSurface/secondary-bold` era negro sobre el magenta #8C1C4C, que no cambia con el modo (2,4:1).
 - Antes de borrar, los 4 que se usaban en páginas de Figma se re-enlazaron a su equivalente con el mismo valor en los dos modos (1.103 enlaces): `fg/title/onSurface/default` → `fg/title/default`, `fg/label/onSurface/default` → `fg/label/default`, `fg/body/onSurface/default` → `fg/body/default`, `fg/label/onSurface/primary` → `fg/label/onColor`.
-- Se quedan los 4 que tienen uso real sin equivalente: `fg/title|icon/onSurface/static-primary` (teal fijo de la cabecera onPrimary de Dialog) y `fg/title/onSurface/secondary-subtle|tertiary-subtle` (títulos de las plantillas de página de la documentación).
+- Los 4 restantes también se borraron tras moverlos (decisión de Carol): el teal fijo de la cabecera onPrimary de Dialog (`fg/title|icon/onSurface/static-primary`) pasa a `bg/surface/primary`, el único token con #0A7C92 en los dos modos (en dark `fg/*/primary` es teal claro y sobre la cabecera blanca daría 1,6:1); los títulos de tarjeta de los frames *How to use & Accessibility* (`…/secondary-subtle|tertiary-subtle`) pasan a dos tokens de documentación nuevos, `doc/all/card/title/fg/designers` → `fg/secondary` y `…/developers` → `fg/tertiary`.
+- Resultado: ya no queda ningún token `onSurface`, `onContainer` ni `onContainerShape` en Mode.
 
 **Regla para texto, iconos y bordes sobre superficies de marca** (sustituye a esas familias):
 
