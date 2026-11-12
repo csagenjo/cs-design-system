@@ -1107,8 +1107,8 @@ Scope `GAP`, ocultos en la publicación (internos del componente, como el resto 
 ## Deuda técnica de tokens
 
 - ~~**Mode tokens dark mode** — varios tokens rotos o sin función clara en dark mode.~~ ✅ **Resuelto 11/08/2026** para la escala neutra `bg/*` (default/page/subtle/disabled/container), la familia de marca/feedback `bg/*` (primary/-bold/-medium, secondary, tertiary, error, success, hover-primary, inverse, accent, warning, info, highlight), y la trampa `*/inverse` vs `*/onColor` en `fg/label`, `fg/body` y `fg/icon` (ver secciones arriba). **Pendiente real:** `borderColor/*` dark no se ha auditado todavía contra Figma — mismo tipo de revisión, sesión aparte.
-- **Notification Count description** — campo Description del componente apunta a dominio interno de Sistema Origen. Pendiente de borrar en Figma.
-- **Placeholder/Placeholder** (node 2355:4239) — descripción del contenedor de iconos apunta a dominio interno. Pendiente de borrar en Figma.
+- **Notification Count description** — campo Description del componente con un enlace externo. Pendiente de borrar en Figma.
+- **Placeholder/Placeholder** (node 2355:4239) — descripción del contenedor de iconos con un enlace externo. Pendiente de borrar en Figma.
 - **Component tokens publicados (30/09/2026)** — 249 de 874 sin `hiddenFromPublishing` en el export actual (en junio solo ~41 accent/visited). Decidir si se vuelven a ocultar.
 - **Youth sin implementar en código (30/09/2026)** — `tokens.css` solo tiene Retail; no hay selector de tema.
 
