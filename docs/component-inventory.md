@@ -47,7 +47,7 @@ Rules that apply to every entry:
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer · _rest to be filled_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
-| Page structure | Accordion, AccordionGroup |
+| Page structure | Accordion, AccordionGroup · Collapsible, CollapsibleIconButton |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
 | Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss`, `_dialogBase` (use Dialog / DialogSimple / ErrorAndEmptyState) |
 
@@ -5426,3 +5426,77 @@ Icon + short value under a title: phone, account number, date.
 
 **Don't**
 - Don't rely on the icon alone to say what the value is when it's ambiguous: add the word ("Tel. 600 000 000")
+
+
+## Collapsible · CollapsibleIconButton
+
+**Group:** Page structure
+**Figma:** 🟢 Collapsible page → `Collapsible Button` and `Collapsible Icon Button` (Variant Default · Secondary × Size Large · Medium · Small × Behavior Expand · Collapse; Tooltip on/off) · frame *Collapsible — How to use & Accessibility* (12/11)
+**Code:** `src/components/Collapsible.jsx`, `CollapsibleIconButton.jsx` (atoms)
+**Tokens:** `--ds-collapsible-*` (re-themes the nested Button / Icon Button)
+
+The trigger that shows or hides a chunk of extra content. With a label it's a Button; icon-only it's an Icon Button with a tooltip.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Show more of a block that is already on screen (more transactions, more details) · for a list of sections that open one by one use Accordion
+
+**Properties**
+- Variant → Default (black) · Secondary (pink) · Size → Large · Medium · Small (the Button / Icon Button sizes) · Behavior → Expand (chevron down) · Collapse (chevron up)
+- Icon Button: Tooltip on/off (the label floats above, it doesn't add to the size)
+
+**Anatomy**
+- Nested Button `Default · Secondary` or Icon Button `Default · Secondary`, locked: change the colour with Variant, never on the nested instance
+- Includes the nested 4 focus area: Collapsible Button 56 · 48 · 40 tall, Icon Button 64 · 52 · 40
+
+### Developers · React
+
+**Import**
+- `import { Collapsible } from './components/Collapsible'` · `CollapsibleIconButton`
+
+**Props**
+- variant 'default' | 'secondary' · expanded · onToggle · labels { expand, collapse } · controls (id of the content)
+- Collapsible size 'sm' | 'md' | 'lg' (Button scale) · CollapsibleIconButton size 'small' | 'medium' | 'large' (Icon Button scale)
+
+**Example**
+- `<Collapsible expanded={open} onToggle={() => setOpen(!open)} controls="transactions" labels={{ expand: 'Show more transactions', collapse: 'Show fewer transactions' }} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- One block grows or shrinks in place · several stacked sections → AccordionGroup
+
+**Composition rules**
+- The component only toggles: keep `expanded` in the parent and render the content with the id you pass in controls
+- Put it right after (or right before) the content it controls
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Label and chevron both change with the state · tooltip on the icon-only version
+- Hover fills the button (pink in Secondary, with on-color text)
+
+### Developers · React
+
+**Semantics**
+- A real button with aria-expanded and aria-controls (only while expanded, when the content exists)
+- Icon-only: the tooltip text is the button's name (aria-label), not repeated as a description
+
+**Keyboard**
+- Tab to focus, Enter / Space toggles; focus stays on the trigger
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- labels in the user's language and specific when there are several on screen ("Show more transactions")
+
+**Don't**
+- Don't change the nested Button variant to recolour it: use variant

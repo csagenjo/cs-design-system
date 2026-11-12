@@ -1,14 +1,14 @@
 /**
  * Collapsible — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: Figma Variant Primary → Default, tokens sin uso borrados)
  *
  * Trigger con label ("Expand"/"Collapse") + chevron, usado para expandir o
- * colapsar contenido. Instancia `Button` (`variant="default" outline`) sin
- * reimplementar su lógica (regla CLAUDE.md §5) — solo re-tematiza color
+ * colapsar contenido. Instancia `Button` (`type="default" variant="secondary"`,
+ * igual que Figma) sin reimplementar su lógica (regla CLAUDE.md §5) — solo re-tematiza color
  * redefiniendo localmente las CSS custom properties que Button ya consume
  * (`--ds-button-border-default`, `--ds-button-fg-default-outline`), el mismo
  * mecanismo que el rebind de variables en Figma. El Button interno usa
- * SIEMPRE `variant="default" outline` — el color visible (negro/rosa) lo fija
+ * SIEMPRE `type="default" variant="secondary"` — el color visible (negro/rosa) lo fija
  * `variant` de Collapsible, no el de Button (así resuelve también en Figma:
  * las dos variantes de Collapsible instancian el mismo Button, solo cambia
  * el token de color).
@@ -20,12 +20,16 @@
  * USO:
  *   <Collapsible expanded={open} onToggle={() => setOpen(!open)} />
  *   <Collapsible variant="secondary" size="sm" expanded={open} onToggle={fn} />
- *   <Collapsible labels={{ expand: 'Ver más', collapse: 'Ver menos' }} expanded={open} onToggle={fn} />
- *   <Collapsible expanded={open} onToggle={fn} controls="movimientos" />
+ *   <Collapsible labels={{ expand: 'Show more', collapse: 'Show less' }} expanded={open} onToggle={fn} />
+ *   <Collapsible expanded={open} onToggle={fn} controls="transactions" />
  *
  * A11y-3 (21/10/2026): `aria-expanded` en el botón; `controls` = id del
- * contenido que abre/cierra (→ `aria-controls`). Para dar contexto ("Ver más
- * movimientos"), usar `labels` con el texto completo.
+ * contenido que abre/cierra (→ `aria-controls`). Para dar contexto ("Show more
+ * transactions"), usar `labels` con el texto completo.
+ *
+ * Área de foco (12/11): la pone el Button anidado (4 por lado, en todos los
+ * estados), igual que en Figma; Collapsible no añade gap ni padding, así que
+ * no hay nada que restar.
  */
 
 import React from 'react';
@@ -92,7 +96,7 @@ export default Collapsible;
 <Collapsible variant="secondary" size="sm" expanded={open} onToggle={fn} />
 
 <Collapsible
-  labels={{ expand: 'Ver más', collapse: 'Ver menos' }}
+  labels={{ expand: 'Show more', collapse: 'Show less' }}
   expanded={open}
   onToggle={fn}
 />

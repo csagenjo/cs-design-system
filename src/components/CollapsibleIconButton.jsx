@@ -1,6 +1,6 @@
 /**
  * CollapsibleIconButton — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: en Figma el tooltip va en absoluto encima, la caja = Icon Button)
  *
  * Variante icon-only de Collapsible, con tooltip mostrando "Expand"/
  * "Collapse" al hover/focus. Instancia `IconButton` (`type="default"
@@ -20,6 +20,10 @@
  * A11y-3 (21/10/2026): `aria-expanded` en el botón; `controls` = id del
  * contenido que abre/cierra (→ `aria-controls`). El tooltip ya es el nombre
  * del botón, así que no se repite como descripción.
+ *
+ * Figma (12/11): el Tooltip va en posición absoluta encima del Icon Button,
+ * así la caja del componente es la del Icon Button (64 · 52 · 40 con el área
+ * de foco), igual que en código, donde la burbuja flota.
  */
 
 import React from 'react';
