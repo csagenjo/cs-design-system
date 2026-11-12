@@ -943,9 +943,9 @@ export default function Gallery({ mode }) {
 
       <Section name="RangeSlider">
         <Col style={{ maxWidth: 480, paddingTop: 48 }}>
-          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Precio" />
-          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Precio secondary" variant="secondary" />
-          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Precio disabled" disabled />
+          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Price range" />
+          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Price range secondary" variant="secondary" />
+          <RangeSlider value={[20, 70]} onChange={noop} ariaLabel="Price range disabled" disabled />
         </Col>
       </Section>
 
@@ -1014,11 +1014,11 @@ export default function Gallery({ mode }) {
 
       <Section name="Slider">
         <Col style={{ maxWidth: 480, paddingTop: 48 }}>
-          <Slider value={40} onChange={noop} ariaLabel="Volumen" />
-          <Slider value={40} onChange={noop} ariaLabel="Volumen con iconos"
-            iconLeft={<Icon name="minus" size="sm" />} iconRight={<Icon name="plus" size="sm" />} />
-          <Slider value={60} onChange={noop} ariaLabel="Progreso secondary" variant="secondary" />
-          <Slider value={60} onChange={noop} ariaLabel="Progreso disabled" disabled />
+          <Slider value={40} onChange={noop} ariaLabel="Volume" />
+          <Slider value={40} onChange={noop} ariaLabel="Volume with icons"
+            iconLeft={<Icon name="volume-x" size="sm" />} iconRight={<Icon name="volume-2" size="sm" />} />
+          <Slider value={60} onChange={noop} ariaLabel="Progress secondary" variant="secondary" />
+          <Slider value={60} onChange={noop} ariaLabel="Progress disabled" disabled />
         </Col>
       </Section>
 
@@ -1052,9 +1052,9 @@ export default function Gallery({ mode }) {
 
       <Section name="SteppedSlider">
         <Col style={{ maxWidth: 480, paddingTop: 48 }}>
-          <SteppedSlider value={50} steps={5} onChange={noop} ariaLabel="Nivel" />
-          <SteppedSlider value={33.33} steps={4} onChange={noop} ariaLabel="Nivel secondary" variant="secondary" />
-          <SteppedSlider value={75} steps={5} onChange={noop} ariaLabel="Nivel disabled" disabled />
+          <SteppedSlider value={50} steps={5} onChange={noop} ariaLabel="Level" />
+          <SteppedSlider value={33.33} steps={4} onChange={noop} ariaLabel="Level secondary" variant="secondary" />
+          <SteppedSlider value={75} steps={5} onChange={noop} ariaLabel="Level disabled" disabled />
         </Col>
       </Section>
 

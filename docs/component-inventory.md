@@ -30,7 +30,7 @@ Rules that apply to every entry:
 - Import from the file path; there is no barrel export.
   Atoms live in `src/components/`, organisms in `src/organisms/`.
 - Fields (inputs and selectors) share the spacing: label → help 4, help → field 8 (label → field 8 without help), field → error 4, and a 4 px focus area around the whole field.
-- Hover has two families on purpose: **blue** (`bg/hover-primary`) on selectable surfaces such as rows, options and tabs; **veil** (`opacity/hover`) on controls that sit on any background (Button, Icon Button, Chip, Link, CTA Link).
+- Hover has three families on purpose: **blue** (`bg/hover-primary`) on selectable surfaces such as rows, options, tabs and sliders; **veil** (`opacity/hover`) on controls that sit on any background (Button, Icon Button, Chip, Link, CTA Link); **border** (`borderColor/emphasis`) on text boxes, where only the border changes.
 - If a piece is listed under **Internal parts**, don't use it directly —
   use the component named next to it.
 
@@ -39,7 +39,7 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
+| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
@@ -5042,3 +5042,85 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 **Don't**
 - Don't open flydowns only on hover
 - Don't put more than 5 columns in a flydown
+
+
+## Slider · RangeSlider · SteppedSlider
+
+**Group:** Forms
+**Figma:** 🟢 Slider page → `Continuous` (Progress × Variant × With Icon × State), `Range`, `Segmented`; `.Knob` and `.Segment` private · frame *Slider — How to use & Accessibility* (12/11)
+**Code:** `src/components/Slider.jsx`, `RangeSlider.jsx`, `SteppedSlider.jsx` (atoms) + `_sliderKnob.jsx` (shared knob, not exported)
+**Tokens:** `--ds-slider-*`
+
+Pick a value, or a range, by dragging a knob along a track. Figma's *Continuous* is `Slider`, *Range* is `RangeSlider` and *Segmented* is `SteppedSlider`.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Continuous → one value where the exact number matters less than the position (volume, opacity)
+- Range → a minimum and a maximum (price, dates as numbers)
+- Segmented → one value from a few fixed steps (2–10)
+- Not for exact numbers people need to type: use Input Stepper or Input Amount
+
+**Properties**
+- Variant Primary (teal) · Secondary (pink): only the filled part changes colour
+- Continuous: With Icon (icons at both ends) · State Initial · Hover · Focus · Disabled
+
+**Anatomy**
+- Row with border → track (grey) + indicator (colour) → knob (white circle) with the value tooltip above it
+
+**Sizing**
+- Row 48 tall, border 1, radius 8, 16 left and right · track 8 · knob 24 · tooltip 8 above the knob
+- With icons: 4 left and right, each icon 24 in a 48 box (12 around)
+
+### Developers · React
+
+**Import**
+- `import { Slider } from './components/Slider'` · `RangeSlider` · `SteppedSlider`
+
+**Props**
+- Slider: value, min, max, step, onChange, variant 'primary'|'secondary', iconLeft, iconRight, formatValue, ariaLabel | ariaLabelledBy, disabled
+- RangeSlider: value=[lo, hi], ariaLabel (group name), ariaLabelMin, ariaLabelMax
+- SteppedSlider: value, steps (stops including both ends), formatValue
+
+**Example**
+- `<Slider value={v} onChange={setV} ariaLabel="Volume" iconLeft={<Icon name="volume-x" />} iconRight={<Icon name="volume-2" />} />`
+- `<RangeSlider value={[20, 70]} onChange={setRange} ariaLabel="Price" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The value is approximate and seeing it on a scale helps; otherwise an input
+
+**Composition rules**
+- Always give a name (ariaLabel or ariaLabelledBy) · formatValue with the unit ("40%", "€ 20")
+- Icons through the Icon atom, size sm (24)
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Focus only on the knob: white 2 inside + blue 2 outside, the row border doesn't change
+- Tooltip shows the value while dragging and on keyboard focus
+- Filled part ≥ 3:1 against the track in light and dark
+
+### Developers · React
+
+**Semantics**
+- Each knob is `role="slider"` with aria-valuemin/max/now and aria-valuetext from formatValue · RangeSlider wraps both knobs in a named group
+
+**Keyboard**
+- Arrow keys move one step · Home / End jump to the ends · SteppedSlider moves stop by stop
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Name and value text in the user's language
+
+**Don't**
+- Don't use a slider as the only way to enter a precise amount

@@ -880,30 +880,34 @@
   --ds-slider-root-bg:                  var(--ds-bg-default);
   --ds-slider-root-bg-hover:            var(--ds-bg-hover-primary);
   --ds-slider-root-border-color:        var(--ds-borderColor-subtle);
-  --ds-slider-root-border-width:        1px;
-  --ds-slider-root-border-width-focus:  2px;
-  --ds-slider-root-border-radius:       8px;
-  --ds-slider-root-gap:                 12px;
-  --ds-slider-root-padding-ver:         12px;
-  --ds-slider-root-padding-ver-with-icon: 6px;
+  --ds-slider-root-border-width:        var(--ds-border-width-sm);   /* slider/all/root/borderWidth/generic */
+  --ds-slider-root-border-radius:       var(--ds-border-radius-md);  /* slider/all/root/borderRadius/generic */
+  --ds-slider-root-gap:                 var(--ds-spacing-lg);        /* slider/all/root/gap/generic (12) */
+  --ds-slider-root-height:              var(--ds-sizing-xl);         /* 12/11: slider/all/root/height/generic (48) — los tres tipos */
+  --ds-slider-root-padding-hor:         var(--ds-spacing-xl);        /* 12/11: slider/all/root/paddingHor/generic (16) — antes 12 en Figma con nombre paddingVer, y 16px suelto en código */
+  --ds-slider-root-padding-hor-with-icon: var(--ds-spacing-xs);      /* 12/11: slider/all/root/paddingHor/withIcon (4) — con icono, la caja 48 del icono da el aire */
+  --ds-slider-icon-padding:             var(--ds-spacing-lg);        /* 12/11: slider/all/icon/padding/generic (12) → caja 48 con icono 24 */
 
   --ds-slider-track-bg:                 var(--ds-bg-track);    /* slider/all/track/bg/generic → bg/track (10/11: antes bg-subtle; en dark el relleno no llegaba a 3:1) */
   --ds-slider-track-bg-disabled:        var(--ds-bg-disabled); /* slider/all/track/bg/disabled (10/11: separado; antes compartía el de arriba) */
   --ds-slider-track-bg-hover:           var(--ds-bg-default);
-  --ds-slider-track-border-radius:      8px;
-  --ds-slider-track-height:             8px;
+  --ds-slider-track-border-radius:      var(--ds-border-radius-md);
+  --ds-slider-track-height:             var(--ds-sizing-3xs);
 
-  --ds-slider-indicator-bg-primary:     var(--ds-bg-primary);
-  --ds-slider-indicator-bg-secondary:   var(--ds-bg-secondary);
+  --ds-slider-indicator-bg-primary:     var(--ds-bg-primary);    /* 12/11: slider/all/indicator/bg/primary → bg/surface/primary (antes fg/primary en Figma: en dark era casi igual que el track) */
+  --ds-slider-indicator-bg-secondary:   var(--ds-bg-secondary);  /* slider/all/indicator/bg/secondary → bg/surface/secondary */
   --ds-slider-indicator-bg-disabled:    var(--ds-fg-disabled);
-  --ds-slider-indicator-border-radius:  8px;
+  --ds-slider-indicator-border-radius:  var(--ds-border-radius-md);
 
   --ds-slider-knob-bg:                  var(--ds-bg-default);
-  --ds-slider-knob-bg-disabled:         var(--ds-bg-subtle);
-  --ds-slider-knob-border-color:        var(--ds-fg-subtle);
-  --ds-slider-knob-border-color-disabled: var(--ds-fg-disabled);
-  --ds-slider-knob-border-radius:       80px;
-  --ds-slider-knob-size:                24px;
+  --ds-slider-knob-bg-disabled:         var(--ds-bg-disabled);           /* 12/11: como Figma (antes bg-subtle) */
+  --ds-slider-knob-border-color:        var(--ds-borderColor-default);   /* 12/11: como Figma (antes fg-subtle) */
+  --ds-slider-knob-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-slider-knob-border-width:        var(--ds-border-width-sm);       /* slider/all/knob/borderWidth/generic */
+  --ds-slider-knob-border-width-focus:  var(--ds-border-width-lg);       /* slider/all/knob/borderWidth/focus: anillo inner por dentro + outer por fuera */
+  --ds-slider-knob-border-radius:       var(--ds-border-radius-circle);
+  --ds-slider-knob-size:                var(--ds-sizing-sm);
+  --ds-slider-knob-tooltip-gap:         var(--ds-spacing-md);            /* 12/11: slider/all/knob/tooltipGap/generic (8) */
   /* Effect Style "Slider/Knob Shadow" (local, 28/09 — antes era el estilo remoto "Switch/Thumb Shadow"),
      literal de Componente — mismo criterio que --ds-snackbar-root-shadow. Solo Initial/Hover:
      Figma no la pinta en Focus (el anillo sustituye a la elevación) ni en Disabled. */
@@ -911,8 +915,8 @@
   --ds-slider-knob-focus-inner:         var(--ds-borderColor-focus-inner);
   --ds-slider-knob-focus-outer:         var(--ds-borderColor-focus-outer);
 
-  --ds-slider-icon-fg:                  var(--ds-fg-subtle);
-  --ds-slider-icon-fg-disabled:         var(--ds-fg-disabled);
+  --ds-slider-icon-fg:                  var(--ds-fg-icon-subtle);    /* slider/all/icon/fg/withIcon-generic */
+  --ds-slider-icon-fg-disabled:         var(--ds-fg-icon-disabled);  /* slider/all/icon/fg/withIcon-disabled */
 
 
   /* ==========================================================================

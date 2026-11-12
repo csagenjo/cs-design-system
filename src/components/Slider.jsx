@@ -1,6 +1,6 @@
 /**
  * Slider — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: fila 48 con padding 16, foco solo en el knob, sin px sueltos)
  *
  * Slider continuo de un solo valor — arrastre libre, sin marcas de parada
  * visibles. Primer componente del sistema con arrastre real (puntero +
@@ -21,10 +21,11 @@
  * en `_sliderKnob.jsx` (helper interno, no exportado), compartido con
  * `RangeSlider`/`SteppedSlider`, en vez de reimplementarlo en cada uno.
  *
- * Fila entera es una superficie hover real (`--ds-slider-root-bg-hover`),
- * y en foco pinta un borde propio alrededor de toda la fila además del
- * anillo del knob — confirmado con captura en Figma, dos mecanismos de
- * foco independientes, no uno solo.
+ * Fila de 48 (`--ds-slider-root-height`) con 16 a cada lado; con iconos,
+ * 4 a cada lado y cada icono en una caja de 48 (24 + 12 por lado). La fila
+ * entera es una superficie hover (`--ds-slider-root-bg-hover`). El foco va
+ * solo en el knob, como Figma (12/11): inner 2 por dentro + outer 2 por fuera;
+ * la fila no cambia de borde.
  *
  * `variant` decide el color del indicator (primary teal / secondary rosa) —
  * el resto (knob, icono, track) no varía con el color, es `generic`.
@@ -57,15 +58,16 @@ const css = `
   width: 100%;
   box-sizing: border-box;
   gap: var(--ds-slider-root-gap);
-  padding: var(--ds-slider-root-padding-ver) 16px;
+  height: var(--ds-slider-root-height);
+  padding: 0 var(--ds-slider-root-padding-hor);
   background: var(--ds-slider-root-bg);
   border: var(--ds-slider-root-border-width) solid var(--ds-slider-root-border-color);
   border-radius: var(--ds-slider-root-border-radius);
   box-sizing: border-box;
 }
 .ds-slider--with-icon {
-  padding-top: var(--ds-slider-root-padding-ver-with-icon);
-  padding-bottom: var(--ds-slider-root-padding-ver-with-icon);
+  gap: 0;
+  padding: 0 var(--ds-slider-root-padding-hor-with-icon);
 }
 .ds-slider:not(.ds-slider--disabled):hover {
   background: var(--ds-slider-root-bg-hover);
@@ -73,13 +75,11 @@ const css = `
 .ds-slider--disabled {
   cursor: not-allowed;
 }
-.ds-slider:focus-within {
-  border-width: var(--ds-slider-root-border-width-focus);
-  border-color: var(--ds-slider-knob-focus-outer);
-}
 .ds-slider__icon {
   flex-shrink: 0;
   display: flex;
+  box-sizing: border-box;
+  padding: var(--ds-slider-icon-padding);  /* caja 48: icono 24 + 12 por lado */
   color: var(--ds-slider-icon-fg);
 }
 .ds-slider--disabled .ds-slider__icon {
