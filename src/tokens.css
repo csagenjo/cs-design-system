@@ -1620,9 +1620,9 @@
 
 
   /* ══════════════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Headline (headline/all/fg/*)
-     6 tamaños (h1–h6) × 4 colores. Color vía Componente→Mode; la tipografía
-     (fontSize/headline/*, fontFamily/headline, fontWeight/regular) se consume
+     COMPONENT TOKENS — Headline (headline/all/text/fg/* — 12/11, antes headline/fg/*)
+     6 tamaños × 4 colores. Color vía Componente→Mode; la tipografía
+     (fontSize/headline/*, fontFamily/default, fontWeight/bold) se consume
      directa de Device — sin capa de Componente (regla tipografía, 22/07).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-headline-fg-default:   var(--ds-fg-headline-default);   /* #050506 */
@@ -1801,6 +1801,7 @@
   --ds-text-fg-default:     var(--ds-fg-label-default);   /* #050506 / #FFFFFF dark */
   --ds-text-fg-secondary:   var(--ds-fg-label-secondary); /* #D61E74 / #FEF6F9 dark */
   --ds-text-fg-disabled:    var(--ds-fg-label-disabled);  /* #AAAFB5 / #7B8490 dark */
+  --ds-text-gap:            var(--ds-spacing-2xs);        /* 12/11: text/all/root/gap/generic (2) — texto → chevron */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1820,6 +1821,8 @@
   --ds-detail-text-icon-fg-secondary: var(--ds-fg-icon-secondary); /* #D61E74 / #FEF6F9 dark */
   --ds-detail-text-icon-fg-tertiary:  var(--ds-fg-icon-tertiary);  /* #8B619E / #F6F1F8 dark */
   --ds-detail-text-icon-fg-disabled:  var(--ds-fg-icon-disabled);  /* #AAAFB5 / #7B8490 dark */
+  --ds-detail-text-gap:               var(--ds-spacing-xs);        /* 12/11: detailText/all/root/gap/generic (4) — icono → texto */
+  --ds-detail-text-icon-size:         var(--ds-sizing-2xs);        /* 16 — icono en los dos tamaños, como Figma */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1831,7 +1834,8 @@
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-description-text-fg-default:  var(--ds-fg-body-default);  /* #050506 / #FFFFFF dark */
   --ds-description-text-fg-subtle:   var(--ds-fg-body-subtle);   /* #676D76 / #EEEFF1 dark */
-  --ds-description-text-fg-disabled: var(--ds-fg-body-disabled); /* #AAAFB5 / #7B8490 dark */
+  --ds-description-text-fg-disabled: var(--ds-fg-disabled);      /* descriptionText/all/text/fg/disabled → fg/disabled (mismo valor que fg/body/disabled) */
+  --ds-description-text-fg-onColor:  var(--ds-fg-body-onColor);  /* 12/11: Color=onColor — blanco en los dos modos, sobre superficies de color */
 
 
   /* ══════════════════════════════════════════════════════════════════════════

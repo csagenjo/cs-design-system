@@ -43,6 +43,7 @@ Rules that apply to every entry:
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · _rest to be filled (includes Pagination)_ |
+| Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer · _rest to be filled_ |
 | Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
@@ -5124,3 +5125,304 @@ Pick a value, or a range, by dragging a knob along a track. Figma's *Continuous*
 
 **Don't**
 - Don't use a slider as the only way to enter a precise amount
+
+
+## Headline
+
+**Group:** Content
+**Figma:** 🟢 Headline page → `Headline text` (Size 2xl–xs × Style Default · Primary · Secondary · onColor) · frame *Headline — How to use & Accessibility* (12/11)
+**Code:** `src/components/Headline.jsx` (atom)
+**Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`
+
+Page and section titles. Size is visual only; the heading level comes from the page outline.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Page title (one per page, level 1) and section titles · for titles inside lists and rows use Section Header
+
+**Properties**
+- Size → 2xl · xl · lg · md · sm · xs (responsive: 48 → 32 on mobile for 2xl) · Style → Default · Primary · Secondary · onColor
+- Write the heading level (h1–h6) in the instance name or description
+
+**Anatomy**
+- Text only, bold, left aligned · line height 1.25× on the 4 grid
+
+### Developers · React
+
+**Import**
+- `import { Headline } from './components/Headline'`
+
+**Props**
+- level 1–6 (the tag) · size '2xl'…'xs' (look only; defaults to the level's) · color 'default' | 'primary' | 'secondary' | 'onColor'
+
+**Example**
+- `<Headline level={2} size="lg">Payments</Headline>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The text names a page or a section of the page outline
+
+**Composition rules**
+- level follows the outline (no skipped levels); size follows the design · onColor only on a coloured surface
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Never truncated: long titles wrap · only left aligned · all colours ≥ 4.5:1 on their surface
+
+### Developers · React
+
+**Semantics**
+- Real `<h1>`–`<h6>` · the level never changes with the device, only the size
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't pick the level for the size you want: use size
+- Don't use more than one level 1 per page
+
+
+## SectionHeader
+
+**Group:** Content
+**Figma:** 🟢 SectionHeader page → `Section Header` (Size 16 · 19 × Color Default · Primary · Disabled × Weight Bold · Regular) · frame *Section Header — How to use & Accessibility* (12/11)
+**Code:** `src/components/SectionHeader.jsx` (atom)
+**Tokens:** `--ds-section-header-text-fg-*` · type straight from Device `fontSize/title/*`
+
+Title of a group inside a screen: rows in List View, Selector and Description List.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Title of a block of rows or values · for page and section titles use Headline
+
+**Properties**
+- Size → 16 · 19 · Color → Default · Primary · Disabled · Weight → Bold · Regular
+
+**Anatomy**
+- Text only, title type ramp (16/24, 19/28)
+
+### Developers · React
+
+**Import**
+- `import { SectionHeader } from './components/SectionHeader'`
+
+**Props**
+- size 'sm' (16) | 'md' (19) · color 'default' | 'primary' | 'disabled' · weight 'bold' | 'regular' · level 1–6 (default 2), null = plain text
+
+**Example**
+- `<SectionHeader level={3} size="sm">Billing address</SectionHeader>`
+
+### AI agents · Claude Code
+
+**Composition rules**
+- level follows the page outline · level={null} inside a button or a row that is a button (a heading there is not valid)
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Default and Primary ≥ 4.5:1 light and dark · Disabled is exempt but must match a disabled block
+
+### Developers · React
+
+**Semantics**
+- Real heading (`<h2>` by default) so screen readers can jump between sections
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't use it as the page title
+
+
+## Text
+
+**Group:** Content
+**Figma:** 🟢 Text page → `Text` (Color Default · Secondary · Disabled × Size 14 · 16 × Style Bold · Regular, Chevron) · frame *Text — How to use & Accessibility* (12/11)
+**Code:** `src/components/Text.jsx` (atom)
+**Tokens:** `--ds-text-fg-*`, `--ds-text-gap`
+
+Short emphasised label, swapped into the Description slot of List View and Selector when a row needs bold, colour or a chevron.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Inside a row's Description slot (instance swap) · short labels in Page Title and Drawer content
+- Not clickable: for text people press use Link or CTA Link
+
+**Properties**
+- Color → Default · Secondary · Disabled · Size → 14 · 16 · Style → Bold · Regular · Chevron on/off
+
+**Anatomy**
+- Text (label type) + optional chevron 16, 2 between them
+
+### Developers · React
+
+**Import**
+- `import { Text } from './components/Text'`
+
+**Props**
+- color 'default' | 'secondary' | 'disabled' · size '14' | '16' · weight 'bold' | 'regular' · chevron
+
+**Example**
+- `<ListView header="Invoice 0042" swapDescription={<Text chevron>See details</Text>} onClick={open} />`
+
+### AI agents · Claude Code
+
+**Composition rules**
+- The chevron only says "this row opens something": the row is the action, not the Text
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Default and Secondary ≥ 4.5:1 light and dark
+
+### Developers · React
+
+**Semantics**
+- A `<span>`, not focusable · chevron is aria-hidden
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't put onClick on it or wrap it in a clickable span: use Link, CTALink or make the whole row a button
+
+
+## DescriptionText
+
+**Group:** Content
+**Figma:** 🟢 Description Text page → `DescriptionText` (Size 14 · 16 × Color Subtle · Default · Disabled · onColor) · frame *Description Text — How to use & Accessibility* (12/11)
+**Code:** `src/components/DescriptionText.jsx` (atom)
+**Tokens:** `--ds-description-text-fg-*`
+
+Plain secondary text under a title: the default Description of List View and Selector rows.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- One line that explains the title above it · for icon + value use Detail Text
+
+**Properties**
+- Size → 14 · 16 · Color → Subtle (default) · Default · Disabled · onColor (on coloured surfaces)
+
+**Anatomy**
+- Text only, body type, regular
+
+### Developers · React
+
+**Import**
+- `import { DescriptionText } from './components/DescriptionText'`
+
+**Props**
+- color 'subtle' | 'default' | 'disabled' | 'onColor' · size '14' | '16' · as 'p' (default) | 'span' (inside a button)
+
+**Example**
+- `<DescriptionText>Last updated 3 days ago</DescriptionText>`
+
+### AI agents · Claude Code
+
+**Composition rules**
+- as="span" when it sits inside a button or another inline element
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Subtle ≥ 4.5:1 on bg/default and bg/page, light and dark · onColor white on brand surfaces
+
+### Developers · React
+
+**Semantics**
+- A `<p>` (or `<span>`), read in order after its title
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't use Subtle on grey surfaces darker than bg/subtle without checking contrast
+
+
+## DetailText
+
+**Group:** Content
+**Figma:** 🟢 Detail Text page → `Detail text` (Size 14 · 16 × Color Default · Secondary · Tertiary · Disabled, Icon swap, Show Icon) · frame *Detail Text — How to use & Accessibility* (12/11)
+**Code:** `src/components/DetailText.jsx` (atom)
+**Tokens:** `--ds-detail-text-fg-*`, `--ds-detail-text-icon-fg-*`, `--ds-detail-text-gap`, `--ds-detail-text-icon-size`
+
+Icon + short value under a title: phone, account number, date.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A value that an icon helps to recognise · for a sentence use Description Text
+
+**Properties**
+- Size → 14 · 16 · Color → Default · Secondary · Tertiary · Disabled · Icon (swap, Lucide) · Show Icon
+
+**Anatomy**
+- Icon 16 + text (body type), 4 between them; the icon takes the text colour
+
+### Developers · React
+
+**Import**
+- `import { DetailText } from './components/DetailText'`
+
+**Props**
+- color 'default' | 'secondary' | 'tertiary' | 'disabled' · size '14' | '16' · icon (an `<Icon size="2xs" />`, link by default) · showIcon
+
+**Example**
+- `<DetailText icon={<Icon name="phone" size="2xs" />}>600 000 000</DetailText>`
+
+### AI agents · Claude Code
+
+**Composition rules**
+- Icon through the Icon atom, size 2xs · the text must make sense without the icon
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Text colours ≥ 4.5:1 light and dark · the icon is decoration
+
+### Developers · React
+
+**Semantics**
+- A `<span>`; the icon is aria-hidden
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't rely on the icon alone to say what the value is when it's ambiguous: add the word ("Tel. 600 000 000")

@@ -1,6 +1,6 @@
 /**
  * Headline — Componente atómico
- * CS Design System · v2.0
+ * CS Design System · v2.1 (12/11/2026: tokens headline/all/text/fg/* en Figma; injectStyles común)
  *
  * Títulos semánticos h1–h6. 6 tamaños × 4 colores.
  *
@@ -48,13 +48,14 @@
  */
 
 import React from 'react';
+import { injectStyles } from './_inputBase';
 
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
 .ds-headline {
   margin:         0;
-  font-family:    inherit;                        /* Nunito (fontFamily/headline) */
+  font-family:    inherit;                        /* Nunito (fontFamily/default) */
   font-weight:    var(--ds-font-weight-bold);     /* 700 — cambiado 22/09, Carol, las 24 variantes de Figma (h1-h6 × 4 colores) son Bold */
   text-align:     left;                           /* regla: solo izquierda */
   overflow-wrap:  break-word;                     /* ajusta a varias líneas, nunca "…" */
@@ -75,14 +76,7 @@ const css = `
 .ds-headline--onColor   { color: var(--ds-headline-fg-onColor);   }
 `;
 
-let injected = false;
-function injectStyles() {
-  if (injected || typeof document === 'undefined') return;
-  const s = document.createElement('style');
-  s.textContent = css;
-  document.head.appendChild(s);
-  injected = true;
-}
+injectStyles('ds-headline', css);
 
 /* ─── Headline ─────────────────────────────────────────────────────────────── */
 
@@ -96,8 +90,6 @@ export function Headline({
   id,
   className,
 }) {
-  injectStyles();
-
   const lvl = Math.min(6, Math.max(1, level));
   const Tag = `h${lvl}`;
   const resolvedSize = SIZES.includes(size) ? size : SIZES[lvl - 1];

@@ -1,6 +1,6 @@
 /**
  * Text — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: solo texto, sin onClick; gap con token)
  *
  * Opción de texto "enriquecido" intercambiable en el slot Description de
  * List View / Selector — no forma parte de su estructura fija, es una pieza
@@ -12,10 +12,14 @@
  * (mismo patrón ya usado en Figma tras consolidar `.Text + Chevron`, sin uso,
  * dentro de `Text`).
  *
+ * No es interactivo (12/11, decisión de Carol): Figma no tiene estados y el
+ * `onClick` que convertía Text en <button> no tenía foco. Para texto que se
+ * pulsa: Link o CTALink. El chevron es decorativo (la fila entera es la acción).
+ *
  * USO:
  *   <Text>Texto</Text>
  *   <Text color="secondary" weight="regular">Ver más</Text>
- *   <Text chevron onClick={fn}>Ver detalle</Text>
+ *   <Text chevron>Ver detalle</Text>
  */
 
 import React from 'react';
@@ -26,17 +30,12 @@ const css = `
 .ds-text {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: var(--ds-text-gap);
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
   white-space: nowrap;
   color: var(--ds-text-fg-default);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: default;
 }
-.ds-text--clickable { cursor: pointer; }
 
 .ds-text--14 { font-size: var(--ds-fontSize-label-sm); line-height: var(--ds-lineHeight-label-sm); } /* 14/20 */
 .ds-text--16 { font-size: var(--ds-fontSize-label-md); line-height: var(--ds-lineHeight-label-md);  } /* 16/24 */
@@ -44,7 +43,7 @@ const css = `
 .ds-text--regular { font-weight: var(--ds-font-weight-regular); }
 
 .ds-text--secondary { color: var(--ds-text-fg-secondary); }
-.ds-text--disabled  { color: var(--ds-text-fg-disabled); cursor: not-allowed; }
+.ds-text--disabled  { color: var(--ds-text-fg-disabled); }
 
 .ds-text__chevron { display: inline-flex; flex-shrink: 0; }
 `;
@@ -57,7 +56,6 @@ export function Text({
   size    = '16',        // '14' | '16'
   weight  = 'bold',       // 'bold' | 'regular'
   chevron = false,
-  onClick,
   id,
   className,
 }) {
@@ -66,21 +64,18 @@ export function Text({
     `ds-text--${size}`,
     weight === 'regular' ? 'ds-text--regular' : '',
     color !== 'default' ? `ds-text--${color}` : '',
-    onClick ? 'ds-text--clickable' : '',
     className || '',
   ].filter(Boolean).join(' ');
 
-  const Tag = onClick ? 'button' : 'span';
-
   return (
-    <Tag id={id} type={onClick ? 'button' : undefined} className={classes} onClick={onClick}>
+    <span id={id} className={classes}>
       {children}
       {chevron && (
-        <span className="ds-text__chevron">
+        <span className="ds-text__chevron" aria-hidden="true">
           <Icon name="ChevronRight" size="2xs" />
         </span>
       )}
-    </Tag>
+    </span>
   );
 }
 

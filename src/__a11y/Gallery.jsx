@@ -470,6 +470,10 @@ export default function Gallery({ mode }) {
           {['subtle', 'default', 'disabled'].flatMap((c) => ['14', '16'].map((s) => (
             <DescriptionText key={c + s} color={c} size={s}>{`Description ${c} ${s}`}</DescriptionText>
           )))}
+          <div className="a11y-onsurface">
+            <DescriptionText color="onColor">Description onColor 14</DescriptionText>
+            <DescriptionText color="onColor" size="16">Description onColor 16</DescriptionText>
+          </div>
         </Row>
       </Section>
 
@@ -478,7 +482,8 @@ export default function Gallery({ mode }) {
           {['default', 'secondary', 'tertiary', 'disabled'].flatMap((c) => ['14', '16'].map((s) => (
             <DetailText key={c + s} color={c} size={s} icon={<Icon name="phone" size="2xs" />}>{`Detail ${c} ${s}`}</DetailText>
           )))}
-          <DetailText showIcon={false}>Sin icono</DetailText>
+          <DetailText showIcon={false}>No icon</DetailText>
+          <DetailText>Default link icon</DetailText>
         </Row>
       </Section>
 
@@ -585,8 +590,8 @@ export default function Gallery({ mode }) {
           </div>
           <div>
             {/* level y size separados (v2): etiqueta h3, aspecto 2xl / etiqueta h3, aspecto xs */}
-            <Headline level={3} size="2xl">h3 con size 2xl</Headline>
-            <Headline level={3} size="xs">h3 con size xs</Headline>
+            <Headline level={3} size="2xl">h3 with size 2xl</Headline>
+            <Headline level={3} size="xs">h3 with size xs</Headline>
           </div>
         </Col>
       </Section>
@@ -959,7 +964,7 @@ export default function Gallery({ mode }) {
       <Section name="SectionHeader">
         <Row>
           {['sm', 'md'].flatMap((s) => ['default', 'primary', 'disabled'].flatMap((c) => ['bold', 'regular'].map((w) => (
-            <SectionHeader key={s + c + w} level={3} size={s} color={c} weight={w}>{`Sección ${s} ${c} ${w}`}</SectionHeader>
+            <SectionHeader key={s + c + w} level={3} size={s} color={c} weight={w}>{`Section ${s} ${c} ${w}`}</SectionHeader>
           ))))}
         </Row>
       </Section>
@@ -1071,8 +1076,8 @@ export default function Gallery({ mode }) {
           {['default', 'secondary', 'disabled'].flatMap((c) => ['14', '16'].flatMap((s) => ['bold', 'regular'].map((w) => (
             <Text key={c + s + w} color={c} size={s} weight={w}>{`Text ${c} ${s} ${w}`}</Text>
           ))))}
-          <Text chevron onClick={noop}>Ver detalle</Text>
-          <Text chevron>Chevron sin click</Text>
+          <Text chevron>See details</Text>
+          <Text chevron size="14" weight="regular" color="secondary">See more</Text>
         </Row>
       </Section>
 
