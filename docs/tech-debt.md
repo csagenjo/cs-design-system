@@ -6,15 +6,13 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Documentación
 
-- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa), Amount View, List, Card, Image, Divider, Country Flag (familia Datos completa), Step Elements, Step Navigator + Substep, Step Indicator Large + Small (familia Steps completa), Slider (Continuous, Range, Segmented), Headline, Section Header, Text, Description Text, Detail Text (familia Contenido completa), Collapsible + Collapsible Icon Button, Pagination, Segmented Control. Siguientes (no críticos, por familias): resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
+- **"How to use & Accessibility" por componente.** Hechos: Accordion, Form Elements, Radio/Checkbox Group, Button, Icon Button, Button Bar, Checkbox, Radio, Chip, Link, LinkList, CTALink, Table + Celda, Description List, Snackbar, Selector, Account Selector, los 6 inputs, Dialog + familia, List View, Switch, File Upload, Tabs, Page Title, Combobox, Drawer, Sidebar Menu, Top Navigation, Inline Notification, Tooltip, Badge Highlight, Badge Notification, Loading Spinner, Progress Bar (familia Feedback completa), Amount View, List, Card, Image, Divider, Country Flag (familia Datos completa), Step Elements, Step Navigator + Substep, Step Indicator Large + Small (familia Steps completa), Slider (Continuous, Range, Segmented), Headline, Section Header, Text, Description Text, Detail Text (familia Contenido completa), Collapsible + Collapsible Icon Button, Pagination, Segmented Control, Popover Sheet, Country Picker, Currency Picker. Siguientes (no críticos, por familias): resto. Regla: antes de documentar se cierran las diferencias con Figma ("Known gaps: None").
 
 ## Componentes
 
 - **Área de foco de Button / Icon Button en otros componentes.** Las instancias crecieron 8 px (08/10). Revisar cada padre (TopNavigation, PageTitle…; InlineNotification revisado 10/11; Collapsible revisado 12/11: el área la pone el Button anidado y no hay gap que restar: Figma ya cuenta el área en el Button Container); si un gap se diseñó con el botón pegado al borde, restar 4 en el token del padre, nunca quitar el área.
-- **Popover: geometría compartida.** El cierre (Escape, click fuera) ya es común (`_popoverDismiss.js`); la posición no: Combobox, Country/Currency Picker y PopoverSheet calculan la suya, sin "flip" en el borde del viewport. Construirlo cuando un caso real lo pida.
 - **Drawer: icono + título en la misma fila del toggle.** Hoy el título de SidebarMenu va como primera línea del contenido.
 - **SidebarMenu: límites conocidos.** Colapsado oculta el árbol entero (sin vista solo iconos con tooltip) y no tiene slot de pie (perfil, salir, versión).
-- **Country Picker / Selector: verificar.** Dos notas antiguas sin comprobar tras A11y-1: focus-inner en teal en las filas, y tokens `iconLeft/fg` / `borderColor/focus-inner` de Selector pendientes de crear.
 
 ## Tokens
 
@@ -32,4 +30,4 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **Copia de la librería de Sistema Origen en la cuenta de Figma.** Revisar y archivar.
 - **Barrido de `Placeholder/Placeholder` y `Notification Count`.** Descripciones con el dominio interno de Sistema Origen; solo se limpió Description List.
 - **Instancia suelta de `Image`** en la página 🟢 Image, fuera de cualquier frame. Confirmar si se borra.
-- **Filete `borderColor/elevated` en el resto de superficies flotantes** (Popover Sheet, picker de Combobox, Dialog, Drawer primary): en dark su sombra negra tampoco se ve. Hoy solo la Card Basic lo lleva (11/11).
+- **Filete `borderColor/elevated` en el resto de superficies flotantes** (Dialog, Drawer primary): en dark su sombra negra no se ve. Ya lo llevan la Card Basic (11/11), Popover Sheet y el Picker de Combobox, Country y Currency (12/11).

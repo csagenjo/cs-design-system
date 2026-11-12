@@ -59,5 +59,5 @@ export function usePickerListbox({ open, onClose, onChange, items, value, getVal
     },
   };
 
-  return { listboxProps, getOptionProps: listbox.getOptionProps };
+  return { listboxProps, getOptionProps: listbox.getOptionProps, rootRef };
 }

@@ -1,6 +1,6 @@
 /**
  * Combobox — Organismo
- * CS Design System · v1.0
+ * CS Design System · v1.3 (12/11/2026: panel = Picker compartido, giro arriba si no cabe)
  *
  * Compone `InputCombobox` (átomo, el campo) + un panel flotante ("Picker" en
  * Figma) de resultados — reutiliza `SelectorListItem` (ya construido, Sprint
@@ -74,31 +74,13 @@ import { InputCombobox } from '../components/InputCombobox';
 import { SelectorListItem } from '../components/SelectorListItem';
 import { useListbox } from '../components/_rovingFocus';
 import { announce } from '../components/announce';
+import { useFlip } from '../components/_floating';
+import { pickerClasses } from './_pickerPanel';
 
 const css = `
 .ds-combobox {
   position: relative;
   width: 100%;
-}
-.ds-combobox__picker {
-  position:      absolute;
-  top:           100%;
-  left:          0;
-  right:         0;
-  margin-top:    4px;
-  z-index:       20;
-  background:    var(--ds-combobox-picker-bg);
-  border-radius: var(--ds-combobox-picker-border-radius);
-  box-shadow:    var(--ds-combobox-picker-shadow);
-  overflow:      hidden;
-  max-height:    320px;
-  overflow-y:    auto;
-}
-.ds-combobox__empty {
-  padding:   16px;
-  font-size: var(--ds-fontSize-body-sm);
-  color:     var(--ds-fg-subtle);
-  text-align: center;
 }
 `;
 
@@ -130,6 +112,7 @@ export function Combobox({
   const inputRef = useRef(null);
 
   const [open, setOpen] = useState(false);
+  const pickerRef = useRef(null);
   const [query, setQuery] = useState(multiple ? '' : (options.find(o => o.value === value)?.label || ''));
 
   useEffect(() => {
@@ -167,6 +150,8 @@ export function Combobox({
   const highlighted = listbox.activeIndex;
 
   const locked = state === 'disabled' || state === 'read-only'; // 03/11: read-only no abre
+  // 12/11: caja Picker compartida (_pickerPanel.jsx) que gira arriba si abajo no cabe.
+  const pickerSide = useFlip({ open: open && !locked, panelRef: pickerRef, placement: 'bottom' });
   function openPicker() {
     if (locked) return;
     setOpen(true);
@@ -286,11 +271,11 @@ export function Combobox({
           opción recién elegida como único resultado filtrado — patrón
           estándar para paneles de combobox/autocomplete. */}
       {open && !locked && (
-        <div className="ds-combobox__picker" onMouseDown={(e) => e.preventDefault()}>
+        <div ref={pickerRef} className={pickerClasses(pickerSide)} onMouseDown={(e) => e.preventDefault()}>
           {filtered.length === 0 ? (
-            <div className="ds-combobox__empty">{emptyMessage}</div>
+            <div className="ds-picker__empty">{emptyMessage}</div>
           ) : (
-            <div {...listbox.listboxProps}>
+            <div {...listbox.listboxProps} className="ds-picker__list">
               {filtered.map((opt, i) => (
                 <SelectorListItem
                   key={opt.value}

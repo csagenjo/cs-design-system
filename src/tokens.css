@@ -954,9 +954,29 @@
   --ds-combobox-caret-color:            var(--ds-borderColor-primary); /* combobox/all/caret/borderColor/generic */
   --ds-combobox-autosuggest-fg:         var(--ds-fg-label-subtle);     /* combobox/all/autoSuggestText/fg/generic */
   --ds-combobox-icondelete-fg:          var(--ds-fg-subtle);           /* combobox/all/iconDelete/fg/generic */
-  --ds-combobox-picker-bg:              var(--ds-bg-container); /* combobox/all/picker/bg/generic (antes root/bg/generic) — superficie elevada */
-  --ds-combobox-picker-border-radius:   var(--ds-border-radius-md); /* combobox/all/picker/borderRadius (03/11) */
-  --ds-combobox-picker-shadow:          0 4px 4px var(--ds-opacity-shadow-umbra-strong); /* Effect Style Picker/Shadow (26/10; antes 25 % literal) */
+  /* El panel de resultados es el Picker compartido (--ds-picker-*, más abajo, 12/11). */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Picker (picker/all/* — 12/11/2026)
+     Caja flotante común de Combobox, Country Picker y Currency Picker (antes
+     combobox/all/picker/* y CSS copiado con px sueltos en cada uno). Helper en
+     src/organisms/_pickerPanel.jsx; posición con giro hacia arriba si no cabe
+     debajo (useFlip, src/components/_floating.js).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-picker-root-bg:              var(--ds-bg-container);        /* picker/all/root/bg/generic — superficie elevada */
+  --ds-picker-root-border-radius:   var(--ds-border-radius-md);    /* picker/all/root/borderRadius/generic */
+  --ds-picker-root-padding:         var(--ds-spacing-xs);          /* picker/all/root/padding/generic (4) */
+  --ds-picker-root-gap:             var(--ds-spacing-2xs);         /* picker/all/root/gap/generic (2) — entre filas */
+  --ds-picker-root-offset:          var(--ds-spacing-xs);          /* picker/all/root/offset/generic (4) — separación con el campo */
+  --ds-picker-root-border-color:    var(--ds-borderColor-elevated); /* picker/all/root/borderColor/generic — filete: blanco en light (no se ve), se ve en dark donde la sombra no */
+  --ds-picker-root-border-width:    var(--ds-border-width-sm);     /* picker/all/root/borderWidth/generic */
+  --ds-picker-root-shadow:          0 4px 4px var(--ds-opacity-shadow-umbra-strong); /* Effect Style Picker/Shadow */
+  --ds-picker-root-max-height:      320px;   /* literal sin variable en Figma: unas 5 filas (Results=5 mide 296) y luego scroll */
+  --ds-picker-root-z-index:         20;      /* capa, no es un valor de diseño */
+  --ds-picker-heading-padding-hor:  var(--ds-spacing-lg);          /* picker/all/heading/paddingHor/generic (12) — título de grupo (.Heading) */
+  --ds-picker-heading-padding-ver:  var(--ds-spacing-xl);          /* picker/all/heading/paddingVer/generic (16) */
+  --ds-picker-empty-padding:        var(--ds-spacing-xl);          /* picker/all/empty/padding/generic — "No results" de Combobox */
+  --ds-picker-empty-fg:             var(--ds-fg-body-subtle);      /* picker/all/empty/fg/generic */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Popover Sheet (popoverSheet/all/*)
@@ -974,15 +994,24 @@
      estaba roto), este seguía enlazado EN VIVO a la librería real de
      La Empresa.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-popover-sheet-root-bg:            var(--ds-bg-container);
-  --ds-popover-sheet-focus-outer:        var(--ds-borderColor-focus-outer); /* foco del panel al abrir con teclado (A11y-4) */
-  --ds-popover-sheet-root-border-radius: 4px;   /* literal, Figma cornerRadius=4 */
-  --ds-popover-sheet-root-padding:       8px;   /* spacing/md — consolidado 14/09 desde 6 tokens fragmentados sin enlazar (popoverSheet/web/root/padding*) */
+  --ds-popover-sheet-root-bg:            var(--ds-bg-container);          /* popoverSheet/all/root/bg/generic */
+  --ds-popover-sheet-focus-outer:        var(--ds-borderColor-focus-outer); /* foco del panel al abrir con teclado (A11y-4) y del botón de cierre */
+  --ds-popover-sheet-focus-width:        var(--ds-border-width-lg);
+  --ds-popover-sheet-root-border-radius: var(--ds-border-radius-sm);     /* 12/11: popoverSheet/all/root/borderRadius/generic (4) */
+  --ds-popover-sheet-root-border-color:  var(--ds-borderColor-elevated); /* 12/11: filete, se ve en dark donde la sombra no */
+  --ds-popover-sheet-root-border-width:  var(--ds-border-width-sm);
+  --ds-popover-sheet-root-padding:       var(--ds-spacing-md);           /* popoverSheet/all/root/padding/generic (8) */
+  --ds-popover-sheet-root-min-width:     200px;   /* literal sin variable en Figma (la tarjeta de ejemplo mide 216–224) */
+  --ds-popover-sheet-root-z-index:       10;      /* capa, no es un valor de diseño */
   --ds-popover-sheet-root-shadow:        0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
   --ds-popover-sheet-pointer-bg:         var(--ds-bg-container);
-  --ds-popover-sheet-pointer-width:      24px;  /* literal, Figma .Pointer 24×12 */
-  --ds-popover-sheet-pointer-height:     12px;
-  --ds-popover-sheet-close-fg:           var(--ds-fg-subtle);
+  --ds-popover-sheet-pointer-width:      var(--ds-sizing-sm);    /* 12/11: popoverSheet/all/pointer/width/generic (24) */
+  --ds-popover-sheet-pointer-height:     var(--ds-spacing-lg);   /* popoverSheet/all/pointer/height/generic (12) — también la separación con el trigger */
+  --ds-popover-sheet-pointer-offset:     var(--ds-spacing-xl);   /* popoverSheet/all/pointer/offset/generic (16) — Pointer Left/Right desde la esquina (antes 20 en código) */
+  --ds-popover-sheet-close-fg:           var(--ds-fg-subtle);    /* popoverSheet/all/closeButton/fg/generic */
+  --ds-popover-sheet-close-padding:      var(--ds-spacing-md);   /* 12/11: popoverSheet/all/closeButton/padding/generic (8) → caja 40 con icono 24 (antes 44 en Figma, 36 en código) */
+  --ds-popover-sheet-close-size:         var(--ds-sizing-lg);    /* 40 — hueco que deja el contenido arriba */
+  --ds-popover-sheet-close-radius:       var(--ds-border-radius-circle);
 
 
 

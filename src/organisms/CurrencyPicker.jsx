@@ -1,6 +1,6 @@
 /**
  * CurrencyPicker — Organismo
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: caja Picker compartida, grupos con título, giro arriba si no cabe; componente nuevo en Figma)
  *
  * Panel flotante de selección de moneda — cierra la deuda técnica de
  * "Country/Currency Picker" (§10 CLAUDE.md): `InputAmount.jsx` ya dispara
@@ -11,13 +11,10 @@
  * `icon={null}` en `SelectorListItem` (en vez de su `file-text` por
  * defecto) — sin icono real que mostrar, no un placeholder genérico.
  *
- * Sin nodo propio en Figma — a diferencia de Country Picker (que sí tenía
- * `Selection cells`/`Country Picker` ya diseñados antes de tocar código),
- * aquí no hace falta ningún diseño nuevo: reutiliza `SelectorListItem`
- * (`Right Panel=false` → `showControl={false}`, mismo borde-como-selección
- * que Country Picker) y el mismo chrome de panel que Combobox/CountryPicker
- * (`--ds-combobox-picker-*`, ya existente). Mismo criterio que Table/
- * CellActions/ButtonBar: composición pura, sin componente propio en Figma.
+ * Figma (12/11): componente propio `Currency Picker` en 🟢 Inputs (sección
+ * Input Amount), clonado de Country Picker con `.Selection Cells`
+ * `Cell Type=Currency` (sin bandera). Antes solo existía en código. Misma
+ * caja Picker que Combobox y Country Picker (`--ds-picker-*`).
  *
  * La lista real de monedas (ISO 4217, probablemente desde una base de datos
  * o endpoint) es responsabilidad del consumidor — este organismo solo recibe
@@ -39,35 +36,11 @@
  */
 
 import React from 'react';
-import { injectStyles } from '../components/_inputBase';
-import { usePickerListbox } from './_usePickerListbox';
-import { SelectorListItem } from '../components/SelectorListItem';
-
-const css = `
-.ds-currency-picker {
-  position:      absolute;
-  top:           100%;
-  left:          0;
-  right:         0;
-  margin-top:    4px;
-  z-index:       20;
-  background:    var(--ds-combobox-picker-bg);
-  border-radius: var(--ds-combobox-picker-border-radius);
-  box-shadow:    var(--ds-combobox-picker-shadow);
-  overflow:      hidden;
-  max-height:    320px;
-  overflow-y:    auto;
-  padding:       4px;
-  display:       flex;
-  flex-direction: column;
-  gap:           2px;
-}
-`;
-
-injectStyles('ds-currency-picker', css);
+import { PickerPanel } from './_pickerPanel';
 
 export function CurrencyPicker({
   currencies = [],
+  groups,                     // [{ label: 'Most used', items: [...] }, ...] — título por grupo (Figma: Show Category)
   value,
   onChange,
   open = false,
@@ -76,31 +49,20 @@ export function CurrencyPicker({
   id,
 }) {
   // Listbox real con teclado — mismo helper que CountryPicker (A11y-1).
-  const label = (c) => `${c.code} — ${c.name}`;
-  const { listboxProps, getOptionProps } = usePickerListbox({
-    open, onClose, onChange,
-    items: currencies, value,
-    getValue: (c) => c.code,
-    getLabel: label,
-    label: ariaLabel,
-  });
-
-  if (!open) return null;
-
+  // Caja y giro: _pickerPanel.jsx (12/11). Fila sin bandera: "EUR — Euro".
   return (
-    <div className="ds-currency-picker" {...listboxProps} id={id || listboxProps.id}>
-      {currencies.map((currency, i) => (
-        <SelectorListItem
-          key={currency.code}
-          {...getOptionProps(i)}
-          data="single"
-          headerText={label(currency)}
-          icon={null}
-          showControl={false}
-          selected={currency.code === value}
-        />
-      ))}
-    </div>
+    <PickerPanel
+      open={open}
+      onClose={onClose}
+      onChange={onChange}
+      value={value}
+      items={currencies}
+      groups={groups}
+      getValue={(c) => c.code}
+      getLabel={(c) => `${c.code} — ${c.name}`}
+      ariaLabel={ariaLabel}
+      id={id}
+    />
   );
 }
 

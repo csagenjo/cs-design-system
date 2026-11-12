@@ -883,8 +883,8 @@ export default function Gallery({ mode }) {
           {['bottom', 'top', 'right', 'left'].map((p) => (
             <Contain key={p} height={300} style={{ width: 460, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <PopoverSheet open placement={p} pointer="center" ariaLabel={`Popover ${p}`} onClose={noop}
-                trigger={<Button size="sm" onClick={noop}>{`Abrir ${p}`}</Button>}>
-                <Text size="14" weight="regular">{`Contenido ${p}`}</Text>
+                trigger={<Button size="sm" onClick={noop}>{`Open ${p}`}</Button>}>
+                <Text size="14" weight="regular">{`Content ${p}`}</Text>
               </PopoverSheet>
             </Contain>
           ))}
@@ -892,7 +892,7 @@ export default function Gallery({ mode }) {
             <Contain key={ptr} height={220} style={{ width: 460, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 16 }}>
               <PopoverSheet open placement="bottom" pointer={ptr} showCloseButton={ptr === 'left'} ariaLabel={`Popover pointer ${ptr}`}
                 onClose={noop} trigger={<Button size="sm" onClick={noop}>{`Pointer ${ptr}`}</Button>}>
-                <Text size="14" weight="regular">Contenido</Text>
+                <Text size="14" weight="regular">Content</Text>
               </PopoverSheet>
             </Contain>
           ))}
@@ -1170,8 +1170,14 @@ export default function Gallery({ mode }) {
       <Section name="CountryPicker">
         <Contain height={340} style={{ maxWidth: 420 }}>
           <div style={{ position: 'relative' }}>
-            <InputTelephone label="Teléfono" flag={<CountryFlag country="spain" />} countryCode="+34" onCountryClick={noop} />
+            <InputTelephone label="Phone" flag={<CountryFlag country="spain" />} countryCode="+34" onCountryClick={noop} />
             <CountryPicker open countries={countries} value="es" onChange={noop} onClose={noop} />
+          </div>
+        </Contain>
+        <Contain height={460} style={{ maxWidth: 420 }}>
+          <div style={{ position: 'relative' }}>
+            <InputTelephone label="Phone (grouped)" flag={<CountryFlag country="spain" />} countryCode="+34" onCountryClick={noop} />
+            <CountryPicker open ariaLabel="Countries, grouped" groups={[{ label: 'Most used', items: countries.slice(0, 1) }, { label: 'All countries', items: countries.slice(1) }]} value="es" onChange={noop} onClose={noop} />
           </div>
         </Contain>
       </Section>
@@ -1179,7 +1185,7 @@ export default function Gallery({ mode }) {
       <Section name="CurrencyPicker">
         <Contain height={320} style={{ maxWidth: 420 }}>
           <div style={{ position: 'relative' }}>
-            <InputAmount label="Importe" currency="EUR" onCurrencyClick={noop} />
+            <InputAmount label="Amount" currency="EUR" onCurrencyClick={noop} />
             <CurrencyPicker open currencies={currencies} value="EUR" onChange={noop} onClose={noop} />
           </div>
         </Contain>

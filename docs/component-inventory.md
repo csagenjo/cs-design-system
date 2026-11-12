@@ -39,14 +39,14 @@ Rules that apply to every entry:
 | Group | Pieces |
 |---|---|
 | Actions | Button, IconButton, ButtonBar · _rest to be filled_ |
-| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · _rest to be filled_ |
+| Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector, AccountSelector (+ invokers and list items) · CountryPicker, CurrencyPicker |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer · _rest to be filled_ |
-| Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · _rest to be filled_ |
+| Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · PopoverSheet |
 | Page structure | Accordion, AccordionGroup · Collapsible, CollapsibleIconButton |
 | Accessibility foundations | VisuallyHidden, LiveRegion (+ `announce`) |
 | Internal parts | _to be filled_ — includes `_requiredMark` (use FieldLabel `required`), `_choiceGroup` (use RadioGroup / CheckboxGroup), `_useModal`, `_rovingFocus` (`useRovingFocus`, `useListbox`), `_focus` (layer stack), `_popoverDismiss`, `_dialogBase` (use Dialog / DialogSimple / ErrorAndEmptyState) |
@@ -4668,7 +4668,7 @@ The header of a page: its only h1, a way back or out, and up to three page-level
 **Group:** Forms
 **Figma:** 🟢 Combobox page → `Input Combobox` (State Initial / Enabled / Hover / Focus / Error / Read-only / Disabled; Label, Helper, Validation, Icon), `.Combobox` (the field: State × Input Type Text / Input Chip), `Selection Cells`, `Picker`, `.Combobox Open` (field + picker) · frame *Combobox — How to use & Accessibility* (03/11)
 **Code:** `src/organisms/Combobox.jsx` · `src/components/InputCombobox.jsx`
-**Tokens:** the common input box (`--ds-input-*`, Figma `Input/InputCommon/*`) + `--ds-combobox-*` (`combobox/all/*`: buttons and chips gap, caret, autosuggest, clear icon, picker)
+**Tokens:** the common input box (`--ds-input-*`, Figma `Input/InputCommon/*`) + `--ds-combobox-*` (`combobox/all/*`: buttons and chips gap, caret, autosuggest, clear icon) + the shared Picker box `--ds-picker-*` (`picker/all/*`, 12/11)
 
 A text field that filters a list as the user types and picks one value (text) or several (chips).
 
@@ -5642,3 +5642,140 @@ Pick one option out of a few, shown side by side as pills. Usually switches the 
 
 **Don't**
 - Don't use it for actions (buttons) or for more than 5 options
+
+
+## PopoverSheet
+
+**Group:** Overlays
+**Figma:** 🟢 Popover Sheet page → `Popover Sheet` (Placement Top · Bottom · Left · Right × Pointer Left · Center · Right, Close Button on/off), `.Pointer` · frame *Popover Sheet — How to use & Accessibility* (12/11)
+**Code:** `src/components/PopoverSheet.jsx` (atom) + `_floating.js` (shared flip) + `_popoverDismiss.js` (shared close)
+**Tokens:** `--ds-popover-sheet-*` (Figma `popoverSheet/all/*`)
+
+A small floating card with extra information or a few actions, attached to the button that opens it.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Extra detail or 1–3 actions about one element, without leaving the page · a short hint → Tooltip · a decision that blocks the page → Dialog · a list to choose from → a Picker
+
+**Properties**
+- Placement → which side of the trigger (the preferred side; in code it turns to the opposite one if it doesn't fit on screen) · Pointer → arrow at the start, centre or end of that edge · Close Button on/off
+
+**Anatomy**
+- Card (bg/container, radius 4, hairline borderColor/elevated, shadow) → close button top-right → free content → arrow towards the trigger
+
+**Sizing**
+- Padding 8 · close button 40 (icon 24 + 8), the content starts below it · arrow 24 × 12, 12 from the trigger, 16 from the corner with Pointer Left / Right · min width 200
+
+### Developers · React
+
+**Import**
+- `import { PopoverSheet } from './components/PopoverSheet'`
+
+**Props**
+- trigger (element, wrapped and given aria-haspopup / aria-expanded) · open · onClose · placement 'top' | 'bottom' | 'left' | 'right' · pointer 'left' | 'center' | 'right' · showCloseButton · ariaLabel · closeLabel · children
+
+**Example**
+- `<PopoverSheet trigger={<Button onClick={() => setOpen(true)}>Details</Button>} open={open} onClose={() => setOpen(false)} ariaLabel="Invoice details">…</PopoverSheet>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The content belongs to one element and is short; never for forms of more than one or two fields
+
+**Composition rules**
+- Keep open in the parent; close it from onClose (X, Escape, click outside all call it)
+- Always pass ariaLabel
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Visible close button · hairline in dark so the card doesn't melt into the page
+
+### Developers · React
+
+**Semantics**
+- role="dialog" (not modal) with a name · the trigger has aria-haspopup="dialog", aria-expanded and aria-controls
+
+**Keyboard**
+- On open, focus goes to the card; Escape closes; on close, focus goes back to the trigger unless the user already moved it
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't use it as a modal: it doesn't trap focus. For that, Dialog
+
+
+## CountryPicker · CurrencyPicker
+
+**Group:** Forms
+**Figma:** 🟢 Inputs page → `Country Picker` (section Input Telephone) and `Currency Picker` (section Input Amount), Results 1–5 × Show Category; rows `.Selection Cells` (Cell Type Country / Currency), group title `.Heading` · frames *Country Picker — How to use & Accessibility* and *Currency Picker — How to use & Accessibility* (12/11)
+**Code:** `src/organisms/CountryPicker.jsx`, `CurrencyPicker.jsx` (organisms) + `_pickerPanel.jsx` (shared Picker box, also used by Combobox) + `_usePickerListbox.js`
+**Tokens:** `--ds-picker-*` (Figma `picker/all/*`) + the Selector List Item rows (`--ds-selector-*`)
+
+The floating lists that Input Telephone (countries, with flag) and Input Amount (currencies) open to pick one value.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Only from Input Telephone's prefix button (Country) or Input Amount's currency button (Currency) · a searchable list of anything else → Combobox
+
+**Properties**
+- Results → 1–5 rows shown (more rows scroll) · Show Category → group title on top (e.g. "Most used")
+
+**Anatomy**
+- Picker box (bg/container, padding 4, 2 between rows, radius 8, hairline, Picker shadow) → optional group title (Section Header 19 bold, padding 16 / 12) → rows (flag + "ES | Spain (+34)", or "EUR — Euro")
+
+**Sizing**
+- Rows 56 · the box is as wide as the field and 4 below it (above it if there's no room) · about 5 rows, then scroll
+
+### Developers · React
+
+**Import**
+- `import { CountryPicker } from './organisms/CountryPicker'` · `CurrencyPicker`
+
+**Props**
+- open · onClose · value · onChange · countries [{ value, label, flag }] / currencies [{ code, name }] · groups [{ label, items }] instead of the flat list · ariaLabel
+
+**Example**
+- `<div style={{ position: 'relative' }}><InputTelephone … onCountryClick={() => setOpen(true)} /><CountryPicker open={open} onClose={() => setOpen(false)} countries={countries} value={country} onChange={setCountry} /></div>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The user changes the phone prefix or the currency of an amount
+
+**Composition rules**
+- Wrap the input and the picker in a `position: relative` container · use groups when there are frequent values ("Most used")
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Selected row with border, not only colour · focus ring inside the row
+
+### Developers · React
+
+**Semantics**
+- role="listbox" with a name; rows are options with aria-selected; each group is role="group" named by its title
+
+**Keyboard**
+- On open, focus goes to the selected row · ↑ / ↓, Home / End and typing the first letters move · Enter / Space choose · Escape or Tab close · focus returns to the button that opened it
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Don't**
+- Don't add a search field here: for searching, Combobox
