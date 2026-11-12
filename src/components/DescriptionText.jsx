@@ -1,6 +1,6 @@
 /**
  * DescriptionText — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: color onColor; Narrow eliminado en Figma)
  *
  * Texto plano de descripción. Consolidado desde el markup fijo (color/tamaño
  * únicos) que Selector/AccountSelector tenían embebido — ahora expone el
@@ -32,13 +32,14 @@ const css = `
 
 .ds-description-text--default  { color: var(--ds-description-text-fg-default); }
 .ds-description-text--disabled { color: var(--ds-description-text-fg-disabled); }
+.ds-description-text--onColor  { color: var(--ds-description-text-fg-onColor); }
 `;
 
 injectStyles('ds-description-text', css);
 
 export function DescriptionText({
   children,
-  color = 'subtle', // 'subtle' | 'default' | 'disabled'
+  color = 'subtle', // 'subtle' | 'default' | 'disabled' | 'onColor' (sobre superficies de color)
   size  = '14',       // '14' | '16'
   as: Tag = 'p',      // A11y-5: 'span' dentro de un botón (un <p> ahí no es válido)
   id,

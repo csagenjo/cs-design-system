@@ -1,29 +1,29 @@
 /**
  * DetailText — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: icono vía átomo Icon, gap y tamaño con token)
  *
  * Icono + texto de detalle. Consolidado desde 4 copias duplicadas en código
  * (SelectorInvoker, SelectorListItem, AccountSelectorInvoker,
  * AccountSelectorListItem), cada una con soporte de color parcial distinto
  * — punto único de mantenimiento a partir de ahora.
  *
- * `icon` es un slot libre (ReactNode) — por defecto el icono "link" de Figma,
+ * `icon` es un slot libre (ReactNode, usar el átomo Icon size="2xs") — por defecto el icono "link" de Figma,
  * sustituible por cualquier otro cuando el consumidor lo necesite.
  *
  * USO:
  *   <DetailText>Here is some detail text</DetailText>
- *   <DetailText color="secondary" size="16" icon={<Phone size={16} />}>600 000 000</DetailText>
+ *   <DetailText color="secondary" size="16" icon={<Icon name="phone" size="2xs" />}>600 000 000</DetailText>
  */
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
-import { Link2 } from 'lucide-react';
+import { Icon } from './Icon';
 
 const css = `
 .ds-detail-text {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--ds-detail-text-gap);
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   white-space: nowrap;
@@ -40,8 +40,8 @@ const css = `
 .ds-detail-text__icon {
   display: inline-flex;
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
+  width: var(--ds-detail-text-icon-size);
+  height: var(--ds-detail-text-icon-size);
   color: var(--ds-detail-text-icon-fg-default);
 }
 .ds-detail-text--secondary .ds-detail-text__icon { color: var(--ds-detail-text-icon-fg-secondary); }
@@ -71,7 +71,7 @@ export function DetailText({
     <span id={id} className={classes}>
       {showIcon && (
         <span className="ds-detail-text__icon" aria-hidden="true">
-          {icon || <Link2 size={16} strokeWidth={1.75} />}
+          {icon || <Icon name="link" size="2xs" />}
         </span>
       )}
       <span>{children}</span>

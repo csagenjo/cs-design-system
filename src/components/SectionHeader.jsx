@@ -1,6 +1,6 @@
 /**
  * SectionHeader — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: Figma Color Subtle → Default, Size 16/19, fuente desde Device en las 12 variantes)
  *
  * Título de sección de la familia tipográfica fontSize/title/* — NO es Headline
  * (familia distinta: headline usa fontSize/headline/*, line-height propio, y va
@@ -13,8 +13,7 @@
  * Ejes (matriz 12/12 de Figma, componente 3209:4291):
  *   · size   : sm (16, título/sm) | md (19, título/md)
  *   · color  : default (negro) | primary (teal) | disabled (gris)
- *              — "Subtle" de Figma se renombra a `default` en código y va contra
- *                fg/title/default, NO fg/title/subtle.
+ *              — en Figma también se llama Default desde el 12/11 (antes "Subtle").
  *   · weight : bold (default) | regular
  *
  * Accesibilidad (A11y-5): es un heading real (`<h2>` por defecto) — antes un
