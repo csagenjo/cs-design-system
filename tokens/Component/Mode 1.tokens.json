@@ -17799,10 +17799,11 @@
             }
           }
         },
-        "paddingVer": {
-          "withIcon-generic": {
+        "paddingHor": {
+          "withIcon": {
             "$type": "number",
-            "$value": 6,
+            "$value": 4,
+            "$description": "Left/right padding when the row has icons (4); the 48 icon box adds 12 more.",
             "$extensions": {
               "com.figma.variableId": "VariableID:5265:16806",
               "com.figma.hiddenFromPublishing": true,
@@ -17810,8 +17811,8 @@
                 "GAP"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:d99a0d3e72ba4cd89f43b1f43b9f90334b7451b4/-1:-1",
-                "targetVariableName": "spacing/sm",
+                "targetVariableId": "VariableID:081f412ba0f7918b28a833500f636b937cf2adc7/-1:-1",
+                "targetVariableName": "spacing/xs",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
@@ -17819,7 +17820,8 @@
           },
           "generic": {
             "$type": "number",
-            "$value": 12,
+            "$value": 16,
+            "$description": "Left/right padding of every slider row (16). Was paddingVer (misnamed) = 12.",
             "$extensions": {
               "com.figma.variableId": "VariableID:5265:16807",
               "com.figma.hiddenFromPublishing": true,
@@ -17827,8 +17829,8 @@
                 "GAP"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:feb84259d91a0f4fa1676484129c047f9d5e5b7c/-1:-1",
-                "targetVariableName": "spacing/lg",
+                "targetVariableId": "VariableID:6562dd3d68aa323469c94a4e8e9b4c2c7adb607b/-1:-1",
+                "targetVariableName": "spacing/xl",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
@@ -17843,7 +17845,7 @@
               "com.figma.variableId": "VariableID:5265:16805",
               "com.figma.hiddenFromPublishing": true,
               "com.figma.scopes": [
-                "ALL_SCOPES"
+                "CORNER_RADIUS"
               ],
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:d4834134a0e65aee09769c7ee927f808b13ea9a9/-1:-1",
@@ -17923,6 +17925,25 @@
                 "targetVariableName": "bg/hover-primary",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        },
+        "height": {
+          "generic": {
+            "$type": "number",
+            "$value": 48,
+            "$description": "Row height 48 for every slider.",
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32867:67",
+              "com.figma.scopes": [
+                "WIDTH_HEIGHT"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:528d79569a0ef9078b1a51986fb56305042f6be9/-1:-1",
+                "targetVariableName": "sizing/xl",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
               }
             }
           }
@@ -18097,7 +18118,7 @@
               "com.figma.variableId": "VariableID:5114:2347",
               "com.figma.hiddenFromPublishing": true,
               "com.figma.scopes": [
-                "ALL_SCOPES"
+                "WIDTH_HEIGHT"
               ],
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:9c434af81c2de0251ca2625708e0b250a6222624/-1:-1",
@@ -18157,6 +18178,25 @@
               "com.figma.aliasData": {
                 "targetVariableId": "VariableID:96e90c7c0d1fdcc1aec787f83e63c1b6f55a7e58/-1:-1",
                 "targetVariableName": "borderRadius/circle",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
+              }
+            }
+          }
+        },
+        "tooltipGap": {
+          "generic": {
+            "$type": "number",
+            "$value": 8,
+            "$description": "Value tooltip → knob.",
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32867:69",
+              "com.figma.scopes": [
+                "GAP"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:79fa87d22d5983b8c82cd33cfc2156ea890cdeee/-1:-1",
+                "targetVariableName": "spacing/md",
                 "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
                 "targetVariableSetName": "Device"
               }
@@ -18307,7 +18347,7 @@
             }
           }
         },
-        "fg": {
+        "bg": {
           "primary": {
             "$type": "color",
             "$value": {
@@ -18327,8 +18367,8 @@
                 "FRAME_FILL"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:ce95282456df0e9f40fe7e813a7d54139810f655/-1:-1",
-                "targetVariableName": "fg/primary",
+                "targetVariableId": "VariableID:1b0f301ba84743e0295ff764fa42409a0680274f/-1:-1",
+                "targetVariableName": "bg/surface/primary",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
               }
@@ -18353,8 +18393,8 @@
                 "FRAME_FILL"
               ],
               "com.figma.aliasData": {
-                "targetVariableId": "VariableID:83c2d1ff4d55c6f4de98e0fe396bb7a165832c6c/-1:-1",
-                "targetVariableName": "fg/secondary",
+                "targetVariableId": "VariableID:8ca757d54b549e8a514d204bddadb87f19b5a88b/-1:-1",
+                "targetVariableName": "bg/surface/secondary",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
               }
@@ -18441,6 +18481,25 @@
                 "targetVariableName": "fg/icon/disabled",
                 "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
                 "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        },
+        "padding": {
+          "generic": {
+            "$type": "number",
+            "$value": 12,
+            "$description": "Icon box 48 = 12 + 24 + 12.",
+            "$extensions": {
+              "com.figma.variableId": "VariableID:32867:68",
+              "com.figma.scopes": [
+                "GAP"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:feb84259d91a0f4fa1676484129c047f9d5e5b7c/-1:-1",
+                "targetVariableName": "spacing/lg",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
               }
             }
           }
