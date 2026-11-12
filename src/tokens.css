@@ -2021,6 +2021,7 @@
   --ds-steps-node-padding:                       var(--ds-spacing-2xs);     /* 2 — node/padding/generic (12/11): en Figma, hueco del trazo exterior; en código el círculo ocupa los 40 con el borde dentro */
   --ds-steps-border-width:                       var(--ds-border-width-lg); /* 2 — steps/common/all/borderWidth/generic (círculo y conectores; 12/11 el de StepHor era 3 suelto en Figma) */
   --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* connector/borderColor/generic */
+  --ds-steps-icon-fg-generic:                    var(--ds-fg-icon-default); /* steps/common/all/icon/fg/generic (12/11): iconos de Substep y chevron de Chapter, en negro — la forma dice el estado; antes check verde y chevron teal se confundían */
   --ds-steps-label-fg-generic:                   var(--ds-fg-title-default);/* steps/common/all/label/fg/generic (12/11): texto de todas las etiquetas; antes cada pieza usaba fg-default desde JSX o node/fg/incomplete */
 
   --ds-steps-root-bg-on-default-incomplete:         var(--ds-bg-default);
@@ -2032,7 +2033,7 @@
   --ds-steps-root-bg-on-page-completed:        var(--ds-bg-page);
   --ds-steps-root-bg-on-page-completed-selected: var(--ds-bg-default);
   --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);
-  --ds-steps-root-opacity-pressed:               var(--ds-opacity-pressed); /* root/bg/pressed → opacity/pressed */
+  --ds-steps-root-opacity-pressed:               var(--ds-opacity-pressed); /* steps/common/all/root/opacity/pressed (12/11: antes root/bg/pressed) */
   --ds-steps-root-border-width-focus:            var(--ds-border-width-lg); /* root/borderWidth/focus */
   --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner);
   --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer);
@@ -2053,9 +2054,6 @@
   --ds-steps-navigator-root-padding-horizontal:  var(--ds-spacing-xl);      /* 16 — root/paddingHor (también padding izq. de Substep) */
   --ds-steps-navigator-substep-padding-right:    var(--ds-spacing-2xl);     /* 24 — subStep/paddingRight (12/11) */
   --ds-steps-navigator-substep-gap:              var(--ds-spacing-md);      /* 8 — subStep/gap: icono → texto (12/11) */
-  --ds-steps-navigator-substep-icon-fg-incomplete: var(--ds-fg-icon-default);
-  --ds-steps-navigator-substep-icon-fg-active:     var(--ds-fg-icon-primary); /* también el chevron de Chapter (Figma) */
-  --ds-steps-navigator-substep-icon-fg-completed:  var(--ds-fg-icon-success);
   --ds-steps-navigator-substep-icon-size:        var(--ds-sizing-xs);       /* 20 */
 
   /* ══════════════════════════════════════════════════════════════════════════

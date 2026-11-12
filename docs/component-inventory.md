@@ -3659,7 +3659,7 @@ The building blocks of the Steps family: the step circle and the connectors that
 **Group:** Steps
 **Figma:** 🟢 Steps page → `Step Navigator` (Variation Page / Chapter - Collapsed / Chapter - Expanded × Style On default / On page × State) and `Substep Navigator` · frame *Step Navigator — How to use & Accessibility* (12/11)
 **Code:** `src/organisms/StepNavigator.jsx`, `SubstepNavigator.jsx` (organisms)
-**Tokens:** `--ds-steps-root-*`, `--ds-steps-navigator-*`, `--ds-steps-label-fg-generic`
+**Tokens:** `--ds-steps-root-*`, `--ds-steps-navigator-*`, `--ds-steps-label-fg-generic`, `--ds-steps-icon-fg-generic`
 
 A vertical list of the steps of a long process; chapter rows expand into substeps.
 
@@ -3680,6 +3680,7 @@ A vertical list of the steps of a long process; chapter rows expand into substep
 **Sizing**
 - Row 56 (8 + 40 + 8), padding 16, gap 16 · title label lg, bold in Active, Completed and Selected
 - Substep 40, 16 left, 24 right, line → text 16, icon → text 8, icon 20, label md
+- Every icon (substep dot · chevron · check, chapter chevron) is black: the shape tells the state, not the colour
 
 **States**
 - Active and Selected sit one surface step away · Hover bg/hover-primary · Pressed opacity · Focus double ring inside the row

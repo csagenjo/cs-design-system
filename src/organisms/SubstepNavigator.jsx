@@ -6,7 +6,8 @@
  * propio, solo una línea vertical de paso (la continuación visual del
  * conector del capítulo padre) + icono de estado + label.
  *
- * Icono por `state` (igual que Figma, 21/10/2026): incomplete → punto,
+ * Icono por `state` (igual que Figma, 21/10/2026), siempre en negro (12/11,
+ * decisión de Carol: el check verde y el chevron teal se confundían): incomplete → punto,
  * active → chevron derecho, completed → check. El label va en negrita en
  * active, completed y con `selected`; regular en incomplete. Antes era
  * siempre una flecha y el label siempre regular. El consumidor la
@@ -95,25 +96,7 @@ const css = `
 .ds-substep-navigator__icon {
   display:     flex;
   flex-shrink: 0;
-  color:       var(--ds-steps-navigator-substep-icon-fg-incomplete);
-}
-.ds-substep-navigator--active .ds-substep-navigator__section {
-  display:     flex;
-  align-items: center;
-  gap:         var(--ds-steps-navigator-substep-gap);
-  min-width:   0;
-}
-.ds-substep-navigator__icon {
-  color: var(--ds-steps-navigator-substep-icon-fg-active);
-}
-.ds-substep-navigator--completed .ds-substep-navigator__section {
-  display:     flex;
-  align-items: center;
-  gap:         var(--ds-steps-navigator-substep-gap);
-  min-width:   0;
-}
-.ds-substep-navigator__icon {
-  color: var(--ds-steps-navigator-substep-icon-fg-completed);
+  color:       var(--ds-steps-icon-fg-generic); /* negro en todos los estados: lo distingue la forma (punto · chevron · check) */
 }
 .ds-substep-navigator__label {
   font-family: inherit;
