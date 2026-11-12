@@ -1,6 +1,6 @@
 /**
  * RangeSlider — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: fila 48 con padding 16, foco solo en el knob, sin px sueltos)
  *
  * Slider de rango — dos valores (`value={[min, max]}`), dos knobs
  * independientes, el indicator pinta el tramo ENTRE ambos (no desde el
@@ -31,7 +31,8 @@ const css = `
   width: 100%;
   box-sizing: border-box;
   gap: var(--ds-slider-root-gap);
-  padding: var(--ds-slider-root-padding-ver) 16px;
+  height: var(--ds-slider-root-height);
+  padding: 0 var(--ds-slider-root-padding-hor);
   background: var(--ds-slider-root-bg);
   border: var(--ds-slider-root-border-width) solid var(--ds-slider-root-border-color);
   border-radius: var(--ds-slider-root-border-radius);
@@ -41,10 +42,6 @@ const css = `
 }
 .ds-range-slider--disabled {
   cursor: not-allowed;
-}
-.ds-range-slider:focus-within {
-  border-width: var(--ds-slider-root-border-width-focus);
-  border-color: var(--ds-slider-knob-focus-outer);
 }
 .ds-range-slider__track-wrapper {
   position: relative;

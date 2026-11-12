@@ -26,7 +26,7 @@ const css = `
   height: var(--ds-slider-knob-size);
   border-radius: var(--ds-slider-knob-border-radius);
   background: var(--ds-slider-knob-bg);
-  border: 1px solid var(--ds-slider-knob-border-color);
+  border: var(--ds-slider-knob-border-width) solid var(--ds-slider-knob-border-color);
   box-shadow: var(--ds-slider-knob-shadow);
   cursor: grab;
   touch-action: none;
@@ -36,9 +36,12 @@ const css = `
   cursor: grabbing;
 }
 .ds-slider__knob:focus-visible {
-  outline: var(--ds-slider-root-border-width-focus) solid var(--ds-slider-knob-focus-outer);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 2px var(--ds-slider-knob-focus-inner);
+  /* Figma .Knob State=Focus: inner 2 por dentro del knob (borde) + outer 2 por fuera, sin sombra */
+  border-width: var(--ds-slider-knob-border-width-focus);
+  border-color: var(--ds-slider-knob-focus-inner);
+  outline: var(--ds-slider-knob-border-width-focus) solid var(--ds-slider-knob-focus-outer);
+  outline-offset: 0;
+  box-shadow: none;
 }
 .ds-slider__knob--disabled {
   background: var(--ds-slider-knob-bg-disabled);
@@ -77,6 +80,8 @@ export const SliderKnob = React.forwardRef(function SliderKnob(
         top: '50%',
         left: `${percent}%`,
         transform: 'translate(-50%, -50%)',
+        // Figma .Knob: 8 entre la burbuja y el knob (slider/all/knob/tooltipGap)
+        '--ds-tooltip-offset': 'var(--ds-slider-knob-tooltip-gap)',
       }}
     >
       <span

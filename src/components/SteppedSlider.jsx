@@ -1,6 +1,6 @@
 /**
  * SteppedSlider — Componente atómico
- * CS Design System · v1.0
+ * CS Design System · v1.1 (12/11/2026: fila 48 con padding 16, foco solo en el knob, sin px sueltos)
  *
  * Slider de un solo valor con paradas discretas visibles (marcas de punto
  * a lo largo del track) — en Figma es el componente "Segmented", con su
@@ -38,7 +38,8 @@ const css = `
   width: 100%;
   box-sizing: border-box;
   gap: var(--ds-slider-root-gap);
-  padding: var(--ds-slider-root-padding-ver) 16px;
+  height: var(--ds-slider-root-height);
+  padding: 0 var(--ds-slider-root-padding-hor);
   background: var(--ds-slider-root-bg);
   border: var(--ds-slider-root-border-width) solid var(--ds-slider-root-border-color);
   border-radius: var(--ds-slider-root-border-radius);
@@ -48,10 +49,6 @@ const css = `
 }
 .ds-stepped-slider--disabled {
   cursor: not-allowed;
-}
-.ds-stepped-slider:focus-within {
-  border-width: var(--ds-slider-root-border-width-focus);
-  border-color: var(--ds-slider-knob-focus-outer);
 }
 .ds-stepped-slider__track-wrapper {
   position: relative;
