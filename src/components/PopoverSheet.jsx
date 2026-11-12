@@ -1,6 +1,6 @@
 /**
  * PopoverSheet — Componente atómico
- * CS Design System · v1.1
+ * CS Design System · v1.2 (12/11/2026: giro si no cabe, filete en dark, cierre de 40, todo con tokens)
  *
  * Contenedor flotante de contenido libre (Figma no modela cabecera ni body —
  * mismo criterio que Dialog/ErrorAndEmptyState: `children` es un slot
@@ -20,9 +20,11 @@
  *      `_popoverDismiss.js`, el mismo hook que ahora usan Combobox y
  *      CountryPicker para su click-fuera (antes duplicado en los dos) — el
  *      hueco de Escape en CountryPicker también se cierra de paso.
- * Sigue sin resolver el "flip" ante borde de viewport (fuera de scope v1.1,
- * anotado en CLAUDE.md §10) — Combobox/CountryPicker no lo necesitan (panel
- * siempre debajo, full-width) y no hay todavía un caso real que lo pida aquí.
+ * v1.2 (12/11): `placement` es el lado preferido; si ahí no cabe dentro de la
+ * ventana y en el opuesto hay más sitio, el panel gira (`useFlip`, compartido
+ * con Combobox y los pickers en `_floating.js`). Filete `borderColor/elevated`
+ * para que se vea en dark, botón de cierre de 40 (icono 24 + 8) y flecha a 16
+ * de la esquina con Pointer Left/Right, como Figma.
  *
  * Foco: al abrir, el panel recibe foco (`tabIndex=-1` + `.focus()`) para que
  * un lector de pantalla anuncie el `role="dialog"`; al cerrar (por cualquier
@@ -67,6 +69,7 @@
  *   </PopoverSheet>
  */
 import React, { useRef, useLayoutEffect, useEffect, useId } from 'react';
+import { useFlip } from './_floating';
 import { injectStyles } from './_inputBase';
 import { Icon } from './Icon';
 import { usePopoverDismiss } from './_popoverDismiss';
@@ -80,37 +83,41 @@ const css = `
 .ds-popover-sheet {
   position:      absolute;
   box-sizing:    border-box;
-  min-width:     200px;
+  min-width:     var(--ds-popover-sheet-root-min-width);
   text-align:    left;  /* el boilerplate de Vite pone text-align:center global — mismo bug ya visto en Accordion/InlineNotification */
   background:    var(--ds-popover-sheet-root-bg);
+  border:        var(--ds-popover-sheet-root-border-width) solid var(--ds-popover-sheet-root-border-color);
   border-radius: var(--ds-popover-sheet-root-border-radius);
   box-shadow:    var(--ds-popover-sheet-root-shadow);
   padding:       var(--ds-popover-sheet-root-padding);
-  z-index:       10;
+  z-index:       var(--ds-popover-sheet-root-z-index);
 }
 .ds-popover-sheet:focus-visible { /* A11y-4: al abrir con teclado el foco entra en el panel — se tiene que ver */
-  outline:        var(--ds-border-width-lg) solid var(--ds-popover-sheet-focus-outer);
-  outline-offset: var(--ds-border-width-lg);
+  outline:        var(--ds-popover-sheet-focus-width) solid var(--ds-popover-sheet-focus-outer);
+  outline-offset: var(--ds-popover-sheet-focus-width);
 }
 .ds-popover-sheet--with-close {
-  padding-top: 36px; /* despeja el hueco del botón de cierre (44×44 en Figma) */
+  padding-top: var(--ds-popover-sheet-close-size); /* despeja el hueco del botón de cierre (40) */
 }
 
 .ds-popover-sheet__close {
   position:        absolute;
-  top:             4px;
-  right:           4px;
+  top:             0;
+  right:           0;
   display:         flex;
   align-items:     center;
   justify-content: center;
-  padding:         6px;
+  padding:         var(--ds-popover-sheet-close-padding);
   background:      transparent;
   border:          none;
-  border-radius:   999px;
+  border-radius:   var(--ds-popover-sheet-close-radius);
   color:           var(--ds-popover-sheet-close-fg);
   cursor:          pointer;
 }
-.ds-popover-sheet__close:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+.ds-popover-sheet__close:focus-visible {
+  outline:        var(--ds-popover-sheet-focus-width) solid var(--ds-popover-sheet-focus-outer);
+  outline-offset: calc(-1 * var(--ds-popover-sheet-focus-width));
+}
 
 .ds-popover-sheet__pointer {
   position: absolute;
@@ -162,13 +169,13 @@ const css = `
 }
 .ds-popover-sheet--pointer-left.ds-popover-sheet--top .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-left.ds-popover-sheet--bottom .ds-popover-sheet__pointer {
-  left: 20px;
+  left: var(--ds-popover-sheet-pointer-offset);
   transform: none;
 }
 .ds-popover-sheet--pointer-right.ds-popover-sheet--top .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-right.ds-popover-sheet--bottom .ds-popover-sheet__pointer {
   left: auto;
-  right: 20px;
+  right: var(--ds-popover-sheet-pointer-offset);
   transform: none;
 }
 
@@ -181,13 +188,13 @@ const css = `
 }
 .ds-popover-sheet--pointer-left.ds-popover-sheet--left .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-left.ds-popover-sheet--right .ds-popover-sheet__pointer {
-  top: 20px;
+  top: var(--ds-popover-sheet-pointer-offset);
   transform: none;
 }
 .ds-popover-sheet--pointer-right.ds-popover-sheet--left .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-right.ds-popover-sheet--right .ds-popover-sheet__pointer {
   top: auto;
-  bottom: 20px;
+  bottom: var(--ds-popover-sheet-pointer-offset);
   transform: none;
 }
 `;
@@ -219,6 +226,7 @@ export function PopoverSheet({
   const wasOpenRef = useRef(false);
 
   usePopoverDismiss({ open, onClose, refs: [wrapperRef] });
+  const side = useFlip({ open, panelRef, anchorRef: wrapperRef, placement });
 
   // Mide el trigger real (el wrapper, en inline-block, se ajusta exactamente
   // a él — el panel es position:absolute y no aporta ancho/alto al wrapper)
@@ -263,7 +271,7 @@ export function PopoverSheet({
 
   const classes = [
     'ds-popover-sheet',
-    `ds-popover-sheet--${placement}`,
+    `ds-popover-sheet--${side}`,
     `ds-popover-sheet--pointer-${pointer}`,
     showCloseButton ? 'ds-popover-sheet--with-close' : '',
     className || '',

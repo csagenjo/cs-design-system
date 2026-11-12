@@ -181,7 +181,6 @@ export function Accordion({
           className="ds-accordion__icon"
           name={expanded ? 'chevron-up' : 'chevron-down'}
           size="2xs"
-          strokeWidth={2}
         />
       </button>
       </Heading>

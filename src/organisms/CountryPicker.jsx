@@ -1,6 +1,6 @@
 /**
  * CountryPicker — Organismo
- * CS Design System · v1.0
+ * CS Design System · v1.2 (12/11/2026: caja Picker compartida, grupos con título, giro arriba si no cabe)
  *
  * Panel flotante de selección de país — cierra la deuda técnica de
  * "Country/Currency Picker" (§10 CLAUDE.md): InputTelephone.jsx ya dispara
@@ -25,10 +25,10 @@
  * filtra por texto; si se necesita búsqueda en el futuro, es una extensión
  * consciente, no algo que Figma ya define hoy.
  *
- * Posicionamiento: panel `absolute` local (`top:100%`), igual que el Picker
- * de Combobox — el consumidor solo necesita envolver el trigger (p. ej.
- * InputTelephone) en un contenedor `position: relative`. Sin popover
- * compartido todavía (misma deuda ya anotada para Combobox/Selector).
+ * Posicionamiento: panel `absolute` bajo el campo (o encima, si abajo no
+ * cabe en la ventana — `useFlip`, 12/11); el consumidor envuelve el trigger
+ * (p. ej. InputTelephone) en un contenedor `position: relative`. La caja es
+ * el Picker compartido con Combobox (`_pickerPanel.jsx`, tokens picker/all/*).
  *
  * USO:
  *   <div style={{ position: 'relative' }}>
@@ -44,36 +44,12 @@
  */
 
 import React from 'react';
-import { injectStyles } from '../components/_inputBase';
-import { usePickerListbox } from './_usePickerListbox';
-import { SelectorListItem } from '../components/SelectorListItem';
+import { PickerPanel } from './_pickerPanel';
 import { CountryFlag } from '../components/CountryFlag';
-
-const css = `
-.ds-country-picker {
-  position:      absolute;
-  top:           100%;
-  left:          0;
-  right:         0;
-  margin-top:    4px;
-  z-index:       20;
-  background:    var(--ds-combobox-picker-bg);
-  border-radius: var(--ds-combobox-picker-border-radius);
-  box-shadow:    var(--ds-combobox-picker-shadow);
-  overflow:      hidden;
-  max-height:    320px;
-  overflow-y:    auto;
-  padding:       4px;
-  display:       flex;
-  flex-direction: column;
-  gap:           2px;
-}
-`;
-
-injectStyles('ds-country-picker', css);
 
 export function CountryPicker({
   countries = [],
+  groups,                    // [{ label: 'Most used', items: [...] }, ...] — título por grupo (Figma: Show Category)
   value,
   onChange,
   open = false,
@@ -82,31 +58,21 @@ export function CountryPicker({
   id,
 }) {
   // Listbox real con teclado, foco y cierre por Escape/Tab/click-fuera
-  // (A11y-1, ver _usePickerListbox.js). Antes: <div onClick> inalcanzables.
-  const { listboxProps, getOptionProps } = usePickerListbox({
-    open, onClose, onChange,
-    items: countries, value,
-    getValue: (c) => c.value,
-    getLabel: (c) => c.label,
-    label: ariaLabel,
-  });
-
-  if (!open) return null;
-
+  // (A11y-1, ver _usePickerListbox.js). Caja y giro: _pickerPanel.jsx (12/11).
   return (
-    <div className="ds-country-picker" {...listboxProps} id={id || listboxProps.id}>
-      {countries.map((country, i) => (
-        <SelectorListItem
-          key={country.value}
-          {...getOptionProps(i)}
-          data="single"
-          headerText={country.label}
-          icon={<CountryFlag country={country.flag} />}
-          showControl={false}
-          selected={country.value === value}
-        />
-      ))}
-    </div>
+    <PickerPanel
+      open={open}
+      onClose={onClose}
+      onChange={onChange}
+      value={value}
+      items={countries}
+      groups={groups}
+      getValue={(c) => c.value}
+      getLabel={(c) => c.label}
+      renderIcon={(c) => <CountryFlag country={c.flag} />}
+      ariaLabel={ariaLabel}
+      id={id}
+    />
   );
 }
 
