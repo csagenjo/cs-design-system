@@ -22023,7 +22023,7 @@
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:ab72cad99fa33cb751ef3e77adf6c4782a3dcf8c/-1:-1",
-              "targetVariableName": "fontLheight/doc/display-xl",
+              "targetVariableName": "lineHeight/doc/display-xl",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }
@@ -22040,7 +22040,7 @@
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:b30f5e259576827d891df3348f63d5f01b4ffe06/-1:-1",
-              "targetVariableName": "fontLheight/doc/display-lg",
+              "targetVariableName": "lineHeight/doc/display-lg",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }
@@ -22057,7 +22057,7 @@
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:6d970ba1e367aafc7aef348f43f0cccfe48f0e41/-1:-1",
-              "targetVariableName": "fontLheight/doc/title-lg",
+              "targetVariableName": "lineHeight/doc/title-lg",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }
@@ -22074,7 +22074,7 @@
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:593df136a4ab3422bed2e66aed46bc8fe9b71cd4/-1:-1",
-              "targetVariableName": "fontLheight/doc/title-md",
+              "targetVariableName": "lineHeight/doc/title-md",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }
@@ -22091,7 +22091,7 @@
             ],
             "com.figma.aliasData": {
               "targetVariableId": "VariableID:fab46e6e7165c187ad38adde7795ec5c741ea899/-1:-1",
-              "targetVariableName": "fontLheight/doc/title-sm",
+              "targetVariableName": "lineHeight/doc/title-sm",
               "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
               "targetVariableSetName": "Device"
             }

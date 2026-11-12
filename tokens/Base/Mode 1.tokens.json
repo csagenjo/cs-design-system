@@ -2306,7 +2306,7 @@
         }
       }
     },
-    "fontLheight": {
+    "lineHeight": {
       "16": {
         "$type": "number",
         "$value": 16,
