@@ -25,8 +25,8 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Figma e IP
 
-- **Sección `Web - Sistema Origen (Copy)`.** 6 component sets antiguos de referencia, con el naranja de marca de La Empresa. Revisar y archivar.
+- **Sección `Web - Sistema Origen (Copy)`.** 6 component sets antiguos que no son nuestros. Revisar y archivar.
 - **Copia de la librería de Sistema Origen en la cuenta de Figma.** Revisar y archivar.
-- **Barrido de `Placeholder/Placeholder` y `Notification Count`.** Descripciones con el dominio interno de Sistema Origen; solo se limpió Description List.
+- **Barrido de `Placeholder/Placeholder` y `Notification Count`.** Descripciones con un enlace externo que hay que quitar; solo se limpió Description List.
 - **Instancia suelta de `Image`** en la página 🟢 Image, fuera de cualquier frame. Confirmar si se borra.
 - **Filete `borderColor/elevated` en el resto de superficies flotantes** (Dialog, Drawer primary): en dark su sombra negra no se ve. Ya lo llevan la Card Basic (11/11), Popover Sheet y el Picker de Combobox, Country y Currency (12/11).

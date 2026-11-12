@@ -1,14 +1,9 @@
 # Layouts
 
-The six page layouts of La Plataforma, translated into the CS Design System.
+The six page layouts of the CS Design System.
 This is the base for step 5 of the project (the layout-generation agent): the
 agent reads `docs/component-index.md` to pick pieces and this file to place
 them on a page.
-
-Source: the layout guidelines of UIKit Plataforma, used as examples only. We
-keep the behaviour rules and the structure; names, colours, typography and
-brand come from our own tokens and components. Nothing is copied from the
-reference files.
 
 Status (12/11/2026): analysis. No layout is built yet; gaps are listed at the
 end.
