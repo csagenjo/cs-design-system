@@ -42,7 +42,6 @@ const css = `
 }
 .ds-input-telephone--full-width { display: flex; }
 
-.ds-input-telephone__label   { margin-bottom: var(--ds-input-label-gap); }
 .ds-input-telephone__message { margin-top: var(--ds-input-validation-gap); }
 
 /* ── País (Figma Country Code) ── */
@@ -86,7 +85,7 @@ button.ds-input-telephone__country:disabled { cursor: not-allowed; }
   flex:               1;
   min-width:          0;
   min-height:         var(--ds-input-subfield-height);
-  padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
+  padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);

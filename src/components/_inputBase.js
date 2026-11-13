@@ -36,9 +36,15 @@ export function injectStyles(id, css) {
                      foco o error pasa por encima, así el borde compartido toma
                      su color (Figma: Hover/Focus/Error - Country|Telephone). */
 const INPUT_BOX_CSS = `
-.ds-input-root { margin: var(--ds-input-focus-area-padding); box-sizing: border-box; }
+.ds-input-root {
+  margin: var(--ds-input-focus-area-padding);
+  box-sizing: border-box;
+  /* 13/11: en Figma el borde va por dentro (stroke inside) y la caja mide 56 = 16 + 24 + 16.
+     En CSS el borde suma por fuera del padding: se descuenta para que el campo mida 56, no 58. */
+  --ds-input-padding-ver-inner: calc(var(--ds-input-padding-ver) - var(--ds-input-border-width));
+}
 
-/* Label → ayuda 4 (label/gap), ayuda → campo 8 (helper/gap); sin ayuda, label → campo 8.
+/* Label → ayuda 0 (label/gap, el line-height de 24 ya deja el aire; 13/11), ayuda → campo 8 (helper/gap); sin ayuda, label → campo 8.
    Figma: frame "Label + Helper" (gap label/gap) dentro de "Base Input" (gap helper/gap). */
 .ds-input-label { margin-bottom: var(--ds-input-helper-gap); }
 .ds-input-label:has(+ .ds-input-helper) { margin-bottom: var(--ds-input-label-gap); }

@@ -37,7 +37,6 @@ const css = `
 }
 .ds-input-amount--full-width { display: flex; }
 
-.ds-input-amount__label   { margin-bottom: var(--ds-input-label-gap); }
 .ds-input-amount__message { margin-top: var(--ds-input-validation-gap); }
 
 /* ── Divisa (Figma ISO Currency) ── */
@@ -47,7 +46,7 @@ const css = `
   flex-shrink: 0;
   gap:         var(--ds-input-subfield-gap);
   min-height:  var(--ds-input-subfield-height);
-  padding:     var(--ds-input-padding-ver) var(--ds-input-padding-hor);
+  padding:     var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   font-family: inherit;
   white-space: nowrap;
   cursor:      default;
@@ -70,7 +69,7 @@ button.ds-input-amount__currency:disabled { cursor: not-allowed; }
   flex:               1;
   min-width:          0;
   min-height:         var(--ds-input-subfield-height);
-  padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
+  padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);

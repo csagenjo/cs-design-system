@@ -24,7 +24,7 @@ const ROOT = new URL('../tokens/', import.meta.url).pathname;
 
 // carpeta del repo → nombre de la colección en Figma (targetVariableSetName)
 const COLLECTIONS = {
-  Base: 'Base tokens',
+  Base: 'Base',
   Theme: 'Theme',
   Mode: 'Mode',
   Device: 'Device',
@@ -32,8 +32,8 @@ const COLLECTIONS = {
 };
 // destinos permitidos por colección (por nombre de Figma)
 const ALLOWED = {
-  'Base tokens': [],
-  Theme: ['Base tokens'],
+  Base: [],
+  Theme: ['Base'],
   Mode: ['Theme'],
   Device: ['Theme'],
   'Component tokens': ['Mode', 'Device'],
@@ -108,7 +108,7 @@ for (const [set, files] of Object.entries(data)) {
         continue;
       }
       if (once) stats[set].literal++;
-      if (set !== 'Base tokens' && once) errors.unlinked.push(`${set} · ${name} = ${JSON.stringify(v?.hex ?? v)}`);
+      if (set !== 'Base' && once) errors.unlinked.push(`${set} · ${name} = ${JSON.stringify(v?.hex ?? v)}`);
     }
   }
 }

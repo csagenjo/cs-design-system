@@ -159,6 +159,23 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "none": {
+      "$type": "number",
+      "$value": 0,
+      "$description": "0 — gaps the line-height already covers (e.g. label → helper in inputs).",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32937:108",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e601785fdd43e6c5acc3b33e0c4a01c7725fd977/-1:-1",
+          "targetVariableName": "spacing/none-mobile",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "sizing": {

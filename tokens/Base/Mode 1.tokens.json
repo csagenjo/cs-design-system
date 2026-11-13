@@ -1871,6 +1871,14 @@
     }
   },
   "dimension": {
+    "0": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32937:104",
+        "com.figma.hiddenFromPublishing": true
+      }
+    },
     "10": {
       "$type": "number",
       "$value": 1,

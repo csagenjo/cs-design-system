@@ -37,6 +37,7 @@ const css = `
   /* El área de foco de cada Button (4 px) ya separa los botones del borde. */
 }
 .ds-btn-bar__left {
+  flex:           1 1 0;      /* 13/11: la notificación ocupa el ancho disponible */
   display:        flex;
   flex-direction: column;
   align-items:    flex-start;
@@ -45,6 +46,7 @@ const css = `
 }
 .ds-btn-bar--simple .ds-btn-bar__left,
 .ds-btn-bar--detail .ds-btn-bar__left { align-self: center; }
+.ds-btn-bar__left > :not(.ds-btn-bar__actions) { align-self: stretch; }
 .ds-btn-bar__actions {
   display:     flex;
   align-items: center;

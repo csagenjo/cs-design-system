@@ -24,7 +24,7 @@ const css = `
 .ds-input-date__control {
   width:              100%;
   /* padding-right siempre compensado por el icono calendario */
-  padding:            var(--ds-input-padding-ver) var(--ds-input-padding-hor);
+  padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
