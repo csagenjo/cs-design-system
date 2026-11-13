@@ -78,7 +78,9 @@ Cada familia: 11 pasos (50, 100–900, 950).
 |---|---|---|
 | Hero de marca (CTA, primary surfaces) | primary/teal | secondary/magenta |
 | Color de soporte | secondary/magenta | primary/teal |
-| Tokens cambiados entre temas | — | 148 (primary↔secondary swap) |
+| Regla | — | primary↔secondary al mismo paso; el resto igual que Retail (ver *Auditoría de Theme (13/11/2026)*) |
+| Tokens de Mode que cambian | — | 25, todos de marca |
+| En código | `:root` | `[data-theme="youth"]` |
 
 ### Reducción de profundidad de color primary/secondary (15/07/2026)
 
@@ -966,7 +968,7 @@ Tipografía → Base directo (misma regla de line-height de titulares: 1.25× en
 | Tema | Estado |
 |---|---|
 | Overall (Retail) | ✅ Activo · Auditado · 0 KOs |
-| Youth | ✅ Activo · Auditado · 0 KOs · 148 tokens cambiados |
+| Youth | ✅ Activo · Auditado 13/11/2026 · 25 tokens de Mode cambiados · en código con `data-theme="youth"` |
 | Wholesale Banking | 🗑️ Eliminado de la colección 15/07/2026 |
 | Business Banking | 🗑️ Eliminado de la colección 15/07/2026 |
 | Private Banking | 🗑️ Eliminado de la colección 15/07/2026 |
@@ -1110,7 +1112,7 @@ Scope `GAP`, ocultos en la publicación (internos del componente, como el resto 
 - **Notification Count description** — campo Description del componente con un enlace externo. Pendiente de borrar en Figma.
 - **Placeholder/Placeholder** (node 2355:4239) — descripción del contenedor de iconos con un enlace externo. Pendiente de borrar en Figma.
 - **Component tokens publicados (30/09/2026)** — 249 de 874 sin `hiddenFromPublishing` en el export actual (en junio solo ~41 accent/visited). Decidir si se vuelven a ocultar.
-- **Youth sin implementar en código (30/09/2026)** — `tokens.css` solo tiene Retail; no hay selector de tema.
+- ~~**Youth sin implementar en código (30/09/2026)**~~ ✅ **Resuelto 13/11/2026** — `[data-theme="youth"]` en `tokens.css` (ver *Auditoría de Theme*).
 
 
 ---
@@ -1187,3 +1189,21 @@ Bordes: en subtle y medium, los `borderColor/*` normales; en base y bold, `borde
 **Sin uso, se quedan a propósito** (como en Device: reservas baratas para contenido).
 - `fg/subheadline/*`, `fg/secondary`, `fg/tertiary`, `fg/headline/subtle|tertiary`, `fg/title/subtle`; `borderColor/accent*`, `onColor`, `tertiary-inverse`, `info-inverse`; `bg/surface/secondary-bold`; `opacity/hover/subtle-inverse`, `opacity/overlay/default` (este sí lo usa el código).
 - `opacity/hover/subtle` y `subtle-inverse` valen lo mismo que `default` y `default-inverse`.
+
+## Auditoría de Theme (13/11/2026) — mismo método
+
+565 variables (235 de color), dos modos: Retail y Youth. Revisados alias por modo, quién las usa (Mode, Device, Component, nodos y estilos en las 60 páginas), visibilidad y alcance, y contraste de lo que cambia entre temas.
+
+**Regla de Youth.** La paleta está calibrada para que el mismo paso dé el mismo contraste en todas las familias (el 500 da ≈4,9:1 sobre blanco y el 300 ≈11:1 sobre `bg/default` dark, sea teal, magenta, rojo o verde). Por eso Youth = Retail con las familias `primary` y `secondary` intercambiadas **al mismo paso**; neutros, estados, tertiary y foco son iguales que en Retail. Así cualquier ajuste de contraste hecho en Retail vale para Youth sin revisarlo dos veces.
+
+**Corregido.**
+- De las 62 diferencias Retail ↔ Youth, 42 cumplían la regla y 20 no: eran alias antiguos que no recibieron las correcciones de Retail. Casi todos fallaban en dark: textos de marca en `secondary/500` (2,9:1 sobre container), iconos y bordes en `secondary/500` (2,9:1), `bg/surface/secondary` y `tertiary` en el paso 300 (texto blanco encima 1,6:1), `bg/error|success(-subtle)` en el paso 200 (fondo claro en dark, 1,3:1 con texto blanco) y `fg|icon|borderColor/error` en el paso 500. Los 20 se alinearon a la regla.
+- `fg/icon/onColor` (Mode, light) apuntaba a `fg/icon/inverse-light`; ahora a `fg/icon/onColor-light` (mismo blanco).
+- `borderColor/info-inverse` (Mode, dark) apuntaba a la variable de foco desde el 12/11; su variable de Theme pasa a info/700 y vuelve a enlazarse.
+- Borradas `fg/icon/onSurface/static-primary-dark` (huérfana tras borrar la familia onSurface) y `fg/headline/inverse` ×2 (los titulares van sobre `bg/page|default|container` o, sobre color, con `onColor`; inverse pasaría a negro en dark).
+- Nuevo en Mode: `fg/body/primary` (light primary/500, dark primary/300; Youth magenta). Era el único hueco de la familia `fg/body/*` y ya existía en Theme sin token de Mode.
+- Visibilidad: 28 variables de Theme estaban visibles para publicar y 209 tenían alcance, así que aparecían en los selectores. Ahora todas están ocultas y sin alcance, como Device: Theme no se enlaza nunca directamente (0 nodos y 0 estilos lo hacían).
+
+**Resultado.** 562 variables de Theme; 25 tokens de Mode cambian entre temas, todos de marca (`fg/primary|secondary` y sus roles, `fg/icon/primary|secondary|accent-primary`, `borderColor/primary|secondary|accent*`, `bg/surface/primary|secondary*`).
+
+**En código** (`src/tokens.css`). `<html data-theme="youth">` activa Youth: un bloque `[data-theme="youth"]` con los 25 tokens en light y otro con sus valores dark (`[data-theme="youth"][data-mode="dark"]` y, en la media query, `:root[data-theme="youth"]`). Generado desde los exports, sin valores a mano. La galería acepta `?theme=youth` y `npm run a11y` escanea los 4 casos (Retail y Youth × light y dark): 0 fallos.

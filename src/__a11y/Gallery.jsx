@@ -197,11 +197,11 @@ const inputStates = ['default', 'error', 'disabled'];
 const selectorStates = ['default', 'error', 'disabled', 'readOnly', 'dataHidden'];
 const dataSelections = ['single', 'multiple', 'empty'];
 
-export default function Gallery({ mode }) {
+export default function Gallery({ mode, theme = 'retail' }) {
   return (
     <main className="a11y-gallery" data-gallery-mode={mode}>
       <style>{css}</style>
-      <h1>CS Design System · a11y gallery ({mode})</h1>
+      <h1>CS Design System · a11y gallery ({theme} · {mode})</h1>
 
       {/* ═══════════ components ═══════════ */}
 

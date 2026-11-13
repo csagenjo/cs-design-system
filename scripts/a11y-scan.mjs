@@ -1,6 +1,6 @@
 /**
  * Accessibility scan — axe-core over the a11y gallery (all 84 pieces, every
- * variant and state), in light and dark mode.
+ * variant and state), in light and dark mode, for both themes (Retail, Youth).
  *
  *   npm run a11y          build the gallery + scan
  *   npm run a11y -- --strict   exit 1 if anything fails (for CI)
@@ -29,12 +29,13 @@ const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePa
 
 const report = {};
 try {
-  for (const mode of ['light', 'dark']) {
+  for (const run of ['retail light', 'retail dark', 'youth light', 'youth dark']) {
+    const [theme, mode] = run.split(' ');
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-    await page.goto(`${base}/a11y.html${mode === 'dark' ? '?mode=dark' : ''}`);
+    await page.goto(`${base}/a11y.html?mode=${mode}&theme=${theme}`);
     await page.waitForTimeout(1000);
     await page.addScriptTag({ content: axeSource });
-    report[mode] = await page.evaluate(async (tags) => {
+    report[run] = await page.evaluate(async (tags) => {
       const res = await window.axe.run(document, { runOnly: { type: 'tag', values: tags }, resultTypes: ['violations'] });
       const isDisabled = (el) => {
         for (let e = el; e && !e.matches('section[data-component]'); e = e.parentElement) {

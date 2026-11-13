@@ -39,6 +39,7 @@ tokens/           exports de Figma: Base/ Theme/ Mode/ Component/ Device/
 - **Tipografía: excepción.** No cambia con Theme ni Mode, así que se consume directa de Device (`fontSize/*`, `fontWeight/*`, `lineHeight/*`).
 - **Spacing:** `spacing/*` fijo en los 3 devices; solo `layout/margin|gutter` es responsive. Rejilla de 4/8 validada en el tamaño exterior del componente.
 - **Nombres:** color de icono por el contraste que resuelve (`on-color`, `on-outline-default`), nunca por la Variant de origen. Eje de color entre variantes = `default` (sin marca) / `secondary` (con marca), nunca `primary`; `generic` solo si el valor es igual en todas las variantes.
+- **Temas:** Retail en `:root`; Youth con `<html data-theme="youth">` (primary↔secondary al mismo paso, el resto igual). Galería: `?theme=youth&mode=dark`.
 - **Icono sobre superficie de color:** `fg/icon/onColor` (blanco en los dos modos), nunca `fg/icon/inverse` (pasa a negro en dark).
 - **Exportar tokens:** Carol exporta a `~/Downloads/DDMMAAAA/` (zip, el último del día). Al oír "exportados": pedir acceso a `~/Downloads`, descomprimir en `tokens/<Colección>/` de la rama, revisar el diff por nombre de token (el orden de Figma cambia), pasar `npm run tokens:check` (alias que resuelven, 0 valores sin enlace, 0 saltos de capa fuera de `tokens/layer-exceptions.json`) y subirlo a la PR. Nunca tocar el repo de su Mac. Export nativo de Figma (Variables → Export modes, DTCG), no Tokens Studio: el hex de `$value` es el valor resuelto; el enlace real va en `aliasData`.
 
@@ -69,7 +70,7 @@ Detalle de cada uno en `docs/component-notes.md`.
 
 **Organismos (`src/organisms/`)** — ButtonBar v3 · Table v1 · CellActions v1 · DescriptionList v2 · FileUpload v2 · FileSelector v1 · Tabs v3 · RadioGroup v1 · CheckboxGroup v1 · AccordionGroup v1 · Combobox v1.3 · CountryPicker v1.2 · CurrencyPicker v1.1 · SidebarMenu v1.1 · TopNavigation v1.1 · PageTitle v2 · StepIndicatorLarge v1.1 · StepIndicatorSmall v1.1 · StepNavigator v1.1 · SubstepNavigator v1.1
 
-**Siguientes:** inventario completo (12/11): todas las piezas documentadas. Paso 4 del proyecto: probar el pipeline Figma MCP con pantallas reales. Deuda en `docs/tech-debt.md`. Backlog: Bottom Navigation, Bottom Sheet, Videoplayer.
+**Siguientes:** inventario completo (12/11): todas las piezas documentadas. Tokens auditados en las 5 colecciones y Youth en código (13/11). Paso 4 del proyecto: probar el pipeline Figma MCP con pantallas reales. Deuda en `docs/tech-debt.md`. Backlog: Bottom Navigation, Bottom Sheet, Videoplayer.
 
 ## 7. Workflow
 

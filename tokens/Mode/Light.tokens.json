@@ -1082,6 +1082,31 @@
             "targetVariableSetName": "Theme"
           }
         }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.03921568766236305,
+            0.48627451062202454,
+            0.572549045085907
+          ],
+          "alpha": 1,
+          "hex": "#0A7C92"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32916:67",
+          "com.figma.scopes": [
+            "TEXT_FILL"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:4cdf918be880e14637dcd32bed33815a36e6174a/-1:-1",
+            "targetVariableName": "fg/body/primary-light",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
       }
     },
     "icon": {
@@ -1261,8 +1286,8 @@
             "STROKE"
           ],
           "com.figma.aliasData": {
-            "targetVariableId": "VariableID:ab3b335e87a64f2b2305b13cf2f8da3e77cc4fc9/-1:-1",
-            "targetVariableName": "fg/icon/inverse-light",
+            "targetVariableId": "VariableID:deb2b8dab6519b2d33f139366321393a947a3c5c/-1:-1",
+            "targetVariableName": "fg/icon/onColor-light",
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }
