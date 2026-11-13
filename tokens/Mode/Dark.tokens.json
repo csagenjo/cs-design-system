@@ -1082,6 +1082,31 @@
             "targetVariableSetName": "Theme"
           }
         }
+      },
+      "primary": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6392157077789307,
+            0.8313725590705872,
+            0.886274516582489
+          ],
+          "alpha": 1,
+          "hex": "#A3D4E2"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32916:67",
+          "com.figma.scopes": [
+            "TEXT_FILL"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:a50acfda16910cf6e23d39d3aa60acee29e3dc5b/-1:-1",
+            "targetVariableName": "fg/body/primary-dark",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
       }
     },
     "icon": {
@@ -2714,8 +2739,8 @@
           "STROKE"
         ],
         "com.figma.aliasData": {
-          "targetVariableId": "VariableID:3316820709bb0a2e5f88770a62dde0654cf8d78c/-1:-1",
-          "targetVariableName": "borderColor/focus-outer-inverse-dark",
+          "targetVariableId": "VariableID:50ac16d661af3f03189145bc1dc833d6511d6fe9/-1:-1",
+          "targetVariableName": "borderColor/info-inverse-dark",
           "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
           "targetVariableSetName": "Theme"
         }

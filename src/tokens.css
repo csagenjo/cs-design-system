@@ -158,6 +158,7 @@
   --ds-fg-body-disabled:    #AAAFB5;
   --ds-fg-body-inverse:     #FFFFFF;
   --ds-fg-body-onColor:     #FFFFFF;
+  --ds-fg-body-primary:    #0A7C92; /* 13/11 — fg/body/primary nuevo en Mode (primary/500) */
   --ds-fg-body-secondary:   #D61E74;   /* secondary/500 (era 600) */
   --ds-fg-body-tertiary:    #8B619E;
 
@@ -2187,6 +2188,44 @@
 }
 
 
+/* ════════════════════════════════════════════════════════════
+   THEME YOUTH (13/11/2026)
+   Se activa con: <html data-theme="youth">. Youth = Retail con las
+   familias primary y secondary intercambiadas al mismo paso; el resto
+   (neutros, estados, tertiary, foco) es igual que Retail. Solo se
+   redefinen los 25 tokens de Mode que cambian. Generado desde
+   tokens/Theme/Youth.tokens.json — no editar a mano.
+   ════════════════════════════════════════════════════════════ */
+
+[data-theme="youth"] {
+  --ds-bg-primary:                  #D61E74;
+  --ds-bg-primary-bold:             #8C1C4C;
+  --ds-bg-primary-medium:           #FED8E8;
+  --ds-bg-primary-subtle:           #FFF8FA;
+  --ds-bg-secondary:                #0A7C92;
+  --ds-bg-secondary-bold:           #13525F;
+  --ds-bg-secondary-medium:         #CBE7EE;
+  --ds-bg-secondary-subtle:         #F6FAFB;
+  --ds-borderColor-accent:          #8C1C4C;
+  --ds-borderColor-accent-inverse:  #FEB9D6;
+  --ds-borderColor-accent-primary:  #8C1C4C;
+  --ds-borderColor-primary:         #D61E74;
+  --ds-borderColor-secondary:       #0A7C92;
+  --ds-fg-body-primary:             #D61E74;
+  --ds-fg-body-secondary:           #0A7C92;
+  --ds-fg-headline-primary:         #D61E74;
+  --ds-fg-headline-secondary:       #0A7C92;
+  --ds-fg-icon-accent-primary:      #8C1C4C;
+  --ds-fg-icon-primary:             #D61E74;
+  --ds-fg-icon-secondary:           #0A7C92;
+  --ds-fg-label-primary:            #D61E74;
+  --ds-fg-label-secondary:          #0A7C92;
+  --ds-fg-primary:                  #D61E74;
+  --ds-fg-secondary:                #0A7C92;
+  --ds-fg-title-primary:            #D61E74;
+}
+
+
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    DARK MODE overrides
    Se activa con: <html data-mode="dark"> o prefers-color-scheme
@@ -2212,6 +2251,7 @@
     --ds-fg-body-default:     #FFFFFF;
     --ds-fg-body-subtle:      #F1F2F4; /* añadido 24/08 — DescriptionText/DetailText atoms */
     --ds-fg-body-secondary:   #FFEEF5; /* añadido 24/08 — DetailText atom */
+    --ds-fg-body-primary:   #A3D4E2; /* 13/11 — fg/body/primary (primary/300) */
     --ds-fg-body-tertiary:    #FDF8FF; /* añadido 24/08 — DetailText atom */
     --ds-fg-body-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
     --ds-fg-headline-default: #FFFFFF;
@@ -2344,6 +2384,7 @@
   --ds-fg-body-default:     #FFFFFF;
   --ds-fg-body-subtle:      #F1F2F4; /* añadido 24/08 — DescriptionText/DetailText atoms */
   --ds-fg-body-secondary:   #FFEEF5; /* añadido 24/08 — DetailText atom */
+  --ds-fg-body-primary:   #A3D4E2; /* 13/11 — fg/body/primary (primary/300) */
   --ds-fg-body-tertiary:    #FDF8FF; /* añadido 24/08 — DetailText atom */
   --ds-fg-body-disabled:    #AAAFB5; /* 26/10: neutral/300 — antes neutral/500, casi igual que bg-disabled (1,1:1) y 1,3:1 sobre bg-container */
   --ds-fg-headline-default: #FFFFFF;
@@ -2444,6 +2485,66 @@
   --ds-fg-warning: #F1C771;
   --ds-opacity-hover-subtle: rgba(255,255,255,0.1);
   --ds-opacity-hover-subtle-inverse: rgba(5,5,6,0.1);
+}
+
+
+/* Youth en dark: más específico que [data-mode="dark"] y que :root en la media query */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="youth"] {
+    --ds-bg-primary:                  #D61E74;
+    --ds-bg-primary-bold:             #8C1C4C;
+    --ds-bg-primary-medium:           #631C39;
+    --ds-bg-primary-subtle:           #371724;
+    --ds-bg-secondary:                #0A7C92;
+    --ds-bg-secondary-bold:           #13525F;
+    --ds-bg-secondary-medium:         #163B44;
+    --ds-bg-secondary-subtle:         #152428;
+    --ds-borderColor-accent:          #FEB9D6;
+    --ds-borderColor-accent-inverse:  #8C1C4C;
+    --ds-borderColor-accent-primary:  #FC77B0;
+    --ds-borderColor-primary:         #FC77B0;
+    --ds-borderColor-secondary:       #A3D4E2;
+    --ds-fg-body-primary:             #FEB9D6;
+    --ds-fg-body-secondary:           #E8F4F7;
+    --ds-fg-headline-primary:         #FEB9D6;
+    --ds-fg-headline-secondary:       #E8F4F7;
+    --ds-fg-icon-accent-primary:      #FC77B0;
+    --ds-fg-icon-primary:             #FC77B0;
+    --ds-fg-icon-secondary:           #F6FAFB;
+    --ds-fg-label-primary:            #FEB9D6;
+    --ds-fg-label-secondary:          #F6FAFB;
+    --ds-fg-primary:                  #FEB9D6;
+    --ds-fg-secondary:                #E8F4F7;
+    --ds-fg-title-primary:            #FEB9D6;
+  }
+}
+
+[data-theme="youth"][data-mode="dark"] {
+  --ds-bg-primary:                  #D61E74;
+  --ds-bg-primary-bold:             #8C1C4C;
+  --ds-bg-primary-medium:           #631C39;
+  --ds-bg-primary-subtle:           #371724;
+  --ds-bg-secondary:                #0A7C92;
+  --ds-bg-secondary-bold:           #13525F;
+  --ds-bg-secondary-medium:         #163B44;
+  --ds-bg-secondary-subtle:         #152428;
+  --ds-borderColor-accent:          #FEB9D6;
+  --ds-borderColor-accent-inverse:  #8C1C4C;
+  --ds-borderColor-accent-primary:  #FC77B0;
+  --ds-borderColor-primary:         #FC77B0;
+  --ds-borderColor-secondary:       #A3D4E2;
+  --ds-fg-body-primary:             #FEB9D6;
+  --ds-fg-body-secondary:           #E8F4F7;
+  --ds-fg-headline-primary:         #FEB9D6;
+  --ds-fg-headline-secondary:       #E8F4F7;
+  --ds-fg-icon-accent-primary:      #FC77B0;
+  --ds-fg-icon-primary:             #FC77B0;
+  --ds-fg-icon-secondary:           #F6FAFB;
+  --ds-fg-label-primary:            #FEB9D6;
+  --ds-fg-label-secondary:          #F6FAFB;
+  --ds-fg-primary:                  #FEB9D6;
+  --ds-fg-secondary:                #E8F4F7;
+  --ds-fg-title-primary:            #FEB9D6;
 }
 
 /* ════ DEVICE — Tablet (Figma modo Tablet) · ≥768px ════ */
