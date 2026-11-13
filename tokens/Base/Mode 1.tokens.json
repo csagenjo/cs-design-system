@@ -2387,6 +2387,14 @@
           "com.figma.hiddenFromPublishing": true
         }
       },
+      "64": {
+        "$type": "number",
+        "$value": 64,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32933:130",
+          "com.figma.hiddenFromPublishing": true
+        }
+      },
       "80": {
         "$type": "number",
         "$value": 80,

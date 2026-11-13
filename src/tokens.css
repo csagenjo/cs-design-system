@@ -377,37 +377,37 @@
   --ds-font-weight-bold:    700;
 
   /* lineHeight — emparejado por ROL (Figma lineHeight/{familia}/{tamaño}; antes fontLheight, renombrado 12/11), uno por cada fontSize:
-     si el tamaño cambia por device, su line-height cambia con él. Lectura (body/label/annotation/title)
-     = 1.5×; headline/subheadline = 1.25× — ambos redondeados al múltiplo de 4 más cercano
-     (empate → abajo), sin decimales (29/09, rejilla de 4 de tipografía dentro de la de 8). Sustituye a la escala genérica --ds-lineHeight-xs…2xl
+     si el tamaño cambia por device, su line-height cambia con él. Desde el 13/11: múltiplo de 8 (rejilla estricta),
+     redondeando hacia arriba el valor anterior (14/24, 19/32, 24/32, 28/40, 36/48, 48/64). Antes: 1.5× lectura, 1.25× titulares, en rejilla de 4.
+     Sustituye a la escala genérica --ds-lineHeight-xs…2xl
      (retirada en Figma el 28/09). */
   --ds-lineHeight-annotation-sm:  16px;
-  --ds-lineHeight-annotation-md:  20px;
+  --ds-lineHeight-annotation-md:  24px;
   --ds-lineHeight-annotation-lg:  24px;
   --ds-lineHeight-label-xs:       16px;
-  --ds-lineHeight-label-sm:       20px;
+  --ds-lineHeight-label-sm:       24px;
   --ds-lineHeight-label-md:       24px;
-  --ds-lineHeight-label-lg:       28px;
+  --ds-lineHeight-label-lg:       32px;
   --ds-lineHeight-body-2xs:       16px;
-  --ds-lineHeight-body-xs:        20px;
+  --ds-lineHeight-body-xs:        24px;
   --ds-lineHeight-body-sm:        24px;
-  --ds-lineHeight-body-md:        28px;
-  --ds-lineHeight-body-lg:        32px;  /* T 36px · D 40px */
+  --ds-lineHeight-body-md:        32px;
+  --ds-lineHeight-body-lg:        32px;  /* T 40px · D 40px */
   --ds-lineHeight-title-sm:       24px;
-  --ds-lineHeight-title-md:       28px;
-  --ds-lineHeight-title-lg:       32px;  /* T 36px · D 36px */
-  --ds-lineHeight-title-xl:       36px;  /* T 40px · D 48px */
-  --ds-lineHeight-subheadline-xs: 20px;
+  --ds-lineHeight-title-md:       32px;
+  --ds-lineHeight-title-lg:       32px;  /* T 40px · D 40px */
+  --ds-lineHeight-title-xl:       40px;  /* T 40px · D 48px */
+  --ds-lineHeight-subheadline-xs: 24px;
   --ds-lineHeight-subheadline-sm: 24px;
-  --ds-lineHeight-subheadline-md: 28px;  /* T 28px · D 36px */
-  --ds-lineHeight-subheadline-lg: 28px;  /* T 36px · D 40px */
-  --ds-lineHeight-subheadline-xl: 36px;  /* T 40px · D 44px */
-  --ds-lineHeight-headline-xs:    20px;  /* T 24px · D 24px */
-  --ds-lineHeight-headline-sm:    24px;  /* T 28px · D 28px */
-  --ds-lineHeight-headline-md:    28px;  /* T 28px · D 36px */
-  --ds-lineHeight-headline-lg:    28px;  /* T 36px · D 40px */
-  --ds-lineHeight-headline-xl:    36px;  /* T 40px · D 44px */
-  --ds-lineHeight-headline-2xl:   40px;  /* T 48px · D 60px */
+  --ds-lineHeight-subheadline-md: 32px;  /* T 32px · D 40px */
+  --ds-lineHeight-subheadline-lg: 32px;  /* T 40px · D 40px */
+  --ds-lineHeight-subheadline-xl: 40px;  /* T 40px · D 48px */
+  --ds-lineHeight-headline-xs:    24px;
+  --ds-lineHeight-headline-sm:    24px;  /* T 32px · D 32px */
+  --ds-lineHeight-headline-md:    32px;  /* T 32px · D 40px */
+  --ds-lineHeight-headline-lg:    32px;  /* T 40px · D 40px */
+  --ds-lineHeight-headline-xl:    40px;  /* T 40px · D 48px */
+  --ds-lineHeight-headline-2xl:   40px;  /* T 48px · D 64px */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -2564,17 +2564,11 @@
     --ds-fontSize-headline-lg:    28px;
     --ds-fontSize-headline-xl:    32px;
     --ds-fontSize-headline-2xl:   40px;
-    --ds-lineHeight-body-lg:        36px;
-    --ds-lineHeight-title-lg:       36px;
-    --ds-lineHeight-title-xl:       40px;
-    --ds-lineHeight-subheadline-md: 28px;
-    --ds-lineHeight-subheadline-lg: 36px;
-    --ds-lineHeight-subheadline-xl: 40px;
-    --ds-lineHeight-headline-xs:    24px;
-    --ds-lineHeight-headline-sm:    28px;
-    --ds-lineHeight-headline-md:    28px;
-    --ds-lineHeight-headline-lg:    36px;
-    --ds-lineHeight-headline-xl:    40px;
+    --ds-lineHeight-body-lg:        40px;
+    --ds-lineHeight-title-lg:       40px;
+    --ds-lineHeight-subheadline-lg: 40px;
+    --ds-lineHeight-headline-sm:    32px;
+    --ds-lineHeight-headline-lg:    40px;
     --ds-lineHeight-headline-2xl:   48px;
   }
 }
@@ -2597,16 +2591,15 @@
     --ds-fontSize-headline-xl:    36px;
     --ds-fontSize-headline-2xl:   48px;
     --ds-lineHeight-body-lg:        40px;
-    --ds-lineHeight-title-lg:       36px;
+    --ds-lineHeight-title-lg:       40px;
     --ds-lineHeight-title-xl:       48px;
-    --ds-lineHeight-subheadline-md: 36px;
+    --ds-lineHeight-subheadline-md: 40px;
     --ds-lineHeight-subheadline-lg: 40px;
-    --ds-lineHeight-subheadline-xl: 44px;
-    --ds-lineHeight-headline-xs:    24px;
-    --ds-lineHeight-headline-sm:    28px;
-    --ds-lineHeight-headline-md:    36px;
+    --ds-lineHeight-subheadline-xl: 48px;
+    --ds-lineHeight-headline-sm:    32px;
+    --ds-lineHeight-headline-md:    40px;
     --ds-lineHeight-headline-lg:    40px;
-    --ds-lineHeight-headline-xl:    44px;
-    --ds-lineHeight-headline-2xl:   60px;
+    --ds-lineHeight-headline-xl:    48px;
+    --ds-lineHeight-headline-2xl:   64px;
   }
 }
