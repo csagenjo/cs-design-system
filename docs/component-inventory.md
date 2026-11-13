@@ -63,6 +63,8 @@ Rules that apply to every entry:
 A vertical list of items whose content expands and collapses under a
 clickable title.
 
+**Content slot (13/11).** In Figma the expanded item has a `Content` slot (like `children` in code): put fields, lists or text inside. Built to sit edge to edge in a Card: the divider spans the full width, the title has 24 of side padding, the content 20 (+ the 4 focus area of fields = 24) and plain text enters 4 more (`--ds-accordion-root-inset-hor`), so title, text and field boxes share one vertical line. Collapsed 40, every expanded height a multiple of 8.
+
 ## How to use
 
 ### Designers · Figma
@@ -3273,6 +3275,8 @@ Short, scannable points instead of a block of text: requirements, benefits, step
 **Tokens:** `--ds-card-root-*` (`cards/all/root/*`, Effect Style `Card/Shadow`)
 
 An empty surface that groups related content: background, radius and shadow. What goes inside, and its padding, is up to the content.
+
+**Content slot (13/11).** In Figma both variants have a `Content` slot, the same as `children` in code. The slot adds no padding or layout: place an auto-layout frame inside with the padding you need (24 in forms).
 
 ## How to use
 

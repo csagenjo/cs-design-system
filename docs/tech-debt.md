@@ -19,6 +19,10 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **249 Component tokens publicados en la librería.** Decidir si es intencionado o hay que ocultarlos (en junio solo se publicaban ~41).
 - **Enlaces a variables borradas en páginas ⚠.** Bottom Sheet, Calendar, Videoplayer, Paragraph y Changelog conservan ~100 enlaces muertos (sin construir). Regla: antes de borrar una variable, re-enlazar sus usos.
 
+- **Rejilla de 8 · tanda 2 (botones y navegación).** Fuera de rejilla tras la tanda 1: IconButton 52/76, CTA link 52, Tab Item y Tabs 52, Segmented Control 36/52, Snackbar 52, TopNavigation 52, Collapsible Icon Button 52, PageTitle 84.
+- **Rejilla de 8 · tanda 3 (datos y paneles).** Table (celdas 36), List View (paneles 36/59), Selector (116/188/212), Description List (65–197), Steps (60/84), Dialog header (44/60), Picker (100–476), Country/Currency Picker (122–238), Tooltip (20/26), Slider knob (58), AmountView (.Amount 20–36), flydown de TopNavigation (203–299, 12 textos con line-height suelto), Checkmark List (28–44). En código: textarea Adaptive (77) y Combobox con chips (71) crecen fuera de rejilla.
+- **Frames *How to use* de Card y Accordion:** mencionar el slot `Content` (ya está en el inventario).
+
 ## Figma e IP
 
 - **Sección `Web - Sistema Origen (Copy)`.** 6 component sets antiguos que no son nuestros. Revisar y archivar.

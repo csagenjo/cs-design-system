@@ -74,7 +74,7 @@ const css = `
   display:     flex;
   align-items: center;
   gap:         var(--ds-input-field-icon-gap);
-  padding:     var(--ds-input-padding-ver) var(--ds-input-padding-hor);
+  padding:     var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   cursor:      text;
 }
 /* Foco: solo cuando el foco está en el texto (la X tiene el suyo). */

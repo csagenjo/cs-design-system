@@ -281,6 +281,7 @@
      DEVICE / SPACING + LAYOUT — mobile-first (28/09/2026; 01/10/2026: spacing fijo, layout responsive)
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
+  --ds-spacing-none: 0px;  /* 13/11: spacing/none (Theme spacing/none-* → dimension/0) — huecos que ya cubre el line-height */
   --ds-spacing-2xs: 2px;
   --ds-spacing-xs:  4px;
   --ds-spacing-sm:  6px;
@@ -377,37 +378,37 @@
   --ds-font-weight-bold:    700;
 
   /* lineHeight — emparejado por ROL (Figma lineHeight/{familia}/{tamaño}; antes fontLheight, renombrado 12/11), uno por cada fontSize:
-     si el tamaño cambia por device, su line-height cambia con él. Lectura (body/label/annotation/title)
-     = 1.5×; headline/subheadline = 1.25× — ambos redondeados al múltiplo de 4 más cercano
-     (empate → abajo), sin decimales (29/09, rejilla de 4 de tipografía dentro de la de 8). Sustituye a la escala genérica --ds-lineHeight-xs…2xl
+     si el tamaño cambia por device, su line-height cambia con él. Desde el 13/11: múltiplo de 8 (rejilla estricta),
+     redondeando hacia arriba el valor anterior (14/24, 19/32, 24/32, 28/40, 36/48, 48/64). Antes: 1.5× lectura, 1.25× titulares, en rejilla de 4.
+     Sustituye a la escala genérica --ds-lineHeight-xs…2xl
      (retirada en Figma el 28/09). */
   --ds-lineHeight-annotation-sm:  16px;
-  --ds-lineHeight-annotation-md:  20px;
+  --ds-lineHeight-annotation-md:  24px;
   --ds-lineHeight-annotation-lg:  24px;
   --ds-lineHeight-label-xs:       16px;
-  --ds-lineHeight-label-sm:       20px;
+  --ds-lineHeight-label-sm:       24px;
   --ds-lineHeight-label-md:       24px;
-  --ds-lineHeight-label-lg:       28px;
+  --ds-lineHeight-label-lg:       32px;
   --ds-lineHeight-body-2xs:       16px;
-  --ds-lineHeight-body-xs:        20px;
+  --ds-lineHeight-body-xs:        24px;
   --ds-lineHeight-body-sm:        24px;
-  --ds-lineHeight-body-md:        28px;
-  --ds-lineHeight-body-lg:        32px;  /* T 36px · D 40px */
+  --ds-lineHeight-body-md:        32px;
+  --ds-lineHeight-body-lg:        32px;  /* T 40px · D 40px */
   --ds-lineHeight-title-sm:       24px;
-  --ds-lineHeight-title-md:       28px;
-  --ds-lineHeight-title-lg:       32px;  /* T 36px · D 36px */
-  --ds-lineHeight-title-xl:       36px;  /* T 40px · D 48px */
-  --ds-lineHeight-subheadline-xs: 20px;
+  --ds-lineHeight-title-md:       32px;
+  --ds-lineHeight-title-lg:       32px;  /* T 40px · D 40px */
+  --ds-lineHeight-title-xl:       40px;  /* T 40px · D 48px */
+  --ds-lineHeight-subheadline-xs: 24px;
   --ds-lineHeight-subheadline-sm: 24px;
-  --ds-lineHeight-subheadline-md: 28px;  /* T 28px · D 36px */
-  --ds-lineHeight-subheadline-lg: 28px;  /* T 36px · D 40px */
-  --ds-lineHeight-subheadline-xl: 36px;  /* T 40px · D 44px */
-  --ds-lineHeight-headline-xs:    20px;  /* T 24px · D 24px */
-  --ds-lineHeight-headline-sm:    24px;  /* T 28px · D 28px */
-  --ds-lineHeight-headline-md:    28px;  /* T 28px · D 36px */
-  --ds-lineHeight-headline-lg:    28px;  /* T 36px · D 40px */
-  --ds-lineHeight-headline-xl:    36px;  /* T 40px · D 44px */
-  --ds-lineHeight-headline-2xl:   40px;  /* T 48px · D 60px */
+  --ds-lineHeight-subheadline-md: 32px;  /* T 32px · D 40px */
+  --ds-lineHeight-subheadline-lg: 32px;  /* T 40px · D 40px */
+  --ds-lineHeight-subheadline-xl: 40px;  /* T 40px · D 48px */
+  --ds-lineHeight-headline-xs:    24px;
+  --ds-lineHeight-headline-sm:    24px;  /* T 32px · D 32px */
+  --ds-lineHeight-headline-md:    32px;  /* T 32px · D 40px */
+  --ds-lineHeight-headline-lg:    32px;  /* T 40px · D 40px */
+  --ds-lineHeight-headline-xl:    40px;  /* T 40px · D 48px */
+  --ds-lineHeight-headline-2xl:   40px;  /* T 48px · D 64px */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -817,14 +818,15 @@
   --ds-accordion-fg-icon:              var(--ds-fg-default);
   --ds-accordion-border-color:        var(--ds-borderColor-default);
   --ds-accordion-border-width:        var(--ds-border-width-sm);
-  --ds-accordion-title-padding-left:  8px;
-  --ds-accordion-title-padding-ver:   var(--ds-spacing-sm); /* 6 — paso de compensación: 6+28+6 = 40 (29/09) */
-  --ds-accordion-title-padding-right: 16px;
+  --ds-accordion-title-padding-left:  var(--ds-spacing-2xl); /* 24 — 13/11: igual que el padding de la Card; las líneas van de borde a borde */
+  --ds-accordion-title-padding-ver:   var(--ds-spacing-xs); /* 4 — 13/11: 4+32+4 = 40 con title/md a 32 */
+  --ds-accordion-title-padding-right: var(--ds-spacing-2xl); /* 24 */
   --ds-accordion-title-gap:           8px;
   --ds-accordion-content-gap:         var(--ds-spacing-md); /* 8 — 29/09 */
-  --ds-accordion-content-padding-left:  8px;
+  --ds-accordion-content-padding-left:  var(--ds-spacing-xl-2xl); /* 20 — 13/11: + 4 del área de foco de los campos = 24, alineado con el título */
   --ds-accordion-content-padding-top:   12px;
-  --ds-accordion-content-padding-right: 12px;
+  --ds-accordion-content-padding-right: var(--ds-spacing-xl-2xl); /* 20 */
+  --ds-accordion-root-inset-hor:       var(--ds-spacing-xs);     /* 4 — accordion/all/root/insetHor: el texto suelto del contenido entra 4 para alinearse con título y cajas */
   --ds-accordion-content-padding-bottom: var(--ds-spacing-lg); /* 12 — gapBottom/generic en Figma, simétrico con top (29/09): 12+texto+12 */
   --ds-accordion-bg-hover:            var(--ds-bg-hover-primary);
   --ds-accordion-opacity-pressed:     var(--ds-opacity-pressed);
@@ -1040,9 +1042,9 @@
   --ds-input-padding-ver:                   var(--ds-spacing-xl);
   --ds-input-min-height:                    var(--ds-sizing-2xl);
   --ds-input-field-icon-gap:                var(--ds-spacing-lg);
-  --ds-input-label-gap:                     var(--ds-spacing-xs);
+  --ds-input-label-gap:                     var(--ds-spacing-none); /* 13/11: 0 — el line-height de 24 ya deja el aire (antes 4 + 20) */
   --ds-input-helper-gap:                    var(--ds-spacing-md);   /* gap se queda en Input — layout propio, NO en Helper Text */
-  --ds-input-validation-gap:                var(--ds-spacing-xs);
+  --ds-input-validation-gap:                var(--ds-spacing-none); /* 13/11: 0 — ídem */
   --ds-input-fg-placeholder:               var(--ds-fg-body-subtle);    /* valueText/fg/placeholder — texto de ejemplo (Initial) */
   --ds-input-border-hover:                 var(--ds-borderColor-emphasis); /* root/borderColor/hover */
   --ds-input-focus-area-padding:           var(--ds-spacing-xs);        /* root/focusArea/padding — el anillo de foco cabe dentro del componente (27/10/2026) */
@@ -1105,7 +1107,7 @@
   --ds-checkbox-border-radius:         var(--ds-border-radius-xs);
   --ds-checkbox-border-width:          var(--ds-border-width-md);
   --ds-checkbox-label-gap:             var(--ds-spacing-sm);        /* checkbox/all/root/gap/generic (6) */
-  --ds-checkbox-padding:               var(--ds-spacing-2xs);       /* checkbox/all/root/padding/generic (2) */
+  --ds-checkbox-padding:               var(--ds-spacing-xs);        /* checkbox/all/root/padding/generic (4) — 13/11: 24+8+8 = 40 */
   --ds-checkbox-border-radius-row:     var(--ds-border-radius-md);  /* checkbox/all/root/borderRadius/row — fila, hover y foco */
   --ds-checkbox-focus-area-padding:    var(--ds-spacing-xs);        /* checkbox/all/root/focusArea/padding (4) */
   --ds-checkbox-focus-width:           var(--ds-border-width-lg);   /* checkbox/all/root/borderWidth/focus (2) */
@@ -1136,7 +1138,7 @@
   --ds-switch-label-fg:                var(--ds-fg-label-default);
   --ds-switch-label-disabled:          var(--ds-fg-label-disabled);
   --ds-switch-gap:                     var(--ds-spacing-sm);        /* switch/all/container/gap/generic (6) */
-  --ds-switch-padding:                 var(--ds-spacing-2xs);       /* switch/all/container/padding/generic (2) */
+  --ds-switch-padding:                 var(--ds-spacing-xs);        /* switch/all/container/padding/generic (4) — 13/11: 40 */
   --ds-switch-border-radius-row:       var(--ds-border-radius-md);  /* switch/all/container/borderRadius/generic (8) */
   --ds-switch-bg-hover:                var(--ds-bg-hover-primary);  /* switch/all/container/bg/hover */
   --ds-switch-opacity-pressed:         var(--ds-opacity-pressed);   /* switch/all/container/opacity/pressed */
@@ -1164,14 +1166,14 @@
   --ds-radio-label-fg-disabled:             var(--ds-fg-label-disabled);
   --ds-choice-group-gap:                    var(--ds-spacing-md);   /* choiceGroup/all/options/gap/generic — entre opciones de RadioGroup / CheckboxGroup */
   --ds-choice-group-root-gap:               var(--ds-spacing-md);   /* choiceGroup/all/root/gap/generic — pila del grupo: pregunta → ayuda → opciones */
-  --ds-choice-group-validation-gap:         var(--ds-spacing-xs);   /* choiceGroup/all/validation/gap/generic — opciones → error */
+  --ds-choice-group-validation-gap:         var(--ds-spacing-none);   /* choiceGroup/all/validation/gap/generic — opciones → error */
 
   --ds-radio-root-size-generic:                var(--ds-sizing-sm);
   --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);
   --ds-radio-root-border-width-generic:        var(--ds-border-width-lg);
   --ds-radio-circle-size:                      var(--ds-sizing-xs);         /* círculo de 20 dentro del hueco (.RadioStates) */
   --ds-radio-root-gap-generic:                 var(--ds-spacing-sm);        /* radioButton/all/root/gap/generic (6) — círculo → label */
-  --ds-radio-root-padding-generic:             var(--ds-spacing-2xs);       /* radioButton/all/root/padding/generic (2) */
+  --ds-radio-root-padding-generic:             var(--ds-spacing-xs);        /* radioButton/all/root/padding/generic (4) — 13/11: 24+8+8 = 40 */
   --ds-radio-root-border-radius-row:           var(--ds-border-radius-md);  /* radioButton/all/root/borderRadius/row */
   --ds-radio-root-focus-area-padding:          var(--ds-spacing-xs);        /* radioButton/all/root/focusArea/padding (4) */
   --ds-radio-root-border-width-focus:          var(--ds-border-width-lg);   /* radioButton/all/root/borderWidth/focus (2) */
@@ -1920,7 +1922,7 @@
   --ds-file-upload-document-item-border-color-generic: var(--ds-borderColor-subtle); /* divisor de fila — #F1F2F4 / #676D76 dark */
   --ds-file-upload-document-item-border-color-error:   var(--ds-borderColor-error);  /* #B12A29 fijo */
   --ds-file-upload-document-item-border-width-generic: var(--ds-border-width-sm); /* 1 — fileUpload/documentItem/borderWidth/generic: divisor y borde de error, ambos por dentro */
-  --ds-file-upload-document-item-padding-ver-generic:  var(--ds-spacing-xs);         /* 4 */
+  --ds-file-upload-document-item-padding-ver-generic:  var(--ds-spacing-2xs);        /* 2 — 13/11: 2+28+2 = 32 */
   --ds-file-upload-document-item-padding-hor-generic:  var(--ds-spacing-xs);         /* 4 */
   --ds-file-upload-document-item-control-padding:      var(--ds-spacing-2xs);        /* 2 — nombre y X: hueco del anillo de foco (fila 4+2+24+2+4 = 36) */
   --ds-file-upload-document-item-icon-size:            var(--ds-sizing-sm);          /* 24 */
@@ -2564,17 +2566,11 @@
     --ds-fontSize-headline-lg:    28px;
     --ds-fontSize-headline-xl:    32px;
     --ds-fontSize-headline-2xl:   40px;
-    --ds-lineHeight-body-lg:        36px;
-    --ds-lineHeight-title-lg:       36px;
-    --ds-lineHeight-title-xl:       40px;
-    --ds-lineHeight-subheadline-md: 28px;
-    --ds-lineHeight-subheadline-lg: 36px;
-    --ds-lineHeight-subheadline-xl: 40px;
-    --ds-lineHeight-headline-xs:    24px;
-    --ds-lineHeight-headline-sm:    28px;
-    --ds-lineHeight-headline-md:    28px;
-    --ds-lineHeight-headline-lg:    36px;
-    --ds-lineHeight-headline-xl:    40px;
+    --ds-lineHeight-body-lg:        40px;
+    --ds-lineHeight-title-lg:       40px;
+    --ds-lineHeight-subheadline-lg: 40px;
+    --ds-lineHeight-headline-sm:    32px;
+    --ds-lineHeight-headline-lg:    40px;
     --ds-lineHeight-headline-2xl:   48px;
   }
 }
@@ -2597,16 +2593,15 @@
     --ds-fontSize-headline-xl:    36px;
     --ds-fontSize-headline-2xl:   48px;
     --ds-lineHeight-body-lg:        40px;
-    --ds-lineHeight-title-lg:       36px;
+    --ds-lineHeight-title-lg:       40px;
     --ds-lineHeight-title-xl:       48px;
-    --ds-lineHeight-subheadline-md: 36px;
+    --ds-lineHeight-subheadline-md: 40px;
     --ds-lineHeight-subheadline-lg: 40px;
-    --ds-lineHeight-subheadline-xl: 44px;
-    --ds-lineHeight-headline-xs:    24px;
-    --ds-lineHeight-headline-sm:    28px;
-    --ds-lineHeight-headline-md:    36px;
+    --ds-lineHeight-subheadline-xl: 48px;
+    --ds-lineHeight-headline-sm:    32px;
+    --ds-lineHeight-headline-md:    40px;
     --ds-lineHeight-headline-lg:    40px;
-    --ds-lineHeight-headline-xl:    44px;
-    --ds-lineHeight-headline-2xl:   60px;
+    --ds-lineHeight-headline-xl:    48px;
+    --ds-lineHeight-headline-2xl:   64px;
   }
 }

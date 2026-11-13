@@ -159,6 +159,23 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "none": {
+      "$type": "number",
+      "$value": 0,
+      "$description": "0 — gaps the line-height already covers (e.g. label → helper in inputs).",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32937:108",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e601785fdd43e6c5acc3b33e0c4a01c7725fd977/-1:-1",
+          "targetVariableName": "spacing/none-mobile",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "sizing": {
@@ -753,6 +770,72 @@
     }
   },
   "fontSize": {
+    "title": {
+      "sm": {
+        "$type": "number",
+        "$value": 16,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:2391:752",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:313844b757104879a02fdc217f81e8cf70d47322/-1:-1",
+            "targetVariableName": "fontSize/title/sm-mobile",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "md": {
+        "$type": "number",
+        "$value": 19,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:2391:753",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:0c3daf9386408a81c3725e69dc8e3c2282b226c6/-1:-1",
+            "targetVariableName": "fontSize/title/md-mobile",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "lg": {
+        "$type": "number",
+        "$value": 22,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:2391:754",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:7d1fa3a88aece5bf422d3f7063e0ff6341e4993d/-1:-1",
+            "targetVariableName": "fontSize/title/lg-mobile",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "xl": {
+        "$type": "number",
+        "$value": 24,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:5797:15859",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:d353cd9c01e552dc4efbbd545b07486fd215c86e/-1:-1",
+            "targetVariableName": "fontSize/title/xl-mobile",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      }
+    },
     "subheadline": {
       "xs": {
         "$type": "number",
@@ -829,72 +912,6 @@
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:785d222519f3ae6dd1d4656fa32acc84eb656439/-1:-1",
             "targetVariableName": "fontSize/subheadline/xl-mobile",
-            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-            "targetVariableSetName": "Theme"
-          }
-        }
-      }
-    },
-    "title": {
-      "sm": {
-        "$type": "number",
-        "$value": 16,
-        "$extensions": {
-          "com.figma.variableId": "VariableID:2391:752",
-          "com.figma.scopes": [
-            "FONT_SIZE"
-          ],
-          "com.figma.aliasData": {
-            "targetVariableId": "VariableID:313844b757104879a02fdc217f81e8cf70d47322/-1:-1",
-            "targetVariableName": "fontSize/title/sm-mobile",
-            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-            "targetVariableSetName": "Theme"
-          }
-        }
-      },
-      "md": {
-        "$type": "number",
-        "$value": 19,
-        "$extensions": {
-          "com.figma.variableId": "VariableID:2391:753",
-          "com.figma.scopes": [
-            "FONT_SIZE"
-          ],
-          "com.figma.aliasData": {
-            "targetVariableId": "VariableID:0c3daf9386408a81c3725e69dc8e3c2282b226c6/-1:-1",
-            "targetVariableName": "fontSize/title/md-mobile",
-            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-            "targetVariableSetName": "Theme"
-          }
-        }
-      },
-      "lg": {
-        "$type": "number",
-        "$value": 22,
-        "$extensions": {
-          "com.figma.variableId": "VariableID:2391:754",
-          "com.figma.scopes": [
-            "FONT_SIZE"
-          ],
-          "com.figma.aliasData": {
-            "targetVariableId": "VariableID:7d1fa3a88aece5bf422d3f7063e0ff6341e4993d/-1:-1",
-            "targetVariableName": "fontSize/title/lg-mobile",
-            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
-            "targetVariableSetName": "Theme"
-          }
-        }
-      },
-      "xl": {
-        "$type": "number",
-        "$value": 24,
-        "$extensions": {
-          "com.figma.variableId": "VariableID:5797:15859",
-          "com.figma.scopes": [
-            "FONT_SIZE"
-          ],
-          "com.figma.aliasData": {
-            "targetVariableId": "VariableID:d353cd9c01e552dc4efbbd545b07486fd215c86e/-1:-1",
-            "targetVariableName": "fontSize/title/xl-mobile",
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }
@@ -1302,7 +1319,7 @@
     "headline": {
       "xs": {
         "$type": "number",
-        "$value": 20,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28350",
           "com.figma.scopes": [
@@ -1334,7 +1351,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28373",
           "com.figma.scopes": [
@@ -1350,7 +1367,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28374",
           "com.figma.scopes": [
@@ -1366,7 +1383,7 @@
       },
       "xl": {
         "$type": "number",
-        "$value": 36,
+        "$value": 40,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28375",
           "com.figma.scopes": [
@@ -1416,7 +1433,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28357",
           "com.figma.scopes": [
@@ -1448,7 +1465,7 @@
       },
       "xl": {
         "$type": "number",
-        "$value": 36,
+        "$value": 40,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28359",
           "com.figma.scopes": [
@@ -1466,7 +1483,7 @@
     "subheadline": {
       "xs": {
         "$type": "number",
-        "$value": 20,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28352",
           "com.figma.scopes": [
@@ -1498,7 +1515,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28354",
           "com.figma.scopes": [
@@ -1514,7 +1531,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28355",
           "com.figma.scopes": [
@@ -1530,7 +1547,7 @@
       },
       "xl": {
         "$type": "number",
-        "$value": 36,
+        "$value": 40,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28356",
           "com.figma.scopes": [
@@ -1564,7 +1581,7 @@
       },
       "sm": {
         "$type": "number",
-        "$value": 20,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28361",
           "com.figma.scopes": [
@@ -1596,7 +1613,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28363",
           "com.figma.scopes": [
@@ -1630,7 +1647,7 @@
       },
       "xs": {
         "$type": "number",
-        "$value": 20,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28368",
           "com.figma.scopes": [
@@ -1662,7 +1679,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28370",
           "com.figma.scopes": [
@@ -1712,7 +1729,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 20,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28366",
           "com.figma.scopes": [
@@ -1794,7 +1811,7 @@
       },
       "title-md": {
         "$type": "number",
-        "$value": 36,
+        "$value": 40,
         "$extensions": {
           "com.figma.variableId": "VariableID:32785:103",
           "com.figma.scopes": [
@@ -1810,7 +1827,7 @@
       },
       "title-sm": {
         "$type": "number",
-        "$value": 28,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32785:111",
           "com.figma.scopes": [

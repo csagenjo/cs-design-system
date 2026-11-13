@@ -121,6 +121,12 @@ const css = `
                    anónima de flexbox que por defecto no hace fill (min-width:
                    auto) — este wrapper real da algo a lo que aplicarle 100% */
 }
+.ds-accordion__content-inner--text {
+  /* texto suelto: entra lo mismo que el área de foco de los campos (4) para
+     alinearse con el título y con las cajas de los inputs del slot (13/11) */
+  padding-inline: var(--ds-accordion-root-inset-hor);
+  box-sizing: border-box;
+}
 .ds-accordion--last {
   /* el cierre inferior cuelga de la raíz, no de __content — el último item
      puede estar colapsado (sin __content en absoluto), mismo caso que el
@@ -186,7 +192,7 @@ export function Accordion({
       </Heading>
       {expanded && (
         <div className="ds-accordion__content" id={panelId} role="region" aria-labelledby={triggerId}>
-          <div className="ds-accordion__content-inner">{children}</div>
+          <div className={'ds-accordion__content-inner' + (typeof children === 'string' || typeof children === 'number' ? ' ds-accordion__content-inner--text' : '')}>{children}</div>
         </div>
       )}
     </div>

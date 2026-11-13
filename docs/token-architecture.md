@@ -44,7 +44,7 @@ Checkbox y Radio ya lo hacían así; desde 22/07 es regla explícita, no una exc
 
 ---
 
-## Base tokens (157)
+## Base (157)
 
 ### Paleta de color — 9 familias
 
@@ -1207,3 +1207,33 @@ Bordes: en subtle y medium, los `borderColor/*` normales; en base y bold, `borde
 **Resultado.** 562 variables de Theme; 25 tokens de Mode cambian entre temas, todos de marca (`fg/primary|secondary` y sus roles, `fg/icon/primary|secondary|accent-primary`, `borderColor/primary|secondary|accent*`, `bg/surface/primary|secondary*`).
 
 **En código** (`src/tokens.css`). `<html data-theme="youth">` activa Youth: un bloque `[data-theme="youth"]` con los 25 tokens en light y otro con sus valores dark (`[data-theme="youth"][data-mode="dark"]` y, en la media query, `:root[data-theme="youth"]`). Generado desde los exports, sin valores a mano. La galería acepta `?theme=youth` y `npm run a11y` escanea los 4 casos (Retail y Youth × light y dark): 0 fallos.
+
+## Rejilla de 8 estricta (13/11/2026)
+
+Decisión de Carol al montar la primera pantalla real (alta de proveedor): **el tamaño exterior de todo componente, área de foco incluida, y todos los line-heights van en múltiplos de 8.** Antes la rejilla era "de 4/8" y los line-heights estaban en rejilla de 4. Un padding interno puede no ser múltiplo de 8 (2, 4, 20) si el exterior cuadra. Excepciones: tamaños de icono de Lucide (16/20), Divider (1), puntero de Popover Sheet y frames de móvil de la documentación.
+
+**Line-heights.** 49 tokens de Theme (`lineHeight/*-mobile|tablet|desktop`, en Retail y Youth) suben al siguiente múltiplo de 8; el tamaño de letra no cambia. Nuevo primitivo `typography/lineHeight/64`; 20, 28, 36, 44 y 60 quedan sin uso como reserva.
+
+| Antes → ahora | Ejemplos (Desktop) |
+|---|---|
+| 20 → 24 | body/xs, label/sm, annotation/md, subheadline/xs (14–16 px) |
+| 28 → 32 | body/md, label/lg, title/md, doc/title-sm (19–24 px) |
+| 36 → 40 | headline/md, title/lg, subheadline/md, doc/title-md (24–28 px) |
+| 44 → 48 · 60 → 64 | headline/xl, subheadline/xl (36 px) · headline/2xl (48 px) |
+
+**Nuevo `spacing/none` (0).** Base `dimension/0` → Theme `spacing/none-mobile|tablet|desktop` → Device `spacing/none`. Para huecos que ya cubre el line-height.
+
+**Tanda 1 — átomos del formulario.**
+
+| Componente | Cambio | Exterior |
+|---|---|---|
+| Inputs (Text, Dropdown, Date, Stepper, Telephone, Amount, Combobox) | label → ayuda y campo → error 4 → 0 (`Input/InputCommon/label|validation/gap`); en código el campo medía 58 (el borde sumaba por fuera) → 56 con `--ds-input-padding-ver-inner`; Telephone y Amount recuperan el hueco label → campo de 8 | 96 · 120 · 144 · 168 |
+| Checkbox · Radio · Switch | padding de fila 2 → 4 | 40 |
+| Radio Group · Checkbox Group | opciones → error 4 → 0 (`choiceGroup/all/validation/gap`) | 104 · 128 · 248 |
+| Document Item | padding vertical 4 → 2 | 32 (con error 64) |
+| Accordion | título 6 → 4 de padding vertical; 24 lateral; contenido 20; texto suelto +4 (`accordion/all/root/insetHor`, nuevo) | 40 cerrado |
+| ButtonBar | la notificación ocupa el ancho disponible (Figma: FILL; código: `__left` flex 1) | 112 · 136 |
+
+Figma, además: las piezas internas de Input Text, Dropdown, Date, Telephone, Amount, Stepper, Radio Group, Checkbox Group, Label + Description e Inline Notification se estiran con el ancho de la instancia (estaban fijas a ~360); 86 variantes de Button y 28 de Tab Item tenían el texto (y los iconos, en Button) sin enlazar a sus propiedades.
+
+Tandas pendientes en `docs/tech-debt.md`.

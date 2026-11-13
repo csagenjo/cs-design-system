@@ -9,7 +9,7 @@ All components reference `--ds-*` CSS custom properties — no hardcoded values 
 ### Five layers (Figma → CSS)
 
 ```
-Base tokens      → raw color palette (50→950 scales)
+Base             → raw color palette (50→950 scales)
 Theme tokens     → semantic roles per brand theme (2 active: Overall/Retail · Youth)
 Mode tokens      → semantic resolution (fg, bg, borderColor) · Light + Dark
 Component tokens → component-specific values (--ds-button-*, etc.)
