@@ -66,7 +66,7 @@ const css = `
   text-decoration: none;
   box-sizing:      border-box;
 }
-/* Label: padding horizontal propio (button/all/label/paddingHor/generic = 4):
+/* Label: padding horizontal propio (button/all/paddingHor/label/generic = 4):
    separa el texto del icono y del borde, igual que el frame Label de Figma. */
 .ds-btn__label { padding: 0 var(--ds-button-label-padding-hor); }
 .ds-btn--full-width { width: calc(100% - 2 * var(--ds-button-focus-area-padding)); }
@@ -94,7 +94,7 @@ const css = `
 .ds-btn--primary:hover:not(:disabled):not(.ds-btn--loading),
 .ds-btn--tertiary:hover:not(:disabled):not(.ds-btn--loading) { border-color: var(--_fill); }
 
-/* ── Pressed: opacidad (button/all/root/opacity/pressed), sin escalar ── */
+/* ── Pressed: opacidad (button/all/opacity/pressed), sin escalar ── */
 .ds-btn:active:not(:disabled):not(.ds-btn--loading) { opacity: var(--ds-button-opacity-pressed); }
 
 /* ── Disabled: sus tokens, nunca opacidad ── */

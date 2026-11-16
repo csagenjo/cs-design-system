@@ -9,7 +9,7 @@
  * y directamente en `StepIndicatorSmall`) — un único punto de mantenimiento
  * para el círculo, nunca reimplementado en cada sitio.
  *
- * Caja de 40×40 (`steps/common/all/node/size/generic` → sizing/lg). En Figma
+ * Caja de 40×40 (`steps/common/all/size/node/generic` → sizing/lg). En Figma
  * es una elipse de 36 con trazo EXTERIOR de 2 y 2 de padding
  * (`node/padding/generic`), así que lo que se ve mide 40. En código el
  * círculo ocupa los 40 con el borde de 2 por dentro: mismo resultado visual.

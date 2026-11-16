@@ -17,7 +17,7 @@
  * fondo. Nunca sobre `bg/page` o `bg/default` directamente tampoco (bajo
  * contraste del track).
  * Texto en onColor: desde 19/10 (A11y-2) Label/Helper (hoy FieldLabel/HelperText, recoloreados con sus variables) usan
- * `progressBar/all/text/fg/onColor` (→ fg/onColor, blanco) — los rellenos
+ * `progressBar/all/fg/text/onColor` (→ fg/onColor, blanco) — los rellenos
  * de color pasan 4.5:1 con blanco tras la paleta por contraste. Excepción:
  * sobre `bg/inverse` en dark (blanco) no usar onColor.
  *

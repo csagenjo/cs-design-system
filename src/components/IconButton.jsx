@@ -126,7 +126,7 @@ const css = `
   background: linear-gradient(var(--_mix), var(--_mix)), var(--_fill);
   color:      var(--_on);
 }
-/* Pressed: relleno de Primary al 80 % (iconButton/all/root/opacity/pressed),
+/* Pressed: relleno de Primary al 80 % (iconButton/all/opacity/pressed),
    también en Secondary y Tertiary — igual que Figma. */
 .ds-icon-btn:active:not(:disabled):not(.ds-icon-btn--loading) .ds-icon-btn__circle {
   background: var(--_fill);

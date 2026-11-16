@@ -7,7 +7,7 @@
  * SIEMPRE rellena el marco (`object-fit: cover` = scaleMode FILL de Figma):
  * recorta lo que sobra, nunca deja franjas.
  *
- * Tokens propios (11/11): gap 8 (`image/all/root/gap/generic`, antes 9 suelto),
+ * Tokens propios (11/11): gap 8 (`image/all/gap/generic`, antes 9 suelto),
  * radio 4 (`…/frame/borderRadius/roundedCorners`, antes reusaba el de Card),
  * gris de espera `…/frame/bg/generic` → bg/subtle (antes bg-subtle desde JSX;
  * en Figma el gris no existía y se ha añadido debajo de la imagen).

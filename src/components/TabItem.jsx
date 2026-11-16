@@ -1,6 +1,6 @@
 /**
  * TabItem — Componente atómico
- * CS Design System · v3.0
+ * CS Design System · v3.1
  *
  * Pestaña individual. `<button role="tab">` real — Hover/Pressed/Focus se
  * resuelven vía pseudo-clases CSS nativas (mismo criterio que Checkbox/
@@ -36,14 +36,25 @@
  *     aviso en desarrollo.
  *   · Grosores por token (ribbon 4 = borderWidth/xl, foco 2 = borderWidth/lg).
  *
+ * 16/11/2026 (v3.1), igual que Figma (Show Icon / Icon / Show Error):
+ *   · `icon` — icono decorativo a la izquierda (slot libre, cualquier nombre
+ *     del átomo Icon), color `tabs/all/fg/icon/generic` (→ fg/default), 16 px.
+ *   · `hasError` — circle-x a la derecha (`tabs/all/fg/icon/error` →
+ *     fg/icon/error, 16 px) para marcar pestañas con campos que corregir. El color no
+ *     basta: el lector oye `errorLabel` ("has errors") detrás del nombre.
+ *   · Gap entre icono, texto y error: `tabs/all/gap/generic` (8).
+ *
  * USO:
  *   <TabItem size="m" selected>Resumen</TabItem>
+ *   <TabItem size="l" variant="contained" icon="file-text" hasError>Bank details</TabItem>
  *   <TabItem size="s" variant="contained" onClick={fn}>Movimientos</TabItem>
  */
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { warnOnce } from './_devWarn';
+import { Icon } from './Icon';
+import { VisuallyHidden } from './VisuallyHidden';
 
 const css = `
 .ds-tab-item {
@@ -52,8 +63,8 @@ const css = `
   justify-content: center;
   position: relative;
   box-sizing: border-box;
-  padding: var(--_pv) var(--ds-tabs-root-padding-hor-generic);
-  background: var(--ds-tabs-root-bg-generic);
+  padding: var(--_pv) var(--ds-tabs-padding-hor-generic);
+  background: var(--ds-tabs-bg-generic);
   border: none;
   margin: 0;
   cursor: pointer;
@@ -61,32 +72,35 @@ const css = `
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--_fs);
   line-height: var(--_lh);
-  color: var(--ds-tabs-text-fg-generic);
+  color: var(--ds-tabs-fg-text-generic);
   white-space: nowrap;
   flex-shrink: 0;
+  gap: var(--ds-tabs-gap-generic);
 }
-.ds-tab-item--s { --_pv: var(--ds-tabs-root-padding-ver-s); --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); }
-.ds-tab-item--m { --_pv: var(--ds-tabs-root-padding-ver-m); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); }
-.ds-tab-item--l { --_pv: var(--ds-tabs-root-padding-ver-l); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); }
+.ds-tab-item__icon { display: inline-flex; color: var(--ds-tabs-fg-icon-generic); }
+.ds-tab-item__error { display: inline-flex; color: var(--ds-tabs-fg-icon-error); }
+.ds-tab-item--s { --_pv: var(--ds-tabs-padding-ver-s); --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); }
+.ds-tab-item--m { --_pv: var(--ds-tabs-padding-ver-m); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); }
+.ds-tab-item--l { --_pv: var(--ds-tabs-padding-ver-l); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); }
 
 .ds-tab-item[aria-selected="true"],
 .ds-tab-item:active:not(:disabled) {
   font-weight: var(--ds-font-weight-bold);
 }
 
-.ds-tab-item:hover { background: var(--ds-tabs-root-bg-hover); }
-.ds-tab-item:active { background: var(--ds-tabs-root-bg-pressed); }
+.ds-tab-item:hover { background: var(--ds-tabs-bg-hover); }
+.ds-tab-item:active { background: var(--ds-tabs-bg-pressed); }
 /* Foco doble por dentro: outline (focus-outer) en el borde + hueco focus-inner.
    El hueco va en ::after para no pisar el box-shadow de los bordes de Contained. */
 .ds-tab-item:focus-visible {
-  outline: var(--ds-tabs-root-border-width-focus) solid var(--ds-tabs-root-border-color-focus);
-  outline-offset: calc(-1 * var(--ds-tabs-root-border-width-focus));
+  outline: var(--ds-tabs-border-width-focus) solid var(--ds-tabs-border-color-focus-outer);
+  outline-offset: calc(-1 * var(--ds-tabs-border-width-focus));
 }
 .ds-tab-item:focus-visible::after {
   content: '';
   position: absolute;
-  inset: var(--ds-tabs-root-border-width-focus);
-  box-shadow: inset 0 0 0 var(--ds-tabs-root-border-width-focus) var(--ds-tabs-root-border-color-focus-inner);
+  inset: var(--ds-tabs-border-width-focus);
+  box-shadow: inset 0 0 0 var(--ds-tabs-border-width-focus) var(--ds-tabs-border-color-focus-inner);
   pointer-events: none;
   z-index: 1;
 }
@@ -96,24 +110,24 @@ const css = `
   left: 0;
   right: 0;
   bottom: 0;
-  height: var(--ds-tabs-ribbon-border-width-selected);
-  background: var(--ds-tabs-ribbon-border-color-selected);
+  height: var(--ds-tabs-border-width-ribbon-selected);
+  background: var(--ds-tabs-border-color-ribbon-selected);
 }
 
 /* ── Contained ── */
 .ds-tab-item--contained {
-  --_bw: var(--ds-tabs-contained-root-border-width-generic);
-  --_bc: var(--ds-tabs-contained-root-border-color-generic);
-  background: var(--ds-tabs-contained-root-bg-generic);
+  --_bw: var(--ds-tabs-border-width-generic);
+  --_bc: var(--ds-tabs-border-color-generic);
+  background: var(--ds-tabs-bg-generic);
   box-shadow: inset 0 0 0 var(--_bw) var(--_bc);
 }
 .ds-tab-item--contained[aria-selected="true"] {
-  background: var(--ds-tabs-contained-root-bg-selected);
+  background: var(--ds-tabs-contained-bg-selected);
   /* sin borde inferior: se une al panel */
   box-shadow: inset var(--_bw) 0 0 var(--_bc), inset calc(-1 * var(--_bw)) 0 0 var(--_bc), inset 0 var(--_bw) 0 var(--_bc);
 }
-.ds-tab-item--contained:hover { background: var(--ds-tabs-root-bg-hover); }
-.ds-tab-item--contained:active { background: var(--ds-tabs-root-bg-pressed); }
+.ds-tab-item--contained:hover { background: var(--ds-tabs-bg-hover); }
+.ds-tab-item--contained:active { background: var(--ds-tabs-bg-pressed); }
 .ds-tab-item--contained .ds-tab-item__ribbon {
   top: 0;
   bottom: auto;
@@ -121,6 +135,8 @@ const css = `
 `;
 
 injectStyles('ds-tab-item', css);
+
+const ICON_SIZE = '2xs'; // 16 en los tres tamaños: tabs/all/icon|errorIcon/size/generic → sizing/2xs
 
 export function TabItem({
   size = 'm',          // 's' | 'm' | 'l'
@@ -131,6 +147,9 @@ export function TabItem({
   children,
   id,
   className,
+  icon,                // nombre del átomo Icon, decorativo, a la izquierda
+  hasError = false,    // circle-x a la derecha + texto para lector
+  errorLabel = 'has errors',
   role = 'tab',   // A11y-1: TopNavigation la usa como botón de navegación (role={null}), no como pestaña
   ...rest         // A11y-1: aria-expanded/aria-controls/ref/onKeyDown… llegan al <button>
 }) {
@@ -152,7 +171,14 @@ export function TabItem({
       role={role || undefined}
       aria-selected={role === 'tab' ? selected : undefined}
     >
+      {icon && <span className="ds-tab-item__icon" aria-hidden="true"><Icon name={icon} size={ICON_SIZE} /></span>}
       {children}
+      {hasError && (
+        <span className="ds-tab-item__error">
+          <Icon name="circle-x" size={ICON_SIZE} />
+          <VisuallyHidden>{`, ${errorLabel}`}</VisuallyHidden>
+        </span>
+      )}
       {selected && <span className="ds-tab-item__ribbon" aria-hidden="true" />}
     </button>
   );
