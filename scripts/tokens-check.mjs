@@ -28,7 +28,7 @@ const COLLECTIONS = {
   Theme: 'Theme',
   Mode: 'Mode',
   Device: 'Device',
-  Component: 'Component tokens',
+  Component: 'Component',            // renombrada en Figma el 16/11 (antes 'Component tokens')
 };
 // destinos permitidos por colección (por nombre de Figma)
 const ALLOWED = {
@@ -36,7 +36,7 @@ const ALLOWED = {
   Theme: ['Base'],
   Mode: ['Theme'],
   Device: ['Theme'],
-  'Component tokens': ['Mode', 'Device'],
+  Component: ['Mode', 'Device'],
 };
 
 const exceptionsFile = join(ROOT, 'layer-exceptions.json');

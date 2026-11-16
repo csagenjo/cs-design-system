@@ -210,7 +210,7 @@ Mismo valor en **light mode**, distinto en **dark mode** — existe en las tres 
 
 ---
 
-## Component tokens (1038)
+## Component tokens (926, colección "Component")
 
 ### Estructura del nombre: la propiedad primero (16/11/2026)
 
@@ -233,8 +233,12 @@ Ejemplos: `tabs/all/fg/icon/error` (antes `tabs/all/errorIcon/fg/error`) ·
 
 Renombrado en Figma el 16/11 (884 de 947 variables; renombrar conserva el id,
 así que ningún enlace se rompe). Tabla antes → después en
-`tokens/renames-2026-11-16.json`. Sin tocar, por no tener estructura (pendiente
-de decidir si se borran): `generic`, `disabled`, `icon/*` (12) y `paragraph/fg/*` (8).
+`tokens/renames-2026-11-16.json`. Las 22 variables sin estructura que quedaban se
+limpiaron el 16/11: `icon/Primary` es el color por defecto del componente Icon
+y pasó a `icon/all/fg/generic`; Bottom Navigation se reenlazó a sus propios
+`bottomNavigation/all/fg/icon/*` y la página Paragraph (intento abandonado) a
+`fg/body/default` de Mode; las otras 21 (`icon/*`, `paragraph/fg/*`,
+`generic`, `disabled`) no tenían usos y se borraron.
 
 **En código** el nombre CSS sigue el mismo orden sin `all`:
 `--ds-{componente}-{propiedad}-{elemento}-{estado}` (`--ds-tabs-fg-icon-error`).
