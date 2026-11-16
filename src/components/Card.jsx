@@ -5,11 +5,11 @@
  * Superficie vacía que agrupa contenido: fondo, radio y sombra. Las dos
  * variantes de Figma (`Cards`, 2455:62023):
  *   · Full  — plana: sin radio ni sombra (borde a borde, p. ej. una sección en mobile)
- *   · Basic — elevada: radio 4 (`cards/all/root/borderRadius/basic`) + Effect Style
+ *   · Basic — elevada: radio 4 (`cards/all/borderRadius/basic`) + Effect Style
  *             "Card/Shadow" + filete 1 px `borderColor/elevated` (blanco en light,
  *             neutral/700 en dark: la sombra negra no se ve sobre fondo oscuro, 11/11)
  *             (p. ej. el flydown de Top Navigation)
- * Fondo `cards/all/root/bg/generic` → bg/container (blanco en light; en dark
+ * Fondo `cards/all/bg/generic` → bg/container (blanco en light; en dark
  * se separa del fondo de página, decisión 26/10).
  *
  * Contenido = slot libre (`children`): Card no pone padding ni layout; lo pone

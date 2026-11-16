@@ -36,7 +36,7 @@ const css = `
   width: 100%;
 }
 .ds-tabs--line {
-  box-shadow: inset 0 calc(-1 * var(--ds-tabs-root-border-bottom-width-generic)) 0 var(--ds-tabs-root-border-bottom-color-generic); /* línea bajo la barra, sin sumar altura */
+  box-shadow: inset 0 calc(-1 * var(--ds-tabs-border-width-generic)) 0 var(--ds-tabs-border-color-generic); /* línea bajo la barra, sin sumar altura */
 }
 .ds-tabs--contained {
   /* se solapa 1px con el panel que va debajo: el borde superior del panel
@@ -44,10 +44,10 @@ const css = `
      y visible bajo las demás — el panel puede llevar su borde completo */
   position: relative;
   z-index: 1;
-  margin-bottom: calc(-1 * var(--ds-tabs-contained-root-border-width-generic));
+  margin-bottom: calc(-1 * var(--ds-tabs-border-width-generic));
 }
 .ds-tabs--contained .ds-tab-item + .ds-tab-item {
-  margin-left: calc(-1 * var(--ds-tabs-contained-root-border-width-generic)); /* bordes contiguos solapados */
+  margin-left: calc(-1 * var(--ds-tabs-border-width-generic)); /* bordes contiguos solapados */
 }
 .ds-tabs--fixed .ds-tab-item { flex: 1 0 0; }
 .ds-tabs--scrollable {

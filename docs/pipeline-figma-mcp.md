@@ -62,9 +62,9 @@ Pantallas (página "Supplier form"):
 - **TabItem** no tenía icono a la izquierda ni icono de error a la derecha (sí en
   Figma). Añadidos: `icon`, `hasError`, `errorLabel` (v3.1), y `Tabs` los pasa
   por `items[]`.
-- **Tokens de Tabs sin exportar:** `tabs/all/icon/fg/generic` (→ fg/default),
-  `tabs/all/errorIcon/fg/error` (→ fg/icon/error; antes `…/generic`, renombrado
-  para no confundirse con el negro) y `tabs/all/root/gap/generic`. Los dos iconos
+- **Tokens de Tabs sin exportar:** `tabs/all/fg/icon/generic` (→ fg/default),
+  `tabs/all/fg/icon/error` (→ fg/icon/error; antes `…/generic`, renombrado
+  para no confundirse con el negro) y `tabs/all/gap/generic`. Los dos iconos
   miden 16 en los tres tamaños (`sizing/2xs`). En código a mano hasta el export.
   En Figma el icono de error del placeholder estaba enlazado a un token de Mode
   y el cuadrado a otro: corregido por Carol (16/11).

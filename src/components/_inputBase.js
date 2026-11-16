@@ -22,7 +22,7 @@ export function injectStyles(id, css) {
    Field: misma caja y mismos estados en todos.
 
    .ds-input-root  → raíz de cada input: área de foco de 4 px alrededor
-                     (Input/InputCommon/root/focusArea/padding), así el anillo
+                     (input/common/padding/focusArea/generic), así el anillo
                      queda dentro del componente. Label, ayuda y error van
                      dentro, alineados con el borde del campo.
    .ds-input-box   → la caja del campo (borde, fondo, radio).

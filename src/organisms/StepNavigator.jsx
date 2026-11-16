@@ -93,7 +93,7 @@ const css = `
 .ds-step-navigator__chevron {
   display:    flex;
   flex-shrink: 0;
-  color:      var(--ds-steps-icon-fg-generic); /* steps/common/all/icon/fg/generic — negro, como los iconos de Substep */
+  color:      var(--ds-steps-icon-fg-generic); /* steps/common/all/fg/icon/generic — negro, como los iconos de Substep */
   transition: transform 0.15s ease;
 }
 .ds-step-navigator__chevron--expanded {

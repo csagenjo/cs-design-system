@@ -373,7 +373,7 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
 - **Cell family complete:** `CellMore` (atom) and `CellActions` (organism) built, closing the family
   alongside `CellHeader`/`CellData`. `Table` (organism) assembles them — see *Design patterns* above
   for why there's no separate `Row` organism and no Table chrome tokens.
-- **`table/all/cellCommon/bg/onSurface`** was aliased to `bg/default` instead of `bg/container` in
+- **`table/all/bg/cellCommon/onSurface`** was aliased to `bg/default` instead of `bg/container` in
   Figma — same value in light, wrong in dark (see *Dark mode* above). Fixed in Figma; `--ds-bg-container`
   added to `tokens.css` (didn't exist at all before).
 - **Dark mode audit:** neutral `bg/*` scale (default/page/subtle/disabled/container) and the brand/
@@ -395,8 +395,8 @@ Light and Dark first. Full audit (7 confirmed instances, in both Figma and `toke
   (single/multi line) — layout only, same colors in both. The action ("Undo"/custom label) is a direct
   `Button` instance (`variant="default" size="sm"`), not a re-implementation — paddings already matched
   Figma exactly.
-- **bg/fg pairing confirmed against Figma, not assumed:** `snackbar/all/root/bg/generic` → `bg/inverse`
-  and `snackbar/all/text/fg/generic` → `fg/body/inverse` (not `fg/label/inverse` — initial assumption,
+- **bg/fg pairing confirmed against Figma, not assumed:** `snackbar/all/bg/generic` → `bg/inverse`
+  and `snackbar/all/fg/text/generic` → `fg/body/inverse` (not `fg/label/inverse` — initial assumption,
   corrected against the actual Figma variable panel; both currently resolve to the same hex, but the
   alias matters — Snackbar's message is body copy, not a button label). Dark-mode inversion verified
   directly against a Figma screenshot (dark canvas → white bg / black text) before wiring the tokens.
@@ -536,12 +536,12 @@ Real bugs caught in the same pass, all confirmed by data before being called bug
   invisible in a screenshot because Tertiary paints no stroke (`strokes: []`, ghost style) and was only
   caught by comparing the raw property against the other 16 Enabled combinations.
 - The icon inside all three Icon Button sizes was bound to the *same* size token
-  (`iconButton/all/icon/size/medium`, 20px) regardless of the button's own Size — a leftover from a
+  (`iconButton/all/size/icon/medium`, 20px) regardless of the button's own Size — a leftover from a
   manual edit. Rebound per size (16/20/24) and the node's `layoutSizingHorizontal/Vertical` flipped from
   `HUG` to `FIXED` so the binding actually took visual effect (HUG on that node computes from its own
   swapped `Icon Size` sub-variant, ignoring any width/height binding entirely). This correctly cascaded
   the whole button's footprint (Small 36→32, Large 52→56) since the content frame hugs icon+padding.
-- `iconButton/all/icon/fg/accent-primary` was aliased to `fg/icon/inverse` (flips in dark mode) while its
+- `iconButton/all/fg/icon/accent-primary` was aliased to `fg/icon/inverse` (flips in dark mode) while its
   paired background (`bg/surface/primary`, teal) does not — same fg/bg-pairing bug pattern already fixed
   elsewhere in Button/Chip/CTALink/BadgeNotification. Realiased to `fg/icon/onColor` (fixed white in both
   modes) and confirmed live in the built component (dark mode: icon stays white on teal).
@@ -656,7 +656,7 @@ caught a token pair where one side inverts with dark mode and its partner doesn'
 default-filled, CTALink primary — see docs/changelog.md (registro de deuda)), Tooltip's bg/fg were checked *before* writing
 `tokens.css`, not after a visual bug report. Used `use_figma` to resolve the actual variable bindings and
 alias chains on the component's fill properties (not the single resolved hex `get_variable_defs` returns
-for the current mode) — `tooltip/all/root/bg/generic` → `bg/inverse`, `tooltip/all/text/fg/generic` →
+for the current mode) — `tooltip/all/bg/generic` → `bg/inverse`, `tooltip/all/fg/text/generic` →
 `fg/label/inverse`. Both sides of the pair invert together, so this is *not* an instance of the bug: light
 mode renders black-on-white, dark mode renders white-on-black, self-consistent regardless of the app's
 theme (an intentional "OS tooltip" look, matching what `CollapsibleIconButton`'s local implementation had
@@ -952,7 +952,7 @@ icons render via stroke, not fill.
 for what was conceptually one 1px line in one color. `content/borderBottomColor/generic` (`#eeeff1`) turned
 out to be a genuinely different color from the rest, feeding a stray stroke that existed on only one of the
 eight variants — real cruft, removed along with that stroke. Collapsed to two:
-`accordion/all/border/color/generic` and `accordion/all/border/width/generic`, re-bound across all eight
+`accordion/all/borderColor/generic` and `accordion/all/borderWidth/generic`, re-bound across all eight
 variants.
 
 **Deleting the old variables surfaced three more layers of vestigial bindings** — `Title + Action` and each
@@ -1219,7 +1219,7 @@ Figma (`Cross Frame` only holds the close icon) — same slot-based pattern as D
 
 Two Figma cleanups before code, both at Carol's request: six fragmented, unbound padding tokens
 (`paddingHor/top-generic`, `paddingTop/top-generic`, etc., all worth 8) with no real `boundVariables` on the
-`Cross Frame` (padding was hardcoded 8/0/0/8) consolidated into one real `popoverSheet/all/root/padding/generic`
+`Cross Frame` (padding was hardcoded 8/0/0/8) consolidated into one real `popoverSheet/all/padding/generic`
 token, properly bound this time — a seventh orphan (`paddingHor/bottom-generic`) surfaced only on a second
 sweep and was removed too; and a pointless `web` namespace, renamed to `all` (same convention as
 Button/Combobox/Tooltip/Accordion: `all` means "identical across every variant," not an empty grouping).
@@ -1365,7 +1365,7 @@ fixed while verifying.
 `.Container` had before merging into the real `Image` component set on 24/09. `objectFit: cover` is fixed,
 matching Figma's `scaleMode=FILL` across all 5 variants — fixed the same day from `FIT`, which had been leaving
 letterbox gaps with real photos. `borderRadius` literally reuses `--ds-card-root-border-radius` (the same
-token Figma itself aliases to, `cards/all/root/borderRadius/basic`) rather than getting its own. The fallback
+token Figma itself aliases to, `cards/all/borderRadius/basic`) rather than getting its own. The fallback
 background (`--ds-bg-subtle`, shown when there's no `src`) is a code-only decision, not a pixel-for-pixel port
 of Figma's mountain-and-sun placeholder graphic, which represents "no image yet" purely as documentation
 artwork.

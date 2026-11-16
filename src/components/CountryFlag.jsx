@@ -11,7 +11,7 @@
  * Un solo tamaño, como Figma (v2 quita `size`, que no existía en Figma).
  * Tamaño y radio por token: --ds-country-flag-width/height (literales de
  * Figma, el asset no está en la escala sizing) y --ds-country-flag-border-radius
- * → border-radius/xs (`countryFlag/all/root/borderRadius/generic`, nuevo).
+ * → border-radius/xs (`countryFlag/all/borderRadius/generic`, nuevo).
  *
  * El SVG se inyecta vía data URI en un <img>, nunca dangerouslySetInnerHTML.
  *

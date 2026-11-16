@@ -5,7 +5,7 @@
  * Compone LabelDescription + FileSelector (DropZone + N × DocumentItem).
  * 28/10/2026, alineado 1:1 con Figma (set "File Upload", Layout × State +
  * booleana "Show Label + Desc" → `showLabel`). Gap 24 entre bloques
- * (`fileUpload/root/gap/generic`).
+ * (`fileUpload/all/gap/generic`).
  *
  * `layout="wide"`    — Label + Description (alineado a la derecha, 235 de
  *                       ancho) y el selector lado a lado.

@@ -5,7 +5,7 @@ import { Icon } from './Icon';
 
 const css = `
 /* v2 (26/10/2026, alineado con Figma): área de foco de 4 px alrededor del chip
-   (margin, chip/all/root/focusArea/padding) y anillo doble por fuera del chip
+   (margin, chip/all/padding/focusArea/generic) y anillo doble por fuera del chip
    y dentro de esa área — mismo patrón que Button. Label/md regular. */
 
 .ds-chip-toggle,

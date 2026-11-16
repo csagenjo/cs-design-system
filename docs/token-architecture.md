@@ -116,7 +116,7 @@ fg/icon/accent-primary-light · borderColor/accent-primary-light · bg/container
 - ramas `subtle`/`medium` y `bg/accent-primary-light` (sigue en 300)
 
 **Efectos secundarios en Component tokens:**
-- `checkbox/all/root/bg/selected` dependía de `bg/primary-bold` (`#36879C`) y quedó desincronizado → corregido a mano a `bg/primary` (`#4BA9C0`). Si algún componente en código depende de tokens `-bold` para primary/secondary, es candidato a la misma revisión.
+- `checkbox/all/bg/selected` dependía de `bg/primary-bold` (`#36879C`) y quedó desincronizado → corregido a mano a `bg/primary` (`#4BA9C0`). Si algún componente en código depende de tokens `-bold` para primary/secondary, es candidato a la misma revisión.
 - ~~`pagination/web/activePage/bg/primary` → `bg/surface/primary-bold`~~ **Obsoleto.** Superado por la reconstrucción de Pagination del 18/07/2026: los rellenos ahora apuntan a `bg/surface/primary` (`#4BA9C0`) / `bg/surface/secondary` (`#E02C7C`), sin repunte a `-bold`, y el círculo de página actual es `selectedPage`, no `activePage`. Ver §Pagination — nomenclatura por Part.
 
 > ⚠️ **Verificar:** `bg/containerShape/primary-light` es un token `bg/*` y cambió (700→500). Es coherente con la regla primary (su hermano `bg/containerShape/accent-light` fue a 700), pero conviene confirmar con Carol que fue intencional y no un efecto colateral del reemplazo global.
@@ -183,7 +183,7 @@ Dos familias que no se mezclan. **Elevación** = dónde se apoya el contenido (d
 
 Los tintes se invierten en dark; base y bold no cambian porque llevan texto blanco encima. Se mantienen los 12 aunque no todos tengan consumidor hoy: son la paleta para componer pantallas de contenido. Antes de la regla, 6 de ellos no tenían valor dark en `tokens.css` (caían al light) y en Figma el orden en dark era arbitrario (p. ej. primary-bold dark = primary/50).
 
-**Filete de lo elevado — `borderColor/elevated`** (nuevo 11/11): white en light (no se ve; la sombra separa) · neutral/700 en dark (1,72:1 contra `bg/default`). La sombra es negra y en dark no se ve; un halo claro se descartó porque se lee como brillo o estado. Hoy lo usa la Card Basic (`cards/all/root/borderColor/basic`); candidatos: Popover Sheet, pickers, Dialog.
+**Filete de lo elevado — `borderColor/elevated`** (nuevo 11/11): white en light (no se ve; la sombra separa) · neutral/700 en dark (1,72:1 contra `bg/default`). La sombra es negra y en dark no se ve; un halo claro se descartó porque se lee como brillo o estado. Hoy lo usa la Card Basic (`cards/all/borderColor/basic`); candidatos: Popover Sheet, pickers, Dialog.
 
 **Estado e interacción** — `success`, `success-subtle`, `error`, `error-subtle`, `hover-primary`: sin cambio.
 
@@ -198,7 +198,7 @@ Mismo valor en **light mode**, distinto en **dark mode** — existe en las tres 
 
 **Regla de detección:** antes de fijar un color de texto/icono sobre un fondo relleno, resolver el `bg` en Light y Dark — si el hex es el mismo en los dos modos, el fg va a `onColor`; si el hex cambia entre modos, el fg va a `inverse`. Nunca decidir por el nombre del token ni por lo que "parece coherente" visualmente en un solo modo.
 
-**Auditoría completa (11/08/2026):** verificado en vivo (resolución de cadena de alias en Figma, no el JSON cacheado) que el bug era real y no solo teórico — 7 casos confirmados con `*/inverse` sentado sobre un `bg` que no invierte, todos corregidos (en Figma y en `tokens.css`): `button/all/label/fg/accent-primary`, `ctaLink/all/label/fg/accent-highEmphasis`, `chip/all/label/fg/selected`, `chip/all/icon/fg/selected`, `badgeNotification/all/label/fg/generic`, `pagination/root/text/fg/selectedPage`, `pagination/activePage/fg/hover` — todos realiasados a `*/onColor`. En paralelo, `--ds-fg-label-inverse`/`--ds-fg-body-inverse`/`--ds-fg-icon-inverse` (que sí necesitaban invertir, para Button/CTALink default-filled) no tenían override dark en `tokens.css` — añadido (`#050506`), y `--ds-button-fg-default-filled`/`--ds-cta-link-fg-primary` recableados de `fg-onColor` (no invertía, incorrecto ahí) a `fg-label-inverse`.
+**Auditoría completa (11/08/2026):** verificado en vivo (resolución de cadena de alias en Figma, no el JSON cacheado) que el bug era real y no solo teórico — 7 casos confirmados con `*/inverse` sentado sobre un `bg` que no invierte, todos corregidos (en Figma y en `tokens.css`): `button/all/fg/label/accent-primary`, `ctaLink/all/fg/label/accent-highEmphasis`, `chip/all/fg/label/selected`, `chip/all/fg/icon/selected`, `badgeNotification/all/fg/label/generic`, `pagination/root/text/fg/selectedPage`, `pagination/activePage/fg/hover` — todos realiasados a `*/onColor`. En paralelo, `--ds-fg-label-inverse`/`--ds-fg-body-inverse`/`--ds-fg-icon-inverse` (que sí necesitaban invertir, para Button/CTALink default-filled) no tenían override dark en `tokens.css` — añadido (`#050506`), y `--ds-button-fg-default-filled`/`--ds-cta-link-fg-primary` recableados de `fg-onColor` (no invertía, incorrecto ahí) a `fg-label-inverse`.
 
 ### Sufijos de intensidad en bg y fg
 
@@ -211,6 +211,35 @@ Mismo valor en **light mode**, distinto en **dark mode** — existe en las tres 
 ---
 
 ## Component tokens (1038)
+
+### Estructura del nombre: la propiedad primero (16/11/2026)
+
+`componente/variante/propiedad/elemento/estado` — igual que Mode (`fg/icon/error`).
+Todo lo que es `fg` cuelga de `fg`, todo lo que es `bg` de `bg`, y así; el
+elemento solo aparece cuando hay más de uno con la misma propiedad.
+
+| Nivel | Valores | Notas |
+|---|---|---|
+| componente | `button`, `tabs`, `input`… | camelCase, en minúscula |
+| variante | `all` · `web` · `common` · `contained` · `desktop` · `filter` · `documentItem`… | Siempre presente: `all` si no hay variante (antes faltaba en `selector`, `topNavigation`, `pageTitle`) |
+| propiedad | `fg`, `bg`, `bgMix`, `borderColor`, `borderWidth`, `borderRadius`, `opacity`, `size`, `gap`, `padding*`, `minHeight`… | Una sola palabra: nunca partida (`border/color` → `borderColor`) ni pegada al elemento (`iconSize` → `size/icon`) |
+| elemento | `text`, `icon`, `label`, `ribbon`, `focusArea`… | Opcional. `root` desaparece: es el propio componente |
+| estado | `generic`, `hover`, `selected`, `error`, `focus-outer`… | Siempre presente: `generic` si no hay otro |
+
+Ejemplos: `tabs/all/fg/icon/error` (antes `tabs/all/errorIcon/fg/error`) ·
+`button/all/bg/default-primary` (antes `button/all/root/bg/default-primary`) ·
+`input/common/borderColor/focus-outer` (antes `Input/InputCommon/root/borderColor/focus-outer`) ·
+`button/all/padding/focusArea/generic` (antes `button/all/root/focusArea/padding`).
+
+Renombrado en Figma el 16/11 (884 de 947 variables; renombrar conserva el id,
+así que ningún enlace se rompe). Tabla antes → después en
+`tokens/renames-2026-11-16.json`. Sin tocar, por no tener estructura (pendiente
+de decidir si se borran): `generic`, `disabled`, `icon/*` (12) y `paragraph/fg/*` (8).
+
+**En código** el nombre CSS sigue el mismo orden sin `all`:
+`--ds-{componente}-{propiedad}-{elemento}-{estado}` (`--ds-tabs-fg-icon-error`).
+Hoy solo Tabs; el resto de `tokens.css` se nombró a mano y solo 226 de 946
+nombres seguían a Figma, así que se migra por componente (ver `tech-debt.md`).
 
 ### Patrón "Common + específico"
 
@@ -320,8 +349,8 @@ todo componente nuevo arrastra la misma deuda.
 ### Tooltip — 8 tokens, la pareja fg/bg SÍ invierte junta (02/09/2026)
 
 ```
-tooltip/all/root/bg/generic          → bg/inverse         (negro light / blanco dark)
-tooltip/all/text/fg/generic          → fg/label/inverse    (blanco light / negro dark)
+tooltip/all/bg/generic          → bg/inverse         (negro light / blanco dark)
+tooltip/all/fg/text/generic          → fg/label/inverse    (blanco light / negro dark)
 tooltip/all/root/{gap,paddingHor,paddingVer,borderRadius}/generic → literales de geometría
 ```
 
@@ -341,7 +370,7 @@ geometría literal leída de `get_metadata` por variante, tratada como token lit
 ### LoadingSpinner — bug real: "inverted" apuntaba al fondo de página, no a blanco fijo (02/09/2026)
 
 ```
-loadingSpinner/all/root/borderColor/primary   → bg/surface/primary  (teal, NO invierte, pero es de la
+loadingSpinner/all/borderColor/primary   → bg/surface/primary  (teal, NO invierte, pero es de la
                                                                        familia bg para un glifo)
                                                → fg/icon/primary    (✅ Carol lo corrigió en paralelo —
                                                                        mismo valor, familia semántica
@@ -380,12 +409,12 @@ real y coincide exacto con `size/8` en las 4 variantes, así que se usó tal cua
 ### ProgressBar — el indicator no era un bug, el track sí (03/09/2026)
 
 ```
-progressBar/all/indicator/bg/generic  → bg/surface/secondary  (mismo color en Default Y onColor —
+progressBar/all/bg/indicator/generic  → bg/surface/secondary  (mismo color en Default Y onColor —
                                                                   A PROPÓSITO, confirmado contra
                                                                   Sistema Origen, no un bug)
-progressBar/all/root/bg/default       → bg/page   (❌ era esto)  → bg/subtle   (✅ corregido)
-progressBar/all/root/bg/onColor       → bg/default (❌ era esto — invierte) → bg/onColor (✅ fijo)
-progressBar/all/text/fg/generic       → fg/default  (Label Y Helper text comparten el mismo color)
+progressBar/all/bg/default       → bg/page   (❌ era esto)  → bg/subtle   (✅ corregido)
+progressBar/all/bg/onColor       → bg/default (❌ era esto — invierte) → bg/onColor (✅ fijo)
+progressBar/all/fg/text/generic       → fg/default  (Label Y Helper text comparten el mismo color)
 ```
 
 **El hallazgo que cambió el diagnóstico:** el archivo real de Sistema Origen (no la copia limpia de IP)
@@ -430,27 +459,27 @@ subtle, EXCEPTO `bg/surface/secondary`.
 ### SegmentedControl — tokens limpios, pero cero estados construidos antes de esta sesión (03/09/2026)
 
 ```
-segmentedControl/all/root/bg/generic          → bg/subtle       (track, igual que rootSegment/bg/generic)
-segmentedControl/all/rootSegment/bg/generic   → bg/subtle       (unselected — mismo valor que root, a
+segmentedControl/all/bg/generic          → bg/subtle       (track, igual que rootSegment/bg/generic)
+segmentedControl/all/bg/rootSegment/generic   → bg/subtle       (unselected — mismo valor que root, a
                                                                    propósito: el segmento se funde con el
                                                                    track cuando no está seleccionado)
-segmentedControl/all/rootSegment/bg/selected  → bg/inverse      (negro light / blanco dark)
-segmentedControl/all/label/fg/generic         → fg/label/default
-segmentedControl/all/label/fg/selected        → fg/label/inverse (pareja correcta con bg/selected —
+segmentedControl/all/bg/rootSegment/selected  → bg/inverse      (negro light / blanco dark)
+segmentedControl/all/fg/label/generic         → fg/label/default
+segmentedControl/all/fg/label/selected        → fg/label/inverse (pareja correcta con bg/selected —
                                                                     invierten JUNTOS, no es el bug fg/bg
                                                                     ya cazado en Chip/Pagination/Button)
-segmentedControl/all/rootSegment/bgMix/hover           → opacity/hover/default  (10% negro light / 10%
+segmentedControl/all/bgMix/rootSegment/hover           → opacity/hover/default  (10% negro light / 10%
                                                                                    blanco dark)
-segmentedControl/all/rootSegment/bgMix/hover-selected  → opacity/hover/default-inverse (10% blanco light /
+segmentedControl/all/bgMix/rootSegment/hover-selected  → opacity/hover/default-inverse (10% blanco light /
                                                                                           10% negro dark —
                                                                                           opuesto a propósito,
                                                                                           aclara lo oscuro)
-segmentedControl/all/rootSegment/bgMix/pressed         → opacity/pressed = 80  (NO es un color-mix como
+segmentedControl/all/bgMix/rootSegment/pressed         → opacity/pressed = 80  (NO es un color-mix como
                                                                                  hover — es un opacity plano
                                                                                  sobre todo el segmento,
                                                                                  mismo mecanismo que
                                                                                  --ds-icon-button-opacity-pressed)
-segmentedControl/all/rootSegment/borderColor/focus-inner/-outer, borderWidth/focus → mismos tokens de foco
+segmentedControl/all/borderColor/rootSegment/focus-inner/-outer, borderWidth/focus → mismos tokens de foco
                                                                                        ya usados en otros
                                                                                        componentes
 ```
@@ -514,10 +543,10 @@ había pedido simplificar los tokens de Componente, no solo enlazarlos bien. Res
 ```
 accordion/all/fg/text/generic     → fg/default   (#050506) — título Y cuerpo, un solo token
 accordion/all/fg/icon/generic     → fg/default   (#050506) — icono, scope STROKE_COLOR propio
-accordion/all/border/color/generic → borderColor/default (#9AA1AA) — línea superior E inferior
-accordion/all/border/width/generic → 1 (FLOAT)
+accordion/all/borderColor/generic → borderColor/default (#9AA1AA) — línea superior E inferior
+accordion/all/borderWidth/generic → 1 (FLOAT)
 accordion/all/opacity/pressed      → opacity/pressed (80, FLOAT) — antes "button/bg/pressed"
-accordion/all/button/bg/hover      → bg/hover-primary (sin cambios, ya era real)
+accordion/all/bg/button/hover      → bg/hover-primary (sin cambios, ya era real)
 ```
 
 De 15 tokens de color/ancho fragmentados a 6. La primera propuesta de simplificación fusionaba título,
@@ -670,7 +699,7 @@ Los 4 átomos/organismos de la familia Celda (`table/all/cellCommon/*`) están c
 
 Al auditar la familia bg de marca/feedback en dark mode se encontró que `--ds-bg-primary` (el token más usado de toda la familia — Button accent, Checkbox/Chip seleccionado, CTALink accent, BadgeNotification primary, 5× Pagination) y `--ds-bg-primary-bold` (0 consumidores) tenían sus valores dark **intercambiados entre sí** en `tokens.css` — ninguno coincidía con el valor real de Figma. Corregido: `bg-primary` dark `#286371`→`#4BA9C0` (el teal vivo real, no un teal casi negro); `bg-primary-bold` dark `#4BA9C0`→`#F7FBFC`. De paso se sincronizó el resto de la familia (antes sin override dark, caían al valor light): `bg-primary-medium`, `bg-secondary`, `bg-secondary-medium`, `bg-tertiary`, `bg-error`/`bg-error-subtle`, `bg-success`/`bg-success-subtle`, `bg-hover-primary`, `bg-inverse`, `bg-accent-primary/secondary`, `bg-warning`, `bg-info`, `bg-highlight` — todos con el valor real resuelto en vivo desde Figma.
 
-**Tokens huérfanos eliminados** (sin fuente en Figma bajo ningún nombre + 0 consumidores en código): `bg-quaternary` (las 4 variantes), `bg-hover-secondary`/`bg-hover-tertiary`, `bg-completed` (duplicado de `bg-success`), `bg-done` (sí era variable propia en Figma con consumidores reales — `switch/all/track/bg/on`, `stepNavigator/web/steps/bg/completed`, ambos en backlog sin construir — pero se decidió simplificar: esos dos se repuntaron a `bg/success` y `bg/done` se eliminó de Figma).
+**Tokens huérfanos eliminados** (sin fuente en Figma bajo ningún nombre + 0 consumidores en código): `bg-quaternary` (las 4 variantes), `bg-hover-secondary`/`bg-hover-tertiary`, `bg-completed` (duplicado de `bg-success`), `bg-done` (sí era variable propia en Figma con consumidores reales — `switch/all/bg/track/on`, `stepNavigator/web/steps/bg/completed`, ambos en backlog sin construir — pero se decidió simplificar: esos dos se repuntaron a `bg/success` y `bg/done` se eliminó de Figma).
 
 **Técnica de auditoría — diff estructural, no textual.** Los re-exports nativos de Figma (panel de Variables → Export modes, formato DTCG; no se usa Tokens Studio) reordenan claves JSON (alfabético o por orden de creación en Figma), produciendo diffs de cientos de líneas que son 100% ruido cosmético. Para auditar un re-export con confianza: aplanar ambos JSON a `path → (hex, alias)` (recorriendo hasta el nodo con `$value`+`$type`) y comparar por path, no por posición de línea — así se separa lo que cambió de verdad de lo que solo cambió de sitio. El hex de `$value` es el valor resuelto que Figma añade por comodidad; el enlace real está en `$extensions.com.figma.aliasData` (o en una referencia DTCG `{…}` cuando apunta a la misma colección), así que la comparación debe incluir también el alias.
 
@@ -682,13 +711,13 @@ Nodo EXPLORE confirmado: `3109:11663`, variante `Length` = `Single Line` / `Mult
 
 | Token Figma | CSS | Alias Mode | Valor (light) |
 |---|---|---|---|
-| `snackbar/all/root/bg/generic` | `--ds-snackbar-root-bg-generic` | `bg/inverse` | `#050506` |
-| `snackbar/all/text/fg/generic` | `--ds-snackbar-text-fg-generic` | `fg/body/inverse` | `#FFFFFF` |
-| `snackbar/all/root/borderRadius/generic` | `--ds-snackbar-root-border-radius` | `borderRadius/md` | `8px` |
-| `snackbar/all/root/paddingHor/generic` | `--ds-snackbar-root-padding-hor` | `spacing/lg` | `12px` |
-| `snackbar/all/root/paddingVer/singleLine` | `--ds-snackbar-root-padding-ver-single` | `spacing/sm` | `6px` |
-| `snackbar/all/root/paddingVer/multiLine` | `--ds-snackbar-root-padding-ver-multi` | `spacing/lg` | `12px` |
-| `snackbar/all/root/gap/singleLine` | `--ds-snackbar-root-gap-single` | `spacing/sm` | `6px` |
+| `snackbar/all/bg/generic` | `--ds-snackbar-root-bg-generic` | `bg/inverse` | `#050506` |
+| `snackbar/all/fg/text/generic` | `--ds-snackbar-text-fg-generic` | `fg/body/inverse` | `#FFFFFF` |
+| `snackbar/all/borderRadius/generic` | `--ds-snackbar-root-border-radius` | `borderRadius/md` | `8px` |
+| `snackbar/all/paddingHor/generic` | `--ds-snackbar-root-padding-hor` | `spacing/lg` | `12px` |
+| `snackbar/all/paddingVer/singleLine` | `--ds-snackbar-root-padding-ver-single` | `spacing/sm` | `6px` |
+| `snackbar/all/paddingVer/multiLine` | `--ds-snackbar-root-padding-ver-multi` | `spacing/lg` | `12px` |
+| `snackbar/all/gap/singleLine` | `--ds-snackbar-root-gap-single` | `spacing/sm` | `6px` |
 | `Snackbar/Shadow` (Effect Style) | `--ds-snackbar-root-shadow` | — (literal, no es Variable) | 3-layer drop-shadow |
 
 **`fg/body/inverse`, no `fg/label/inverse` — verificado contra el panel de variables de Figma, no asumido.** La primera hipótesis fue reutilizar `fg-label-inverse` (el mismo token que Button default-filled/CTALink primario), razonando por analogía con el par `bg-inverse`/`fg-*-inverse` ya cerrado el 11/08. Al comprobar el alias real en el panel de Component tokens de Figma, el mensaje del Snackbar resuelve contra `fg/body/inverse` — correcto semánticamente: es texto de cuerpo, no el label de un botón. Ambos tokens (`fg-label-inverse`/`fg-body-inverse`) resuelven al mismo hex en `tokens.css` hoy (`#FFFFFF` light / `#050506` dark), así que no había regresión visual posible por el error — pero el alias sí importa si algún día divergen. Regla general reafirmada: **verificar el alias real, no inferirlo por el patrón de un componente anterior**, aunque el resultado visual coincida.
@@ -1041,7 +1070,7 @@ Confirmado que `Selector List Item` (component set `3347:7310`) ya soportaba `Ri
 
 ## Popover Sheet (14–15/09/2026) — v1.1, reescrito tras el primer review
 
-**Dos limpiezas de Figma antes de CODE:** 6 tokens de padding fragmentados y sin `boundVariables` real (`paddingHor/top-generic`, etc., los 6 valen 8) consolidados en un único `popoverSheet/all/root/padding/generic` — un séptimo huérfano (`paddingHor/bottom-generic`) apareció solo en un segundo barrido; y un namespace `web` sin sentido (el componente no tiene ningún eje Device real), renombrado a `all`.
+**Dos limpiezas de Figma antes de CODE:** 6 tokens de padding fragmentados y sin `boundVariables` real (`paddingHor/top-generic`, etc., los 6 valen 8) consolidados en un único `popoverSheet/all/padding/generic` — un séptimo huérfano (`paddingHor/bottom-generic`) apareció solo en un segundo barrido; y un namespace `web` sin sentido (el componente no tiene ningún eje Device real), renombrado a `all`.
 
 **Fuga de IP real, más seria que las de padding — sombra enlazada EN VIVO a la librería real de La Empresa** (no una referencia rota, como `Dialog/DialogShadow` — `getStyleByIdAsync` la resolvía con normalidad porque seguía conectada de verdad a un archivo externo). Creado un estilo local nuevo, `Popover Sheet/Shadow`, reasignado a las 12 `Shadow Frame`, verificado por dato (`remote: false`).
 
@@ -1071,7 +1100,7 @@ Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width` y los literales de
 
 **Un grupo del flydown puede llevar `featured: {...}` en vez de `links`** (25/09) — instancia `Image` tal cual. `flydownToSidebarChildren` filtra esos grupos antes de aplanar el árbol de `SidebarMenu` móvil (contenido decorativo, no navegable) — sin el filtro, `group.links.map` crasheaba con `undefined`, bug real encontrado al verificar.
 
-**`Image` (átomo nuevo)** — `size`(1:1/3:2/4:3/16:9)×`variant`(roundedCorners/circle) mismo eje que `.Container` en Figma antes de fusionarse en el component set real (24/09). `objectFit: cover` fijo, corregido en Figma el mismo día desde `scaleMode=FIT` (dejaba huecos de letterbox con fotos reales). `borderRadius` reusa literalmente `--ds-card-root-border-radius` (mismo token que Figma, `cards/all/root/borderRadius/basic`) — sin token propio nuevo. Fondo de fallback (`--ds-bg-subtle`) cuando no hay `src` es decisión de código, no réplica del placeholder gráfico de Figma.
+**`Image` (átomo nuevo)** — `size`(1:1/3:2/4:3/16:9)×`variant`(roundedCorners/circle) mismo eje que `.Container` en Figma antes de fusionarse en el component set real (24/09). `objectFit: cover` fijo, corregido en Figma el mismo día desde `scaleMode=FIT` (dejaba huecos de letterbox con fotos reales). `borderRadius` reusa literalmente `--ds-card-root-border-radius` (mismo token que Figma, `cards/all/borderRadius/basic`) — sin token propio nuevo. Fondo de fallback (`--ds-bg-subtle`) cuando no hay `src` es decisión de código, no réplica del placeholder gráfico de Figma.
 
 ---
 
@@ -1095,8 +1124,8 @@ Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width` y los literales de
 
 | Figma (Component tokens) | CSS | Valor |
 |---|---|---|
-| `button/all/root/focusArea/padding` | `--ds-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
-| `iconButton/all/root/focusArea/padding` | `--ds-icon-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
+| `button/all/padding/focusArea/generic` | `--ds-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
+| `iconButton/all/padding/focusArea/generic` | `--ds-icon-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
 
 Scope `GAP`, ocultos en la publicación (internos del componente, como el resto de geometría). Son geometría, así que viven en Component sin equivalente en Mode (regla de la cascada). 4px = hueco `focus-inner` (2px) + anillo `focus-outer` (2px), los dos ligados a `*/root/borderWidth/focus`.
 
@@ -1125,7 +1154,7 @@ Scope `GAP`, ocultos en la publicación (internos del componente, como el resto 
 
 **Corregido en Figma.**
 - `pagination/pageDots/fg/hover` apuntaba a `icon/fg/onColor`, una variable borrada → re-enlazado a Mode `fg/icon/onColor` (mismo valor; el CSS ya lo resolvía bien). Barrido en vivo: ninguna otra variable local apunta a una borrada.
-- Los 15 saltos Component → Base (14 del export + `drawer/all/toggle/padding/center`), sin excepciones (decisión de Carol: corregir todo):
+- Los 15 saltos Component → Base (14 del export + `drawer/all/padding/toggle/center`), sin excepciones (decisión de Carol: corregir todo):
   - Escala de spacing ampliada con dos pasos intermedios, misma cadena que el resto: Device `spacing/lg-xl` (14) y `spacing/xl-2xl` (20) → Theme `…-mobile|-tablet|-desktop` → Base `dimension/175` / `dimension/250`. Fijos en los 3 devices, como todo `spacing/*`.
   - Tabs: paddingVer s → `spacing/lg`, m → `spacing/lg-xl`, l y paddingHor → `spacing/xl`. Drawer Toggle → `spacing/xl-2xl`.
   - Tipografía de la documentación: Device `fontSize/doc/*` y `lineHeight/doc/*` (display-xl 128/160, display-lg 64/80, title-lg 40/48, title-md 28/36, title-sm 24/28) → Theme `…-mobile|-tablet|-desktop` → Base `typography/*`. Mismo valor en los 3 devices (las páginas de documentación no cambian por dispositivo). `doc/all/*` apunta a ellos.
@@ -1153,7 +1182,7 @@ Revisados nombre, valor, alcance (scope), uso en Figma (las 60 páginas, enlaces
 - `fontStyle/italic`, `fontDecor/underline` (0 usos), `fontWeight/medium` (0 usos; existe en código), `fontFamily/narrow` (= Nunito), `fontFamily/annotation`, `fontFamily/web/fallback`.
 - Escala sin usar: `fontSize|lineHeight/subheadline/*` (solo en la página de Calendar, descartado), `title/xl`, `annotation/*`; `spacing/3xl` y `sizing/3xl` solo en páginas de documentación.
 - `dimension/iconStroke` (2,67): solo en decoraciones de Cover y portadas. No es el trazo de los iconos (ese es `icon-stroke` de la librería Lucide, 2).
-- `opacity/readOnly` (40): solo la usa `Input/InputTelephone/iconFlag/fg/disabled` (la bandera es una imagen y no se puede recolorear; único caso de disabled por opacidad).
+- `opacity/readOnly` (40): solo la usa `input/telephone/fg/iconFlag/disabled` (la bandera es una imagen y no se puede recolorear; único caso de disabled por opacidad).
 
 ## Auditoría de Mode (12/11/2026) — mismo método
 
@@ -1172,7 +1201,7 @@ Revisados nombre, valor, alcance (scope), uso en Figma (las 60 páginas, enlaces
 **Familias "encima de superficie" borradas** (decisión de Carol, 12/11). `fg/{headline,subheadline,title,label,body,icon}/onSurface/*`, `…/onContainer/*`, `…/onContainerShape/*` y `borderColor/onSurface/*`: 123 tokens de Mode y 245 de Theme.
 - Repetían el mismo valor en cada rol (headline = title = label = body sobre una misma superficie) y algunos fallaban en dark: `…/onSurface/secondary-bold` era negro sobre el magenta #8C1C4C, que no cambia con el modo (2,4:1).
 - Antes de borrar, los 4 que se usaban en páginas de Figma se re-enlazaron a su equivalente con el mismo valor en los dos modos (1.103 enlaces): `fg/title/onSurface/default` → `fg/title/default`, `fg/label/onSurface/default` → `fg/label/default`, `fg/body/onSurface/default` → `fg/body/default`, `fg/label/onSurface/primary` → `fg/label/onColor`.
-- Los 4 restantes también se borraron tras moverlos (decisión de Carol): el teal fijo de la cabecera onPrimary de Dialog (`fg/title|icon/onSurface/static-primary`) pasa a `bg/surface/primary`, el único token con #0A7C92 en los dos modos (en dark `fg/*/primary` es teal claro y sobre la cabecera blanca daría 1,6:1); los títulos de tarjeta de los frames *How to use & Accessibility* (`…/secondary-subtle|tertiary-subtle`) pasan a dos tokens de documentación nuevos, `doc/all/card/title/fg/designers` → `fg/secondary` y `…/developers` → `fg/tertiary`.
+- Los 4 restantes también se borraron tras moverlos (decisión de Carol): el teal fijo de la cabecera onPrimary de Dialog (`fg/title|icon/onSurface/static-primary`) pasa a `bg/surface/primary`, el único token con #0A7C92 en los dos modos (en dark `fg/*/primary` es teal claro y sobre la cabecera blanca daría 1,6:1); los títulos de tarjeta de los frames *How to use & Accessibility* (`…/secondary-subtle|tertiary-subtle`) pasan a dos tokens de documentación nuevos, `doc/all/fg/card/title/designers` → `fg/secondary` y `…/developers` → `fg/tertiary`.
 - Resultado: ya no queda ningún token `onSurface`, `onContainer` ni `onContainerShape` en Mode.
 
 **Regla para texto, iconos y bordes sobre superficies de marca** (sustituye a esas familias):

@@ -538,15 +538,15 @@ The action control of the system: it does something on the current view
 **Behaviour**
 - Hover: all three variants fill with the Primary background + `bgMix`, text
   and icon turn on-colour.
-- Pressed: 80 % opacity (`button/all/root/opacity/pressed`).
+- Pressed: 80 % opacity (`button/all/opacity/pressed`).
 - Disabled: its own tokens (background, border, text), never opacity.
 - Loading: spinner in the left icon slot, label visible, Enabled look.
 
 **Sizing**
 - Root padding `button/all/root/paddingHor/*` (8 / 12 / 16) + label padding
-  `button/all/label/paddingHor/generic` (4): text 12 / 16 / 20 from the edge,
+  `button/all/paddingHor/label/generic` (4): text 12 / 16 / 20 from the edge,
   4 from the icon.
-- 4 px focus area around it (`button/all/root/focusArea/padding`): the box is
+- 4 px focus area around it (`button/all/padding/focusArea/generic`): the box is
   height + 8 (Large = 56). It's where the focus ring lives.
 
 ### Developers · React
@@ -669,11 +669,11 @@ For compact toolbars and repeated actions (close, edit, filter).
 
 **Behaviour**
 - Hover: all three variants fill with the Primary background + `bgMix`, icon on-colour.
-- Pressed: Primary background at 80 % (`iconButton/all/root/opacity/pressed`), also in Secondary and Tertiary.
+- Pressed: Primary background at 80 % (`iconButton/all/opacity/pressed`), also in Secondary and Tertiary.
 - Loading: spinner in place of the icon, same size and colour.
 
 **Sizing**
-- 4 px focus area around it (`iconButton/all/root/focusArea/padding`): the box is size + 8.
+- 4 px focus area around it (`iconButton/all/padding/focusArea/generic`): the box is size + 8.
 
 ### Developers · React
 
@@ -777,8 +777,8 @@ screen in La Plataforma reads the same.
   (only Next goes after it).
 - Negative actions are Secondary and always on the left.
 - Cancel, Previous and Next are Tertiary.
-- Gap 24 between actions (`buttonBar/all/root/gap`), 16 between the
-  notification and the actions (`buttonBar/all/notification/gap`).
+- Gap 24 between actions (`buttonBar/all/gap/generic`), 16 between the
+  notification and the actions (`buttonBar/all/gap/notification/generic`).
 - No padding, border or background: the screen that holds it sets them.
 - The nested instances are locked: change texts and use the `Show…`
   properties; never change their variants.
@@ -880,7 +880,7 @@ CheckboxGroup, which gives them a question, help and the error message.
 
 **Sizing**
 - 24 slot with a 20 box, 6 gap to the label, 2 padding, row radius 8.
-- 4 px focus area around it (`checkbox/all/root/focusArea/padding`): with a label the box is 36 high.
+- 4 px focus area around it (`checkbox/all/padding/focusArea/generic`): with a label the box is 36 high.
 
 ### Developers · React
 
@@ -988,7 +988,7 @@ gives them their question, help, error and the arrow-key behaviour.
 
 **Sizing**
 - 24 slot with a 20 circle and a 10 dot, 6 gap to the label, 2 padding, row radius 8.
-- 4 px focus area around it (`radioButton/all/root/focusArea/padding`): with a label it is 36 high.
+- 4 px focus area around it (`radioButton/all/padding/focusArea/generic`): with a label it is 36 high.
 
 ### Developers · React
 
@@ -1096,7 +1096,7 @@ Small, rounded pieces for choosing, filtering or showing entered values.
 
 **Sizing**
 - 32 high: padding 4 / 8, gap 4, icons 20, radius 8, label 16 regular.
-- 4 px focus area around it (`chip/all/root/focusArea/padding`): the box is 40 high.
+- 4 px focus area around it (`chip/all/padding/focusArea/generic`): the box is 40 high.
 
 ### Developers · React
 
@@ -1209,7 +1209,7 @@ A text field: one line, or a box that grows with the text (Adaptive). Optional i
 **Sizing**
 - Field 56 high, padding 16, radius 8, border 1.5.
 - Label, help (above the field) and error message (below) are Form Elements instances.
-- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+- 4 px focus area around the whole input (input/common/padding/focusArea/generic): the focus ring fits inside the component and the label stays aligned with the border.
 
 ### Developers · React
 
@@ -1324,7 +1324,7 @@ A native select: pick one option from a short list. The list is the browser's ow
 **Sizing**
 - Field 56 high, padding 16, radius 8, border 1.5.
 - Label, help (above the field) and error message (below) are Form Elements instances.
-- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+- 4 px focus area around the whole input (input/common/padding/focusArea/generic): the focus ring fits inside the component and the label stays aligned with the border.
 
 ### Developers · React
 
@@ -1432,7 +1432,7 @@ A text field for a date typed as text, with the calendar icon as a visual hint.
 **Sizing**
 - Field 56 high, padding 16, radius 8, border 1.5.
 - Label, help (above the field) and error message (below) are Form Elements instances.
-- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+- 4 px focus area around the whole input (input/common/padding/focusArea/generic): the focus ring fits inside the component and the label stays aligned with the border.
 
 ### Developers · React
 
@@ -1543,7 +1543,7 @@ A small number changed one step at a time with − and +, or with the arrow keys
 **Sizing**
 - Field 56 high, padding 16, radius 8, border 1.5.
 - Label, help (above the field) and error message (below) are Form Elements instances.
-- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+- 4 px focus area around the whole input (input/common/padding/focusArea/generic): the focus ring fits inside the component and the label stays aligned with the border.
 
 ### Developers · React
 
@@ -1653,7 +1653,7 @@ A phone number with its country prefix: two boxes side by side, country (flag + 
 **Sizing**
 - Field 56 high, padding 16, radius 8, border 1.5.
 - Label, help (above the field) and error message (below) are Form Elements instances.
-- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+- 4 px focus area around the whole input (input/common/padding/focusArea/generic): the focus ring fits inside the component and the label stays aligned with the border.
 
 ### Developers · React
 
@@ -1768,7 +1768,7 @@ An amount of money with its currency: two boxes side by side, currency (ISO code
 **Sizing**
 - Field 56 high, padding 16, radius 8, border 1.5.
 - Label, help (above the field) and error message (below) are Form Elements instances.
-- 4 px focus area around the whole input (Input/InputCommon/root/focusArea/padding): the focus ring fits inside the component and the label stays aligned with the border.
+- 4 px focus area around the whole input (input/common/padding/focusArea/generic): the focus ring fits inside the component and the label stays aligned with the border.
 
 ### Developers · React
 
@@ -1885,7 +1885,7 @@ A field that shows the chosen item (header, description, detail) and opens a lis
 **Sizing**
 - Invoker: 12 left padding and 12 gap to the icon (selector/root/paddingHor, gapHor); 16 top, right and bottom (selector/content/padding) and 16 between the text and the right panel (selector/content/gap); border 1, radius 8.
 - Icons 24; header Section Header.
-- 4 px focus area around the whole selector (selector/root/focusArea/padding); label, help and error inside it.
+- 4 px focus area around the whole selector (selector/all/padding/focusArea/generic); label, help and error inside it.
 - List items: same padding, no focus area — the focus ring is drawn inside the row because rows are stacked in lists and panels.
 
 ### Developers · React
@@ -2003,7 +2003,7 @@ A Selector for bank accounts: header (account name), balance (Amount View) and d
 **Sizing**
 - Invoker: 12 left padding and 12 gap to the icon (selector/root/paddingHor, gapHor); 16 top, right and bottom (selector/content/padding) and 16 between the text and the right panel (selector/content/gap); border 1, radius 8.
 - Icons 24; header Section Header.
-- 4 px focus area around the whole selector (selector/root/focusArea/padding); label, help and error inside it.
+- 4 px focus area around the whole selector (selector/all/padding/focusArea/generic); label, help and error inside it.
 - List items: same padding, no focus area — the focus ring is drawn inside the row because rows are stacked in lists and panels.
 
 ### Developers · React
@@ -2217,7 +2217,7 @@ pages, footers and secondary navigation.
 - The nested Link keeps its own Variant / Type / State.
 
 **Behaviour**
-- The list icon is always black (`linkList/all/iconLeft/fg/generic`), also for Accent links.
+- The list icon is always black (`linkList/all/fg/iconLeft/generic`), also for Accent links.
 
 **Sizing**
 - 4 px between the list icon and the link. Space between rows is set by the list (small 4 · medium 8 · large 16).
@@ -2319,7 +2319,7 @@ A call to action that takes the user somewhere: "Start now",
 
 **Sizing**
 - Same size in the three types: label lg bold, padding 6 / 12, radius 16 / 24 / pill.
-- 4 px focus area around it (`ctaLink/all/root/focusArea/padding`): the box is 48 high.
+- 4 px focus area around it (`ctaLink/all/padding/focusArea/generic`): the box is 48 high.
 
 ### Developers · React
 
@@ -2416,7 +2416,7 @@ Short feedback about an action that has just happened, with an optional action (
 **Behaviour**
 - Background and text invert with the mode: black with white text in light, white with black text in dark.
 - Action: Button Default Primary — hover lightens / darkens with the inverse veil, pressed lowers the opacity.
-- Action focus ring: snackbar/all/action/borderColor/focus-inner | focus-outer (the inverse focus colours), because the system blue does not show on the inverted background.
+- Action focus ring: snackbar/all/borderColor/action/focus-inner | focus-outer (the inverse focus colours), because the system blue does not show on the inverted background.
 - Appears at the bottom of the screen (mobile) or a corner (web) and goes away by itself if it has no action; position and timing are not part of the component.
 
 **Sizing**
@@ -2640,7 +2640,7 @@ A short hint about an element, shown on hover and on keyboard focus.
 - Positioned inside its wrapper (no portal): a parent with overflow hidden can clip it
 
 **Arrow**
-- In Figma the arrow is a vector shape named "arrow": an isosceles triangle, base 8 × height 6, filled with `tooltip/all/root/bg/generic`, rotated per Placement (Top 0°, Right −90°, Bottom 180°, Left 90°). It has no size variable
+- In Figma the arrow is a vector shape named "arrow": an isosceles triangle, base 8 × height 6, filled with `tooltip/all/bg/generic`, rotated per Placement (Top 0°, Right −90°, Bottom 180°, Left 90°). It has no size variable
 - In code it is a CSS border triangle, no SVG: a 0 × 0 span with two transparent borders of half the base (4) and one solid border of the length (6) in `--ds-tooltip-bg` — e.g. Top: `border-left/right: 4px solid transparent; border-top: 6px solid var(--ds-tooltip-bg)`
 - Tokens: `--ds-tooltip-arrow-base` (8) and `--ds-tooltip-arrow-length` (6), literals in `tokens.css` with a comment because Figma has no variable for them
 - Placement: centred on the side of the bubble that faces the element; the bubble sits arrow-length away from the element, so the tip touches its edge
@@ -3517,7 +3517,7 @@ A 1 px horizontal line that separates groups of content.
 **Group:** Data
 **Figma:** 🟢 Country Flag page → `CountryFlag` set (32843:3274, Country = 201 variants, 22×16; moved from the icons library on 11/11) · frame *Country Flag — How to use & Accessibility* (11/11)
 **Code:** `src/components/CountryFlag.jsx` (atom) + `src/components/flags.js` (201 SVGs)
-**Tokens:** `--ds-country-flag-*` (`countryFlag/all/root/borderRadius/generic`)
+**Tokens:** `--ds-country-flag-*` (`countryFlag/all/borderRadius/generic`)
 
 A country's flag in full colour, next to its name or dial code.
 
@@ -3840,7 +3840,7 @@ Read-only pairs of label and value (customer data, a summary before confirming).
 **Sizing**
 - Each pair: content + 8 + divider line (also under the last one), 8 between pairs — descriptionList/all/gap/generic.
 - Landscape: label and value share the width 50 / 50, aligned on the text baseline · Portrait: value 8 under the label.
-- Edit link 8 under the value · Account values 4 apart (descriptionList/all/account/gap/generic), icon 24.
+- Edit link 8 under the value · Account values 4 apart (descriptionList/all/gap/account/generic), icon 24.
 - Section: Section Header 19 bold primary + 8 + list + 8 + section Edit.
 
 ### Developers · React
@@ -3953,7 +3953,7 @@ Tabular data built from cells: column headers (optionally sortable), data cells,
 
 **Sizing**
 - Compact 32 high (4 + 24 + 4), Basic 36 (Cell 6 + 24 + 6; Header 8 + 24 + 4, text at the bottom) — the bottom line is drawn inside.
-- Padding 6 left and right (table/all/cellCommon/padding/hor), 4 between text and icon; sort and More icons 16.
+- Padding 6 left and right (table/all/padding/cellCommon/hor), 4 between text and icon; sort and More icons 16.
 - Focus ring 2 + 2 inside the cell (cells sit edge to edge, there is no room outside).
 
 ### Developers · React
