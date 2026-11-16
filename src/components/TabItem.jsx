@@ -38,9 +38,9 @@
  *
  * 16/11/2026 (v3.1), igual que Figma (Show Icon / Icon / Show Error):
  *   · `icon` — icono decorativo a la izquierda (slot libre, cualquier nombre
- *     del átomo Icon), color `tabs/all/icon/fg/generic`.
- *   · `hasError` — circle-x a la derecha (`tabs/all/errorIcon/fg/generic` →
- *     fg/icon/error) para marcar pestañas con campos que corregir. El color no
+ *     del átomo Icon), color `tabs/all/icon/fg/generic` (→ fg/default), 16 px.
+ *   · `hasError` — circle-x a la derecha (`tabs/all/errorIcon/fg/error` →
+ *     fg/icon/error, 16 px) para marcar pestañas con campos que corregir. El color no
  *     basta: el lector oye `errorLabel` ("has errors") detrás del nombre.
  *   · Gap entre icono, texto y error: `tabs/all/root/gap/generic` (8).
  *
@@ -78,7 +78,7 @@ const css = `
   gap: var(--ds-tabs-root-gap-generic);
 }
 .ds-tab-item__icon { display: inline-flex; color: var(--ds-tabs-icon-fg-generic); }
-.ds-tab-item__error { display: inline-flex; color: var(--ds-tabs-error-icon-fg-generic); }
+.ds-tab-item__error { display: inline-flex; color: var(--ds-tabs-error-icon-fg-error); }
 .ds-tab-item--s { --_pv: var(--ds-tabs-root-padding-ver-s); --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); }
 .ds-tab-item--m { --_pv: var(--ds-tabs-root-padding-ver-m); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); }
 .ds-tab-item--l { --_pv: var(--ds-tabs-root-padding-ver-l); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); }
@@ -136,7 +136,7 @@ const css = `
 
 injectStyles('ds-tab-item', css);
 
-const ICON_SIZE = { s: '2xs', m: 'xs', l: 'sm' }; // 16 / 20 / 24, cabe en el line-height de cada tamaño
+const ICON_SIZE = '2xs'; // 16 en los tres tamaños: tabs/all/icon|errorIcon/size/generic → sizing/2xs
 
 export function TabItem({
   size = 'm',          // 's' | 'm' | 'l'
@@ -171,11 +171,11 @@ export function TabItem({
       role={role || undefined}
       aria-selected={role === 'tab' ? selected : undefined}
     >
-      {icon && <span className="ds-tab-item__icon" aria-hidden="true"><Icon name={icon} size={ICON_SIZE[size]} /></span>}
+      {icon && <span className="ds-tab-item__icon" aria-hidden="true"><Icon name={icon} size={ICON_SIZE} /></span>}
       {children}
       {hasError && (
         <span className="ds-tab-item__error">
-          <Icon name="circle-x" size={ICON_SIZE[size]} />
+          <Icon name="circle-x" size={ICON_SIZE} />
           <VisuallyHidden>{`, ${errorLabel}`}</VisuallyHidden>
         </span>
       )}

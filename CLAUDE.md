@@ -9,6 +9,7 @@ Repo: https://github.com/csagenjo/cs-design-system · Figma fileKey `QiWDJdMPB5p
 - `docs/component-inventory.md` — cómo usar cada componente y su accesibilidad (diseño, React, agentes)
 - `docs/component-notes.md` — detalle y decisiones por componente
 - `docs/pipeline-figma-mcp.md` — pasadas del pipeline Figma MCP → código (paso 4)
+- `docs/screen-brief.md` — plantilla de brief para pedir una pantalla de Figma en código
 - `docs/layouts.md` — los 6 layouts de página (base del agente de layouts, paso 5)
 - `docs/token-architecture.md` · `docs/architecture.md` — tokens y arquitectura completas
 - `docs/accessibility-audit.md` — auditoría WCAG 2.2 AA y plan A11y

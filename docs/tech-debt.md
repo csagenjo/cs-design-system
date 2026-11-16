@@ -16,7 +16,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 ## Tokens
 
-- **Tabs: tokens sin exportar.** `tabs/all/icon/fg/generic`, `tabs/all/errorIcon/fg/generic` y `tabs/all/root/gap/generic` están a mano en `tokens.css`; confirmar con el export (el icono se puso a `fg/icon/default`).
+- **Tabs: tokens sin exportar.** `tabs/all/icon/fg/generic`, `tabs/all/errorIcon/fg/error` y `tabs/all/root/gap/generic` están a mano en `tokens.css` (valores leídos de Figma el 16/11); falta el export para pasarlos por `tokens:check`.
 - **249 Component tokens publicados en la librería.** Decidir si es intencionado o hay que ocultarlos (en junio solo se publicaban ~41).
 - **Enlaces a variables borradas en páginas ⚠.** Bottom Sheet, Calendar, Videoplayer, Paragraph y Changelog conservan ~100 enlaces muertos (sin construir). Regla: antes de borrar una variable, re-enlazar sus usos.
 

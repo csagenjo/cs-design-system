@@ -62,10 +62,12 @@ Pantallas (página "Supplier form"):
 - **TabItem** no tenía icono a la izquierda ni icono de error a la derecha (sí en
   Figma). Añadidos: `icon`, `hasError`, `errorLabel` (v3.1), y `Tabs` los pasa
   por `items[]`.
-- **Tokens de Tabs sin exportar:** `tabs/all/icon/fg/generic`,
-  `tabs/all/errorIcon/fg/generic`, `tabs/all/root/gap/generic`. Están a mano en
-  `tokens.css`; falta el export para confirmar el valor del icono (puesto a
-  `fg/icon/default`).
+- **Tokens de Tabs sin exportar:** `tabs/all/icon/fg/generic` (→ fg/default),
+  `tabs/all/errorIcon/fg/error` (→ fg/icon/error; antes `…/generic`, renombrado
+  para no confundirse con el negro) y `tabs/all/root/gap/generic`. Los dos iconos
+  miden 16 en los tres tamaños (`sizing/2xs`). En código a mano hasta el export.
+  En Figma el icono de error del placeholder estaba enlazado a un token de Mode
+  y el cuadrado a otro: corregido por Carol (16/11).
 - **ButtonBar en las pantallas:** "Delete" y "Save draft" salían negros porque
   las instancias tenían `Type=Default` sobrescrito en el Button anidado (el
   componente y el código usan Accent). Corregido en las 7 instancias (16/11).
@@ -90,6 +92,11 @@ código postal, emails, dígitos de control del IBAN) y, si hay errores:
 Después de pulsarlo, los errores se recalculan al escribir. Con todo correcto
 aparece "Supplier created.". `?screen=tabs` arranca con tres fallos para verlo;
 `?screen=tabs&data=valid` arranca con los datos correctos.
+
+## Brief de pantalla
+
+Lo que hubo que suponer se pide ahora con `docs/screen-brief.md`: contenido
+oculto, componentes dudosos, títulos, datos, validación y comportamiento.
 
 ## Para la pasada B
 
