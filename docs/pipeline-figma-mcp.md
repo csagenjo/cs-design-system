@@ -65,7 +65,7 @@ Pantallas (página "Supplier form"):
 - **Tokens de Tabs sin exportar:** `tabs/all/fg/icon/generic` (→ fg/default),
   `tabs/all/fg/icon/error` (→ fg/icon/error; antes `…/generic`, renombrado
   para no confundirse con el negro) y `tabs/all/gap/generic`. Los dos iconos
-  miden 16 en los tres tamaños (`sizing/2xs`). En código a mano hasta el export.
+  miden 16 en los tres tamaños (`sizing/2xs`). Exportados el 16/11.
   En Figma el icono de error del placeholder estaba enlazado a un token de Mode
   y el cuadrado a otro: corregido por Carol (16/11).
 - **ButtonBar en las pantallas:** "Delete" y "Save draft" salían negros porque
