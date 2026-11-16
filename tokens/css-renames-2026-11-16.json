@@ -1,0 +1,2949 @@
+{
+ "$description": "Renombrado de variables CSS de componente a propiedad primero (16/11/2026): --ds-{componente}-[variante-]{propiedad}-{elemento}-{estado}. \"figma\" = nombre sacado del token de Figma emparejado; \"rule\" = mismo orden aplicado al nombre que ya tenía (sin pareja segura en Figma). Sin cambiar: las que no tienen propiedad reconocible.",
+ "renames": {
+  "--ds-accordion-content-gap": {
+   "to": "--ds-accordion-gap-content",
+   "from": "rule"
+  },
+  "--ds-accordion-content-padding-bottom": {
+   "to": "--ds-accordion-padding-bottom-content",
+   "from": "rule"
+  },
+  "--ds-accordion-content-padding-left": {
+   "to": "--ds-accordion-padding-left-content",
+   "from": "rule"
+  },
+  "--ds-accordion-content-padding-right": {
+   "to": "--ds-accordion-padding-right-content",
+   "from": "rule"
+  },
+  "--ds-accordion-content-padding-top": {
+   "to": "--ds-accordion-padding-top-content",
+   "from": "rule"
+  },
+  "--ds-accordion-focus-inner": {
+   "to": "--ds-accordion-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-accordion-focus-outer": {
+   "to": "--ds-accordion-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-accordion-focus-width": {
+   "to": "--ds-accordion-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-accordion-root-inset-hor": {
+   "to": "--ds-accordion-inset-hor",
+   "from": "rule"
+  },
+  "--ds-accordion-title-gap": {
+   "to": "--ds-accordion-gap-title",
+   "from": "rule"
+  },
+  "--ds-accordion-title-padding-left": {
+   "to": "--ds-accordion-padding-left-title",
+   "from": "rule"
+  },
+  "--ds-accordion-title-padding-right": {
+   "to": "--ds-accordion-padding-right-title",
+   "from": "rule"
+  },
+  "--ds-accordion-title-padding-ver": {
+   "to": "--ds-accordion-padding-ver-title",
+   "from": "rule"
+  },
+  "--ds-account-selector-content-gap": {
+   "to": "--ds-account-selector-gap-content",
+   "from": "rule"
+  },
+  "--ds-account-selector-content-padding": {
+   "to": "--ds-account-selector-padding-content",
+   "from": "rule"
+  },
+  "--ds-account-selector-focus-area-padding": {
+   "to": "--ds-account-selector-padding-focus-area",
+   "from": "rule"
+  },
+  "--ds-account-selector-header-fg-default": {
+   "to": "--ds-account-selector-fg-header-default",
+   "from": "rule"
+  },
+  "--ds-account-selector-header-fg-disabled": {
+   "to": "--ds-account-selector-fg-header-disabled",
+   "from": "rule"
+  },
+  "--ds-account-selector-icon-fg-disabled": {
+   "to": "--ds-account-selector-fg-icon-disabled",
+   "from": "rule"
+  },
+  "--ds-account-selector-icon-fg-primary": {
+   "to": "--ds-account-selector-fg-icon-primary",
+   "from": "rule"
+  },
+  "--ds-account-selector-icon-left-size": {
+   "to": "--ds-account-selector-size-icon-left",
+   "from": "rule"
+  },
+  "--ds-account-selector-icon-right-size": {
+   "to": "--ds-account-selector-size-icon-right",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-bg-disabled": {
+   "to": "--ds-account-selector-bg-disabled",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-bg-generic": {
+   "to": "--ds-account-selector-bg-generic",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-bg-hover": {
+   "to": "--ds-account-selector-bg-hover",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-color-disabled": {
+   "to": "--ds-account-selector-border-color-disabled",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-color-error": {
+   "to": "--ds-account-selector-border-color-error",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-color-focus-inner": {
+   "to": "--ds-account-selector-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-color-focus-outer": {
+   "to": "--ds-account-selector-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-color-generic": {
+   "to": "--ds-account-selector-border-color-generic",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-color-selected": {
+   "to": "--ds-account-selector-border-color-selected",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-radius-generic": {
+   "to": "--ds-account-selector-border-radius-generic",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-width-focus": {
+   "to": "--ds-account-selector-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-border-width-generic": {
+   "to": "--ds-account-selector-border-width-generic",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-gap": {
+   "to": "--ds-account-selector-gap",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-opacity-pressed": {
+   "to": "--ds-account-selector-opacity-pressed",
+   "from": "rule"
+  },
+  "--ds-account-selector-root-padding": {
+   "to": "--ds-account-selector-padding",
+   "from": "rule"
+  },
+  "--ds-amount-view-fg-onColor": {
+   "to": "--ds-amount-view-fg-on-color",
+   "from": "figma:amountView/all/fg/onColor"
+  },
+  "--ds-badge-highlight-focus-inner": {
+   "to": "--ds-badge-highlight-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-badge-highlight-focus-outer": {
+   "to": "--ds-badge-highlight-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-badge-highlight-focus-width": {
+   "to": "--ds-badge-highlight-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-badge-highlight-icon-fg-disabled": {
+   "to": "--ds-badge-highlight-fg-icon-disabled",
+   "from": "figma:badgeHighlight/all/fg/icon/disabled"
+  },
+  "--ds-badge-highlight-icon-fg-emphasis": {
+   "to": "--ds-badge-highlight-fg-icon-emphasis",
+   "from": "figma:badgeHighlight/all/fg/icon/emphasis"
+  },
+  "--ds-badge-highlight-icon-fg-negative": {
+   "to": "--ds-badge-highlight-fg-icon-negative",
+   "from": "figma:badgeHighlight/all/fg/icon/negative"
+  },
+  "--ds-badge-highlight-icon-fg-neutral": {
+   "to": "--ds-badge-highlight-fg-icon-neutral",
+   "from": "figma:badgeHighlight/all/fg/icon/neutral"
+  },
+  "--ds-badge-highlight-icon-fg-positive": {
+   "to": "--ds-badge-highlight-fg-icon-positive",
+   "from": "figma:badgeHighlight/all/fg/icon/positive"
+  },
+  "--ds-badge-highlight-icon-size": {
+   "to": "--ds-badge-highlight-size-icon",
+   "from": "rule"
+  },
+  "--ds-badge-highlight-label-fg": {
+   "to": "--ds-badge-highlight-fg-label",
+   "from": "rule"
+  },
+  "--ds-badge-highlight-label-fg-disabled": {
+   "to": "--ds-badge-highlight-fg-label-disabled",
+   "from": "figma:badgeHighlight/all/fg/label/disabled"
+  },
+  "--ds-badge-highlight-label-fg-negative": {
+   "to": "--ds-badge-highlight-fg-label-negative",
+   "from": "figma:badgeHighlight/all/fg/label/negative"
+  },
+  "--ds-badge-highlight-label-fg-positive": {
+   "to": "--ds-badge-highlight-fg-label-positive",
+   "from": "figma:badgeHighlight/all/fg/label/positive"
+  },
+  "--ds-badge-highlight-tooltip-gap": {
+   "to": "--ds-badge-highlight-gap-tooltip",
+   "from": "rule"
+  },
+  "--ds-button-bar-gap": {
+   "to": "--ds-button-bar-gap-generic",
+   "from": "figma:buttonBar/all/gap/generic"
+  },
+  "--ds-button-bar-notification-gap": {
+   "to": "--ds-button-bar-gap-notification-generic",
+   "from": "figma:buttonBar/all/gap/notification/generic"
+  },
+  "--ds-button-border-accent": {
+   "to": "--ds-button-border-color-accent-generic",
+   "from": "figma:button/all/borderColor/accent-generic"
+  },
+  "--ds-button-border-default": {
+   "to": "--ds-button-border-color-default",
+   "from": "rule"
+  },
+  "--ds-button-border-disabled": {
+   "to": "--ds-button-border-color-disabled",
+   "from": "rule"
+  },
+  "--ds-button-border-focus-inner": {
+   "to": "--ds-button-border-color-focus-inner",
+   "from": "figma:button/all/borderColor/focus-inner"
+  },
+  "--ds-button-border-focus-outer": {
+   "to": "--ds-button-border-color-focus-outer",
+   "from": "figma:button/all/borderColor/focus-outer"
+  },
+  "--ds-button-border-width": {
+   "to": "--ds-button-border-width-generic",
+   "from": "figma:button/all/borderWidth/generic"
+  },
+  "--ds-button-focus-area-padding": {
+   "to": "--ds-button-padding-focus-area-generic",
+   "from": "figma:button/all/padding/focusArea/generic"
+  },
+  "--ds-button-focus-width": {
+   "to": "--ds-button-border-width-focus",
+   "from": "figma:button/all/borderWidth/focus"
+  },
+  "--ds-button-icon-size-large": {
+   "to": "--ds-button-size-icon-large",
+   "from": "rule"
+  },
+  "--ds-button-icon-size-medium": {
+   "to": "--ds-button-size-icon-medium",
+   "from": "rule"
+  },
+  "--ds-button-icon-size-small": {
+   "to": "--ds-button-size-icon-small",
+   "from": "rule"
+  },
+  "--ds-button-label-padding-hor": {
+   "to": "--ds-button-padding-hor-label",
+   "from": "rule"
+  },
+  "--ds-button-radius": {
+   "to": "--ds-button-border-radius-generic",
+   "from": "figma:button/all/borderRadius/generic"
+  },
+  "--ds-card-root-bg": {
+   "to": "--ds-card-bg",
+   "from": "rule"
+  },
+  "--ds-card-root-border-color-basic": {
+   "to": "--ds-cards-border-color-basic",
+   "from": "figma:cards/all/borderColor/basic"
+  },
+  "--ds-card-root-border-radius": {
+   "to": "--ds-cards-border-radius-basic",
+   "from": "figma:cards/all/borderRadius/basic"
+  },
+  "--ds-card-root-border-width-basic": {
+   "to": "--ds-cards-border-width-basic",
+   "from": "figma:cards/all/borderWidth/basic"
+  },
+  "--ds-card-root-shadow": {
+   "to": "--ds-card-shadow",
+   "from": "rule"
+  },
+  "--ds-cell-common-focus-inner": {
+   "to": "--ds-cell-common-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-cell-common-focus-outer": {
+   "to": "--ds-cell-common-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-cell-common-focus-width": {
+   "to": "--ds-cell-common-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-cell-common-icon-fg": {
+   "to": "--ds-cell-common-fg-icon",
+   "from": "rule"
+  },
+  "--ds-cell-common-icon-size": {
+   "to": "--ds-cell-common-size-icon",
+   "from": "rule"
+  },
+  "--ds-cell-common-text-fg": {
+   "to": "--ds-cell-common-fg-text",
+   "from": "rule"
+  },
+  "--ds-checkbox-border-default": {
+   "to": "--ds-checkbox-border-color-default",
+   "from": "rule"
+  },
+  "--ds-checkbox-border-disabled": {
+   "to": "--ds-checkbox-border-color-disabled",
+   "from": "figma:checkbox/all/borderColor/disabled"
+  },
+  "--ds-checkbox-border-error": {
+   "to": "--ds-checkbox-border-color-error",
+   "from": "figma:checkbox/all/borderColor/error"
+  },
+  "--ds-checkbox-border-selected": {
+   "to": "--ds-checkbox-border-color-selected",
+   "from": "figma:checkbox/all/borderColor/selected"
+  },
+  "--ds-checkbox-box-size": {
+   "to": "--ds-checkbox-size-box",
+   "from": "rule"
+  },
+  "--ds-checkbox-focus-area-padding": {
+   "to": "--ds-checkbox-padding-focus-area-generic",
+   "from": "figma:checkbox/all/padding/focusArea/generic"
+  },
+  "--ds-checkbox-focus-inner": {
+   "to": "--ds-checkbox-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-checkbox-focus-outer": {
+   "to": "--ds-checkbox-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-checkbox-focus-width": {
+   "to": "--ds-checkbox-border-width-focus",
+   "from": "figma:checkbox/all/borderWidth/focus"
+  },
+  "--ds-checkbox-icon-disabled": {
+   "to": "--ds-checkbox-fg-icon-disabled",
+   "from": "figma:checkbox/all/fg/icon/disabled"
+  },
+  "--ds-checkbox-icon-fg": {
+   "to": "--ds-checkbox-fg-icon",
+   "from": "rule"
+  },
+  "--ds-checkbox-label-disabled": {
+   "to": "--ds-checkbox-fg-label-disabled",
+   "from": "figma:checkbox/all/fg/label/disabled"
+  },
+  "--ds-checkbox-label-fg": {
+   "to": "--ds-checkbox-fg-label",
+   "from": "rule"
+  },
+  "--ds-checkbox-label-gap": {
+   "to": "--ds-checkbox-gap-generic",
+   "from": "figma:checkbox/all/gap/generic"
+  },
+  "--ds-checkbox-opacity-pressed": {
+   "to": "--ds-checkbox-bg-pressed",
+   "from": "figma:checkbox/all/bg/pressed"
+  },
+  "--ds-checkbox-padding": {
+   "to": "--ds-checkbox-padding-generic",
+   "from": "figma:checkbox/all/padding/generic"
+  },
+  "--ds-checkbox-size": {
+   "to": "--ds-checkbox-size-generic",
+   "from": "figma:checkbox/all/size/generic"
+  },
+  "--ds-chip-filter-label-font-weight": {
+   "to": "--ds-chip-filter-font-weight-label",
+   "from": "rule"
+  },
+  "--ds-chip-filter-label-padding-left": {
+   "to": "--ds-chip-filter-padding-left-label",
+   "from": "rule"
+  },
+  "--ds-chip-filter-label-padding-right": {
+   "to": "--ds-chip-filter-padding-right-label",
+   "from": "rule"
+  },
+  "--ds-chip-focus-area-padding": {
+   "to": "--ds-chip-padding-focus-area-generic",
+   "from": "figma:chip/all/padding/focusArea/generic"
+  },
+  "--ds-chip-icon-fg-disabled": {
+   "to": "--ds-chip-fg-icon-disabled",
+   "from": "figma:chip/all/fg/icon/disabled"
+  },
+  "--ds-chip-icon-fg-generic": {
+   "to": "--ds-chip-fg-icon-generic",
+   "from": "figma:chip/all/fg/icon/generic"
+  },
+  "--ds-chip-icon-fg-selected": {
+   "to": "--ds-chip-fg-icon-selected",
+   "from": "figma:chip/all/fg/icon/selected"
+  },
+  "--ds-chip-icon-size-generic": {
+   "to": "--ds-chip-size-icon-generic",
+   "from": "rule"
+  },
+  "--ds-chip-label-fg-disabled": {
+   "to": "--ds-chip-fg-label-disabled",
+   "from": "figma:chip/all/fg/label/disabled"
+  },
+  "--ds-chip-label-fg-generic": {
+   "to": "--ds-chip-fg-label-generic",
+   "from": "figma:chip/all/fg/label/generic"
+  },
+  "--ds-chip-label-fg-selected": {
+   "to": "--ds-chip-fg-label-selected",
+   "from": "figma:chip/all/fg/label/selected"
+  },
+  "--ds-chip-label-font-size": {
+   "to": "--ds-chip-font-size-label",
+   "from": "rule"
+  },
+  "--ds-chip-label-line-height": {
+   "to": "--ds-chip-line-height-label",
+   "from": "rule"
+  },
+  "--ds-chip-remove-target-size": {
+   "to": "--ds-chip-size-remove-target",
+   "from": "rule"
+  },
+  "--ds-chip-root-bg-disabled": {
+   "to": "--ds-chip-bg-disabled",
+   "from": "figma:chip/all/bg/disabled"
+  },
+  "--ds-chip-root-bg-generic": {
+   "to": "--ds-chip-bg-generic",
+   "from": "rule"
+  },
+  "--ds-chip-root-bg-selected": {
+   "to": "--ds-chip-bg-selected",
+   "from": "rule"
+  },
+  "--ds-chip-root-bgmix-hover": {
+   "to": "--ds-chip-bg-mix-hover",
+   "from": "figma:chip/all/bgMix/hover"
+  },
+  "--ds-chip-root-bgmix-hover-selected": {
+   "to": "--ds-chip-bg-mix-hover-selected",
+   "from": "figma:chip/all/bgMix/hover-selected"
+  },
+  "--ds-chip-root-border-color-focus-inner": {
+   "to": "--ds-chip-border-color-focus-inner",
+   "from": "figma:chip/all/borderColor/focus-inner"
+  },
+  "--ds-chip-root-border-color-focus-outer": {
+   "to": "--ds-chip-border-color-focus-outer",
+   "from": "figma:chip/all/borderColor/focus-outer"
+  },
+  "--ds-chip-root-border-color-generic": {
+   "to": "--ds-chip-border-color-generic",
+   "from": "figma:chip/all/borderColor/generic"
+  },
+  "--ds-chip-root-border-radius-generic": {
+   "to": "--ds-chip-border-radius-generic",
+   "from": "figma:chip/all/borderRadius/generic"
+  },
+  "--ds-chip-root-border-width-focus": {
+   "to": "--ds-chip-border-width-focus",
+   "from": "figma:chip/all/borderWidth/focus"
+  },
+  "--ds-chip-root-border-width-generic": {
+   "to": "--ds-chip-border-width-generic",
+   "from": "figma:chip/all/borderWidth/generic"
+  },
+  "--ds-chip-root-gap-generic": {
+   "to": "--ds-chip-gap-generic",
+   "from": "figma:chip/all/gap/generic"
+  },
+  "--ds-chip-root-opacity-pressed": {
+   "to": "--ds-chip-opacity-pressed",
+   "from": "rule"
+  },
+  "--ds-chip-root-padding-hor-generic": {
+   "to": "--ds-chip-padding-hor-generic",
+   "from": "figma:chip/all/paddingHor/generic"
+  },
+  "--ds-chip-root-padding-ver-generic": {
+   "to": "--ds-chip-padding-ver-generic",
+   "from": "figma:chip/all/paddingVer/generic"
+  },
+  "--ds-chip-valuetext-padding-hor": {
+   "to": "--ds-chip-padding-hor-value-text-generic",
+   "from": "figma:chip/all/paddingHor/valueText/generic"
+  },
+  "--ds-choice-group-gap": {
+   "to": "--ds-choice-group-gap-options-generic",
+   "from": "figma:choiceGroup/all/gap/options/generic"
+  },
+  "--ds-choice-group-root-gap": {
+   "to": "--ds-choice-group-gap-generic",
+   "from": "figma:choiceGroup/all/gap/generic"
+  },
+  "--ds-choice-group-validation-gap": {
+   "to": "--ds-choice-group-gap-validation-generic",
+   "from": "figma:choiceGroup/all/gap/validation/generic"
+  },
+  "--ds-collapsible-icon-fg-default": {
+   "to": "--ds-collapsible-fg-icon-default",
+   "from": "figma:collapsible/all/fg/icon/default"
+  },
+  "--ds-collapsible-icon-fg-secondary": {
+   "to": "--ds-collapsible-fg-icon-secondary",
+   "from": "figma:collapsible/all/fg/icon/secondary"
+  },
+  "--ds-collapsible-label-fg-default": {
+   "to": "--ds-collapsible-fg-label-default",
+   "from": "figma:collapsible/all/fg/label/default"
+  },
+  "--ds-collapsible-label-fg-secondary": {
+   "to": "--ds-collapsible-fg-label-secondary",
+   "from": "figma:collapsible/all/fg/label/secondary"
+  },
+  "--ds-combobox-autosuggest-fg": {
+   "to": "--ds-combobox-fg-auto-suggest-text-generic",
+   "from": "figma:combobox/all/fg/autoSuggestText/generic"
+  },
+  "--ds-combobox-buttons-gap": {
+   "to": "--ds-combobox-gap-buttons-generic",
+   "from": "figma:combobox/all/gap/buttons/generic"
+  },
+  "--ds-combobox-caret-color": {
+   "to": "--ds-combobox-border-color-caret-generic",
+   "from": "figma:combobox/all/borderColor/caret/generic"
+  },
+  "--ds-combobox-chips-gap": {
+   "to": "--ds-combobox-gap-chips-generic",
+   "from": "figma:combobox/all/gap/chips/generic"
+  },
+  "--ds-combobox-icondelete-fg": {
+   "to": "--ds-combobox-fg-icon-delete-generic",
+   "from": "figma:combobox/all/fg/iconDelete/generic"
+  },
+  "--ds-country-flag-border-radius": {
+   "to": "--ds-country-flag-border-radius-generic",
+   "from": "figma:countryFlag/all/borderRadius/generic"
+  },
+  "--ds-cta-link-border-accent-secondary": {
+   "to": "--ds-cta-link-border-color-accent-secondary",
+   "from": "rule"
+  },
+  "--ds-cta-link-border-bottom-accent": {
+   "to": "--ds-cta-link-border-color-bottom-accent",
+   "from": "rule"
+  },
+  "--ds-cta-link-border-bottom-default": {
+   "to": "--ds-cta-link-border-color-bottom-default",
+   "from": "rule"
+  },
+  "--ds-cta-link-border-disabled": {
+   "to": "--ds-cta-link-border-color-disabled",
+   "from": "figma:ctaLink/all/borderColor/disabled"
+  },
+  "--ds-cta-link-border-radius-high": {
+   "to": "--ds-cta-link-border-radius-high-emphasis",
+   "from": "figma:ctaLink/all/borderRadius/highEmphasis"
+  },
+  "--ds-cta-link-border-radius-medium": {
+   "to": "--ds-cta-link-border-radius-medium-emphasis",
+   "from": "figma:ctaLink/all/borderRadius/mediumEmphasis"
+  },
+  "--ds-cta-link-border-secondary": {
+   "to": "--ds-cta-link-border-color-secondary",
+   "from": "rule"
+  },
+  "--ds-cta-link-border-width-medium": {
+   "to": "--ds-cta-link-border-width-medium-emphasis",
+   "from": "figma:ctaLink/all/borderWidth/mediumEmphasis"
+  },
+  "--ds-cta-link-fg-disabled": {
+   "to": "--ds-cta-link-fg-label-disabled",
+   "from": "figma:ctaLink/all/fg/label/disabled"
+  },
+  "--ds-cta-link-focus-area-padding": {
+   "to": "--ds-cta-link-padding-focus-area",
+   "from": "rule"
+  },
+  "--ds-cta-link-focus-inner": {
+   "to": "--ds-cta-link-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-cta-link-focus-outer": {
+   "to": "--ds-cta-link-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-cta-link-focus-width": {
+   "to": "--ds-cta-link-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-description-text-fg-default": {
+   "to": "--ds-description-text-fg-text-default",
+   "from": "figma:descriptionText/all/fg/text/default"
+  },
+  "--ds-description-text-fg-disabled": {
+   "to": "--ds-description-text-fg-text-disabled",
+   "from": "figma:descriptionText/all/fg/text/disabled"
+  },
+  "--ds-description-text-fg-onColor": {
+   "to": "--ds-description-text-fg-text-on-color",
+   "from": "figma:descriptionText/all/fg/text/onColor"
+  },
+  "--ds-description-text-fg-subtle": {
+   "to": "--ds-description-text-fg-text-subtle",
+   "from": "figma:descriptionText/all/fg/text/subtle"
+  },
+  "--ds-descriptionlist-account-gap": {
+   "to": "--ds-description-list-gap-account-generic",
+   "from": "figma:descriptionList/all/gap/account/generic"
+  },
+  "--ds-descriptionlist-accountname-fg-generic": {
+   "to": "--ds-descriptionlist-fg-accountname-generic",
+   "from": "rule"
+  },
+  "--ds-descriptionlist-divider-width": {
+   "to": "--ds-descriptionlist-width-divider",
+   "from": "rule"
+  },
+  "--ds-descriptionlist-gap": {
+   "to": "--ds-description-list-gap-generic",
+   "from": "figma:descriptionList/all/gap/generic"
+  },
+  "--ds-descriptionlist-helpertext-fg-generic": {
+   "to": "--ds-description-list-fg-helper-text-generic",
+   "from": "figma:descriptionList/all/fg/helperText/generic"
+  },
+  "--ds-descriptionlist-iban-fg-generic": {
+   "to": "--ds-description-list-fg-iban-generic",
+   "from": "figma:descriptionList/all/fg/iban/generic"
+  },
+  "--ds-descriptionlist-icon-account-fg": {
+   "to": "--ds-description-list-fg-icon-account-generic",
+   "from": "figma:descriptionList/all/fg/iconAccount/generic"
+  },
+  "--ds-descriptionlist-icon-account-size": {
+   "to": "--ds-description-list-size-icon-account-generic",
+   "from": "figma:descriptionList/all/size/iconAccount/generic"
+  },
+  "--ds-descriptionlist-label-fg-generic": {
+   "to": "--ds-description-list-fg-label-generic",
+   "from": "figma:descriptionList/all/fg/label/generic"
+  },
+  "--ds-descriptionlist-valuetext-fg-generic": {
+   "to": "--ds-description-list-fg-value-text-generic",
+   "from": "figma:descriptionList/all/fg/valueText/generic"
+  },
+  "--ds-descriptionlist-valuetext-fg-subtle": {
+   "to": "--ds-description-list-fg-value-text-subtle",
+   "from": "figma:descriptionList/all/fg/valueText/subtle"
+  },
+  "--ds-detail-text-fg-default": {
+   "to": "--ds-detail-text-fg-text-default",
+   "from": "figma:detailText/all/fg/text/default"
+  },
+  "--ds-detail-text-fg-disabled": {
+   "to": "--ds-detail-text-fg-text-disabled",
+   "from": "figma:detailText/all/fg/text/disabled"
+  },
+  "--ds-detail-text-fg-secondary": {
+   "to": "--ds-detail-text-fg-text-secondary",
+   "from": "figma:detailText/all/fg/text/secondary"
+  },
+  "--ds-detail-text-fg-tertiary": {
+   "to": "--ds-detail-text-fg-text-tertiary",
+   "from": "figma:detailText/all/fg/text/tertiary"
+  },
+  "--ds-detail-text-gap": {
+   "to": "--ds-detail-text-gap-generic",
+   "from": "figma:detailText/all/gap/generic"
+  },
+  "--ds-detail-text-icon-fg-default": {
+   "to": "--ds-detail-text-fg-icon-default",
+   "from": "figma:detailText/all/fg/icon/default"
+  },
+  "--ds-detail-text-icon-fg-disabled": {
+   "to": "--ds-detail-text-fg-icon-disabled",
+   "from": "figma:detailText/all/fg/icon/disabled"
+  },
+  "--ds-detail-text-icon-fg-secondary": {
+   "to": "--ds-detail-text-fg-icon-secondary",
+   "from": "figma:detailText/all/fg/icon/secondary"
+  },
+  "--ds-detail-text-icon-fg-tertiary": {
+   "to": "--ds-detail-text-fg-icon-tertiary",
+   "from": "figma:detailText/all/fg/icon/tertiary"
+  },
+  "--ds-detail-text-icon-size": {
+   "to": "--ds-detail-text-size-icon",
+   "from": "rule"
+  },
+  "--ds-dialog-body-text-fg-generic": {
+   "to": "--ds-dialog-fg-body-text-generic",
+   "from": "rule"
+  },
+  "--ds-dialog-control-area-padding-generic": {
+   "to": "--ds-dialog-padding-control-area-generic",
+   "from": "rule"
+  },
+  "--ds-dialog-empty-state-body-text-fg-generic": {
+   "to": "--ds-dialog-fg-empty-state-body-text-generic",
+   "from": "rule"
+  },
+  "--ds-dialog-empty-state-content-gap": {
+   "to": "--ds-dialog-gap-empty-state-content",
+   "from": "rule"
+  },
+  "--ds-dialog-empty-state-padding-generic": {
+   "to": "--ds-dialog-padding-empty-state-generic",
+   "from": "rule"
+  },
+  "--ds-dialog-empty-state-text-gap": {
+   "to": "--ds-dialog-gap-empty-state-text",
+   "from": "rule"
+  },
+  "--ds-dialog-empty-state-text-padding-bottom-full-screen": {
+   "to": "--ds-dialog-padding-bottom-empty-state-text-full-screen",
+   "from": "rule"
+  },
+  "--ds-dialog-header-bg-default": {
+   "to": "--ds-dialog-bg-header-default",
+   "from": "figma:dialog/all/bg/header/default"
+  },
+  "--ds-dialog-header-bg-on-primary": {
+   "to": "--ds-dialog-bg-header-on-primary",
+   "from": "figma:dialog/all/bg/header/onPrimary"
+  },
+  "--ds-dialog-header-bg-primary": {
+   "to": "--ds-dialog-bg-header-primary",
+   "from": "rule"
+  },
+  "--ds-dialog-header-bg-secondary": {
+   "to": "--ds-dialog-bg-header-secondary",
+   "from": "rule"
+  },
+  "--ds-dialog-header-bg-tertiary": {
+   "to": "--ds-dialog-bg-header-tertiary",
+   "from": "rule"
+  },
+  "--ds-dialog-header-icon-fg-default": {
+   "to": "--ds-dialog-fg-header-icon-default",
+   "from": "rule"
+  },
+  "--ds-dialog-header-icon-fg-on-primary": {
+   "to": "--ds-dialog-fg-header-icon-on-primary",
+   "from": "rule"
+  },
+  "--ds-dialog-header-icon-fg-primary": {
+   "to": "--ds-dialog-fg-header-icon-primary",
+   "from": "figma:dialog/all/fg/header/icon/primary"
+  },
+  "--ds-dialog-header-icon-fg-secondary": {
+   "to": "--ds-dialog-fg-header-icon-secondary",
+   "from": "figma:dialog/all/fg/header/icon/secondary"
+  },
+  "--ds-dialog-header-icon-fg-tertiary": {
+   "to": "--ds-dialog-fg-header-icon-tertiary",
+   "from": "figma:dialog/all/fg/header/icon/tertiary"
+  },
+  "--ds-dialog-header-icon-focus-inner-default": {
+   "to": "--ds-dialog-border-color-header-icon-focus-inner-default",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-inner-default"
+  },
+  "--ds-dialog-header-icon-focus-inner-on-primary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-inner-on-primary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-inner-onPrimary"
+  },
+  "--ds-dialog-header-icon-focus-inner-primary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-inner-primary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-inner-primary"
+  },
+  "--ds-dialog-header-icon-focus-inner-secondary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-inner-secondary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-inner-secondary"
+  },
+  "--ds-dialog-header-icon-focus-inner-tertiary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-inner-tertiary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-inner-tertiary"
+  },
+  "--ds-dialog-header-icon-focus-outer-default": {
+   "to": "--ds-dialog-border-color-header-icon-focus-outer-default",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-outer-default"
+  },
+  "--ds-dialog-header-icon-focus-outer-on-primary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-outer-on-primary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-outer-onPrimary"
+  },
+  "--ds-dialog-header-icon-focus-outer-primary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-outer-primary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-outer-primary"
+  },
+  "--ds-dialog-header-icon-focus-outer-secondary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-outer-secondary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-outer-secondary"
+  },
+  "--ds-dialog-header-icon-focus-outer-tertiary": {
+   "to": "--ds-dialog-border-color-header-icon-focus-outer-tertiary",
+   "from": "figma:dialog/all/borderColor/header/icon/focus-outer-tertiary"
+  },
+  "--ds-dialog-header-padding-hor": {
+   "to": "--ds-dialog-padding-hor-header",
+   "from": "rule"
+  },
+  "--ds-dialog-header-padding-ver-regular": {
+   "to": "--ds-dialog-padding-ver-header-regular",
+   "from": "rule"
+  },
+  "--ds-dialog-header-padding-ver-small": {
+   "to": "--ds-dialog-padding-ver-header-small",
+   "from": "rule"
+  },
+  "--ds-dialog-header-title-fg-default": {
+   "to": "--ds-dialog-fg-header-title-default",
+   "from": "rule"
+  },
+  "--ds-dialog-header-title-fg-on-primary": {
+   "to": "--ds-dialog-fg-header-title-on-primary",
+   "from": "rule"
+  },
+  "--ds-dialog-header-title-fg-primary": {
+   "to": "--ds-dialog-fg-header-title-primary",
+   "from": "figma:dialog/all/fg/header/title/primary"
+  },
+  "--ds-dialog-header-title-fg-secondary": {
+   "to": "--ds-dialog-fg-header-title-secondary",
+   "from": "figma:dialog/all/fg/header/title/secondary"
+  },
+  "--ds-dialog-header-title-fg-tertiary": {
+   "to": "--ds-dialog-fg-header-title-tertiary",
+   "from": "figma:dialog/all/fg/header/title/tertiary"
+  },
+  "--ds-dialog-root-bg-generic": {
+   "to": "--ds-dialog-bg-default",
+   "from": "figma:dialog/all/bg/default"
+  },
+  "--ds-dialog-root-border-radius-generic": {
+   "to": "--ds-dialog-border-radius-generic",
+   "from": "figma:dialog/all/borderRadius/generic"
+  },
+  "--ds-dialog-root-gap-generic": {
+   "to": "--ds-dialog-gap-generic",
+   "from": "figma:dialog/all/gap/generic"
+  },
+  "--ds-dialog-root-padding-hor-generic": {
+   "to": "--ds-dialog-padding-hor-generic",
+   "from": "figma:dialog/all/paddingHor/generic"
+  },
+  "--ds-dialog-root-padding-ver-generic": {
+   "to": "--ds-dialog-padding-ver-generic",
+   "from": "figma:dialog/all/paddingVer/generic"
+  },
+  "--ds-dialog-scrim-bg-generic": {
+   "to": "--ds-dialog-bg-scrim-generic",
+   "from": "figma:dialog/all/bg/scrim/generic"
+  },
+  "--ds-dialog-simple-border-width-generic": {
+   "to": "--ds-dialog-border-width-simple-generic",
+   "from": "figma:dialog/all/borderWidth/simple/generic"
+  },
+  "--ds-dialog-simple-content-gap-generic": {
+   "to": "--ds-dialog-simple-gap-content-generic",
+   "from": "rule"
+  },
+  "--ds-dialog-simple-cta-gap-generic": {
+   "to": "--ds-dialog-gap-simple-cta-generic",
+   "from": "figma:dialog/all/gap/simple/cta/generic"
+  },
+  "--ds-dialog-title-fg-generic": {
+   "to": "--ds-dialog-fg-title-generic",
+   "from": "rule"
+  },
+  "--ds-drawer-collapsed-size": {
+   "to": "--ds-drawer-size-collapsed",
+   "from": "rule"
+  },
+  "--ds-drawer-expanded-size": {
+   "to": "--ds-drawer-size-expanded",
+   "from": "rule"
+  },
+  "--ds-drawer-icon-fg-generic": {
+   "to": "--ds-drawer-fg-icon-generic",
+   "from": "figma:drawer/all/fg/icon/generic"
+  },
+  "--ds-drawer-icon-padding": {
+   "to": "--ds-drawer-padding-icon",
+   "from": "rule"
+  },
+  "--ds-drawer-icon-size": {
+   "to": "--ds-drawer-size-icon",
+   "from": "rule"
+  },
+  "--ds-drawer-root-bg-primary": {
+   "to": "--ds-drawer-bg-primary",
+   "from": "figma:drawer/all/bg/primary"
+  },
+  "--ds-drawer-root-bg-secondary": {
+   "to": "--ds-drawer-bg-secondary",
+   "from": "figma:drawer/all/bg/secondary"
+  },
+  "--ds-drawer-root-border-color-generic": {
+   "to": "--ds-drawer-border-color-generic",
+   "from": "figma:drawer/all/borderColor/generic"
+  },
+  "--ds-drawer-root-border-radius-generic": {
+   "to": "--ds-drawer-border-radius-generic",
+   "from": "figma:drawer/all/borderRadius/generic"
+  },
+  "--ds-drawer-root-border-width-generic": {
+   "to": "--ds-drawer-border-width-generic",
+   "from": "figma:drawer/all/borderWidth/generic"
+  },
+  "--ds-drawer-root-focus-inner": {
+   "to": "--ds-drawer-border-color-focus-inner",
+   "from": "figma:drawer/all/borderColor/focus-inner"
+  },
+  "--ds-drawer-root-focus-outer": {
+   "to": "--ds-drawer-border-color-focus-outer",
+   "from": "figma:drawer/all/borderColor/focus-outer"
+  },
+  "--ds-drawer-root-focus-width": {
+   "to": "--ds-drawer-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-drawer-toggle-bg-hover": {
+   "to": "--ds-drawer-bg-toggle-hover",
+   "from": "figma:drawer/all/bg/toggle/hover"
+  },
+  "--ds-drawer-toggle-opacity-pressed": {
+   "to": "--ds-drawer-opacity-toggle-pressed",
+   "from": "figma:drawer/all/opacity/toggle/pressed"
+  },
+  "--ds-drawer-toggle-padding-center": {
+   "to": "--ds-drawer-padding-toggle-center",
+   "from": "figma:drawer/all/padding/toggle/center"
+  },
+  "--ds-field-label-fg-disabled": {
+   "to": "--ds-field-label-fg-text-disabled",
+   "from": "figma:fieldLabel/all/fg/text/disabled"
+  },
+  "--ds-field-label-fg-generic": {
+   "to": "--ds-field-label-fg-text-generic",
+   "from": "figma:fieldLabel/all/fg/text/generic"
+  },
+  "--ds-field-label-gap": {
+   "to": "--ds-field-label-gap-generic",
+   "from": "figma:fieldLabel/all/gap/generic"
+  },
+  "--ds-field-label-required-fg": {
+   "to": "--ds-field-label-fg-required-generic",
+   "from": "figma:fieldLabel/all/fg/required/generic"
+  },
+  "--ds-file-upload-common-bg-hover": {
+   "to": "--ds-file-upload-bg-hover",
+   "from": "figma:fileUpload/common/bg/hover"
+  },
+  "--ds-file-upload-common-border-radius-generic": {
+   "to": "--ds-file-upload-border-radius-generic",
+   "from": "figma:fileUpload/common/borderRadius/generic"
+  },
+  "--ds-file-upload-common-icon-fg-generic": {
+   "to": "--ds-file-upload-fg-icon-generic",
+   "from": "figma:fileUpload/common/fg/icon/generic"
+  },
+  "--ds-file-upload-common-stack-gap-generic": {
+   "to": "--ds-file-upload-gap-stack-generic",
+   "from": "figma:fileUpload/common/gap/stack/generic"
+  },
+  "--ds-file-upload-document-item-control-padding": {
+   "to": "--ds-file-upload-padding-document-item-control",
+   "from": "rule"
+  },
+  "--ds-file-upload-document-item-focus-ring-border-color-inner": {
+   "to": "--ds-file-upload-document-item-border-color-focus-inner",
+   "from": "figma:fileUpload/documentItem/borderColor/focus-inner"
+  },
+  "--ds-file-upload-document-item-focus-ring-border-color-outer": {
+   "to": "--ds-file-upload-document-item-border-color-focus-outer",
+   "from": "figma:fileUpload/documentItem/borderColor/focus-outer"
+  },
+  "--ds-file-upload-document-item-focus-ring-width": {
+   "to": "--ds-file-upload-width-document-item-focus-ring",
+   "from": "rule"
+  },
+  "--ds-file-upload-document-item-icon-size": {
+   "to": "--ds-file-upload-size-document-item-icon",
+   "from": "rule"
+  },
+  "--ds-file-upload-document-item-text-fg-generic": {
+   "to": "--ds-file-upload-document-item-fg-text-generic",
+   "from": "figma:fileUpload/documentItem/fg/text/generic"
+  },
+  "--ds-file-upload-document-item-text-fg-uploading": {
+   "to": "--ds-file-upload-document-item-fg-text-uploading",
+   "from": "figma:fileUpload/documentItem/fg/text/uploading"
+  },
+  "--ds-file-upload-drop-zone-text-fg-disabled": {
+   "to": "--ds-file-upload-drop-zone-fg-text-disabled",
+   "from": "figma:fileUpload/dropZone/fg/text/disabled"
+  },
+  "--ds-file-upload-drop-zone-text-fg-generic": {
+   "to": "--ds-file-upload-drop-zone-fg-text-generic",
+   "from": "figma:fileUpload/dropZone/fg/text/generic"
+  },
+  "--ds-file-upload-label-width-wide": {
+   "to": "--ds-file-upload-width-label-wide",
+   "from": "rule"
+  },
+  "--ds-file-upload-root-gap-generic": {
+   "to": "--ds-file-upload-gap-generic",
+   "from": "figma:fileUpload/all/gap/generic"
+  },
+  "--ds-headline-fg-default": {
+   "to": "--ds-headline-fg-text-default",
+   "from": "figma:headline/all/fg/text/default"
+  },
+  "--ds-headline-fg-onColor": {
+   "to": "--ds-headline-fg-text-on-color",
+   "from": "figma:headline/all/fg/text/onColor"
+  },
+  "--ds-headline-fg-primary": {
+   "to": "--ds-headline-fg-text-primary",
+   "from": "figma:headline/all/fg/text/primary"
+  },
+  "--ds-headline-fg-secondary": {
+   "to": "--ds-headline-fg-text-secondary",
+   "from": "figma:headline/all/fg/text/secondary"
+  },
+  "--ds-helper-text-fg-disabled": {
+   "to": "--ds-helper-text-fg-text-disabled",
+   "from": "figma:helperText/all/fg/text/disabled"
+  },
+  "--ds-helper-text-fg-generic": {
+   "to": "--ds-helper-text-fg-text-generic",
+   "from": "figma:helperText/all/fg/text/generic"
+  },
+  "--ds-icon-button-border-width-secondary": {
+   "to": "--ds-icon-button-border-width-secondary-generic",
+   "from": "figma:iconButton/all/borderWidth/secondary-generic"
+  },
+  "--ds-icon-button-focus-area-padding": {
+   "to": "--ds-icon-button-padding-focus-area",
+   "from": "rule"
+  },
+  "--ds-icon-button-focus-width": {
+   "to": "--ds-icon-button-border-width-focus",
+   "from": "figma:iconButton/all/borderWidth/focus"
+  },
+  "--ds-icon-button-icon-fg-disabled": {
+   "to": "--ds-icon-button-fg-icon-disabled",
+   "from": "figma:iconButton/all/fg/icon/disabled"
+  },
+  "--ds-icon-button-icon-fg-on-color-accent": {
+   "to": "--ds-icon-button-fg-icon-on-color-accent",
+   "from": "rule"
+  },
+  "--ds-icon-button-icon-fg-on-color-default": {
+   "to": "--ds-icon-button-fg-icon-on-color-default",
+   "from": "rule"
+  },
+  "--ds-icon-button-icon-fg-on-outline-accent": {
+   "to": "--ds-icon-button-fg-icon-on-outline-accent",
+   "from": "rule"
+  },
+  "--ds-icon-button-icon-fg-on-outline-default": {
+   "to": "--ds-icon-button-fg-icon-on-outline-default",
+   "from": "rule"
+  },
+  "--ds-icon-button-icon-size-large": {
+   "to": "--ds-icon-button-size-icon-large",
+   "from": "rule"
+  },
+  "--ds-icon-button-icon-size-medium": {
+   "to": "--ds-icon-button-size-icon-medium",
+   "from": "rule"
+  },
+  "--ds-icon-button-icon-size-small": {
+   "to": "--ds-icon-button-size-icon-small",
+   "from": "rule"
+  },
+  "--ds-icon-button-label-fg-accent": {
+   "to": "--ds-icon-button-fg-label-accent",
+   "from": "figma:iconButton/all/fg/label/accent"
+  },
+  "--ds-icon-button-label-fg-default": {
+   "to": "--ds-icon-button-fg-label-default",
+   "from": "figma:iconButton/all/fg/label/default"
+  },
+  "--ds-icon-button-label-fg-disabled": {
+   "to": "--ds-icon-button-fg-label-disabled",
+   "from": "figma:iconButton/all/fg/label/disabled"
+  },
+  "--ds-icon-button-label-padding-hor": {
+   "to": "--ds-icon-button-padding-hor-label",
+   "from": "rule"
+  },
+  "--ds-icon-button-padding-large": {
+   "to": "--ds-icon-button-padding-icon-large",
+   "from": "figma:iconButton/all/padding/icon/large"
+  },
+  "--ds-icon-button-padding-medium": {
+   "to": "--ds-icon-button-padding-icon-medium",
+   "from": "figma:iconButton/all/padding/icon/medium"
+  },
+  "--ds-icon-button-padding-small": {
+   "to": "--ds-icon-button-padding-icon-small",
+   "from": "figma:iconButton/all/padding/icon/small"
+  },
+  "--ds-image-caption-fg-generic": {
+   "to": "--ds-image-fg-caption-generic",
+   "from": "figma:image/all/fg/caption/generic"
+  },
+  "--ds-image-frame-bg-generic": {
+   "to": "--ds-image-bg-frame-generic",
+   "from": "figma:image/all/bg/frame/generic"
+  },
+  "--ds-image-frame-border-radius": {
+   "to": "--ds-image-border-radius-frame-rounded-corners",
+   "from": "figma:image/all/borderRadius/frame/roundedCorners"
+  },
+  "--ds-image-gap": {
+   "to": "--ds-image-gap-generic",
+   "from": "figma:image/all/gap/generic"
+  },
+  "--ds-inline-notification-color-success": {
+   "to": "--ds-inline-notification-border-color-success",
+   "from": "figma:inlineNotification/all/borderColor/success"
+  },
+  "--ds-inline-notification-color-warning": {
+   "to": "--ds-inline-notification-border-color-warning",
+   "from": "figma:inlineNotification/all/borderColor/warning"
+  },
+  "--ds-inline-notification-content-gap": {
+   "to": "--ds-inline-notification-gap-content",
+   "from": "rule"
+  },
+  "--ds-inline-notification-icon-fg-error": {
+   "to": "--ds-inline-notification-fg-icon-error",
+   "from": "figma:inlineNotification/all/fg/icon/error"
+  },
+  "--ds-inline-notification-icon-fg-information": {
+   "to": "--ds-inline-notification-fg-icon-information",
+   "from": "rule"
+  },
+  "--ds-inline-notification-icon-fg-success": {
+   "to": "--ds-inline-notification-fg-icon-success",
+   "from": "figma:inlineNotification/all/fg/icon/success"
+  },
+  "--ds-inline-notification-icon-fg-warning": {
+   "to": "--ds-inline-notification-fg-icon-warning",
+   "from": "figma:inlineNotification/all/fg/icon/warning"
+  },
+  "--ds-inline-notification-icon-size": {
+   "to": "--ds-inline-notification-size-icon",
+   "from": "rule"
+  },
+  "--ds-inline-notification-text-fg": {
+   "to": "--ds-inline-notification-fg-text",
+   "from": "rule"
+  },
+  "--ds-inline-notification-title-fg": {
+   "to": "--ds-inline-notification-fg-title",
+   "from": "rule"
+  },
+  "--ds-input-border-default": {
+   "to": "--ds-input-border-color-default",
+   "from": "rule"
+  },
+  "--ds-input-border-disabled": {
+   "to": "--ds-input-border-color-disabled",
+   "from": "rule"
+  },
+  "--ds-input-border-error": {
+   "to": "--ds-input-border-color-error",
+   "from": "rule"
+  },
+  "--ds-input-border-hover": {
+   "to": "--ds-input-border-color-hover",
+   "from": "rule"
+  },
+  "--ds-input-field-icon-gap": {
+   "to": "--ds-input-gap-field-icon",
+   "from": "rule"
+  },
+  "--ds-input-focus-area-padding": {
+   "to": "--ds-input-padding-focus-area",
+   "from": "rule"
+  },
+  "--ds-input-focus-inner": {
+   "to": "--ds-input-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-input-focus-outer": {
+   "to": "--ds-input-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-input-helper-gap": {
+   "to": "--ds-input-gap-helper",
+   "from": "rule"
+  },
+  "--ds-input-icon-fg": {
+   "to": "--ds-input-fg-icon",
+   "from": "rule"
+  },
+  "--ds-input-icon-fg-disabled": {
+   "to": "--ds-input-fg-icon-disabled",
+   "from": "rule"
+  },
+  "--ds-input-icon-fg-primary": {
+   "to": "--ds-input-fg-icon-primary",
+   "from": "rule"
+  },
+  "--ds-input-icon-size": {
+   "to": "--ds-input-size-icon",
+   "from": "rule"
+  },
+  "--ds-input-label-gap": {
+   "to": "--ds-input-gap-label",
+   "from": "rule"
+  },
+  "--ds-input-subfield-gap": {
+   "to": "--ds-input-gap-subfield",
+   "from": "rule"
+  },
+  "--ds-input-subfield-height": {
+   "to": "--ds-input-height-subfield",
+   "from": "rule"
+  },
+  "--ds-input-telephone-country-padding-ver": {
+   "to": "--ds-input-telephone-padding-ver-country",
+   "from": "rule"
+  },
+  "--ds-input-telephone-icon-flag-opacity-disabled": {
+   "to": "--ds-input-telephone-fg-icon-flag-disabled",
+   "from": "figma:input/telephone/fg/iconFlag/disabled"
+  },
+  "--ds-input-telephone-icon-flag-size": {
+   "to": "--ds-input-telephone-size-icon-flag",
+   "from": "rule"
+  },
+  "--ds-input-validation-gap": {
+   "to": "--ds-input-gap-validation",
+   "from": "rule"
+  },
+  "--ds-link-border-bottom-accent": {
+   "to": "--ds-link-border-color-bottom-accent",
+   "from": "rule"
+  },
+  "--ds-link-border-bottom-default": {
+   "to": "--ds-link-border-color-bottom-default",
+   "from": "rule"
+  },
+  "--ds-link-border-bottom-visited": {
+   "to": "--ds-link-border-color-bottom-visited",
+   "from": "rule"
+  },
+  "--ds-link-fg-icon-visited": {
+   "to": "--ds-link-fg-icon-accent-visited",
+   "from": "figma:link/all/fg/icon/accent-visited"
+  },
+  "--ds-link-fg-label-default": {
+   "to": "--ds-link-fg-label-default-generic",
+   "from": "figma:link/all/fg/label/default-generic"
+  },
+  "--ds-link-focus-inner": {
+   "to": "--ds-link-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-link-focus-outer": {
+   "to": "--ds-link-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-link-focus-width": {
+   "to": "--ds-link-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-link-icon-size-lg": {
+   "to": "--ds-link-size-icon-lg",
+   "from": "rule"
+  },
+  "--ds-link-icon-size-md": {
+   "to": "--ds-link-size-icon-md",
+   "from": "rule"
+  },
+  "--ds-link-icon-size-sm": {
+   "to": "--ds-link-size-icon-sm",
+   "from": "rule"
+  },
+  "--ds-link-icon-size-xs": {
+   "to": "--ds-link-size-icon-xs",
+   "from": "rule"
+  },
+  "--ds-link-list-icon-fg": {
+   "to": "--ds-link-list-fg-icon-left-generic",
+   "from": "figma:linkList/all/fg/iconLeft/generic"
+  },
+  "--ds-link-list-item-gap-lg": {
+   "to": "--ds-link-list-gap-item-lg",
+   "from": "rule"
+  },
+  "--ds-link-list-item-gap-md": {
+   "to": "--ds-link-list-gap-item-md",
+   "from": "rule"
+  },
+  "--ds-link-list-item-gap-sm": {
+   "to": "--ds-link-list-gap-item-sm",
+   "from": "rule"
+  },
+  "--ds-link-list-title-fg": {
+   "to": "--ds-link-list-fg-title",
+   "from": "rule"
+  },
+  "--ds-list-bodytext-fg-generic": {
+   "to": "--ds-list-fg-body-text-generic",
+   "from": "figma:list/all/fg/bodyText/generic"
+  },
+  "--ds-list-bullet-fg-generic": {
+   "to": "--ds-list-fg-bullet-generic",
+   "from": "figma:list/all/fg/bullet/generic"
+  },
+  "--ds-list-gap-checkmark": {
+   "to": "--ds-list-gap-checkmark-list",
+   "from": "figma:list/all/gap/checkmarkList"
+  },
+  "--ds-list-icon-checkmark-fg-generic": {
+   "to": "--ds-list-fg-icon-checkmark-generic",
+   "from": "figma:list/all/fg/iconCheckmark/generic"
+  },
+  "--ds-list-icon-checkmark-padding-ver": {
+   "to": "--ds-list-padding-ver-icon-checkmark",
+   "from": "rule"
+  },
+  "--ds-list-icon-checkmark-size-lg": {
+   "to": "--ds-list-size-icon-checkmark-lg",
+   "from": "rule"
+  },
+  "--ds-list-icon-checkmark-size-md": {
+   "to": "--ds-list-size-icon-checkmark-md",
+   "from": "rule"
+  },
+  "--ds-list-icon-checkmark-size-sm": {
+   "to": "--ds-list-size-icon-checkmark-sm",
+   "from": "rule"
+  },
+  "--ds-list-icon-checkmark-size-xs": {
+   "to": "--ds-list-size-icon-checkmark-xs",
+   "from": "rule"
+  },
+  "--ds-list-ordered-indent-lg": {
+   "to": "--ds-list-indent-ordered-lg",
+   "from": "rule"
+  },
+  "--ds-list-ordered-indent-md": {
+   "to": "--ds-list-indent-ordered-md",
+   "from": "rule"
+  },
+  "--ds-list-ordered-indent-sm": {
+   "to": "--ds-list-indent-ordered-sm",
+   "from": "rule"
+  },
+  "--ds-list-ordered-indent-xs": {
+   "to": "--ds-list-indent-ordered-xs",
+   "from": "rule"
+  },
+  "--ds-list-ordered-marker-fg-generic": {
+   "to": "--ds-list-fg-ordered-list-marker-generic",
+   "from": "figma:list/all/fg/orderedList/marker/generic"
+  },
+  "--ds-list-padding-left-unordered": {
+   "to": "--ds-list-padding-left-unordered-list",
+   "from": "figma:list/all/paddingLeft/unorderedList"
+  },
+  "--ds-list-view-center-gap": {
+   "to": "--ds-list-view-gap-center-generic",
+   "from": "figma:listView/all/gap/center/generic"
+  },
+  "--ds-list-view-divider-color-generic": {
+   "to": "--ds-list-view-border-color-divider-generic",
+   "from": "figma:listView/all/borderColor/divider/generic"
+  },
+  "--ds-list-view-divider-width": {
+   "to": "--ds-list-view-width-divider",
+   "from": "rule"
+  },
+  "--ds-list-view-icon-chevron-fg-disabled": {
+   "to": "--ds-list-view-fg-icon-chevron-disabled",
+   "from": "figma:listView/all/fg/iconChevron/disabled"
+  },
+  "--ds-list-view-icon-chevron-fg-generic": {
+   "to": "--ds-list-view-fg-icon-chevron-generic",
+   "from": "figma:listView/all/fg/iconChevron/generic"
+  },
+  "--ds-list-view-icon-left-fg-disabled": {
+   "to": "--ds-list-view-fg-icon-left-disabled",
+   "from": "figma:listView/all/fg/iconLeft/disabled"
+  },
+  "--ds-list-view-icon-left-fg-generic": {
+   "to": "--ds-list-view-fg-icon-left-generic",
+   "from": "figma:listView/all/fg/iconLeft/generic"
+  },
+  "--ds-list-view-icon-right-fg-disabled": {
+   "to": "--ds-list-view-fg-icon-right-disabled",
+   "from": "figma:listView/all/fg/iconRight/disabled"
+  },
+  "--ds-list-view-icon-right-fg-generic": {
+   "to": "--ds-list-view-fg-icon-right-generic",
+   "from": "figma:listView/all/fg/iconRight/generic"
+  },
+  "--ds-list-view-ribbon-border-color-disabled": {
+   "to": "--ds-list-view-border-color-ribbon-disabled",
+   "from": "rule"
+  },
+  "--ds-list-view-ribbon-border-color-selected": {
+   "to": "--ds-list-view-border-color-ribbon-selected",
+   "from": "rule"
+  },
+  "--ds-list-view-ribbon-border-width-selected": {
+   "to": "--ds-list-view-border-width-ribbon-selected",
+   "from": "rule"
+  },
+  "--ds-list-view-root-bg-disabled": {
+   "to": "--ds-list-view-bg-disabled",
+   "from": "figma:listView/all/bg/disabled"
+  },
+  "--ds-list-view-root-bg-generic": {
+   "to": "--ds-list-view-bg-generic",
+   "from": "figma:listView/all/bg/generic"
+  },
+  "--ds-list-view-root-bg-hover": {
+   "to": "--ds-list-view-bg-hover",
+   "from": "rule"
+  },
+  "--ds-list-view-root-border-color-focus-inner": {
+   "to": "--ds-list-view-border-color-focus-inner",
+   "from": "figma:listView/all/borderColor/focus-inner"
+  },
+  "--ds-list-view-root-border-color-focus-outer": {
+   "to": "--ds-list-view-border-color-focus-outer",
+   "from": "figma:listView/all/borderColor/focus-outer"
+  },
+  "--ds-list-view-root-border-width-focus": {
+   "to": "--ds-list-view-border-width-focus",
+   "from": "figma:listView/all/borderWidth/focus"
+  },
+  "--ds-list-view-root-gap": {
+   "to": "--ds-list-view-gap-generic",
+   "from": "figma:listView/all/gap/generic"
+  },
+  "--ds-list-view-root-opacity-pressed": {
+   "to": "--ds-list-view-opacity-pressed",
+   "from": "figma:listView/all/opacity/pressed"
+  },
+  "--ds-list-view-root-padding": {
+   "to": "--ds-list-view-padding-generic",
+   "from": "figma:listView/all/padding/generic"
+  },
+  "--ds-loading-spinner-color-on-color": {
+   "to": "--ds-loading-spinner-border-color-on-color",
+   "from": "figma:loadingSpinner/all/borderColor/onColor"
+  },
+  "--ds-loading-spinner-color-primary": {
+   "to": "--ds-loading-spinner-border-color-primary",
+   "from": "figma:loadingSpinner/all/borderColor/primary"
+  },
+  "--ds-loading-spinner-size-lg": {
+   "to": "--ds-loading-spinner-size-large",
+   "from": "figma:loadingSpinner/all/size/large"
+  },
+  "--ds-loading-spinner-size-sm": {
+   "to": "--ds-loading-spinner-size-small",
+   "from": "figma:loadingSpinner/all/size/small"
+  },
+  "--ds-page-title-buttons-gap": {
+   "to": "--ds-page-title-gap-buttons",
+   "from": "rule"
+  },
+  "--ds-page-title-desktop-breadcrumb-gap": {
+   "to": "--ds-page-title-desktop-gap-breadcrumb",
+   "from": "rule"
+  },
+  "--ds-page-title-desktop-content-gap": {
+   "to": "--ds-page-title-desktop-gap-content",
+   "from": "rule"
+  },
+  "--ds-page-title-desktop-content-padding-ver": {
+   "to": "--ds-page-title-desktop-padding-ver-content-generic",
+   "from": "figma:pageTitle/desktop/paddingVer/content/generic"
+  },
+  "--ds-page-title-desktop-root-gap": {
+   "to": "--ds-page-title-desktop-gap",
+   "from": "rule"
+  },
+  "--ds-page-title-desktop-root-padding-hor": {
+   "to": "--ds-page-title-desktop-padding-hor-generic",
+   "from": "figma:pageTitle/desktop/paddingHor/generic"
+  },
+  "--ds-page-title-desktop-root-padding-top": {
+   "to": "--ds-page-title-desktop-padding-top-generic",
+   "from": "figma:pageTitle/desktop/paddingTop/generic"
+  },
+  "--ds-page-title-nav-focus-inner": {
+   "to": "--ds-page-title-border-color-nav-focus-inner",
+   "from": "figma:pageTitle/all/borderColor/nav/focus-inner"
+  },
+  "--ds-page-title-nav-focus-outer": {
+   "to": "--ds-page-title-border-color-nav-focus-outer",
+   "from": "figma:pageTitle/all/borderColor/nav/focus-outer"
+  },
+  "--ds-page-title-nav-focus-width": {
+   "to": "--ds-page-title-border-width-nav-focus",
+   "from": "rule"
+  },
+  "--ds-page-title-nav-icon-fg": {
+   "to": "--ds-page-title-fg-nav-icon",
+   "from": "rule"
+  },
+  "--ds-page-title-nav-icon-size-desktop": {
+   "to": "--ds-page-title-size-nav-icon-desktop",
+   "from": "rule"
+  },
+  "--ds-page-title-nav-icon-size-mobile": {
+   "to": "--ds-page-title-size-nav-icon-mobile",
+   "from": "rule"
+  },
+  "--ds-page-title-nav-icon-size-tablet": {
+   "to": "--ds-page-title-size-nav-icon-tablet",
+   "from": "rule"
+  },
+  "--ds-page-title-nav-padding": {
+   "to": "--ds-page-title-padding-nav-generic",
+   "from": "figma:pageTitle/all/padding/nav/generic"
+  },
+  "--ds-page-title-root-gap": {
+   "to": "--ds-page-title-gap",
+   "from": "rule"
+  },
+  "--ds-page-title-root-padding-hor": {
+   "to": "--ds-page-title-padding-hor",
+   "from": "rule"
+  },
+  "--ds-page-title-root-padding-ver": {
+   "to": "--ds-page-title-padding-ver",
+   "from": "rule"
+  },
+  "--ds-pagination-active-bg-hover-default": {
+   "to": "--ds-pagination-bg-active-hover-default",
+   "from": "rule"
+  },
+  "--ds-pagination-active-bg-hover-secondary": {
+   "to": "--ds-pagination-bg-active-hover-secondary",
+   "from": "rule"
+  },
+  "--ds-pagination-active-border-bottom-width": {
+   "to": "--ds-pagination-border-bottom-width-active",
+   "from": "rule"
+  },
+  "--ds-pagination-active-fg-default": {
+   "to": "--ds-pagination-fg-active-page-default",
+   "from": "figma:pagination/all/fg/activePage/default"
+  },
+  "--ds-pagination-active-fg-disabled": {
+   "to": "--ds-pagination-fg-active-page-disabled",
+   "from": "figma:pagination/all/fg/activePage/disabled"
+  },
+  "--ds-pagination-active-fg-hover": {
+   "to": "--ds-pagination-fg-active-page-hover",
+   "from": "figma:pagination/all/fg/activePage/hover"
+  },
+  "--ds-pagination-active-fg-secondary": {
+   "to": "--ds-pagination-fg-active-page-secondary",
+   "from": "figma:pagination/all/fg/activePage/secondary"
+  },
+  "--ds-pagination-active-opacity-pressed": {
+   "to": "--ds-pagination-opacity-active-pressed",
+   "from": "rule"
+  },
+  "--ds-pagination-container-size": {
+   "to": "--ds-pagination-size-container",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-bg-hover-default": {
+   "to": "--ds-pagination-bg-dots-hover-default",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-bg-hover-secondary": {
+   "to": "--ds-pagination-bg-dots-hover-secondary",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-fg-default": {
+   "to": "--ds-pagination-fg-dots-default",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-fg-disabled": {
+   "to": "--ds-pagination-fg-dots-disabled",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-fg-hover": {
+   "to": "--ds-pagination-fg-dots-hover",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-fg-secondary": {
+   "to": "--ds-pagination-fg-dots-secondary",
+   "from": "rule"
+  },
+  "--ds-pagination-dots-opacity-pressed": {
+   "to": "--ds-pagination-opacity-dots-pressed",
+   "from": "rule"
+  },
+  "--ds-pagination-item-radius": {
+   "to": "--ds-pagination-border-radius-item",
+   "from": "rule"
+  },
+  "--ds-pagination-next-bg-hover-default": {
+   "to": "--ds-pagination-bg-next-hover-default",
+   "from": "rule"
+  },
+  "--ds-pagination-next-bg-hover-secondary": {
+   "to": "--ds-pagination-bg-next-hover-secondary",
+   "from": "rule"
+  },
+  "--ds-pagination-next-fg-default": {
+   "to": "--ds-pagination-fg-next-default",
+   "from": "figma:pagination/all/fg/next/default"
+  },
+  "--ds-pagination-next-fg-disabled": {
+   "to": "--ds-pagination-fg-next-disabled",
+   "from": "figma:pagination/all/fg/next/disabled"
+  },
+  "--ds-pagination-next-fg-hover": {
+   "to": "--ds-pagination-fg-next-hover",
+   "from": "figma:pagination/all/fg/next/hover"
+  },
+  "--ds-pagination-next-fg-secondary": {
+   "to": "--ds-pagination-fg-next-secondary",
+   "from": "figma:pagination/all/fg/next/secondary"
+  },
+  "--ds-pagination-next-opacity-pressed": {
+   "to": "--ds-pagination-opacity-next-pressed",
+   "from": "rule"
+  },
+  "--ds-pagination-number-font-size": {
+   "to": "--ds-pagination-font-size-number",
+   "from": "rule"
+  },
+  "--ds-pagination-number-line-height": {
+   "to": "--ds-pagination-line-height-number",
+   "from": "rule"
+  },
+  "--ds-pagination-previous-bg-hover-default": {
+   "to": "--ds-pagination-bg-previous-hover-default",
+   "from": "rule"
+  },
+  "--ds-pagination-previous-bg-hover-secondary": {
+   "to": "--ds-pagination-bg-previous-hover-secondary",
+   "from": "rule"
+  },
+  "--ds-pagination-previous-fg-default": {
+   "to": "--ds-pagination-fg-previous-default",
+   "from": "figma:pagination/all/fg/previous/default"
+  },
+  "--ds-pagination-previous-fg-disabled": {
+   "to": "--ds-pagination-fg-previous-disabled",
+   "from": "figma:pagination/all/fg/previous/disabled"
+  },
+  "--ds-pagination-previous-fg-hover": {
+   "to": "--ds-pagination-fg-previous-hover",
+   "from": "figma:pagination/all/fg/previous/hover"
+  },
+  "--ds-pagination-previous-fg-secondary": {
+   "to": "--ds-pagination-fg-previous-secondary",
+   "from": "figma:pagination/all/fg/previous/secondary"
+  },
+  "--ds-pagination-previous-opacity-pressed": {
+   "to": "--ds-pagination-opacity-previous-pressed",
+   "from": "rule"
+  },
+  "--ds-pagination-root-border-color-focus-inner": {
+   "to": "--ds-pagination-border-color-focus-inner",
+   "from": "figma:pagination/all/borderColor/focus-inner"
+  },
+  "--ds-pagination-root-border-color-focus-outer": {
+   "to": "--ds-pagination-border-color-focus-outer",
+   "from": "figma:pagination/all/borderColor/focus-outer"
+  },
+  "--ds-pagination-root-border-width-focus": {
+   "to": "--ds-pagination-border-width-focus",
+   "from": "figma:pagination/all/borderWidth/focus"
+  },
+  "--ds-pagination-root-focus-area": {
+   "to": "--ds-pagination-focus-area",
+   "from": "noprop"
+  },
+  "--ds-pagination-root-text-fg-disabled": {
+   "to": "--ds-pagination-fg-text-disabled",
+   "from": "rule"
+  },
+  "--ds-pagination-root-text-fg-selected": {
+   "to": "--ds-pagination-fg-text-selected",
+   "from": "rule"
+  },
+  "--ds-pagination-selected-bg-default": {
+   "to": "--ds-pagination-bg-selected-default",
+   "from": "rule"
+  },
+  "--ds-pagination-selected-bg-disabled": {
+   "to": "--ds-pagination-bg-selected-page-disabled",
+   "from": "figma:pagination/all/bg/selectedPage/disabled"
+  },
+  "--ds-pagination-selected-bg-hover": {
+   "to": "--ds-pagination-bg-selected-page-hover",
+   "from": "figma:pagination/all/bg/selectedPage/hover"
+  },
+  "--ds-pagination-selected-bg-secondary": {
+   "to": "--ds-pagination-bg-selected-secondary",
+   "from": "rule"
+  },
+  "--ds-pagination-selected-opacity-pressed": {
+   "to": "--ds-pagination-opacity-selected-pressed",
+   "from": "rule"
+  },
+  "--ds-picker-empty-fg": {
+   "to": "--ds-picker-fg-empty-generic",
+   "from": "figma:picker/all/fg/empty/generic"
+  },
+  "--ds-picker-empty-padding": {
+   "to": "--ds-picker-padding-empty-generic",
+   "from": "figma:picker/all/padding/empty/generic"
+  },
+  "--ds-picker-heading-padding-hor": {
+   "to": "--ds-picker-padding-hor-heading-generic",
+   "from": "figma:picker/all/paddingHor/heading/generic"
+  },
+  "--ds-picker-heading-padding-ver": {
+   "to": "--ds-picker-padding-ver-heading-generic",
+   "from": "figma:picker/all/paddingVer/heading/generic"
+  },
+  "--ds-picker-root-bg": {
+   "to": "--ds-picker-bg-generic",
+   "from": "figma:picker/all/bg/generic"
+  },
+  "--ds-picker-root-border-color": {
+   "to": "--ds-picker-border-color-generic",
+   "from": "figma:picker/all/borderColor/generic"
+  },
+  "--ds-picker-root-border-radius": {
+   "to": "--ds-picker-border-radius-generic",
+   "from": "figma:picker/all/borderRadius/generic"
+  },
+  "--ds-picker-root-border-width": {
+   "to": "--ds-picker-border-width-generic",
+   "from": "figma:picker/all/borderWidth/generic"
+  },
+  "--ds-picker-root-gap": {
+   "to": "--ds-picker-gap-generic",
+   "from": "figma:picker/all/gap/generic"
+  },
+  "--ds-picker-root-max-height": {
+   "to": "--ds-picker-height-max",
+   "from": "rule"
+  },
+  "--ds-picker-root-offset": {
+   "to": "--ds-picker-offset-generic",
+   "from": "figma:picker/all/offset/generic"
+  },
+  "--ds-picker-root-padding": {
+   "to": "--ds-picker-padding-generic",
+   "from": "figma:picker/all/padding/generic"
+  },
+  "--ds-picker-root-shadow": {
+   "to": "--ds-picker-shadow",
+   "from": "rule"
+  },
+  "--ds-picker-root-z-index": {
+   "to": "--ds-picker-z-index",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-close-fg": {
+   "to": "--ds-popover-sheet-fg-close-button-generic",
+   "from": "figma:popoverSheet/all/fg/closeButton/generic"
+  },
+  "--ds-popover-sheet-close-padding": {
+   "to": "--ds-popover-sheet-padding-close-button-generic",
+   "from": "figma:popoverSheet/all/padding/closeButton/generic"
+  },
+  "--ds-popover-sheet-close-radius": {
+   "to": "--ds-popover-sheet-border-radius-close",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-close-size": {
+   "to": "--ds-popover-sheet-size-close",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-focus-outer": {
+   "to": "--ds-popover-sheet-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-focus-width": {
+   "to": "--ds-popover-sheet-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-pointer-bg": {
+   "to": "--ds-popover-sheet-bg-pointer",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-pointer-height": {
+   "to": "--ds-popover-sheet-height-pointer-generic",
+   "from": "figma:popoverSheet/all/height/pointer/generic"
+  },
+  "--ds-popover-sheet-pointer-offset": {
+   "to": "--ds-popover-sheet-offset-pointer-generic",
+   "from": "figma:popoverSheet/all/offset/pointer/generic"
+  },
+  "--ds-popover-sheet-pointer-width": {
+   "to": "--ds-popover-sheet-width-pointer-generic",
+   "from": "figma:popoverSheet/all/width/pointer/generic"
+  },
+  "--ds-popover-sheet-root-bg": {
+   "to": "--ds-popover-sheet-bg-generic",
+   "from": "figma:popoverSheet/all/bg/generic"
+  },
+  "--ds-popover-sheet-root-border-color": {
+   "to": "--ds-popover-sheet-border-color",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-root-border-radius": {
+   "to": "--ds-popover-sheet-border-radius-generic",
+   "from": "figma:popoverSheet/all/borderRadius/generic"
+  },
+  "--ds-popover-sheet-root-border-width": {
+   "to": "--ds-popover-sheet-border-width",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-root-min-width": {
+   "to": "--ds-popover-sheet-min-width",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-root-padding": {
+   "to": "--ds-popover-sheet-padding-generic",
+   "from": "figma:popoverSheet/all/padding/generic"
+  },
+  "--ds-popover-sheet-root-shadow": {
+   "to": "--ds-popover-sheet-shadow",
+   "from": "rule"
+  },
+  "--ds-popover-sheet-root-z-index": {
+   "to": "--ds-popover-sheet-z-index",
+   "from": "rule"
+  },
+  "--ds-progress-bar-root-bg-default": {
+   "to": "--ds-progress-bar-bg-default",
+   "from": "figma:progressBar/all/bg/default"
+  },
+  "--ds-progress-bar-root-bg-on-color": {
+   "to": "--ds-progress-bar-bg-on-color",
+   "from": "figma:progressBar/all/bg/onColor"
+  },
+  "--ds-progress-bar-root-border-radius": {
+   "to": "--ds-progress-bar-border-radius",
+   "from": "rule"
+  },
+  "--ds-progress-bar-text-fg": {
+   "to": "--ds-progress-bar-fg-text",
+   "from": "rule"
+  },
+  "--ds-progress-bar-text-fg-on-color": {
+   "to": "--ds-progress-bar-fg-text-on-color",
+   "from": "figma:progressBar/all/fg/text/onColor"
+  },
+  "--ds-progress-bar-track-height": {
+   "to": "--ds-progress-bar-height-track",
+   "from": "rule"
+  },
+  "--ds-radio-circle-size": {
+   "to": "--ds-radio-size-circle",
+   "from": "rule"
+  },
+  "--ds-radio-indicator-fg-disabled": {
+   "to": "--ds-radio-button-fg-indicator-disabled",
+   "from": "figma:radioButton/all/fg/indicator/disabled"
+  },
+  "--ds-radio-indicator-fg-error": {
+   "to": "--ds-radio-button-fg-indicator-error",
+   "from": "figma:radioButton/all/fg/indicator/error"
+  },
+  "--ds-radio-indicator-fg-generic": {
+   "to": "--ds-radio-button-fg-indicator-generic",
+   "from": "figma:radioButton/all/fg/indicator/generic"
+  },
+  "--ds-radio-label-fg-disabled": {
+   "to": "--ds-radio-button-fg-label-disabled",
+   "from": "figma:radioButton/all/fg/label/disabled"
+  },
+  "--ds-radio-label-fg-generic": {
+   "to": "--ds-radio-button-fg-label-generic",
+   "from": "figma:radioButton/all/fg/label/generic"
+  },
+  "--ds-radio-root-bg-disabled": {
+   "to": "--ds-radio-button-bg-disabled",
+   "from": "figma:radioButton/all/bg/disabled"
+  },
+  "--ds-radio-root-bg-generic": {
+   "to": "--ds-radio-button-bg-generic",
+   "from": "figma:radioButton/all/bg/generic"
+  },
+  "--ds-radio-root-bg-hover": {
+   "to": "--ds-radio-bg-hover",
+   "from": "rule"
+  },
+  "--ds-radio-root-border-color-disabled": {
+   "to": "--ds-radio-button-border-color-disabled",
+   "from": "figma:radioButton/all/borderColor/disabled"
+  },
+  "--ds-radio-root-border-color-error": {
+   "to": "--ds-radio-button-border-color-error",
+   "from": "figma:radioButton/all/borderColor/error"
+  },
+  "--ds-radio-root-border-color-focus-inner": {
+   "to": "--ds-radio-button-border-color-focus-inner",
+   "from": "figma:radioButton/all/borderColor/focus-inner"
+  },
+  "--ds-radio-root-border-color-focus-outer": {
+   "to": "--ds-radio-button-border-color-focus-outer",
+   "from": "figma:radioButton/all/borderColor/focus-outer"
+  },
+  "--ds-radio-root-border-color-generic": {
+   "to": "--ds-radio-button-border-color-generic",
+   "from": "figma:radioButton/all/borderColor/generic"
+  },
+  "--ds-radio-root-border-color-selected": {
+   "to": "--ds-radio-button-border-color-selected",
+   "from": "figma:radioButton/all/borderColor/selected"
+  },
+  "--ds-radio-root-border-radius-generic": {
+   "to": "--ds-radio-border-radius-generic",
+   "from": "rule"
+  },
+  "--ds-radio-root-border-radius-row": {
+   "to": "--ds-radio-button-border-radius-row",
+   "from": "figma:radioButton/all/borderRadius/row"
+  },
+  "--ds-radio-root-border-width-focus": {
+   "to": "--ds-radio-button-border-width-focus",
+   "from": "figma:radioButton/all/borderWidth/focus"
+  },
+  "--ds-radio-root-border-width-generic": {
+   "to": "--ds-radio-button-border-width-generic",
+   "from": "figma:radioButton/all/borderWidth/generic"
+  },
+  "--ds-radio-root-focus-area-padding": {
+   "to": "--ds-radio-button-padding-focus-area-generic",
+   "from": "figma:radioButton/all/padding/focusArea/generic"
+  },
+  "--ds-radio-root-gap-generic": {
+   "to": "--ds-radio-button-gap-generic",
+   "from": "figma:radioButton/all/gap/generic"
+  },
+  "--ds-radio-root-opacity-pressed": {
+   "to": "--ds-radio-button-bg-pressed",
+   "from": "figma:radioButton/all/bg/pressed"
+  },
+  "--ds-radio-root-padding-generic": {
+   "to": "--ds-radio-button-padding-generic",
+   "from": "figma:radioButton/all/padding/generic"
+  },
+  "--ds-radio-root-size-generic": {
+   "to": "--ds-radio-button-size-generic",
+   "from": "figma:radioButton/all/size/generic"
+  },
+  "--ds-section-header-text-fg-default": {
+   "to": "--ds-section-header-fg-text-default",
+   "from": "figma:sectionHeader/all/fg/text/default"
+  },
+  "--ds-section-header-text-fg-disabled": {
+   "to": "--ds-section-header-fg-text-disabled",
+   "from": "figma:sectionHeader/all/fg/text/disabled"
+  },
+  "--ds-section-header-text-fg-primary": {
+   "to": "--ds-section-header-fg-text-primary",
+   "from": "figma:sectionHeader/all/fg/text/primary"
+  },
+  "--ds-segmented-control-bgmix-hover": {
+   "to": "--ds-segmented-control-bg-mix-hover",
+   "from": "rule"
+  },
+  "--ds-segmented-control-bgmix-hover-selected": {
+   "to": "--ds-segmented-control-bg-mix-hover-selected",
+   "from": "rule"
+  },
+  "--ds-segmented-control-focus-inner": {
+   "to": "--ds-segmented-control-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-segmented-control-focus-outer": {
+   "to": "--ds-segmented-control-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-segmented-control-focus-width": {
+   "to": "--ds-segmented-control-border-width-focus",
+   "from": "rule"
+  },
+  "--ds-segmented-control-label-fg": {
+   "to": "--ds-segmented-control-fg-label",
+   "from": "rule"
+  },
+  "--ds-segmented-control-label-fg-selected": {
+   "to": "--ds-segmented-control-fg-label-selected",
+   "from": "figma:segmentedControl/all/fg/label/selected"
+  },
+  "--ds-segmented-control-root-bg": {
+   "to": "--ds-segmented-control-bg",
+   "from": "rule"
+  },
+  "--ds-segmented-control-root-border-radius": {
+   "to": "--ds-segmented-control-border-radius",
+   "from": "rule"
+  },
+  "--ds-segmented-control-root-gap": {
+   "to": "--ds-segmented-control-gap",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-bg": {
+   "to": "--ds-segmented-control-bg-segment",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-bg-selected": {
+   "to": "--ds-segmented-control-bg-segment-selected",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-border-radius": {
+   "to": "--ds-segmented-control-border-radius-segment",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-padding-hor-lg": {
+   "to": "--ds-segmented-control-padding-hor-segment-lg",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-padding-hor-sm": {
+   "to": "--ds-segmented-control-padding-hor-segment-sm",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-padding-ver-lg": {
+   "to": "--ds-segmented-control-padding-ver-segment-lg",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-padding-ver-md": {
+   "to": "--ds-segmented-control-padding-ver-segment-md",
+   "from": "rule"
+  },
+  "--ds-segmented-control-segment-padding-ver-sm": {
+   "to": "--ds-segmented-control-padding-ver-segment-sm",
+   "from": "rule"
+  },
+  "--ds-selector-common-content-gap": {
+   "to": "--ds-selector-common-gap-content",
+   "from": "rule"
+  },
+  "--ds-selector-common-content-padding": {
+   "to": "--ds-selector-common-padding-content",
+   "from": "rule"
+  },
+  "--ds-selector-common-focus-area-padding": {
+   "to": "--ds-selector-padding-focus-area-generic",
+   "from": "figma:selector/all/padding/focusArea/generic"
+  },
+  "--ds-selector-common-header-fg-default": {
+   "to": "--ds-selector-common-fg-header-default",
+   "from": "rule"
+  },
+  "--ds-selector-common-header-fg-disabled": {
+   "to": "--ds-selector-common-fg-header-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-common-icon-fg-disabled": {
+   "to": "--ds-selector-common-fg-icon-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-common-icon-fg-primary": {
+   "to": "--ds-selector-common-fg-icon-primary",
+   "from": "rule"
+  },
+  "--ds-selector-common-icon-left-size": {
+   "to": "--ds-selector-common-size-icon-left",
+   "from": "rule"
+  },
+  "--ds-selector-common-icon-right-size": {
+   "to": "--ds-selector-common-size-icon-right",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-bg-disabled": {
+   "to": "--ds-selector-common-bg-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-bg-generic": {
+   "to": "--ds-selector-common-bg-generic",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-bg-hover": {
+   "to": "--ds-selector-common-bg-hover",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-border-color-disabled": {
+   "to": "--ds-selector-common-border-color-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-border-color-error": {
+   "to": "--ds-selector-common-border-color-error",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-border-color-generic": {
+   "to": "--ds-selector-common-border-color-generic",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-border-color-selected": {
+   "to": "--ds-selector-common-border-color-selected",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-border-radius-generic": {
+   "to": "--ds-selector-common-border-radius-generic",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-border-width-generic": {
+   "to": "--ds-selector-common-border-width-generic",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-gap": {
+   "to": "--ds-selector-common-gap",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-opacity-pressed": {
+   "to": "--ds-selector-common-opacity-pressed",
+   "from": "rule"
+  },
+  "--ds-selector-common-root-padding": {
+   "to": "--ds-selector-common-padding",
+   "from": "rule"
+  },
+  "--ds-selector-content-gap": {
+   "to": "--ds-selector-gap-content",
+   "from": "rule"
+  },
+  "--ds-selector-content-padding": {
+   "to": "--ds-selector-padding-content",
+   "from": "rule"
+  },
+  "--ds-selector-focus-area-padding": {
+   "to": "--ds-selector-padding-focus-area",
+   "from": "rule"
+  },
+  "--ds-selector-header-fg-default": {
+   "to": "--ds-selector-fg-header-default",
+   "from": "rule"
+  },
+  "--ds-selector-header-fg-disabled": {
+   "to": "--ds-selector-fg-header-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-icon-fg-disabled": {
+   "to": "--ds-selector-fg-icon-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-icon-fg-primary": {
+   "to": "--ds-selector-fg-icon-primary",
+   "from": "rule"
+  },
+  "--ds-selector-icon-left-size": {
+   "to": "--ds-selector-size-icon-left",
+   "from": "rule"
+  },
+  "--ds-selector-icon-right-size": {
+   "to": "--ds-selector-size-icon-right",
+   "from": "rule"
+  },
+  "--ds-selector-root-bg-disabled": {
+   "to": "--ds-selector-bg-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-root-bg-generic": {
+   "to": "--ds-selector-bg-generic",
+   "from": "rule"
+  },
+  "--ds-selector-root-bg-hover": {
+   "to": "--ds-selector-bg-hover",
+   "from": "rule"
+  },
+  "--ds-selector-root-border-color-disabled": {
+   "to": "--ds-selector-border-color-disabled",
+   "from": "rule"
+  },
+  "--ds-selector-root-border-color-error": {
+   "to": "--ds-selector-border-color-error",
+   "from": "rule"
+  },
+  "--ds-selector-root-border-color-generic": {
+   "to": "--ds-selector-border-color-generic",
+   "from": "rule"
+  },
+  "--ds-selector-root-border-color-selected": {
+   "to": "--ds-selector-border-color-selected",
+   "from": "rule"
+  },
+  "--ds-selector-root-border-radius-generic": {
+   "to": "--ds-selector-border-radius-generic",
+   "from": "rule"
+  },
+  "--ds-selector-root-border-width-generic": {
+   "to": "--ds-selector-border-width-generic",
+   "from": "rule"
+  },
+  "--ds-selector-root-gap": {
+   "to": "--ds-selector-gap",
+   "from": "rule"
+  },
+  "--ds-selector-root-opacity-pressed": {
+   "to": "--ds-selector-opacity-pressed",
+   "from": "rule"
+  },
+  "--ds-selector-root-padding": {
+   "to": "--ds-selector-padding",
+   "from": "rule"
+  },
+  "--ds-sidebar-menu-chevron-fg-primary": {
+   "to": "--ds-sidebar-menu-fg-chevron-primary",
+   "from": "rule"
+  },
+  "--ds-sidebar-menu-title-padding-bottom": {
+   "to": "--ds-sidebar-menu-padding-bottom-title",
+   "from": "rule"
+  },
+  "--ds-sidebar-menu-title-padding-horizontal": {
+   "to": "--ds-sidebar-menu-padding-title-horizontal",
+   "from": "rule"
+  },
+  "--ds-sidebar-menu-title-padding-top": {
+   "to": "--ds-sidebar-menu-padding-top-title",
+   "from": "rule"
+  },
+  "--ds-slider-icon-fg": {
+   "to": "--ds-slider-fg-icon-with-icon-generic",
+   "from": "figma:slider/all/fg/icon/withIcon-generic"
+  },
+  "--ds-slider-icon-fg-disabled": {
+   "to": "--ds-slider-fg-icon-with-icon-disabled",
+   "from": "figma:slider/all/fg/icon/withIcon-disabled"
+  },
+  "--ds-slider-icon-padding": {
+   "to": "--ds-slider-padding-icon-generic",
+   "from": "figma:slider/all/padding/icon/generic"
+  },
+  "--ds-slider-indicator-bg-disabled": {
+   "to": "--ds-slider-bg-indicator-disabled",
+   "from": "figma:slider/all/bg/indicator/disabled"
+  },
+  "--ds-slider-indicator-bg-primary": {
+   "to": "--ds-slider-bg-indicator-primary",
+   "from": "figma:slider/all/bg/indicator/primary"
+  },
+  "--ds-slider-indicator-bg-secondary": {
+   "to": "--ds-slider-bg-indicator-secondary",
+   "from": "figma:slider/all/bg/indicator/secondary"
+  },
+  "--ds-slider-knob-bg": {
+   "to": "--ds-slider-bg-knob",
+   "from": "rule"
+  },
+  "--ds-slider-knob-bg-disabled": {
+   "to": "--ds-slider-bg-knob-disabled",
+   "from": "figma:slider/all/bg/knob/disabled"
+  },
+  "--ds-slider-knob-border-color": {
+   "to": "--ds-slider-border-color-knob",
+   "from": "rule"
+  },
+  "--ds-slider-knob-border-color-disabled": {
+   "to": "--ds-slider-border-color-knob-disabled",
+   "from": "figma:slider/all/borderColor/knob/disabled"
+  },
+  "--ds-slider-knob-border-radius": {
+   "to": "--ds-slider-border-radius-knob",
+   "from": "rule"
+  },
+  "--ds-slider-knob-border-width": {
+   "to": "--ds-slider-border-width-knob-generic",
+   "from": "figma:slider/all/borderWidth/knob/generic"
+  },
+  "--ds-slider-knob-border-width-focus": {
+   "to": "--ds-slider-border-width-knob-focus",
+   "from": "figma:slider/all/borderWidth/knob/focus"
+  },
+  "--ds-slider-knob-focus-inner": {
+   "to": "--ds-slider-border-color-knob-focus-inner",
+   "from": "rule"
+  },
+  "--ds-slider-knob-focus-outer": {
+   "to": "--ds-slider-border-color-knob-focus-outer",
+   "from": "rule"
+  },
+  "--ds-slider-knob-shadow": {
+   "to": "--ds-slider-shadow-knob",
+   "from": "rule"
+  },
+  "--ds-slider-knob-size": {
+   "to": "--ds-slider-size-knob",
+   "from": "rule"
+  },
+  "--ds-slider-knob-tooltip-gap": {
+   "to": "--ds-slider-gap-knob-tooltip-generic",
+   "from": "figma:slider/all/gap/knob/tooltip/generic"
+  },
+  "--ds-slider-root-bg": {
+   "to": "--ds-slider-bg",
+   "from": "rule"
+  },
+  "--ds-slider-root-bg-hover": {
+   "to": "--ds-slider-bg-hover",
+   "from": "rule"
+  },
+  "--ds-slider-root-border-color": {
+   "to": "--ds-slider-border-color",
+   "from": "rule"
+  },
+  "--ds-slider-root-border-radius": {
+   "to": "--ds-slider-border-radius",
+   "from": "rule"
+  },
+  "--ds-slider-root-border-width": {
+   "to": "--ds-slider-border-width-generic",
+   "from": "figma:slider/all/borderWidth/generic"
+  },
+  "--ds-slider-root-gap": {
+   "to": "--ds-slider-gap-generic",
+   "from": "figma:slider/all/gap/generic"
+  },
+  "--ds-slider-root-height": {
+   "to": "--ds-slider-height-generic",
+   "from": "figma:slider/all/height/generic"
+  },
+  "--ds-slider-root-padding-hor": {
+   "to": "--ds-slider-padding-hor-generic",
+   "from": "figma:slider/all/paddingHor/generic"
+  },
+  "--ds-slider-root-padding-hor-with-icon": {
+   "to": "--ds-slider-padding-hor-with-icon",
+   "from": "figma:slider/all/paddingHor/withIcon"
+  },
+  "--ds-slider-track-bg": {
+   "to": "--ds-slider-bg-track-generic",
+   "from": "figma:slider/all/bg/track/generic"
+  },
+  "--ds-slider-track-bg-disabled": {
+   "to": "--ds-slider-bg-track-disabled",
+   "from": "figma:slider/all/bg/track/disabled"
+  },
+  "--ds-slider-track-bg-hover": {
+   "to": "--ds-slider-bg-track-hover",
+   "from": "rule"
+  },
+  "--ds-slider-track-border-radius": {
+   "to": "--ds-slider-border-radius-track",
+   "from": "rule"
+  },
+  "--ds-slider-track-height": {
+   "to": "--ds-slider-height-track",
+   "from": "rule"
+  },
+  "--ds-snackbar-action-focus-inner": {
+   "to": "--ds-snackbar-border-color-action-focus-inner",
+   "from": "figma:snackbar/all/borderColor/action/focus-inner"
+  },
+  "--ds-snackbar-action-focus-outer": {
+   "to": "--ds-snackbar-border-color-action-focus-outer",
+   "from": "figma:snackbar/all/borderColor/action/focus-outer"
+  },
+  "--ds-snackbar-root-bg-generic": {
+   "to": "--ds-snackbar-bg-generic",
+   "from": "figma:snackbar/all/bg/generic"
+  },
+  "--ds-snackbar-root-border-radius": {
+   "to": "--ds-snackbar-border-radius",
+   "from": "rule"
+  },
+  "--ds-snackbar-root-gap-single": {
+   "to": "--ds-snackbar-gap-single",
+   "from": "rule"
+  },
+  "--ds-snackbar-root-padding-hor": {
+   "to": "--ds-snackbar-padding-hor",
+   "from": "rule"
+  },
+  "--ds-snackbar-root-padding-ver-multi": {
+   "to": "--ds-snackbar-padding-ver-multi",
+   "from": "rule"
+  },
+  "--ds-snackbar-root-padding-ver-single": {
+   "to": "--ds-snackbar-padding-ver-single-line",
+   "from": "figma:snackbar/all/paddingVer/singleLine"
+  },
+  "--ds-snackbar-root-shadow": {
+   "to": "--ds-snackbar-shadow",
+   "from": "rule"
+  },
+  "--ds-snackbar-text-fg-generic": {
+   "to": "--ds-snackbar-fg-text-generic",
+   "from": "figma:snackbar/all/fg/text/generic"
+  },
+  "--ds-steps-border-width": {
+   "to": "--ds-steps-border-width-generic",
+   "from": "figma:steps/common/all/borderWidth/generic"
+  },
+  "--ds-steps-connector-border-color": {
+   "to": "--ds-steps-border-color-connector",
+   "from": "rule"
+  },
+  "--ds-steps-icon-fg-generic": {
+   "to": "--ds-steps-fg-icon-generic",
+   "from": "figma:steps/common/all/fg/icon/generic"
+  },
+  "--ds-steps-indicator-small-gap": {
+   "to": "--ds-steps-indicator-gap-small",
+   "from": "rule"
+  },
+  "--ds-steps-indicator-small-padding": {
+   "to": "--ds-steps-indicator-padding-small",
+   "from": "rule"
+  },
+  "--ds-steps-indicator-step-hor-gap": {
+   "to": "--ds-steps-indicator-gap-step-hor",
+   "from": "rule"
+  },
+  "--ds-steps-indicator-step-hor-padding-ver": {
+   "to": "--ds-steps-indicator-padding-ver-step-hor",
+   "from": "rule"
+  },
+  "--ds-steps-label-fg-generic": {
+   "to": "--ds-steps-fg-label-generic",
+   "from": "figma:steps/common/all/fg/label/generic"
+  },
+  "--ds-steps-navigator-root-gap": {
+   "to": "--ds-steps-navigator-gap",
+   "from": "rule"
+  },
+  "--ds-steps-navigator-root-height": {
+   "to": "--ds-steps-navigator-height-generic",
+   "from": "figma:steps/navigator/all/height/generic"
+  },
+  "--ds-steps-navigator-root-padding-horizontal": {
+   "to": "--ds-steps-navigator-padding-horizontal",
+   "from": "rule"
+  },
+  "--ds-steps-navigator-substep-gap": {
+   "to": "--ds-steps-navigator-gap-substep",
+   "from": "rule"
+  },
+  "--ds-steps-navigator-substep-icon-size": {
+   "to": "--ds-steps-navigator-size-substep-icon",
+   "from": "rule"
+  },
+  "--ds-steps-navigator-substep-padding-right": {
+   "to": "--ds-steps-navigator-padding-right-substep",
+   "from": "rule"
+  },
+  "--ds-steps-node-bg-active": {
+   "to": "--ds-steps-bg-node-active",
+   "from": "figma:steps/common/all/bg/node/active"
+  },
+  "--ds-steps-node-bg-completed": {
+   "to": "--ds-steps-bg-node-completed",
+   "from": "rule"
+  },
+  "--ds-steps-node-border-color-active": {
+   "to": "--ds-steps-border-color-node-active",
+   "from": "rule"
+  },
+  "--ds-steps-node-border-color-completed": {
+   "to": "--ds-steps-border-color-node-completed",
+   "from": "rule"
+  },
+  "--ds-steps-node-border-color-incomplete": {
+   "to": "--ds-steps-border-color-node-incomplete",
+   "from": "rule"
+  },
+  "--ds-steps-node-fg-active": {
+   "to": "--ds-steps-fg-node-active",
+   "from": "rule"
+  },
+  "--ds-steps-node-fg-completed": {
+   "to": "--ds-steps-fg-node-completed",
+   "from": "rule"
+  },
+  "--ds-steps-node-fg-incomplete": {
+   "to": "--ds-steps-fg-node-incomplete",
+   "from": "rule"
+  },
+  "--ds-steps-node-padding": {
+   "to": "--ds-steps-padding-node",
+   "from": "rule"
+  },
+  "--ds-steps-node-size": {
+   "to": "--ds-steps-size-node",
+   "from": "rule"
+  },
+  "--ds-steps-root-bg-hover": {
+   "to": "--ds-steps-bg-hover",
+   "from": "rule"
+  },
+  "--ds-steps-root-bg-on-default-active": {
+   "to": "--ds-steps-bg-on-default-active",
+   "from": "figma:steps/common/all/bg/onDefault-active"
+  },
+  "--ds-steps-root-bg-on-default-completed": {
+   "to": "--ds-steps-bg-on-default-completed",
+   "from": "figma:steps/common/all/bg/onDefault-completed"
+  },
+  "--ds-steps-root-bg-on-default-completed-selected": {
+   "to": "--ds-steps-bg-on-default-completed-selected",
+   "from": "figma:steps/common/all/bg/onDefault-completedSelected"
+  },
+  "--ds-steps-root-bg-on-default-incomplete": {
+   "to": "--ds-steps-bg-on-default-incomplete",
+   "from": "rule"
+  },
+  "--ds-steps-root-bg-on-page-active": {
+   "to": "--ds-steps-bg-on-page-active",
+   "from": "figma:steps/common/all/bg/onPage-active"
+  },
+  "--ds-steps-root-bg-on-page-completed": {
+   "to": "--ds-steps-bg-on-page-completed",
+   "from": "figma:steps/common/all/bg/onPage-completed"
+  },
+  "--ds-steps-root-bg-on-page-completed-selected": {
+   "to": "--ds-steps-bg-on-page-completed-selected",
+   "from": "figma:steps/common/all/bg/onPage-completedSelected"
+  },
+  "--ds-steps-root-bg-on-page-incomplete": {
+   "to": "--ds-steps-bg-on-page-incomplete",
+   "from": "figma:steps/common/all/bg/onPage-incomplete"
+  },
+  "--ds-steps-root-border-color-focus-inner": {
+   "to": "--ds-steps-border-color-focus-inner",
+   "from": "figma:steps/common/all/borderColor/focus-inner"
+  },
+  "--ds-steps-root-border-color-focus-outer": {
+   "to": "--ds-steps-border-color-focus-outer",
+   "from": "figma:steps/common/all/borderColor/focus-outer"
+  },
+  "--ds-steps-root-border-width-focus": {
+   "to": "--ds-steps-border-width-focus",
+   "from": "figma:steps/common/all/borderWidth/focus"
+  },
+  "--ds-steps-root-opacity-pressed": {
+   "to": "--ds-steps-opacity-pressed",
+   "from": "figma:steps/common/all/opacity/pressed"
+  },
+  "--ds-switch-bg-hover": {
+   "to": "--ds-switch-bg-container-hover",
+   "from": "figma:switch/all/bg/container/hover"
+  },
+  "--ds-switch-border-radius-row": {
+   "to": "--ds-switch-border-radius-container-generic",
+   "from": "figma:switch/all/borderRadius/container/generic"
+  },
+  "--ds-switch-focus-area-padding": {
+   "to": "--ds-switch-padding-focus-area-generic",
+   "from": "figma:switch/all/padding/focusArea/generic"
+  },
+  "--ds-switch-focus-inner": {
+   "to": "--ds-switch-border-color-focus-inner",
+   "from": "rule"
+  },
+  "--ds-switch-focus-outer": {
+   "to": "--ds-switch-border-color-focus-outer",
+   "from": "rule"
+  },
+  "--ds-switch-focus-width": {
+   "to": "--ds-switch-border-width-focus",
+   "from": "figma:switch/all/borderWidth/focus"
+  },
+  "--ds-switch-gap": {
+   "to": "--ds-switch-gap-container-generic",
+   "from": "figma:switch/all/gap/container/generic"
+  },
+  "--ds-switch-label-disabled": {
+   "to": "--ds-switch-fg-label-disabled",
+   "from": "figma:switch/all/fg/label/disabled"
+  },
+  "--ds-switch-label-fg": {
+   "to": "--ds-switch-fg-label",
+   "from": "rule"
+  },
+  "--ds-switch-opacity-pressed": {
+   "to": "--ds-switch-opacity-container-pressed",
+   "from": "figma:switch/all/opacity/container/pressed"
+  },
+  "--ds-switch-padding": {
+   "to": "--ds-switch-padding-container-generic",
+   "from": "figma:switch/all/padding/container/generic"
+  },
+  "--ds-switch-thumb-fg-disabled": {
+   "to": "--ds-switch-fg-thumb-disabled",
+   "from": "figma:switch/all/fg/thumb/disabled"
+  },
+  "--ds-switch-thumb-fg-generic": {
+   "to": "--ds-switch-fg-thumb-generic",
+   "from": "figma:switch/all/fg/thumb/generic"
+  },
+  "--ds-switch-thumb-fg-read-only": {
+   "to": "--ds-switch-fg-thumb-read-only",
+   "from": "figma:switch/all/fg/thumb/readOnly"
+  },
+  "--ds-switch-thumb-size": {
+   "to": "--ds-switch-size-thumb",
+   "from": "rule"
+  },
+  "--ds-switch-track-bg-disabled": {
+   "to": "--ds-switch-bg-track-disabled",
+   "from": "figma:switch/all/bg/track/disabled"
+  },
+  "--ds-switch-track-bg-off": {
+   "to": "--ds-switch-bg-track-off",
+   "from": "figma:switch/all/bg/track/off"
+  },
+  "--ds-switch-track-bg-on": {
+   "to": "--ds-switch-bg-track-on",
+   "from": "figma:switch/all/bg/track/on"
+  },
+  "--ds-switch-track-bg-read-only": {
+   "to": "--ds-switch-bg-track-read-only",
+   "from": "figma:switch/all/bg/track/readOnly"
+  },
+  "--ds-switch-track-border-radius": {
+   "to": "--ds-switch-border-radius-track",
+   "from": "rule"
+  },
+  "--ds-switch-track-height": {
+   "to": "--ds-switch-height-track",
+   "from": "rule"
+  },
+  "--ds-switch-track-padding": {
+   "to": "--ds-switch-padding-track",
+   "from": "rule"
+  },
+  "--ds-text-fg-disabled": {
+   "to": "--ds-text-fg-label-disabled",
+   "from": "figma:text/all/fg/label/disabled"
+  },
+  "--ds-text-fg-secondary": {
+   "to": "--ds-text-fg-label-secondary",
+   "from": "figma:text/all/fg/label/secondary"
+  },
+  "--ds-text-gap": {
+   "to": "--ds-text-gap-generic",
+   "from": "figma:text/all/gap/generic"
+  },
+  "--ds-tooltip-border-radius": {
+   "to": "--ds-tooltip-border-radius-generic",
+   "from": "figma:tooltip/all/borderRadius/generic"
+  },
+  "--ds-top-navigation-flydown-column-width": {
+   "to": "--ds-top-navigation-width-flydown-column",
+   "from": "rule"
+  },
+  "--ds-top-navigation-flydown-gap": {
+   "to": "--ds-top-navigation-gap-flydown-column-generic",
+   "from": "figma:topNavigation/all/gap/flydown/column/generic"
+  },
+  "--ds-top-navigation-flydown-group-title-fg-generic": {
+   "to": "--ds-top-navigation-fg-flydown-group-title-generic",
+   "from": "figma:topNavigation/all/fg/flydown/groupTitle/generic"
+  },
+  "--ds-top-navigation-flydown-height": {
+   "to": "--ds-top-navigation-height-flydown",
+   "from": "rule"
+  },
+  "--ds-top-navigation-flydown-links-group-gap": {
+   "to": "--ds-top-navigation-gap-flydown-links-group-generic",
+   "from": "figma:topNavigation/all/gap/flydown/linksGroup/generic"
+  },
+  "--ds-top-navigation-flydown-links-group-padding": {
+   "to": "--ds-top-navigation-padding-flydown-links-group-generic",
+   "from": "figma:topNavigation/all/padding/flydown/linksGroup/generic"
+  },
+  "--ds-top-navigation-flydown-padding": {
+   "to": "--ds-top-navigation-padding-flydown-generic",
+   "from": "figma:topNavigation/all/padding/flydown/generic"
+  },
+  "--ds-top-navigation-flydown-tab-title-fg-generic": {
+   "to": "--ds-top-navigation-fg-flydown-tab-title-generic",
+   "from": "figma:topNavigation/all/fg/flydown/tabTitle/generic"
+  },
+  "--ds-top-navigation-flydown-title-gap": {
+   "to": "--ds-top-navigation-gap-flydown-generic",
+   "from": "figma:topNavigation/all/gap/flydown/generic"
+  },
+  "--ds-top-navigation-mobile-panel-width": {
+   "to": "--ds-top-navigation-width-mobile-panel",
+   "from": "rule"
+  },
+  "--ds-top-navigation-root-bg-generic": {
+   "to": "--ds-top-navigation-bg-generic",
+   "from": "figma:topNavigation/all/bg/generic"
+  },
+  "--ds-top-navigation-root-gap-generic": {
+   "to": "--ds-top-navigation-gap-generic",
+   "from": "figma:topNavigation/all/gap/generic"
+  },
+  "--ds-top-navigation-root-padding-horizontal": {
+   "to": "--ds-top-navigation-padding-hor-generic",
+   "from": "figma:topNavigation/all/paddingHor/generic"
+  },
+  "--ds-validation-message-fg-icon": {
+   "to": "--ds-validation-message-fg-icon-generic",
+   "from": "figma:validationMessage/all/fg/icon/generic"
+  },
+  "--ds-validation-message-fg-text": {
+   "to": "--ds-validation-message-fg-text-generic",
+   "from": "figma:validationMessage/all/fg/text/generic"
+  },
+  "--ds-validation-message-gap": {
+   "to": "--ds-validation-message-gap-generic",
+   "from": "figma:validationMessage/all/gap/generic"
+  }
+ },
+ "unchanged": [
+  "--ds-accordion-bg-hover",
+  "--ds-accordion-border-color",
+  "--ds-accordion-border-width",
+  "--ds-accordion-fg-icon",
+  "--ds-accordion-fg-text",
+  "--ds-accordion-opacity-pressed",
+  "--ds-amount-view-bg-disabled",
+  "--ds-amount-view-bg-negative-soft",
+  "--ds-amount-view-bg-negative-solid",
+  "--ds-amount-view-bg-neutral",
+  "--ds-amount-view-bg-positive-soft",
+  "--ds-amount-view-bg-positive-solid",
+  "--ds-amount-view-border-radius",
+  "--ds-amount-view-fg-disabled",
+  "--ds-amount-view-fg-generic",
+  "--ds-amount-view-gap",
+  "--ds-amount-view-padding-hor",
+  "--ds-amount-view-padding-ver",
+  "--ds-badge-highlight-bg-disabled",
+  "--ds-badge-highlight-bg-emphasis",
+  "--ds-badge-highlight-bg-negative",
+  "--ds-badge-highlight-bg-neutral",
+  "--ds-badge-highlight-bg-positive",
+  "--ds-badge-highlight-border-radius",
+  "--ds-badge-highlight-gap",
+  "--ds-badge-highlight-height",
+  "--ds-badge-highlight-padding-hor",
+  "--ds-badge-highlight-padding-ver",
+  "--ds-badge-notification-bg-default",
+  "--ds-badge-notification-bg-disabled",
+  "--ds-badge-notification-bg-primary",
+  "--ds-badge-notification-bg-secondary",
+  "--ds-badge-notification-bg-tertiary",
+  "--ds-badge-notification-border-radius",
+  "--ds-badge-notification-fg-label",
+  "--ds-badge-notification-fg-label-disabled",
+  "--ds-badge-notification-gap",
+  "--ds-badge-notification-min-width-expanded",
+  "--ds-badge-notification-padding-hor",
+  "--ds-badge-notification-padding-ver-expanded",
+  "--ds-button-bg-accent-filled",
+  "--ds-button-bg-default-filled",
+  "--ds-button-bg-disabled",
+  "--ds-button-bg-mix-accent-hover",
+  "--ds-button-bg-mix-default-hover",
+  "--ds-button-fg-accent-filled",
+  "--ds-button-fg-accent-outline",
+  "--ds-button-fg-default-filled",
+  "--ds-button-fg-default-outline",
+  "--ds-button-fg-disabled",
+  "--ds-button-height-large",
+  "--ds-button-height-medium",
+  "--ds-button-height-small",
+  "--ds-button-opacity-pressed",
+  "--ds-button-padding-hor-large",
+  "--ds-button-padding-hor-medium",
+  "--ds-button-padding-hor-small",
+  "--ds-cell-common-bg-mix-hover",
+  "--ds-cell-common-bg-on-surface",
+  "--ds-cell-common-bg-zebra",
+  "--ds-cell-common-border-bottom-color-primary",
+  "--ds-cell-common-border-bottom-color-subtle",
+  "--ds-cell-common-border-bottom-width",
+  "--ds-cell-common-gap",
+  "--ds-cell-common-opacity-pressed",
+  "--ds-cell-common-padding-hor",
+  "--ds-cell-common-padding-ver",
+  "--ds-cell-data-padding-ver-basic",
+  "--ds-cell-header-padding-bottom-basic",
+  "--ds-cell-header-padding-top-basic",
+  "--ds-checkbox-bg-default",
+  "--ds-checkbox-bg-disabled",
+  "--ds-checkbox-bg-error",
+  "--ds-checkbox-bg-hover",
+  "--ds-checkbox-bg-selected",
+  "--ds-checkbox-border-radius",
+  "--ds-checkbox-border-radius-row",
+  "--ds-checkbox-border-width",
+  "--ds-collapsible-border-color-default",
+  "--ds-collapsible-border-color-secondary",
+  "--ds-collapsible-fg-on-color",
+  "--ds-country-flag-height",
+  "--ds-country-flag-width",
+  "--ds-cta-link-bg-accent-primary",
+  "--ds-cta-link-bg-disabled",
+  "--ds-cta-link-bg-mix-hover",
+  "--ds-cta-link-bg-primary",
+  "--ds-cta-link-border-bottom-width",
+  "--ds-cta-link-border-bottom-width-hover",
+  "--ds-cta-link-border-radius-focus",
+  "--ds-cta-link-border-radius-low",
+  "--ds-cta-link-fg-accent",
+  "--ds-cta-link-fg-accent-primary",
+  "--ds-cta-link-fg-default",
+  "--ds-cta-link-fg-primary",
+  "--ds-cta-link-opacity-pressed",
+  "--ds-cta-link-padding-hor",
+  "--ds-cta-link-padding-ver",
+  "--ds-descriptionlist-divider-color",
+  "--ds-dialog-shadow",
+  "--ds-dialog-simple-border-color-generic",
+  "--ds-divider-border-color-generic",
+  "--ds-divider-border-width-generic",
+  "--ds-file-upload-common-gap-generic",
+  "--ds-file-upload-document-item-border-color-error",
+  "--ds-file-upload-document-item-border-color-generic",
+  "--ds-file-upload-document-item-border-width-generic",
+  "--ds-file-upload-document-item-padding-hor-generic",
+  "--ds-file-upload-document-item-padding-ver-generic",
+  "--ds-file-upload-drop-zone-border-color-disabled",
+  "--ds-file-upload-drop-zone-border-color-generic",
+  "--ds-file-upload-drop-zone-border-width-generic",
+  "--ds-file-upload-drop-zone-padding-hor-generic",
+  "--ds-file-upload-drop-zone-padding-ver-generic",
+  "--ds-icon-button-bg-accent-primary",
+  "--ds-icon-button-bg-default-primary",
+  "--ds-icon-button-bg-disabled",
+  "--ds-icon-button-bg-mix-accent-hover",
+  "--ds-icon-button-bg-mix-default-hover",
+  "--ds-icon-button-border-color-accent",
+  "--ds-icon-button-border-color-default",
+  "--ds-icon-button-border-color-disabled",
+  "--ds-icon-button-border-color-focus-inner",
+  "--ds-icon-button-border-color-focus-outer",
+  "--ds-icon-button-border-radius",
+  "--ds-icon-button-border-width-primary",
+  "--ds-icon-button-opacity-pressed",
+  "--ds-inline-notification-bg",
+  "--ds-inline-notification-bg-borderless",
+  "--ds-inline-notification-border-radius",
+  "--ds-inline-notification-border-width",
+  "--ds-inline-notification-color-error",
+  "--ds-inline-notification-color-information",
+  "--ds-inline-notification-gap",
+  "--ds-inline-notification-padding-hor",
+  "--ds-inline-notification-padding-ver",
+  "--ds-input-bg-default",
+  "--ds-input-bg-disabled",
+  "--ds-input-border-radius",
+  "--ds-input-border-radius-focus-inner",
+  "--ds-input-border-radius-focus-outer",
+  "--ds-input-border-width",
+  "--ds-input-border-width-focus",
+  "--ds-input-fg-default",
+  "--ds-input-fg-disabled",
+  "--ds-input-fg-placeholder",
+  "--ds-input-min-height",
+  "--ds-input-padding-hor",
+  "--ds-input-padding-ver",
+  "--ds-link-bg-mix-hover",
+  "--ds-link-border-bottom-width",
+  "--ds-link-border-radius",
+  "--ds-link-fg-icon-accent",
+  "--ds-link-fg-icon-default",
+  "--ds-link-fg-label-accent",
+  "--ds-link-fg-label-accent-visited",
+  "--ds-link-gap",
+  "--ds-link-opacity-pressed",
+  "--ds-list-gap-unordered-lg",
+  "--ds-list-gap-unordered-md",
+  "--ds-list-gap-unordered-sm",
+  "--ds-list-gap-unordered-xs",
+  "--ds-list-padding-bottom-generic",
+  "--ds-list-view-divider-color-disabled",
+  "--ds-loading-spinner-duration",
+  "--ds-loading-spinner-size-md",
+  "--ds-loading-spinner-size-xs",
+  "--ds-progress-bar-gap",
+  "--ds-progress-bar-indicator-bg",
+  "--ds-radio-indicator-border-radius-generic",
+  "--ds-segmented-control-opacity-pressed",
+  "--ds-segmented-control-segment-focus-area",
+  "--ds-selector-common-root-border-color-focus-inner",
+  "--ds-selector-common-root-border-color-focus-outer",
+  "--ds-selector-common-root-border-width-focus",
+  "--ds-selector-root-border-color-focus-inner",
+  "--ds-selector-root-border-color-focus-outer",
+  "--ds-selector-root-border-width-focus",
+  "--ds-sidebar-menu-indent-step",
+  "--ds-slider-indicator-border-radius",
+  "--ds-tabs-bg-generic",
+  "--ds-tabs-bg-hover",
+  "--ds-tabs-bg-pressed",
+  "--ds-tabs-border-color-focus-inner",
+  "--ds-tabs-border-color-focus-outer",
+  "--ds-tabs-border-color-generic",
+  "--ds-tabs-border-color-ribbon-selected",
+  "--ds-tabs-border-width-focus",
+  "--ds-tabs-border-width-generic",
+  "--ds-tabs-border-width-ribbon-selected",
+  "--ds-tabs-contained-bg-selected",
+  "--ds-tabs-fg-icon-error",
+  "--ds-tabs-fg-icon-generic",
+  "--ds-tabs-fg-text-generic",
+  "--ds-tabs-gap-generic",
+  "--ds-tabs-padding-hor-generic",
+  "--ds-tabs-padding-ver-l",
+  "--ds-tabs-padding-ver-m",
+  "--ds-tabs-padding-ver-s",
+  "--ds-text-fg-default",
+  "--ds-tooltip-arrow-base",
+  "--ds-tooltip-arrow-length",
+  "--ds-tooltip-bg",
+  "--ds-tooltip-fg",
+  "--ds-tooltip-gap",
+  "--ds-tooltip-offset",
+  "--ds-tooltip-padding-hor",
+  "--ds-tooltip-padding-ver",
+  "--ds-top-navigation-breakpoint",
+  "--ds-top-navigation-flydown-link-underline-hover"
+ ]
+}

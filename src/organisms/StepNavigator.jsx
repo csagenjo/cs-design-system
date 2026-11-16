@@ -41,44 +41,44 @@ const css = `
 .ds-step-navigator {
   display:        flex;
   align-items:    center;
-  gap:            var(--ds-steps-navigator-root-gap);
+  gap:            var(--ds-steps-navigator-gap);
   width:          100%;
-  min-height:     var(--ds-steps-navigator-root-height);
-  padding:        0 var(--ds-steps-navigator-root-padding-horizontal);
+  min-height:     var(--ds-steps-navigator-height-generic);
+  padding:        0 var(--ds-steps-navigator-padding-horizontal);
   border:         none;
-  background:     var(--ds-steps-root-bg-on-default-incomplete);
+  background:     var(--ds-steps-bg-on-default-incomplete);
   cursor:         pointer;
   text-align:     left;
   box-sizing:     border-box;
   outline:        none;
 }
 .ds-step-navigator--on-page {
-  background: var(--ds-steps-root-bg-on-page-incomplete);
+  background: var(--ds-steps-bg-on-page-incomplete);
 }
 .ds-step-navigator--active {
-  background: var(--ds-steps-root-bg-on-default-active);
+  background: var(--ds-steps-bg-on-default-active);
 }
 .ds-step-navigator--active.ds-step-navigator--on-page {
-  background: var(--ds-steps-root-bg-on-page-active);
+  background: var(--ds-steps-bg-on-page-active);
 }
 .ds-step-navigator:hover {
-  background: var(--ds-steps-root-bg-hover);
+  background: var(--ds-steps-bg-hover);
 }
 .ds-step-navigator:active {
-  opacity: var(--ds-steps-root-opacity-pressed);
+  opacity: var(--ds-steps-opacity-pressed);
 }
 .ds-step-navigator:focus-visible {
   outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
   outline-offset: calc(var(--ds-border-width-lg) * -1);
   /* Fila apilada: anillo doble POR DENTRO (12/11, CLAUDE.md §4; Figma: rects Focus outer/inner) */
-  box-shadow: inset 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-outer),
-              inset 0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-inner);
+  box-shadow: inset 0 0 0 var(--ds-steps-border-width-focus) var(--ds-steps-border-color-focus-outer),
+              inset 0 0 0 calc(var(--ds-steps-border-width-focus) * 2) var(--ds-steps-border-color-focus-inner);
 }
 .ds-step-navigator--selected {
-  background: var(--ds-steps-root-bg-on-default-completed-selected);
+  background: var(--ds-steps-bg-on-default-completed-selected);
 }
 .ds-step-navigator--selected.ds-step-navigator--on-page {
-  background: var(--ds-steps-root-bg-on-page-completed-selected);
+  background: var(--ds-steps-bg-on-page-completed-selected);
 }
 .ds-step-navigator__title {
   flex:        1 1 auto;
@@ -87,13 +87,13 @@ const css = `
   font-size:   var(--ds-fontSize-label-lg);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-label-lg);
-  color:       var(--ds-steps-label-fg-generic);
+  color:       var(--ds-steps-fg-label-generic);
 }
 .ds-step-navigator--incomplete .ds-step-navigator__title { font-weight: var(--ds-font-weight-regular); }
 .ds-step-navigator__chevron {
   display:    flex;
   flex-shrink: 0;
-  color:      var(--ds-steps-icon-fg-generic); /* steps/common/all/fg/icon/generic — negro, como los iconos de Substep */
+  color:      var(--ds-steps-fg-icon-generic); /* steps/common/all/fg/icon/generic — negro, como los iconos de Substep */
   transition: transform 0.15s ease;
 }
 .ds-step-navigator__chevron--expanded {

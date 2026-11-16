@@ -27,7 +27,7 @@ const css = `
 .ds-file-selector {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-file-upload-common-stack-gap-generic);
+  gap: var(--ds-file-upload-gap-stack-generic);
   width: 100%;
   box-sizing: border-box;
 }

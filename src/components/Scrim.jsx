@@ -31,7 +31,7 @@ const css = `
 .ds-scrim {
   width: 100%;
   height: 100%;
-  background: var(--ds-dialog-scrim-bg-generic);
+  background: var(--ds-dialog-bg-scrim-generic);
 }
 `;
 

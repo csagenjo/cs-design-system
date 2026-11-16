@@ -6,7 +6,7 @@
  * colapsar contenido. Instancia `Button` (`type="default" variant="secondary"`,
  * igual que Figma) sin reimplementar su lógica (regla CLAUDE.md §5) — solo re-tematiza color
  * redefiniendo localmente las CSS custom properties que Button ya consume
- * (`--ds-button-border-default`, `--ds-button-fg-default-outline`), el mismo
+ * (`--ds-button-border-color-default`, `--ds-button-fg-default-outline`), el mismo
  * mecanismo que el rebind de variables en Figma. El Button interno usa
  * SIEMPRE `type="default" variant="secondary"` — el color visible (negro/rosa) lo fija
  * `variant` de Collapsible, no el de Button (así resuelve también en Figma:
@@ -38,12 +38,12 @@ import { Button } from './Button';
 
 const css = `
 .ds-collapsible--default {
-  --ds-button-border-default:     var(--ds-collapsible-border-color-default);
-  --ds-button-fg-default-outline: var(--ds-collapsible-label-fg-default);
+  --ds-button-border-color-default:     var(--ds-collapsible-border-color-default);
+  --ds-button-fg-default-outline: var(--ds-collapsible-fg-label-default);
 }
 .ds-collapsible--secondary {
-  --ds-button-border-default:     var(--ds-collapsible-border-color-secondary);
-  --ds-button-fg-default-outline: var(--ds-collapsible-label-fg-secondary);
+  --ds-button-border-color-default:     var(--ds-collapsible-border-color-secondary);
+  --ds-button-fg-default-outline: var(--ds-collapsible-fg-label-secondary);
   /* Hover/Pressed: Button rellena con su fondo de Primary — en Secondary ese
      relleno es el rosa del borde, con texto on-color (26/10/2026). */
   --ds-button-bg-default-filled:  var(--ds-collapsible-border-color-secondary);

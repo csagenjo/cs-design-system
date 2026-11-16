@@ -53,9 +53,9 @@ const css = `
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background: var(--ds-dialog-root-bg-generic);
-  gap: var(--ds-dialog-root-gap-generic);
-  border-radius: var(--ds-dialog-root-border-radius-generic);
+  background: var(--ds-dialog-bg-default);
+  gap: var(--ds-dialog-gap-generic);
+  border-radius: var(--ds-dialog-border-radius-generic);
   overflow: hidden;
   box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — 25/08: aplicada a todas las variantes, antes solo PopUp */
 }
@@ -82,8 +82,8 @@ const css = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-dialog-root-gap-generic);
-  padding: var(--ds-dialog-control-area-padding-generic);
+  gap: var(--ds-dialog-gap-generic);
+  padding: var(--ds-dialog-padding-control-area-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;

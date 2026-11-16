@@ -37,7 +37,7 @@ export function injectStyles(id, css) {
                      su color (Figma: Hover/Focus/Error - Country|Telephone). */
 const INPUT_BOX_CSS = `
 .ds-input-root {
-  margin: var(--ds-input-focus-area-padding);
+  margin: var(--ds-input-padding-focus-area);
   box-sizing: border-box;
   /* 13/11: en Figma el borde va por dentro (stroke inside) y la caja mide 56 = 16 + 24 + 16.
      En CSS el borde suma por fuera del padding: se descuenta para que el campo mida 56, no 58. */
@@ -46,17 +46,17 @@ const INPUT_BOX_CSS = `
 
 /* Label → ayuda 0 (label/gap, el line-height de 24 ya deja el aire; 13/11), ayuda → campo 8 (helper/gap); sin ayuda, label → campo 8.
    Figma: frame "Label + Helper" (gap label/gap) dentro de "Base Input" (gap helper/gap). */
-.ds-input-label { margin-bottom: var(--ds-input-helper-gap); }
-.ds-input-label:has(+ .ds-input-helper) { margin-bottom: var(--ds-input-label-gap); }
-.ds-input-helper { margin-bottom: var(--ds-input-helper-gap); }
-.ds-input-root--full-width { width: calc(100% - 2 * var(--ds-input-focus-area-padding)); }
+.ds-input-label { margin-bottom: var(--ds-input-gap-helper); }
+.ds-input-label:has(+ .ds-input-helper) { margin-bottom: var(--ds-input-gap-label); }
+.ds-input-helper { margin-bottom: var(--ds-input-gap-helper); }
+.ds-input-root--full-width { width: calc(100% - 2 * var(--ds-input-padding-focus-area)); }
 
 .ds-input-box {
   box-sizing:    border-box;
   min-height:    var(--ds-input-min-height);
   color:         var(--ds-input-fg-default);
   background:    var(--ds-input-bg-default);
-  border:        var(--ds-input-border-width) solid var(--ds-input-border-default);
+  border:        var(--ds-input-border-width) solid var(--ds-input-border-color-default);
   border-radius: var(--ds-input-border-radius);
   outline:       none;
   transition:    border-color 0.12s, background 0.12s;
@@ -64,12 +64,12 @@ const INPUT_BOX_CSS = `
 .ds-input-box::placeholder,
 .ds-input-box ::placeholder { color: var(--ds-input-fg-placeholder); opacity: 1; }
 
-.ds-input-box:hover:not(.is-error):not(.is-readonly):not(.is-disabled) { border-color: var(--ds-input-border-hover); }
-.ds-input-box.is-error    { border-color: var(--ds-input-border-error); }
-.ds-input-box.is-readonly { background: var(--ds-input-bg-disabled); border-color: var(--ds-input-border-disabled); }
+.ds-input-box:hover:not(.is-error):not(.is-readonly):not(.is-disabled) { border-color: var(--ds-input-border-color-hover); }
+.ds-input-box.is-error    { border-color: var(--ds-input-border-color-error); }
+.ds-input-box.is-readonly { background: var(--ds-input-bg-disabled); border-color: var(--ds-input-border-color-disabled); }
 .ds-input-box.is-disabled {
   background:   var(--ds-input-bg-disabled);
-  border-color: var(--ds-input-border-disabled);
+  border-color: var(--ds-input-border-color-disabled);
   color:        var(--ds-input-fg-disabled);
   cursor:       not-allowed;
 }
@@ -77,9 +77,9 @@ const INPUT_BOX_CSS = `
 .ds-input-box:focus-visible,
 .ds-input-box:is(input, select, textarea):focus,
 .ds-input-box--within:focus-within {
-  outline:        var(--ds-input-border-width-focus) solid var(--ds-input-focus-outer);
+  outline:        var(--ds-input-border-width-focus) solid var(--ds-input-border-color-focus-outer);
   outline-offset: var(--ds-input-border-width-focus);
-  box-shadow:     0 0 0 var(--ds-input-border-width-focus) var(--ds-input-focus-inner);
+  box-shadow:     0 0 0 var(--ds-input-border-width-focus) var(--ds-input-border-color-focus-inner);
 }
 
 .ds-input-split { display: flex; align-items: stretch; width: 100%; }

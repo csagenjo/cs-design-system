@@ -16,15 +16,15 @@ const css = `
 .ds-dialog-header {
   display: flex;
   align-items: center;
-  gap: var(--ds-dialog-root-gap-generic);
+  gap: var(--ds-dialog-gap-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
-  padding: 0 var(--ds-dialog-header-padding-hor);
+  padding: 0 var(--ds-dialog-padding-hor-header);
 }
 /* Alto = padding + Icon Button con su área de foco: 4 + 52 + 4 = 60 / 2 + 40 + 2 = 44 */
-.ds-dialog-header--standard { padding-top: var(--ds-dialog-header-padding-ver-regular); padding-bottom: var(--ds-dialog-header-padding-ver-regular); }
-.ds-dialog-header--small    { padding-top: var(--ds-dialog-header-padding-ver-small);   padding-bottom: var(--ds-dialog-header-padding-ver-small); }
+.ds-dialog-header--standard { padding-top: var(--ds-dialog-padding-ver-header-regular); padding-bottom: var(--ds-dialog-padding-ver-header-regular); }
+.ds-dialog-header--small    { padding-top: var(--ds-dialog-padding-ver-header-small);   padding-bottom: var(--ds-dialog-padding-ver-header-small); }
 
 .ds-dialog-header--standard .ds-dialog-header__title { font-size: var(--ds-fontSize-title-lg); line-height: var(--ds-lineHeight-title-lg); }
 .ds-dialog-header--small    .ds-dialog-header__title { font-size: var(--ds-fontSize-title-md); line-height: var(--ds-lineHeight-title-md); }
@@ -46,44 +46,44 @@ const css = `
 /* Back y Close = Icon Button Default Tertiary (Medium en Standard, Small en Small).
    Se re-tematiza redefiniendo sus variables, como Collapsible: color del icono
    y anillo de foco que contrastan con el fondo de cada header. */
-.ds-dialog-header--default    { background: var(--ds-dialog-header-bg-default); }
-.ds-dialog-header--default    .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-default); }
+.ds-dialog-header--default    { background: var(--ds-dialog-bg-header-default); }
+.ds-dialog-header--default    .ds-dialog-header__title { color: var(--ds-dialog-fg-header-title-default); }
 .ds-dialog-header--default    .ds-icon-btn {
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-default);
-  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-default);
-  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-default);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-dialog-fg-header-icon-default);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-border-color-header-icon-focus-inner-default);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-border-color-header-icon-focus-outer-default);
 }
 
-.ds-dialog-header--primary    { background: var(--ds-dialog-header-bg-primary); }
-.ds-dialog-header--primary    .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-primary); }
+.ds-dialog-header--primary    { background: var(--ds-dialog-bg-header-primary); }
+.ds-dialog-header--primary    .ds-dialog-header__title { color: var(--ds-dialog-fg-header-title-primary); }
 .ds-dialog-header--primary    .ds-icon-btn {
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-primary);
-  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-primary);
-  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-primary);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-dialog-fg-header-icon-primary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-border-color-header-icon-focus-inner-primary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-border-color-header-icon-focus-outer-primary);
 }
 
-.ds-dialog-header--on-primary { background: var(--ds-dialog-header-bg-on-primary); }
-.ds-dialog-header--on-primary .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-on-primary); }
+.ds-dialog-header--on-primary { background: var(--ds-dialog-bg-header-on-primary); }
+.ds-dialog-header--on-primary .ds-dialog-header__title { color: var(--ds-dialog-fg-header-title-on-primary); }
 .ds-dialog-header--on-primary .ds-icon-btn {
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-on-primary);
-  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-on-primary);
-  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-on-primary);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-dialog-fg-header-icon-on-primary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-border-color-header-icon-focus-inner-on-primary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-border-color-header-icon-focus-outer-on-primary);
 }
 
-.ds-dialog-header--secondary  { background: var(--ds-dialog-header-bg-secondary); }
-.ds-dialog-header--secondary  .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-secondary); }
+.ds-dialog-header--secondary  { background: var(--ds-dialog-bg-header-secondary); }
+.ds-dialog-header--secondary  .ds-dialog-header__title { color: var(--ds-dialog-fg-header-title-secondary); }
 .ds-dialog-header--secondary  .ds-icon-btn {
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-secondary);
-  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-secondary);
-  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-secondary);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-dialog-fg-header-icon-secondary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-border-color-header-icon-focus-inner-secondary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-border-color-header-icon-focus-outer-secondary);
 }
 
-.ds-dialog-header--tertiary   { background: var(--ds-dialog-header-bg-tertiary); }
-.ds-dialog-header--tertiary   .ds-dialog-header__title { color: var(--ds-dialog-header-title-fg-tertiary); }
+.ds-dialog-header--tertiary   { background: var(--ds-dialog-bg-header-tertiary); }
+.ds-dialog-header--tertiary   .ds-dialog-header__title { color: var(--ds-dialog-fg-header-title-tertiary); }
 .ds-dialog-header--tertiary   .ds-icon-btn {
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-dialog-header-icon-fg-tertiary);
-  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-header-icon-focus-inner-tertiary);
-  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-header-icon-focus-outer-tertiary);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-dialog-fg-header-icon-tertiary);
+  --ds-icon-button-border-color-focus-inner:   var(--ds-dialog-border-color-header-icon-focus-inner-tertiary);
+  --ds-icon-button-border-color-focus-outer:   var(--ds-dialog-border-color-header-icon-focus-outer-tertiary);
 }
 `;
 

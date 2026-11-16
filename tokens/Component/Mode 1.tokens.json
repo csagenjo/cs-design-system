@@ -2212,7 +2212,7 @@
   "button": {
     "all": {
       "bg": {
-        "default-primary": {
+        "default-filled": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2238,7 +2238,7 @@
             }
           }
         },
-        "accent-primary": {
+        "accent-filled": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2263,7 +2263,7 @@
             }
           }
         },
-        "disabled-generic": {
+        "disabled": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2435,7 +2435,7 @@
         }
       },
       "borderColor": {
-        "default-generic": {
+        "default": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2461,7 +2461,7 @@
             }
           }
         },
-        "disabled-generic": {
+        "disabled": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2487,7 +2487,7 @@
             }
           }
         },
-        "accent-generic": {
+        "accent": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2512,7 +2512,7 @@
             }
           }
         },
-        "accent-disabled-generic": {
+        "accent-disabled": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2647,7 +2647,7 @@
       },
       "fg": {
         "label": {
-          "default-primary": {
+          "default-filled": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -2673,7 +2673,7 @@
               }
             }
           },
-          "default-generic": {
+          "default-outline": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -2699,7 +2699,7 @@
               }
             }
           },
-          "accent-primary": {
+          "accent-filled": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -2724,7 +2724,7 @@
               }
             }
           },
-          "accent-generic": {
+          "accent-outline": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",
@@ -11196,7 +11196,7 @@
   "input": {
     "common": {
       "bg": {
-        "generic": {
+        "default": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -11250,7 +11250,7 @@
         }
       },
       "borderColor": {
-        "generic": {
+        "default": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -11634,85 +11634,83 @@
         }
       },
       "fg": {
-        "valueText": {
-          "generic": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "srgb",
-              "components": [
-                0.019607843831181526,
-                0.019607843831181526,
-                0.0235294122248888
-              ],
-              "alpha": 1,
-              "hex": "#050506"
-            },
-            "$extensions": {
-              "com.figma.variableId": "VariableID:30530:84",
-              "com.figma.scopes": [
-                "TEXT_FILL"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:5ce0917574fff4ce0dfa15a6aab6cac302f45499/-1:-1",
-                "targetVariableName": "fg/body/default",
-                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
-                "targetVariableSetName": "Mode"
-              }
-            }
+        "default": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.019607843831181526,
+              0.019607843831181526,
+              0.0235294122248888
+            ],
+            "alpha": 1,
+            "hex": "#050506"
           },
-          "disabled": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "srgb",
-              "components": [
-                0.6666666865348816,
-                0.686274528503418,
-                0.7098039388656616
-              ],
-              "alpha": 1,
-              "hex": "#AAAFB5"
-            },
-            "$extensions": {
-              "com.figma.variableId": "VariableID:30530:85",
-              "com.figma.scopes": [
-                "TEXT_FILL"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:5da462e25a8839df979836b2f2a22da8d9feb8f6/-1:-1",
-                "targetVariableName": "fg/body/disabled",
-                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
-                "targetVariableSetName": "Mode"
-              }
+          "$extensions": {
+            "com.figma.variableId": "VariableID:30530:84",
+            "com.figma.scopes": [
+              "TEXT_FILL"
+            ],
+            "com.figma.aliasData": {
+              "targetVariableId": "VariableID:5ce0917574fff4ce0dfa15a6aab6cac302f45499/-1:-1",
+              "targetVariableName": "fg/body/default",
+              "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+              "targetVariableSetName": "Mode"
             }
+          }
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6666666865348816,
+              0.686274528503418,
+              0.7098039388656616
+            ],
+            "alpha": 1,
+            "hex": "#AAAFB5"
           },
-          "placeholder": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "srgb",
-              "components": [
-                0.40392157435417175,
-                0.4274509847164154,
-                0.4627451002597809
-              ],
-              "alpha": 1,
-              "hex": "#676D76"
-            },
-            "$extensions": {
-              "com.figma.variableId": "VariableID:32661:68",
-              "com.figma.scopes": [
-                "TEXT_FILL"
-              ],
-              "com.figma.aliasData": {
-                "targetVariableId": "VariableID:56dd5911eac7d0619816ba6a9b339db2e0518f47/-1:-1",
-                "targetVariableName": "fg/body/subtle",
-                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
-                "targetVariableSetName": "Mode"
-              }
+          "$extensions": {
+            "com.figma.variableId": "VariableID:30530:85",
+            "com.figma.scopes": [
+              "TEXT_FILL"
+            ],
+            "com.figma.aliasData": {
+              "targetVariableId": "VariableID:5da462e25a8839df979836b2f2a22da8d9feb8f6/-1:-1",
+              "targetVariableName": "fg/body/disabled",
+              "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+              "targetVariableSetName": "Mode"
+            }
+          }
+        },
+        "placeholder": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.40392157435417175,
+              0.4274509847164154,
+              0.4627451002597809
+            ],
+            "alpha": 1,
+            "hex": "#676D76"
+          },
+          "$extensions": {
+            "com.figma.variableId": "VariableID:32661:68",
+            "com.figma.scopes": [
+              "TEXT_FILL"
+            ],
+            "com.figma.aliasData": {
+              "targetVariableId": "VariableID:56dd5911eac7d0619816ba6a9b339db2e0518f47/-1:-1",
+              "targetVariableName": "fg/body/subtle",
+              "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+              "targetVariableSetName": "Mode"
             }
           }
         },
         "icon": {
-          "generic": {
+          "default": {
             "$type": "color",
             "$value": {
               "colorSpace": "srgb",

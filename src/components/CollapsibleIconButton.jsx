@@ -37,14 +37,14 @@ const css = `
 }
 .ds-collapsible-icon-btn--default {
   --ds-icon-button-border-color-default:       var(--ds-collapsible-border-color-default);
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-collapsible-icon-fg-default);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-collapsible-fg-icon-default);
 }
 .ds-collapsible-icon-btn--secondary {
   --ds-icon-button-border-color-default:       var(--ds-collapsible-border-color-secondary);
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-collapsible-icon-fg-secondary);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-collapsible-fg-icon-secondary);
   /* Hover/Pressed rellenan con el fondo de Primary: en Secondary, el rosa. */
   --ds-icon-button-bg-default-primary:         var(--ds-collapsible-border-color-secondary);
-  --ds-icon-button-icon-fg-on-color-default:   var(--ds-collapsible-fg-on-color);
+  --ds-icon-button-fg-icon-on-color-default:   var(--ds-collapsible-fg-on-color);
 }
 `;
 

@@ -25,7 +25,7 @@ const css = `
   width:              100%;
   /* padding-right siempre compensado por el icono calendario */
   padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
-  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
+  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-size-icon) + var(--ds-input-gap-field-icon));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
@@ -43,12 +43,12 @@ const css = `
   display:        flex;
   align-items:    center;
   pointer-events: none;
-  color:          var(--ds-input-icon-fg-primary);
+  color:          var(--ds-input-fg-icon-primary);
 }
-.ds-input-date--disabled .ds-input-date__icon { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-date--disabled .ds-input-date__icon { color: var(--ds-input-fg-icon-disabled); }
 
 /* Helper — aparece ENCIMA del campo */
-.ds-input-date__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-date__message { margin-top: var(--ds-input-gap-validation); }
 
 /* Validación */
 `;

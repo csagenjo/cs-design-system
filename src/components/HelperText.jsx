@@ -14,7 +14,7 @@
  * de Device (Body/sm = Nunito Regular 16/24) — sin token de Componente, según la
  * regla de tipografía (CLAUDE.md §5). El `gap` respecto a otros elementos NO es
  * de este átomo: lo fija cada consumidor con su clase (Input usa
- * --ds-input-helper-gap, RadioGroup/CheckboxGroup --ds-choice-group-root-gap).
+ * --ds-input-gap-helper, RadioGroup/CheckboxGroup --ds-choice-group-gap-generic).
  *
  * Estados: generic (por defecto) · disabled.
  *
@@ -37,9 +37,9 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);    /* 400 */
   line-height: var(--ds-lineHeight-body-sm);          /* 24 */
-  color:       var(--ds-helper-text-fg-generic);
+  color:       var(--ds-helper-text-fg-text-generic);
 }
-.ds-helper-text--disabled { color: var(--ds-helper-text-fg-disabled); }
+.ds-helper-text--disabled { color: var(--ds-helper-text-fg-text-disabled); }
 `;
 
 injectStyles('ds-helper-text', css);

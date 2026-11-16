@@ -14,7 +14,7 @@ const css = `
 .ds-selector--full-width { display: flex; }
 
 
-.ds-selector__message { margin-top: var(--ds-input-validation-gap); }
+.ds-selector__message { margin-top: var(--ds-input-gap-validation); }
 
 `;
 

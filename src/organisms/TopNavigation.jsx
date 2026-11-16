@@ -36,7 +36,7 @@
  * ambigüedad a qué tab pertenece el flydown visible, motivado en parte por
  * el fix de abajo (con el hover-close corregido ya no hacía falta para
  * evitar el flydown equivocado, pero Carol lo mantuvo como refuerzo visual
- * real, confirmado en Figma). Usa `--ds-top-navigation-flydown-tab-title-fg-generic`
+ * real, confirmado en Figma). Usa `--ds-top-navigation-fg-flydown-tab-title-generic`
  * (Component token nuevo — antes de esta sesión el texto de Figma saltaba
  * directo a `headline/fg/default`, Mode, sin capa de Componente).
  *
@@ -54,7 +54,7 @@
  * columnas CSS reales (`column-width`/`max-height`/`column-fill:auto`),
  * NUNCA scroll en una capa flotante — un grupo largo sin columnas hermanas
  * salta de columna en cuanto se queda sin alto (`break-inside: avoid` por
- * grupo) en vez de crecer sin límite. `--ds-top-navigation-flydown-height`
+ * grupo) en vez de crecer sin límite. `--ds-top-navigation-height-flydown`
  * es aproximado a propósito ("de un vistazo"), no una garantía matemática
  * para cualquier volumen de contenido — pensado para el rango real visto en
  * La Plataforma (hasta ~6 grupos, ~7 enlaces cada uno).
@@ -105,7 +105,7 @@ const css = `
 .ds-top-navigation {
   position: relative;
   width: 100%;
-  background: var(--ds-top-navigation-root-bg-generic);
+  background: var(--ds-top-navigation-bg-generic);
   box-sizing: border-box;
 }
 .ds-top-navigation__desktop,
@@ -113,7 +113,7 @@ const css = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--ds-top-navigation-root-padding-horizontal);
+  padding: 0 var(--ds-top-navigation-padding-hor-generic);
 }
 .ds-top-navigation__desktop { display: flex; }
 .ds-top-navigation__collapsed { display: none; }
@@ -123,7 +123,7 @@ const css = `
   .ds-top-navigation__collapsed { display: flex; }
 }
 
-.ds-top-navigation__left { display: flex; align-items: center; gap: var(--ds-top-navigation-root-gap-generic); min-width: 0; }
+.ds-top-navigation__left { display: flex; align-items: center; gap: var(--ds-top-navigation-gap-generic); min-width: 0; }
 .ds-top-navigation__tabs { display: flex; align-items: stretch; }
 /* Sin position propio (A11y-1): el flydown vive DENTRO de su item (orden de
    Tab correcto) pero se sigue anclando al <nav> raíz — ancho de barra completo. */
@@ -149,8 +149,8 @@ const css = `
   z-index: 20;
   display: flex;
   flex-direction: column;
-  gap: var(--ds-top-navigation-flydown-title-gap);
-  padding: var(--ds-top-navigation-flydown-padding) var(--ds-top-navigation-root-padding-horizontal);
+  gap: var(--ds-top-navigation-gap-flydown-generic);
+  padding: var(--ds-top-navigation-padding-flydown-generic) var(--ds-top-navigation-padding-hor-generic);
   text-align: left; /* el boilerplate de Vite pone text-align:center en body — mismo
     bug real ya cazado en Accordion/InlineNotification. Con columnas estrechas
     (Group title) apenas se notaba; con el "Tab title" a ancho completo del
@@ -164,7 +164,7 @@ const css = `
   font-weight: var(--ds-font-weight-bold);
   font-size: var(--ds-fontSize-headline-xs);
   line-height: var(--ds-lineHeight-headline-xs);
-  color: var(--ds-top-navigation-flydown-tab-title-fg-generic);
+  color: var(--ds-top-navigation-fg-flydown-tab-title-generic);
 }
 .ds-top-navigation__flydown-columns {
   /* Columnas CSS reales, no flex-wrap — flex-wrap solo resuelve el desborde
@@ -176,38 +176,38 @@ const css = `
      indefinido. Aproximado a propósito ("de un vistazo"), no es garantía
      matemática para cualquier volumen — pensado para el rango real visto en
      La Plataforma (hasta ~6 grupos, ~7 enlaces cada uno). */
-  max-height: var(--ds-top-navigation-flydown-height);
-  column-width: var(--ds-top-navigation-flydown-column-width);
-  column-gap: var(--ds-top-navigation-flydown-gap);
+  max-height: var(--ds-top-navigation-height-flydown);
+  column-width: var(--ds-top-navigation-width-flydown-column);
+  column-gap: var(--ds-top-navigation-gap-flydown-column-generic);
   column-fill: auto;
 }
 .ds-top-navigation__group {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-top-navigation-flydown-links-group-gap);
-  padding: var(--ds-top-navigation-flydown-links-group-padding);
-  margin-bottom: var(--ds-top-navigation-flydown-gap);
+  gap: var(--ds-top-navigation-gap-flydown-links-group-generic);
+  padding: var(--ds-top-navigation-padding-flydown-links-group-generic);
+  margin-bottom: var(--ds-top-navigation-gap-flydown-column-generic);
   break-inside: avoid; /* un grupo nunca se parte entre 2 columnas */
 }
 .ds-top-navigation__group-title {
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
   font-size: var(--ds-fontSize-label-sm);
-  color: var(--ds-top-navigation-flydown-group-title-fg-generic);
+  color: var(--ds-top-navigation-fg-flydown-group-title-generic);
 }
-.ds-top-navigation__group-links { display: flex; flex-direction: column; gap: var(--ds-top-navigation-flydown-links-group-gap); }
+.ds-top-navigation__group-links { display: flex; flex-direction: column; gap: var(--ds-top-navigation-gap-flydown-links-group-generic); }
 
 /* re-tematiza Link SOLO aquí — subrayado permanente -> hover/focus.
    Mismo mecanismo que Collapsible re-tematizando Button, sin tocar el
    átomo compartido ni sus otros consumidores. */
 .ds-top-navigation__group-links .ds-link {
-  --ds-link-border-bottom-default: transparent;
-  --ds-link-border-bottom-accent:  transparent;
+  --ds-link-border-color-bottom-default: transparent;
+  --ds-link-border-color-bottom-accent:  transparent;
 }
 .ds-top-navigation__group-links .ds-link:hover,
 .ds-top-navigation__group-links .ds-link:focus-visible {
-  --ds-link-border-bottom-default: var(--ds-top-navigation-flydown-link-underline-hover);
-  --ds-link-border-bottom-accent:  var(--ds-top-navigation-flydown-link-underline-hover);
+  --ds-link-border-color-bottom-default: var(--ds-top-navigation-flydown-link-underline-hover);
+  --ds-link-border-color-bottom-accent:  var(--ds-top-navigation-flydown-link-underline-hover);
 }
 
 .ds-top-navigation__scrim-wrap {
@@ -220,9 +220,9 @@ const css = `
   top: 0;
   left: 0;
   bottom: 0;
-  width: var(--ds-top-navigation-mobile-panel-width);
+  width: var(--ds-top-navigation-width-mobile-panel);
   z-index: 31;
-  background: var(--ds-top-navigation-root-bg-generic);
+  background: var(--ds-top-navigation-bg-generic);
 }
 `;
 
@@ -422,7 +422,7 @@ export function TopNavigation({
             {/* dentro del panel móvil el menú ocupa todo su ancho; la sección
                 actual se marca igual que en escritorio (selectedId) */}
             <SidebarMenu items={sidebarItems} selectedId={selectedId} onSelect={handleSidebarSelect} collapseOnDismiss={false}
-              style={{ '--ds-drawer-expanded-size': '100%' }} />
+              style={{ '--ds-drawer-size-expanded': '100%' }} />
           </div>
         </div>
       )}

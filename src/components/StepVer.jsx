@@ -34,8 +34,8 @@ const css = `
 }
 .ds-step-ver__connector {
   flex:   1 1 0;
-  width:  var(--ds-steps-border-width);
-  background: var(--ds-steps-connector-border-color);
+  width:  var(--ds-steps-border-width-generic);
+  background: var(--ds-steps-border-color-connector);
 }
 .ds-step-ver__connector--hidden {
   visibility: hidden;

@@ -167,7 +167,7 @@ intended ones (sortable CellHeader icon, new Tabs-with-panel example).
 | Status messages (H) | ListItem, FileSelector, Snackbar, InlineNotification, ErrorAndEmptyState | ListItem announces "uploaded" / error (`statusLabels`) and links the error to the name field; FileSelector announces added / removed files; Snackbar announces through `announce()`; InlineNotification `error` is `role="alert"`; ErrorAndEmptyState full screen announces its title and description (`announceOnMount`) |
 | Date format (H) | InputDate | The format is read as description ("Format DD/MM/YYYY", `formatHint`), not only in the placeholder |
 | Focus kept (F) | Button, Pagination, InputStepper, FileSelector | Button `loading` and Pagination prev/next at the ends and InputStepper −/+ at min/max use `aria-disabled` + a click guard, so focus stays on them. Loading reads ", Loading" in the name and is announced. Pagination's current page stays a button (`aria-current`). After removing a file, focus goes to the next row, the previous one, or the upload button |
-| Focus visible (F) | InputText, SelectorInvoker, AccountSelectorInvoker (read-only), InputAmount currency, InputTelephone country, InputStepper −/+, PopoverSheet panel | Read-only fields keep their focus ring; inner buttons get their own ring so you can tell which part has focus; PopoverSheet panel shows focus (`--ds-popover-sheet-focus-outer`) |
+| Focus visible (F) | InputText, SelectorInvoker, AccountSelectorInvoker (read-only), InputAmount currency, InputTelephone country, InputStepper −/+, PopoverSheet panel | Read-only fields keep their focus ring; inner buttons get their own ring so you can tell which part has focus; PopoverSheet panel shows focus (`--ds-popover-sheet-border-color-focus-outer`) |
 
 Verified with a keyboard and accessibility-tree harness (37 checks, Chromium
 via CDP, StrictMode), the A11y-3 (40/40) and A11y-1 (57/57) harnesses, and
@@ -193,7 +193,7 @@ with `aria-disabled`).
 | Button content (I) | SelectorInvoker, AccountSelectorInvoker, ListView | No `<p>` / `<div>` / heading inside the button: DescriptionText and AmountView take `as="span"`. ListView warns in development if `rightPanelContent` or `swapDescription` holds a button, link or field (a control inside a control) |
 | Hover content (J, 1.4.13) | Tooltip | The bubble can be hovered (the pointer can move onto it without it closing) and Escape hides it without moving pointer or focus; it comes back when pointer or focus leave and return. Inside a dialog the first Escape only closes the bubble |
 | Pointer (J, 2.5.7) | RangeSlider | A click on the track moves the nearest knob (on equal distance, the one on the clicked side), moves focus to it and keeps dragging |
-| Target size (J, 2.5.8) | Chip (input) | The remove X accepts clicks on a 24 × 24 area (`--ds-chip-remove-target-size`) with no visual change |
+| Target size (J, 2.5.8) | Chip (input) | The remove X accepts clicks on a 24 × 24 area (`--ds-chip-size-remove-target`) with no visual change |
 | Reflow (J, 1.4.10) | Dialog, DialogSimple | popUp and expanded shrink to the viewport (`min(480px, 100%)`, `max-height: 100dvh`) and scroll inside: they fit at 320 × 568 |
 | Language (K) | InputDropdown, ButtonBar, TopNavigation, AccountSelectorInvoker, AccountSelectorListItem | Last Spanish defaults now English: "Select an option", "Cancel", "Confirm", "Accept and continue", "Accept", "Search", "Log out", "Account". Every built-in string is a prop |
 
@@ -407,7 +407,7 @@ there's no `href`. That fixes every consumer at once.
 | RangeSlider | ~~Values can only change by dragging; no click on the track~~ ✅ A11y-5: a click on the track moves the nearest knob | 2.5.7 | 🟠 |
 | Tooltip | ~~Not hoverable (`pointer-events: none`) and can't be dismissed with Escape~~ ✅ A11y-5: bubble hoverable (bridge over the arrow), Escape hides it until the pointer/focus leaves | 1.4.13 | 🟠 |
 | Dialog, DialogSimple | ~~Fixed 480 px width and 616–680 px height: two-way scrolling at 320 px~~ ✅ A11y-5: `min(480px, 100%)`, height capped at `100dvh` with inner scroll | 1.4.10 | 🟠 |
-| Chip (input) | ~~Remove target 20 × 20 px~~ ✅ A11y-5: 24 × 24 hit area (`--ds-chip-remove-target-size`), same look | 2.5.8 | 🟡 |
+| Chip (input) | ~~Remove target 20 × 20 px~~ ✅ A11y-5: 24 × 24 hit area (`--ds-chip-size-remove-target`), same look | 2.5.8 | 🟡 |
 | All animated pieces | ~~No `prefers-reduced-motion` anywhere in `src`~~ ✅ A11y-0: `foundations.css` (transitions, Button press scale; spinners kept as essential motion) | 2.3.3 (AAA, best practice) | 🟡 |
 
 ## K · Language of screen-reader strings (🟡)

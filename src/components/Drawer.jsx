@@ -11,7 +11,7 @@
  * Figma: la franja es el componente ".Drawer Toggle" (instancia expuesta) con
  * State Initial / Hover (azul, como las filas) / Pressed (opacidad) / Focus;
  * aquí son :hover / :active / :focus-visible del botón. Borde del riel →
- * icono = 20 (`--ds-drawer-toggle-padding-center`), fijo aunque cambie el ancho.
+ * icono = 20 (`--ds-drawer-padding-toggle-center`), fijo aunque cambie el ancho.
  *
  * Riel lateral/superior colapsable — contenedor simple, sin header ni
  * contenido propios (los aporta el consumidor vía `children`, mismo criterio
@@ -23,7 +23,7 @@
  *     (`collapsed` se ignora).
  * El fondo/borde/radio son EL MISMO en los dos estados (confirmado por dato:
  * mismo radio 0/8/0/8 en Collapsed y Expanded) — solo cambia el tamaño
- * (`--ds-drawer-collapsed-size`/`-expanded-size`) y si `children` se muestra.
+ * (`--ds-drawer-size-collapsed`/`-expanded-size`) y si `children` se muestra.
  *
  * Sin cambio de código: `strokeAlign` del `Container` se corrigió en Figma
  * de `INSIDE` a `OUTSIDE` en las 30 variantes (17/09) — con `INSIDE`, un
@@ -56,7 +56,7 @@
  * pinta en el borde OPUESTO al anclaje, para que el riel quede a ras del
  * borde de pantalla al que se ancla.
  *
- * `--ds-drawer-collapsed-size`/`-expanded-size` (72px/240px por defecto)
+ * `--ds-drawer-size-collapsed`/`-expanded-size` (72px/240px por defecto)
  * gobiernan el ancho (anchor="left") o alto (anchor="top") en cada estado —
  * sobreescribibles por el consumidor vía `style` (custom properties CSS),
  * p. ej. un SidebarMenu que necesite 56px/312px en vez de los de muestra.
@@ -96,11 +96,11 @@ const css = `
   box-sizing:    border-box;
   display:       flex;
   overflow:      hidden;
-  background:    var(--ds-drawer-root-bg-primary);
-  border:        var(--ds-drawer-root-border-width-generic) solid var(--ds-drawer-root-border-color-generic);
+  background:    var(--ds-drawer-bg-primary);
+  border:        var(--ds-drawer-border-width-generic) solid var(--ds-drawer-border-color-generic);
   transition:    width 0.2s ease, height 0.2s ease;
 }
-.ds-drawer--color-secondary { background: var(--ds-drawer-root-bg-secondary); }
+.ds-drawer--color-secondary { background: var(--ds-drawer-bg-secondary); }
 
 /* Icono siempre arriba (o abajo con iconPlacement="end"), children en el
    resto del eje — solo cambia qué dimensión CSS responde a collapsed/expanded. */
@@ -108,14 +108,14 @@ const css = `
 .ds-drawer--anchor-top  { flex-direction: column; width: 100%; }
 .ds-drawer--anchor-left.ds-drawer--placement-end { flex-direction: column-reverse; }
 
-.ds-drawer--anchor-left.ds-drawer--collapsed  { width: var(--ds-drawer-collapsed-size); }
-.ds-drawer--anchor-left.ds-drawer--expanded   { width: var(--ds-drawer-expanded-size); }
-.ds-drawer--anchor-top.ds-drawer--collapsed   { height: var(--ds-drawer-collapsed-size); }
-.ds-drawer--anchor-top.ds-drawer--expanded    { height: var(--ds-drawer-expanded-size); }
+.ds-drawer--anchor-left.ds-drawer--collapsed  { width: var(--ds-drawer-size-collapsed); }
+.ds-drawer--anchor-left.ds-drawer--expanded   { width: var(--ds-drawer-size-expanded); }
+.ds-drawer--anchor-top.ds-drawer--collapsed   { height: var(--ds-drawer-size-collapsed); }
+.ds-drawer--anchor-top.ds-drawer--expanded    { height: var(--ds-drawer-size-expanded); }
 
 /* El radio solo va en el borde opuesto al anclaje (confirmado por dato en Figma) */
-.ds-drawer--anchor-left { border-radius: 0 var(--ds-drawer-root-border-radius-generic) var(--ds-drawer-root-border-radius-generic) 0; }
-.ds-drawer--anchor-top  { border-radius: 0 0 var(--ds-drawer-root-border-radius-generic) var(--ds-drawer-root-border-radius-generic); }
+.ds-drawer--anchor-left { border-radius: 0 var(--ds-drawer-border-radius-generic) var(--ds-drawer-border-radius-generic) 0; }
+.ds-drawer--anchor-top  { border-radius: 0 0 var(--ds-drawer-border-radius-generic) var(--ds-drawer-border-radius-generic); }
 
 .ds-drawer__icon {
   flex-shrink:     0;
@@ -127,37 +127,37 @@ const css = `
   background:      transparent;
   border:          none;
   border-radius:   0;
-  color:           var(--ds-drawer-icon-fg-generic);
+  color:           var(--ds-drawer-fg-icon-generic);
   cursor:          pointer;
 }
-.ds-drawer__icon svg { width: var(--ds-drawer-icon-size); height: var(--ds-drawer-icon-size); }
+.ds-drawer__icon svg { width: var(--ds-drawer-size-icon); height: var(--ds-drawer-size-icon); }
 /* Franja del icono: 64 a lo largo del riel; en el riel izquierdo ocupa todo
    el ancho y el icono queda centrado en el ancho del riel colapsado. */
 .ds-drawer--anchor-left .ds-drawer__icon-row { align-self: stretch; }
 .ds-drawer--anchor-left .ds-drawer__icon {
   width:           100%;
-  height:          calc(var(--ds-drawer-icon-size) + 2 * var(--ds-drawer-icon-padding));
+  height:          calc(var(--ds-drawer-size-icon) + 2 * var(--ds-drawer-padding-icon));
   justify-content: flex-start;
-  padding-left:    var(--ds-drawer-toggle-padding-center);
+  padding-left:    var(--ds-drawer-padding-toggle-center);
 }
 /* Hover azul (como las filas: el toggle es superficie del riel) y pressed por opacidad */
-button.ds-drawer__icon:hover  { background: var(--ds-drawer-toggle-bg-hover); }
-button.ds-drawer__icon:active { background: var(--ds-drawer-toggle-bg-hover); opacity: var(--ds-drawer-toggle-opacity-pressed); }
+button.ds-drawer__icon:hover  { background: var(--ds-drawer-bg-toggle-hover); }
+button.ds-drawer__icon:active { background: var(--ds-drawer-bg-toggle-hover); opacity: var(--ds-drawer-opacity-toggle-pressed); }
 .ds-drawer--anchor-top .ds-drawer__icon {
-  width:  calc(var(--ds-drawer-icon-size) + 2 * var(--ds-drawer-icon-padding));
-  height: var(--ds-drawer-collapsed-size);
+  width:  calc(var(--ds-drawer-size-icon) + 2 * var(--ds-drawer-padding-icon));
+  height: var(--ds-drawer-size-collapsed);
 }
 /* Foco: anillo doble por dentro de la franja del icono */
 .ds-drawer__icon:focus-visible {
-  outline:        var(--ds-drawer-root-focus-width) solid var(--ds-drawer-root-focus-outer);
-  outline-offset: calc(-1 * var(--ds-drawer-root-focus-width));
-  box-shadow:     inset 0 0 0 calc(2 * var(--ds-drawer-root-focus-width)) var(--ds-drawer-root-focus-inner);
+  outline:        var(--ds-drawer-border-width-focus) solid var(--ds-drawer-border-color-focus-outer);
+  outline-offset: calc(-1 * var(--ds-drawer-border-width-focus));
+  box-shadow:     inset 0 0 0 calc(2 * var(--ds-drawer-border-width-focus)) var(--ds-drawer-border-color-focus-inner);
 }
 /* La franja toca la esquina redondeada del Drawer: el anillo la sigue */
-.ds-drawer--anchor-left.ds-drawer--placement-start .ds-drawer__icon { border-top-right-radius: var(--ds-drawer-root-border-radius-generic); }
-.ds-drawer--anchor-left.ds-drawer--placement-end .ds-drawer__icon   { border-bottom-right-radius: var(--ds-drawer-root-border-radius-generic); }
-.ds-drawer--anchor-top.ds-drawer--collapsed.ds-drawer--placement-start .ds-drawer__icon { border-bottom-left-radius: var(--ds-drawer-root-border-radius-generic); }
-.ds-drawer--anchor-top.ds-drawer--collapsed.ds-drawer--placement-end .ds-drawer__icon   { border-bottom-right-radius: var(--ds-drawer-root-border-radius-generic); }
+.ds-drawer--anchor-left.ds-drawer--placement-start .ds-drawer__icon { border-top-right-radius: var(--ds-drawer-border-radius-generic); }
+.ds-drawer--anchor-left.ds-drawer--placement-end .ds-drawer__icon   { border-bottom-right-radius: var(--ds-drawer-border-radius-generic); }
+.ds-drawer--anchor-top.ds-drawer--collapsed.ds-drawer--placement-start .ds-drawer__icon { border-bottom-left-radius: var(--ds-drawer-border-radius-generic); }
+.ds-drawer--anchor-top.ds-drawer--collapsed.ds-drawer--placement-end .ds-drawer__icon   { border-bottom-right-radius: var(--ds-drawer-border-radius-generic); }
 
 /* El icono NUNCA se centra — confirmado por dato en Figma: x fijo (20px
    anchor=left, 16px anchor=top) igual en Collapsed y Expanded, no un cálculo

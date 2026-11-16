@@ -27,8 +27,8 @@ import { stepStatusText } from './_stepStatus';
 
 const css = `
 .ds-node {
-  width: var(--ds-steps-node-size);
-  height: var(--ds-steps-node-size);
+  width: var(--ds-steps-size-node);
+  height: var(--ds-steps-size-node);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -43,22 +43,22 @@ const css = `
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  border: var(--ds-steps-border-width) solid var(--ds-steps-node-border-color-incomplete);
-  color: var(--ds-steps-node-fg-incomplete);
+  border: var(--ds-steps-border-width-generic) solid var(--ds-steps-border-color-node-incomplete);
+  color: var(--ds-steps-fg-node-incomplete);
   font-family: inherit;
   font-size: var(--ds-fontSize-label-lg);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-label-lg);
 }
 .ds-node--active .ds-node__circle {
-  background:  var(--ds-steps-node-bg-active);
-  border-color: var(--ds-steps-node-border-color-active);
-  color:       var(--ds-steps-node-fg-active);
+  background:  var(--ds-steps-bg-node-active);
+  border-color: var(--ds-steps-border-color-node-active);
+  color:       var(--ds-steps-fg-node-active);
 }
 .ds-node--completed .ds-node__circle {
-  background:  var(--ds-steps-node-bg-completed);
-  border-color: var(--ds-steps-node-border-color-completed);
-  color:       var(--ds-steps-node-fg-completed);
+  background:  var(--ds-steps-bg-node-completed);
+  border-color: var(--ds-steps-border-color-node-completed);
+  color:       var(--ds-steps-fg-node-completed);
 }
 `;
 

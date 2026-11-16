@@ -48,7 +48,7 @@ const css = `
   box-sizing: border-box;
   background: var(--ds-tooltip-bg);
   color: var(--ds-tooltip-fg);
-  border-radius: var(--ds-tooltip-border-radius);
+  border-radius: var(--ds-tooltip-border-radius-generic);
   padding: var(--ds-tooltip-padding-ver) var(--ds-tooltip-padding-hor);
   font-family: inherit;                        /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-label-xs);       /* 12 */

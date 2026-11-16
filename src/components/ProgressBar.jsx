@@ -43,21 +43,21 @@ const css = `
 }
 .ds-progress-bar__track {
   width: 100%;
-  height: var(--ds-progress-bar-track-height);
-  border-radius: var(--ds-progress-bar-root-border-radius);
+  height: var(--ds-progress-bar-height-track);
+  border-radius: var(--ds-progress-bar-border-radius);
   overflow: hidden;
 }
 .ds-progress-bar--default .ds-progress-bar__track {
-  background: var(--ds-progress-bar-root-bg-default);
+  background: var(--ds-progress-bar-bg-default);
 }
 .ds-progress-bar--onColor {
   /* Label y Helper son los átomos de Form Elements: sobre relleno de color se
      redefinen sus variables desde aquí (regla de instancias anidadas) */
-  --ds-field-label-fg-generic: var(--ds-progress-bar-text-fg-on-color);
-  --ds-helper-text-fg-generic: var(--ds-progress-bar-text-fg-on-color);
+  --ds-field-label-fg-text-generic: var(--ds-progress-bar-fg-text-on-color);
+  --ds-helper-text-fg-text-generic: var(--ds-progress-bar-fg-text-on-color);
 }
 .ds-progress-bar--onColor .ds-progress-bar__track {
-  background: var(--ds-progress-bar-root-bg-on-color);
+  background: var(--ds-progress-bar-bg-on-color);
 }
 .ds-progress-bar__indicator {
   height: 100%;

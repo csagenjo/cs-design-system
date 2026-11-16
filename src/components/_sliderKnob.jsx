@@ -10,7 +10,7 @@
  * Tooltip.jsx). El foco por teclado ya la muestra vía `:focus-within` nativo
  * del propio Tooltip, sin necesitar `dragging` para eso.
  *
- * Sombra de elevación (`--ds-slider-knob-shadow`, Effect Style "Slider/Knob
+ * Sombra de elevación (`--ds-slider-shadow-knob`, Effect Style "Slider/Knob
  * Shadow") en reposo, hover y arrastre; en :focus-visible la sustituye el
  * anillo de foco y en disabled no hay — igual que Figma (29/09).
  */
@@ -22,12 +22,12 @@ import { Tooltip } from './Tooltip';
 const css = `
 .ds-slider__knob {
   box-sizing: border-box;
-  width: var(--ds-slider-knob-size);
-  height: var(--ds-slider-knob-size);
-  border-radius: var(--ds-slider-knob-border-radius);
-  background: var(--ds-slider-knob-bg);
-  border: var(--ds-slider-knob-border-width) solid var(--ds-slider-knob-border-color);
-  box-shadow: var(--ds-slider-knob-shadow);
+  width: var(--ds-slider-size-knob);
+  height: var(--ds-slider-size-knob);
+  border-radius: var(--ds-slider-border-radius-knob);
+  background: var(--ds-slider-bg-knob);
+  border: var(--ds-slider-border-width-knob-generic) solid var(--ds-slider-border-color-knob);
+  box-shadow: var(--ds-slider-shadow-knob);
   cursor: grab;
   touch-action: none;
   display: block;
@@ -37,15 +37,15 @@ const css = `
 }
 .ds-slider__knob:focus-visible {
   /* Figma .Knob State=Focus: inner 2 por dentro del knob (borde) + outer 2 por fuera, sin sombra */
-  border-width: var(--ds-slider-knob-border-width-focus);
-  border-color: var(--ds-slider-knob-focus-inner);
-  outline: var(--ds-slider-knob-border-width-focus) solid var(--ds-slider-knob-focus-outer);
+  border-width: var(--ds-slider-border-width-knob-focus);
+  border-color: var(--ds-slider-border-color-knob-focus-inner);
+  outline: var(--ds-slider-border-width-knob-focus) solid var(--ds-slider-border-color-knob-focus-outer);
   outline-offset: 0;
   box-shadow: none;
 }
 .ds-slider__knob--disabled {
-  background: var(--ds-slider-knob-bg-disabled);
-  border-color: var(--ds-slider-knob-border-color-disabled);
+  background: var(--ds-slider-bg-knob-disabled);
+  border-color: var(--ds-slider-border-color-knob-disabled);
   box-shadow: none;
   cursor: not-allowed;
 }
@@ -81,7 +81,7 @@ export const SliderKnob = React.forwardRef(function SliderKnob(
         left: `${percent}%`,
         transform: 'translate(-50%, -50%)',
         // Figma .Knob: 8 entre la burbuja y el knob (slider/all/knob/tooltipGap)
-        '--ds-tooltip-offset': 'var(--ds-slider-knob-tooltip-gap)',
+        '--ds-tooltip-offset': 'var(--ds-slider-gap-knob-tooltip-generic)',
       }}
     >
       <span

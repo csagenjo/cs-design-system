@@ -33,7 +33,7 @@ import { Button } from '../components/Button';
 const css = `
 .ds-file-upload {
   display: flex;
-  gap: var(--ds-file-upload-root-gap-generic);
+  gap: var(--ds-file-upload-gap-generic);
   box-sizing: border-box;
 }
 .ds-file-upload--wide {
@@ -51,7 +51,7 @@ const css = `
 .ds-file-upload__label {
   flex-shrink: 0;
 }
-.ds-file-upload--wide .ds-file-upload__label { width: var(--ds-file-upload-label-width-wide); }
+.ds-file-upload--wide .ds-file-upload__label { width: var(--ds-file-upload-width-label-wide); }
 
 .ds-file-upload__selector {
   flex: 1 0 0;

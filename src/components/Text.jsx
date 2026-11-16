@@ -30,7 +30,7 @@ const css = `
 .ds-text {
   display: inline-flex;
   align-items: center;
-  gap: var(--ds-text-gap);
+  gap: var(--ds-text-gap-generic);
   font-family: inherit;
   font-weight: var(--ds-font-weight-bold);
   white-space: nowrap;
@@ -42,8 +42,8 @@ const css = `
 
 .ds-text--regular { font-weight: var(--ds-font-weight-regular); }
 
-.ds-text--secondary { color: var(--ds-text-fg-secondary); }
-.ds-text--disabled  { color: var(--ds-text-fg-disabled); }
+.ds-text--secondary { color: var(--ds-text-fg-label-secondary); }
+.ds-text--disabled  { color: var(--ds-text-fg-label-disabled); }
 
 .ds-text__chevron { display: inline-flex; flex-shrink: 0; }
 `;

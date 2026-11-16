@@ -12,14 +12,14 @@ const css = `
   display:        flex;
   align-items:    center;
   width:          100%;
-  gap:            var(--ds-account-selector-root-gap);
-  padding-left:   var(--ds-account-selector-root-padding);
-  background:     var(--ds-account-selector-root-bg-generic);
+  gap:            var(--ds-account-selector-gap);
+  padding-left:   var(--ds-account-selector-padding);
+  background:     var(--ds-account-selector-bg-generic);
   /* Unselected/Disabled sin borde real en Figma (mismo criterio aplicado por
      Carol que en Selector List Item, 10/09/2026) — base transparente del
      mismo ancho que Error (1px) para no desplazar el layout al activarlo. */
-  border:         var(--ds-account-selector-root-border-width-generic) solid transparent;
-  border-radius:  var(--ds-account-selector-root-border-radius-generic);
+  border:         var(--ds-account-selector-border-width-generic) solid transparent;
+  border-radius:  var(--ds-account-selector-border-radius-generic);
   font-family:    inherit;
   text-align:     left;
   cursor:         pointer;
@@ -29,21 +29,21 @@ const css = `
 .ds-account-selector-list-item__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-account-selector-icon-fg-primary);
+  color:       var(--ds-account-selector-fg-icon-primary);
 }
 .ds-account-selector-list-item__icon-left svg {
-  width:  var(--ds-account-selector-icon-left-size);
-  height: var(--ds-account-selector-icon-left-size);
+  width:  var(--ds-account-selector-size-icon-left);
+  height: var(--ds-account-selector-size-icon-left);
 }
 
 .ds-account-selector-list-item__content {
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-account-selector-content-gap);
+  gap:         var(--ds-account-selector-gap-content);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) 0;
+  padding:     var(--ds-account-selector-padding-content) var(--ds-account-selector-padding-content) var(--ds-account-selector-padding-content) 0;
 }
 
 .ds-account-selector-list-item__center {
@@ -59,7 +59,7 @@ const css = `
   font-size:   var(--ds-fontSize-title-sm);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-title-sm);
-  color:       var(--ds-account-selector-header-fg-default);
+  color:       var(--ds-account-selector-fg-header-default);
   overflow:    hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -79,29 +79,29 @@ const css = `
 
 .ds-account-selector-list-item--unselected:hover,
 .ds-account-selector-list-item--selected:hover {
-  background: var(--ds-account-selector-root-bg-hover);
+  background: var(--ds-account-selector-bg-hover);
 }
 .ds-account-selector-list-item--unselected:active,
 .ds-account-selector-list-item--selected:active {
-  opacity: var(--ds-account-selector-root-opacity-pressed);
+  opacity: var(--ds-account-selector-opacity-pressed);
 }
 
 /* Selected — 2px real (mismo ancho que el foco, a propósito) */
 .ds-account-selector-list-item--selected {
-  border-width: var(--ds-account-selector-root-border-width-focus);
-  border-color: var(--ds-account-selector-root-border-color-selected);
+  border-width: var(--ds-account-selector-border-width-focus);
+  border-color: var(--ds-account-selector-border-color-selected);
 }
 /* Error — 1px, distinto de Selected a propósito */
 .ds-account-selector-list-item--error {
-  border-color: var(--ds-account-selector-root-border-color-error);
+  border-color: var(--ds-account-selector-border-color-error);
 }
 
 /* Focus: anillo doble por dentro de la fila (igual que SelectorListItem) */
 .ds-account-selector-list-item:focus-visible,
 .ds-account-selector-list-item:has(:focus-visible) {
-  outline:        var(--ds-account-selector-root-border-width-focus) solid var(--ds-account-selector-root-border-color-focus-outer);
-  outline-offset: calc(var(--ds-account-selector-root-border-width-focus) * -1);
-  box-shadow:     inset 0 0 0 calc(var(--ds-account-selector-root-border-width-focus) * 2) var(--ds-account-selector-root-border-color-focus-inner);
+  outline:        var(--ds-account-selector-border-width-focus) solid var(--ds-account-selector-border-color-focus-outer);
+  outline-offset: calc(var(--ds-account-selector-border-width-focus) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-account-selector-border-width-focus) * 2) var(--ds-account-selector-border-color-focus-inner);
 }
 /* El anillo es de la fila (Figma Focus): el Radio/Checkbox de dentro no pinta el suyo */
 .ds-account-selector-list-item .ds-radio:has(:focus-visible),
@@ -111,11 +111,11 @@ const css = `
 
 /* Disabled — sin borde, igual que Unselected (confirmado en Figma) */
 .ds-account-selector-list-item--disabled {
-  background: var(--ds-account-selector-root-bg-disabled);
+  background: var(--ds-account-selector-bg-disabled);
   cursor:     not-allowed;
 }
-.ds-account-selector-list-item--disabled .ds-account-selector-list-item__icon-left { color: var(--ds-account-selector-icon-fg-disabled); }
-.ds-account-selector-list-item--disabled .ds-account-selector-list-item__header { color: var(--ds-account-selector-header-fg-disabled); }
+.ds-account-selector-list-item--disabled .ds-account-selector-list-item__icon-left { color: var(--ds-account-selector-fg-icon-disabled); }
+.ds-account-selector-list-item--disabled .ds-account-selector-list-item__header { color: var(--ds-account-selector-fg-header-disabled); }
 `;
 
 injectStyles('ds-account-selector-list-item', css);

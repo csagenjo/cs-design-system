@@ -33,14 +33,14 @@ const css = `
 .ds-image {
   display:        flex;
   flex-direction: column;
-  gap:            var(--ds-image-gap);
+  gap:            var(--ds-image-gap-generic);
   margin:         0;
 }
 .ds-image__frame {
   width:         100%;
-  border-radius: var(--ds-image-frame-border-radius);
+  border-radius: var(--ds-image-border-radius-frame-rounded-corners);
   overflow:      hidden;
-  background:    var(--ds-image-frame-bg-generic);
+  background:    var(--ds-image-bg-frame-generic);
 }
 ${Object.entries(ASPECT_RATIO).map(([k, v]) =>
   `.ds-image--${k.replace(':', '-')} .ds-image__frame { aspect-ratio: ${v}; }`).join('\n')}
@@ -56,7 +56,7 @@ ${Object.entries(ASPECT_RATIO).map(([k, v]) =>
   font-weight: var(--ds-font-weight-regular);
   font-size:   var(--ds-fontSize-body-sm);
   line-height: var(--ds-lineHeight-body-sm);
-  color:       var(--ds-image-caption-fg-generic);
+  color:       var(--ds-image-fg-caption-generic);
 }
 `;
 

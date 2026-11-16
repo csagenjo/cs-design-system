@@ -28,13 +28,13 @@ injectStyles('ds-choice-group', `
   border:         0;
   font-family:    inherit;
 }
-.ds-choice-group__legend { margin-bottom: var(--ds-choice-group-root-gap); }
-.ds-choice-group__helper { margin-bottom: var(--ds-choice-group-root-gap); }
-.ds-choice-group__message { margin-top: var(--ds-choice-group-validation-gap); }
+.ds-choice-group__legend { margin-bottom: var(--ds-choice-group-gap-generic); }
+.ds-choice-group__helper { margin-bottom: var(--ds-choice-group-gap-generic); }
+.ds-choice-group__message { margin-top: var(--ds-choice-group-gap-validation-generic); }
 .ds-choice-group__options {
   display:        flex;
   flex-direction: column;
-  gap:            var(--ds-choice-group-gap);
+  gap:            var(--ds-choice-group-gap-options-generic);
 }
 .ds-choice-group--horizontal .ds-choice-group__options { flex-direction: row; flex-wrap: wrap; }
 .ds-choice-group--no-gap .ds-choice-group__options { gap: 0; }

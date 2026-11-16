@@ -25,37 +25,37 @@ const css = `
   top:           100%;
   left:          0;
   right:         0;
-  margin-top:    var(--ds-picker-root-offset);
-  z-index:       var(--ds-picker-root-z-index);
+  margin-top:    var(--ds-picker-offset-generic);
+  z-index:       var(--ds-picker-z-index);
   box-sizing:    border-box;
-  max-height:    var(--ds-picker-root-max-height);
+  max-height:    var(--ds-picker-height-max);
   overflow-y:    auto;
-  padding:       var(--ds-picker-root-padding);
-  background:    var(--ds-picker-root-bg);
-  border:        var(--ds-picker-root-border-width) solid var(--ds-picker-root-border-color);
-  border-radius: var(--ds-picker-root-border-radius);
-  box-shadow:    var(--ds-picker-root-shadow);
+  padding:       var(--ds-picker-padding-generic);
+  background:    var(--ds-picker-bg-generic);
+  border:        var(--ds-picker-border-width-generic) solid var(--ds-picker-border-color-generic);
+  border-radius: var(--ds-picker-border-radius-generic);
+  box-shadow:    var(--ds-picker-shadow);
 }
 .ds-picker--up {
   top:           auto;
   bottom:        100%;
   margin-top:    0;
-  margin-bottom: var(--ds-picker-root-offset);
+  margin-bottom: var(--ds-picker-offset-generic);
 }
 .ds-picker__list,
 .ds-picker__group {
   display:        flex;
   flex-direction: column;
-  gap:            var(--ds-picker-root-gap);
+  gap:            var(--ds-picker-gap-generic);
 }
 .ds-picker__heading {
-  padding: var(--ds-picker-heading-padding-ver) var(--ds-picker-heading-padding-hor);
+  padding: var(--ds-picker-padding-ver-heading-generic) var(--ds-picker-padding-hor-heading-generic);
 }
 .ds-picker__empty {
-  padding:   var(--ds-picker-empty-padding);
+  padding:   var(--ds-picker-padding-empty-generic);
   font-size: var(--ds-fontSize-body-sm);
   line-height: var(--ds-lineHeight-body-sm);
-  color:     var(--ds-picker-empty-fg);
+  color:     var(--ds-picker-fg-empty-generic);
 }
 `;
 

@@ -56,21 +56,21 @@ const css = `
 .ds-inline-notification--default    { background: var(--ds-inline-notification-bg); }
 .ds-inline-notification--borderless { background: var(--ds-inline-notification-bg-borderless); }
 .ds-inline-notification--default.ds-inline-notification--error       { --_border: var(--ds-inline-notification-color-error); }
-.ds-inline-notification--default.ds-inline-notification--success     { --_border: var(--ds-inline-notification-color-success); }
+.ds-inline-notification--default.ds-inline-notification--success     { --_border: var(--ds-inline-notification-border-color-success); }
 .ds-inline-notification--default.ds-inline-notification--information { --_border: var(--ds-inline-notification-color-information); }
-.ds-inline-notification--default.ds-inline-notification--warning     { --_border: var(--ds-inline-notification-color-warning); }
+.ds-inline-notification--default.ds-inline-notification--warning     { --_border: var(--ds-inline-notification-border-color-warning); }
 
-.ds-inline-notification__icon--error       { color: var(--ds-inline-notification-icon-fg-error); }
-.ds-inline-notification__icon--success     { color: var(--ds-inline-notification-icon-fg-success); }
-.ds-inline-notification__icon--information { color: var(--ds-inline-notification-icon-fg-information); }
-.ds-inline-notification__icon--warning     { color: var(--ds-inline-notification-icon-fg-warning); }
+.ds-inline-notification__icon--error       { color: var(--ds-inline-notification-fg-icon-error); }
+.ds-inline-notification__icon--success     { color: var(--ds-inline-notification-fg-icon-success); }
+.ds-inline-notification__icon--information { color: var(--ds-inline-notification-fg-icon-information); }
+.ds-inline-notification__icon--warning     { color: var(--ds-inline-notification-fg-icon-warning); }
 .ds-inline-notification__icon { flex-shrink: 0; }
 
 .ds-inline-notification__content {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: var(--ds-inline-notification-content-gap);
+  gap: var(--ds-inline-notification-gap-content);
   min-width: 0;
 }
 .ds-inline-notification__text {
@@ -83,13 +83,13 @@ const css = `
   font-size: var(--ds-fontSize-title-sm);
   line-height: var(--ds-lineHeight-title-sm);  /* 24 — faltaba: heredaba 23.2 de index.css (29/09) */
   font-weight: var(--ds-font-weight-bold);
-  color: var(--ds-inline-notification-title-fg);
+  color: var(--ds-inline-notification-fg-title);
   text-align: left;
 }
 .ds-inline-notification__message {
   font-size: var(--ds-fontSize-body-sm);
   line-height: var(--ds-lineHeight-body-sm);   /* 24 — faltaba (29/09) */
-  color: var(--ds-inline-notification-text-fg);
+  color: var(--ds-inline-notification-fg-text);
   text-align: left;
 }
 .ds-inline-notification__button {

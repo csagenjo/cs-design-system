@@ -63,7 +63,7 @@ Rules that apply to every entry:
 A vertical list of items whose content expands and collapses under a
 clickable title.
 
-**Content slot (13/11).** In Figma the expanded item has a `Content` slot (like `children` in code): put fields, lists or text inside. Built to sit edge to edge in a Card: the divider spans the full width, the title has 24 of side padding, the content 20 (+ the 4 focus area of fields = 24) and plain text enters 4 more (`--ds-accordion-root-inset-hor`), so title, text and field boxes share one vertical line. Collapsed 40, every expanded height a multiple of 8.
+**Content slot (13/11).** In Figma the expanded item has a `Content` slot (like `children` in code): put fields, lists or text inside. Built to sit edge to edge in a Card: the divider spans the full width, the title has 24 of side padding, the content 20 (+ the 4 focus area of fields = 24) and plain text enters 4 more (`--ds-accordion-inset-hor`), so title, text and field boxes share one vertical line. Collapsed 40, every expanded height a multiple of 8.
 
 ## How to use
 
@@ -376,10 +376,10 @@ import { ValidationMessage } from './components/ValidationMessage';
 
 Known gaps: none.
 
-**Tokens:** `--ds-field-label-fg-generic|disabled`, `--ds-field-label-required-fg`,
-`--ds-field-label-gap` (Figma `fieldLabel/all/*`) · `--ds-helper-text-fg-generic|disabled`
-(`helperText/all/text/fg/*`) · `--ds-validation-message-fg-text|fg-icon`,
-`--ds-validation-message-gap` (`validationMessage/all/*`). Typography comes
+**Tokens:** `--ds-field-label-fg-text-generic|disabled`, `--ds-field-label-fg-required-generic`,
+`--ds-field-label-gap-generic` (Figma `fieldLabel/all/*`) · `--ds-helper-text-fg-text-generic|disabled`
+(`helperText/all/text/fg/*`) · `--ds-validation-message-fg-text-generic|fg-icon`,
+`--ds-validation-message-gap-generic` (`validationMessage/all/*`). Typography comes
 straight from Device. Since 23/10/2026 they no longer borrow `Input/InputCommon` tokens.
 
 ---
@@ -500,9 +500,9 @@ import { CheckboxGroup } from './organisms/CheckboxGroup';
 
 Known gaps: none.
 
-**Tokens:** `--ds-choice-group-gap` (options, `choiceGroup/all/options/gap`),
-`--ds-choice-group-root-gap` (question → helper → options, `choiceGroup/all/root/gap`),
-`--ds-choice-group-validation-gap` (`choiceGroup/all/validation/gap`).
+**Tokens:** `--ds-choice-group-gap-options-generic` (options, `choiceGroup/all/options/gap`),
+`--ds-choice-group-gap-generic` (question → helper → options, `choiceGroup/all/root/gap`),
+`--ds-choice-group-gap-validation-generic` (`choiceGroup/all/validation/gap`).
 
 ---
 
@@ -755,7 +755,7 @@ Known gaps: none.
 **Group:** Actions (organism)
 **Figma:** 🟢 Buttons page → `Button Bar` set (Variant Complex / Simple / Form / Detail + `Show Notification`, `Show Previous`, `Show Negative`, `Show Cancel`, `Show Secondary`, `Show Primary`, `Show Next`; created 26/10) · frames *Button Bar* (variants, by Carol) and *Button Bar — How to use & Accessibility*
 **Code:** `src/organisms/ButtonBar.jsx` (organism, v3; composes Button and takes an InlineNotification)
-**Tokens:** `--ds-button-bar-gap`, `--ds-button-bar-notification-gap` (`buttonBar/all/*`)
+**Tokens:** `--ds-button-bar-gap-generic`, `--ds-button-bar-gap-notification-generic` (`buttonBar/all/*`)
 
 The closing actions of a screen: forms, step processes, search panels and
 detail views. It fixes the order and the style of each button so every
@@ -3593,7 +3593,7 @@ A country's flag in full colour, next to its name or dial code.
 **Group:** Steps
 **Figma:** 🟢 Steps page → `.Node`, `.StepHor`, `.StepVer` (private, locked inside Step Indicator and Step Navigator) · frame *Step Elements — How to use & Accessibility* (12/11)
 **Code:** `src/components/Node.jsx`, `StepHor.jsx`, `StepVer.jsx` (atoms) + `_stepStatus.js`
-**Tokens:** `--ds-steps-node-*`, `--ds-steps-border-width`, `--ds-steps-connector-border-color`, `--ds-steps-label-fg-generic`, `--ds-steps-indicator-step-hor-*`
+**Tokens:** `--ds-steps-node-*`, `--ds-steps-border-width-generic`, `--ds-steps-border-color-connector`, `--ds-steps-fg-label-generic`, `--ds-steps-indicator-step-hor-*`
 
 The building blocks of the Steps family: the step circle and the connectors that join steps.
 
@@ -3664,7 +3664,7 @@ The building blocks of the Steps family: the step circle and the connectors that
 **Group:** Steps
 **Figma:** 🟢 Steps page → `Step Navigator` (Variation Page / Chapter - Collapsed / Chapter - Expanded × Style On default / On page × State) and `Substep Navigator` · frame *Step Navigator — How to use & Accessibility* (12/11)
 **Code:** `src/organisms/StepNavigator.jsx`, `SubstepNavigator.jsx` (organisms)
-**Tokens:** `--ds-steps-root-*`, `--ds-steps-navigator-*`, `--ds-steps-label-fg-generic`, `--ds-steps-icon-fg-generic`
+**Tokens:** `--ds-steps-root-*`, `--ds-steps-navigator-*`, `--ds-steps-fg-label-generic`, `--ds-steps-fg-icon-generic`
 
 A vertical list of the steps of a long process; chapter rows expand into substeps.
 
@@ -3746,7 +3746,7 @@ A vertical list of the steps of a long process; chapter rows expand into substep
 **Group:** Steps
 **Figma:** 🟢 Steps page → `Step Indicator Large` (Number of steps 2–7) and `Step Indicator small` (States) · frame *Step Indicator — How to use & Accessibility* (12/11)
 **Code:** `src/organisms/StepIndicatorLarge.jsx`, `StepIndicatorSmall.jsx` (organisms)
-**Tokens:** `--ds-steps-indicator-*`, `--ds-steps-node-*`, `--ds-steps-label-fg-generic`
+**Tokens:** `--ds-steps-indicator-*`, `--ds-steps-node-*`, `--ds-steps-fg-label-generic`
 
 Where the user is in a process of 2 to 7 steps: every step in a row (Large) or one compact row (Small).
 
@@ -4809,7 +4809,7 @@ A side or top panel that can collapse to a rail; the frame of Sidebar Menu.
 
 **Props**
 - anchor 'left'|'top', color 'primary'|'secondary', dismissable, collapsed, onToggleCollapse, icon, expandedIcon, iconPlacement 'start'|'end'|'none', iconLabel ('Toggle panel'), showDivider, children
-- Sizes: CSS custom properties --ds-drawer-collapsed-size / --ds-drawer-expanded-size
+- Sizes: CSS custom properties --ds-drawer-size-collapsed / --ds-drawer-size-expanded
 
 **Example**
 - `<Drawer collapsed={c} onToggleCollapse={() => setC(!c)} icon={<Icon name="menu" />} expandedIcon={<Icon name="arrow-left" />}>…</Drawer>`
@@ -4909,7 +4909,7 @@ The side navigation of La Plataforma, up to three levels.
 
 **Example**
 - `<SidebarMenu title="Account management" items={tree} selectedId={page} onSelect={go} collapsed={c} onToggleCollapse={() => setC(!c)} />`
-- Inside Top Navigation's mobile panel it fills the panel width (--ds-drawer-expanded-size: 100%); TopNavigation builds it from menuItems and passes selectedId and collapseOnDismiss={false} — don't add a second SidebarMenu on those breakpoints
+- Inside Top Navigation's mobile panel it fills the panel width (--ds-drawer-size-expanded: 100%); TopNavigation builds it from menuItems and passes selectedId and collapseOnDismiss={false} — don't add a second SidebarMenu on those breakpoints
 
 ### AI agents · Claude Code
 
@@ -5260,7 +5260,7 @@ Title of a group inside a screen: rows in List View, Selector and Description Li
 **Group:** Content
 **Figma:** 🟢 Text page → `Text` (Color Default · Secondary · Disabled × Size 14 · 16 × Style Bold · Regular, Chevron) · frame *Text — How to use & Accessibility* (12/11)
 **Code:** `src/components/Text.jsx` (atom)
-**Tokens:** `--ds-text-fg-*`, `--ds-text-gap`
+**Tokens:** `--ds-text-fg-*`, `--ds-text-gap-generic`
 
 Short emphasised label, swapped into the Description slot of List View and Selector when a row needs bold, colour or a chevron.
 
@@ -5379,7 +5379,7 @@ Plain secondary text under a title: the default Description of List View and Sel
 **Group:** Content
 **Figma:** 🟢 Detail Text page → `Detail text` (Size 14 · 16 × Color Default · Secondary · Tertiary · Disabled, Icon swap, Show Icon) · frame *Detail Text — How to use & Accessibility* (12/11)
 **Code:** `src/components/DetailText.jsx` (atom)
-**Tokens:** `--ds-detail-text-fg-*`, `--ds-detail-text-icon-fg-*`, `--ds-detail-text-gap`, `--ds-detail-text-icon-size`
+**Tokens:** `--ds-detail-text-fg-*`, `--ds-detail-text-icon-fg-*`, `--ds-detail-text-gap-generic`, `--ds-detail-text-size-icon`
 
 Icon + short value under a title: phone, account number, date.
 

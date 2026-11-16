@@ -41,12 +41,12 @@ const css = `
   stroke-dasharray: 75 25;
 }
 .ds-loading-spinner--extraSmall { width: var(--ds-loading-spinner-size-xs); height: var(--ds-loading-spinner-size-xs); }
-.ds-loading-spinner--small      { width: var(--ds-loading-spinner-size-sm); height: var(--ds-loading-spinner-size-sm); }
+.ds-loading-spinner--small      { width: var(--ds-loading-spinner-size-small); height: var(--ds-loading-spinner-size-small); }
 .ds-loading-spinner--medium     { width: var(--ds-loading-spinner-size-md); height: var(--ds-loading-spinner-size-md); }
-.ds-loading-spinner--large      { width: var(--ds-loading-spinner-size-lg); height: var(--ds-loading-spinner-size-lg); }
+.ds-loading-spinner--large      { width: var(--ds-loading-spinner-size-large); height: var(--ds-loading-spinner-size-large); }
 
-.ds-loading-spinner--primary .ds-loading-spinner__track { stroke: var(--ds-loading-spinner-color-primary); }
-.ds-loading-spinner--onColor .ds-loading-spinner__track { stroke: var(--ds-loading-spinner-color-on-color); }
+.ds-loading-spinner--primary .ds-loading-spinner__track { stroke: var(--ds-loading-spinner-border-color-primary); }
+.ds-loading-spinner--onColor .ds-loading-spinner__track { stroke: var(--ds-loading-spinner-border-color-on-color); }
 /* current: hereda el color del texto del padre (Button lo usa así: el
    spinner toma el color de icono por contraste de cada variante, como en Figma). */
 .ds-loading-spinner--current .ds-loading-spinner__track { stroke: currentColor; }

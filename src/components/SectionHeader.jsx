@@ -39,7 +39,7 @@ const css = `
   font-family:  inherit;                     /* Nunito */
   font-weight:  var(--ds-font-weight-bold);  /* 700 por defecto */
   text-align:   left;
-  color:        var(--ds-section-header-text-fg-default);
+  color:        var(--ds-section-header-fg-text-default);
 }
 
 /* Tamaño (fontSize + lineHeight bloqueados) */
@@ -50,8 +50,8 @@ const css = `
 .ds-section-header--regular { font-weight: var(--ds-font-weight-regular); } /* 400 */
 
 /* Color */
-.ds-section-header--primary  { color: var(--ds-section-header-text-fg-primary);  }
-.ds-section-header--disabled { color: var(--ds-section-header-text-fg-disabled); }
+.ds-section-header--primary  { color: var(--ds-section-header-fg-text-primary);  }
+.ds-section-header--disabled { color: var(--ds-section-header-fg-text-disabled); }
 `;
 
 injectStyles('ds-section-header', css);

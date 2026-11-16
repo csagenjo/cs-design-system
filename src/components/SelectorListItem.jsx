@@ -12,15 +12,15 @@ const css = `
   display:        flex;
   align-items:    center;
   width:          100%;
-  gap:            var(--ds-selector-root-gap);
-  padding-left:   var(--ds-selector-root-padding);
-  background:     var(--ds-selector-root-bg-generic);
+  gap:            var(--ds-selector-gap);
+  padding-left:   var(--ds-selector-padding);
+  background:     var(--ds-selector-bg-generic);
   /* Unselected/Disabled no llevan borde real en Figma (corregido por Carol,
      10/09/2026 — antes había un borde gris de fondo aplicado siempre). Base
      transparente del mismo ancho que Selected/Error (1px) para que activar
      esos estados no desplace el layout 1px. */
-  border:         var(--ds-selector-root-border-width-generic) solid transparent;
-  border-radius:  var(--ds-selector-root-border-radius-generic);
+  border:         var(--ds-selector-border-width-generic) solid transparent;
+  border-radius:  var(--ds-selector-border-radius-generic);
   font-family:    inherit;
   text-align:     left;
   cursor:         pointer;
@@ -30,21 +30,21 @@ const css = `
 .ds-selector-list-item__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-selector-icon-fg-primary);
+  color:       var(--ds-selector-fg-icon-primary);
 }
 .ds-selector-list-item__icon-left svg {
-  width:  var(--ds-selector-icon-left-size);
-  height: var(--ds-selector-icon-left-size);
+  width:  var(--ds-selector-size-icon-left);
+  height: var(--ds-selector-size-icon-left);
 }
 
 .ds-selector-list-item__content {
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-selector-content-gap);
+  gap:         var(--ds-selector-gap-content);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-selector-content-padding) var(--ds-selector-content-padding) var(--ds-selector-content-padding) 0;
+  padding:     var(--ds-selector-padding-content) var(--ds-selector-padding-content) var(--ds-selector-padding-content) 0;
 }
 
 .ds-selector-list-item__center {
@@ -60,7 +60,7 @@ const css = `
   font-size:   var(--ds-fontSize-title-md);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-title-md);
-  color:       var(--ds-selector-header-fg-default);
+  color:       var(--ds-selector-fg-header-default);
   overflow:    hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -82,25 +82,25 @@ const css = `
 /* Hover */
 .ds-selector-list-item--unselected:hover,
 .ds-selector-list-item--selected:hover {
-  background: var(--ds-selector-root-bg-hover);
+  background: var(--ds-selector-bg-hover);
 }
 
 /* Pressed */
 .ds-selector-list-item--unselected:active,
 .ds-selector-list-item--selected:active {
-  opacity: var(--ds-selector-root-opacity-pressed);
+  opacity: var(--ds-selector-opacity-pressed);
 }
 
 /* Selected — 2px real (Carol lo ajustó a propósito al ancho de foco, se ve
    mejor que el 1px inicial) */
 .ds-selector-list-item--selected {
   border-width: var(--ds-selector-root-border-width-focus);
-  border-color: var(--ds-selector-root-border-color-selected);
+  border-color: var(--ds-selector-border-color-selected);
 }
 
 /* Error — 1px, distinto de Selected a propósito */
 .ds-selector-list-item--error {
-  border-color: var(--ds-selector-root-border-color-error);
+  border-color: var(--ds-selector-border-color-error);
 }
 
 /* Focus (Figma: anillo doble POR DENTRO de la fila — va apilada en listas y
@@ -121,11 +121,11 @@ const css = `
 
 /* Disabled — sin borde, igual que Unselected (confirmado en Figma) */
 .ds-selector-list-item--disabled {
-  background: var(--ds-selector-root-bg-disabled);
+  background: var(--ds-selector-bg-disabled);
   cursor:     not-allowed;
 }
-.ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-icon-fg-disabled); }
-.ds-selector-list-item--disabled .ds-selector-list-item__header { color: var(--ds-selector-header-fg-disabled); }
+.ds-selector-list-item--disabled .ds-selector-list-item__icon-left { color: var(--ds-selector-fg-icon-disabled); }
+.ds-selector-list-item--disabled .ds-selector-list-item__header { color: var(--ds-selector-fg-header-disabled); }
 `;
 
 injectStyles('ds-selector-list-item', css);

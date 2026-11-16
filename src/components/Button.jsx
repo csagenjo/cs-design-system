@@ -40,14 +40,14 @@ import { warnOnce, warnPlaceholderLabel } from './_devWarn';
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-btn--sm { --_h: var(--ds-button-height-small);  --_px: var(--ds-button-padding-hor-small);  --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-button-icon-size-small); }
-.ds-btn--md { --_h: var(--ds-button-height-medium); --_px: var(--ds-button-padding-hor-medium); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-button-icon-size-medium); }
-.ds-btn--lg { --_h: var(--ds-button-height-large);  --_px: var(--ds-button-padding-hor-large);  --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-button-icon-size-large); }
+.ds-btn--sm { --_h: var(--ds-button-height-small);  --_px: var(--ds-button-padding-hor-small);  --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-button-size-icon-small); }
+.ds-btn--md { --_h: var(--ds-button-height-medium); --_px: var(--ds-button-padding-hor-medium); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-button-size-icon-medium); }
+.ds-btn--lg { --_h: var(--ds-button-height-large);  --_px: var(--ds-button-padding-hor-large);  --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-button-size-icon-large); }
 /* Área de foco (08/10/2026, igual que Figma): el componente reserva 4px
    alrededor para que el anillo de foco quede DENTRO de su caja. En Figma es
    el padding del frame del componente; aquí, margin del <button>. */
 .ds-btn {
-  margin:          var(--ds-button-focus-area-padding);
+  margin:          var(--ds-button-padding-focus-area-generic);
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
@@ -56,8 +56,8 @@ const css = `
   padding:         0 var(--_px);
   font-size:       var(--_fs);
   font-weight:     var(--ds-font-weight-bold);
-  border-radius:   var(--ds-button-radius);
-  border:          var(--ds-button-border-width) solid transparent;
+  border-radius:   var(--ds-button-border-radius-generic);
+  border:          var(--ds-button-border-width-generic) solid transparent;
   cursor:          pointer;
   transition:      background 0.12s, border-color 0.12s, color 0.12s, opacity 0.12s;
   white-space:     nowrap;
@@ -68,18 +68,18 @@ const css = `
 }
 /* Label: padding horizontal propio (button/all/paddingHor/label/generic = 4):
    separa el texto del icono y del borde, igual que el frame Label de Figma. */
-.ds-btn__label { padding: 0 var(--ds-button-label-padding-hor); }
-.ds-btn--full-width { width: calc(100% - 2 * var(--ds-button-focus-area-padding)); }
+.ds-btn__label { padding: 0 var(--ds-button-padding-hor-label); }
+.ds-btn--full-width { width: calc(100% - 2 * var(--ds-button-padding-focus-area-generic)); }
 /* Foco POR FUERA del botón (08/10/2026, igual que Figma). */
 .ds-btn:focus-visible {
-  outline:        var(--ds-button-focus-width) solid var(--ds-button-border-focus-outer);
-  outline-offset: var(--ds-button-focus-width);
-  box-shadow:     0 0 0 var(--ds-button-focus-width) var(--ds-button-border-focus-inner);
+  outline:        var(--ds-button-border-width-focus) solid var(--ds-button-border-color-focus-outer);
+  outline-offset: var(--ds-button-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-button-border-width-focus) var(--ds-button-border-color-focus-inner);
 }
 
 /* ── Enabled ── */
-.ds-btn--accent  { --_fill: var(--ds-button-bg-accent-filled);  --_on: var(--ds-button-fg-accent-filled);  --_mix: var(--ds-button-bg-mix-accent-hover);  --_line: var(--ds-button-border-accent);  --_ink: var(--ds-button-fg-accent-outline); }
-.ds-btn--default { --_fill: var(--ds-button-bg-default-filled); --_on: var(--ds-button-fg-default-filled); --_mix: var(--ds-button-bg-mix-default-hover); --_line: var(--ds-button-border-default); --_ink: var(--ds-button-fg-default-outline); }
+.ds-btn--accent  { --_fill: var(--ds-button-bg-accent-filled);  --_on: var(--ds-button-fg-accent-filled);  --_mix: var(--ds-button-bg-mix-accent-hover);  --_line: var(--ds-button-border-color-accent);  --_ink: var(--ds-button-fg-accent-outline); }
+.ds-btn--default { --_fill: var(--ds-button-bg-default-filled); --_on: var(--ds-button-fg-default-filled); --_mix: var(--ds-button-bg-mix-default-hover); --_line: var(--ds-button-border-color-default); --_ink: var(--ds-button-fg-default-outline); }
 .ds-btn--primary   { background: var(--_fill);   color: var(--_on);  border-color: var(--_fill); }
 .ds-btn--secondary { background: transparent;   color: var(--_ink); border-color: var(--_line); }
 .ds-btn--tertiary  { background: transparent;   color: var(--_ink); border-color: transparent; }
@@ -100,7 +100,7 @@ const css = `
 /* ── Disabled: sus tokens, nunca opacidad ── */
 .ds-btn:disabled { cursor: not-allowed; color: var(--ds-button-fg-disabled); }
 .ds-btn--primary:disabled   { background: var(--ds-button-bg-disabled); border-color: var(--ds-button-bg-disabled); }
-.ds-btn--secondary:disabled { background: transparent; border-color: var(--ds-button-border-disabled); }
+.ds-btn--secondary:disabled { background: transparent; border-color: var(--ds-button-border-color-disabled); }
 .ds-btn--tertiary:disabled  { background: transparent; border-color: transparent; }
 
 /* Loading: aspecto de Enabled, como en Figma — no es un botón deshabilitado,

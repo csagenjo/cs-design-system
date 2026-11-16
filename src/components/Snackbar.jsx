@@ -35,24 +35,24 @@ const css = `
 .ds-snackbar {
   display:       flex;
   box-sizing:    border-box;
-  background:    var(--ds-snackbar-root-bg-generic);
-  border-radius: var(--ds-snackbar-root-border-radius);
-  padding-left:  var(--ds-snackbar-root-padding-hor);
-  padding-right: var(--ds-snackbar-root-padding-hor);
-  box-shadow:    var(--ds-snackbar-root-shadow);
+  background:    var(--ds-snackbar-bg-generic);
+  border-radius: var(--ds-snackbar-border-radius);
+  padding-left:  var(--ds-snackbar-padding-hor);
+  padding-right: var(--ds-snackbar-padding-hor);
+  box-shadow:    var(--ds-snackbar-shadow);
 }
 .ds-snackbar--single {
   align-items:    center;
   justify-content: flex-end;
-  gap:            var(--ds-snackbar-root-gap-single);
-  padding-top:    var(--ds-snackbar-root-padding-ver-single);
-  padding-bottom: var(--ds-snackbar-root-padding-ver-single);
+  gap:            var(--ds-snackbar-gap-single);
+  padding-top:    var(--ds-snackbar-padding-ver-single-line);
+  padding-bottom: var(--ds-snackbar-padding-ver-single-line);
 }
 .ds-snackbar--multi {
   flex-direction: column;
   align-items:    flex-end;
-  padding-top:    var(--ds-snackbar-root-padding-ver-multi);
-  padding-bottom: var(--ds-snackbar-root-padding-ver-multi);
+  padding-top:    var(--ds-snackbar-padding-ver-multi);
+  padding-bottom: var(--ds-snackbar-padding-ver-multi);
 }
 .ds-snackbar__message {
   margin:      0;
@@ -60,14 +60,14 @@ const css = `
   font-size:   var(--ds-fontSize-body-sm);       /* 16 */
   font-weight: var(--ds-font-weight-regular);    /* 400 */
   line-height: var(--ds-lineHeight-body-sm);          /* 24 */
-  color:       var(--ds-snackbar-text-fg-generic);
+  color:       var(--ds-snackbar-fg-text-generic);
   word-break:  break-word;
 }
 .ds-snackbar .ds-btn {
   /* El foco del sistema no contrasta sobre el fondo invertido: el Button
      anidado toma los focus-*-inverse (mismo mecanismo que Collapsible). */
-  --ds-button-border-focus-inner: var(--ds-snackbar-action-focus-inner);
-  --ds-button-border-focus-outer: var(--ds-snackbar-action-focus-outer);
+  --ds-button-border-color-focus-inner: var(--ds-snackbar-border-color-action-focus-inner);
+  --ds-button-border-color-focus-outer: var(--ds-snackbar-border-color-action-focus-outer);
 }
 .ds-snackbar--single .ds-snackbar__message { flex: 1 0 0; min-width: 0; }
 .ds-snackbar--multi  .ds-snackbar__message { width: 100%; }

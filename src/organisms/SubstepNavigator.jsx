@@ -40,70 +40,70 @@ const css = `
 .ds-substep-navigator {
   display:        flex;
   align-items:    center;
-  gap:            var(--ds-steps-navigator-root-gap);
+  gap:            var(--ds-steps-navigator-gap);
   width:          100%;
-  min-height:     var(--ds-steps-node-size);
-  padding:        0 var(--ds-steps-navigator-substep-padding-right) 0 var(--ds-steps-navigator-root-padding-horizontal);
+  min-height:     var(--ds-steps-size-node);
+  padding:        0 var(--ds-steps-navigator-padding-right-substep) 0 var(--ds-steps-navigator-padding-horizontal);
   border:         none;
-  background:     var(--ds-steps-root-bg-on-default-incomplete);
+  background:     var(--ds-steps-bg-on-default-incomplete);
   cursor:         pointer;
   text-align:     left;
   box-sizing:     border-box;
   outline:        none;
 }
 .ds-substep-navigator--on-page {
-  background: var(--ds-steps-root-bg-on-page-incomplete);
+  background: var(--ds-steps-bg-on-page-incomplete);
 }
 .ds-substep-navigator--active {
-  background: var(--ds-steps-root-bg-on-default-active);
+  background: var(--ds-steps-bg-on-default-active);
 }
 .ds-substep-navigator--active.ds-substep-navigator--on-page {
-  background: var(--ds-steps-root-bg-on-page-active);
+  background: var(--ds-steps-bg-on-page-active);
 }
 .ds-substep-navigator:hover {
-  background: var(--ds-steps-root-bg-hover);
+  background: var(--ds-steps-bg-hover);
 }
 .ds-substep-navigator:focus-visible {
   outline:    var(--ds-border-width-lg) solid transparent; /* visible solo en colores forzados — audit §F */
   outline-offset: calc(var(--ds-border-width-lg) * -1);
   /* Fila apilada: anillo doble POR DENTRO (12/11, CLAUDE.md §4; Figma: rects Focus outer/inner) */
-  box-shadow: inset 0 0 0 var(--ds-steps-root-border-width-focus) var(--ds-steps-root-border-color-focus-outer),
-              inset 0 0 0 calc(var(--ds-steps-root-border-width-focus) * 2) var(--ds-steps-root-border-color-focus-inner);
+  box-shadow: inset 0 0 0 var(--ds-steps-border-width-focus) var(--ds-steps-border-color-focus-outer),
+              inset 0 0 0 calc(var(--ds-steps-border-width-focus) * 2) var(--ds-steps-border-color-focus-inner);
 }
 .ds-substep-navigator--selected {
-  background: var(--ds-steps-root-bg-on-default-completed-selected);
+  background: var(--ds-steps-bg-on-default-completed-selected);
 }
 .ds-substep-navigator--selected.ds-substep-navigator--on-page {
-  background: var(--ds-steps-root-bg-on-page-completed-selected);
+  background: var(--ds-steps-bg-on-page-completed-selected);
 }
 .ds-substep-navigator__line-col {
   flex-shrink:     0;
-  width:           var(--ds-steps-node-size);
+  width:           var(--ds-steps-size-node);
   align-self:      stretch;
   display:         flex;
   justify-content: center;
 }
 .ds-substep-navigator__line {
-  width:      var(--ds-steps-border-width);
-  background: var(--ds-steps-connector-border-color);
+  width:      var(--ds-steps-border-width-generic);
+  background: var(--ds-steps-border-color-connector);
 }
 .ds-substep-navigator__section {
   display:     flex;
   align-items: center;
-  gap:         var(--ds-steps-navigator-substep-gap);
+  gap:         var(--ds-steps-navigator-gap-substep);
   min-width:   0;
 }
 .ds-substep-navigator__icon {
   display:     flex;
   flex-shrink: 0;
-  color:       var(--ds-steps-icon-fg-generic); /* negro en todos los estados: lo distingue la forma (punto · chevron · check) */
+  color:       var(--ds-steps-fg-icon-generic); /* negro en todos los estados: lo distingue la forma (punto · chevron · check) */
 }
 .ds-substep-navigator__label {
   font-family: inherit;
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-regular);
   line-height: var(--ds-lineHeight-label-md);
-  color:       var(--ds-steps-label-fg-generic);
+  color:       var(--ds-steps-fg-label-generic);
 }
 .ds-substep-navigator--active .ds-substep-navigator__label,
 .ds-substep-navigator--completed .ds-substep-navigator__label,

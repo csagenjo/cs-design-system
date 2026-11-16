@@ -83,21 +83,21 @@ const css = `
 .ds-popover-sheet {
   position:      absolute;
   box-sizing:    border-box;
-  min-width:     var(--ds-popover-sheet-root-min-width);
+  min-width:     var(--ds-popover-sheet-min-width);
   text-align:    left;  /* el boilerplate de Vite pone text-align:center global — mismo bug ya visto en Accordion/InlineNotification */
-  background:    var(--ds-popover-sheet-root-bg);
-  border:        var(--ds-popover-sheet-root-border-width) solid var(--ds-popover-sheet-root-border-color);
-  border-radius: var(--ds-popover-sheet-root-border-radius);
-  box-shadow:    var(--ds-popover-sheet-root-shadow);
-  padding:       var(--ds-popover-sheet-root-padding);
-  z-index:       var(--ds-popover-sheet-root-z-index);
+  background:    var(--ds-popover-sheet-bg-generic);
+  border:        var(--ds-popover-sheet-border-width) solid var(--ds-popover-sheet-border-color);
+  border-radius: var(--ds-popover-sheet-border-radius-generic);
+  box-shadow:    var(--ds-popover-sheet-shadow);
+  padding:       var(--ds-popover-sheet-padding-generic);
+  z-index:       var(--ds-popover-sheet-z-index);
 }
 .ds-popover-sheet:focus-visible { /* A11y-4: al abrir con teclado el foco entra en el panel — se tiene que ver */
-  outline:        var(--ds-popover-sheet-focus-width) solid var(--ds-popover-sheet-focus-outer);
-  outline-offset: var(--ds-popover-sheet-focus-width);
+  outline:        var(--ds-popover-sheet-border-width-focus) solid var(--ds-popover-sheet-border-color-focus-outer);
+  outline-offset: var(--ds-popover-sheet-border-width-focus);
 }
 .ds-popover-sheet--with-close {
-  padding-top: var(--ds-popover-sheet-close-size); /* despeja el hueco del botón de cierre (40) */
+  padding-top: var(--ds-popover-sheet-size-close); /* despeja el hueco del botón de cierre (40) */
 }
 
 .ds-popover-sheet__close {
@@ -107,16 +107,16 @@ const css = `
   display:         flex;
   align-items:     center;
   justify-content: center;
-  padding:         var(--ds-popover-sheet-close-padding);
+  padding:         var(--ds-popover-sheet-padding-close-button-generic);
   background:      transparent;
   border:          none;
-  border-radius:   var(--ds-popover-sheet-close-radius);
-  color:           var(--ds-popover-sheet-close-fg);
+  border-radius:   var(--ds-popover-sheet-border-radius-close);
+  color:           var(--ds-popover-sheet-fg-close-button-generic);
   cursor:          pointer;
 }
 .ds-popover-sheet__close:focus-visible {
-  outline:        var(--ds-popover-sheet-focus-width) solid var(--ds-popover-sheet-focus-outer);
-  outline-offset: calc(-1 * var(--ds-popover-sheet-focus-width));
+  outline:        var(--ds-popover-sheet-border-width-focus) solid var(--ds-popover-sheet-border-color-focus-outer);
+  outline-offset: calc(-1 * var(--ds-popover-sheet-border-width-focus));
 }
 
 .ds-popover-sheet__pointer {
@@ -126,35 +126,35 @@ const css = `
 }
 
 /* Placement — dónde se coloca la tarjeta respecto al wrapper que envuelve el trigger */
-.ds-popover-sheet--top    { bottom: calc(100% + var(--ds-popover-sheet-pointer-height)); left: 0; }
-.ds-popover-sheet--bottom { top:    calc(100% + var(--ds-popover-sheet-pointer-height)); left: 0; }
-.ds-popover-sheet--left   { right: calc(100% + var(--ds-popover-sheet-pointer-height)); top: 0; }
-.ds-popover-sheet--right  { left:  calc(100% + var(--ds-popover-sheet-pointer-height)); top: 0; }
+.ds-popover-sheet--top    { bottom: calc(100% + var(--ds-popover-sheet-height-pointer-generic)); left: 0; }
+.ds-popover-sheet--bottom { top:    calc(100% + var(--ds-popover-sheet-height-pointer-generic)); left: 0; }
+.ds-popover-sheet--left   { right: calc(100% + var(--ds-popover-sheet-height-pointer-generic)); top: 0; }
+.ds-popover-sheet--right  { left:  calc(100% + var(--ds-popover-sheet-height-pointer-generic)); top: 0; }
 
 /* Flecha — triángulo CSS apuntando hacia el trigger, mismo mecanismo que Tooltip */
 .ds-popover-sheet--top .ds-popover-sheet__pointer {
   top: 100%;
-  border-left:  calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-right: calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-top:   var(--ds-popover-sheet-pointer-height) solid var(--ds-popover-sheet-pointer-bg);
+  border-left:  calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-right: calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-top:   var(--ds-popover-sheet-height-pointer-generic) solid var(--ds-popover-sheet-bg-pointer);
 }
 .ds-popover-sheet--bottom .ds-popover-sheet__pointer {
   bottom: 100%;
-  border-left:   calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-right:  calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-bottom: var(--ds-popover-sheet-pointer-height) solid var(--ds-popover-sheet-pointer-bg);
+  border-left:   calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-right:  calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-bottom: var(--ds-popover-sheet-height-pointer-generic) solid var(--ds-popover-sheet-bg-pointer);
 }
 .ds-popover-sheet--left .ds-popover-sheet__pointer {
   left: 100%;
-  border-top:    calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-bottom: calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-left:   var(--ds-popover-sheet-pointer-height) solid var(--ds-popover-sheet-pointer-bg);
+  border-top:    calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-bottom: calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-left:   var(--ds-popover-sheet-height-pointer-generic) solid var(--ds-popover-sheet-bg-pointer);
 }
 .ds-popover-sheet--right .ds-popover-sheet__pointer {
   right: 100%;
-  border-top:    calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-bottom: calc(var(--ds-popover-sheet-pointer-width) / 2) solid transparent;
-  border-right:  var(--ds-popover-sheet-pointer-height) solid var(--ds-popover-sheet-pointer-bg);
+  border-top:    calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-bottom: calc(var(--ds-popover-sheet-width-pointer-generic) / 2) solid transparent;
+  border-right:  var(--ds-popover-sheet-height-pointer-generic) solid var(--ds-popover-sheet-bg-pointer);
 }
 
 /* Posición de la flecha a lo largo del borde perpendicular — eje horizontal (top/bottom).
@@ -169,13 +169,13 @@ const css = `
 }
 .ds-popover-sheet--pointer-left.ds-popover-sheet--top .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-left.ds-popover-sheet--bottom .ds-popover-sheet__pointer {
-  left: var(--ds-popover-sheet-pointer-offset);
+  left: var(--ds-popover-sheet-offset-pointer-generic);
   transform: none;
 }
 .ds-popover-sheet--pointer-right.ds-popover-sheet--top .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-right.ds-popover-sheet--bottom .ds-popover-sheet__pointer {
   left: auto;
-  right: var(--ds-popover-sheet-pointer-offset);
+  right: var(--ds-popover-sheet-offset-pointer-generic);
   transform: none;
 }
 
@@ -188,13 +188,13 @@ const css = `
 }
 .ds-popover-sheet--pointer-left.ds-popover-sheet--left .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-left.ds-popover-sheet--right .ds-popover-sheet__pointer {
-  top: var(--ds-popover-sheet-pointer-offset);
+  top: var(--ds-popover-sheet-offset-pointer-generic);
   transform: none;
 }
 .ds-popover-sheet--pointer-right.ds-popover-sheet--left .ds-popover-sheet__pointer,
 .ds-popover-sheet--pointer-right.ds-popover-sheet--right .ds-popover-sheet__pointer {
   top: auto;
-  bottom: var(--ds-popover-sheet-pointer-offset);
+  bottom: var(--ds-popover-sheet-offset-pointer-generic);
   transform: none;
 }
 `;

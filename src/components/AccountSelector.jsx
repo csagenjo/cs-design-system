@@ -14,7 +14,7 @@ const css = `
 .ds-account-selector--full-width { display: flex; }
 
 
-.ds-account-selector__message { margin-top: var(--ds-input-validation-gap); }
+.ds-account-selector__message { margin-top: var(--ds-input-gap-validation); }
 
 `;
 

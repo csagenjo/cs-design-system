@@ -30,15 +30,15 @@ const css = `
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  gap: var(--ds-slider-root-gap);
-  height: var(--ds-slider-root-height);
-  padding: 0 var(--ds-slider-root-padding-hor);
-  background: var(--ds-slider-root-bg);
-  border: var(--ds-slider-root-border-width) solid var(--ds-slider-root-border-color);
-  border-radius: var(--ds-slider-root-border-radius);
+  gap: var(--ds-slider-gap-generic);
+  height: var(--ds-slider-height-generic);
+  padding: 0 var(--ds-slider-padding-hor-generic);
+  background: var(--ds-slider-bg);
+  border: var(--ds-slider-border-width-generic) solid var(--ds-slider-border-color);
+  border-radius: var(--ds-slider-border-radius);
 }
 .ds-range-slider:not(.ds-range-slider--disabled):hover {
-  background: var(--ds-slider-root-bg-hover);
+  background: var(--ds-slider-bg-hover);
 }
 .ds-range-slider--disabled {
   cursor: not-allowed;
@@ -46,7 +46,7 @@ const css = `
 .ds-range-slider__track-wrapper {
   position: relative;
   flex: 1 1 auto;
-  height: var(--ds-slider-knob-size);
+  height: var(--ds-slider-size-knob);
   display: flex;
   align-items: center;
   touch-action: none;
@@ -54,9 +54,9 @@ const css = `
 .ds-range-slider__track {
   position: relative;
   width: 100%;
-  height: var(--ds-slider-track-height);
-  border-radius: var(--ds-slider-track-border-radius);
-  background: var(--ds-slider-track-bg);
+  height: var(--ds-slider-height-track);
+  border-radius: var(--ds-slider-border-radius-track);
+  background: var(--ds-slider-bg-track-generic);
   overflow: hidden;
 }
 .ds-range-slider__indicator {
@@ -64,14 +64,14 @@ const css = `
   top: 0;
   height: 100%;
   border-radius: var(--ds-slider-indicator-border-radius);
-  background: var(--ds-slider-indicator-bg-primary);
+  background: var(--ds-slider-bg-indicator-primary);
 }
 .ds-range-slider__indicator--secondary {
-  background: var(--ds-slider-indicator-bg-secondary);
+  background: var(--ds-slider-bg-indicator-secondary);
 }
-.ds-range-slider--disabled .ds-range-slider__track { background: var(--ds-slider-track-bg-disabled); }
+.ds-range-slider--disabled .ds-range-slider__track { background: var(--ds-slider-bg-track-disabled); }
 .ds-range-slider--disabled .ds-range-slider__indicator {
-  background: var(--ds-slider-indicator-bg-disabled);
+  background: var(--ds-slider-bg-indicator-disabled);
 }
 `;
 

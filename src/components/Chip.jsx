@@ -13,17 +13,17 @@ const css = `
 .ds-chip-input {
   display:       inline-flex;
   align-items:   center;
-  gap:           var(--ds-chip-root-gap-generic);
-  padding:       var(--ds-chip-root-padding-ver-generic) var(--ds-chip-root-padding-hor-generic);
-  margin:        var(--ds-chip-focus-area-padding);
-  background:    var(--ds-chip-root-bg-generic);
+  gap:           var(--ds-chip-gap-generic);
+  padding:       var(--ds-chip-padding-ver-generic) var(--ds-chip-padding-hor-generic);
+  margin:        var(--ds-chip-padding-focus-area-generic);
+  background:    var(--ds-chip-bg-generic);
   border:        none;
-  border-radius: var(--ds-chip-root-border-radius-generic);
-  color:         var(--ds-chip-label-fg-generic);
+  border-radius: var(--ds-chip-border-radius-generic);
+  color:         var(--ds-chip-fg-label-generic);
   font-family:   inherit;
-  font-size:     var(--ds-chip-label-font-size);
+  font-size:     var(--ds-chip-font-size-label);
   font-weight:   var(--ds-font-weight-regular);
-  line-height:   var(--ds-chip-label-line-height);
+  line-height:   var(--ds-chip-line-height-label);
   white-space:   nowrap;
   position:      relative;
   box-sizing:    border-box;
@@ -46,71 +46,71 @@ const css = `
 .ds-chip-toggle:focus-visible,
 .ds-chip-dismissible:has(.ds-chip-dismissible__remove:focus-visible),
 .ds-chip-input:has(.ds-chip-input__body:focus-visible) {
-  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  outline-offset: var(--ds-chip-root-border-width-focus);
-  box-shadow:     0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
+  outline:        var(--ds-chip-border-width-focus) solid var(--ds-chip-border-color-focus-outer);
+  outline-offset: var(--ds-chip-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-chip-border-width-focus) var(--ds-chip-border-color-focus-inner);
 }
 
 /* ── ChipToggle — Choice + Filter Selectable ── */
 
 .ds-chip-toggle { cursor: pointer; }
-.ds-chip-toggle:not(:disabled):hover::before { background: var(--ds-chip-root-bgmix-hover); }
+.ds-chip-toggle:not(:disabled):hover::before { background: var(--ds-chip-bg-mix-hover); }
 .ds-chip-toggle[aria-pressed="true"] {
-  background: var(--ds-chip-root-bg-selected);
-  color:      var(--ds-chip-label-fg-selected);
+  background: var(--ds-chip-bg-selected);
+  color:      var(--ds-chip-fg-label-selected);
 }
-.ds-chip-toggle[aria-pressed="true"]:not(:disabled):hover::before { background: var(--ds-chip-root-bgmix-hover-selected); }
-.ds-chip-toggle:not(:disabled):active { opacity: var(--ds-chip-root-opacity-pressed); }
+.ds-chip-toggle[aria-pressed="true"]:not(:disabled):hover::before { background: var(--ds-chip-bg-mix-hover-selected); }
+.ds-chip-toggle:not(:disabled):active { opacity: var(--ds-chip-opacity-pressed); }
 .ds-chip-toggle:disabled {
-  background: var(--ds-chip-root-bg-disabled);
-  color:      var(--ds-chip-label-fg-disabled);
+  background: var(--ds-chip-bg-disabled);
+  color:      var(--ds-chip-fg-label-disabled);
   cursor:     not-allowed;
 }
 /* Filter Selectable: el texto lleva el padding de Value Text (Choice no) */
-.ds-chip-toggle--filter .ds-chip-toggle__label { padding: 0 var(--ds-chip-valuetext-padding-hor); }
+.ds-chip-toggle--filter .ds-chip-toggle__label { padding: 0 var(--ds-chip-padding-hor-value-text-generic); }
 
 .ds-chip-toggle__check {
   display:     flex;
   align-items: center;
   flex-shrink: 0;
-  color:       var(--ds-chip-icon-fg-selected);
+  color:       var(--ds-chip-fg-icon-selected);
 }
-.ds-chip-toggle:disabled .ds-chip-toggle__check { color: var(--ds-chip-icon-fg-disabled); }
+.ds-chip-toggle:disabled .ds-chip-toggle__check { color: var(--ds-chip-fg-icon-disabled); }
 
 /* ── ChipFilter Dismissible — "Label:" + valor + X ── */
 
-.ds-chip-dismissible:not(.ds-chip-dismissible--disabled):hover::before { background: var(--ds-chip-root-bgmix-hover); }
-.ds-chip-dismissible:not(.ds-chip-dismissible--disabled):has(.ds-chip-dismissible__remove:active) { opacity: var(--ds-chip-root-opacity-pressed); }
+.ds-chip-dismissible:not(.ds-chip-dismissible--disabled):hover::before { background: var(--ds-chip-bg-mix-hover); }
+.ds-chip-dismissible:not(.ds-chip-dismissible--disabled):has(.ds-chip-dismissible__remove:active) { opacity: var(--ds-chip-opacity-pressed); }
 .ds-chip-dismissible--disabled {
-  background: var(--ds-chip-root-bg-disabled);
-  color:      var(--ds-chip-label-fg-disabled);
+  background: var(--ds-chip-bg-disabled);
+  color:      var(--ds-chip-fg-label-disabled);
 }
 .ds-chip-dismissible__filter-label {
-  padding-left:  var(--ds-chip-filter-label-padding-left);
-  padding-right: var(--ds-chip-filter-label-padding-right);
-  font-weight:   var(--ds-chip-filter-label-font-weight);
+  padding-left:  var(--ds-chip-filter-padding-left-label);
+  padding-right: var(--ds-chip-filter-padding-right-label);
+  font-weight:   var(--ds-chip-filter-font-weight-label);
 }
-.ds-chip-dismissible__value { padding: 0 var(--ds-chip-valuetext-padding-hor); }
+.ds-chip-dismissible__value { padding: 0 var(--ds-chip-padding-hor-value-text-generic); }
 
 /* ── ChipInput — cuerpo (opcionalmente clicable) + X ── */
 
-.ds-chip-input:not(.ds-chip-input--disabled):hover::before { background: var(--ds-chip-root-bgmix-hover); }
+.ds-chip-input:not(.ds-chip-input--disabled):hover::before { background: var(--ds-chip-bg-mix-hover); }
 .ds-chip-input--disabled {
-  background: var(--ds-chip-root-bg-disabled);
-  color:      var(--ds-chip-label-fg-disabled);
+  background: var(--ds-chip-bg-disabled);
+  color:      var(--ds-chip-fg-label-disabled);
 }
 /* Borde de 1 px en el chip cuando la X está en hover/foco/pressed (Part=Delete) */
 .ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__remove:hover),
 .ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__remove:focus-visible),
 .ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__remove:active) {
-  box-shadow: inset 0 0 0 var(--ds-chip-root-border-width-generic) var(--ds-chip-root-border-color-generic);
+  box-shadow: inset 0 0 0 var(--ds-chip-border-width-generic) var(--ds-chip-border-color-generic);
 }
-.ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__body:active) { opacity: var(--ds-chip-root-opacity-pressed); }
+.ds-chip-input:not(.ds-chip-input--disabled):has(.ds-chip-input__body:active) { opacity: var(--ds-chip-opacity-pressed); }
 
 .ds-chip-input__body {
   display:     inline-flex;
   align-items: center;
-  gap:         var(--ds-chip-root-gap-generic);
+  gap:         var(--ds-chip-gap-generic);
   padding:     0;
   background:  transparent;
   border:      none;
@@ -129,10 +129,10 @@ span.ds-chip-input__body { cursor: default; }
   display:     flex;
   align-items: center;
   flex-shrink: 0;
-  color:       var(--ds-chip-icon-fg-generic);
+  color:       var(--ds-chip-fg-icon-generic);
 }
-.ds-chip-input--disabled .ds-chip-input__icon { color: var(--ds-chip-icon-fg-disabled); }
-.ds-chip-input__label { padding: 0 var(--ds-chip-valuetext-padding-hor); }
+.ds-chip-input--disabled .ds-chip-input__icon { color: var(--ds-chip-fg-icon-disabled); }
+.ds-chip-input__label { padding: 0 var(--ds-chip-padding-hor-value-text-generic); }
 
 /* ── X (Dismissible e Input): el icono de 20, área de clic de 24 ── */
 
@@ -145,8 +145,8 @@ span.ds-chip-input__body { cursor: default; }
   padding:         0;
   background:      transparent;
   border:          none;
-  border-radius:   var(--ds-chip-root-border-radius-generic);
-  color:           var(--ds-chip-icon-fg-generic);
+  border-radius:   var(--ds-chip-border-radius-generic);
+  color:           var(--ds-chip-fg-icon-generic);
   cursor:          pointer;
   flex-shrink:     0;
   -webkit-tap-highlight-color: transparent;
@@ -154,14 +154,14 @@ span.ds-chip-input__body { cursor: default; }
 .ds-chip-dismissible__remove:focus-visible { outline: none; } /* el anillo lo pinta el chip */
 .ds-chip-dismissible--disabled .ds-chip-dismissible__remove,
 .ds-chip-input--disabled .ds-chip-input__remove {
-  color:  var(--ds-chip-icon-fg-disabled);
+  color:  var(--ds-chip-fg-icon-disabled);
   cursor: not-allowed;
 }
 /* Chip Input Part=Delete: el anillo de foco rodea la X */
 .ds-chip-input__remove:focus-visible {
-  outline:        var(--ds-chip-root-border-width-focus) solid var(--ds-chip-root-border-color-focus-outer);
-  outline-offset: var(--ds-chip-root-border-width-focus);
-  box-shadow:     0 0 0 var(--ds-chip-root-border-width-focus) var(--ds-chip-root-border-color-focus-inner);
+  outline:        var(--ds-chip-border-width-focus) solid var(--ds-chip-border-color-focus-outer);
+  outline-offset: var(--ds-chip-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-chip-border-width-focus) var(--ds-chip-border-color-focus-inner);
 }
 /* A11y-5 (2.5.8): área de clic de 24 × 24 sin cambiar el aspecto */
 .ds-chip-dismissible__remove::after,
@@ -170,15 +170,15 @@ span.ds-chip-input__body { cursor: default; }
   position:  absolute;
   top:       50%;
   left:      50%;
-  width:     var(--ds-chip-remove-target-size);
-  height:    var(--ds-chip-remove-target-size);
+  width:     var(--ds-chip-size-remove-target);
+  height:    var(--ds-chip-size-remove-target);
   transform: translate(-50%, -50%);
 }
 
 /* Un icono de consumidor (slot de Input) se ajusta al tamaño del chip */
 .ds-chip-input__icon svg {
-  width:   var(--ds-chip-icon-size-generic);
-  height:  var(--ds-chip-icon-size-generic);
+  width:   var(--ds-chip-size-icon-generic);
+  height:  var(--ds-chip-size-icon-generic);
   display: block;
 }
 `;

@@ -11,12 +11,12 @@ const css = `
   box-sizing:     border-box;
   display:        inline-flex;
   align-items:    center;
-  gap:            var(--ds-account-selector-root-gap);
+  gap:            var(--ds-account-selector-gap);
   width:          auto;
-  padding-left:   var(--ds-account-selector-root-padding);
-  background:     var(--ds-account-selector-root-bg-generic);
-  border:         var(--ds-account-selector-root-border-width-generic) solid var(--ds-account-selector-root-border-color-generic);
-  border-radius:  var(--ds-account-selector-root-border-radius-generic);
+  padding-left:   var(--ds-account-selector-padding);
+  background:     var(--ds-account-selector-bg-generic);
+  border:         var(--ds-account-selector-border-width-generic) solid var(--ds-account-selector-border-color-generic);
+  border-radius:  var(--ds-account-selector-border-radius-generic);
   font-family:    inherit;
   text-align:     left;
   cursor:         pointer;
@@ -28,21 +28,21 @@ const css = `
 .ds-account-selector-invoker__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-account-selector-icon-fg-primary);
+  color:       var(--ds-account-selector-fg-icon-primary);
 }
 .ds-account-selector-invoker__icon-left svg {
-  width:  var(--ds-account-selector-icon-left-size);
-  height: var(--ds-account-selector-icon-left-size);
+  width:  var(--ds-account-selector-size-icon-left);
+  height: var(--ds-account-selector-size-icon-left);
 }
 
 .ds-account-selector-invoker__content {
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-account-selector-content-gap);
+  gap:         var(--ds-account-selector-gap-content);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) var(--ds-account-selector-content-padding) 0;
+  padding:     var(--ds-account-selector-padding-content) var(--ds-account-selector-padding-content) var(--ds-account-selector-padding-content) 0;
 }
 
 .ds-account-selector-invoker__center {
@@ -59,7 +59,7 @@ const css = `
   font-size:   var(--ds-fontSize-title-sm);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-title-sm);
-  color:       var(--ds-account-selector-header-fg-default);
+  color:       var(--ds-account-selector-fg-header-default);
   overflow:    hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -76,24 +76,24 @@ const css = `
   display:     inline-flex;
   align-items: center;
   gap:         var(--ds-spacing-xs);
-  color:       var(--ds-account-selector-icon-fg-primary);
+  color:       var(--ds-account-selector-fg-icon-primary);
 }
-.ds-account-selector-invoker__right svg { width: var(--ds-account-selector-icon-right-size); height: var(--ds-account-selector-icon-right-size); }
+.ds-account-selector-invoker__right svg { width: var(--ds-account-selector-size-icon-right); height: var(--ds-account-selector-size-icon-right); }
 
-.ds-account-selector-invoker--default:hover { background: var(--ds-account-selector-root-bg-hover); }
-.ds-account-selector-invoker--default:active { opacity: var(--ds-account-selector-root-opacity-pressed); }
+.ds-account-selector-invoker--default:hover { background: var(--ds-account-selector-bg-hover); }
+.ds-account-selector-invoker--default:active { opacity: var(--ds-account-selector-opacity-pressed); }
 
 .ds-account-selector-invoker:focus-visible {
-  outline:        var(--ds-account-selector-root-border-width-focus) solid var(--ds-account-selector-root-border-color-focus-outer);
-  outline-offset: var(--ds-account-selector-root-border-width-focus);
-  box-shadow:     0 0 0 var(--ds-account-selector-root-border-width-focus) var(--ds-account-selector-root-border-color-focus-inner);
+  outline:        var(--ds-account-selector-border-width-focus) solid var(--ds-account-selector-border-color-focus-outer);
+  outline-offset: var(--ds-account-selector-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-account-selector-border-width-focus) var(--ds-account-selector-border-color-focus-inner);
 }
 
-.ds-account-selector-invoker--error { border-color: var(--ds-account-selector-root-border-color-error); }
+.ds-account-selector-invoker--error { border-color: var(--ds-account-selector-border-color-error); }
 
 .ds-account-selector-invoker--readOnly {
-  background:   var(--ds-account-selector-root-bg-disabled);
-  border-color: var(--ds-account-selector-root-border-color-disabled);
+  background:   var(--ds-account-selector-bg-disabled);
+  border-color: var(--ds-account-selector-border-color-disabled);
   cursor:       default;
 }
 /* A11y-4: solo lectura sigue siendo enfocable — conserva el anillo de foco (antes se quitaba). */
@@ -101,14 +101,14 @@ const css = `
 .ds-account-selector-invoker--dataHidden { cursor: default; }
 
 .ds-account-selector-invoker:disabled {
-  background:   var(--ds-account-selector-root-bg-disabled);
-  border-color: var(--ds-account-selector-root-border-color-disabled);
-  color:        var(--ds-account-selector-icon-fg-disabled);
+  background:   var(--ds-account-selector-bg-disabled);
+  border-color: var(--ds-account-selector-border-color-disabled);
+  color:        var(--ds-account-selector-fg-icon-disabled);
   cursor:       not-allowed;
 }
 .ds-account-selector-invoker:disabled .ds-account-selector-invoker__icon-left,
-.ds-account-selector-invoker:disabled .ds-account-selector-invoker__right { color: var(--ds-account-selector-icon-fg-disabled); }
-.ds-account-selector-invoker:disabled .ds-account-selector-invoker__header { color: var(--ds-account-selector-header-fg-disabled); }
+.ds-account-selector-invoker:disabled .ds-account-selector-invoker__right { color: var(--ds-account-selector-fg-icon-disabled); }
+.ds-account-selector-invoker:disabled .ds-account-selector-invoker__header { color: var(--ds-account-selector-fg-header-disabled); }
 `;
 
 injectStyles('ds-account-selector-invoker', css);

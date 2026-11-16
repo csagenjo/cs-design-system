@@ -40,11 +40,11 @@ injectStyles('ds-field-label', `
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-label-md);
-  color:       var(--ds-field-label-fg-generic);
+  color:       var(--ds-field-label-fg-text-generic);
   cursor:      default;
 }
 .ds-field-label--clickable { cursor: pointer; }
-.ds-field-label--disabled  { color: var(--ds-field-label-fg-disabled); cursor: default; }
+.ds-field-label--disabled  { color: var(--ds-field-label-fg-text-disabled); cursor: default; }
 `);
 
 export function FieldLabel({

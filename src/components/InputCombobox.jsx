@@ -26,7 +26,7 @@
  *
  * El cursor de texto NO se fabrica a mano — Figma tiene un vector `Caret`
  * propio, pero en HTML un `<input>` real ya trae su cursor nativo; alcanza
- * con `caret-color` (`--ds-combobox-caret-color`) para que sea el color
+ * con `caret-color` (`--ds-combobox-border-color-caret-generic`) para que sea el color
  * correcto, sin reimplementar un elemento que el navegador ya da gratis.
  *
  * `autoSuggestText` (la parte de la sugerencia que falta por escribir, tipo
@@ -63,7 +63,7 @@ const css = `
   font-family:    inherit;
 }
 .ds-input-combobox--full-width { display: flex; }
-.ds-input-combobox__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-combobox__message { margin-top: var(--ds-input-gap-validation); }
 
 .ds-input-combobox__field-wrap { position: relative; display: flex; }
 
@@ -73,15 +73,15 @@ const css = `
   width:       100%;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-input-field-icon-gap);
+  gap:         var(--ds-input-gap-field-icon);
   padding:     var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   cursor:      text;
 }
 /* Foco: solo cuando el foco está en el texto (la X tiene el suyo). */
 .ds-input-combobox__field:has(.ds-input-combobox__control:focus) {
-  outline:        var(--ds-input-border-width-focus) solid var(--ds-input-focus-outer);
+  outline:        var(--ds-input-border-width-focus) solid var(--ds-input-border-color-focus-outer);
   outline-offset: var(--ds-input-border-width-focus);
-  box-shadow:     0 0 0 var(--ds-input-border-width-focus) var(--ds-input-focus-inner);
+  box-shadow:     0 0 0 var(--ds-input-border-width-focus) var(--ds-input-border-color-focus-inner);
 }
 .ds-input-combobox--disabled .ds-input-combobox__field { cursor: not-allowed; }
 .ds-input-combobox--readonly .ds-input-combobox__field { cursor: default; }
@@ -89,9 +89,9 @@ const css = `
 .ds-input-combobox__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-input-icon-fg-primary);
+  color:       var(--ds-input-fg-icon-primary);
 }
-.ds-input-combobox--disabled .ds-input-combobox__icon-left { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-combobox--disabled .ds-input-combobox__icon-left { color: var(--ds-input-fg-icon-disabled); }
 
 .ds-input-combobox__value {
   flex:        1 1 0;   /* base 0: el texto ocupa el hueco libre, los botones no bajan de línea */
@@ -99,7 +99,7 @@ const css = `
   display:     flex;
   flex-wrap:   wrap;
   align-items: center;
-  gap:         var(--ds-combobox-chips-gap);
+  gap:         var(--ds-combobox-gap-chips-generic);
 }
 .ds-input-combobox__value-wrap {
   position:    relative;
@@ -123,7 +123,7 @@ const css = `
   font:           inherit;
 }
 .ds-input-combobox__suggest-typed { visibility: hidden; }
-.ds-input-combobox__suggest-remainder { color: var(--ds-combobox-autosuggest-fg); }
+.ds-input-combobox__suggest-remainder { color: var(--ds-combobox-fg-auto-suggest-text-generic); }
 
 .ds-input-combobox__control {
   position:    relative;
@@ -138,7 +138,7 @@ const css = `
   padding:     0;
   font:        inherit;
   color:       var(--ds-input-fg-default);
-  caret-color: var(--ds-combobox-caret-color);
+  caret-color: var(--ds-combobox-border-color-caret-generic);
 }
 .ds-input-combobox__control::placeholder { color: var(--ds-input-fg-placeholder); opacity: 1; }
 .ds-input-combobox--disabled .ds-input-combobox__control { color: var(--ds-input-fg-disabled); cursor: not-allowed; }
@@ -147,7 +147,7 @@ const css = `
   flex-shrink: 0;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-combobox-buttons-gap);
+  gap:         var(--ds-combobox-gap-buttons-generic);
 }
 .ds-input-combobox__delete,
 .ds-input-combobox__chevron {
@@ -161,14 +161,14 @@ const css = `
   background:      transparent;
   cursor:          pointer;
 }
-.ds-input-combobox__delete { color: var(--ds-combobox-icondelete-fg); }
+.ds-input-combobox__delete { color: var(--ds-combobox-fg-icon-delete-generic); }
 .ds-input-combobox__delete:focus-visible {
-  outline:        var(--ds-input-border-width-focus) solid var(--ds-input-focus-outer);
+  outline:        var(--ds-input-border-width-focus) solid var(--ds-input-border-color-focus-outer);
   outline-offset: var(--ds-input-border-width-focus);
-  box-shadow:     0 0 0 var(--ds-input-border-width-focus) var(--ds-input-focus-inner);
+  box-shadow:     0 0 0 var(--ds-input-border-width-focus) var(--ds-input-border-color-focus-inner);
 }
-.ds-input-combobox__chevron { color: var(--ds-input-icon-fg-primary); transition: transform 0.12s; }
-.ds-input-combobox__chevron:disabled { color: var(--ds-input-icon-fg-disabled); cursor: inherit; }
+.ds-input-combobox__chevron { color: var(--ds-input-fg-icon-primary); transition: transform 0.12s; }
+.ds-input-combobox__chevron:disabled { color: var(--ds-input-fg-icon-disabled); cursor: inherit; }
 .ds-input-combobox__chevron--open { transform: rotate(180deg); }
 `;
 

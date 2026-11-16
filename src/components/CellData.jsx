@@ -41,7 +41,7 @@ const css = `
   font-size:     var(--ds-fontSize-body-sm);       /* 16 */
   font-weight:   var(--ds-font-weight-regular);    /* 400 */
   line-height:   var(--ds-lineHeight-body-sm);          /* 24 */
-  color:         var(--ds-cell-common-text-fg);    /* #050506 */
+  color:         var(--ds-cell-common-fg-text);    /* #050506 */
   border-bottom: var(--ds-cell-common-border-bottom-width) solid var(--ds-cell-common-border-bottom-color-subtle);
 }
 

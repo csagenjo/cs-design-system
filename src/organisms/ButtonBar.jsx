@@ -18,8 +18,8 @@
  *   - Negativas = Secondary, siempre a la izquierda. No hay botón rojo: lo
  *     destructivo se distingue por su texto y su posición.
  *   - Cancel, Previous y Next = Tertiary.
- *   - Gap 24 entre acciones (`--ds-button-bar-gap`), 16 entre notificación y
- *     acciones (`--ds-button-bar-notification-gap`). Sin padding, borde ni fondo:
+ *   - Gap 24 entre acciones (`--ds-button-bar-gap-generic`), 16 entre notificación y
+ *     acciones (`--ds-button-bar-gap-notification-generic`). Sin padding, borde ni fondo:
  *     los pone la pantalla que lo contiene.
  */
 
@@ -33,7 +33,7 @@ const css = `
   align-items:     flex-end;
   justify-content: space-between;
   flex-wrap:       wrap;
-  gap:             var(--ds-button-bar-gap);
+  gap:             var(--ds-button-bar-gap-generic);
   /* El área de foco de cada Button (4 px) ya separa los botones del borde. */
 }
 .ds-btn-bar__left {
@@ -41,7 +41,7 @@ const css = `
   display:        flex;
   flex-direction: column;
   align-items:    flex-start;
-  gap:            var(--ds-button-bar-notification-gap);
+  gap:            var(--ds-button-bar-gap-notification-generic);
   min-width:      0;
 }
 .ds-btn-bar--simple .ds-btn-bar__left,
@@ -51,7 +51,7 @@ const css = `
   display:     flex;
   align-items: center;
   flex-wrap:   wrap;
-  gap:         var(--ds-button-bar-gap);
+  gap:         var(--ds-button-bar-gap-generic);
 }
 .ds-btn-bar__right { margin-left: auto; }
 `;

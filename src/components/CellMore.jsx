@@ -9,8 +9,8 @@
  *
  * Tokens: familia table/all/* — cellCommon compartido.
  *   · color/bg/borde vía --ds-cell-common-* (Componente→Mode)
- *   · chevron vía --ds-cell-common-icon-fg (teal), currentColor en el SVG
- *   · texto vía --ds-cell-common-text-fg (oscuro)
+ *   · chevron vía --ds-cell-common-fg-icon (teal), currentColor en el SVG
+ *   · texto vía --ds-cell-common-fg-text (oscuro)
  *   · tipografía directa de Device (Body/sm 16/24) — regla de tipografía §4
  *
  * Ejes (nombres compartidos con CellData/CellHeader, significado propio):
@@ -51,7 +51,7 @@ const css = `
   font-size:       var(--ds-fontSize-body-sm);       /* 16 */
   font-weight:     var(--ds-font-weight-regular);    /* 400 */
   line-height:     var(--ds-lineHeight-body-sm);          /* 24 */
-  color:           var(--ds-cell-common-text-fg);    /* #050506 */
+  color:           var(--ds-cell-common-fg-text);    /* #050506 */
   background:      transparent;
   border:          0;
   border-bottom:   var(--ds-cell-common-border-bottom-width) solid var(--ds-cell-common-border-bottom-color-subtle);
@@ -68,9 +68,9 @@ const css = `
 }
 .ds-cell-more:active:not(:disabled) { opacity: var(--ds-cell-common-opacity-pressed); }
 .ds-cell-more:focus-visible {
-  outline:        var(--ds-cell-common-focus-width) solid var(--ds-cell-common-focus-outer);
-  outline-offset: calc(var(--ds-cell-common-focus-width) * -1);
-  box-shadow:     inset 0 0 0 calc(var(--ds-cell-common-focus-width) * 2) var(--ds-cell-common-focus-inner);
+  outline:        var(--ds-cell-common-border-width-focus) solid var(--ds-cell-common-border-color-focus-outer);
+  outline-offset: calc(var(--ds-cell-common-border-width-focus) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-cell-common-border-width-focus) * 2) var(--ds-cell-common-border-color-focus-inner);
 }
 
 /* Superficie: neutral = transparente (sin token) */
@@ -84,7 +84,7 @@ const css = `
 .ds-cell-more__chevron {
   display:     inline-flex;
   flex-shrink: 0;
-  color:       var(--ds-cell-common-icon-fg); /* #4BA9C0 */
+  color:       var(--ds-cell-common-fg-icon); /* #4BA9C0 */
 }
 `;
 
