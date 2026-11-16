@@ -78,7 +78,7 @@ const css = `
 }
 
 /* ── Enabled ── */
-.ds-btn--accent  { --_fill: var(--ds-button-bg-accent-filled);  --_on: var(--ds-button-fg-accent-filled);  --_mix: var(--ds-button-bg-mix-accent-hover);  --_line: var(--ds-button-border-color-accent-generic);  --_ink: var(--ds-button-fg-accent-outline); }
+.ds-btn--accent  { --_fill: var(--ds-button-bg-accent-filled);  --_on: var(--ds-button-fg-accent-filled);  --_mix: var(--ds-button-bg-mix-accent-hover);  --_line: var(--ds-button-border-color-accent);  --_ink: var(--ds-button-fg-accent-outline); }
 .ds-btn--default { --_fill: var(--ds-button-bg-default-filled); --_on: var(--ds-button-fg-default-filled); --_mix: var(--ds-button-bg-mix-default-hover); --_line: var(--ds-button-border-color-default); --_ink: var(--ds-button-fg-default-outline); }
 .ds-btn--primary   { background: var(--_fill);   color: var(--_on);  border-color: var(--_fill); }
 .ds-btn--secondary { background: transparent;   color: var(--_ink); border-color: var(--_line); }

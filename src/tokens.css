@@ -446,7 +446,7 @@
   --ds-button-fg-disabled:        var(--ds-fg-disabled);
 
   /* Bordes */
-  --ds-button-border-color-accent-generic:        var(--ds-borderColor-primary);   /* button/all/borderColor/accent-generic (#0A7C92, igual que el texto; antes accent = #13525F) */
+  --ds-button-border-color-accent:        var(--ds-borderColor-primary);   /* button/all/borderColor/accent (#0A7C92, igual que el texto; antes accent = #13525F) */
   --ds-button-border-color-default:       var(--ds-borderColor-emphasis);
   --ds-button-border-color-disabled:      var(--ds-borderColor-disabled);
   --ds-button-border-color-focus-outer:   var(--ds-borderColor-focus-outer);
@@ -1049,7 +1049,7 @@
   --ds-input-border-color-hover:                 var(--ds-borderColor-emphasis); /* root/borderColor/hover */
   --ds-input-padding-focus-area:           var(--ds-spacing-xs);        /* root/focusArea/padding — el anillo de foco cabe dentro del componente (27/10/2026) */
   /* Input/InputCommon — comunes a TODOS los inputs (09/10/2026, igual que Figma) */
-  --ds-input-fg-icon:                      var(--ds-fg-icon-subtle);    /* icon/fg/generic — icono informativo (gris) */
+  --ds-input-fg-icon-default:                      var(--ds-fg-icon-subtle);    /* icon/fg/generic — icono informativo (gris) */
   --ds-input-fg-icon-primary:              var(--ds-fg-icon-primary);   /* icon/fg/primary — icono accionable (chevron, calendario, +/−) */
   --ds-input-fg-icon-disabled:             var(--ds-fg-icon-disabled);  /* icon/fg/disabled */
   --ds-input-size-icon:                    var(--ds-sizing-sm);         /* icon/size/generic — 24 */

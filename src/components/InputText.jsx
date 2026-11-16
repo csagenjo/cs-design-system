@@ -58,11 +58,11 @@ const css = `
 }
 .ds-input-text__icon--left  {
   left:  var(--ds-input-padding-hor);
-  color: var(--ds-input-fg-icon);
+  color: var(--ds-input-fg-icon-default);
 }
 .ds-input-text__icon--right {
   right: var(--ds-input-padding-hor);
-  color: var(--ds-input-fg-icon);
+  color: var(--ds-input-fg-icon-default);
 }
 .ds-input-text__icon--left.ds-input-text__icon--primary  { color: var(--ds-input-fg-icon-primary); }
 .ds-input-text__icon--right.ds-input-text__icon--primary { color: var(--ds-input-fg-icon-primary); }

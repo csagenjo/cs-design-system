@@ -198,7 +198,7 @@ Mismo valor en **light mode**, distinto en **dark mode** — existe en las tres 
 
 **Regla de detección:** antes de fijar un color de texto/icono sobre un fondo relleno, resolver el `bg` en Light y Dark — si el hex es el mismo en los dos modos, el fg va a `onColor`; si el hex cambia entre modos, el fg va a `inverse`. Nunca decidir por el nombre del token ni por lo que "parece coherente" visualmente en un solo modo.
 
-**Auditoría completa (11/08/2026):** verificado en vivo (resolución de cadena de alias en Figma, no el JSON cacheado) que el bug era real y no solo teórico — 7 casos confirmados con `*/inverse` sentado sobre un `bg` que no invierte, todos corregidos (en Figma y en `tokens.css`): `button/all/fg/label/accent-primary`, `ctaLink/all/fg/label/accent-highEmphasis`, `chip/all/fg/label/selected`, `chip/all/fg/icon/selected`, `badgeNotification/all/fg/label/generic`, `pagination/root/text/fg/selectedPage`, `pagination/activePage/fg/hover` — todos realiasados a `*/onColor`. En paralelo, `--ds-fg-label-inverse`/`--ds-fg-body-inverse`/`--ds-fg-icon-inverse` (que sí necesitaban invertir, para Button/CTALink default-filled) no tenían override dark en `tokens.css` — añadido (`#050506`), y `--ds-button-fg-default-filled`/`--ds-cta-link-fg-primary` recableados de `fg-onColor` (no invertía, incorrecto ahí) a `fg-label-inverse`.
+**Auditoría completa (11/08/2026):** verificado en vivo (resolución de cadena de alias en Figma, no el JSON cacheado) que el bug era real y no solo teórico — 7 casos confirmados con `*/inverse` sentado sobre un `bg` que no invierte, todos corregidos (en Figma y en `tokens.css`): `button/all/fg/label/accent-filled`, `ctaLink/all/fg/label/accent-highEmphasis`, `chip/all/fg/label/selected`, `chip/all/fg/icon/selected`, `badgeNotification/all/fg/label/generic`, `pagination/root/text/fg/selectedPage`, `pagination/activePage/fg/hover` — todos realiasados a `*/onColor`. En paralelo, `--ds-fg-label-inverse`/`--ds-fg-body-inverse`/`--ds-fg-icon-inverse` (que sí necesitaban invertir, para Button/CTALink default-filled) no tenían override dark en `tokens.css` — añadido (`#050506`), y `--ds-button-fg-default-filled`/`--ds-cta-link-fg-primary` recableados de `fg-onColor` (no invertía, incorrecto ahí) a `fg-label-inverse`.
 
 ### Sufijos de intensidad en bg y fg
 
@@ -227,7 +227,7 @@ elemento solo aparece cuando hay más de uno con la misma propiedad.
 | estado | `generic`, `hover`, `selected`, `error`, `focus-outer`… | Siempre presente: `generic` si no hay otro |
 
 Ejemplos: `tabs/all/fg/icon/error` (antes `tabs/all/errorIcon/fg/error`) ·
-`button/all/bg/default-primary` (antes `button/all/root/bg/default-primary`) ·
+`button/all/bg/default-filled` (antes `button/all/root/bg/default-primary`) ·
 `input/common/borderColor/focus-outer` (antes `Input/InputCommon/root/borderColor/focus-outer`) ·
 `button/all/padding/focusArea/generic` (antes `button/all/root/focusArea/padding`).
 
@@ -239,6 +239,15 @@ y pasó a `icon/all/fg/generic`; Bottom Navigation se reenlazó a sus propios
 `bottomNavigation/all/fg/icon/*` y la página Paragraph (intento abandonado) a
 `fg/body/default` de Mode; las otras 21 (`icon/*`, `paragraph/fg/*`,
 `generic`, `disabled`) no tenían usos y se borraron.
+
+**Vocabulario de Button e Input (16/11, decisión de Carol):** aquí Figma toma las
+palabras del código, que se entienden mejor. Button: `filled`/`outline` en lugar de
+`primary`/`generic` (`button/all/bg/accent-filled`, `…/fg/label/default-outline`).
+Input: el estado base de los colores es `default` (`input/common/bg/default`,
+`…/fg/default`, `…/fg/icon/default`) y el texto del valor no lleva elemento
+(`fg/default`, `fg/disabled`, `fg/placeholder`), como en código. Los tokens que no
+son de color siguen con `generic`. `button/all/borderColor/accent-disabled` existe
+solo en Figma: en código basta `--ds-button-border-color-disabled` (mismo valor).
 
 **En código** el nombre CSS sigue el mismo orden sin `all`:
 `--ds-{componente}-{propiedad}-{elemento}-{estado}` (`--ds-tabs-fg-icon-error`).
@@ -269,7 +278,7 @@ accountSelector/all/    ← tokens propios del Account Selector
 
 | InputCommon | Alias | Uso | CSS |
 |---|---|---|---|
-| `icon/fg/generic` | `fg/icon/subtle` | icono informativo/decorativo (gris) — antes InputText `…/generic` (subtle) | `--ds-input-fg-icon` |
+| `icon/fg/generic` | `fg/icon/subtle` | icono informativo/decorativo (gris) — antes InputText `…/generic` (subtle) | `--ds-input-fg-icon-default` |
 | `icon/fg/primary` | `fg/icon/primary` | icono accionable: chevron, calendario, +/−, desplegable de país/divisa | `--ds-input-fg-icon-primary` |
 | `icon/fg/disabled` | `fg/icon/disabled` | cualquier icono del campo en Disabled | `--ds-input-fg-icon-disabled` |
 | `icon/size/generic` | `sizing/sm` (24) | tamaño de los iconos del campo | `--ds-input-size-icon` |
