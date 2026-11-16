@@ -42,7 +42,7 @@ const css = `
   list-style:   none;
   font-family:  inherit;
 }
-.ds-list--unordered { padding-left: var(--ds-list-padding-left-unordered); }
+.ds-list--unordered { padding-left: var(--ds-list-padding-left-unordered-list); }
 /* lista anidada: empieza en la columna del texto del padre */
 .ds-list .ds-list { margin-top: var(--ds-list-padding-bottom-generic); }
 
@@ -52,32 +52,32 @@ const css = `
   padding-bottom: var(--ds-list-padding-bottom-generic);
 }
 .ds-list__item:last-child { padding-bottom: 0; }
-.ds-list--checkmark .ds-list__item { align-items: center; gap: var(--ds-list-gap-checkmark); }
+.ds-list--checkmark .ds-list__item { align-items: center; gap: var(--ds-list-gap-checkmark-list); }
 .ds-list--ordered .ds-list__item { gap: 0; }
 
 .ds-list__body { min-width: 0; flex: 1 1 auto; }
 
 .ds-list__body {
   font-weight: var(--ds-font-weight-regular);
-  color:       var(--ds-list-bodytext-fg-generic);
+  color:       var(--ds-list-fg-body-text-generic);
 }
 .ds-list--unordered .ds-list__marker {
   flex-shrink: 0;
   font-weight: var(--ds-font-weight-bold);
-  color:       var(--ds-list-bullet-fg-generic);
+  color:       var(--ds-list-fg-bullet-generic);
 }
 .ds-list--ordered .ds-list__marker {
   flex-shrink: 0;
   box-sizing:  border-box;
   font-weight: var(--ds-font-weight-regular);
-  color:       var(--ds-list-ordered-marker-fg-generic);
+  color:       var(--ds-list-fg-ordered-list-marker-generic);
 }
 
 .ds-list__icon {
   flex-shrink: 0;
   display:     flex;
-  padding:     var(--ds-list-icon-checkmark-padding-ver) 0;
-  color:       var(--ds-list-icon-checkmark-fg-generic);
+  padding:     var(--ds-list-padding-ver-icon-checkmark) 0;
+  color:       var(--ds-list-fg-icon-checkmark-generic);
 }
 
 ${SIZES.map((s) => `
@@ -91,10 +91,10 @@ ${SIZES.map((s) => `
   line-height: var(--ds-lineHeight-${MARK[s]});
 }
 .ds-list--${s}.ds-list--unordered .ds-list__item { gap: var(--ds-list-gap-unordered-${s}); }
-.ds-list--${s}.ds-list--ordered .ds-list__marker { min-width: var(--ds-list-ordered-indent-${s}); }
+.ds-list--${s}.ds-list--ordered .ds-list__marker { min-width: var(--ds-list-indent-ordered-${s}); }
 .ds-list--${s} .ds-list__icon svg {
-  width:  var(--ds-list-icon-checkmark-size-${s});
-  height: var(--ds-list-icon-checkmark-size-${s});
+  width:  var(--ds-list-size-icon-checkmark-${s});
+  height: var(--ds-list-size-icon-checkmark-${s});
 }`).join('')}
 `;
 

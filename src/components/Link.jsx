@@ -37,10 +37,10 @@ import { VisuallyHidden } from './VisuallyHidden';
 /* ─── CSS ──────────────────────────────────────────────────────────────────── */
 
 const css = `
-.ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); --_icon: var(--ds-link-icon-size-xs); }
-.ds-link--sm { --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-link-icon-size-sm); }
-.ds-link--md { --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-link-icon-size-md); }
-.ds-link--lg { --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-link-icon-size-lg); }
+.ds-link--xs { --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); --_icon: var(--ds-link-size-icon-xs); }
+.ds-link--sm { --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); --_icon: var(--ds-link-size-icon-sm); }
+.ds-link--md { --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); --_icon: var(--ds-link-size-icon-md); }
+.ds-link--lg { --_fs: var(--ds-fontSize-label-lg); --_lh: var(--ds-lineHeight-label-lg); --_icon: var(--ds-link-size-icon-lg); }
 
 .ds-link {
   display:         inline-flex;
@@ -71,18 +71,18 @@ const css = `
 .ds-link__text { box-shadow: inset 0 calc(-1 * var(--ds-link-border-bottom-width)) 0 var(--_ul); } /* por dentro: no suma altura, como en Figma */
 
 /* ── Default ── */
-.ds-link--default                        { color: var(--ds-link-fg-label-default); }
-.ds-link--default .ds-link__text         { --_ul: var(--ds-link-border-bottom-default); }
+.ds-link--default                        { color: var(--ds-link-fg-label-default-generic); }
+.ds-link--default .ds-link__text         { --_ul: var(--ds-link-border-color-bottom-default); }
 .ds-link--default .ds-link__icon         { color: var(--ds-link-fg-icon-default); }
-.ds-link--default:visited .ds-link__text { --_ul: var(--ds-link-border-bottom-visited); }
+.ds-link--default:visited .ds-link__text { --_ul: var(--ds-link-border-color-bottom-visited); }
 
 /* ── Accent ── */
 .ds-link--accent                          { color: var(--ds-link-fg-label-accent); }
-.ds-link--accent .ds-link__text           { --_ul: var(--ds-link-border-bottom-accent); }
+.ds-link--accent .ds-link__text           { --_ul: var(--ds-link-border-color-bottom-accent); }
 .ds-link--accent .ds-link__icon           { color: var(--ds-link-fg-icon-accent); }
 .ds-link--accent:visited                  { color: var(--ds-link-fg-label-accent-visited); }
-.ds-link--accent:visited .ds-link__text   { --_ul: var(--ds-link-border-bottom-visited); }
-.ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-fg-icon-visited); }
+.ds-link--accent:visited .ds-link__text   { --_ul: var(--ds-link-border-color-bottom-visited); }
+.ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-fg-icon-accent-visited); }
 
 /* ── Emphasis (Figma Type) ── */
 .ds-link--emphasis-medium { font-weight: var(--ds-font-weight-bold); }
@@ -99,9 +99,9 @@ const css = `
 /* ── Focus: anillo doble pegado al enlace (Focus inner −2, Focus outer −4).
    outline transparente: visible solo en colores forzados — audit §F. ── */
 .ds-link:focus-visible {
-  outline:    var(--ds-link-focus-width) solid transparent;
-  box-shadow: 0 0 0 var(--ds-link-focus-width) var(--ds-link-focus-inner),
-              0 0 0 calc(2 * var(--ds-link-focus-width)) var(--ds-link-focus-outer);
+  outline:    var(--ds-link-border-width-focus) solid transparent;
+  box-shadow: 0 0 0 var(--ds-link-border-width-focus) var(--ds-link-border-color-focus-inner),
+              0 0 0 calc(2 * var(--ds-link-border-width-focus)) var(--ds-link-border-color-focus-outer);
 }
 `;
 

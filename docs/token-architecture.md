@@ -242,8 +242,14 @@ y pasó a `icon/all/fg/generic`; Bottom Navigation se reenlazó a sus propios
 
 **En código** el nombre CSS sigue el mismo orden sin `all`:
 `--ds-{componente}-{propiedad}-{elemento}-{estado}` (`--ds-tabs-fg-icon-error`).
-Hoy solo Tabs; el resto de `tokens.css` se nombró a mano y solo 226 de 946
-nombres seguían a Figma, así que se migra por componente (ver `tech-debt.md`).
+Migrado el 16/11 en todo `tokens.css`: 683 variables renombradas, 427 con el
+nombre sacado de su token de Figma (pareja segura: el comentario lo cita o el
+parecido es alto) y 256 reordenando el nombre que ya tenían (tokens solo de
+código o sin pareja clara). Se dejan sin cambiar las que no tienen propiedad
+reconocible (`--ds-tooltip-arrow-base`…) y 6 de Selector que chocarían con su
+versión `common`. Tabla en `tokens/css-renames-2026-11-16.json`. Comprobado con
+capturas de la galería (Retail/Youth × light/dark) idénticas píxel a píxel antes y
+después (`scripts/gallery-shots.mjs`).
 
 ### Patrón "Common + específico"
 
@@ -263,12 +269,12 @@ accountSelector/all/    ← tokens propios del Account Selector
 
 | InputCommon | Alias | Uso | CSS |
 |---|---|---|---|
-| `icon/fg/generic` | `fg/icon/subtle` | icono informativo/decorativo (gris) — antes InputText `…/generic` (subtle) | `--ds-input-icon-fg` |
-| `icon/fg/primary` | `fg/icon/primary` | icono accionable: chevron, calendario, +/−, desplegable de país/divisa | `--ds-input-icon-fg-primary` |
-| `icon/fg/disabled` | `fg/icon/disabled` | cualquier icono del campo en Disabled | `--ds-input-icon-fg-disabled` |
-| `icon/size/generic` | `sizing/sm` (24) | tamaño de los iconos del campo | `--ds-input-icon-size` |
-| `subField/height/generic` | `sizing/2xl` | alto FIJO de cada subcampo de un campo compuesto (país/teléfono, divisa/importe) | `--ds-input-subfield-height` |
-| `subField/gap/generic` | `spacing/xs` | bandera/texto ↔ chevron dentro del subcampo selector | `--ds-input-subfield-gap` |
+| `icon/fg/generic` | `fg/icon/subtle` | icono informativo/decorativo (gris) — antes InputText `…/generic` (subtle) | `--ds-input-fg-icon` |
+| `icon/fg/primary` | `fg/icon/primary` | icono accionable: chevron, calendario, +/−, desplegable de país/divisa | `--ds-input-fg-icon-primary` |
+| `icon/fg/disabled` | `fg/icon/disabled` | cualquier icono del campo en Disabled | `--ds-input-fg-icon-disabled` |
+| `icon/size/generic` | `sizing/sm` (24) | tamaño de los iconos del campo | `--ds-input-size-icon` |
+| `subField/height/generic` | `sizing/2xl` | alto FIJO de cada subcampo de un campo compuesto (país/teléfono, divisa/importe) | `--ds-input-height-subfield` |
+| `subField/gap/generic` | `spacing/xs` | bandera/texto ↔ chevron dentro del subcampo selector | `--ds-input-gap-subfield` |
 | *(ya existían)* `valueText/fg/*`, `root/paddingHor`, `root/paddingVer` | — | absorben `countryText`/`currencyText`, los paddings de `telephoneField`/`countryField` | `--ds-input-fg-*`, `--ds-input-padding-*` |
 
 **`root/minheight` vs `subField/height` — mismo valor hoy, distinto motivo de cambio.** `root/minheight` es el alto MÍNIMO del campo entero y puede crecer (InputText multilínea, Combobox con chips en varias filas). `subField/height` es el alto FIJO de cada segmento de un campo compuesto, que nunca crece. Si mañana el campo base sube a 64, los subcampos no tienen por qué seguirle.
@@ -284,9 +290,9 @@ Los iconos son vectores de la librería Lucide. Figma no permite vincular el fil
 En código, el color se aplica via `currentColor` en el componente padre:
 ```css
 /* Component token */
---ds-selector-icon-fg-primary: var(--ds-fg-icon-primary)
+--ds-selector-fg-icon-primary: var(--ds-fg-icon-primary)
 /* En el JSX, se aplica al contenedor, no al SVG */
-color: var(--ds-selector-icon-fg-primary)
+color: var(--ds-selector-fg-icon-primary)
 /* El SVG hereda via currentColor */
 ```
 
@@ -311,8 +317,8 @@ La posición (left/right) **nunca** determina el color. El criterio es el contra
 
 **Selector y Account Selector** — mismo patrón aplicado (15/07/2026): `Selector/iconLeft/fg/*` == `Selector/iconRight/fg/*` (mismo valor `#4BA9C0` primary / `#B9BEC4` disabled), consolidados en CSS a un único par por componente:
 ```css
---ds-selector-icon-fg-primary   / --ds-selector-icon-fg-disabled
---ds-account-selector-icon-fg-primary / --ds-account-selector-icon-fg-disabled
+--ds-selector-fg-icon-primary   / --ds-selector-fg-icon-disabled
+--ds-account-selector-fg-icon-primary / --ds-account-selector-fg-icon-disabled
 ```
 Left y right comparten color; solo el tamaño (`--ds-selector-icon-left/right-size`, ambos 20px) sigue separado por posición — candidato a la misma consolidación en una pasada futura.
 
@@ -369,7 +375,7 @@ default-filled los usan igual) — no hizo falta tocar la capa Mode.
 
 La flecha (vector `arrow`, 8×6 en Top/Bottom · 6×8 en Left/Right) no tiene Variable propia en Figma —
 geometría literal leída de `get_metadata` por variante, tratada como token literal de Componente
-(`--ds-tooltip-arrow-base`/`-arrow-length`), mismo criterio que `--ds-snackbar-root-shadow`.
+(`--ds-tooltip-arrow-base`/`-arrow-length`), mismo criterio que `--ds-snackbar-shadow`.
 
 ### LoadingSpinner — bug real: "inverted" apuntaba al fondo de página, no a blanco fijo (02/09/2026)
 
@@ -631,11 +637,11 @@ Variantes renombradas en Figma: `Neutral High Emphasis` → `Emphasis`, `Neutral
 **Color de icono — CREADO y sincronizado (15/07/2026).** Figma expone `Selector/iconLeft/fg/{primary,disabled}` y `Selector/iconRight/fg/{primary,disabled}` (mismo valor left/right: `#4BA9C0` primary, `#B9BEC4` disabled → Mode `fg/icon/primary` / `fg/icon/disabled`). Consolidados en `tokens.css` a un único par por componente, sin distinción de posición:
 
 ```css
---ds-selector-common-icon-fg-primary   → var(--ds-fg-icon-primary)
---ds-selector-common-icon-fg-disabled  → var(--ds-fg-icon-disabled)
+--ds-selector-common-fg-icon-primary   → var(--ds-fg-icon-primary)
+--ds-selector-common-fg-icon-disabled  → var(--ds-fg-icon-disabled)
 /* alias por componente */
---ds-selector-icon-fg-primary  · --ds-selector-icon-fg-disabled
---ds-account-selector-icon-fg-primary · --ds-account-selector-icon-fg-disabled
+--ds-selector-fg-icon-primary  · --ds-selector-fg-icon-disabled
+--ds-account-selector-fg-icon-primary · --ds-account-selector-fg-icon-disabled
 ```
 
 Consumido por `SelectorInvoker` · `SelectorListItem` · `AccountSelectorInvoker` · `AccountSelectorListItem` vía `color:` sobre el contenedor + `currentColor` en el SVG (componente `Icon` compartido). Los sub-componentes antiguos `.Icon Left`/`.Icon Right` ya no existen en Figma.
@@ -715,14 +721,14 @@ Nodo EXPLORE confirmado: `3109:11663`, variante `Length` = `Single Line` / `Mult
 
 | Token Figma | CSS | Alias Mode | Valor (light) |
 |---|---|---|---|
-| `snackbar/all/bg/generic` | `--ds-snackbar-root-bg-generic` | `bg/inverse` | `#050506` |
-| `snackbar/all/fg/text/generic` | `--ds-snackbar-text-fg-generic` | `fg/body/inverse` | `#FFFFFF` |
-| `snackbar/all/borderRadius/generic` | `--ds-snackbar-root-border-radius` | `borderRadius/md` | `8px` |
-| `snackbar/all/paddingHor/generic` | `--ds-snackbar-root-padding-hor` | `spacing/lg` | `12px` |
-| `snackbar/all/paddingVer/singleLine` | `--ds-snackbar-root-padding-ver-single` | `spacing/sm` | `6px` |
-| `snackbar/all/paddingVer/multiLine` | `--ds-snackbar-root-padding-ver-multi` | `spacing/lg` | `12px` |
-| `snackbar/all/gap/singleLine` | `--ds-snackbar-root-gap-single` | `spacing/sm` | `6px` |
-| `Snackbar/Shadow` (Effect Style) | `--ds-snackbar-root-shadow` | — (literal, no es Variable) | 3-layer drop-shadow |
+| `snackbar/all/bg/generic` | `--ds-snackbar-bg-generic` | `bg/inverse` | `#050506` |
+| `snackbar/all/fg/text/generic` | `--ds-snackbar-fg-text-generic` | `fg/body/inverse` | `#FFFFFF` |
+| `snackbar/all/borderRadius/generic` | `--ds-snackbar-border-radius` | `borderRadius/md` | `8px` |
+| `snackbar/all/paddingHor/generic` | `--ds-snackbar-padding-hor` | `spacing/lg` | `12px` |
+| `snackbar/all/paddingVer/singleLine` | `--ds-snackbar-padding-ver-single-line` | `spacing/sm` | `6px` |
+| `snackbar/all/paddingVer/multiLine` | `--ds-snackbar-padding-ver-multi` | `spacing/lg` | `12px` |
+| `snackbar/all/gap/singleLine` | `--ds-snackbar-gap-single` | `spacing/sm` | `6px` |
+| `Snackbar/Shadow` (Effect Style) | `--ds-snackbar-shadow` | — (literal, no es Variable) | 3-layer drop-shadow |
 
 **`fg/body/inverse`, no `fg/label/inverse` — verificado contra el panel de variables de Figma, no asumido.** La primera hipótesis fue reutilizar `fg-label-inverse` (el mismo token que Button default-filled/CTALink primario), razonando por analogía con el par `bg-inverse`/`fg-*-inverse` ya cerrado el 11/08. Al comprobar el alias real en el panel de Component tokens de Figma, el mensaje del Snackbar resuelve contra `fg/body/inverse` — correcto semánticamente: es texto de cuerpo, no el label de un botón. Ambos tokens (`fg-label-inverse`/`fg-body-inverse`) resuelven al mismo hex en `tokens.css` hoy (`#FFFFFF` light / `#050506` dark), así que no había regresión visual posible por el error — pero el alias sí importa si algún día divergen. Regla general reafirmada: **verificar el alias real, no inferirlo por el patrón de un componente anterior**, aunque el resultado visual coincida.
 
@@ -750,7 +756,7 @@ El texto de título de sección (teal, bold, 19px) estaba **duplicado 4 veces** 
 | lineHeight | `lineHeight/sm` (28.5, propio) | escala headline propia |
 | weight | siempre Bold-capable (prop `weight`) | siempre Regular |
 
-Tokens Component: `--ds-section-header-text-fg-default/primary/disabled` → Mode `fg/title/default/primary/disabled`. La nomenclatura de Figma para el color "normal" era **"Subtle"** (confuso — no es un gris apagado, resuelve al mismo `#050506`/`#FFFFFF` que cualquier texto de contraste completo) — renombrado a `default` en código, siguiendo la regla de nombrar por lo que resuelve, no por la etiqueta heredada.
+Tokens Component: `--ds-section-header-fg-text-default/primary/disabled` → Mode `fg/title/default/primary/disabled`. La nomenclatura de Figma para el color "normal" era **"Subtle"** (confuso — no es un gris apagado, resuelve al mismo `#050506`/`#FFFFFF` que cualquier texto de contraste completo) — renombrado a `default` en código, siguiendo la regla de nombrar por lo que resuelve, no por la etiqueta heredada.
 
 **Mode nuevo `fg/title/*` — valores reales, no replicados de `fg/headline/*`.** Resueltos siguiendo la cadena de alias completa en vivo (Theme → Base), no asumidos por analogía:
 
@@ -841,7 +847,7 @@ Ambos verificados por cadena de alias completa en Figma (no por nombre ni por he
 
 ### Tokens
 
-Los 27 `--ds-dialog-*` en `tokens.css`: bodyText/emptyState (2 fg) · header bg×5 colores · header title fg×5 · header icon fg×5 · header padding×2 (layout, literal px) · root bg · scrim bg · simple (icon fg, border color, borderRadius, content gap, padding×2, literales) · title fg compartido (DialogSimple/ErrorAndEmptyState). Sombra `Dialog/DialogShadow` (2 capas: `0 24px 24px rgba(0,0,0,.24)` + `0 0 24px rgba(0,0,0,.12)`) tratada como literal en CSS, mismo criterio que `--ds-snackbar-root-shadow` — aplica a `width="popUp"` de Dialog **y** a `variant="default"` de DialogSimple (mismo shadow, no uno propio). `--ds-dialog-simple-border-color-generic` nuevo, `var(--ds-borderColor-subtle)` — antes el borde no tenía token, era un gradiente sin enlazar. `--ds-bg-overlay` no tenía override dark hasta esta sesión (`bg/overlay` dark en Figma = negro→blanco 30%) — añadido.
+Los 27 `--ds-dialog-*` en `tokens.css`: bodyText/emptyState (2 fg) · header bg×5 colores · header title fg×5 · header icon fg×5 · header padding×2 (layout, literal px) · root bg · scrim bg · simple (icon fg, border color, borderRadius, content gap, padding×2, literales) · title fg compartido (DialogSimple/ErrorAndEmptyState). Sombra `Dialog/DialogShadow` (2 capas: `0 24px 24px rgba(0,0,0,.24)` + `0 0 24px rgba(0,0,0,.12)`) tratada como literal en CSS, mismo criterio que `--ds-snackbar-shadow` — aplica a `width="popUp"` de Dialog **y** a `variant="default"` de DialogSimple (mismo shadow, no uno propio). `--ds-dialog-simple-border-color-generic` nuevo, `var(--ds-borderColor-subtle)` — antes el borde no tenía token, era un gradiente sin enlazar. `--ds-bg-overlay` no tenía override dark hasta esta sesión (`bg/overlay` dark en Figma = negro→blanco 30%) — añadido.
 
 ### Hallazgo de código (no de Figma): tamaño de Button un escalón corto
 
@@ -1094,17 +1100,17 @@ Confirmado que `Selector List Item` (component set `3347:7310`) ya soportaba `Ri
 
 **`Step Indicator Large` — dos arquitecturas a propósito.** Figma tiene un componente con variantes fijas `Number of steps=2..7` (comodidad real para diseñadoras + límite real de ancho de pantalla); código sigue el patrón de composición sin límite ya usado en Table/CellActions/SegmentedControl (`array.map()` + dev-warn a partir de 7, nunca bloqueo).
 
-Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width` y los literales de padding/gap/iconSize (con precedente directo en Figma, `spacing/xl`) — el resto reusa Mode-layer existente (`--ds-bg-primary`, `--ds-fg-success`, `--ds-borderColor-emphasis`).
+Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width-generic` y los literales de padding/gap/iconSize (con precedente directo en Figma, `spacing/xl`) — el resto reusa Mode-layer existente (`--ds-bg-primary`, `--ds-fg-success`, `--ds-borderColor-emphasis`).
 
 ---
 
 ## Top Navigation, Card, Image (22–25/09/2026)
 
-**`Card` (átomo nuevo)** — carcasa del panel Flydown de Top Navigation. Sombra propia (`--ds-card-root-shadow`, Effect Style real "Card/Shadow") — hasta el 23/09 aliasaba a Popover Sheet por coincidencia de valor, desacoplada para no depender de otro componente sin motivo real.
+**`Card` (átomo nuevo)** — carcasa del panel Flydown de Top Navigation. Sombra propia (`--ds-card-shadow`, Effect Style real "Card/Shadow") — hasta el 23/09 aliasaba a Popover Sheet por coincidencia de valor, desacoplada para no depender de otro componente sin motivo real.
 
 **Un grupo del flydown puede llevar `featured: {...}` en vez de `links`** (25/09) — instancia `Image` tal cual. `flydownToSidebarChildren` filtra esos grupos antes de aplanar el árbol de `SidebarMenu` móvil (contenido decorativo, no navegable) — sin el filtro, `group.links.map` crasheaba con `undefined`, bug real encontrado al verificar.
 
-**`Image` (átomo nuevo)** — `size`(1:1/3:2/4:3/16:9)×`variant`(roundedCorners/circle) mismo eje que `.Container` en Figma antes de fusionarse en el component set real (24/09). `objectFit: cover` fijo, corregido en Figma el mismo día desde `scaleMode=FIT` (dejaba huecos de letterbox con fotos reales). `borderRadius` reusa literalmente `--ds-card-root-border-radius` (mismo token que Figma, `cards/all/borderRadius/basic`) — sin token propio nuevo. Fondo de fallback (`--ds-bg-subtle`) cuando no hay `src` es decisión de código, no réplica del placeholder gráfico de Figma.
+**`Image` (átomo nuevo)** — `size`(1:1/3:2/4:3/16:9)×`variant`(roundedCorners/circle) mismo eje que `.Container` en Figma antes de fusionarse en el component set real (24/09). `objectFit: cover` fijo, corregido en Figma el mismo día desde `scaleMode=FIT` (dejaba huecos de letterbox con fotos reales). `borderRadius` reusa literalmente `--ds-cards-border-radius-basic` (mismo token que Figma, `cards/all/borderRadius/basic`) — sin token propio nuevo. Fondo de fallback (`--ds-bg-subtle`) cuando no hay `src` es decisión de código, no réplica del placeholder gráfico de Figma.
 
 ---
 
@@ -1128,8 +1134,8 @@ Tokens nuevos en `tokens.css`: solo `--ds-steps-border-width` y los literales de
 
 | Figma (Component tokens) | CSS | Valor |
 |---|---|---|
-| `button/all/padding/focusArea/generic` | `--ds-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
-| `iconButton/all/padding/focusArea/generic` | `--ds-icon-button-focus-area-padding` | alias Device `spacing/xs` (4px) |
+| `button/all/padding/focusArea/generic` | `--ds-button-padding-focus-area-generic` | alias Device `spacing/xs` (4px) |
+| `iconButton/all/padding/focusArea/generic` | `--ds-icon-button-padding-focus-area` | alias Device `spacing/xs` (4px) |
 
 Scope `GAP`, ocultos en la publicación (internos del componente, como el resto de geometría). Son geometría, así que viven en Component sin equivalente en Mode (regla de la cascada). 4px = hueco `focus-inner` (2px) + anillo `focus-outer` (2px), los dos ligados a `*/root/borderWidth/focus`.
 

@@ -24,15 +24,15 @@ const css = `
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   white-space: nowrap;
-  color: var(--ds-description-text-fg-subtle);
+  color: var(--ds-description-text-fg-text-subtle);
 }
 
 .ds-description-text--14 { font-size: var(--ds-fontSize-body-xs); line-height: var(--ds-lineHeight-body-xs); } /* 14/20 */
 .ds-description-text--16 { font-size: var(--ds-fontSize-body-sm); line-height: var(--ds-lineHeight-body-sm);  } /* 16/24 */
 
-.ds-description-text--default  { color: var(--ds-description-text-fg-default); }
-.ds-description-text--disabled { color: var(--ds-description-text-fg-disabled); }
-.ds-description-text--onColor  { color: var(--ds-description-text-fg-onColor); }
+.ds-description-text--default  { color: var(--ds-description-text-fg-text-default); }
+.ds-description-text--disabled { color: var(--ds-description-text-fg-text-disabled); }
+.ds-description-text--onColor  { color: var(--ds-description-text-fg-text-on-color); }
 `;
 
 injectStyles('ds-description-text', css);

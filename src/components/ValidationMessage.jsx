@@ -39,19 +39,19 @@ injectStyles('ds-validation-message', `
 .ds-validation-message {
   display:     flex;
   align-items: flex-start;
-  gap:         var(--ds-validation-message-gap);
+  gap:         var(--ds-validation-message-gap-generic);
   font-family: inherit;
   font-size:   var(--ds-fontSize-body-xs);
   font-weight: var(--ds-font-weight-regular);
   line-height: var(--ds-lineHeight-body-xs);
-  color:       var(--ds-validation-message-fg-text);
+  color:       var(--ds-validation-message-fg-text-generic);
 }
 .ds-validation-message__icon {
   display:     inline-flex;
   align-items: center;
   flex-shrink: 0;
   height:      var(--ds-lineHeight-body-xs);
-  color:       var(--ds-validation-message-fg-icon);
+  color:       var(--ds-validation-message-fg-icon-generic);
 }
 `);
 

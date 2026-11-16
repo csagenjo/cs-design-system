@@ -10,7 +10,7 @@
  *
  * Un solo tamaño, como Figma (v2 quita `size`, que no existía en Figma).
  * Tamaño y radio por token: --ds-country-flag-width/height (literales de
- * Figma, el asset no está en la escala sizing) y --ds-country-flag-border-radius
+ * Figma, el asset no está en la escala sizing) y --ds-country-flag-border-radius-generic
  * → border-radius/xs (`countryFlag/all/borderRadius/generic`, nuevo).
  *
  * El SVG se inyecta vía data URI en un <img>, nunca dangerouslySetInnerHTML.
@@ -32,7 +32,7 @@ const css = `
   flex-shrink:   0;
   width:         var(--ds-country-flag-width);
   height:        var(--ds-country-flag-height);
-  border-radius: var(--ds-country-flag-border-radius);
+  border-radius: var(--ds-country-flag-border-radius-generic);
 }
 `;
 

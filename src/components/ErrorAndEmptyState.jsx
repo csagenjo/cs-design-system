@@ -50,27 +50,27 @@ const css = `
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background: var(--ds-dialog-root-bg-generic);
+  background: var(--ds-dialog-bg-default);
   box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — añadida 25/08, antes ninguna variante llevaba sombra ni radio (sigue sin radio, cornerRadius 0 en Figma) */
 }
 .ds-error-empty-state--full-screen {
   width: 100%;
   height: 100%;
-  gap: var(--ds-dialog-root-gap-generic);
-  padding: var(--ds-dialog-empty-state-padding-generic);
+  gap: var(--ds-dialog-gap-generic);
+  padding: var(--ds-dialog-padding-empty-state-generic);
 }
 .ds-error-empty-state--pop-up {
   width: min(359px, 100%); /* Figma: Pop up 359 */
   flex-shrink: 0;
-  gap: var(--ds-dialog-root-gap-generic);
-  padding: var(--ds-dialog-empty-state-padding-generic);
+  gap: var(--ds-dialog-gap-generic);
+  padding: var(--ds-dialog-padding-empty-state-generic);
 }
 
 .ds-error-empty-state__content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ds-dialog-empty-state-content-gap);
+  gap: var(--ds-dialog-gap-empty-state-content);
   width: 100%;
   box-sizing: border-box;
 }
@@ -81,13 +81,13 @@ const css = `
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ds-dialog-empty-state-text-gap);
+  gap: var(--ds-dialog-gap-empty-state-text);
   width: 100%;
   box-sizing: border-box;
   text-align: center;
 }
 .ds-error-empty-state--full-screen .ds-error-empty-state__content { flex: 1 1 auto; justify-content: center; } /* Figma: Content en fill, centrado en el hueco libre; botones abajo */
-.ds-error-empty-state--full-screen .ds-error-empty-state__text { padding-bottom: var(--ds-dialog-empty-state-text-padding-bottom-full-screen); }
+.ds-error-empty-state--full-screen .ds-error-empty-state__text { padding-bottom: var(--ds-dialog-padding-bottom-empty-state-text-full-screen); }
 
 .ds-error-empty-state__title {
   margin: 0;
@@ -97,7 +97,7 @@ const css = `
   font-weight: var(--ds-font-weight-bold);
   font-size: var(--ds-fontSize-title-md);
   line-height: var(--ds-lineHeight-title-md);
-  color: var(--ds-dialog-title-fg-generic);
+  color: var(--ds-dialog-fg-title-generic);
 }
 .ds-error-empty-state__description {
   margin: 0;
@@ -106,7 +106,7 @@ const css = `
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-body-sm);
   line-height: var(--ds-lineHeight-body-sm);
-  color: var(--ds-dialog-empty-state-body-text-fg-generic);
+  color: var(--ds-dialog-fg-empty-state-body-text-generic);
 }
 
 .ds-error-empty-state__control-area {
@@ -114,12 +114,12 @@ const css = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--ds-dialog-root-gap-generic);
+  gap: var(--ds-dialog-gap-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
 }
-.ds-error-empty-state--full-screen .ds-error-empty-state__control-area { padding: var(--ds-dialog-control-area-padding-generic); }
+.ds-error-empty-state--full-screen .ds-error-empty-state__control-area { padding: var(--ds-dialog-padding-control-area-generic); }
 `;
 
 injectStyles('ds-error-empty-state', css);

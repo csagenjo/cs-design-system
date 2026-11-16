@@ -1047,7 +1047,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
 
       <Section name="StepVer">
         <Row>
-          <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(var(--ds-steps-navigator-root-height) * 3)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(var(--ds-steps-navigator-height-generic) * 3)' }}>
             <StepVer state="completed" showTopConnector={false} />
             <StepVer state="active" number="2" />
             <StepVer state="incomplete" number="3" showBottomConnector={false} />

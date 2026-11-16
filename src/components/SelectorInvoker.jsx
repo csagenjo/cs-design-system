@@ -11,12 +11,12 @@ const css = `
   box-sizing:     border-box;
   display:        inline-flex;
   align-items:    center;
-  gap:            var(--ds-selector-root-gap);
+  gap:            var(--ds-selector-gap);
   width:          auto;
-  padding-left:   var(--ds-selector-root-padding);
-  background:     var(--ds-selector-root-bg-generic);
-  border:         var(--ds-selector-root-border-width-generic) solid var(--ds-selector-root-border-color-generic);
-  border-radius:  var(--ds-selector-root-border-radius-generic);
+  padding-left:   var(--ds-selector-padding);
+  background:     var(--ds-selector-bg-generic);
+  border:         var(--ds-selector-border-width-generic) solid var(--ds-selector-border-color-generic);
+  border-radius:  var(--ds-selector-border-radius-generic);
   font-family:    inherit;
   text-align:     left;
   cursor:         pointer;
@@ -28,21 +28,21 @@ const css = `
 .ds-selector-invoker__icon-left {
   flex-shrink: 0;
   display:     flex;
-  color:       var(--ds-selector-icon-fg-primary);
+  color:       var(--ds-selector-fg-icon-primary);
 }
 .ds-selector-invoker__icon-left svg {
-  width:  var(--ds-selector-icon-left-size);
-  height: var(--ds-selector-icon-left-size);
+  width:  var(--ds-selector-size-icon-left);
+  height: var(--ds-selector-size-icon-left);
 }
 
 .ds-selector-invoker__content {
   box-sizing:  border-box;
   display:     flex;
   align-items: center;
-  gap:         var(--ds-selector-content-gap);
+  gap:         var(--ds-selector-gap-content);
   flex:        1 1 auto;
   min-width:   0;
-  padding:     var(--ds-selector-content-padding) var(--ds-selector-content-padding) var(--ds-selector-content-padding) 0;
+  padding:     var(--ds-selector-padding-content) var(--ds-selector-padding-content) var(--ds-selector-padding-content) 0;
 }
 
 .ds-selector-invoker__center {
@@ -59,7 +59,7 @@ const css = `
   font-size:   var(--ds-fontSize-title-md);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-title-md);
-  color:       var(--ds-selector-header-fg-default);
+  color:       var(--ds-selector-fg-header-default);
   overflow:    hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -79,18 +79,18 @@ const css = `
   display:     inline-flex;
   align-items: center;
   gap:         var(--ds-spacing-xs);
-  color:       var(--ds-selector-icon-fg-primary);
+  color:       var(--ds-selector-fg-icon-primary);
 }
-.ds-selector-invoker__right svg { width: var(--ds-selector-icon-right-size); height: var(--ds-selector-icon-right-size); }
+.ds-selector-invoker__right svg { width: var(--ds-selector-size-icon-right); height: var(--ds-selector-size-icon-right); }
 
 /* Hover — solo estado genérico interactivo */
 .ds-selector-invoker--default:hover {
-  background:   var(--ds-selector-root-bg-hover);
+  background:   var(--ds-selector-bg-hover);
 }
 
 /* Pressed */
 .ds-selector-invoker--default:active {
-  opacity: var(--ds-selector-root-opacity-pressed);
+  opacity: var(--ds-selector-opacity-pressed);
 }
 
 /* Focus — anillo doble (inner blanco + outer negro) */
@@ -102,13 +102,13 @@ const css = `
 
 /* Error */
 .ds-selector-invoker--error {
-  border-color: var(--ds-selector-root-border-color-error);
+  border-color: var(--ds-selector-border-color-error);
 }
 
 /* Read-only — sin foco visible, cursor default */
 .ds-selector-invoker--readOnly {
-  background: var(--ds-selector-root-bg-disabled);
-  border-color: var(--ds-selector-root-border-color-disabled);
+  background: var(--ds-selector-bg-disabled);
+  border-color: var(--ds-selector-border-color-disabled);
   cursor:     default;
 }
 /* A11y-4: solo lectura sigue siendo enfocable — conserva el anillo de foco (antes se quitaba). */
@@ -118,14 +118,14 @@ const css = `
 
 /* Disabled */
 .ds-selector-invoker:disabled {
-  background:   var(--ds-selector-root-bg-disabled);
-  border-color: var(--ds-selector-root-border-color-disabled);
-  color:        var(--ds-selector-icon-fg-disabled);
+  background:   var(--ds-selector-bg-disabled);
+  border-color: var(--ds-selector-border-color-disabled);
+  color:        var(--ds-selector-fg-icon-disabled);
   cursor:       not-allowed;
 }
 .ds-selector-invoker:disabled .ds-selector-invoker__icon-left,
-.ds-selector-invoker:disabled .ds-selector-invoker__right { color: var(--ds-selector-icon-fg-disabled); }
-.ds-selector-invoker:disabled .ds-selector-invoker__header { color: var(--ds-selector-header-fg-disabled); }
+.ds-selector-invoker:disabled .ds-selector-invoker__right { color: var(--ds-selector-fg-icon-disabled); }
+.ds-selector-invoker:disabled .ds-selector-invoker__header { color: var(--ds-selector-fg-header-disabled); }
 `;
 
 injectStyles('ds-selector-invoker', css);

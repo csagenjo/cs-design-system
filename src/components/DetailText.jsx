@@ -23,30 +23,30 @@ const css = `
 .ds-detail-text {
   display: inline-flex;
   align-items: center;
-  gap: var(--ds-detail-text-gap);
+  gap: var(--ds-detail-text-gap-generic);
   font-family: inherit;
   font-weight: var(--ds-font-weight-regular);
   white-space: nowrap;
-  color: var(--ds-detail-text-fg-default);
+  color: var(--ds-detail-text-fg-text-default);
 }
 
 .ds-detail-text--14 { font-size: var(--ds-fontSize-body-xs); line-height: var(--ds-lineHeight-body-xs); } /* 14/20 */
 .ds-detail-text--16 { font-size: var(--ds-fontSize-body-sm); line-height: var(--ds-lineHeight-body-sm);  } /* 16/24 */
 
-.ds-detail-text--secondary { color: var(--ds-detail-text-fg-secondary); }
-.ds-detail-text--tertiary  { color: var(--ds-detail-text-fg-tertiary); }
-.ds-detail-text--disabled  { color: var(--ds-detail-text-fg-disabled); }
+.ds-detail-text--secondary { color: var(--ds-detail-text-fg-text-secondary); }
+.ds-detail-text--tertiary  { color: var(--ds-detail-text-fg-text-tertiary); }
+.ds-detail-text--disabled  { color: var(--ds-detail-text-fg-text-disabled); }
 
 .ds-detail-text__icon {
   display: inline-flex;
   flex-shrink: 0;
-  width: var(--ds-detail-text-icon-size);
-  height: var(--ds-detail-text-icon-size);
-  color: var(--ds-detail-text-icon-fg-default);
+  width: var(--ds-detail-text-size-icon);
+  height: var(--ds-detail-text-size-icon);
+  color: var(--ds-detail-text-fg-icon-default);
 }
-.ds-detail-text--secondary .ds-detail-text__icon { color: var(--ds-detail-text-icon-fg-secondary); }
-.ds-detail-text--tertiary  .ds-detail-text__icon { color: var(--ds-detail-text-icon-fg-tertiary); }
-.ds-detail-text--disabled  .ds-detail-text__icon { color: var(--ds-detail-text-icon-fg-disabled); }
+.ds-detail-text--secondary .ds-detail-text__icon { color: var(--ds-detail-text-fg-icon-secondary); }
+.ds-detail-text--tertiary  .ds-detail-text__icon { color: var(--ds-detail-text-fg-icon-tertiary); }
+.ds-detail-text--disabled  .ds-detail-text__icon { color: var(--ds-detail-text-fg-icon-disabled); }
 `;
 
 injectStyles('ds-detail-text', css);

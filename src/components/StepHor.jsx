@@ -30,8 +30,8 @@ const css = `
   display:        flex;
   flex-direction: column;
   align-items:    center;
-  gap:            var(--ds-steps-indicator-step-hor-gap);
-  padding:        var(--ds-steps-indicator-step-hor-padding-ver) 0;
+  gap:            var(--ds-steps-indicator-gap-step-hor);
+  padding:        var(--ds-steps-indicator-padding-ver-step-hor) 0;
   min-width:      0;
 }
 .ds-step-hor__indicator {
@@ -41,8 +41,8 @@ const css = `
 }
 .ds-step-hor__connector {
   flex:   1 1 auto;
-  height: var(--ds-steps-border-width);
-  background: var(--ds-steps-connector-border-color);
+  height: var(--ds-steps-border-width-generic);
+  background: var(--ds-steps-border-color-connector);
 }
 .ds-step-hor__connector--hidden {
   visibility: hidden;
@@ -52,7 +52,7 @@ const css = `
   font-size:   var(--ds-fontSize-label-lg);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-lineHeight-label-lg);
-  color:       var(--ds-steps-label-fg-generic);
+  color:       var(--ds-steps-fg-label-generic);
   text-align:  center;
 }
 .ds-step-hor--incomplete .ds-step-hor__label { font-weight: var(--ds-font-weight-regular); }

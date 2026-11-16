@@ -78,13 +78,13 @@ import { usePopoverDismiss } from '../components/_popoverDismiss';
 
 const css = `
 .ds-sidebar-menu__title {
-  padding: var(--ds-sidebar-menu-title-padding-top) var(--ds-sidebar-menu-title-padding-horizontal) var(--ds-sidebar-menu-title-padding-bottom);
+  padding: var(--ds-sidebar-menu-padding-top-title) var(--ds-sidebar-menu-padding-title-horizontal) var(--ds-sidebar-menu-padding-bottom-title);
 }
 .ds-sidebar-menu__list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
 .ds-sidebar-menu__row  { padding-left: var(--ds-sidebar-menu-indent, 0px); }
 .ds-sidebar-menu__chevron {
   display:    flex;
-  color:      var(--ds-sidebar-menu-chevron-fg-primary);
+  color:      var(--ds-sidebar-menu-fg-chevron-primary);
   transition: transform 0.15s ease;
 }
 /* ChevronDown (no chevron-up import) + rotate 180° al expandir — mismo

@@ -30,8 +30,8 @@ const css = `
 }
 .ds-input-stepper--full-width { display: flex; }
 
-.ds-input-stepper__label   { margin-bottom: var(--ds-input-label-gap); }
-.ds-input-stepper__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-stepper__label   { margin-bottom: var(--ds-input-gap-label); }
+.ds-input-stepper__message { margin-top: var(--ds-input-gap-validation); }
 
 /* Caja: .ds-input-box (_inputBase). El anillo aparece con el foco en el valor. */
 .ds-input-stepper__field-wrap {
@@ -46,19 +46,19 @@ const css = `
   align-items:     center;
   justify-content: center;
   flex-shrink:     0;
-  width:           calc(var(--ds-input-padding-hor) * 2 + var(--ds-input-icon-size));
+  width:           calc(var(--ds-input-padding-hor) * 2 + var(--ds-input-size-icon));
   padding:         0;
   border:          none;
   background:      transparent;
   cursor:          pointer;
-  color:           var(--ds-input-icon-fg-primary);
+  color:           var(--ds-input-fg-icon-primary);
 }
-.ds-input-stepper__btn:first-child { margin-right: calc(-1 * var(--ds-input-padding-hor) + var(--ds-input-field-icon-gap)); }
-.ds-input-stepper__btn:last-child  { margin-left:  calc(-1 * var(--ds-input-padding-hor) + var(--ds-input-field-icon-gap)); }
+.ds-input-stepper__btn:first-child { margin-right: calc(-1 * var(--ds-input-padding-hor) + var(--ds-input-gap-field-icon)); }
+.ds-input-stepper__btn:last-child  { margin-left:  calc(-1 * var(--ds-input-padding-hor) + var(--ds-input-gap-field-icon)); }
 .ds-input-stepper__btn:focus { outline: none; }
 .ds-input-stepper__btn[aria-disabled="true"],
 .ds-input-stepper__btn:disabled {
-  color:  var(--ds-input-icon-fg-disabled);
+  color:  var(--ds-input-fg-icon-disabled);
   cursor: not-allowed;
 }
 

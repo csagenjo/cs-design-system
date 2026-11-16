@@ -23,7 +23,7 @@ Device tokens    → responsive typography and spacing (Mobile / Desk)
 --ds-fg-{role}                   /* foreground:     --ds-fg-default */
 --ds-bg-{role}                   /* background:     --ds-bg-subtle */
 --ds-borderColor-{role}          /* borders:        --ds-borderColor-error */
---ds-{component}-{part}-{state}  /* component:      --ds-link-fg-label-default */
+--ds-{component}-{part}-{state}  /* component:      --ds-link-fg-label-default-generic */
 --ds-fontSize-{scale}-{step}     /* typography:     --ds-fontSize-label-md */
 ```
 
@@ -153,8 +153,8 @@ The dual wrapper scopes hover background inside the outer ring, preventing color
 
 **Focus area (Button, IconButton) — 8 October 2026:**
 ```css
-.ds-btn      { margin:  var(--ds-button-focus-area-padding); }       /* 4px, spacing/xs */
-.ds-icon-btn { padding: var(--ds-icon-button-focus-area-padding); }  /* 4px, spacing/xs */
+.ds-btn      { margin:  var(--ds-button-padding-focus-area-generic); }       /* 4px, spacing/xs */
+.ds-icon-btn { padding: var(--ds-icon-button-padding-focus-area); }  /* 4px, spacing/xs */
 :focus-visible {
   outline:        2px solid var(--ds-*-focus-outer);   /* blue ring, 2px beyond the gap */
   outline-offset: 2px;
@@ -206,9 +206,9 @@ Icons from lucide-react inherit color from their parent via `currentColor`.
 The parent component sets the color via its own Component token:
 ```css
 /* Component token sets the color */
---ds-selector-icon-fg-primary: var(--ds-fg-icon-primary)
+--ds-selector-fg-icon-primary: var(--ds-fg-icon-primary)
 /* JSX applies it to the container, not the SVG directly */
-color: var(--ds-selector-icon-fg-primary)
+color: var(--ds-selector-fg-icon-primary)
 /* The icon SVG inherits via currentColor */
 ```
 This is necessary because Figma vector fills cannot be bound to variables — 
@@ -224,8 +224,8 @@ the position never determines the color:
   Secondary/Tertiary that includes Hover and Focus Hover, not only Primary.
   *(tokens.css still reflects the old iconLeft/iconRight structure for Button — sync pending.)*
 - **Selector / Account Selector:** `Selector/iconLeft/fg/*` == `Selector/iconRight/fg/*`
-  (same value) → consolidated in CSS to `--ds-selector-icon-fg-primary` /
-  `--ds-selector-icon-fg-disabled` (and `--ds-account-selector-icon-fg-*`). ✅ synced.
+  (same value) → consolidated in CSS to `--ds-selector-fg-icon-primary` /
+  `--ds-selector-fg-icon-disabled` (and `--ds-account-selector-icon-fg-*`). ✅ synced.
 
 ### Selector family — shared Icon atom
 
@@ -667,7 +667,7 @@ overrides from the 11 August audit, so no new Mode-layer tokens were needed.
 Left/Right, same pair rotated) are literal shape geometry, not a bound token. Read from each variant's
 `get_metadata` output directly (container + arrow child positions) rather than guessed, then added to
 `tokens.css` as literal Component-layer values (`--ds-tooltip-arrow-base`, `--ds-tooltip-arrow-length`),
-same treatment already established for `--ds-snackbar-root-shadow`.
+same treatment already established for `--ds-snackbar-shadow`.
 
 **CODE.** `Tooltip.jsx` wraps a `children` trigger (`React.cloneElement` to add `aria-describedby`,
 pointing at a `React.useId()`-generated id on the bubble) and shows/hides the bubble purely via
@@ -1071,7 +1071,7 @@ declared box, where no content can ever cover it again. No code change needed: `
 in Figma's manual composition, which has no real box model. Second: the Right Panel chevron had no `color` set
 at all in `.ds-sidebar-menu__chevron`, so it inherited black from the row's text via `currentColor` instead of
 teal — `Icon.jsx` never sets its own color by design. Fixed with a new token,
-`--ds-sidebar-menu-chevron-fg-primary` (aliased to the same fixed teal the Drawer's own icon already uses).
+`--ds-sidebar-menu-fg-chevron-primary` (aliased to the same fixed teal the Drawer's own icon already uses).
 
 **A third bug, caught by Carol comparing code and Figma side by side with two screenshots.** The chevron used
 `ChevronRight` rotated 90° when expanded — the right mechanism (a single icon plus a CSS rotation, not two
@@ -1331,7 +1331,7 @@ that "Steps" is the Figma page that contains both families.
 (atoms) plus `StepIndicatorLarge.jsx`, `StepIndicatorSmall.jsx`, `StepNavigator.jsx`, `SubstepNavigator.jsx`
 (organisms). Tokens in `tokens.css` reuse existing Mode-layer values where they already matched
 (`--ds-bg-primary`, `--ds-fg-success`, `--ds-borderColor-emphasis`) instead of duplicating hex — only
-`--ds-steps-border-width` and the padding/gap/icon-size literals are new, with a direct Figma precedent
+`--ds-steps-border-width-generic` and the padding/gap/icon-size literals are new, with a direct Figma precedent
 (`spacing/xl`).
 
 ### Top Navigation, Card and Image built (22–25 September 2026)
@@ -1348,7 +1348,7 @@ never scroll, deliberately approximate ("de un vistazo"). Collapsed (<1024px): L
 
 **`Card` (new atom)** is born as the Flydown panel's shell — a generic surface with background/radius/shadow,
 only the `basic` Figma variant, but a free `children` slot reusable anywhere a simple elevated surface is
-needed. Its shadow (`--ds-card-root-shadow`, a real Effect Style, "Card/Shadow") aliased to Popover Sheet's
+needed. Its shadow (`--ds-card-shadow`, a real Effect Style, "Card/Shadow") aliased to Popover Sheet's
 shadow purely by coincidence until 23/09, when it was decoupled into its own token so Card doesn't depend on
 another unrelated component. In Figma the Flydown itself doesn't instance `Cards` — it's a rigid, `ABSOLUTE`
 frame that hand-simulates the same fill/radius/shadow — a problem that never exists in code, where
@@ -1364,7 +1364,7 @@ fixed while verifying.
 `size` (1:1/3:2/4:3/16:9) × `variant` (roundedCorners/circle, circle only valid with 1:1) mirrors the same axis
 `.Container` had before merging into the real `Image` component set on 24/09. `objectFit: cover` is fixed,
 matching Figma's `scaleMode=FILL` across all 5 variants — fixed the same day from `FIT`, which had been leaving
-letterbox gaps with real photos. `borderRadius` literally reuses `--ds-card-root-border-radius` (the same
+letterbox gaps with real photos. `borderRadius` literally reuses `--ds-cards-border-radius-basic` (the same
 token Figma itself aliases to, `cards/all/borderRadius/basic`) rather than getting its own. The fallback
 background (`--ds-bg-subtle`, shown when there's no `src`) is a code-only decision, not a pixel-for-pixel port
 of Figma's mountain-and-sun placeholder graphic, which represents "no image yet" purely as documentation

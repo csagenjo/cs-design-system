@@ -18,7 +18,7 @@
  * padding/gap/borderRadius: renombrados 26/08 de `dialog/all/simple/*` a
  * `dialog/all/root/*` en Figma — no eran exclusivos de DialogSimple, Dialog y
  * ErrorAndEmptyState ya los consumían con el nombre "simple" por error. De
- * paso se sincronizó `--ds-dialog-root-gap-generic` (existía en Figma sin
+ * paso se sincronizó `--ds-dialog-gap-generic` (existía en Figma sin
  * sincronizar) para dejar de usar el token de padding como gap.
  *
  *
@@ -50,16 +50,16 @@ const css = `
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box;
-  background: var(--ds-dialog-root-bg-generic);
-  border-radius: var(--ds-dialog-root-border-radius-generic);
-  gap: var(--ds-dialog-root-gap-generic);
-  padding: var(--ds-dialog-root-padding-ver-generic) var(--ds-dialog-root-padding-hor-generic); /* Default y Expanded (Figma) */
+  background: var(--ds-dialog-bg-default);
+  border-radius: var(--ds-dialog-border-radius-generic);
+  gap: var(--ds-dialog-gap-generic);
+  padding: var(--ds-dialog-padding-ver-generic) var(--ds-dialog-padding-hor-generic); /* Default y Expanded (Figma) */
 }
 .ds-dialog-simple--default {
   width: 280px;
   max-width: 100%;   /* A11y-5 (1.4.10) */
   flex-shrink: 0;
-  border: var(--ds-dialog-simple-border-width-generic) solid var(--ds-dialog-simple-border-color-generic);
+  border: var(--ds-dialog-border-width-simple-generic) solid var(--ds-dialog-simple-border-color-generic);
   box-shadow: var(--ds-dialog-shadow); /* Dialog/DialogShadow — mismo valor que Dialog PopUp */
 }
 .ds-dialog-simple--expanded {
@@ -76,11 +76,11 @@ const css = `
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--ds-dialog-simple-content-gap-generic);
+  gap: var(--ds-dialog-simple-gap-content-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;
-  padding: var(--ds-dialog-root-padding-ver-generic) var(--ds-dialog-root-padding-hor-generic);
+  padding: var(--ds-dialog-padding-ver-generic) var(--ds-dialog-padding-hor-generic);
 }
 .ds-dialog-simple--expanded .ds-dialog-simple__content { flex: 1 0 0; }
 
@@ -91,14 +91,14 @@ const css = `
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-fontSize-body-sm);
   line-height: var(--ds-lineHeight-body-sm);
-  color: var(--ds-dialog-body-text-fg-generic);
+  color: var(--ds-dialog-fg-body-text-generic);
 }
 
 .ds-dialog-simple__cta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--ds-dialog-simple-cta-gap-generic);
+  gap: var(--ds-dialog-gap-simple-cta-generic);
   width: 100%;
   box-sizing: border-box;
   flex-shrink: 0;

@@ -45,9 +45,9 @@ const css = `
    los estados) — 8 visibles entre círculos, como Figma (12/11). */
 .ds-pgn__item {
   position:         relative;
-  width:            var(--ds-pagination-container-size);
-  height:           var(--ds-pagination-container-size);
-  margin:           var(--ds-pagination-root-focus-area);
+  width:            var(--ds-pagination-size-container);
+  height:           var(--ds-pagination-size-container);
+  margin:           var(--ds-pagination-focus-area);
   display:          inline-flex;
   align-items:      center;
   justify-content:  center;
@@ -55,74 +55,74 @@ const css = `
   padding:          0;
   border:           none;
   background:       transparent;
-  border-radius:    var(--ds-pagination-item-radius);
+  border-radius:    var(--ds-pagination-border-radius-item);
   font-family:      inherit;
-  font-size:        var(--ds-pagination-number-font-size);
-  line-height:      var(--ds-pagination-number-line-height);
+  font-size:        var(--ds-pagination-font-size-number);
+  line-height:      var(--ds-pagination-line-height-number);
   font-weight:      var(--ds-font-weight-regular);
   cursor:           pointer;
 }
 /* Anillo 2 + 2 por fuera del círculo, dentro del área de foco */
 .ds-pgn__item:focus-visible {
-  outline:    var(--ds-pagination-root-border-width-focus) solid transparent; /* visible solo en colores forzados — audit §F */
-  box-shadow: 0 0 0 var(--ds-pagination-root-border-width-focus) var(--ds-pagination-root-border-color-focus-inner),
-              0 0 0 calc(var(--ds-pagination-root-border-width-focus) * 2) var(--ds-pagination-root-border-color-focus-outer);
+  outline:    var(--ds-pagination-border-width-focus) solid transparent; /* visible solo en colores forzados — audit §F */
+  box-shadow: 0 0 0 var(--ds-pagination-border-width-focus) var(--ds-pagination-border-color-focus-inner),
+              0 0 0 calc(var(--ds-pagination-border-width-focus) * 2) var(--ds-pagination-border-color-focus-outer);
 }
 
 /* ── Previous / Next (flechas) ────────────────────────────────────────────── */
-.ds-pgn--default   .ds-pgn__nav--prev { color: var(--ds-pagination-previous-fg-default); }
-.ds-pgn--secondary .ds-pgn__nav--prev { color: var(--ds-pagination-previous-fg-secondary); }
-.ds-pgn--default   .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-default); }
-.ds-pgn--secondary .ds-pgn__nav--next { color: var(--ds-pagination-next-fg-secondary); }
+.ds-pgn--default   .ds-pgn__nav--prev { color: var(--ds-pagination-fg-previous-default); }
+.ds-pgn--secondary .ds-pgn__nav--prev { color: var(--ds-pagination-fg-previous-secondary); }
+.ds-pgn--default   .ds-pgn__nav--next { color: var(--ds-pagination-fg-next-default); }
+.ds-pgn--secondary .ds-pgn__nav--next { color: var(--ds-pagination-fg-next-secondary); }
 
-.ds-pgn--default   .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-default);   color: var(--ds-pagination-previous-fg-hover); }
-.ds-pgn--secondary .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-previous-bg-hover-secondary); color: var(--ds-pagination-previous-fg-hover); }
-.ds-pgn--default   .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-default);       color: var(--ds-pagination-next-fg-hover); }
-.ds-pgn--secondary .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-next-bg-hover-secondary);     color: var(--ds-pagination-next-fg-hover); }
+.ds-pgn--default   .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-bg-previous-hover-default);   color: var(--ds-pagination-fg-previous-hover); }
+.ds-pgn--secondary .ds-pgn__nav--prev:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-bg-previous-hover-secondary); color: var(--ds-pagination-fg-previous-hover); }
+.ds-pgn--default   .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-bg-next-hover-default);       color: var(--ds-pagination-fg-next-hover); }
+.ds-pgn--secondary .ds-pgn__nav--next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--ds-pagination-bg-next-hover-secondary);     color: var(--ds-pagination-fg-next-hover); }
 
-.ds-pgn__nav--prev:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-previous-opacity-pressed); }
-.ds-pgn__nav--next:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-next-opacity-pressed); }
+.ds-pgn__nav--prev:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-opacity-previous-pressed); }
+.ds-pgn__nav--next:active:not(:disabled):not([aria-disabled="true"]) { opacity: var(--ds-pagination-opacity-next-pressed); }
 
-.ds-pgn__nav--prev:disabled, .ds-pgn__nav--prev[aria-disabled="true"] { color: var(--ds-pagination-previous-fg-disabled); }
-.ds-pgn__nav--next:disabled, .ds-pgn__nav--next[aria-disabled="true"] { color: var(--ds-pagination-next-fg-disabled); }
+.ds-pgn__nav--prev:disabled, .ds-pgn__nav--prev[aria-disabled="true"] { color: var(--ds-pagination-fg-previous-disabled); }
+.ds-pgn__nav--next:disabled, .ds-pgn__nav--next[aria-disabled="true"] { color: var(--ds-pagination-fg-next-disabled); }
 .ds-pgn__nav:disabled,
 .ds-pgn__nav[aria-disabled="true"] { cursor: not-allowed; }
 
 /* ── ActivePage (número subrayado) ────────────────────────────────────────── */
-.ds-pgn--default   .ds-pgn__page { color: var(--ds-pagination-active-fg-default); }
-.ds-pgn--secondary .ds-pgn__page { color: var(--ds-pagination-active-fg-secondary); }
+.ds-pgn--default   .ds-pgn__page { color: var(--ds-pagination-fg-active-page-default); }
+.ds-pgn--secondary .ds-pgn__page { color: var(--ds-pagination-fg-active-page-secondary); }
 .ds-pgn__page {
   text-decoration:           underline;
-  text-decoration-thickness: var(--ds-pagination-active-border-bottom-width);
+  text-decoration-thickness: var(--ds-pagination-border-bottom-width-active);
 }
-.ds-pgn--default   .ds-pgn__page:hover { background: var(--ds-pagination-active-bg-hover-default);   color: var(--ds-pagination-active-fg-hover); }
-.ds-pgn--secondary .ds-pgn__page:hover { background: var(--ds-pagination-active-bg-hover-secondary); color: var(--ds-pagination-active-fg-hover); }
-.ds-pgn__page:active { opacity: var(--ds-pagination-active-opacity-pressed); }
+.ds-pgn--default   .ds-pgn__page:hover { background: var(--ds-pagination-bg-active-hover-default);   color: var(--ds-pagination-fg-active-page-hover); }
+.ds-pgn--secondary .ds-pgn__page:hover { background: var(--ds-pagination-bg-active-hover-secondary); color: var(--ds-pagination-fg-active-page-hover); }
+.ds-pgn__page:active { opacity: var(--ds-pagination-opacity-active-pressed); }
 
 /* ── SelectedPage (círculo actual, bold) ──────────────────────────────────── */
-.ds-pgn--default   .ds-pgn__current { background-color: var(--ds-pagination-selected-bg-default); }
-.ds-pgn--secondary .ds-pgn__current { background-color: var(--ds-pagination-selected-bg-secondary); }
+.ds-pgn--default   .ds-pgn__current { background-color: var(--ds-pagination-bg-selected-default); }
+.ds-pgn--secondary .ds-pgn__current { background-color: var(--ds-pagination-bg-selected-secondary); }
 .ds-pgn__current {
-  color:       var(--ds-pagination-root-text-fg-selected);
+  color:       var(--ds-pagination-fg-text-selected);
   font-weight: var(--ds-font-weight-bold);
 }
-.ds-pgn__current:hover  { background-image: linear-gradient(var(--ds-pagination-selected-bg-hover), var(--ds-pagination-selected-bg-hover)); }
-.ds-pgn__current:active { opacity: var(--ds-pagination-selected-opacity-pressed); }
+.ds-pgn__current:hover  { background-image: linear-gradient(var(--ds-pagination-bg-selected-page-hover), var(--ds-pagination-bg-selected-page-hover)); }
+.ds-pgn__current:active { opacity: var(--ds-pagination-opacity-selected-pressed); }
 
 /* ── Dots ("…" — botón: salta un bloque de siblingCount páginas) ──────────── */
-.ds-pgn--default   .ds-pgn__dots { color: var(--ds-pagination-dots-fg-default); }
-.ds-pgn--secondary .ds-pgn__dots { color: var(--ds-pagination-dots-fg-secondary); }
-.ds-pgn--default   .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-default);   color: var(--ds-pagination-dots-fg-hover); }
-.ds-pgn--secondary .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-dots-bg-hover-secondary); color: var(--ds-pagination-dots-fg-hover); }
-.ds-pgn__dots:active:not(:disabled) { opacity: var(--ds-pagination-dots-opacity-pressed); }
+.ds-pgn--default   .ds-pgn__dots { color: var(--ds-pagination-fg-dots-default); }
+.ds-pgn--secondary .ds-pgn__dots { color: var(--ds-pagination-fg-dots-secondary); }
+.ds-pgn--default   .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-bg-dots-hover-default);   color: var(--ds-pagination-fg-dots-hover); }
+.ds-pgn--secondary .ds-pgn__dots:hover:not(:disabled) { background: var(--ds-pagination-bg-dots-hover-secondary); color: var(--ds-pagination-fg-dots-hover); }
+.ds-pgn__dots:active:not(:disabled) { opacity: var(--ds-pagination-opacity-dots-pressed); }
 
 /* ── Disabled global ──────────────────────────────────────────────────────── */
 .ds-pgn--disabled .ds-pgn__item { cursor: not-allowed; pointer-events: none; }
-.ds-pgn--disabled .ds-pgn__page { color: var(--ds-pagination-active-fg-disabled); }
-.ds-pgn--disabled .ds-pgn__dots { color: var(--ds-pagination-dots-fg-disabled); }
+.ds-pgn--disabled .ds-pgn__page { color: var(--ds-pagination-fg-active-page-disabled); }
+.ds-pgn--disabled .ds-pgn__dots { color: var(--ds-pagination-fg-dots-disabled); }
 .ds-pgn--disabled .ds-pgn__current {
-  background: var(--ds-pagination-selected-bg-disabled);
-  color:      var(--ds-pagination-root-text-fg-disabled);
+  background: var(--ds-pagination-bg-selected-page-disabled);
+  color:      var(--ds-pagination-fg-text-disabled);
 }
 `;
 

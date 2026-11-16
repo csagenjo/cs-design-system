@@ -22,7 +22,7 @@
  *     que quien usa teclado sin lector también pueda verlo; muestra el anillo
  *     de foco del sistema. Sin tooltip, no es enfocable.
  *   · Si el tooltip repite el texto del badge, no se anuncia dos veces.
- *   · El tooltip se separa 8 del badge (`--ds-badge-highlight-tooltip-gap`: 4 del
+ *   · El tooltip se separa 8 del badge (`--ds-badge-highlight-gap-tooltip`: 4 del
  *     anillo de foco, que va por fuera, + 4 de aire) para que la flecha no lo toque.
  *
  * USO:
@@ -49,49 +49,49 @@ const css = `
   font-weight:    var(--ds-font-weight-regular);
   font-size:      var(--ds-fontSize-label-sm);
   line-height:    var(--ds-lineHeight-label-sm);
-  color:          var(--ds-badge-highlight-label-fg);
+  color:          var(--ds-badge-highlight-fg-label);
   white-space:    nowrap;
 }
 .ds-badge-highlight:focus-visible {
-  outline:        var(--ds-badge-highlight-focus-width) solid var(--ds-badge-highlight-focus-outer);
-  outline-offset: var(--ds-badge-highlight-focus-width);
-  box-shadow:     0 0 0 var(--ds-badge-highlight-focus-width) var(--ds-badge-highlight-focus-inner);
+  outline:        var(--ds-badge-highlight-border-width-focus) solid var(--ds-badge-highlight-border-color-focus-outer);
+  outline-offset: var(--ds-badge-highlight-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-badge-highlight-border-width-focus) var(--ds-badge-highlight-border-color-focus-inner);
 }
 
-.ds-badge-highlight-tooltip { --ds-tooltip-offset: var(--ds-badge-highlight-tooltip-gap); }
+.ds-badge-highlight-tooltip { --ds-tooltip-offset: var(--ds-badge-highlight-gap-tooltip); }
 
 .ds-badge-highlight__icon {
   flex-shrink: 0;
   display:     flex;
 }
 .ds-badge-highlight__icon svg {
-  width:  var(--ds-badge-highlight-icon-size);
-  height: var(--ds-badge-highlight-icon-size);
+  width:  var(--ds-badge-highlight-size-icon);
+  height: var(--ds-badge-highlight-size-icon);
 }
 
 .ds-badge-highlight--emphasis { background: var(--ds-badge-highlight-bg-emphasis); }
-.ds-badge-highlight--emphasis .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-emphasis); }
+.ds-badge-highlight--emphasis .ds-badge-highlight__icon { color: var(--ds-badge-highlight-fg-icon-emphasis); }
 
 .ds-badge-highlight--neutral { background: var(--ds-badge-highlight-bg-neutral); }
-.ds-badge-highlight--neutral .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-neutral); }
+.ds-badge-highlight--neutral .ds-badge-highlight__icon { color: var(--ds-badge-highlight-fg-icon-neutral); }
 
 .ds-badge-highlight--positive {
   background: var(--ds-badge-highlight-bg-positive);
-  color:      var(--ds-badge-highlight-label-fg-positive);
+  color:      var(--ds-badge-highlight-fg-label-positive);
 }
-.ds-badge-highlight--positive .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-positive); }
+.ds-badge-highlight--positive .ds-badge-highlight__icon { color: var(--ds-badge-highlight-fg-icon-positive); }
 
 .ds-badge-highlight--negative {
   background: var(--ds-badge-highlight-bg-negative);
-  color:      var(--ds-badge-highlight-label-fg-negative);
+  color:      var(--ds-badge-highlight-fg-label-negative);
 }
-.ds-badge-highlight--negative .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-negative); }
+.ds-badge-highlight--negative .ds-badge-highlight__icon { color: var(--ds-badge-highlight-fg-icon-negative); }
 
 .ds-badge-highlight--disabled {
   background: var(--ds-badge-highlight-bg-disabled);
-  color:      var(--ds-badge-highlight-label-fg-disabled);
+  color:      var(--ds-badge-highlight-fg-label-disabled);
 }
-.ds-badge-highlight--disabled .ds-badge-highlight__icon { color: var(--ds-badge-highlight-icon-fg-disabled); }
+.ds-badge-highlight--disabled .ds-badge-highlight__icon { color: var(--ds-badge-highlight-fg-icon-disabled); }
 `;
 
 injectStyles('ds-badge-highlight', css);

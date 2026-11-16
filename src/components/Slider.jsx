@@ -21,9 +21,9 @@
  * en `_sliderKnob.jsx` (helper interno, no exportado), compartido con
  * `RangeSlider`/`SteppedSlider`, en vez de reimplementarlo en cada uno.
  *
- * Fila de 48 (`--ds-slider-root-height`) con 16 a cada lado; con iconos,
+ * Fila de 48 (`--ds-slider-height-generic`) con 16 a cada lado; con iconos,
  * 4 a cada lado y cada icono en una caja de 48 (24 + 12 por lado). La fila
- * entera es una superficie hover (`--ds-slider-root-bg-hover`). El foco va
+ * entera es una superficie hover (`--ds-slider-bg-hover`). El foco va
  * solo en el knob, como Figma (12/11): inner 2 por dentro + outer 2 por fuera;
  * la fila no cambia de borde.
  *
@@ -57,20 +57,20 @@ const css = `
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  gap: var(--ds-slider-root-gap);
-  height: var(--ds-slider-root-height);
-  padding: 0 var(--ds-slider-root-padding-hor);
-  background: var(--ds-slider-root-bg);
-  border: var(--ds-slider-root-border-width) solid var(--ds-slider-root-border-color);
-  border-radius: var(--ds-slider-root-border-radius);
+  gap: var(--ds-slider-gap-generic);
+  height: var(--ds-slider-height-generic);
+  padding: 0 var(--ds-slider-padding-hor-generic);
+  background: var(--ds-slider-bg);
+  border: var(--ds-slider-border-width-generic) solid var(--ds-slider-border-color);
+  border-radius: var(--ds-slider-border-radius);
   box-sizing: border-box;
 }
 .ds-slider--with-icon {
   gap: 0;
-  padding: 0 var(--ds-slider-root-padding-hor-with-icon);
+  padding: 0 var(--ds-slider-padding-hor-with-icon);
 }
 .ds-slider:not(.ds-slider--disabled):hover {
-  background: var(--ds-slider-root-bg-hover);
+  background: var(--ds-slider-bg-hover);
 }
 .ds-slider--disabled {
   cursor: not-allowed;
@@ -79,16 +79,16 @@ const css = `
   flex-shrink: 0;
   display: flex;
   box-sizing: border-box;
-  padding: var(--ds-slider-icon-padding);  /* caja 48: icono 24 + 12 por lado */
-  color: var(--ds-slider-icon-fg);
+  padding: var(--ds-slider-padding-icon-generic);  /* caja 48: icono 24 + 12 por lado */
+  color: var(--ds-slider-fg-icon-with-icon-generic);
 }
 .ds-slider--disabled .ds-slider__icon {
-  color: var(--ds-slider-icon-fg-disabled);
+  color: var(--ds-slider-fg-icon-with-icon-disabled);
 }
 .ds-slider__track-wrapper {
   position: relative;
   flex: 1 1 auto;
-  height: var(--ds-slider-knob-size);
+  height: var(--ds-slider-size-knob);
   display: flex;
   align-items: center;
   touch-action: none;
@@ -96,9 +96,9 @@ const css = `
 .ds-slider__track {
   position: relative;
   width: 100%;
-  height: var(--ds-slider-track-height);
-  border-radius: var(--ds-slider-track-border-radius);
-  background: var(--ds-slider-track-bg);
+  height: var(--ds-slider-height-track);
+  border-radius: var(--ds-slider-border-radius-track);
+  background: var(--ds-slider-bg-track-generic);
   overflow: hidden;
 }
 .ds-slider__indicator {
@@ -107,14 +107,14 @@ const css = `
   left: 0;
   height: 100%;
   border-radius: var(--ds-slider-indicator-border-radius);
-  background: var(--ds-slider-indicator-bg-primary);
+  background: var(--ds-slider-bg-indicator-primary);
 }
 .ds-slider__indicator--secondary {
-  background: var(--ds-slider-indicator-bg-secondary);
+  background: var(--ds-slider-bg-indicator-secondary);
 }
-.ds-slider--disabled .ds-slider__track { background: var(--ds-slider-track-bg-disabled); }
+.ds-slider--disabled .ds-slider__track { background: var(--ds-slider-bg-track-disabled); }
 .ds-slider--disabled .ds-slider__indicator {
-  background: var(--ds-slider-indicator-bg-disabled);
+  background: var(--ds-slider-bg-indicator-disabled);
 }
 `;
 

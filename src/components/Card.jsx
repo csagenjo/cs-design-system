@@ -31,16 +31,16 @@ import { injectStyles } from './_inputBase';
 
 const css = `
 .ds-card {
-  background: var(--ds-card-root-bg);
+  background: var(--ds-card-bg);
   box-sizing: border-box;
 }
 .ds-card--basic {
-  border-radius:  var(--ds-card-root-border-radius);
-  box-shadow:     var(--ds-card-root-shadow);
+  border-radius:  var(--ds-cards-border-radius-basic);
+  box-shadow:     var(--ds-card-shadow);
   /* Filete = stroke INSIDE de Figma: outline hacia dentro, no cambia el tamaño.
      Light: blanco (no se ve, trabaja la sombra) · Dark: neutral/700 */
-  outline:        var(--ds-card-root-border-width-basic) solid var(--ds-card-root-border-color-basic);
-  outline-offset: calc(-1 * var(--ds-card-root-border-width-basic));
+  outline:        var(--ds-cards-border-width-basic) solid var(--ds-cards-border-color-basic);
+  outline-offset: calc(-1 * var(--ds-cards-border-width-basic));
 }
 /* Colores forzados: la sombra desaparece → el filete pasa a CanvasText */
 @media (forced-colors: active) {

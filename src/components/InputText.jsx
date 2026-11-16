@@ -58,16 +58,16 @@ const css = `
 }
 .ds-input-text__icon--left  {
   left:  var(--ds-input-padding-hor);
-  color: var(--ds-input-icon-fg);
+  color: var(--ds-input-fg-icon);
 }
 .ds-input-text__icon--right {
   right: var(--ds-input-padding-hor);
-  color: var(--ds-input-icon-fg);
+  color: var(--ds-input-fg-icon);
 }
-.ds-input-text__icon--left.ds-input-text__icon--primary  { color: var(--ds-input-icon-fg-primary); }
-.ds-input-text__icon--right.ds-input-text__icon--primary { color: var(--ds-input-icon-fg-primary); }
-.ds-input-text--disabled .ds-input-text__icon--left      { color: var(--ds-input-icon-fg-disabled); }
-.ds-input-text--disabled .ds-input-text__icon--right     { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-text__icon--left.ds-input-text__icon--primary  { color: var(--ds-input-fg-icon-primary); }
+.ds-input-text__icon--right.ds-input-text__icon--primary { color: var(--ds-input-fg-icon-primary); }
+.ds-input-text--disabled .ds-input-text__icon--left      { color: var(--ds-input-fg-icon-disabled); }
+.ds-input-text--disabled .ds-input-text__icon--right     { color: var(--ds-input-fg-icon-disabled); }
 
 /* En adaptive el icono se ancla al borde superior del texto */
 .ds-input-text--adaptive .ds-input-text__icon {
@@ -77,14 +77,14 @@ const css = `
 
 /* Padding compensado cuando hay iconos */
 .ds-input-text__field-wrap--icon-left .ds-input-text__control {
-  padding-left: calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
+  padding-left: calc(var(--ds-input-padding-hor) + var(--ds-input-size-icon) + var(--ds-input-gap-field-icon));
 }
 .ds-input-text__field-wrap--icon-right .ds-input-text__control {
-  padding-right: calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
+  padding-right: calc(var(--ds-input-padding-hor) + var(--ds-input-size-icon) + var(--ds-input-gap-field-icon));
 }
 
 /* Helper text — aparece ENCIMA del campo */
-.ds-input-text__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-text__message { margin-top: var(--ds-input-gap-validation); }
 
 `;
 

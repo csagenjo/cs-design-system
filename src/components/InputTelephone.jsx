@@ -42,16 +42,16 @@ const css = `
 }
 .ds-input-telephone--full-width { display: flex; }
 
-.ds-input-telephone__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-telephone__message { margin-top: var(--ds-input-gap-validation); }
 
 /* ── País (Figma Country Code) ── */
 .ds-input-telephone__country {
   display:     flex;
   align-items: center;
   flex-shrink: 0;
-  gap:         var(--ds-input-subfield-gap);
-  min-height:  var(--ds-input-subfield-height);
-  padding:     var(--ds-input-telephone-country-padding-ver) var(--ds-input-padding-hor);
+  gap:         var(--ds-input-gap-subfield);
+  min-height:  var(--ds-input-height-subfield);
+  padding:     var(--ds-input-telephone-padding-ver-country) var(--ds-input-padding-hor);
   font-family: inherit;
   white-space: nowrap;
   cursor:      default;
@@ -62,12 +62,12 @@ button.ds-input-telephone__country:disabled { cursor: not-allowed; }
 .ds-input-telephone__flag {
   display:     flex;
   align-items: center;
-  height:      var(--ds-input-telephone-icon-flag-size);
-  font-size:   var(--ds-input-telephone-icon-flag-size);
+  height:      var(--ds-input-telephone-size-icon-flag);
+  font-size:   var(--ds-input-telephone-size-icon-flag);
   line-height: 1;
 }
-.ds-input-telephone__flag img { height: var(--ds-input-telephone-icon-flag-size); width: auto; }
-.ds-input-telephone--disabled .ds-input-telephone__flag { opacity: var(--ds-input-telephone-icon-flag-opacity-disabled); }
+.ds-input-telephone__flag img { height: var(--ds-input-telephone-size-icon-flag); width: auto; }
+.ds-input-telephone--disabled .ds-input-telephone__flag { opacity: var(--ds-input-telephone-fg-icon-flag-disabled); }
 
 /* Prefijo — mismo texto que el valor (valueText, body sm regular) */
 .ds-input-telephone__code {
@@ -77,14 +77,14 @@ button.ds-input-telephone__country:disabled { cursor: not-allowed; }
   color:       inherit;
 }
 
-.ds-input-telephone__chevron { display: flex; align-items: center; color: var(--ds-input-icon-fg-primary); }
-.ds-input-telephone--disabled .ds-input-telephone__chevron { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-telephone__chevron { display: flex; align-items: center; color: var(--ds-input-fg-icon-primary); }
+.ds-input-telephone--disabled .ds-input-telephone__chevron { color: var(--ds-input-fg-icon-disabled); }
 
 /* ── Número (Figma Telephone) ── */
 .ds-input-telephone__phone {
   flex:               1;
   min-width:          0;
-  min-height:         var(--ds-input-subfield-height);
+  min-height:         var(--ds-input-height-subfield);
   padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;

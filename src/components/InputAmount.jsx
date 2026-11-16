@@ -37,15 +37,15 @@ const css = `
 }
 .ds-input-amount--full-width { display: flex; }
 
-.ds-input-amount__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-amount__message { margin-top: var(--ds-input-gap-validation); }
 
 /* ── Divisa (Figma ISO Currency) ── */
 .ds-input-amount__currency {
   display:     flex;
   align-items: center;
   flex-shrink: 0;
-  gap:         var(--ds-input-subfield-gap);
-  min-height:  var(--ds-input-subfield-height);
+  gap:         var(--ds-input-gap-subfield);
+  min-height:  var(--ds-input-height-subfield);
   padding:     var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   font-family: inherit;
   white-space: nowrap;
@@ -61,14 +61,14 @@ button.ds-input-amount__currency:disabled { cursor: not-allowed; }
   color:       inherit;
 }
 
-.ds-input-amount__chevron { display: flex; align-items: center; color: var(--ds-input-icon-fg-primary); }
-.ds-input-amount--disabled .ds-input-amount__chevron { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-amount__chevron { display: flex; align-items: center; color: var(--ds-input-fg-icon-primary); }
+.ds-input-amount--disabled .ds-input-amount__chevron { color: var(--ds-input-fg-icon-disabled); }
 
 /* ── Importe (Figma Amount) ── */
 .ds-input-amount__amount {
   flex:               1;
   min-width:          0;
-  min-height:         var(--ds-input-subfield-height);
+  min-height:         var(--ds-input-height-subfield);
   padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;

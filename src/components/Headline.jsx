@@ -59,7 +59,7 @@ const css = `
   font-weight:    var(--ds-font-weight-bold);     /* 700 — cambiado 22/09, Carol, las 24 variantes de Figma (h1-h6 × 4 colores) son Bold */
   text-align:     left;                           /* regla: solo izquierda */
   overflow-wrap:  break-word;                     /* ajusta a varias líneas, nunca "…" */
-  color:          var(--ds-headline-fg-default);
+  color:          var(--ds-headline-fg-text-default);
 }
 
 /* Tamaño = size (fontSize + lineHeight emparejados por rol, responsive vía tokens Device) */
@@ -71,9 +71,9 @@ const css = `
 .ds-headline--xs  { font-size: var(--ds-fontSize-headline-xs);  line-height: var(--ds-lineHeight-headline-xs);  }
 
 /* Color */
-.ds-headline--primary   { color: var(--ds-headline-fg-primary);   }
-.ds-headline--secondary { color: var(--ds-headline-fg-secondary); }
-.ds-headline--onColor   { color: var(--ds-headline-fg-onColor);   }
+.ds-headline--primary   { color: var(--ds-headline-fg-text-primary);   }
+.ds-headline--secondary { color: var(--ds-headline-fg-text-secondary); }
+.ds-headline--onColor   { color: var(--ds-headline-fg-text-on-color);   }
 `;
 
 injectStyles('ds-headline', css);

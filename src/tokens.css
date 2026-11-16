@@ -416,8 +416,8 @@
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* Geometría */
-  --ds-button-radius:      var(--ds-border-radius-circle);   /* button/all/borderRadius/generic → pill */
-  --ds-button-border-width: var(--ds-border-width-lg);      /* button/all/borderWidth/generic = 2 */
+  --ds-button-border-radius-generic:      var(--ds-border-radius-circle);   /* button/all/borderRadius/generic → pill */
+  --ds-button-border-width-generic: var(--ds-border-width-lg);      /* button/all/borderWidth/generic = 2 */
 
   /* Padding horizontal por tamaño (button/all/root/paddingHor/*) y del label
      (button/all/paddingHor/label/generic): el texto queda a 12/16/20 del borde
@@ -425,7 +425,7 @@
   --ds-button-padding-hor-small:  var(--ds-spacing-md);  /* 8px */
   --ds-button-padding-hor-medium: var(--ds-spacing-lg);  /* 12px */
   --ds-button-padding-hor-large:  var(--ds-spacing-xl);  /* 16px */
-  --ds-button-label-padding-hor:  var(--ds-spacing-xs);  /* 4px */
+  --ds-button-padding-hor-label:  var(--ds-spacing-xs);  /* 4px */
   /* Alto fijo por token (01/10/2026): 32/40/48 en rejilla de 8 aunque cambie
      el line-height del label — antes salía de padding+line-height (Figma
      daba 32/36/44). button/all/root/height/* → sizing/md|lg|xl. */
@@ -446,13 +446,13 @@
   --ds-button-fg-disabled:        var(--ds-fg-disabled);
 
   /* Bordes */
-  --ds-button-border-accent:        var(--ds-borderColor-primary);   /* button/all/borderColor/accent-generic (#0A7C92, igual que el texto; antes accent = #13525F) */
-  --ds-button-border-default:       var(--ds-borderColor-emphasis);
-  --ds-button-border-disabled:      var(--ds-borderColor-disabled);
-  --ds-button-border-focus-outer:   var(--ds-borderColor-focus-outer);
-  --ds-button-border-focus-inner:   var(--ds-borderColor-focus-inner);
-  --ds-button-focus-width:          var(--ds-border-width-lg);   /* button/all/borderWidth/focus — anillo por FUERA del botón (08/10/2026) */
-  --ds-button-focus-area-padding:   var(--ds-spacing-xs);   /* button/all/padding/focusArea/generic — espacio del anillo de foco DENTRO del componente (08/10/2026) */
+  --ds-button-border-color-accent-generic:        var(--ds-borderColor-primary);   /* button/all/borderColor/accent-generic (#0A7C92, igual que el texto; antes accent = #13525F) */
+  --ds-button-border-color-default:       var(--ds-borderColor-emphasis);
+  --ds-button-border-color-disabled:      var(--ds-borderColor-disabled);
+  --ds-button-border-color-focus-outer:   var(--ds-borderColor-focus-outer);
+  --ds-button-border-color-focus-inner:   var(--ds-borderColor-focus-inner);
+  --ds-button-border-width-focus:          var(--ds-border-width-lg);   /* button/all/borderWidth/focus — anillo por FUERA del botón (08/10/2026) */
+  --ds-button-padding-focus-area-generic:   var(--ds-spacing-xs);   /* button/all/padding/focusArea/generic — espacio del anillo de foco DENTRO del componente (08/10/2026) */
 
   /* Hover y Pressed (button/all/root/bgMix/* y opacity/pressed): en Hover las
      tres variantes toman el fondo de Primary con este velo encima (26/10/2026). */
@@ -461,9 +461,9 @@
   --ds-button-opacity-pressed:      var(--ds-opacity-pressed);        /* 0.8 */
 
   /* Icono — tamaño (button/all/icon/size/*). Sincronizado con Figma 15/07. */
-  --ds-button-icon-size-small:      var(--ds-sizing-2xs);   /* 16px */
-  --ds-button-icon-size-medium:     var(--ds-sizing-xs);    /* 20px */
-  --ds-button-icon-size-large:      var(--ds-sizing-sm);    /* 24px */
+  --ds-button-size-icon-small:      var(--ds-sizing-2xs);   /* 16px */
+  --ds-button-size-icon-medium:     var(--ds-sizing-xs);    /* 20px */
+  --ds-button-size-icon-large:      var(--ds-sizing-sm);    /* 24px */
   /* Icono — color (button/all/icon/fg/*): NO se declara token propio.
      El icono hereda el color del botón vía currentColor, y ese color ya lo
      fijan los --ds-button-fg-* de arriba (regla CLAUDE.md §4):
@@ -473,8 +473,8 @@
        disabled           → --ds-button-fg-disabled */
 
   /* ButtonBar (buttonBar/all/*, 26/10/2026) */
-  --ds-button-bar-gap:              var(--ds-spacing-2xl);  /* buttonBar/all/gap/generic = 24, entre acciones */
-  --ds-button-bar-notification-gap: var(--ds-spacing-xl);   /* buttonBar/all/gap/notification/generic = 16, notificación → acciones */
+  --ds-button-bar-gap-generic:              var(--ds-spacing-2xl);  /* buttonBar/all/gap/generic = 24, entre acciones */
+  --ds-button-bar-gap-notification-generic: var(--ds-spacing-xl);   /* buttonBar/all/gap/notification/generic = 16, notificación → acciones */
 
   /* ==========================================================================
      COMPONENT TOKENS -- IconButton
@@ -483,19 +483,19 @@
   /* Geometría (iconButton/all/root/*) */
   --ds-icon-button-border-radius:          var(--ds-border-radius-circle);  /* pill → círculo */
   --ds-icon-button-border-width-primary:   var(--ds-border-width-sm);
-  --ds-icon-button-border-width-secondary: var(--ds-border-width-lg);   /* Secondary y Tertiary comparten grosor */
+  --ds-icon-button-border-width-secondary-generic: var(--ds-border-width-lg);   /* Secondary y Tertiary comparten grosor */
   --ds-icon-button-opacity-pressed:        var(--ds-opacity-pressed);
 
   /* Padding por tamaño (iconButton/all/icon/padding/*) */
-  --ds-icon-button-padding-small:  var(--ds-spacing-md);
-  --ds-icon-button-padding-medium: var(--ds-spacing-lg);
-  --ds-icon-button-padding-large:  var(--ds-spacing-xl);
-  --ds-icon-button-label-padding-hor: var(--ds-spacing-xs);
+  --ds-icon-button-padding-icon-small:  var(--ds-spacing-md);
+  --ds-icon-button-padding-icon-medium: var(--ds-spacing-lg);
+  --ds-icon-button-padding-icon-large:  var(--ds-spacing-xl);
+  --ds-icon-button-padding-hor-label: var(--ds-spacing-xs);
 
   /* Icono — tamaño (iconButton/all/icon/size/*), misma escala que Button */
-  --ds-icon-button-icon-size-small:  var(--ds-sizing-2xs);  /* 16px */
-  --ds-icon-button-icon-size-medium: var(--ds-sizing-xs);   /* 20px */
-  --ds-icon-button-icon-size-large:  var(--ds-sizing-sm);   /* 24px */
+  --ds-icon-button-size-icon-small:  var(--ds-sizing-2xs);  /* 16px */
+  --ds-icon-button-size-icon-medium: var(--ds-sizing-xs);   /* 20px */
+  --ds-icon-button-size-icon-large:  var(--ds-sizing-sm);   /* 24px */
 
   /* Fondos (iconButton/all/root/bg/*, Variant=Primary/filled) */
   --ds-icon-button-bg-default-primary:  var(--ds-bg-inverse);
@@ -510,8 +510,8 @@
   --ds-icon-button-border-color-disabled:    var(--ds-borderColor-disabled);
   --ds-icon-button-border-color-focus-inner: var(--ds-borderColor-focus-inner);
   --ds-icon-button-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-icon-button-focus-width:             var(--ds-border-width-lg);   /* iconButton/all/borderWidth/focus */
-  --ds-icon-button-focus-area-padding:      var(--ds-spacing-xs);   /* iconButton/all/padding/focusArea/generic — espacio del anillo de foco DENTRO del componente (08/10/2026) */
+  --ds-icon-button-border-width-focus:             var(--ds-border-width-lg);   /* iconButton/all/borderWidth/focus */
+  --ds-icon-button-padding-focus-area:      var(--ds-spacing-xs);   /* iconButton/all/padding/focusArea/generic — espacio del anillo de foco DENTRO del componente (08/10/2026) */
   /* Anillo de foco: SIEMPRE alrededor del círculo, por DENTRO (01/10/2026) —
      también con label (antes envolvía icono+label con radio propio 4/2). */
 
@@ -521,16 +521,16 @@
      Figma (se invertía en dark aunque bg/surface/primary no invierte → icono
      negro sobre teal) — realiasado a fg/icon/onColor, mismo bug ya cazado en
      Button/Chip/CTALink/BadgeNotification. */
-  --ds-icon-button-icon-fg-on-color-default:   var(--ds-fg-icon-inverse); /* bg-inverse también invierte: contraste se mantiene en ambos modos */
-  --ds-icon-button-icon-fg-on-color-accent:    var(--ds-fg-icon-onColor);
-  --ds-icon-button-icon-fg-on-outline-default: var(--ds-fg-icon-default);
-  --ds-icon-button-icon-fg-on-outline-accent:  var(--ds-fg-icon-primary);
-  --ds-icon-button-icon-fg-disabled:           var(--ds-fg-icon-disabled);
+  --ds-icon-button-fg-icon-on-color-default:   var(--ds-fg-icon-inverse); /* bg-inverse también invierte: contraste se mantiene en ambos modos */
+  --ds-icon-button-fg-icon-on-color-accent:    var(--ds-fg-icon-onColor);
+  --ds-icon-button-fg-icon-on-outline-default: var(--ds-fg-icon-default);
+  --ds-icon-button-fg-icon-on-outline-accent:  var(--ds-fg-icon-primary);
+  --ds-icon-button-fg-icon-disabled:           var(--ds-fg-icon-disabled);
 
   /* Label — color (iconButton/all/label/fg/*, with Label=Yes) */
-  --ds-icon-button-label-fg-default:  var(--ds-fg-label-default);
-  --ds-icon-button-label-fg-accent:   var(--ds-fg-label-primary);
-  --ds-icon-button-label-fg-disabled: var(--ds-fg-label-disabled);
+  --ds-icon-button-fg-label-default:  var(--ds-fg-label-default);
+  --ds-icon-button-fg-label-accent:   var(--ds-fg-label-primary);
+  --ds-icon-button-fg-label-disabled: var(--ds-fg-label-disabled);
 
 
   /* ==========================================================================
@@ -545,10 +545,10 @@
   --ds-collapsible-fg-on-color: var(--ds-fg-onColor);  /* collapsible/all/fg/onColor (12/11) — texto/icono sobre el relleno rosa en Hover/Pressed (Secondary) */
   --ds-collapsible-border-color-default:  var(--ds-borderColor-emphasis);
   --ds-collapsible-border-color-secondary: var(--ds-borderColor-secondary);
-  --ds-collapsible-label-fg-default:      var(--ds-fg-label-default);
-  --ds-collapsible-label-fg-secondary:    var(--ds-fg-label-secondary);
-  --ds-collapsible-icon-fg-default:       var(--ds-fg-icon-default);
-  --ds-collapsible-icon-fg-secondary:     var(--ds-fg-icon-secondary);
+  --ds-collapsible-fg-label-default:      var(--ds-fg-label-default);
+  --ds-collapsible-fg-label-secondary:    var(--ds-fg-label-secondary);
+  --ds-collapsible-fg-icon-default:       var(--ds-fg-icon-default);
+  --ds-collapsible-fg-icon-secondary:     var(--ds-fg-icon-secondary);
 
 
   /* ==========================================================================
@@ -560,8 +560,8 @@
   --ds-inline-notification-gap:           var(--ds-spacing-xs);       /* 4 — icono ↔ content, root */
   --ds-inline-notification-padding-hor:   var(--ds-spacing-md); /* 8 — 29/09 (antes 6 literal; Figma: izq 6 token + der 12 directo a spacing/lg, unificado) */
   --ds-inline-notification-padding-ver:   var(--ds-spacing-md); /* 8 — 29/09 */
-  --ds-inline-notification-content-gap:   var(--ds-spacing-md);   /* title/message/button, vertical */
-  --ds-inline-notification-icon-size:     var(--ds-sizing-sm); /* 24px */
+  --ds-inline-notification-gap-content:   var(--ds-spacing-md);   /* title/message/button, vertical */
+  --ds-inline-notification-size-icon:     var(--ds-sizing-sm); /* 24px */
 
   /* Fondos (inlineNotification/all/bg/default|borderless) — mismo valor, tokens separados como en Figma */
   --ds-inline-notification-bg:            var(--ds-bg-default);
@@ -569,20 +569,20 @@
 
   /* Borde por Type (inlineNotification/all/root/borderColor/*) */
   --ds-inline-notification-color-error:       var(--ds-borderColor-error);
-  --ds-inline-notification-color-success:     var(--ds-borderColor-success);
+  --ds-inline-notification-border-color-success:     var(--ds-borderColor-success);
   --ds-inline-notification-color-information: var(--ds-borderColor-info);
-  --ds-inline-notification-color-warning:     var(--ds-borderColor-warning);
+  --ds-inline-notification-border-color-warning:     var(--ds-borderColor-warning);
 
   /* Icono por Type (inlineNotification/all/icon/fg/*) — 10/11: separado del borde;
      en dark no coinciden (fg/error #FDBCBB vs borderColor/error #FB7F7D) */
-  --ds-inline-notification-icon-fg-error:       var(--ds-fg-error);
-  --ds-inline-notification-icon-fg-success:     var(--ds-fg-success);
-  --ds-inline-notification-icon-fg-information: var(--ds-fg-info);
-  --ds-inline-notification-icon-fg-warning:     var(--ds-fg-warning);
+  --ds-inline-notification-fg-icon-error:       var(--ds-fg-error);
+  --ds-inline-notification-fg-icon-success:     var(--ds-fg-success);
+  --ds-inline-notification-fg-icon-information: var(--ds-fg-info);
+  --ds-inline-notification-fg-icon-warning:     var(--ds-fg-warning);
 
   /* Texto (inlineNotification/all/{title,text}/fg/generic) — fijo, no varía por Type */
-  --ds-inline-notification-title-fg: var(--ds-fg-title-default);
-  --ds-inline-notification-text-fg:  var(--ds-fg-body-default);
+  --ds-inline-notification-fg-title: var(--ds-fg-title-default);
+  --ds-inline-notification-fg-text:  var(--ds-fg-body-default);
 
 
   /* ==========================================================================
@@ -598,11 +598,11 @@
      `arrow-base`/`arrow-length` no son Variables de Figma (el vector "arrow"
      no tiene token propio) — literales de geometría del nodo (8×6 en Top/
      Bottom, 6×8 en Left/Right — mismo par rotado), tratados como token
-     literal de Componente, mismo criterio que --ds-snackbar-root-shadow.
+     literal de Componente, mismo criterio que --ds-snackbar-shadow.
      ========================================================================== */
   --ds-tooltip-bg:            var(--ds-bg-inverse);
   --ds-tooltip-fg:            var(--ds-fg-label-inverse);
-  --ds-tooltip-border-radius: var(--ds-border-radius-sm); /* 4 — tooltip/all/borderRadius/generic */
+  --ds-tooltip-border-radius-generic: var(--ds-border-radius-sm); /* 4 — tooltip/all/borderRadius/generic */
   --ds-tooltip-padding-hor:   var(--ds-spacing-sm);       /* 6 — root/paddingHor/generic */
   --ds-tooltip-padding-ver:   var(--ds-spacing-2xs);      /* 2 — root/paddingVer/generic */
   --ds-tooltip-gap:           var(--ds-spacing-sm);       /* 6 — root/gap/generic; sin efecto visible hoy (un solo hijo) */
@@ -642,11 +642,11 @@
      main (`color="inverted"` → `color="onColor"`), documentado como tal.
      ========================================================================== */
   --ds-loading-spinner-size-xs:  var(--ds-sizing-2xs); /* 16 — root/size/extraSmall */
-  --ds-loading-spinner-size-sm:  var(--ds-sizing-sm);  /* 24 — root/size/small */
+  --ds-loading-spinner-size-small:  var(--ds-sizing-sm);  /* 24 — root/size/small */
   --ds-loading-spinner-size-md:  var(--ds-sizing-md);  /* 32 — root/size/medium */
-  --ds-loading-spinner-size-lg:  var(--ds-sizing-xl);  /* 48 — root/size/large */
-  --ds-loading-spinner-color-primary:   var(--ds-fg-icon-primary); /* teal, no invierte */
-  --ds-loading-spinner-color-on-color:  var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
+  --ds-loading-spinner-size-large:  var(--ds-sizing-xl);  /* 48 — root/size/large */
+  --ds-loading-spinner-border-color-primary:   var(--ds-fg-icon-primary); /* teal, no invierte */
+  --ds-loading-spinner-border-color-on-color:  var(--ds-fg-icon-onColor); /* blanco fijo, no invierte */
   --ds-loading-spinner-duration: 0.7s; /* una vuelta; Figma es estático (sin variable de movimiento) */
 
 
@@ -693,14 +693,14 @@
      (a). Nunca sobre bg/page o bg/default directamente tampoco (bajo
      contraste del track, ~1.1–2.6:1 en light mode, confirmado con captura).
      ========================================================================== */
-  --ds-progress-bar-root-bg-default:    var(--ds-bg-track);      /* 10/11: antes bg-subtle (en dark el indicador daba 1,19:1) */
-  --ds-progress-bar-root-bg-on-color:   var(--ds-bg-onColor);
-  --ds-progress-bar-root-border-radius: var(--ds-border-radius-circle); /* 80 — root/borderRadius/generic */
+  --ds-progress-bar-bg-default:    var(--ds-bg-track);      /* 10/11: antes bg-subtle (en dark el indicador daba 1,19:1) */
+  --ds-progress-bar-bg-on-color:   var(--ds-bg-onColor);
+  --ds-progress-bar-border-radius: var(--ds-border-radius-circle); /* 80 — root/borderRadius/generic */
   --ds-progress-bar-indicator-bg:       var(--ds-bg-secondary);
-  --ds-progress-bar-text-fg:            var(--ds-fg-default);     /* text/fg/generic */
-  --ds-progress-bar-text-fg-on-color:   var(--ds-fg-onColor);   /* Figma progressBar/all/fg/text/onColor — 19/10 A11y-2 */
+  --ds-progress-bar-fg-text:            var(--ds-fg-default);     /* text/fg/generic */
+  --ds-progress-bar-fg-text-on-color:   var(--ds-fg-onColor);   /* Figma progressBar/all/fg/text/onColor — 19/10 A11y-2 */
   --ds-progress-bar-gap:                var(--ds-spacing-xs);     /* 4 — root/gap/generic (nuevo 10/11) */
-  --ds-progress-bar-track-height:       var(--ds-sizing-3xs);     /* 8 — track/height/generic (nuevo 10/11) */
+  --ds-progress-bar-height-track:       var(--ds-sizing-3xs);     /* 8 — track/height/generic (nuevo 10/11) */
 
 
   /* ==========================================================================
@@ -730,26 +730,26 @@
      NO es un color-mix como hover — es un `opacity` plano (80%) aplicado a
      todo el segmento, mismo mecanismo que `--ds-icon-button-opacity-pressed`.
      ========================================================================== */
-  --ds-segmented-control-root-bg:              var(--ds-bg-subtle);
-  --ds-segmented-control-root-gap:             var(--ds-spacing-xs);         /* root/gap/generic (4) */
-  --ds-segmented-control-root-border-radius:   var(--ds-border-radius-md);   /* root/borderRadius/generic */
-  --ds-segmented-control-segment-bg:           var(--ds-bg-subtle);
-  --ds-segmented-control-segment-bg-selected:  var(--ds-bg-inverse);
-  --ds-segmented-control-segment-border-radius: var(--ds-border-radius-md); /* rootSegment/borderRadius/generic */
+  --ds-segmented-control-bg:              var(--ds-bg-subtle);
+  --ds-segmented-control-gap:             var(--ds-spacing-xs);         /* root/gap/generic (4) */
+  --ds-segmented-control-border-radius:   var(--ds-border-radius-md);   /* root/borderRadius/generic */
+  --ds-segmented-control-bg-segment:           var(--ds-bg-subtle);
+  --ds-segmented-control-bg-segment-selected:  var(--ds-bg-inverse);
+  --ds-segmented-control-border-radius-segment: var(--ds-border-radius-md); /* rootSegment/borderRadius/generic */
   --ds-segmented-control-segment-focus-area:   var(--ds-spacing-2xs);        /* 12/11: rootSegment/focusArea/padding (2) — alrededor de cada segmento, en todos los estados; deja sitio al anillo exterior */
-  --ds-segmented-control-segment-padding-hor-sm: var(--ds-spacing-lg); /* rootSegment/paddingHor/generic (12) — Small y Medium */
-  --ds-segmented-control-segment-padding-hor-lg: var(--ds-spacing-xl); /* rootSegment/paddingHor/large (16) */
-  --ds-segmented-control-segment-padding-ver-sm: var(--ds-spacing-xs); /* rootSegment/paddingVer/small (4) */
-  --ds-segmented-control-segment-padding-ver-md: var(--ds-spacing-sm); /* rootSegment/paddingVer/medium (6) */
-  --ds-segmented-control-segment-padding-ver-lg: var(--ds-spacing-md); /* rootSegment/paddingVer/large (8) */
-  --ds-segmented-control-label-fg:             var(--ds-fg-label-default);
-  --ds-segmented-control-label-fg-selected:    var(--ds-fg-label-inverse);
-  --ds-segmented-control-bgmix-hover:          var(--ds-opacity-hover-default);
-  --ds-segmented-control-bgmix-hover-selected: var(--ds-opacity-hover-default-inverse);
+  --ds-segmented-control-padding-hor-segment-sm: var(--ds-spacing-lg); /* rootSegment/paddingHor/generic (12) — Small y Medium */
+  --ds-segmented-control-padding-hor-segment-lg: var(--ds-spacing-xl); /* rootSegment/paddingHor/large (16) */
+  --ds-segmented-control-padding-ver-segment-sm: var(--ds-spacing-xs); /* rootSegment/paddingVer/small (4) */
+  --ds-segmented-control-padding-ver-segment-md: var(--ds-spacing-sm); /* rootSegment/paddingVer/medium (6) */
+  --ds-segmented-control-padding-ver-segment-lg: var(--ds-spacing-md); /* rootSegment/paddingVer/large (8) */
+  --ds-segmented-control-fg-label:             var(--ds-fg-label-default);
+  --ds-segmented-control-fg-label-selected:    var(--ds-fg-label-inverse);
+  --ds-segmented-control-bg-mix-hover:          var(--ds-opacity-hover-default);
+  --ds-segmented-control-bg-mix-hover-selected: var(--ds-opacity-hover-default-inverse);
   --ds-segmented-control-opacity-pressed:      var(--ds-opacity-pressed);
-  --ds-segmented-control-focus-inner:          var(--ds-borderColor-focus-inner);
-  --ds-segmented-control-focus-outer:          var(--ds-borderColor-focus-outer);
-  --ds-segmented-control-focus-width:          var(--ds-border-width-lg); /* rootSegment/borderWidth/focus: inner 2 por dentro del segmento + outer 2 en el área de foco */
+  --ds-segmented-control-border-color-focus-inner:          var(--ds-borderColor-focus-inner);
+  --ds-segmented-control-border-color-focus-outer:          var(--ds-borderColor-focus-outer);
+  --ds-segmented-control-border-width-focus:          var(--ds-border-width-lg); /* rootSegment/borderWidth/focus: inner 2 por dentro del segmento + outer 2 en el área de foco */
 
 
   /* ==========================================================================
@@ -818,21 +818,21 @@
   --ds-accordion-fg-icon:              var(--ds-fg-default);
   --ds-accordion-border-color:        var(--ds-borderColor-default);
   --ds-accordion-border-width:        var(--ds-border-width-sm);
-  --ds-accordion-title-padding-left:  var(--ds-spacing-2xl); /* 24 — 13/11: igual que el padding de la Card; las líneas van de borde a borde */
-  --ds-accordion-title-padding-ver:   var(--ds-spacing-xs); /* 4 — 13/11: 4+32+4 = 40 con title/md a 32 */
-  --ds-accordion-title-padding-right: var(--ds-spacing-2xl); /* 24 */
-  --ds-accordion-title-gap:           8px;
-  --ds-accordion-content-gap:         var(--ds-spacing-md); /* 8 — 29/09 */
-  --ds-accordion-content-padding-left:  var(--ds-spacing-xl-2xl); /* 20 — 13/11: + 4 del área de foco de los campos = 24, alineado con el título */
-  --ds-accordion-content-padding-top:   12px;
-  --ds-accordion-content-padding-right: var(--ds-spacing-xl-2xl); /* 20 */
-  --ds-accordion-root-inset-hor:       var(--ds-spacing-xs);     /* 4 — accordion/all/root/insetHor: el texto suelto del contenido entra 4 para alinearse con título y cajas */
-  --ds-accordion-content-padding-bottom: var(--ds-spacing-lg); /* 12 — gapBottom/generic en Figma, simétrico con top (29/09): 12+texto+12 */
+  --ds-accordion-padding-left-title:  var(--ds-spacing-2xl); /* 24 — 13/11: igual que el padding de la Card; las líneas van de borde a borde */
+  --ds-accordion-padding-ver-title:   var(--ds-spacing-xs); /* 4 — 13/11: 4+32+4 = 40 con title/md a 32 */
+  --ds-accordion-padding-right-title: var(--ds-spacing-2xl); /* 24 */
+  --ds-accordion-gap-title:           8px;
+  --ds-accordion-gap-content:         var(--ds-spacing-md); /* 8 — 29/09 */
+  --ds-accordion-padding-left-content:  var(--ds-spacing-xl-2xl); /* 20 — 13/11: + 4 del área de foco de los campos = 24, alineado con el título */
+  --ds-accordion-padding-top-content:   12px;
+  --ds-accordion-padding-right-content: var(--ds-spacing-xl-2xl); /* 20 */
+  --ds-accordion-inset-hor:       var(--ds-spacing-xs);     /* 4 — accordion/all/root/insetHor: el texto suelto del contenido entra 4 para alinearse con título y cajas */
+  --ds-accordion-padding-bottom-content: var(--ds-spacing-lg); /* 12 — gapBottom/generic en Figma, simétrico con top (29/09): 12+texto+12 */
   --ds-accordion-bg-hover:            var(--ds-bg-hover-primary);
   --ds-accordion-opacity-pressed:     var(--ds-opacity-pressed);
-  --ds-accordion-focus-inner:         var(--ds-borderColor-focus-inner);
-  --ds-accordion-focus-outer:         var(--ds-borderColor-focus-outer);
-  --ds-accordion-focus-width:         2px;
+  --ds-accordion-border-color-focus-inner:         var(--ds-borderColor-focus-inner);
+  --ds-accordion-border-color-focus-outer:         var(--ds-borderColor-focus-outer);
+  --ds-accordion-border-width-focus:         2px;
 
 
   /* ==========================================================================
@@ -878,46 +878,46 @@
      variacion visual. Comparten tokens, no componente. `.Segment` reutiliza
      literalmente los mismos tokens de `indicator`/`track` de abajo.
      ========================================================================== */
-  --ds-slider-root-bg:                  var(--ds-bg-default);
-  --ds-slider-root-bg-hover:            var(--ds-bg-hover-primary);
-  --ds-slider-root-border-color:        var(--ds-borderColor-subtle);
-  --ds-slider-root-border-width:        var(--ds-border-width-sm);   /* slider/all/borderWidth/generic */
-  --ds-slider-root-border-radius:       var(--ds-border-radius-md);  /* slider/all/borderRadius/generic */
-  --ds-slider-root-gap:                 var(--ds-spacing-lg);        /* slider/all/gap/generic (12) */
-  --ds-slider-root-height:              var(--ds-sizing-xl);         /* 12/11: slider/all/height/generic (48) — los tres tipos */
-  --ds-slider-root-padding-hor:         var(--ds-spacing-xl);        /* 12/11: slider/all/paddingHor/generic (16) — antes 12 en Figma con nombre paddingVer, y 16px suelto en código */
-  --ds-slider-root-padding-hor-with-icon: var(--ds-spacing-xs);      /* 12/11: slider/all/paddingHor/withIcon (4) — con icono, la caja 48 del icono da el aire */
-  --ds-slider-icon-padding:             var(--ds-spacing-lg);        /* 12/11: slider/all/padding/icon/generic (12) → caja 48 con icono 24 */
+  --ds-slider-bg:                  var(--ds-bg-default);
+  --ds-slider-bg-hover:            var(--ds-bg-hover-primary);
+  --ds-slider-border-color:        var(--ds-borderColor-subtle);
+  --ds-slider-border-width-generic:        var(--ds-border-width-sm);   /* slider/all/borderWidth/generic */
+  --ds-slider-border-radius:       var(--ds-border-radius-md);  /* slider/all/borderRadius/generic */
+  --ds-slider-gap-generic:                 var(--ds-spacing-lg);        /* slider/all/gap/generic (12) */
+  --ds-slider-height-generic:              var(--ds-sizing-xl);         /* 12/11: slider/all/height/generic (48) — los tres tipos */
+  --ds-slider-padding-hor-generic:         var(--ds-spacing-xl);        /* 12/11: slider/all/paddingHor/generic (16) — antes 12 en Figma con nombre paddingVer, y 16px suelto en código */
+  --ds-slider-padding-hor-with-icon: var(--ds-spacing-xs);      /* 12/11: slider/all/paddingHor/withIcon (4) — con icono, la caja 48 del icono da el aire */
+  --ds-slider-padding-icon-generic:             var(--ds-spacing-lg);        /* 12/11: slider/all/padding/icon/generic (12) → caja 48 con icono 24 */
 
-  --ds-slider-track-bg:                 var(--ds-bg-track);    /* slider/all/bg/track/generic → bg/track (10/11: antes bg-subtle; en dark el relleno no llegaba a 3:1) */
-  --ds-slider-track-bg-disabled:        var(--ds-bg-disabled); /* slider/all/bg/track/disabled (10/11: separado; antes compartía el de arriba) */
-  --ds-slider-track-bg-hover:           var(--ds-bg-default);
-  --ds-slider-track-border-radius:      var(--ds-border-radius-md);
-  --ds-slider-track-height:             var(--ds-sizing-3xs);
+  --ds-slider-bg-track-generic:                 var(--ds-bg-track);    /* slider/all/bg/track/generic → bg/track (10/11: antes bg-subtle; en dark el relleno no llegaba a 3:1) */
+  --ds-slider-bg-track-disabled:        var(--ds-bg-disabled); /* slider/all/bg/track/disabled (10/11: separado; antes compartía el de arriba) */
+  --ds-slider-bg-track-hover:           var(--ds-bg-default);
+  --ds-slider-border-radius-track:      var(--ds-border-radius-md);
+  --ds-slider-height-track:             var(--ds-sizing-3xs);
 
-  --ds-slider-indicator-bg-primary:     var(--ds-bg-primary);    /* 12/11: slider/all/bg/indicator/primary → bg/surface/primary (antes fg/primary en Figma: en dark era casi igual que el track) */
-  --ds-slider-indicator-bg-secondary:   var(--ds-bg-secondary);  /* slider/all/bg/indicator/secondary → bg/surface/secondary */
-  --ds-slider-indicator-bg-disabled:    var(--ds-fg-disabled);
+  --ds-slider-bg-indicator-primary:     var(--ds-bg-primary);    /* 12/11: slider/all/bg/indicator/primary → bg/surface/primary (antes fg/primary en Figma: en dark era casi igual que el track) */
+  --ds-slider-bg-indicator-secondary:   var(--ds-bg-secondary);  /* slider/all/bg/indicator/secondary → bg/surface/secondary */
+  --ds-slider-bg-indicator-disabled:    var(--ds-fg-disabled);
   --ds-slider-indicator-border-radius:  var(--ds-border-radius-md);
 
-  --ds-slider-knob-bg:                  var(--ds-bg-default);
-  --ds-slider-knob-bg-disabled:         var(--ds-bg-disabled);           /* 12/11: como Figma (antes bg-subtle) */
-  --ds-slider-knob-border-color:        var(--ds-borderColor-default);   /* 12/11: como Figma (antes fg-subtle) */
-  --ds-slider-knob-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-slider-knob-border-width:        var(--ds-border-width-sm);       /* slider/all/borderWidth/knob/generic */
-  --ds-slider-knob-border-width-focus:  var(--ds-border-width-lg);       /* slider/all/borderWidth/knob/focus: anillo inner por dentro + outer por fuera */
-  --ds-slider-knob-border-radius:       var(--ds-border-radius-circle);
-  --ds-slider-knob-size:                var(--ds-sizing-sm);
-  --ds-slider-knob-tooltip-gap:         var(--ds-spacing-md);            /* 12/11: slider/all/gap/knob/tooltip/generic (8) */
+  --ds-slider-bg-knob:                  var(--ds-bg-default);
+  --ds-slider-bg-knob-disabled:         var(--ds-bg-disabled);           /* 12/11: como Figma (antes bg-subtle) */
+  --ds-slider-border-color-knob:        var(--ds-borderColor-default);   /* 12/11: como Figma (antes fg-subtle) */
+  --ds-slider-border-color-knob-disabled: var(--ds-borderColor-disabled);
+  --ds-slider-border-width-knob-generic:        var(--ds-border-width-sm);       /* slider/all/borderWidth/knob/generic */
+  --ds-slider-border-width-knob-focus:  var(--ds-border-width-lg);       /* slider/all/borderWidth/knob/focus: anillo inner por dentro + outer por fuera */
+  --ds-slider-border-radius-knob:       var(--ds-border-radius-circle);
+  --ds-slider-size-knob:                var(--ds-sizing-sm);
+  --ds-slider-gap-knob-tooltip-generic:         var(--ds-spacing-md);            /* 12/11: slider/all/gap/knob/tooltip/generic (8) */
   /* Effect Style "Slider/Knob Shadow" (local, 28/09 — antes era el estilo remoto "Switch/Thumb Shadow"),
-     literal de Componente — mismo criterio que --ds-snackbar-root-shadow. Solo Initial/Hover:
+     literal de Componente — mismo criterio que --ds-snackbar-shadow. Solo Initial/Hover:
      Figma no la pinta en Focus (el anillo sustituye a la elevación) ni en Disabled. */
-  --ds-slider-knob-shadow:              0 1px 3px 0 var(--ds-opacity-shadow-umbra), 0 2px 1px -1px var(--ds-opacity-shadow-ambient), 0 1px 1px 0 var(--ds-opacity-shadow-penumbra);
-  --ds-slider-knob-focus-inner:         var(--ds-borderColor-focus-inner);
-  --ds-slider-knob-focus-outer:         var(--ds-borderColor-focus-outer);
+  --ds-slider-shadow-knob:              0 1px 3px 0 var(--ds-opacity-shadow-umbra), 0 2px 1px -1px var(--ds-opacity-shadow-ambient), 0 1px 1px 0 var(--ds-opacity-shadow-penumbra);
+  --ds-slider-border-color-knob-focus-inner:         var(--ds-borderColor-focus-inner);
+  --ds-slider-border-color-knob-focus-outer:         var(--ds-borderColor-focus-outer);
 
-  --ds-slider-icon-fg:                  var(--ds-fg-icon-subtle);    /* slider/all/fg/icon/withIcon-generic */
-  --ds-slider-icon-fg-disabled:         var(--ds-fg-icon-disabled);  /* slider/all/fg/icon/withIcon-disabled */
+  --ds-slider-fg-icon-with-icon-generic:                  var(--ds-fg-icon-subtle);    /* slider/all/fg/icon/withIcon-generic */
+  --ds-slider-fg-icon-with-icon-disabled:         var(--ds-fg-icon-disabled);  /* slider/all/fg/icon/withIcon-disabled */
 
 
   /* ==========================================================================
@@ -950,11 +950,11 @@
   /* 03/11/2026: la caja del campo es la común de los inputs (_inputBase, tokens
      --ds-input-*): se borran combobox/all/root/*, icon/fg/* y text/fg/* en Figma.
      Aquí quedan solo los tokens propios de Combobox. */
-  --ds-combobox-buttons-gap:            var(--ds-spacing-xs);   /* combobox/all/gap/buttons/generic — x ↔ chevron */
-  --ds-combobox-chips-gap:              var(--ds-spacing-md);   /* combobox/all/gap/chips/generic — entre chips (8 + área de foco de cada chip) */
-  --ds-combobox-caret-color:            var(--ds-borderColor-primary); /* combobox/all/borderColor/caret/generic */
-  --ds-combobox-autosuggest-fg:         var(--ds-fg-label-subtle);     /* combobox/all/fg/autoSuggestText/generic */
-  --ds-combobox-icondelete-fg:          var(--ds-fg-subtle);           /* combobox/all/fg/iconDelete/generic */
+  --ds-combobox-gap-buttons-generic:            var(--ds-spacing-xs);   /* combobox/all/gap/buttons/generic — x ↔ chevron */
+  --ds-combobox-gap-chips-generic:              var(--ds-spacing-md);   /* combobox/all/gap/chips/generic — entre chips (8 + área de foco de cada chip) */
+  --ds-combobox-border-color-caret-generic:            var(--ds-borderColor-primary); /* combobox/all/borderColor/caret/generic */
+  --ds-combobox-fg-auto-suggest-text-generic:         var(--ds-fg-label-subtle);     /* combobox/all/fg/autoSuggestText/generic */
+  --ds-combobox-fg-icon-delete-generic:          var(--ds-fg-subtle);           /* combobox/all/fg/iconDelete/generic */
   /* El panel de resultados es el Picker compartido (--ds-picker-*, más abajo, 12/11). */
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -964,20 +964,20 @@
      src/organisms/_pickerPanel.jsx; posición con giro hacia arriba si no cabe
      debajo (useFlip, src/components/_floating.js).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-picker-root-bg:              var(--ds-bg-container);        /* picker/all/bg/generic — superficie elevada */
-  --ds-picker-root-border-radius:   var(--ds-border-radius-md);    /* picker/all/borderRadius/generic */
-  --ds-picker-root-padding:         var(--ds-spacing-xs);          /* picker/all/padding/generic (4) */
-  --ds-picker-root-gap:             var(--ds-spacing-2xs);         /* picker/all/gap/generic (2) — entre filas */
-  --ds-picker-root-offset:          var(--ds-spacing-xs);          /* picker/all/offset/generic (4) — separación con el campo */
-  --ds-picker-root-border-color:    var(--ds-borderColor-elevated); /* picker/all/borderColor/generic — filete: blanco en light (no se ve), se ve en dark donde la sombra no */
-  --ds-picker-root-border-width:    var(--ds-border-width-sm);     /* picker/all/borderWidth/generic */
-  --ds-picker-root-shadow:          0 4px 4px var(--ds-opacity-shadow-umbra-strong); /* Effect Style Picker/Shadow */
-  --ds-picker-root-max-height:      320px;   /* literal sin variable en Figma: unas 5 filas (Results=5 mide 296) y luego scroll */
-  --ds-picker-root-z-index:         20;      /* capa, no es un valor de diseño */
-  --ds-picker-heading-padding-hor:  var(--ds-spacing-lg);          /* picker/all/paddingHor/heading/generic (12) — título de grupo (.Heading) */
-  --ds-picker-heading-padding-ver:  var(--ds-spacing-xl);          /* picker/all/paddingVer/heading/generic (16) */
-  --ds-picker-empty-padding:        var(--ds-spacing-xl);          /* picker/all/padding/empty/generic — "No results" de Combobox */
-  --ds-picker-empty-fg:             var(--ds-fg-body-subtle);      /* picker/all/fg/empty/generic */
+  --ds-picker-bg-generic:              var(--ds-bg-container);        /* picker/all/bg/generic — superficie elevada */
+  --ds-picker-border-radius-generic:   var(--ds-border-radius-md);    /* picker/all/borderRadius/generic */
+  --ds-picker-padding-generic:         var(--ds-spacing-xs);          /* picker/all/padding/generic (4) */
+  --ds-picker-gap-generic:             var(--ds-spacing-2xs);         /* picker/all/gap/generic (2) — entre filas */
+  --ds-picker-offset-generic:          var(--ds-spacing-xs);          /* picker/all/offset/generic (4) — separación con el campo */
+  --ds-picker-border-color-generic:    var(--ds-borderColor-elevated); /* picker/all/borderColor/generic — filete: blanco en light (no se ve), se ve en dark donde la sombra no */
+  --ds-picker-border-width-generic:    var(--ds-border-width-sm);     /* picker/all/borderWidth/generic */
+  --ds-picker-shadow:          0 4px 4px var(--ds-opacity-shadow-umbra-strong); /* Effect Style Picker/Shadow */
+  --ds-picker-height-max:      320px;   /* literal sin variable en Figma: unas 5 filas (Results=5 mide 296) y luego scroll */
+  --ds-picker-z-index:         20;      /* capa, no es un valor de diseño */
+  --ds-picker-padding-hor-heading-generic:  var(--ds-spacing-lg);          /* picker/all/paddingHor/heading/generic (12) — título de grupo (.Heading) */
+  --ds-picker-padding-ver-heading-generic:  var(--ds-spacing-xl);          /* picker/all/paddingVer/heading/generic (16) */
+  --ds-picker-padding-empty-generic:        var(--ds-spacing-xl);          /* picker/all/padding/empty/generic — "No results" de Combobox */
+  --ds-picker-fg-empty-generic:             var(--ds-fg-body-subtle);      /* picker/all/fg/empty/generic */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Popover Sheet (popoverSheet/all/*)
@@ -995,24 +995,24 @@
      estaba roto), este seguía enlazado EN VIVO a la librería real de
      La Empresa.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-popover-sheet-root-bg:            var(--ds-bg-container);          /* popoverSheet/all/bg/generic */
-  --ds-popover-sheet-focus-outer:        var(--ds-borderColor-focus-outer); /* foco del panel al abrir con teclado (A11y-4) y del botón de cierre */
-  --ds-popover-sheet-focus-width:        var(--ds-border-width-lg);
-  --ds-popover-sheet-root-border-radius: var(--ds-border-radius-sm);     /* 12/11: popoverSheet/all/borderRadius/generic (4) */
-  --ds-popover-sheet-root-border-color:  var(--ds-borderColor-elevated); /* 12/11: filete, se ve en dark donde la sombra no */
-  --ds-popover-sheet-root-border-width:  var(--ds-border-width-sm);
-  --ds-popover-sheet-root-padding:       var(--ds-spacing-md);           /* popoverSheet/all/padding/generic (8) */
-  --ds-popover-sheet-root-min-width:     200px;   /* literal sin variable en Figma (la tarjeta de ejemplo mide 216–224) */
-  --ds-popover-sheet-root-z-index:       10;      /* capa, no es un valor de diseño */
-  --ds-popover-sheet-root-shadow:        0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
-  --ds-popover-sheet-pointer-bg:         var(--ds-bg-container);
-  --ds-popover-sheet-pointer-width:      var(--ds-sizing-sm);    /* 12/11: popoverSheet/all/width/pointer/generic (24) */
-  --ds-popover-sheet-pointer-height:     var(--ds-spacing-lg);   /* popoverSheet/all/height/pointer/generic (12) — también la separación con el trigger */
-  --ds-popover-sheet-pointer-offset:     var(--ds-spacing-xl);   /* popoverSheet/all/offset/pointer/generic (16) — Pointer Left/Right desde la esquina (antes 20 en código) */
-  --ds-popover-sheet-close-fg:           var(--ds-fg-subtle);    /* popoverSheet/all/fg/closeButton/generic */
-  --ds-popover-sheet-close-padding:      var(--ds-spacing-md);   /* 12/11: popoverSheet/all/padding/closeButton/generic (8) → caja 40 con icono 24 (antes 44 en Figma, 36 en código) */
-  --ds-popover-sheet-close-size:         var(--ds-sizing-lg);    /* 40 — hueco que deja el contenido arriba */
-  --ds-popover-sheet-close-radius:       var(--ds-border-radius-circle);
+  --ds-popover-sheet-bg-generic:            var(--ds-bg-container);          /* popoverSheet/all/bg/generic */
+  --ds-popover-sheet-border-color-focus-outer:        var(--ds-borderColor-focus-outer); /* foco del panel al abrir con teclado (A11y-4) y del botón de cierre */
+  --ds-popover-sheet-border-width-focus:        var(--ds-border-width-lg);
+  --ds-popover-sheet-border-radius-generic: var(--ds-border-radius-sm);     /* 12/11: popoverSheet/all/borderRadius/generic (4) */
+  --ds-popover-sheet-border-color:  var(--ds-borderColor-elevated); /* 12/11: filete, se ve en dark donde la sombra no */
+  --ds-popover-sheet-border-width:  var(--ds-border-width-sm);
+  --ds-popover-sheet-padding-generic:       var(--ds-spacing-md);           /* popoverSheet/all/padding/generic (8) */
+  --ds-popover-sheet-min-width:     200px;   /* literal sin variable en Figma (la tarjeta de ejemplo mide 216–224) */
+  --ds-popover-sheet-z-index:       10;      /* capa, no es un valor de diseño */
+  --ds-popover-sheet-shadow:        0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
+  --ds-popover-sheet-bg-pointer:         var(--ds-bg-container);
+  --ds-popover-sheet-width-pointer-generic:      var(--ds-sizing-sm);    /* 12/11: popoverSheet/all/width/pointer/generic (24) */
+  --ds-popover-sheet-height-pointer-generic:     var(--ds-spacing-lg);   /* popoverSheet/all/height/pointer/generic (12) — también la separación con el trigger */
+  --ds-popover-sheet-offset-pointer-generic:     var(--ds-spacing-xl);   /* popoverSheet/all/offset/pointer/generic (16) — Pointer Left/Right desde la esquina (antes 20 en código) */
+  --ds-popover-sheet-fg-close-button-generic:           var(--ds-fg-subtle);    /* popoverSheet/all/fg/closeButton/generic */
+  --ds-popover-sheet-padding-close-button-generic:      var(--ds-spacing-md);   /* 12/11: popoverSheet/all/padding/closeButton/generic (8) → caja 40 con icono 24 (antes 44 en Figma, 36 en código) */
+  --ds-popover-sheet-size-close:         var(--ds-sizing-lg);    /* 40 — hueco que deja el contenido arriba */
+  --ds-popover-sheet-border-radius-close:       var(--ds-border-radius-circle);
 
 
 
@@ -1027,11 +1027,11 @@
   --ds-input-fg-default:                    var(--ds-fg-default);
   --ds-input-fg-disabled:                   var(--ds-fg-disabled);
 
-  --ds-input-border-default:                var(--ds-borderColor-default);
-  --ds-input-border-disabled:               var(--ds-borderColor-disabled);
-  --ds-input-border-error:                  var(--ds-borderColor-error);
-  --ds-input-focus-inner:                   var(--ds-borderColor-focus-inner);
-  --ds-input-focus-outer:                   var(--ds-borderColor-focus-outer);
+  --ds-input-border-color-default:                var(--ds-borderColor-default);
+  --ds-input-border-color-disabled:               var(--ds-borderColor-disabled);
+  --ds-input-border-color-error:                  var(--ds-borderColor-error);
+  --ds-input-border-color-focus-inner:                   var(--ds-borderColor-focus-inner);
+  --ds-input-border-color-focus-outer:                   var(--ds-borderColor-focus-outer);
 
   --ds-input-border-width:                  var(--ds-border-width-md);
   --ds-input-border-width-focus:            var(--ds-border-width-lg);
@@ -1041,20 +1041,20 @@
   --ds-input-padding-hor:                   var(--ds-spacing-xl);
   --ds-input-padding-ver:                   var(--ds-spacing-xl);
   --ds-input-min-height:                    var(--ds-sizing-2xl);
-  --ds-input-field-icon-gap:                var(--ds-spacing-lg);
-  --ds-input-label-gap:                     var(--ds-spacing-none); /* 13/11: 0 — el line-height de 24 ya deja el aire (antes 4 + 20) */
-  --ds-input-helper-gap:                    var(--ds-spacing-md);   /* gap se queda en Input — layout propio, NO en Helper Text */
-  --ds-input-validation-gap:                var(--ds-spacing-none); /* 13/11: 0 — ídem */
+  --ds-input-gap-field-icon:                var(--ds-spacing-lg);
+  --ds-input-gap-label:                     var(--ds-spacing-none); /* 13/11: 0 — el line-height de 24 ya deja el aire (antes 4 + 20) */
+  --ds-input-gap-helper:                    var(--ds-spacing-md);   /* gap se queda en Input — layout propio, NO en Helper Text */
+  --ds-input-gap-validation:                var(--ds-spacing-none); /* 13/11: 0 — ídem */
   --ds-input-fg-placeholder:               var(--ds-fg-body-subtle);    /* valueText/fg/placeholder — texto de ejemplo (Initial) */
-  --ds-input-border-hover:                 var(--ds-borderColor-emphasis); /* root/borderColor/hover */
-  --ds-input-focus-area-padding:           var(--ds-spacing-xs);        /* root/focusArea/padding — el anillo de foco cabe dentro del componente (27/10/2026) */
+  --ds-input-border-color-hover:                 var(--ds-borderColor-emphasis); /* root/borderColor/hover */
+  --ds-input-padding-focus-area:           var(--ds-spacing-xs);        /* root/focusArea/padding — el anillo de foco cabe dentro del componente (27/10/2026) */
   /* Input/InputCommon — comunes a TODOS los inputs (09/10/2026, igual que Figma) */
-  --ds-input-icon-fg:                      var(--ds-fg-icon-subtle);    /* icon/fg/generic — icono informativo (gris) */
-  --ds-input-icon-fg-primary:              var(--ds-fg-icon-primary);   /* icon/fg/primary — icono accionable (chevron, calendario, +/−) */
-  --ds-input-icon-fg-disabled:             var(--ds-fg-icon-disabled);  /* icon/fg/disabled */
-  --ds-input-icon-size:                    var(--ds-sizing-sm);         /* icon/size/generic — 24 */
-  --ds-input-subfield-height:              var(--ds-sizing-2xl);        /* subField/height/generic — alto FIJO de cada subcampo (país/teléfono, divisa/importe) */
-  --ds-input-subfield-gap:                 var(--ds-spacing-xs);        /* subField/gap/generic — bandera/texto ↔ chevron en el subcampo selector */
+  --ds-input-fg-icon:                      var(--ds-fg-icon-subtle);    /* icon/fg/generic — icono informativo (gris) */
+  --ds-input-fg-icon-primary:              var(--ds-fg-icon-primary);   /* icon/fg/primary — icono accionable (chevron, calendario, +/−) */
+  --ds-input-fg-icon-disabled:             var(--ds-fg-icon-disabled);  /* icon/fg/disabled */
+  --ds-input-size-icon:                    var(--ds-sizing-sm);         /* icon/size/generic — 24 */
+  --ds-input-height-subfield:              var(--ds-sizing-2xl);        /* subField/height/generic — alto FIJO de cada subcampo (país/teléfono, divisa/importe) */
+  --ds-input-gap-subfield:                 var(--ds-spacing-xs);        /* subField/gap/generic — bandera/texto ↔ chevron en el subcampo selector */
 
   /* â”€â”€ InputText â€” iconos opcionales left/right â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
@@ -1068,9 +1068,9 @@
      root/bg/*), eran 2 pares huérfanos en el archivo. JSX consume
      --ds-input-bg-default/-disabled directamente, igual que el resto de la
      familia Input. */
-  --ds-input-telephone-country-padding-ver:        var(--ds-spacing-lg);
-  --ds-input-telephone-icon-flag-size:             var(--ds-sizing-2xs);   /* iconFlag/size/generic (16) */
-  --ds-input-telephone-icon-flag-opacity-disabled: var(--ds-opacity-read-only); /* iconFlag/fg/disabled */
+  --ds-input-telephone-padding-ver-country:        var(--ds-spacing-lg);
+  --ds-input-telephone-size-icon-flag:             var(--ds-sizing-2xs);   /* iconFlag/size/generic (16) */
+  --ds-input-telephone-fg-icon-flag-disabled: var(--ds-opacity-read-only); /* iconFlag/fg/disabled */
 
   /* â”€â”€ InputAmount â€” importe + moneda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
@@ -1090,28 +1090,28 @@
   --ds-checkbox-bg-disabled:           var(--ds-bg-disabled);
   --ds-checkbox-bg-error:              var(--ds-bg-error);
 
-  --ds-checkbox-border-default:        var(--ds-borderColor-default);
-  --ds-checkbox-border-selected:       var(--ds-borderColor-primary);
-  --ds-checkbox-border-disabled:       var(--ds-borderColor-disabled);
-  --ds-checkbox-border-error:          var(--ds-borderColor-error);
-  --ds-checkbox-focus-inner:           var(--ds-borderColor-focus-inner);
-  --ds-checkbox-focus-outer:           var(--ds-borderColor-focus-outer);
+  --ds-checkbox-border-color-default:        var(--ds-borderColor-default);
+  --ds-checkbox-border-color-selected:       var(--ds-borderColor-primary);
+  --ds-checkbox-border-color-disabled:       var(--ds-borderColor-disabled);
+  --ds-checkbox-border-color-error:          var(--ds-borderColor-error);
+  --ds-checkbox-border-color-focus-inner:           var(--ds-borderColor-focus-inner);
+  --ds-checkbox-border-color-focus-outer:           var(--ds-borderColor-focus-outer);
 
-  --ds-checkbox-icon-fg:               var(--ds-fg-onColor);
-  --ds-checkbox-icon-disabled:         var(--ds-fg-disabled);
-  --ds-checkbox-label-fg:              var(--ds-fg-label-default);
-  --ds-checkbox-label-disabled:        var(--ds-fg-label-disabled);
+  --ds-checkbox-fg-icon:               var(--ds-fg-onColor);
+  --ds-checkbox-fg-icon-disabled:         var(--ds-fg-disabled);
+  --ds-checkbox-fg-label:              var(--ds-fg-label-default);
+  --ds-checkbox-fg-label-disabled:        var(--ds-fg-label-disabled);
 
-  --ds-checkbox-size:                  var(--ds-sizing-sm);         /* checkbox/all/size/generic — hueco de 24 */
-  --ds-checkbox-box-size:              var(--ds-sizing-xs);         /* caja de 20 dentro del hueco (.CheckStates) */
+  --ds-checkbox-size-generic:                  var(--ds-sizing-sm);         /* checkbox/all/size/generic — hueco de 24 */
+  --ds-checkbox-size-box:              var(--ds-sizing-xs);         /* caja de 20 dentro del hueco (.CheckStates) */
   --ds-checkbox-border-radius:         var(--ds-border-radius-xs);
   --ds-checkbox-border-width:          var(--ds-border-width-md);
-  --ds-checkbox-label-gap:             var(--ds-spacing-sm);        /* checkbox/all/gap/generic (6) */
-  --ds-checkbox-padding:               var(--ds-spacing-xs);        /* checkbox/all/padding/generic (4) — 13/11: 24+8+8 = 40 */
+  --ds-checkbox-gap-generic:             var(--ds-spacing-sm);        /* checkbox/all/gap/generic (6) */
+  --ds-checkbox-padding-generic:               var(--ds-spacing-xs);        /* checkbox/all/padding/generic (4) — 13/11: 24+8+8 = 40 */
   --ds-checkbox-border-radius-row:     var(--ds-border-radius-md);  /* checkbox/all/borderRadius/row — fila, hover y foco */
-  --ds-checkbox-focus-area-padding:    var(--ds-spacing-xs);        /* checkbox/all/padding/focusArea/generic (4) */
-  --ds-checkbox-focus-width:           var(--ds-border-width-lg);   /* checkbox/all/borderWidth/focus (2) */
-  --ds-checkbox-opacity-pressed:       var(--ds-opacity-pressed);   /* checkbox/all/bg/pressed */
+  --ds-checkbox-padding-focus-area-generic:    var(--ds-spacing-xs);        /* checkbox/all/padding/focusArea/generic (4) */
+  --ds-checkbox-border-width-focus:           var(--ds-border-width-lg);   /* checkbox/all/borderWidth/focus (2) */
+  --ds-checkbox-bg-pressed:       var(--ds-opacity-pressed);   /* checkbox/all/bg/pressed */
 
   /* ══════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Radio
@@ -1124,60 +1124,60 @@
      Track 44 × 24 (2 + pulgar 20 + 2, ancho = 2 pulgares + 2 paddings).
      Read-only como los inputs: fondo de disabled con el pulgar en color normal.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-switch-track-bg-on:             var(--ds-bg-success);        /* switch/all/bg/track/on */
-  --ds-switch-track-bg-off:            var(--ds-bg-inverse);        /* switch/all/bg/track/off */
-  --ds-switch-track-bg-disabled:       var(--ds-bg-disabled);
-  --ds-switch-track-bg-read-only:      var(--ds-bg-disabled);       /* switch/all/bg/track/readOnly */
-  --ds-switch-thumb-fg-generic:        var(--ds-fg-inverse);        /* contrasta con on (verde) y off (negro/blanco), invierte con el track */
-  --ds-switch-thumb-fg-disabled:       var(--ds-fg-disabled);
-  --ds-switch-thumb-fg-read-only:      var(--ds-fg-default);        /* switch/all/fg/thumb/readOnly */
-  --ds-switch-track-height:            var(--ds-sizing-sm);         /* 24 */
-  --ds-switch-thumb-size:              var(--ds-sizing-xs);         /* 20 */
-  --ds-switch-track-padding:           var(--ds-spacing-2xs);       /* 2 */
-  --ds-switch-track-border-radius:     var(--ds-border-radius-xl);  /* 12 = alto / 2 */
-  --ds-switch-label-fg:                var(--ds-fg-label-default);
-  --ds-switch-label-disabled:          var(--ds-fg-label-disabled);
-  --ds-switch-gap:                     var(--ds-spacing-sm);        /* switch/all/gap/container/generic (6) */
-  --ds-switch-padding:                 var(--ds-spacing-xs);        /* switch/all/padding/container/generic (4) — 13/11: 40 */
-  --ds-switch-border-radius-row:       var(--ds-border-radius-md);  /* switch/all/borderRadius/container/generic (8) */
-  --ds-switch-bg-hover:                var(--ds-bg-hover-primary);  /* switch/all/bg/container/hover */
-  --ds-switch-opacity-pressed:         var(--ds-opacity-pressed);   /* switch/all/opacity/container/pressed */
-  --ds-switch-focus-area-padding:      var(--ds-spacing-xs);        /* switch/all/padding/focusArea/generic (4) */
-  --ds-switch-focus-width:             var(--ds-border-width-lg);   /* switch/all/borderWidth/focus (2) */
-  --ds-switch-focus-inner:             var(--ds-borderColor-focus-inner);
-  --ds-switch-focus-outer:             var(--ds-borderColor-focus-outer);
+  --ds-switch-bg-track-on:             var(--ds-bg-success);        /* switch/all/bg/track/on */
+  --ds-switch-bg-track-off:            var(--ds-bg-inverse);        /* switch/all/bg/track/off */
+  --ds-switch-bg-track-disabled:       var(--ds-bg-disabled);
+  --ds-switch-bg-track-read-only:      var(--ds-bg-disabled);       /* switch/all/bg/track/readOnly */
+  --ds-switch-fg-thumb-generic:        var(--ds-fg-inverse);        /* contrasta con on (verde) y off (negro/blanco), invierte con el track */
+  --ds-switch-fg-thumb-disabled:       var(--ds-fg-disabled);
+  --ds-switch-fg-thumb-read-only:      var(--ds-fg-default);        /* switch/all/fg/thumb/readOnly */
+  --ds-switch-height-track:            var(--ds-sizing-sm);         /* 24 */
+  --ds-switch-size-thumb:              var(--ds-sizing-xs);         /* 20 */
+  --ds-switch-padding-track:           var(--ds-spacing-2xs);       /* 2 */
+  --ds-switch-border-radius-track:     var(--ds-border-radius-xl);  /* 12 = alto / 2 */
+  --ds-switch-fg-label:                var(--ds-fg-label-default);
+  --ds-switch-fg-label-disabled:          var(--ds-fg-label-disabled);
+  --ds-switch-gap-container-generic:                     var(--ds-spacing-sm);        /* switch/all/gap/container/generic (6) */
+  --ds-switch-padding-container-generic:                 var(--ds-spacing-xs);        /* switch/all/padding/container/generic (4) — 13/11: 40 */
+  --ds-switch-border-radius-container-generic:       var(--ds-border-radius-md);  /* switch/all/borderRadius/container/generic (8) */
+  --ds-switch-bg-container-hover:                var(--ds-bg-hover-primary);  /* switch/all/bg/container/hover */
+  --ds-switch-opacity-container-pressed:         var(--ds-opacity-pressed);   /* switch/all/opacity/container/pressed */
+  --ds-switch-padding-focus-area-generic:      var(--ds-spacing-xs);        /* switch/all/padding/focusArea/generic (4) */
+  --ds-switch-border-width-focus:             var(--ds-border-width-lg);   /* switch/all/borderWidth/focus (2) */
+  --ds-switch-border-color-focus-inner:             var(--ds-borderColor-focus-inner);
+  --ds-switch-border-color-focus-outer:             var(--ds-borderColor-focus-outer);
 
-  --ds-radio-root-bg-generic:               var(--ds-bg-default);
-  --ds-radio-root-bg-hover:                 var(--ds-bg-hover-primary);
-  --ds-radio-root-bg-disabled:              var(--ds-bg-disabled);
+  --ds-radio-button-bg-generic:               var(--ds-bg-default);
+  --ds-radio-bg-hover:                 var(--ds-bg-hover-primary);
+  --ds-radio-button-bg-disabled:              var(--ds-bg-disabled);
 
-  --ds-radio-root-border-color-generic:     var(--ds-borderColor-default);
-  --ds-radio-root-border-color-selected:    var(--ds-borderColor-primary);
-  --ds-radio-root-border-color-error:       var(--ds-borderColor-error);
-  --ds-radio-root-border-color-disabled:    var(--ds-borderColor-disabled);
-  --ds-radio-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-radio-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-radio-button-border-color-generic:     var(--ds-borderColor-default);
+  --ds-radio-button-border-color-selected:    var(--ds-borderColor-primary);
+  --ds-radio-button-border-color-error:       var(--ds-borderColor-error);
+  --ds-radio-button-border-color-disabled:    var(--ds-borderColor-disabled);
+  --ds-radio-button-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-radio-button-border-color-focus-outer: var(--ds-borderColor-focus-outer);
 
-  --ds-radio-indicator-fg-generic:          var(--ds-fg-primary);   /* Figma: indicator/fg/generic → fg/primary (era bg/primary-bold — token y valor incorrectos) */
-  --ds-radio-indicator-fg-disabled:         var(--ds-fg-disabled);
-  --ds-radio-indicator-fg-error:            var(--ds-fg-error);
+  --ds-radio-button-fg-indicator-generic:          var(--ds-fg-primary);   /* Figma: indicator/fg/generic → fg/primary (era bg/primary-bold — token y valor incorrectos) */
+  --ds-radio-button-fg-indicator-disabled:         var(--ds-fg-disabled);
+  --ds-radio-button-fg-indicator-error:            var(--ds-fg-error);
 
-  --ds-radio-label-fg-generic:              var(--ds-fg-label-default);
-  --ds-radio-label-fg-disabled:             var(--ds-fg-label-disabled);
-  --ds-choice-group-gap:                    var(--ds-spacing-md);   /* choiceGroup/all/gap/options/generic — entre opciones de RadioGroup / CheckboxGroup */
-  --ds-choice-group-root-gap:               var(--ds-spacing-md);   /* choiceGroup/all/gap/generic — pila del grupo: pregunta → ayuda → opciones */
-  --ds-choice-group-validation-gap:         var(--ds-spacing-none);   /* choiceGroup/all/gap/validation/generic — opciones → error */
+  --ds-radio-button-fg-label-generic:              var(--ds-fg-label-default);
+  --ds-radio-button-fg-label-disabled:             var(--ds-fg-label-disabled);
+  --ds-choice-group-gap-options-generic:                    var(--ds-spacing-md);   /* choiceGroup/all/gap/options/generic — entre opciones de RadioGroup / CheckboxGroup */
+  --ds-choice-group-gap-generic:               var(--ds-spacing-md);   /* choiceGroup/all/gap/generic — pila del grupo: pregunta → ayuda → opciones */
+  --ds-choice-group-gap-validation-generic:         var(--ds-spacing-none);   /* choiceGroup/all/gap/validation/generic — opciones → error */
 
-  --ds-radio-root-size-generic:                var(--ds-sizing-sm);
-  --ds-radio-root-border-radius-generic:       var(--ds-border-radius-circle);
-  --ds-radio-root-border-width-generic:        var(--ds-border-width-lg);
-  --ds-radio-circle-size:                      var(--ds-sizing-xs);         /* círculo de 20 dentro del hueco (.RadioStates) */
-  --ds-radio-root-gap-generic:                 var(--ds-spacing-sm);        /* radioButton/all/gap/generic (6) — círculo → label */
-  --ds-radio-root-padding-generic:             var(--ds-spacing-xs);        /* radioButton/all/padding/generic (4) — 13/11: 24+8+8 = 40 */
-  --ds-radio-root-border-radius-row:           var(--ds-border-radius-md);  /* radioButton/all/borderRadius/row */
-  --ds-radio-root-focus-area-padding:          var(--ds-spacing-xs);        /* radioButton/all/padding/focusArea/generic (4) */
-  --ds-radio-root-border-width-focus:          var(--ds-border-width-lg);   /* radioButton/all/borderWidth/focus (2) */
-  --ds-radio-root-opacity-pressed:             var(--ds-opacity-pressed);   /* radioButton/all/bg/pressed */
+  --ds-radio-button-size-generic:                var(--ds-sizing-sm);
+  --ds-radio-border-radius-generic:       var(--ds-border-radius-circle);
+  --ds-radio-button-border-width-generic:        var(--ds-border-width-lg);
+  --ds-radio-size-circle:                      var(--ds-sizing-xs);         /* círculo de 20 dentro del hueco (.RadioStates) */
+  --ds-radio-button-gap-generic:                 var(--ds-spacing-sm);        /* radioButton/all/gap/generic (6) — círculo → label */
+  --ds-radio-button-padding-generic:             var(--ds-spacing-xs);        /* radioButton/all/padding/generic (4) — 13/11: 24+8+8 = 40 */
+  --ds-radio-button-border-radius-row:           var(--ds-border-radius-md);  /* radioButton/all/borderRadius/row */
+  --ds-radio-button-padding-focus-area-generic:          var(--ds-spacing-xs);        /* radioButton/all/padding/focusArea/generic (4) */
+  --ds-radio-button-border-width-focus:          var(--ds-border-width-lg);   /* radioButton/all/borderWidth/focus (2) */
+  --ds-radio-button-bg-pressed:             var(--ds-opacity-pressed);   /* radioButton/all/bg/pressed */
   --ds-radio-indicator-border-radius-generic:  var(--ds-border-radius-circle);
 
   /* ══════════════════════════════════════════════════════════════
@@ -1185,70 +1185,70 @@
      ══════════════════════════════════════════════════════════════ */
 
   /* chip/all/ — tokens comunes a Choice, Filter e Input */
-  --ds-chip-root-bg-generic:               var(--ds-bg-primary-medium);
-  --ds-chip-root-bg-selected:              var(--ds-bg-primary);
-  --ds-chip-root-bg-disabled:              var(--ds-bg-disabled);
-  --ds-chip-root-opacity-pressed:          var(--ds-opacity-pressed);
-  --ds-chip-root-bgmix-hover:              var(--ds-opacity-hover-default);
-  --ds-chip-root-bgmix-hover-selected:     var(--ds-opacity-hover-default-inverse);
-  --ds-chip-root-border-color-generic:     var(--ds-borderColor-default);
-  --ds-chip-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-chip-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-chip-root-border-width-generic:     var(--ds-border-width-sm);
-  --ds-chip-root-border-width-focus:       var(--ds-border-width-lg);
-  --ds-chip-root-border-radius-generic:    var(--ds-border-radius-md);
-  --ds-chip-root-gap-generic:              var(--ds-spacing-xs);
-  --ds-chip-root-padding-hor-generic:      var(--ds-spacing-md);
-  --ds-chip-root-padding-ver-generic:      var(--ds-spacing-xs);
-  --ds-chip-label-fg-generic:              var(--ds-fg-label-default);
-  --ds-chip-label-fg-selected:             var(--ds-fg-label-onColor); /* corregido 11/08 — bg-selected (bg-primary) no invierte, el texto no debe invertir tampoco */
-  --ds-chip-label-fg-disabled:             var(--ds-fg-label-disabled);
-  --ds-chip-label-font-size:               var(--ds-fontSize-label-md);
-  --ds-chip-icon-fg-generic:               var(--ds-fg-icon-primary);
-  --ds-chip-icon-fg-selected:              var(--ds-fg-icon-onColor); /* corregido 11/08 — mismo motivo que label-fg-selected */
-  --ds-chip-icon-fg-disabled:              var(--ds-fg-icon-disabled);
-  --ds-chip-icon-size-generic:             var(--ds-sizing-xs);
-  --ds-chip-focus-area-padding:            var(--ds-spacing-xs);  /* chip/all/padding/focusArea/generic — el anillo de foco cabe dentro del componente */
-  --ds-chip-valuetext-padding-hor:         var(--ds-spacing-xs);  /* chip/all/paddingHor/valueText/generic — Filter e Input */
-  --ds-chip-label-line-height:             var(--ds-lineHeight-label-md);
-  --ds-chip-remove-target-size:            var(--ds-sizing-sm);   /* área de clic mínima de la X (A11y-5, WCAG 2.5.8: 24 × 24) — sin cambio visual */
+  --ds-chip-bg-generic:               var(--ds-bg-primary-medium);
+  --ds-chip-bg-selected:              var(--ds-bg-primary);
+  --ds-chip-bg-disabled:              var(--ds-bg-disabled);
+  --ds-chip-opacity-pressed:          var(--ds-opacity-pressed);
+  --ds-chip-bg-mix-hover:              var(--ds-opacity-hover-default);
+  --ds-chip-bg-mix-hover-selected:     var(--ds-opacity-hover-default-inverse);
+  --ds-chip-border-color-generic:     var(--ds-borderColor-default);
+  --ds-chip-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-chip-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-chip-border-width-generic:     var(--ds-border-width-sm);
+  --ds-chip-border-width-focus:       var(--ds-border-width-lg);
+  --ds-chip-border-radius-generic:    var(--ds-border-radius-md);
+  --ds-chip-gap-generic:              var(--ds-spacing-xs);
+  --ds-chip-padding-hor-generic:      var(--ds-spacing-md);
+  --ds-chip-padding-ver-generic:      var(--ds-spacing-xs);
+  --ds-chip-fg-label-generic:              var(--ds-fg-label-default);
+  --ds-chip-fg-label-selected:             var(--ds-fg-label-onColor); /* corregido 11/08 — bg-selected (bg-primary) no invierte, el texto no debe invertir tampoco */
+  --ds-chip-fg-label-disabled:             var(--ds-fg-label-disabled);
+  --ds-chip-font-size-label:               var(--ds-fontSize-label-md);
+  --ds-chip-fg-icon-generic:               var(--ds-fg-icon-primary);
+  --ds-chip-fg-icon-selected:              var(--ds-fg-icon-onColor); /* corregido 11/08 — mismo motivo que label-fg-selected */
+  --ds-chip-fg-icon-disabled:              var(--ds-fg-icon-disabled);
+  --ds-chip-size-icon-generic:             var(--ds-sizing-xs);
+  --ds-chip-padding-focus-area-generic:            var(--ds-spacing-xs);  /* chip/all/padding/focusArea/generic — el anillo de foco cabe dentro del componente */
+  --ds-chip-padding-hor-value-text-generic:         var(--ds-spacing-xs);  /* chip/all/paddingHor/valueText/generic — Filter e Input */
+  --ds-chip-line-height-label:             var(--ds-lineHeight-label-md);
+  --ds-chip-size-remove-target:            var(--ds-sizing-sm);   /* área de clic mínima de la X (A11y-5, WCAG 2.5.8: 24 × 24) — sin cambio visual */
 
   /* chip/filter/label/* — "Label:" de type="filter" variant="dismissible" */
-  --ds-chip-filter-label-font-weight:      var(--ds-font-weight-bold);
-  --ds-chip-filter-label-padding-left:     var(--ds-spacing-xs);
-  --ds-chip-filter-label-padding-right:    var(--ds-spacing-2xs);
+  --ds-chip-filter-font-weight-label:      var(--ds-font-weight-bold);
+  --ds-chip-filter-padding-left-label:     var(--ds-spacing-xs);
+  --ds-chip-filter-padding-right-label:    var(--ds-spacing-2xs);
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      COMPONENT TOKENS â€” Link
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
   /* Link (link/all/*) — 26/10/2026 alineado con Figma */
-  --ds-link-list-title-fg:              var(--ds-fg-title-default); /* 19/10 — el título heredaba el color de index.css (1.01:1 en dark) */
-  --ds-link-list-icon-fg:               var(--ds-fg-icon-default);  /* linkList/all/fg/iconLeft/generic — icono de lista */
-  --ds-link-list-item-gap-sm:           var(--ds-spacing-xs);       /* separación entre filas (composición, sin token en Figma) */
-  --ds-link-list-item-gap-md:           var(--ds-spacing-md);
-  --ds-link-list-item-gap-lg:           var(--ds-spacing-xl);
-  --ds-link-fg-label-default:          var(--ds-fg-label-default);   /* fg/label/default-generic */
+  --ds-link-list-fg-title:              var(--ds-fg-title-default); /* 19/10 — el título heredaba el color de index.css (1.01:1 en dark) */
+  --ds-link-list-fg-icon-left-generic:               var(--ds-fg-icon-default);  /* linkList/all/fg/iconLeft/generic — icono de lista */
+  --ds-link-list-gap-item-sm:           var(--ds-spacing-xs);       /* separación entre filas (composición, sin token en Figma) */
+  --ds-link-list-gap-item-md:           var(--ds-spacing-md);
+  --ds-link-list-gap-item-lg:           var(--ds-spacing-xl);
+  --ds-link-fg-label-default-generic:          var(--ds-fg-label-default);   /* fg/label/default-generic */
   --ds-link-fg-label-accent:           var(--ds-fg-label-primary);   /* fg/label/accent-generic */
   --ds-link-fg-label-accent-visited:   var(--ds-fg-label-tertiary);  /* fg/label/accent-visited */
   --ds-link-fg-icon-default:           var(--ds-fg-icon-default);    /* fg/icon/default-generic */
   --ds-link-fg-icon-accent:            var(--ds-fg-icon-primary);    /* fg/icon/accent-generic */
-  --ds-link-fg-icon-visited:           var(--ds-fg-icon-tertiary);   /* fg/icon/accent-visited */
-  --ds-link-border-bottom-default:     var(--ds-borderColor-primary);  /* borderBottomColor/label/default-generic — subrayado teal también en Default (Carol, 26/10) */
-  --ds-link-border-bottom-accent:      var(--ds-borderColor-primary);  /* borderBottomColor/label/accent-generic */
-  --ds-link-border-bottom-visited:     var(--ds-borderColor-tertiary); /* borderBottomColor/label/default-visited */
+  --ds-link-fg-icon-accent-visited:           var(--ds-fg-icon-tertiary);   /* fg/icon/accent-visited */
+  --ds-link-border-color-bottom-default:     var(--ds-borderColor-primary);  /* borderBottomColor/label/default-generic — subrayado teal también en Default (Carol, 26/10) */
+  --ds-link-border-color-bottom-accent:      var(--ds-borderColor-primary);  /* borderBottomColor/label/accent-generic */
+  --ds-link-border-color-bottom-visited:     var(--ds-borderColor-tertiary); /* borderBottomColor/label/default-visited */
   --ds-link-border-bottom-width:       var(--ds-border-width-sm);      /* borderBottomWidth/label/generic */
   --ds-link-gap:                       var(--ds-spacing-xs);           /* root/gap/generic — icono ↔ texto (= linkList/all/root/gapHor, icono de lista → enlace) */
   --ds-link-border-radius:             var(--ds-border-radius-xs);     /* root/borderRadius/focus-inner — fondo de hover */
   --ds-link-bg-mix-hover:              var(--ds-opacity-hover-subtle); /* root/bgMix/hover */
   --ds-link-opacity-pressed:           var(--ds-opacity-pressed);      /* root/opacity/pressed */
-  --ds-link-focus-width:               var(--ds-border-width-lg);      /* root/borderWidth/focus */
-  --ds-link-focus-inner:               var(--ds-borderColor-focus-inner); /* root/borderColor/default-focus-inner */
-  --ds-link-focus-outer:               var(--ds-borderColor-focus-outer); /* root/borderColor/default-focus-outer */
-  --ds-link-icon-size-xs:              var(--ds-sizing-2xs);           /* 16 */
-  --ds-link-icon-size-sm:              var(--ds-sizing-xs);            /* 20 */
-  --ds-link-icon-size-md:              var(--ds-sizing-sm);            /* 24 */
-  --ds-link-icon-size-lg:              var(--ds-sizing-md);            /* 32 */
+  --ds-link-border-width-focus:               var(--ds-border-width-lg);      /* root/borderWidth/focus */
+  --ds-link-border-color-focus-inner:               var(--ds-borderColor-focus-inner); /* root/borderColor/default-focus-inner */
+  --ds-link-border-color-focus-outer:               var(--ds-borderColor-focus-outer); /* root/borderColor/default-focus-outer */
+  --ds-link-size-icon-xs:              var(--ds-sizing-2xs);           /* 16 */
+  --ds-link-size-icon-sm:              var(--ds-sizing-xs);            /* 20 */
+  --ds-link-size-icon-md:              var(--ds-sizing-sm);            /* 24 */
+  --ds-link-size-icon-lg:              var(--ds-sizing-md);            /* 32 */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1260,26 +1260,26 @@
   --ds-cta-link-fg-accent:               var(--ds-fg-label-primary);   /* label/fg/accent-generic */
   --ds-cta-link-fg-primary:              var(--ds-fg-label-inverse);   /* label/fg/default-highEmphasis (sobre bg-inverse, invierten juntos) */
   --ds-cta-link-fg-accent-primary:       var(--ds-fg-label-onColor);   /* label/fg/accent-highEmphasis */
-  --ds-cta-link-fg-disabled:             var(--ds-fg-label-disabled);  /* label/fg/disabled */
+  --ds-cta-link-fg-label-disabled:             var(--ds-fg-label-disabled);  /* label/fg/disabled */
   --ds-cta-link-bg-primary:              var(--ds-bg-inverse);         /* root/bg/default-highEmphasis */
   --ds-cta-link-bg-accent-primary:       var(--ds-bg-primary);         /* root/bg/accent-highEmphasis */
   --ds-cta-link-bg-disabled:             var(--ds-bg-disabled);        /* root/bg/disabled */
   --ds-cta-link-bg-mix-hover:            var(--ds-opacity-hover-default); /* root/bgMix/hover */
-  --ds-cta-link-border-secondary:        var(--ds-borderColor-emphasis);  /* root/borderColor/default-mediumEmphasis */
-  --ds-cta-link-border-accent-secondary: var(--ds-borderColor-primary);   /* root/borderColor/accent-mediumEmphasis */
-  --ds-cta-link-border-disabled:         var(--ds-borderColor-disabled);  /* root/borderColor/disabled */
-  --ds-cta-link-border-width-medium:     var(--ds-border-width-sm);       /* root/borderWidth/mediumEmphasis */
-  --ds-cta-link-border-bottom-default:   var(--ds-borderColor-emphasis);  /* label/borderColorBottom/default-lowEmphasis */
-  --ds-cta-link-border-bottom-accent:    var(--ds-borderColor-primary);   /* label/borderColorBottom/accent-lowEmphasis */
+  --ds-cta-link-border-color-secondary:        var(--ds-borderColor-emphasis);  /* root/borderColor/default-mediumEmphasis */
+  --ds-cta-link-border-color-accent-secondary: var(--ds-borderColor-primary);   /* root/borderColor/accent-mediumEmphasis */
+  --ds-cta-link-border-color-disabled:         var(--ds-borderColor-disabled);  /* root/borderColor/disabled */
+  --ds-cta-link-border-width-medium-emphasis:     var(--ds-border-width-sm);       /* root/borderWidth/mediumEmphasis */
+  --ds-cta-link-border-color-bottom-default:   var(--ds-borderColor-emphasis);  /* label/borderColorBottom/default-lowEmphasis */
+  --ds-cta-link-border-color-bottom-accent:    var(--ds-borderColor-primary);   /* label/borderColorBottom/accent-lowEmphasis */
   --ds-cta-link-border-bottom-width:     var(--ds-border-width-sm);       /* label/borderWidthBottom/generic */
   --ds-cta-link-border-bottom-width-hover: var(--ds-border-width-md);     /* label/borderWidthBottom/hover-lowEmphasis */
-  --ds-cta-link-focus-inner:             var(--ds-borderColor-focus-inner);
-  --ds-cta-link-focus-outer:             var(--ds-borderColor-focus-outer);
-  --ds-cta-link-focus-width:             var(--ds-border-width-lg);       /* root/borderWidth/focus */
-  --ds-cta-link-focus-area-padding:      var(--ds-spacing-xs);            /* root/focusArea/padding — el anillo cabe dentro del componente */
+  --ds-cta-link-border-color-focus-inner:             var(--ds-borderColor-focus-inner);
+  --ds-cta-link-border-color-focus-outer:             var(--ds-borderColor-focus-outer);
+  --ds-cta-link-border-width-focus:             var(--ds-border-width-lg);       /* root/borderWidth/focus */
+  --ds-cta-link-padding-focus-area:      var(--ds-spacing-xs);            /* root/focusArea/padding — el anillo cabe dentro del componente */
   --ds-cta-link-border-radius-low:       var(--ds-border-radius-2xl);     /* 16 */
-  --ds-cta-link-border-radius-medium:    var(--ds-border-radius-3xl);     /* 24 */
-  --ds-cta-link-border-radius-high:      var(--ds-border-radius-circle);  /* 80 */
+  --ds-cta-link-border-radius-medium-emphasis:    var(--ds-border-radius-3xl);     /* 24 */
+  --ds-cta-link-border-radius-high-emphasis:      var(--ds-border-radius-circle);  /* 80 */
   --ds-cta-link-border-radius-focus:     var(--ds-border-radius-circle);
   --ds-cta-link-opacity-pressed:         var(--ds-opacity-pressed);
   --ds-cta-link-padding-ver:             var(--ds-spacing-sm);            /* 6 */
@@ -1319,23 +1319,23 @@
   --ds-badge-highlight-padding-ver:        var(--ds-spacing-2xs);          /* 2px */
   --ds-badge-highlight-padding-hor:        var(--ds-spacing-md);           /* 8px */
 
-  --ds-badge-highlight-icon-size:          var(--ds-sizing-2xs); /* 16 — Figma: instancia del set Icon a 16 desde el 10/11 (antes Icon/20 huérfano) */
-  --ds-badge-highlight-icon-fg-emphasis:   var(--ds-fg-icon-secondary);    /* fg/icon/secondary — 10/11: antes fg-secondary (en dark no coincide) */
-  --ds-badge-highlight-icon-fg-neutral:    var(--ds-fg-icon-subtle);       /* fg/icon/subtle */
-  --ds-badge-highlight-icon-fg-positive:   var(--ds-fg-icon-success);      /* fg/icon/success — 10/11: antes fg-success (en dark no coincide) */
-  --ds-badge-highlight-icon-fg-negative:   var(--ds-fg-icon-error);        /* #D23435 */
-  --ds-badge-highlight-icon-fg-disabled:   var(--ds-fg-icon-disabled);     /* #AAAFB5 */
+  --ds-badge-highlight-size-icon:          var(--ds-sizing-2xs); /* 16 — Figma: instancia del set Icon a 16 desde el 10/11 (antes Icon/20 huérfano) */
+  --ds-badge-highlight-fg-icon-emphasis:   var(--ds-fg-icon-secondary);    /* fg/icon/secondary — 10/11: antes fg-secondary (en dark no coincide) */
+  --ds-badge-highlight-fg-icon-neutral:    var(--ds-fg-icon-subtle);       /* fg/icon/subtle */
+  --ds-badge-highlight-fg-icon-positive:   var(--ds-fg-icon-success);      /* fg/icon/success — 10/11: antes fg-success (en dark no coincide) */
+  --ds-badge-highlight-fg-icon-negative:   var(--ds-fg-icon-error);        /* #D23435 */
+  --ds-badge-highlight-fg-icon-disabled:   var(--ds-fg-icon-disabled);     /* #AAAFB5 */
 
-  --ds-badge-highlight-label-fg:           var(--ds-fg-label-default);     /* label/fg/generic */
-  --ds-badge-highlight-label-fg-positive:  var(--ds-fg-success);           /* Figma badgeHighlight/all/fg/label/positive — 19/10 A11y-2 */
-  --ds-badge-highlight-label-fg-negative:  var(--ds-fg-error);             /* Figma badgeHighlight/all/fg/label/negative — 19/10 A11y-2 */
-  --ds-badge-highlight-label-fg-disabled:  var(--ds-fg-label-disabled);    /* label/fg/disabled */
+  --ds-badge-highlight-fg-label:           var(--ds-fg-label-default);     /* label/fg/generic */
+  --ds-badge-highlight-fg-label-positive:  var(--ds-fg-success);           /* Figma badgeHighlight/all/fg/label/positive — 19/10 A11y-2 */
+  --ds-badge-highlight-fg-label-negative:  var(--ds-fg-error);             /* Figma badgeHighlight/all/fg/label/negative — 19/10 A11y-2 */
+  --ds-badge-highlight-fg-label-disabled:  var(--ds-fg-label-disabled);    /* label/fg/disabled */
 
   /* Foco — solo cuando lleva tooltip (tabIndex=0): anillo del sistema 2 + 2 por fuera */
-  --ds-badge-highlight-focus-outer:        var(--ds-borderColor-focus-outer);
-  --ds-badge-highlight-focus-inner:        var(--ds-borderColor-focus-inner);
-  --ds-badge-highlight-focus-width:        var(--ds-border-width-lg);      /* 2 */
-  --ds-badge-highlight-tooltip-gap:        var(--ds-spacing-md);           /* 8 — tooltip/gap/generic: 4 del anillo de foco + 4 de aire */
+  --ds-badge-highlight-border-color-focus-outer:        var(--ds-borderColor-focus-outer);
+  --ds-badge-highlight-border-color-focus-inner:        var(--ds-borderColor-focus-inner);
+  --ds-badge-highlight-border-width-focus:        var(--ds-border-width-lg);      /* 2 */
+  --ds-badge-highlight-gap-tooltip:        var(--ds-spacing-md);           /* 8 — tooltip/gap/generic: 4 del anillo de foco + 4 de aire */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1353,7 +1353,7 @@
   --ds-amount-view-bg-neutral:         var(--ds-bg-subtle);          /* #F1F2F4 — neutral+negative */
   --ds-amount-view-bg-disabled:        var(--ds-bg-disabled);        /* #F1F2F4 — disabled+negative */
   --ds-amount-view-fg-generic:         var(--ds-fg-body-default);    /* #050506 — texto negro (neutral/subtle) */
-  --ds-amount-view-fg-onColor:         var(--ds-fg-body-onColor);    /* #FFFFFF — texto sobre solid */
+  --ds-amount-view-fg-on-color:         var(--ds-fg-body-onColor);    /* #FFFFFF — texto sobre solid */
   --ds-amount-view-fg-disabled:        var(--ds-fg-body-disabled);   /* #AAAFB5 — texto disabled */
   --ds-amount-view-border-radius:      var(--ds-border-radius-sm);   /* 4px */
   --ds-amount-view-gap:                var(--ds-spacing-xs);         /* 4px */
@@ -1367,30 +1367,30 @@
      expone un único "16"). ordered reusa el gap de unordered (Figma no da token propio).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-list-bodytext-fg-generic:        var(--ds-fg-default);        /* list/all/fg/bodyText/generic */
-  --ds-list-bullet-fg-generic:          var(--ds-fg-icon-primary);   /* list/all/fg/bullet/generic — teal */
-  --ds-list-ordered-marker-fg-generic:    var(--ds-fg-primary);   /* list/all/fg/orderedList/marker/generic — teal de texto, regular */
-  --ds-list-icon-checkmark-fg-generic:  var(--ds-fg-icon-primary);   /* list/all/fg/iconCheckmark/generic — teal */
+  --ds-list-fg-body-text-generic:        var(--ds-fg-default);        /* list/all/fg/bodyText/generic */
+  --ds-list-fg-bullet-generic:          var(--ds-fg-icon-primary);   /* list/all/fg/bullet/generic — teal */
+  --ds-list-fg-ordered-list-marker-generic:    var(--ds-fg-primary);   /* list/all/fg/orderedList/marker/generic — teal de texto, regular */
+  --ds-list-fg-icon-checkmark-generic:  var(--ds-fg-icon-primary);   /* list/all/fg/iconCheckmark/generic — teal */
   --ds-list-padding-bottom-generic:     var(--ds-spacing-md);        /* 8 — root/paddingBottom/{generic,16,19}: entre items */
   /* Unordered */
-  --ds-list-padding-left-unordered:     var(--ds-spacing-2xs);       /* 2 — root/paddingLeft/unorderedList */
+  --ds-list-padding-left-unordered-list:     var(--ds-spacing-2xs);       /* 2 — root/paddingLeft/unorderedList */
   --ds-list-gap-unordered-xs:           var(--ds-spacing-sm);        /* 6 — root/gap/unorderedList-12 */
   --ds-list-gap-unordered-sm:           var(--ds-spacing-sm);        /* 6 — -14 */
   --ds-list-gap-unordered-md:           var(--ds-spacing-md);        /* 8 — -16 */
   --ds-list-gap-unordered-lg:           var(--ds-spacing-md);        /* 8 — -19 */
   /* Ordered: columna del marcador = sangría del nivel siguiente (orderedList/indent/level2-*);
      el nivel 3 (level3-*) sale solo al anidar: 20+20, 24+24, 32+32 */
-  --ds-list-ordered-indent-xs:          var(--ds-sizing-xs);         /* 20 — level2-12 */
-  --ds-list-ordered-indent-sm:          var(--ds-sizing-sm);         /* 24 — level2-14 */
-  --ds-list-ordered-indent-md:          var(--ds-sizing-sm);         /* 24 — level2-16 */
-  --ds-list-ordered-indent-lg:          var(--ds-sizing-md);         /* 32 — level2-19 */
+  --ds-list-indent-ordered-xs:          var(--ds-sizing-xs);         /* 20 — level2-12 */
+  --ds-list-indent-ordered-sm:          var(--ds-sizing-sm);         /* 24 — level2-14 */
+  --ds-list-indent-ordered-md:          var(--ds-sizing-sm);         /* 24 — level2-16 */
+  --ds-list-indent-ordered-lg:          var(--ds-sizing-md);         /* 32 — level2-19 */
   /* Checkmark (11/11: tamaño y padding nuevos en Figma) */
-  --ds-list-gap-checkmark:              var(--ds-spacing-sm);        /* 6 — root/gap/checkmarkList */
-  --ds-list-icon-checkmark-padding-ver: var(--ds-spacing-2xs);       /* 2 — iconCheckmark/paddingVer/generic */
-  --ds-list-icon-checkmark-size-xs:     var(--ds-sizing-2xs);        /* 16 — iconCheckmark/size/12 */
-  --ds-list-icon-checkmark-size-sm:     var(--ds-sizing-xs);         /* 20 — /14 */
-  --ds-list-icon-checkmark-size-md:     var(--ds-sizing-sm);         /* 24 — /16 */
-  --ds-list-icon-checkmark-size-lg:     var(--ds-sizing-md);         /* 32 — /19 */
+  --ds-list-gap-checkmark-list:              var(--ds-spacing-sm);        /* 6 — root/gap/checkmarkList */
+  --ds-list-padding-ver-icon-checkmark: var(--ds-spacing-2xs);       /* 2 — iconCheckmark/paddingVer/generic */
+  --ds-list-size-icon-checkmark-xs:     var(--ds-sizing-2xs);        /* 16 — iconCheckmark/size/12 */
+  --ds-list-size-icon-checkmark-sm:     var(--ds-sizing-xs);         /* 20 — /14 */
+  --ds-list-size-icon-checkmark-md:     var(--ds-sizing-sm);         /* 24 — /16 */
+  --ds-list-size-icon-checkmark-lg:     var(--ds-sizing-md);         /* 32 — /19 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1410,9 +1410,9 @@
      Device (regla de tipografía §4). color: default | primary | disabled.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-section-header-text-fg-default:  var(--ds-fg-title-default);  /* #050506 (Figma "Subtle"→default) */
-  --ds-section-header-text-fg-primary:  var(--ds-fg-title-primary);  /* #0A7C92 */
-  --ds-section-header-text-fg-disabled: var(--ds-fg-title-disabled); /* #AAAFB5 */
+  --ds-section-header-fg-text-default:  var(--ds-fg-title-default);  /* #050506 (Figma "Subtle"→default) */
+  --ds-section-header-fg-text-primary:  var(--ds-fg-title-primary);  /* #0A7C92 */
+  --ds-section-header-fg-text-disabled: var(--ds-fg-title-disabled); /* #AAAFB5 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1421,18 +1421,18 @@
      lista + Edit) y el valor Account (DescriptionListAccount) sí van en código.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-descriptionlist-gap:                   var(--ds-spacing-md);        /* 8 — descriptionList/all/gap/generic: label↔valor, valor↔Edit, contenido↔línea, entre pares, título↔lista */
-  --ds-descriptionlist-account-gap:           var(--ds-spacing-xs);        /* 4 — descriptionList/all/gap/account/generic: nombre/importe/número */
-  --ds-descriptionlist-divider-width:         var(--ds-divider-border-width-generic); /* 1 */
-  --ds-descriptionlist-label-fg-generic:      var(--ds-fg-label-default);  /* #050506 */
-  --ds-descriptionlist-valuetext-fg-generic:  var(--ds-fg-body-default);   /* #050506 */
-  --ds-descriptionlist-valuetext-fg-subtle:   var(--ds-fg-body-subtle);    /* #676D76 — Not Filled */
+  --ds-description-list-gap-generic:                   var(--ds-spacing-md);        /* 8 — descriptionList/all/gap/generic: label↔valor, valor↔Edit, contenido↔línea, entre pares, título↔lista */
+  --ds-description-list-gap-account-generic:           var(--ds-spacing-xs);        /* 4 — descriptionList/all/gap/account/generic: nombre/importe/número */
+  --ds-descriptionlist-width-divider:         var(--ds-divider-border-width-generic); /* 1 */
+  --ds-description-list-fg-label-generic:      var(--ds-fg-label-default);  /* #050506 */
+  --ds-description-list-fg-value-text-generic:  var(--ds-fg-body-default);   /* #050506 */
+  --ds-description-list-fg-value-text-subtle:   var(--ds-fg-body-subtle);    /* #676D76 — Not Filled */
   --ds-descriptionlist-divider-color:         var(--ds-divider-border-color-generic); /* separador entre pares (A11y-5: borde del grupo, no <hr> dentro de <dl>) — mismo color que el átomo Divider que instancia Figma */
-  --ds-descriptionlist-accountname-fg-generic:var(--ds-fg-label-default);  /* #050506 */
-  --ds-descriptionlist-iban-fg-generic:       var(--ds-fg-label-subtle);   /* #676D76 */
-  --ds-descriptionlist-icon-account-fg:       var(--ds-fg-icon-warning);   /* descriptionList/all/fg/iconAccount/generic */
-  --ds-descriptionlist-icon-account-size:     var(--ds-sizing-sm);         /* 24 — descriptionList/all/size/iconAccount/generic */
-  --ds-descriptionlist-helpertext-fg-generic: var(--ds-fg-label-subtle);   /* #676D76 */
+  --ds-descriptionlist-fg-accountname-generic:var(--ds-fg-label-default);  /* #050506 */
+  --ds-description-list-fg-iban-generic:       var(--ds-fg-label-subtle);   /* #676D76 */
+  --ds-description-list-fg-icon-account-generic:       var(--ds-fg-icon-warning);   /* descriptionList/all/fg/iconAccount/generic */
+  --ds-description-list-size-icon-account-generic:     var(--ds-sizing-sm);         /* 24 — descriptionList/all/size/iconAccount/generic */
+  --ds-description-list-fg-helper-text-generic: var(--ds-fg-label-subtle);   /* #676D76 */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1443,33 +1443,33 @@
      estos y solo redefinen detailText fg (única diferencia real, por el formato IBAN).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-selector-common-root-bg-generic:            var(--ds-bg-container);       /* #FFFFFF / #606772 dark — corregido 15/09: era bg-default, quedaba más oscuro que el panel flotante (bg-container) que lo contiene en Combobox/Country Picker */
-  --ds-selector-common-root-bg-disabled:           var(--ds-bg-disabled);        /* #F1F2F4 */
-  --ds-selector-common-root-bg-hover:              var(--ds-bg-hover-primary);   /* #BDE8FF */
-  --ds-selector-common-root-border-color-generic:  var(--ds-borderColor-default);/* #676D76 */
-  --ds-selector-common-root-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-selector-common-root-border-color-error:    var(--ds-borderColor-error);
-  --ds-selector-common-root-border-color-selected: var(--ds-borderColor-primary);/* #0A7C92 */
+  --ds-selector-common-bg-generic:            var(--ds-bg-container);       /* #FFFFFF / #606772 dark — corregido 15/09: era bg-default, quedaba más oscuro que el panel flotante (bg-container) que lo contiene en Combobox/Country Picker */
+  --ds-selector-common-bg-disabled:           var(--ds-bg-disabled);        /* #F1F2F4 */
+  --ds-selector-common-bg-hover:              var(--ds-bg-hover-primary);   /* #BDE8FF */
+  --ds-selector-common-border-color-generic:  var(--ds-borderColor-default);/* #676D76 */
+  --ds-selector-common-border-color-disabled: var(--ds-borderColor-disabled);
+  --ds-selector-common-border-color-error:    var(--ds-borderColor-error);
+  --ds-selector-common-border-color-selected: var(--ds-borderColor-primary);/* #0A7C92 */
   --ds-selector-common-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
   --ds-selector-common-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-selector-common-root-border-width-generic:  var(--ds-border-width-sm);    /* 1px — unificado con Figma */
+  --ds-selector-common-border-width-generic:  var(--ds-border-width-sm);    /* 1px — unificado con Figma */
   --ds-selector-common-root-border-width-focus:    var(--ds-border-width-lg); /* selector/all/borderWidth/focus */
-  --ds-selector-common-root-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
-  --ds-selector-common-root-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
-  --ds-selector-common-root-gap:                   var(--ds-spacing-lg);         /* 12px — unificado con Figma */
-  --ds-selector-common-root-padding:               var(--ds-spacing-lg);         /* 12px — selector/root/paddingHor (izquierda) */
-  --ds-selector-common-content-padding:            var(--ds-spacing-xl);         /* 16px — selector/content/padding (arriba, derecha, abajo) — 27/10 */
-  --ds-selector-common-content-gap:                var(--ds-spacing-xl);         /* 16px — selector/content/gap (texto → panel derecho) — 27/10 */
-  --ds-selector-common-focus-area-padding:         var(--ds-spacing-xs);         /* 4px — selector/all/padding/focusArea/generic — 27/10 */
+  --ds-selector-common-border-radius-generic: var(--ds-border-radius-md);   /* 8px */
+  --ds-selector-common-opacity-pressed:       var(--ds-opacity-pressed);    /* 0.8 */
+  --ds-selector-common-gap:                   var(--ds-spacing-lg);         /* 12px — unificado con Figma */
+  --ds-selector-common-padding:               var(--ds-spacing-lg);         /* 12px — selector/root/paddingHor (izquierda) */
+  --ds-selector-common-padding-content:            var(--ds-spacing-xl);         /* 16px — selector/content/padding (arriba, derecha, abajo) — 27/10 */
+  --ds-selector-common-gap-content:                var(--ds-spacing-xl);         /* 16px — selector/content/gap (texto → panel derecho) — 27/10 */
+  --ds-selector-padding-focus-area-generic:         var(--ds-spacing-xs);         /* 4px — selector/all/padding/focusArea/generic — 27/10 */
   /* Color de icono consolidado — la posición (left/right) nunca determina el color.
      Figma: Selector/iconLeft/fg/* == Selector/iconRight/fg/* (mismo valor) → un único par.
      Mismo patrón que Button (--ds-button-icon-fg-*, sin distinción left/right). */
-  --ds-selector-common-icon-fg-primary:            var(--ds-fg-icon-primary);
-  --ds-selector-common-icon-fg-disabled:           var(--ds-fg-icon-disabled);
-  --ds-selector-common-icon-left-size:             var(--ds-sizing-sm);   /* 24 — Left Panel Icon (Figma) */
-  --ds-selector-common-icon-right-size:            var(--ds-sizing-sm);   /* 24 — Right Panel Icon */
-  --ds-selector-common-header-fg-default:          var(--ds-fg-default);
-  --ds-selector-common-header-fg-disabled:         var(--ds-fg-disabled);
+  --ds-selector-common-fg-icon-primary:            var(--ds-fg-icon-primary);
+  --ds-selector-common-fg-icon-disabled:           var(--ds-fg-icon-disabled);
+  --ds-selector-common-size-icon-left:             var(--ds-sizing-sm);   /* 24 — Left Panel Icon (Figma) */
+  --ds-selector-common-size-icon-right:            var(--ds-sizing-sm);   /* 24 — Right Panel Icon */
+  --ds-selector-common-fg-header-default:          var(--ds-fg-default);
+  --ds-selector-common-fg-header-disabled:         var(--ds-fg-disabled);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1480,32 +1480,32 @@
      (24/08, mismo criterio que SectionHeader).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
-  --ds-selector-root-bg-disabled:           var(--ds-selector-common-root-bg-disabled);
-  --ds-selector-root-bg-hover:              var(--ds-selector-common-root-bg-hover);
-  --ds-selector-root-border-color-generic:  var(--ds-selector-common-root-border-color-generic);
-  --ds-selector-root-border-color-disabled: var(--ds-selector-common-root-border-color-disabled);
-  --ds-selector-root-border-color-error:    var(--ds-selector-common-root-border-color-error);
-  --ds-selector-root-border-color-selected: var(--ds-selector-common-root-border-color-selected);
+  --ds-selector-bg-generic:            var(--ds-selector-common-bg-generic);
+  --ds-selector-bg-disabled:           var(--ds-selector-common-bg-disabled);
+  --ds-selector-bg-hover:              var(--ds-selector-common-bg-hover);
+  --ds-selector-border-color-generic:  var(--ds-selector-common-border-color-generic);
+  --ds-selector-border-color-disabled: var(--ds-selector-common-border-color-disabled);
+  --ds-selector-border-color-error:    var(--ds-selector-common-border-color-error);
+  --ds-selector-border-color-selected: var(--ds-selector-common-border-color-selected);
   --ds-selector-root-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
   --ds-selector-root-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
-  --ds-selector-root-border-width-generic:  var(--ds-selector-common-root-border-width-generic);
+  --ds-selector-border-width-generic:  var(--ds-selector-common-border-width-generic);
   --ds-selector-root-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
-  --ds-selector-root-border-radius-generic: var(--ds-selector-common-root-border-radius-generic);
-  --ds-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
-  --ds-selector-root-gap:                   var(--ds-selector-common-root-gap);
-  --ds-selector-root-padding:               var(--ds-selector-common-root-padding);
-  --ds-selector-content-padding:            var(--ds-selector-common-content-padding);
-  --ds-selector-content-gap:                var(--ds-selector-common-content-gap);
-  --ds-selector-focus-area-padding:         var(--ds-selector-common-focus-area-padding);
+  --ds-selector-border-radius-generic: var(--ds-selector-common-border-radius-generic);
+  --ds-selector-opacity-pressed:       var(--ds-selector-common-opacity-pressed);
+  --ds-selector-gap:                   var(--ds-selector-common-gap);
+  --ds-selector-padding:               var(--ds-selector-common-padding);
+  --ds-selector-padding-content:            var(--ds-selector-common-padding-content);
+  --ds-selector-gap-content:                var(--ds-selector-common-gap-content);
+  --ds-selector-padding-focus-area:         var(--ds-selector-padding-focus-area-generic);
 
-  --ds-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
-  --ds-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
-  --ds-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
-  --ds-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
+  --ds-selector-fg-icon-primary:            var(--ds-selector-common-fg-icon-primary);
+  --ds-selector-fg-icon-disabled:           var(--ds-selector-common-fg-icon-disabled);
+  --ds-selector-size-icon-left:             var(--ds-selector-common-size-icon-left);
+  --ds-selector-size-icon-right:            var(--ds-selector-common-size-icon-right);
 
-  --ds-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
-  --ds-selector-header-fg-disabled:         var(--ds-selector-common-header-fg-disabled);
+  --ds-selector-fg-header-default:          var(--ds-selector-common-fg-header-default);
+  --ds-selector-fg-header-disabled:         var(--ds-selector-common-fg-header-disabled);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1514,32 +1514,32 @@
      Comparte COMMON en su totalidad para root.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-account-selector-root-bg-generic:            var(--ds-selector-common-root-bg-generic);
-  --ds-account-selector-root-bg-disabled:           var(--ds-selector-common-root-bg-disabled);
-  --ds-account-selector-root-bg-hover:              var(--ds-selector-common-root-bg-hover);
-  --ds-account-selector-root-border-color-generic:  var(--ds-selector-common-root-border-color-generic);
-  --ds-account-selector-root-border-color-disabled: var(--ds-selector-common-root-border-color-disabled);
-  --ds-account-selector-root-border-color-error:    var(--ds-selector-common-root-border-color-error);
-  --ds-account-selector-root-border-color-selected: var(--ds-selector-common-root-border-color-selected);
-  --ds-account-selector-root-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
-  --ds-account-selector-root-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
-  --ds-account-selector-root-border-width-generic:  var(--ds-selector-common-root-border-width-generic);
-  --ds-account-selector-root-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
-  --ds-account-selector-root-border-radius-generic: var(--ds-selector-common-root-border-radius-generic);
-  --ds-account-selector-root-opacity-pressed:       var(--ds-selector-common-root-opacity-pressed);
-  --ds-account-selector-root-gap:                   var(--ds-selector-common-root-gap);
-  --ds-account-selector-root-padding:               var(--ds-selector-common-root-padding);
-  --ds-account-selector-content-padding:            var(--ds-selector-common-content-padding);
-  --ds-account-selector-content-gap:                var(--ds-selector-common-content-gap);
-  --ds-account-selector-focus-area-padding:         var(--ds-selector-common-focus-area-padding);
+  --ds-account-selector-bg-generic:            var(--ds-selector-common-bg-generic);
+  --ds-account-selector-bg-disabled:           var(--ds-selector-common-bg-disabled);
+  --ds-account-selector-bg-hover:              var(--ds-selector-common-bg-hover);
+  --ds-account-selector-border-color-generic:  var(--ds-selector-common-border-color-generic);
+  --ds-account-selector-border-color-disabled: var(--ds-selector-common-border-color-disabled);
+  --ds-account-selector-border-color-error:    var(--ds-selector-common-border-color-error);
+  --ds-account-selector-border-color-selected: var(--ds-selector-common-border-color-selected);
+  --ds-account-selector-border-color-focus-outer: var(--ds-selector-common-root-border-color-focus-outer);
+  --ds-account-selector-border-color-focus-inner: var(--ds-selector-common-root-border-color-focus-inner);
+  --ds-account-selector-border-width-generic:  var(--ds-selector-common-border-width-generic);
+  --ds-account-selector-border-width-focus:    var(--ds-selector-common-root-border-width-focus);
+  --ds-account-selector-border-radius-generic: var(--ds-selector-common-border-radius-generic);
+  --ds-account-selector-opacity-pressed:       var(--ds-selector-common-opacity-pressed);
+  --ds-account-selector-gap:                   var(--ds-selector-common-gap);
+  --ds-account-selector-padding:               var(--ds-selector-common-padding);
+  --ds-account-selector-padding-content:            var(--ds-selector-common-padding-content);
+  --ds-account-selector-gap-content:                var(--ds-selector-common-gap-content);
+  --ds-account-selector-padding-focus-area:         var(--ds-selector-padding-focus-area-generic);
 
-  --ds-account-selector-icon-fg-primary:            var(--ds-selector-common-icon-fg-primary);
-  --ds-account-selector-icon-fg-disabled:           var(--ds-selector-common-icon-fg-disabled);
-  --ds-account-selector-icon-left-size:             var(--ds-selector-common-icon-left-size);
-  --ds-account-selector-icon-right-size:            var(--ds-selector-common-icon-right-size);
+  --ds-account-selector-fg-icon-primary:            var(--ds-selector-common-fg-icon-primary);
+  --ds-account-selector-fg-icon-disabled:           var(--ds-selector-common-fg-icon-disabled);
+  --ds-account-selector-size-icon-left:             var(--ds-selector-common-size-icon-left);
+  --ds-account-selector-size-icon-right:            var(--ds-selector-common-size-icon-right);
 
-  --ds-account-selector-header-fg-default:          var(--ds-selector-common-header-fg-default);
-  --ds-account-selector-header-fg-disabled:         var(--ds-selector-common-header-fg-disabled);
+  --ds-account-selector-fg-header-default:          var(--ds-selector-common-fg-header-default);
+  --ds-account-selector-fg-header-disabled:         var(--ds-selector-common-fg-header-disabled);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1561,61 +1561,61 @@
      ══════════════════════════════════════════════════════════════════════════ */
 
   /* Root — geometría, foco y textos compartidos (12/11: alineado con Figma) */
-  --ds-pagination-container-size:            var(--ds-sizing-md);          /* root/size/generic — círculo de 32 */
-  --ds-pagination-item-radius:               var(--ds-border-radius-circle); /* root/borderRadius/generic */
-  --ds-pagination-root-focus-area:           var(--ds-spacing-xs);         /* root/focusArea/padding (4) — alrededor de cada Part, en todos los estados: 8 visibles entre círculos, sin gap propio */
-  --ds-pagination-number-font-size:          var(--ds-fontSize-label-sm);  /* 12/11: label/sm (14) en Figma y código (antes 12 en Figma, 16 en código) */
-  --ds-pagination-number-line-height:        var(--ds-lineHeight-label-sm);
+  --ds-pagination-size-container:            var(--ds-sizing-md);          /* root/size/generic — círculo de 32 */
+  --ds-pagination-border-radius-item:               var(--ds-border-radius-circle); /* root/borderRadius/generic */
+  --ds-pagination-focus-area:           var(--ds-spacing-xs);         /* root/focusArea/padding (4) — alrededor de cada Part, en todos los estados: 8 visibles entre círculos, sin gap propio */
+  --ds-pagination-font-size-number:          var(--ds-fontSize-label-sm);  /* 12/11: label/sm (14) en Figma y código (antes 12 en Figma, 16 en código) */
+  --ds-pagination-line-height-number:        var(--ds-lineHeight-label-sm);
 
-  --ds-pagination-root-border-width-focus:   var(--ds-border-width-lg);    /* root/borderWidth/focus — anillo 2 + 2 por fuera, dentro del área de foco */
-  --ds-pagination-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-pagination-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-pagination-root-text-fg-selected:     var(--ds-fg-label-onColor);   /* root/text/fg/selectedPage — blanco sobre bg/surface/primary|secondary */
-  --ds-pagination-root-text-fg-disabled:     var(--ds-fg-label-disabled);
+  --ds-pagination-border-width-focus:   var(--ds-border-width-lg);    /* root/borderWidth/focus — anillo 2 + 2 por fuera, dentro del área de foco */
+  --ds-pagination-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-pagination-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-pagination-fg-text-selected:     var(--ds-fg-label-onColor);   /* root/text/fg/selectedPage — blanco sobre bg/surface/primary|secondary */
+  --ds-pagination-fg-text-disabled:     var(--ds-fg-label-disabled);
 
   /* Previous — flecha izquierda */
-  --ds-pagination-previous-fg-default:       var(--ds-fg-icon-primary);
-  --ds-pagination-previous-fg-secondary:     var(--ds-fg-icon-secondary);
-  --ds-pagination-previous-fg-disabled:      var(--ds-fg-icon-disabled);
-  --ds-pagination-previous-fg-hover:         var(--ds-fg-icon-onColor);    /* blanco sobre relleno */
-  --ds-pagination-previous-bg-hover-default:   var(--ds-bg-primary);
-  --ds-pagination-previous-bg-hover-secondary: var(--ds-bg-secondary);
-  --ds-pagination-previous-opacity-pressed:  var(--ds-opacity-pressed);
+  --ds-pagination-fg-previous-default:       var(--ds-fg-icon-primary);
+  --ds-pagination-fg-previous-secondary:     var(--ds-fg-icon-secondary);
+  --ds-pagination-fg-previous-disabled:      var(--ds-fg-icon-disabled);
+  --ds-pagination-fg-previous-hover:         var(--ds-fg-icon-onColor);    /* blanco sobre relleno */
+  --ds-pagination-bg-previous-hover-default:   var(--ds-bg-primary);
+  --ds-pagination-bg-previous-hover-secondary: var(--ds-bg-secondary);
+  --ds-pagination-opacity-previous-pressed:  var(--ds-opacity-pressed);
 
   /* Next — flecha derecha (idéntico a previous, se mantiene separado como en input iconLeft/Right) */
-  --ds-pagination-next-fg-default:           var(--ds-fg-icon-primary);
-  --ds-pagination-next-fg-secondary:         var(--ds-fg-icon-secondary);
-  --ds-pagination-next-fg-disabled:          var(--ds-fg-icon-disabled);
-  --ds-pagination-next-fg-hover:             var(--ds-fg-icon-onColor);
-  --ds-pagination-next-bg-hover-default:       var(--ds-bg-primary);
-  --ds-pagination-next-bg-hover-secondary:     var(--ds-bg-secondary);
-  --ds-pagination-next-opacity-pressed:      var(--ds-opacity-pressed);
+  --ds-pagination-fg-next-default:           var(--ds-fg-icon-primary);
+  --ds-pagination-fg-next-secondary:         var(--ds-fg-icon-secondary);
+  --ds-pagination-fg-next-disabled:          var(--ds-fg-icon-disabled);
+  --ds-pagination-fg-next-hover:             var(--ds-fg-icon-onColor);
+  --ds-pagination-bg-next-hover-default:       var(--ds-bg-primary);
+  --ds-pagination-bg-next-hover-secondary:     var(--ds-bg-secondary);
+  --ds-pagination-opacity-next-pressed:      var(--ds-opacity-pressed);
 
   /* Dots — el "…" de truncamiento (usa tokens de label, no de icono) */
-  --ds-pagination-dots-fg-default:           var(--ds-fg-label-default);
-  --ds-pagination-dots-fg-secondary:         var(--ds-fg-label-secondary);
-  --ds-pagination-dots-fg-disabled:          var(--ds-fg-label-disabled);
-  --ds-pagination-dots-fg-hover:             var(--ds-fg-icon-onColor);    /* fg/icon/onColor — 10/11: en Figma apuntaba a icon/fg/onColor, variable borrada; re-enlazado a Mode */
-  --ds-pagination-dots-bg-hover-default:       var(--ds-bg-primary);
-  --ds-pagination-dots-bg-hover-secondary:     var(--ds-bg-secondary);
-  --ds-pagination-dots-opacity-pressed:      var(--ds-opacity-pressed);
+  --ds-pagination-fg-dots-default:           var(--ds-fg-label-default);
+  --ds-pagination-fg-dots-secondary:         var(--ds-fg-label-secondary);
+  --ds-pagination-fg-dots-disabled:          var(--ds-fg-label-disabled);
+  --ds-pagination-fg-dots-hover:             var(--ds-fg-icon-onColor);    /* fg/icon/onColor — 10/11: en Figma apuntaba a icon/fg/onColor, variable borrada; re-enlazado a Mode */
+  --ds-pagination-bg-dots-hover-default:       var(--ds-bg-primary);
+  --ds-pagination-bg-dots-hover-secondary:     var(--ds-bg-secondary);
+  --ds-pagination-opacity-dots-pressed:      var(--ds-opacity-pressed);
 
   /* SelectedPage — círculo relleno de la página actual (texto vía root/text/fg/selected) */
-  --ds-pagination-selected-bg-default:       var(--ds-bg-primary);
-  --ds-pagination-selected-bg-secondary:     var(--ds-bg-secondary);
-  --ds-pagination-selected-bg-disabled:      var(--ds-bg-disabled);
-  --ds-pagination-selected-bg-hover:         var(--ds-opacity-hover-default);
-  --ds-pagination-selected-opacity-pressed:  var(--ds-opacity-pressed);
+  --ds-pagination-bg-selected-default:       var(--ds-bg-primary);
+  --ds-pagination-bg-selected-secondary:     var(--ds-bg-secondary);
+  --ds-pagination-bg-selected-page-disabled:      var(--ds-bg-disabled);
+  --ds-pagination-bg-selected-page-hover:         var(--ds-opacity-hover-default);
+  --ds-pagination-opacity-selected-pressed:  var(--ds-opacity-pressed);
 
   /* ActivePage — número subrayado (resto de páginas) */
-  --ds-pagination-active-fg-default:         var(--ds-fg-label-default);
-  --ds-pagination-active-fg-secondary:       var(--ds-fg-label-secondary);
-  --ds-pagination-active-fg-hover:           var(--ds-fg-label-onColor);   /* blanco sobre relleno hover — corregido 11/08, bg-hover-primary/secondary no invierten */
-  --ds-pagination-active-fg-disabled:        var(--ds-fg-label-disabled);
-  --ds-pagination-active-bg-hover-default:     var(--ds-bg-primary);
-  --ds-pagination-active-bg-hover-secondary:   var(--ds-bg-secondary);
-  --ds-pagination-active-opacity-pressed:    var(--ds-opacity-pressed);
-  --ds-pagination-active-border-bottom-width: var(--ds-border-width-sm);   /* activePage/borderBottomWidth/generic — grosor del subrayado */
+  --ds-pagination-fg-active-page-default:         var(--ds-fg-label-default);
+  --ds-pagination-fg-active-page-secondary:       var(--ds-fg-label-secondary);
+  --ds-pagination-fg-active-page-hover:           var(--ds-fg-label-onColor);   /* blanco sobre relleno hover — corregido 11/08, bg-hover-primary/secondary no invierten */
+  --ds-pagination-fg-active-page-disabled:        var(--ds-fg-label-disabled);
+  --ds-pagination-bg-active-hover-default:     var(--ds-bg-primary);
+  --ds-pagination-bg-active-hover-secondary:   var(--ds-bg-secondary);
+  --ds-pagination-opacity-active-pressed:    var(--ds-opacity-pressed);
+  --ds-pagination-border-bottom-width-active: var(--ds-border-width-sm);   /* activePage/borderBottomWidth/generic — grosor del subrayado */
   /* El subrayado es text-decoration del número (Figma: texto con Underline, 12/11 —
      antes una instancia de Link): toma el color del texto en cada estado. */
 
@@ -1629,19 +1629,19 @@
      tomaban prestados los de Input/InputCommon. Solo color y la separación
      INTERNA de cada átomo; la tipografía va directa de Device (regla §5) y la
      separación ENTRE átomos la pone cada consumidor (--ds-input-*-gap,
-     --ds-choice-group-root-gap / -validation-gap).
+     --ds-choice-group-gap-generic / -validation-gap).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-field-label-fg-generic:          var(--ds-fg-label-default);   /* fieldLabel/all/fg/text/generic */
-  --ds-field-label-fg-disabled:         var(--ds-fg-label-disabled);  /* fieldLabel/all/fg/text/disabled */
-  --ds-field-label-required-fg:         var(--ds-fg-label-primary);   /* fieldLabel/all/fg/required/generic — asterisco: color de marca, rojo = error */
-  --ds-field-label-gap:                 var(--ds-spacing-2xs);        /* fieldLabel/all/gap/generic — label → asterisco */
+  --ds-field-label-fg-text-generic:          var(--ds-fg-label-default);   /* fieldLabel/all/fg/text/generic */
+  --ds-field-label-fg-text-disabled:         var(--ds-fg-label-disabled);  /* fieldLabel/all/fg/text/disabled */
+  --ds-field-label-fg-required-generic:         var(--ds-fg-label-primary);   /* fieldLabel/all/fg/required/generic — asterisco: color de marca, rojo = error */
+  --ds-field-label-gap-generic:                 var(--ds-spacing-2xs);        /* fieldLabel/all/gap/generic — label → asterisco */
 
-  --ds-helper-text-fg-generic:          var(--ds-fg-body-subtle);     /* helperText/all/fg/text/generic */
-  --ds-helper-text-fg-disabled:         var(--ds-fg-body-disabled);   /* helperText/all/fg/text/disabled */
+  --ds-helper-text-fg-text-generic:          var(--ds-fg-body-subtle);     /* helperText/all/fg/text/generic */
+  --ds-helper-text-fg-text-disabled:         var(--ds-fg-body-disabled);   /* helperText/all/fg/text/disabled */
 
-  --ds-validation-message-fg-text:      var(--ds-fg-body-default);    /* validationMessage/all/fg/text/generic */
-  --ds-validation-message-fg-icon:      var(--ds-fg-icon-error);      /* validationMessage/all/fg/icon/generic */
-  --ds-validation-message-gap:          var(--ds-spacing-md);         /* validationMessage/all/gap/generic — icono → texto */
+  --ds-validation-message-fg-text-generic:      var(--ds-fg-body-default);    /* validationMessage/all/fg/text/generic */
+  --ds-validation-message-fg-icon-generic:      var(--ds-fg-icon-error);      /* validationMessage/all/fg/icon/generic */
+  --ds-validation-message-gap-generic:          var(--ds-spacing-md);         /* validationMessage/all/gap/generic — icono → texto */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1650,10 +1650,10 @@
      (fontSize/headline/*, fontFamily/default, fontWeight/bold) se consume
      directa de Device — sin capa de Componente (regla tipografía, 22/07).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-headline-fg-default:   var(--ds-fg-headline-default);   /* #050506 */
-  --ds-headline-fg-primary:   var(--ds-fg-headline-primary);   /* #0A7C92 */
-  --ds-headline-fg-secondary: var(--ds-fg-headline-secondary); /* #D61E74 */
-  --ds-headline-fg-onColor:   var(--ds-fg-headline-onColor);   /* #FFFFFF */
+  --ds-headline-fg-text-default:   var(--ds-fg-headline-default);   /* #050506 */
+  --ds-headline-fg-text-primary:   var(--ds-fg-headline-primary);   /* #0A7C92 */
+  --ds-headline-fg-text-secondary: var(--ds-fg-headline-secondary); /* #D61E74 */
+  --ds-headline-fg-text-on-color:   var(--ds-fg-headline-onColor);   /* #FFFFFF */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1666,9 +1666,9 @@
      ══════════════════════════════════════════════════════════════════════════ */
   /* CellCommon — compartido Header/Cell/More */
   --ds-cell-common-gap:                         var(--ds-spacing-xs);          /* 4 */
-  --ds-cell-common-icon-size:                   var(--ds-sizing-2xs);          /* 16 — icono de orden */
-  --ds-cell-common-icon-fg:                     var(--ds-borderColor-primary); /* #0A7C92 */
-  --ds-cell-common-text-fg:                     var(--ds-fg-label-default);    /* #050506 */
+  --ds-cell-common-size-icon:                   var(--ds-sizing-2xs);          /* 16 — icono de orden */
+  --ds-cell-common-fg-icon:                     var(--ds-borderColor-primary); /* #0A7C92 */
+  --ds-cell-common-fg-text:                     var(--ds-fg-label-default);    /* #050506 */
   --ds-cell-common-padding-hor:                 var(--ds-spacing-sm);          /* 6 */
   --ds-cell-common-padding-ver:                 var(--ds-spacing-xs);          /* 4 */
   --ds-cell-common-bg-on-surface:               var(--ds-bg-container);        /* #FFFFFF — superficie de tarjeta/panel elevada, resuelto 11/08 §10 */
@@ -1676,9 +1676,9 @@
   --ds-cell-common-border-bottom-color-primary: var(--ds-borderColor-primary); /* #0A7C92 — orden columna / hover */
   --ds-cell-common-border-bottom-color-subtle:  var(--ds-borderColor-subtle);  /* #F1F2F4 — divisor por defecto */
   --ds-cell-common-border-bottom-width:         var(--ds-border-width-sm);     /* 1 — borderWidth/sm */
-  --ds-cell-common-focus-inner:                 var(--ds-borderColor-focus-inner); /* botón de orden de CellHeader (A11y-3) */
-  --ds-cell-common-focus-outer:                 var(--ds-borderColor-focus-outer);
-  --ds-cell-common-focus-width:                 var(--ds-border-width-lg);     /* 2 — table/all/borderWidth/cellCommon/focus (27/10) */
+  --ds-cell-common-border-color-focus-inner:                 var(--ds-borderColor-focus-inner); /* botón de orden de CellHeader (A11y-3) */
+  --ds-cell-common-border-color-focus-outer:                 var(--ds-borderColor-focus-outer);
+  --ds-cell-common-border-width-focus:                 var(--ds-border-width-lg);     /* 2 — table/all/borderWidth/cellCommon/focus (27/10) */
   --ds-cell-common-bg-mix-hover:                var(--ds-opacity-hover-default); /* velo — table/all/bgMix/cellCommon/hover: cabecera ordenable y More */
   --ds-cell-common-opacity-pressed:             var(--ds-opacity-pressed);     /* 0.8 — table/all/opacity/cellCommon/pressed */
   /* Específico — NO fusionar con Common */
@@ -1701,17 +1701,17 @@
      Shadow es Effect Style de Figma ("Snackbar/Shadow"), no una Variable de
      color — valor literal, mismo tratamiento que --ds-shadow-md/lg de Button.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-snackbar-root-bg-generic:          var(--ds-bg-inverse);        /* #050506 light / #FFFFFF dark */
-  --ds-snackbar-text-fg-generic:          var(--ds-fg-body-inverse);   /* #FFFFFF light / #050506 dark — snackbar/all/fg/text/generic alias real en Figma (NO fg/label) */
-  --ds-snackbar-root-border-radius:       var(--ds-border-radius-md);  /* 8 */
-  --ds-snackbar-root-padding-hor:         var(--ds-spacing-lg);        /* 12 */
-  --ds-snackbar-root-padding-ver-single:  var(--ds-spacing-sm);        /* 6 */
-  --ds-snackbar-root-padding-ver-multi:   var(--ds-spacing-lg);        /* 12 */
-  --ds-snackbar-root-gap-single:          var(--ds-spacing-sm);        /* 6 */
-  --ds-snackbar-action-focus-inner:       var(--ds-borderColor-focus-inner-inverse); /* snackbar/all/borderColor/action/focus-inner — negro light / blanco dark (27/10) */
-  --ds-snackbar-action-focus-outer:       var(--ds-borderColor-focus-outer-inverse); /* snackbar/all/borderColor/action/focus-outer — info/200 light / info/700 dark: el foco del sistema no contrasta sobre el fondo invertido */
+  --ds-snackbar-bg-generic:          var(--ds-bg-inverse);        /* #050506 light / #FFFFFF dark */
+  --ds-snackbar-fg-text-generic:          var(--ds-fg-body-inverse);   /* #FFFFFF light / #050506 dark — snackbar/all/fg/text/generic alias real en Figma (NO fg/label) */
+  --ds-snackbar-border-radius:       var(--ds-border-radius-md);  /* 8 */
+  --ds-snackbar-padding-hor:         var(--ds-spacing-lg);        /* 12 */
+  --ds-snackbar-padding-ver-single-line:  var(--ds-spacing-sm);        /* 6 */
+  --ds-snackbar-padding-ver-multi:   var(--ds-spacing-lg);        /* 12 */
+  --ds-snackbar-gap-single:          var(--ds-spacing-sm);        /* 6 */
+  --ds-snackbar-border-color-action-focus-inner:       var(--ds-borderColor-focus-inner-inverse); /* snackbar/all/borderColor/action/focus-inner — negro light / blanco dark (27/10) */
+  --ds-snackbar-border-color-action-focus-outer:       var(--ds-borderColor-focus-outer-inverse); /* snackbar/all/borderColor/action/focus-outer — info/200 light / info/700 dark: el foco del sistema no contrasta sobre el fondo invertido */
   --ds-dialog-shadow:                     0 24px 24px 0 var(--ds-opacity-shadow-umbra-strong), 0 0 24px 0 var(--ds-opacity-shadow-ambient); /* Effect Style Dialog/DialogShadow (Dialog, DialogSimple, ErrorAndEmptyState) */
-  --ds-snackbar-root-shadow:              0 3px 5px -1px var(--ds-opacity-shadow-umbra), 0 1px 18px 0 var(--ds-opacity-shadow-ambient), 0 6px 10px 1px var(--ds-opacity-shadow-penumbra);
+  --ds-snackbar-shadow:              0 3px 5px -1px var(--ds-opacity-shadow-umbra), 0 1px 18px 0 var(--ds-opacity-shadow-ambient), 0 6px 10px 1px var(--ds-opacity-shadow-penumbra);
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1755,64 +1755,64 @@
      único stroke sólido en borderColor/subtle.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  --ds-dialog-body-text-fg-generic:            var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
-  --ds-dialog-empty-state-body-text-fg-generic:var(--ds-fg-body-subtle);    /* #676D76 */
-  --ds-dialog-empty-state-padding-generic:     var(--ds-spacing-xl);
-  --ds-dialog-empty-state-content-gap:         var(--ds-spacing-xl);       /* imagen → texto, 16 en las dos variantes (27/10) */
-  --ds-dialog-empty-state-text-gap:            var(--ds-spacing-md);       /* título → párrafo */
-  --ds-dialog-empty-state-text-padding-bottom-full-screen: var(--ds-spacing-2xl); /* 24 */
+  --ds-dialog-fg-body-text-generic:            var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
+  --ds-dialog-fg-empty-state-body-text-generic:var(--ds-fg-body-subtle);    /* #676D76 */
+  --ds-dialog-padding-empty-state-generic:     var(--ds-spacing-xl);
+  --ds-dialog-gap-empty-state-content:         var(--ds-spacing-xl);       /* imagen → texto, 16 en las dos variantes (27/10) */
+  --ds-dialog-gap-empty-state-text:            var(--ds-spacing-md);       /* título → párrafo */
+  --ds-dialog-padding-bottom-empty-state-text-full-screen: var(--ds-spacing-2xl); /* 24 */
 
   /* Header — bg */
-  --ds-dialog-header-bg-default:               var(--ds-bg-container);   /* 11/11: superficie flotante → bg/container (Figma dialog/all/bg/header/default) */
-  --ds-dialog-header-bg-primary:               var(--ds-bg-primary);       /* #0A7C92 fijo */
-  --ds-dialog-header-bg-on-primary:            var(--ds-bg-onColor);       /* #FFFFFF fijo */
-  --ds-dialog-header-bg-secondary:             var(--ds-bg-secondary);     /* #D61E74 / #EE8FB9 dark */
-  --ds-dialog-header-bg-tertiary:               var(--ds-bg-tertiary);     /* #8B619E / #CAABD7 dark */
+  --ds-dialog-bg-header-default:               var(--ds-bg-container);   /* 11/11: superficie flotante → bg/container (Figma dialog/all/bg/header/default) */
+  --ds-dialog-bg-header-primary:               var(--ds-bg-primary);       /* #0A7C92 fijo */
+  --ds-dialog-bg-header-on-primary:            var(--ds-bg-onColor);       /* #FFFFFF fijo */
+  --ds-dialog-bg-header-secondary:             var(--ds-bg-secondary);     /* #D61E74 / #EE8FB9 dark */
+  --ds-dialog-bg-header-tertiary:               var(--ds-bg-tertiary);     /* #8B619E / #CAABD7 dark */
   /* Header — title */
-  --ds-dialog-header-title-fg-default:         var(--ds-fg-title-default); /* pairs con bg-default — invierte */
-  --ds-dialog-header-title-fg-primary:         var(--ds-fg-title-onColor); /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-title-fg-on-primary:      var(--ds-bg-primary); /* 12/11: Figma → bg/surface/primary (teal fijo en los dos modos; antes fg/title/onSurface/static-primary, borrado) */
-  --ds-dialog-header-title-fg-secondary:       var(--ds-fg-title-inverse); /* pairs con bg-secondary — invierte */
-  --ds-dialog-header-title-fg-tertiary:        var(--ds-fg-title-inverse); /* pairs con bg-tertiary — corregido 24/08, antes fg-title-default */
+  --ds-dialog-fg-header-title-default:         var(--ds-fg-title-default); /* pairs con bg-default — invierte */
+  --ds-dialog-fg-header-title-primary:         var(--ds-fg-title-onColor); /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
+  --ds-dialog-fg-header-title-on-primary:      var(--ds-bg-primary); /* 12/11: Figma → bg/surface/primary (teal fijo en los dos modos; antes fg/title/onSurface/static-primary, borrado) */
+  --ds-dialog-fg-header-title-secondary:       var(--ds-fg-title-inverse); /* pairs con bg-secondary — invierte */
+  --ds-dialog-fg-header-title-tertiary:        var(--ds-fg-title-inverse); /* pairs con bg-tertiary — corregido 24/08, antes fg-title-default */
   /* Header — icon */
-  --ds-dialog-header-icon-fg-default:          var(--ds-fg-icon-default);  /* pairs con bg-default — corregido 24/08, antes fg-icon-inverse (blanco sobre blanco en light); luego se descubrió además mal enlazado a la capa de Primary en Figma — ver token-architecture.md */
-  --ds-dialog-header-icon-fg-primary:          var(--ds-fg-icon-onColor);  /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
-  --ds-dialog-header-icon-fg-on-primary:       var(--ds-bg-primary);  /* 12/11: Figma → bg/surface/primary (antes fg/icon/onSurface/static-primary, borrado) */
-  --ds-dialog-header-icon-fg-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
-  --ds-dialog-header-icon-fg-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
+  --ds-dialog-fg-header-icon-default:          var(--ds-fg-icon-default);  /* pairs con bg-default — corregido 24/08, antes fg-icon-inverse (blanco sobre blanco en light); luego se descubrió además mal enlazado a la capa de Primary en Figma — ver token-architecture.md */
+  --ds-dialog-fg-header-icon-primary:          var(--ds-fg-icon-onColor);  /* pairs con bg-primary — fijo blanco (Figma: generic→primary, 24/08) */
+  --ds-dialog-fg-header-icon-on-primary:       var(--ds-bg-primary);  /* 12/11: Figma → bg/surface/primary (antes fg/icon/onSurface/static-primary, borrado) */
+  --ds-dialog-fg-header-icon-secondary:        var(--ds-fg-icon-inverse);  /* pairs con bg-secondary — invierte */
+  --ds-dialog-fg-header-icon-tertiary:         var(--ds-fg-icon-inverse);  /* pairs con bg-tertiary — corregido 24/08, antes fg-icon-default */
   /* Header — foco de Back/Close (Icon Button re-tematizado): el anillo contrasta con el fondo de cada header (27/10) */
-  --ds-dialog-header-icon-focus-inner-default:    var(--ds-borderColor-focus-inner);
-  --ds-dialog-header-icon-focus-outer-default:    var(--ds-borderColor-focus-outer);
-  --ds-dialog-header-icon-focus-inner-primary:    var(--ds-borderColor-focus-inner-onColor);
-  --ds-dialog-header-icon-focus-outer-primary:    var(--ds-borderColor-focus-outer-onColor);
-  --ds-dialog-header-icon-focus-inner-on-primary: var(--ds-borderColor-focus-inner-onLight);
-  --ds-dialog-header-icon-focus-outer-on-primary: var(--ds-borderColor-focus-outer-onLight);
-  --ds-dialog-header-icon-focus-inner-secondary:  var(--ds-borderColor-focus-inner-onColor);
-  --ds-dialog-header-icon-focus-outer-secondary:  var(--ds-borderColor-focus-outer-onColor);
-  --ds-dialog-header-icon-focus-inner-tertiary:   var(--ds-borderColor-focus-inner-onColor);
-  --ds-dialog-header-icon-focus-outer-tertiary:   var(--ds-borderColor-focus-outer-onColor);
+  --ds-dialog-border-color-header-icon-focus-inner-default:    var(--ds-borderColor-focus-inner);
+  --ds-dialog-border-color-header-icon-focus-outer-default:    var(--ds-borderColor-focus-outer);
+  --ds-dialog-border-color-header-icon-focus-inner-primary:    var(--ds-borderColor-focus-inner-onColor);
+  --ds-dialog-border-color-header-icon-focus-outer-primary:    var(--ds-borderColor-focus-outer-onColor);
+  --ds-dialog-border-color-header-icon-focus-inner-on-primary: var(--ds-borderColor-focus-inner-onLight);
+  --ds-dialog-border-color-header-icon-focus-outer-on-primary: var(--ds-borderColor-focus-outer-onLight);
+  --ds-dialog-border-color-header-icon-focus-inner-secondary:  var(--ds-borderColor-focus-inner-onColor);
+  --ds-dialog-border-color-header-icon-focus-outer-secondary:  var(--ds-borderColor-focus-outer-onColor);
+  --ds-dialog-border-color-header-icon-focus-inner-tertiary:   var(--ds-borderColor-focus-inner-onColor);
+  --ds-dialog-border-color-header-icon-focus-outer-tertiary:   var(--ds-borderColor-focus-outer-onColor);
   /* Header — layout */
-  --ds-dialog-header-padding-hor:              var(--ds-spacing-2xs);      /* 2 — 27/10: con el área de foco de 4 del Icon Button, el círculo queda a 6 del borde */
-  --ds-dialog-header-padding-ver-regular:      var(--ds-spacing-xs);       /* 4 + Icon Button Medium 52 + 4 = 60 (27/10) */
-  --ds-dialog-header-padding-ver-small:        var(--ds-spacing-2xs);      /* 2 + Icon Button Small 40 + 2 = 44 (27/10) */
+  --ds-dialog-padding-hor-header:              var(--ds-spacing-2xs);      /* 2 — 27/10: con el área de foco de 4 del Icon Button, el círculo queda a 6 del borde */
+  --ds-dialog-padding-ver-header-regular:      var(--ds-spacing-xs);       /* 4 + Icon Button Medium 52 + 4 = 60 (27/10) */
+  --ds-dialog-padding-ver-header-small:        var(--ds-spacing-2xs);      /* 2 + Icon Button Small 40 + 2 = 44 (27/10) */
 
   /* Root / Scrim */
-  --ds-dialog-root-bg-generic:                 var(--ds-bg-container);   /* 11/11: bg/container (Figma dialog/all/bg/default) */
-  --ds-dialog-root-gap-generic:                var(--ds-spacing-lg);                       /* spacing/lg — sync 26/08, existía en Figma sin sincronizar; antes el código tomaba prestado simple-padding-ver para esto */
-  --ds-dialog-root-padding-hor-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingHor, es compartido (Dialog family), no exclusivo de DialogSimple */
-  --ds-dialog-root-padding-ver-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingVer, idem */
-  --ds-dialog-root-border-radius-generic:      var(--ds-border-radius-sm);                        /* borderRadius/sm — renombrado 26/08 desde simple/borderRadius, compartido (Dialog + DialogSimple) */
-  --ds-dialog-control-area-padding-generic:    var(--ds-spacing-xl);                       /* spacing/xl — nuevo 26/08: en Figma el padding del Control Area (botones del Dialog) no tenía variable, iba suelto; un solo token para los 4 lados (los 4 valen igual, sin separar Hor/Ver innecesariamente) */
-  --ds-dialog-scrim-bg-generic:                var(--ds-bg-overlay);       /* rgba negro 30% light / blanco 30% dark */
+  --ds-dialog-bg-default:                 var(--ds-bg-container);   /* 11/11: bg/container (Figma dialog/all/bg/default) */
+  --ds-dialog-gap-generic:                var(--ds-spacing-lg);                       /* spacing/lg — sync 26/08, existía en Figma sin sincronizar; antes el código tomaba prestado simple-padding-ver para esto */
+  --ds-dialog-padding-hor-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingHor, es compartido (Dialog family), no exclusivo de DialogSimple */
+  --ds-dialog-padding-ver-generic:        var(--ds-spacing-lg);                       /* spacing/lg — renombrado 26/08 desde simple/paddingVer, idem */
+  --ds-dialog-border-radius-generic:      var(--ds-border-radius-sm);                        /* borderRadius/sm — renombrado 26/08 desde simple/borderRadius, compartido (Dialog + DialogSimple) */
+  --ds-dialog-padding-control-area-generic:    var(--ds-spacing-xl);                       /* spacing/xl — nuevo 26/08: en Figma el padding del Control Area (botones del Dialog) no tenía variable, iba suelto; un solo token para los 4 lados (los 4 valen igual, sin separar Hor/Ver innecesariamente) */
+  --ds-dialog-bg-scrim-generic:                var(--ds-bg-overlay);       /* rgba negro 30% light / blanco 30% dark */
 
   /* DialogSimple */
   --ds-dialog-simple-border-color-generic:     var(--ds-borderColor-subtle);
-  --ds-dialog-simple-border-width-generic:     var(--ds-border-width-sm);  /* dialog/all/borderWidth/simple/generic — 27/10, antes 0,5 px sin token */
-  --ds-dialog-simple-content-gap-generic:      var(--ds-spacing-lg);                       /* spacing/lg */
-  --ds-dialog-simple-cta-gap-generic:          var(--ds-spacing-md);                        /* spacing/md — nuevo 26/08: el gap entre botones apilados de DialogSimple iba suelto en Figma (8px, distinto del gap de 12px del Control Area de Dialog — no es el mismo valor, no se puede fusionar con root/gap) */
+  --ds-dialog-border-width-simple-generic:     var(--ds-border-width-sm);  /* dialog/all/borderWidth/simple/generic — 27/10, antes 0,5 px sin token */
+  --ds-dialog-simple-gap-content-generic:      var(--ds-spacing-lg);                       /* spacing/lg */
+  --ds-dialog-gap-simple-cta-generic:          var(--ds-spacing-md);                        /* spacing/md — nuevo 26/08: el gap entre botones apilados de DialogSimple iba suelto en Figma (8px, distinto del gap de 12px del Control Area de Dialog — no es el mismo valor, no se puede fusionar con root/gap) */
 
   /* Título compartido (DialogSimple / ErrorAndEmptyState) */
-  --ds-dialog-title-fg-generic:                var(--ds-fg-title-default); /* invierte */
+  --ds-dialog-fg-title-generic:                var(--ds-fg-title-default); /* invierte */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1824,9 +1824,9 @@
      size (14/16) × style (bold/regular) × chevron (boolean, icono opcional).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-text-fg-default:     var(--ds-fg-label-default);   /* #050506 / #FFFFFF dark */
-  --ds-text-fg-secondary:   var(--ds-fg-label-secondary); /* #D61E74 / #FEF6F9 dark */
-  --ds-text-fg-disabled:    var(--ds-fg-label-disabled);  /* #AAAFB5 / #7B8490 dark */
-  --ds-text-gap:            var(--ds-spacing-2xs);        /* 12/11: text/all/gap/generic (2) — texto → chevron */
+  --ds-text-fg-label-secondary:   var(--ds-fg-label-secondary); /* #D61E74 / #FEF6F9 dark */
+  --ds-text-fg-label-disabled:    var(--ds-fg-label-disabled);  /* #AAAFB5 / #7B8490 dark */
+  --ds-text-gap-generic:            var(--ds-spacing-2xs);        /* 12/11: text/all/gap/generic (2) — texto → chevron */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1838,16 +1838,16 @@
      y texto tienen familias de token separadas en Figma (pueden divergir),
      aunque hoy resuelven igual value por value.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-detail-text-fg-default:     var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
-  --ds-detail-text-fg-secondary:   var(--ds-fg-body-secondary); /* #D61E74 / #FBE4EE dark */
-  --ds-detail-text-fg-tertiary:    var(--ds-fg-body-tertiary);  /* #8B619E / #F6F1F8 dark */
-  --ds-detail-text-fg-disabled:    var(--ds-fg-body-disabled);  /* #AAAFB5 / #7B8490 dark */
-  --ds-detail-text-icon-fg-default:   var(--ds-fg-icon-default);   /* #050506 / #FFFFFF dark */
-  --ds-detail-text-icon-fg-secondary: var(--ds-fg-icon-secondary); /* #D61E74 / #FEF6F9 dark */
-  --ds-detail-text-icon-fg-tertiary:  var(--ds-fg-icon-tertiary);  /* #8B619E / #F6F1F8 dark */
-  --ds-detail-text-icon-fg-disabled:  var(--ds-fg-icon-disabled);  /* #AAAFB5 / #7B8490 dark */
-  --ds-detail-text-gap:               var(--ds-spacing-xs);        /* 12/11: detailText/all/gap/generic (4) — icono → texto */
-  --ds-detail-text-icon-size:         var(--ds-sizing-2xs);        /* 16 — icono en los dos tamaños, como Figma */
+  --ds-detail-text-fg-text-default:     var(--ds-fg-body-default);   /* #050506 / #FFFFFF dark */
+  --ds-detail-text-fg-text-secondary:   var(--ds-fg-body-secondary); /* #D61E74 / #FBE4EE dark */
+  --ds-detail-text-fg-text-tertiary:    var(--ds-fg-body-tertiary);  /* #8B619E / #F6F1F8 dark */
+  --ds-detail-text-fg-text-disabled:    var(--ds-fg-body-disabled);  /* #AAAFB5 / #7B8490 dark */
+  --ds-detail-text-fg-icon-default:   var(--ds-fg-icon-default);   /* #050506 / #FFFFFF dark */
+  --ds-detail-text-fg-icon-secondary: var(--ds-fg-icon-secondary); /* #D61E74 / #FEF6F9 dark */
+  --ds-detail-text-fg-icon-tertiary:  var(--ds-fg-icon-tertiary);  /* #8B619E / #F6F1F8 dark */
+  --ds-detail-text-fg-icon-disabled:  var(--ds-fg-icon-disabled);  /* #AAAFB5 / #7B8490 dark */
+  --ds-detail-text-gap-generic:               var(--ds-spacing-xs);        /* 12/11: detailText/all/gap/generic (4) — icono → texto */
+  --ds-detail-text-size-icon:         var(--ds-sizing-2xs);        /* 16 — icono en los dos tamaños, como Figma */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1857,10 +1857,10 @@
      (default/subtle/disabled) × size (14/16/14 Narrow/16 Narrow, narrow usa
      fontFamily/narrow — sin consumidor real hoy, no se expone como prop v1).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-description-text-fg-default:  var(--ds-fg-body-default);  /* #050506 / #FFFFFF dark */
-  --ds-description-text-fg-subtle:   var(--ds-fg-body-subtle);   /* #676D76 / #EEEFF1 dark */
-  --ds-description-text-fg-disabled: var(--ds-fg-disabled);      /* descriptionText/all/fg/text/disabled → fg/disabled (mismo valor que fg/body/disabled) */
-  --ds-description-text-fg-onColor:  var(--ds-fg-body-onColor);  /* 12/11: Color=onColor — blanco en los dos modos, sobre superficies de color */
+  --ds-description-text-fg-text-default:  var(--ds-fg-body-default);  /* #050506 / #FFFFFF dark */
+  --ds-description-text-fg-text-subtle:   var(--ds-fg-body-subtle);   /* #676D76 / #EEEFF1 dark */
+  --ds-description-text-fg-text-disabled: var(--ds-fg-disabled);      /* descriptionText/all/fg/text/disabled → fg/disabled (mismo valor que fg/body/disabled) */
+  --ds-description-text-fg-text-on-color:  var(--ds-fg-body-onColor);  /* 12/11: Color=onColor — blanco en los dos modos, sobre superficies de color */
 
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -1874,28 +1874,28 @@
      tamaño configurable (escala Icon.jsx: 2xs 20/xs 24/sm 32/md 40/lg 48/3xl 64
      — Figma expone 6 pasos que mapean 1:1, salvo el 2xl=56 que no está en Figma).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-list-view-root-bg-generic:          var(--ds-bg-default);        /* #FFFFFF / #050506 dark */
-  --ds-list-view-root-bg-hover:            var(--ds-bg-hover-primary);  /* #BDE8FF / #016398 dark */
-  --ds-list-view-root-bg-disabled:         var(--ds-bg-disabled);
-  --ds-list-view-root-opacity-pressed:     var(--ds-opacity-pressed);   /* listView/all/opacity/pressed (antes bg/pressed) */
-  --ds-list-view-root-padding:             var(--ds-spacing-xl);        /* listView/all/padding/generic — 16: izquierda de la fila; arriba/derecha/abajo del contenido */
-  --ds-list-view-root-gap:                 var(--ds-spacing-xl);        /* listView/all/gap/generic — 16: panel izquierdo → contenido → panel derecho */
-  --ds-list-view-center-gap:               var(--ds-spacing-xs);        /* listView/all/gap/center/generic — 4: header → descripción → detalle */
-  --ds-list-view-divider-color-generic:    var(--ds-borderColor-subtle);   /* listView/all/borderColor/divider/generic (28/10, antes tomaba prestado el de Divider) */
+  --ds-list-view-bg-generic:          var(--ds-bg-default);        /* #FFFFFF / #050506 dark */
+  --ds-list-view-bg-hover:            var(--ds-bg-hover-primary);  /* #BDE8FF / #016398 dark */
+  --ds-list-view-bg-disabled:         var(--ds-bg-disabled);
+  --ds-list-view-opacity-pressed:     var(--ds-opacity-pressed);   /* listView/all/opacity/pressed (antes bg/pressed) */
+  --ds-list-view-padding-generic:             var(--ds-spacing-xl);        /* listView/all/padding/generic — 16: izquierda de la fila; arriba/derecha/abajo del contenido */
+  --ds-list-view-gap-generic:                 var(--ds-spacing-xl);        /* listView/all/gap/generic — 16: panel izquierdo → contenido → panel derecho */
+  --ds-list-view-gap-center-generic:               var(--ds-spacing-xs);        /* listView/all/gap/center/generic — 4: header → descripción → detalle */
+  --ds-list-view-border-color-divider-generic:    var(--ds-borderColor-subtle);   /* listView/all/borderColor/divider/generic (28/10, antes tomaba prestado el de Divider) */
   --ds-list-view-divider-color-disabled:   var(--ds-borderColor-disabled);
-  --ds-list-view-divider-width:            var(--ds-border-width-sm);      /* 1 en los tres divisores (All Sides era 1,5) */
-  --ds-list-view-root-border-color-focus-inner: var(--ds-borderColor-focus-inner);
-  --ds-list-view-root-border-color-focus-outer: var(--ds-borderColor-focus-outer);
-  --ds-list-view-root-border-width-focus:  var(--ds-border-width-lg);   /* 2 — doble anillo POR DENTRO (filas apiladas) */
-  --ds-list-view-ribbon-border-color-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
-  --ds-list-view-ribbon-border-color-disabled: var(--ds-borderColor-disabled);
-  --ds-list-view-ribbon-border-width-selected: var(--ds-border-width-xl);  /* 4 — borderWidth/xl */
-  --ds-list-view-icon-left-fg-generic:     var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
-  --ds-list-view-icon-left-fg-disabled:    var(--ds-fg-icon-disabled);
-  --ds-list-view-icon-chevron-fg-generic:  var(--ds-fg-icon-subtle);    /* #676D76 / #EEEFF1 dark */
-  --ds-list-view-icon-chevron-fg-disabled: var(--ds-fg-icon-disabled);
-  --ds-list-view-icon-right-fg-generic:    var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
-  --ds-list-view-icon-right-fg-disabled:   var(--ds-fg-icon-disabled);
+  --ds-list-view-width-divider:            var(--ds-border-width-sm);      /* 1 en los tres divisores (All Sides era 1,5) */
+  --ds-list-view-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-list-view-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-list-view-border-width-focus:  var(--ds-border-width-lg);   /* 2 — doble anillo POR DENTRO (filas apiladas) */
+  --ds-list-view-border-color-ribbon-selected: var(--ds-borderColor-primary);  /* #0A7C92 fijo */
+  --ds-list-view-border-color-ribbon-disabled: var(--ds-borderColor-disabled);
+  --ds-list-view-border-width-ribbon-selected: var(--ds-border-width-xl);  /* 4 — borderWidth/xl */
+  --ds-list-view-fg-icon-left-generic:     var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
+  --ds-list-view-fg-icon-left-disabled:    var(--ds-fg-icon-disabled);
+  --ds-list-view-fg-icon-chevron-generic:  var(--ds-fg-icon-subtle);    /* #676D76 / #EEEFF1 dark */
+  --ds-list-view-fg-icon-chevron-disabled: var(--ds-fg-icon-disabled);
+  --ds-list-view-fg-icon-right-generic:    var(--ds-fg-icon-primary);   /* #0A7C92 fijo */
+  --ds-list-view-fg-icon-right-disabled:   var(--ds-fg-icon-disabled);
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — File Upload (fileUpload/*)
@@ -1910,13 +1910,13 @@
      gap...) con valores distintos; no fusionar solo porque coincida el nombre.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-file-upload-common-gap-generic:           var(--ds-spacing-lg);       /* 12 — spacing/lg — gap interno icono-texto-cierre dentro de una fila */
-  --ds-file-upload-common-stack-gap-generic:     var(--ds-spacing-md);       /* 8 — spacing/md — gap vertical entre bloques apilados (DocumentItem root↔Validation Message; FileSelector: DropZone↔lista) */
-  --ds-file-upload-common-border-radius-generic: var(--ds-border-radius-sm);  /* 4 — borderRadius/sm */
-  --ds-file-upload-common-bg-hover:              var(--ds-bg-hover-primary); /* #BDE8FF / #016398 dark */
-  --ds-file-upload-common-icon-fg-generic:       var(--ds-fg-icon-primary);  /* fileUpload/common/fg/icon/generic → fg/icon/primary (11/11: en Figma apuntaba a icon/Primary de la librería de iconos) */
+  --ds-file-upload-gap-stack-generic:     var(--ds-spacing-md);       /* 8 — spacing/md — gap vertical entre bloques apilados (DocumentItem root↔Validation Message; FileSelector: DropZone↔lista) */
+  --ds-file-upload-border-radius-generic: var(--ds-border-radius-sm);  /* 4 — borderRadius/sm */
+  --ds-file-upload-bg-hover:              var(--ds-bg-hover-primary); /* #BDE8FF / #016398 dark */
+  --ds-file-upload-fg-icon-generic:       var(--ds-fg-icon-primary);  /* fileUpload/common/fg/icon/generic → fg/icon/primary (11/11: en Figma apuntaba a icon/Primary de la librería de iconos) */
 
-  --ds-file-upload-root-gap-generic:             var(--ds-spacing-2xl);      /* 24 — fileUpload/all/gap/generic: label ↔ selector / botón ↔ fichero */
-  --ds-file-upload-label-width-wide:             235px;                      /* ancho de Label + Description en Wide (Figma: Helper fijo a 235, sin variable) */
+  --ds-file-upload-gap-generic:             var(--ds-spacing-2xl);      /* 24 — fileUpload/all/gap/generic: label ↔ selector / botón ↔ fichero */
+  --ds-file-upload-width-label-wide:             235px;                      /* ancho de Label + Description en Wide (Figma: Helper fijo a 235, sin variable) */
 
   /* DocumentItem (Figma "Document Item") */
   --ds-file-upload-document-item-border-color-generic: var(--ds-borderColor-subtle); /* divisor de fila — #F1F2F4 / #676D76 dark */
@@ -1924,13 +1924,13 @@
   --ds-file-upload-document-item-border-width-generic: var(--ds-border-width-sm); /* 1 — fileUpload/documentItem/borderWidth/generic: divisor y borde de error, ambos por dentro */
   --ds-file-upload-document-item-padding-ver-generic:  var(--ds-spacing-2xs);        /* 2 — 13/11: 2+28+2 = 32 */
   --ds-file-upload-document-item-padding-hor-generic:  var(--ds-spacing-xs);         /* 4 */
-  --ds-file-upload-document-item-control-padding:      var(--ds-spacing-2xs);        /* 2 — nombre y X: hueco del anillo de foco (fila 4+2+24+2+4 = 36) */
-  --ds-file-upload-document-item-icon-size:            var(--ds-sizing-sm);          /* 24 */
-  --ds-file-upload-document-item-focus-ring-width:     var(--ds-border-width-lg);    /* 2 — anillo doble 2+2 alrededor del nombre / la X */
-  --ds-file-upload-document-item-text-fg-generic:      var(--ds-fg-label-default);  /* invierte — Uploaded y Error comparten a propósito, el error se marca con el borde, no con el texto */
-  --ds-file-upload-document-item-text-fg-uploading:    var(--ds-fg-label-subtle);   /* #676D76 fijo */
-  --ds-file-upload-document-item-focus-ring-border-color-outer: var(--ds-borderColor-focus-outer);
-  --ds-file-upload-document-item-focus-ring-border-color-inner: var(--ds-borderColor-focus-inner);
+  --ds-file-upload-padding-document-item-control:      var(--ds-spacing-2xs);        /* 2 — nombre y X: hueco del anillo de foco (fila 4+2+24+2+4 = 36) */
+  --ds-file-upload-size-document-item-icon:            var(--ds-sizing-sm);          /* 24 */
+  --ds-file-upload-width-document-item-focus-ring:     var(--ds-border-width-lg);    /* 2 — anillo doble 2+2 alrededor del nombre / la X */
+  --ds-file-upload-document-item-fg-text-generic:      var(--ds-fg-label-default);  /* invierte — Uploaded y Error comparten a propósito, el error se marca con el borde, no con el texto */
+  --ds-file-upload-document-item-fg-text-uploading:    var(--ds-fg-label-subtle);   /* #676D76 fijo */
+  --ds-file-upload-document-item-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-file-upload-document-item-border-color-focus-inner: var(--ds-borderColor-focus-inner);
 
   /* DropZone */
   --ds-file-upload-drop-zone-border-color-generic:  var(--ds-borderColor-default);  /* #676D76 / #454C56 dark */
@@ -1938,8 +1938,8 @@
   --ds-file-upload-drop-zone-border-width-generic:  var(--ds-border-width-md);      /* 1.5 */
   --ds-file-upload-drop-zone-padding-ver-generic:   var(--ds-spacing-xl);          /* 16 */
   --ds-file-upload-drop-zone-padding-hor-generic:   var(--ds-spacing-lg);          /* 12 */
-  --ds-file-upload-drop-zone-text-fg-generic:       var(--ds-fg-default);          /* invierte */
-  --ds-file-upload-drop-zone-text-fg-disabled:      var(--ds-fg-label-disabled);   /* #AAAFB5 / #7B8490 dark */
+  --ds-file-upload-drop-zone-fg-text-generic:       var(--ds-fg-default);          /* invierte */
+  --ds-file-upload-drop-zone-fg-text-disabled:      var(--ds-fg-label-disabled);   /* #AAAFB5 / #7B8490 dark */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs (tabs/*)
@@ -1998,23 +1998,23 @@
      8 a la derecha; Anchor=Top: 0 arriba, 8 abajo) — el riel queda a ras del
      borde de pantalla al que se ancla.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-drawer-root-bg-primary:            var(--ds-bg-container); /* 11/11: bg/container — panel flotante */
-  --ds-drawer-root-bg-secondary:          var(--ds-bg-page);    /* #FAFBFB / #464B53 dark */
-  --ds-drawer-root-border-color-generic:  var(--ds-borderColor-subtle);
-  --ds-drawer-root-border-width-generic:  var(--ds-border-width-md);  /* 1.5 — drawer/all/borderWidth/generic */
-  --ds-drawer-root-border-radius-generic: var(--ds-border-radius-md); /* 8 — drawer/all/borderRadius/generic (03/11), solo en el borde opuesto al anclaje */
-  --ds-drawer-root-focus-outer:           var(--ds-borderColor-focus-outer); /* drawer/all/borderColor/focus-outer */
-  --ds-drawer-root-focus-inner:           var(--ds-borderColor-focus-inner); /* drawer/all/borderColor/focus-inner */
-  --ds-drawer-root-focus-width:           var(--ds-border-width-lg);         /* 2 */
-  --ds-drawer-icon-size:                  var(--ds-sizing-md);               /* 32 */
-  --ds-drawer-icon-padding:               var(--ds-spacing-xl);              /* 16 — franja del icono: 16 + 32 + 16 = 64 a lo largo del riel */
-  --ds-drawer-icon-fg-generic:            var(--ds-fg-icon-primary); /* #0A7C92 fijo */
+  --ds-drawer-bg-primary:            var(--ds-bg-container); /* 11/11: bg/container — panel flotante */
+  --ds-drawer-bg-secondary:          var(--ds-bg-page);    /* #FAFBFB / #464B53 dark */
+  --ds-drawer-border-color-generic:  var(--ds-borderColor-subtle);
+  --ds-drawer-border-width-generic:  var(--ds-border-width-md);  /* 1.5 — drawer/all/borderWidth/generic */
+  --ds-drawer-border-radius-generic: var(--ds-border-radius-md); /* 8 — drawer/all/borderRadius/generic (03/11), solo en el borde opuesto al anclaje */
+  --ds-drawer-border-color-focus-outer:           var(--ds-borderColor-focus-outer); /* drawer/all/borderColor/focus-outer */
+  --ds-drawer-border-color-focus-inner:           var(--ds-borderColor-focus-inner); /* drawer/all/borderColor/focus-inner */
+  --ds-drawer-border-width-focus:           var(--ds-border-width-lg);         /* 2 */
+  --ds-drawer-size-icon:                  var(--ds-sizing-md);               /* 32 */
+  --ds-drawer-padding-icon:               var(--ds-spacing-xl);              /* 16 — franja del icono: 16 + 32 + 16 = 64 a lo largo del riel */
+  --ds-drawer-fg-icon-generic:            var(--ds-fg-icon-primary); /* #0A7C92 fijo */
   /* .Drawer Toggle (03/11): la franja del icono es el botón, con estados como las filas */
-  --ds-drawer-toggle-bg-hover:            var(--ds-bg-hover-primary); /* drawer/all/bg/toggle/hover — azul, como las filas */
-  --ds-drawer-toggle-opacity-pressed:     var(--ds-opacity-pressed);  /* drawer/all/opacity/toggle/pressed */
-  --ds-drawer-toggle-padding-center:      var(--ds-spacing-xl-2xl); /* 20 — drawer/all/padding/toggle/center → spacing/xl-2xl: borde del riel → icono */
-  --ds-drawer-collapsed-size:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — tamaño de muestra de Figma, sin variable; sobreescribible por el consumidor */
-  --ds-drawer-expanded-size:              240px; /* ídem en Expanded/Standard */
+  --ds-drawer-bg-toggle-hover:            var(--ds-bg-hover-primary); /* drawer/all/bg/toggle/hover — azul, como las filas */
+  --ds-drawer-opacity-toggle-pressed:     var(--ds-opacity-pressed);  /* drawer/all/opacity/toggle/pressed */
+  --ds-drawer-padding-toggle-center:      var(--ds-spacing-xl-2xl); /* 20 — drawer/all/padding/toggle/center → spacing/xl-2xl: borde del riel → icono */
+  --ds-drawer-size-collapsed:             72px;  /* ancho (anchor=left) o alto (anchor=top) en Collapsed — tamaño de muestra de Figma, sin variable; sobreescribible por el consumidor */
+  --ds-drawer-size-expanded:              240px; /* ídem en Expanded/Standard */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Sidebar Menu (sidebarMenu/all/*)
@@ -2026,11 +2026,11 @@
      SidebarMenu.jsx — sin límite duro en Child/Gran son (recomendaciones de
      arquitectura de información, no un número, ver CLAUDE.md §9).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-sidebar-menu-title-padding-horizontal: var(--ds-spacing-xl);
-  --ds-sidebar-menu-title-padding-top:        var(--ds-spacing-xl);
-  --ds-sidebar-menu-title-padding-bottom:     var(--ds-spacing-md);
+  --ds-sidebar-menu-padding-title-horizontal: var(--ds-spacing-xl);
+  --ds-sidebar-menu-padding-top-title:        var(--ds-spacing-xl);
+  --ds-sidebar-menu-padding-bottom-title:     var(--ds-spacing-md);
   --ds-sidebar-menu-indent-step:              var(--ds-spacing-xl); /* por nivel: Parent=0, Child=1×step, Gran son=2×step */
-  --ds-sidebar-menu-chevron-fg-primary:       var(--ds-fg-icon-primary); /* teal #4BA9C0 fijo — pedido explícito de Carol 17/09, el chevron heredaba negro del texto de la fila */
+  --ds-sidebar-menu-fg-chevron-primary:       var(--ds-fg-icon-primary); /* teal #4BA9C0 fijo — pedido explícito de Carol 17/09, el chevron heredaba negro del texto de la fila */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Steps Common (steps/common/all/*)
@@ -2046,52 +2046,52 @@
      lo consume tal cual. `root/opacity-pressed` es opacidad (0.8), no color
      — mismo patrón ya usado en Accordion/Icon Button/Segmented Control.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-steps-node-bg-active:                    var(--ds-bg-primary);      /* steps/common/all/bg/node/active → bg/surface/primary */
-  --ds-steps-node-bg-completed:                  var(--ds-bg-success);      /* node/bg/completed */
-  --ds-steps-node-fg-incomplete:                 var(--ds-fg-title-default);/* node/fg/incomplete — número del círculo */
-  --ds-steps-node-fg-active:                     var(--ds-fg-title-onColor);/* node/fg/active */
-  --ds-steps-node-fg-completed:                  var(--ds-fg-title-onColor);/* node/fg/completed */
-  --ds-steps-node-border-color-incomplete:       var(--ds-borderColor-emphasis);
-  --ds-steps-node-border-color-active:           var(--ds-borderColor-primary);
-  --ds-steps-node-border-color-completed:        var(--ds-borderColor-success);
-  --ds-steps-node-size:                          var(--ds-sizing-lg);       /* 40 — node/size/generic (12/11) */
-  --ds-steps-node-padding:                       var(--ds-spacing-2xs);     /* 2 — node/padding/generic (12/11): en Figma, hueco del trazo exterior; en código el círculo ocupa los 40 con el borde dentro */
-  --ds-steps-border-width:                       var(--ds-border-width-lg); /* 2 — steps/common/all/borderWidth/generic (círculo y conectores; 12/11 el de StepHor era 3 suelto en Figma) */
-  --ds-steps-connector-border-color:             var(--ds-borderColor-emphasis); /* connector/borderColor/generic */
-  --ds-steps-icon-fg-generic:                    var(--ds-fg-icon-default); /* steps/common/all/fg/icon/generic (12/11): iconos de Substep y chevron de Chapter, en negro — la forma dice el estado; antes check verde y chevron teal se confundían */
-  --ds-steps-label-fg-generic:                   var(--ds-fg-title-default);/* steps/common/all/fg/label/generic (12/11): texto de todas las etiquetas; antes cada pieza usaba fg-default desde JSX o node/fg/incomplete */
+  --ds-steps-bg-node-active:                    var(--ds-bg-primary);      /* steps/common/all/bg/node/active → bg/surface/primary */
+  --ds-steps-bg-node-completed:                  var(--ds-bg-success);      /* node/bg/completed */
+  --ds-steps-fg-node-incomplete:                 var(--ds-fg-title-default);/* node/fg/incomplete — número del círculo */
+  --ds-steps-fg-node-active:                     var(--ds-fg-title-onColor);/* node/fg/active */
+  --ds-steps-fg-node-completed:                  var(--ds-fg-title-onColor);/* node/fg/completed */
+  --ds-steps-border-color-node-incomplete:       var(--ds-borderColor-emphasis);
+  --ds-steps-border-color-node-active:           var(--ds-borderColor-primary);
+  --ds-steps-border-color-node-completed:        var(--ds-borderColor-success);
+  --ds-steps-size-node:                          var(--ds-sizing-lg);       /* 40 — node/size/generic (12/11) */
+  --ds-steps-padding-node:                       var(--ds-spacing-2xs);     /* 2 — node/padding/generic (12/11): en Figma, hueco del trazo exterior; en código el círculo ocupa los 40 con el borde dentro */
+  --ds-steps-border-width-generic:                       var(--ds-border-width-lg); /* 2 — steps/common/all/borderWidth/generic (círculo y conectores; 12/11 el de StepHor era 3 suelto en Figma) */
+  --ds-steps-border-color-connector:             var(--ds-borderColor-emphasis); /* connector/borderColor/generic */
+  --ds-steps-fg-icon-generic:                    var(--ds-fg-icon-default); /* steps/common/all/fg/icon/generic (12/11): iconos de Substep y chevron de Chapter, en negro — la forma dice el estado; antes check verde y chevron teal se confundían */
+  --ds-steps-fg-label-generic:                   var(--ds-fg-title-default);/* steps/common/all/fg/label/generic (12/11): texto de todas las etiquetas; antes cada pieza usaba fg-default desde JSX o node/fg/incomplete */
 
-  --ds-steps-root-bg-on-default-incomplete:         var(--ds-bg-default);
-  --ds-steps-root-bg-on-default-active:             var(--ds-bg-page);
-  --ds-steps-root-bg-on-default-completed:          var(--ds-bg-default);
-  --ds-steps-root-bg-on-default-completed-selected: var(--ds-bg-page);
-  --ds-steps-root-bg-on-page-incomplete:       var(--ds-bg-page);
-  --ds-steps-root-bg-on-page-active:           var(--ds-bg-default);
-  --ds-steps-root-bg-on-page-completed:        var(--ds-bg-page);
-  --ds-steps-root-bg-on-page-completed-selected: var(--ds-bg-default);
-  --ds-steps-root-bg-hover:                      var(--ds-bg-hover-primary);
-  --ds-steps-root-opacity-pressed:               var(--ds-opacity-pressed); /* steps/common/all/opacity/pressed (12/11: antes root/bg/pressed) */
-  --ds-steps-root-border-width-focus:            var(--ds-border-width-lg); /* root/borderWidth/focus */
-  --ds-steps-root-border-color-focus-inner:      var(--ds-borderColor-focus-inner);
-  --ds-steps-root-border-color-focus-outer:      var(--ds-borderColor-focus-outer);
+  --ds-steps-bg-on-default-incomplete:         var(--ds-bg-default);
+  --ds-steps-bg-on-default-active:             var(--ds-bg-page);
+  --ds-steps-bg-on-default-completed:          var(--ds-bg-default);
+  --ds-steps-bg-on-default-completed-selected: var(--ds-bg-page);
+  --ds-steps-bg-on-page-incomplete:       var(--ds-bg-page);
+  --ds-steps-bg-on-page-active:           var(--ds-bg-default);
+  --ds-steps-bg-on-page-completed:        var(--ds-bg-page);
+  --ds-steps-bg-on-page-completed-selected: var(--ds-bg-default);
+  --ds-steps-bg-hover:                      var(--ds-bg-hover-primary);
+  --ds-steps-opacity-pressed:               var(--ds-opacity-pressed); /* steps/common/all/opacity/pressed (12/11: antes root/bg/pressed) */
+  --ds-steps-border-width-focus:            var(--ds-border-width-lg); /* root/borderWidth/focus */
+  --ds-steps-border-color-focus-inner:      var(--ds-borderColor-focus-inner);
+  --ds-steps-border-color-focus-outer:      var(--ds-borderColor-focus-outer);
 
   /* ══ Steps Indicator (steps/indicator/all/*) · 12/11 ══ */
-  --ds-steps-indicator-step-hor-gap:             var(--ds-spacing-md);      /* 8 — stepHor/gap: nodo → nombre */
-  --ds-steps-indicator-step-hor-padding-ver:     var(--ds-spacing-2xs);     /* 2 — stepHor/paddingVer */
-  --ds-steps-indicator-small-padding:            var(--ds-spacing-lg);      /* 12 — small/padding (antes 8/16 en código) */
-  --ds-steps-indicator-small-gap:                var(--ds-spacing-md);      /* 8 — small/gap (antes 12 en código) */
+  --ds-steps-indicator-gap-step-hor:             var(--ds-spacing-md);      /* 8 — stepHor/gap: nodo → nombre */
+  --ds-steps-indicator-padding-ver-step-hor:     var(--ds-spacing-2xs);     /* 2 — stepHor/paddingVer */
+  --ds-steps-indicator-padding-small:            var(--ds-spacing-lg);      /* 12 — small/padding (antes 8/16 en código) */
+  --ds-steps-indicator-gap-small:                var(--ds-spacing-md);      /* 8 — small/gap (antes 12 en código) */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Steps Navigator (steps/navigator/all/*)
      Exclusivo del menú vertical. El texto de las filas usa ya el token común
-     --ds-steps-label-fg-generic (12/11: navigator/root/fg/label borrado).
+     --ds-steps-fg-label-generic (12/11: navigator/root/fg/label borrado).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-steps-navigator-root-gap:                 var(--ds-spacing-xl);      /* 16 — root/gap */
-  --ds-steps-navigator-root-height:              var(--ds-sizing-2xl); /* 56 — steps/navigator/all/height/generic (12/11): 8 + 40 + 8, rejilla de 8 (antes 60) */
-  --ds-steps-navigator-root-padding-horizontal:  var(--ds-spacing-xl);      /* 16 — root/paddingHor (también padding izq. de Substep) */
-  --ds-steps-navigator-substep-padding-right:    var(--ds-spacing-2xl);     /* 24 — subStep/paddingRight (12/11) */
-  --ds-steps-navigator-substep-gap:              var(--ds-spacing-md);      /* 8 — subStep/gap: icono → texto (12/11) */
-  --ds-steps-navigator-substep-icon-size:        var(--ds-sizing-xs);       /* 20 */
+  --ds-steps-navigator-gap:                 var(--ds-spacing-xl);      /* 16 — root/gap */
+  --ds-steps-navigator-height-generic:              var(--ds-sizing-2xl); /* 56 — steps/navigator/all/height/generic (12/11): 8 + 40 + 8, rejilla de 8 (antes 60) */
+  --ds-steps-navigator-padding-horizontal:  var(--ds-spacing-xl);      /* 16 — root/paddingHor (también padding izq. de Substep) */
+  --ds-steps-navigator-padding-right-substep:    var(--ds-spacing-2xl);     /* 24 — subStep/paddingRight (12/11) */
+  --ds-steps-navigator-gap-substep:              var(--ds-spacing-md);      /* 8 — subStep/gap: icono → texto (12/11) */
+  --ds-steps-navigator-size-substep-icon:        var(--ds-sizing-xs);       /* 20 */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Card (basic variant, cards/all/*)
@@ -2103,12 +2103,12 @@
      Shadow" en la instancia real de Cards). Mismo valor hoy, concepto
      distinto — igual criterio que el caret de Combobox.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-card-root-bg:             var(--ds-bg-container); /* 26/10: antes bg-default — en dark era negro sobre negro (Flydown invisible); bg-container = superficie elevada, blanca en light */
-  --ds-card-root-border-color-basic: var(--ds-borderColor-elevated); /* cards/all/borderColor/basic */
-  --ds-card-root-border-width-basic: var(--ds-border-width-sm);     /* cards/all/borderWidth/basic */
-  --ds-card-root-border-radius:  var(--ds-border-radius-sm); /* 4 — cards/all/borderRadius/basic (11/11: enlazado en Figma, antes literal) */
+  --ds-card-bg:             var(--ds-bg-container); /* 26/10: antes bg-default — en dark era negro sobre negro (Flydown invisible); bg-container = superficie elevada, blanca en light */
+  --ds-cards-border-color-basic: var(--ds-borderColor-elevated); /* cards/all/borderColor/basic */
+  --ds-cards-border-width-basic: var(--ds-border-width-sm);     /* cards/all/borderWidth/basic */
+  --ds-cards-border-radius-basic:  var(--ds-border-radius-sm); /* 4 — cards/all/borderRadius/basic (11/11: enlazado en Figma, antes literal) */
   /* sombra = Effect Style Card/Shadow: offsets/blur/spread son literales de Figma (sin variable), colores enlazados a opacity/shadow/* */
-  --ds-card-root-shadow:         0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
+  --ds-card-shadow:         0 5px 5px -3px var(--ds-opacity-shadow-umbra), 0 3px 14px 2px var(--ds-opacity-shadow-ambient), 0 8px 10px 1px var(--ds-opacity-shadow-penumbra);
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Image (image/all/*)
@@ -2119,14 +2119,14 @@
      token propio. objectFit siempre "cover" (Figma scaleMode=FILL en las 5
      variantes, corregido desde FIT el mismo día).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-image-caption-fg-generic: var(--ds-fg-subtle); /* #676D76 — image/all/fg/caption/generic */
-  --ds-image-gap:                       var(--ds-spacing-md);      /* 8 — image/all/gap/generic (11/11; antes 9 suelto en Figma y código) */
-  --ds-image-frame-border-radius:       var(--ds-border-radius-sm);/* 4 — image/all/borderRadius/frame/roundedCorners (11/11; antes reusaba el de Card) */
-  --ds-image-frame-bg-generic:          var(--ds-bg-subtle);       /* image/all/bg/frame/generic — gris mientras carga o sin src (11/11; antes bg-subtle directo en JSX) */
+  --ds-image-fg-caption-generic: var(--ds-fg-subtle); /* #676D76 — image/all/fg/caption/generic */
+  --ds-image-gap-generic:                       var(--ds-spacing-md);      /* 8 — image/all/gap/generic (11/11; antes 9 suelto en Figma y código) */
+  --ds-image-border-radius-frame-rounded-corners:       var(--ds-border-radius-sm);/* 4 — image/all/borderRadius/frame/roundedCorners (11/11; antes reusaba el de Card) */
+  --ds-image-bg-frame-generic:          var(--ds-bg-subtle);       /* image/all/bg/frame/generic — gris mientras carga o sin src (11/11; antes bg-subtle directo en JSX) */
 
   /* ══ COMPONENT TOKENS — Country Flag (countryFlag/all/*) · 11/11 ══
      El set vive en la librería de iconos (archivo aparte, 201 variantes 22×16). */
-  --ds-country-flag-border-radius: var(--ds-border-radius-xs); /* 2 — countryFlag/all/borderRadius/generic */
+  --ds-country-flag-border-radius-generic: var(--ds-border-radius-xs); /* 2 — countryFlag/all/borderRadius/generic */
   --ds-country-flag-width:         22px; /* literal de Figma sin variable: tamaño intrínseco del asset (no está en la escala sizing) */
   --ds-country-flag-height:        16px; /* literal de Figma sin variable */
 
@@ -2137,26 +2137,26 @@
      responsive ya lo resuelve Headline.jsx por CSS, no hace falta token
      propio aquí. Iconos y gaps sí escalan por device.
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-page-title-root-padding-hor:  var(--ds-spacing-md);  /* 8 — pageTitle/root/paddingHor (Mobile/Tablet) */
-  --ds-page-title-root-padding-ver:  var(--ds-spacing-xs);  /* 4 — pageTitle/root/paddingVer */
-  --ds-page-title-root-gap:          var(--ds-spacing-lg);  /* 12 — pageTitle/root/gap (subido de 8 por Carol, 28/09) */
-  --ds-page-title-buttons-gap:       var(--ds-spacing-xl);  /* 16 — pageTitle/buttons/gap: + 8 del área de foco de Button = 24 visibles */
-  --ds-page-title-nav-icon-fg:       var(--ds-fg-icon-primary); /* pageTitle/nav/icon/fg */
-  --ds-page-title-nav-icon-size-mobile:  var(--ds-sizing-xs);  /* 20 — en Figma la variante del Icon sigue al token desde el 30/10 */
-  --ds-page-title-nav-icon-size-tablet:  var(--ds-sizing-sm);  /* 24 */
-  --ds-page-title-nav-icon-size-desktop: var(--ds-sizing-md);  /* 32 */
+  --ds-page-title-padding-hor:  var(--ds-spacing-md);  /* 8 — pageTitle/root/paddingHor (Mobile/Tablet) */
+  --ds-page-title-padding-ver:  var(--ds-spacing-xs);  /* 4 — pageTitle/root/paddingVer */
+  --ds-page-title-gap:          var(--ds-spacing-lg);  /* 12 — pageTitle/root/gap (subido de 8 por Carol, 28/09) */
+  --ds-page-title-gap-buttons:       var(--ds-spacing-xl);  /* 16 — pageTitle/buttons/gap: + 8 del área de foco de Button = 24 visibles */
+  --ds-page-title-fg-nav-icon:       var(--ds-fg-icon-primary); /* pageTitle/nav/icon/fg */
+  --ds-page-title-size-nav-icon-mobile:  var(--ds-sizing-xs);  /* 20 — en Figma la variante del Icon sigue al token desde el 30/10 */
+  --ds-page-title-size-nav-icon-tablet:  var(--ds-sizing-sm);  /* 24 */
+  --ds-page-title-size-nav-icon-desktop: var(--ds-sizing-md);  /* 32 */
   /* Iconos de nav y acciones: padding 2 = hueco del anillo de foco doble (30/10) */
-  --ds-page-title-nav-padding:           var(--ds-spacing-2xs);          /* pageTitle/all/padding/nav/generic */
-  --ds-page-title-nav-focus-outer:       var(--ds-borderColor-focus-outer); /* pageTitle/all/borderColor/nav/focus-outer */
-  --ds-page-title-nav-focus-inner:       var(--ds-borderColor-focus-inner); /* pageTitle/all/borderColor/nav/focus-inner */
-  --ds-page-title-nav-focus-width:       var(--ds-border-width-lg);       /* 2 */
+  --ds-page-title-padding-nav-generic:           var(--ds-spacing-2xs);          /* pageTitle/all/padding/nav/generic */
+  --ds-page-title-border-color-nav-focus-outer:       var(--ds-borderColor-focus-outer); /* pageTitle/all/borderColor/nav/focus-outer */
+  --ds-page-title-border-color-nav-focus-inner:       var(--ds-borderColor-focus-inner); /* pageTitle/all/borderColor/nav/focus-inner */
+  --ds-page-title-border-width-nav-focus:       var(--ds-border-width-lg);       /* 2 */
   /* Desktop (30/10: antes sueltos en Figma; el código usaba los de móvil) */
-  --ds-page-title-desktop-root-padding-hor: var(--ds-spacing-xl);  /* 16 — pageTitle/desktop/paddingHor/generic */
-  --ds-page-title-desktop-root-padding-top: var(--ds-spacing-xl);  /* 16 — pageTitle/desktop/paddingTop/generic (abajo 0) */
-  --ds-page-title-desktop-root-gap:         var(--ds-spacing-md);  /* 8  — breadcrumb → título */
-  --ds-page-title-desktop-content-padding-ver: var(--ds-spacing-xl); /* 16 — pageTitle/desktop/paddingVer/content/generic */
-  --ds-page-title-desktop-content-gap:      var(--ds-spacing-xl);  /* 16 — título → acciones */
-  --ds-page-title-desktop-breadcrumb-gap:   var(--ds-spacing-md);  /* 8 */
+  --ds-page-title-desktop-padding-hor-generic: var(--ds-spacing-xl);  /* 16 — pageTitle/desktop/paddingHor/generic */
+  --ds-page-title-desktop-padding-top-generic: var(--ds-spacing-xl);  /* 16 — pageTitle/desktop/paddingTop/generic (abajo 0) */
+  --ds-page-title-desktop-gap:         var(--ds-spacing-md);  /* 8  — breadcrumb → título */
+  --ds-page-title-desktop-padding-ver-content-generic: var(--ds-spacing-xl); /* 16 — pageTitle/desktop/paddingVer/content/generic */
+  --ds-page-title-desktop-gap-content:      var(--ds-spacing-xl);  /* 16 — título → acciones */
+  --ds-page-title-desktop-gap-breadcrumb:   var(--ds-spacing-md);  /* 8 */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Top Navigation (topNavigation/all/*)
@@ -2176,21 +2176,21 @@
      `Link` "manchaba" el panel flotante con muchos enlaces densos en
      columna (hallazgo real de Carol, confirmado visualmente).
      ══════════════════════════════════════════════════════════════════════════ */
-  --ds-top-navigation-root-bg-generic:  var(--ds-bg-container); /* 11/11: bg/container — topNavigation/all/bg/generic */
-  --ds-top-navigation-root-gap-generic: var(--ds-layout-gutter); /* topNavigation/all/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap real entre Logo y Tabs */
-  --ds-top-navigation-root-padding-horizontal: var(--ds-layout-margin); /* topNavigation/all/paddingHor/generic — layout/margin (01/10, antes spacing/2xl), ahora bindeado en Figma (antes literal sin variable) */
-  --ds-top-navigation-flydown-group-title-fg-generic: var(--ds-fg-subtle); /* topNavigation/all/fg/flydown/groupTitle/generic — corregido 24/09: Carol recoloreó el título de grupo a gris (fg/subtle) en Figma; el alias a fg/default (negro) quedó desincronizado */
-  --ds-top-navigation-flydown-tab-title-fg-generic: var(--ds-fg-headline-default); /* topNavigation/all/fg/flydown/tabTitle/generic → Mode fg/headline/default (11/11: antes apuntaba a otro token de componente, headline/fg/default) */
+  --ds-top-navigation-bg-generic:  var(--ds-bg-container); /* 11/11: bg/container — topNavigation/all/bg/generic */
+  --ds-top-navigation-gap-generic: var(--ds-layout-gutter); /* topNavigation/all/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap real entre Logo y Tabs */
+  --ds-top-navigation-padding-hor-generic: var(--ds-layout-margin); /* topNavigation/all/paddingHor/generic — layout/margin (01/10, antes spacing/2xl), ahora bindeado en Figma (antes literal sin variable) */
+  --ds-top-navigation-fg-flydown-group-title-generic: var(--ds-fg-subtle); /* topNavigation/all/fg/flydown/groupTitle/generic — corregido 24/09: Carol recoloreó el título de grupo a gris (fg/subtle) en Figma; el alias a fg/default (negro) quedó desincronizado */
+  --ds-top-navigation-fg-flydown-tab-title-generic: var(--ds-fg-headline-default); /* topNavigation/all/fg/flydown/tabTitle/generic → Mode fg/headline/default (11/11: antes apuntaba a otro token de componente, headline/fg/default) */
   --ds-top-navigation-breakpoint:       1024px;
-  --ds-top-navigation-flydown-gap:      var(--ds-layout-gutter); /* topNavigation/all/gap/flydown/column/generic — layout/gutter (01/10, antes spacing/3xl), gap horizontal entre columnas (reusado tal cual para el margin-bottom de apilado vertical dentro de una columna) */
-  --ds-top-navigation-flydown-title-gap: var(--ds-spacing-xl); /* 16 — topNavigation/all/gap/flydown/generic, Tab title → columnas */
-  --ds-top-navigation-flydown-links-group-gap: var(--ds-spacing-xl); /* 16 — topNavigation/all/gap/flydown/linksGroup/generic, título↔link y link↔link */
-  --ds-top-navigation-flydown-links-group-padding: var(--ds-spacing-md); /* 8 — topNavigation/all/padding/flydown/linksGroup/generic */
+  --ds-top-navigation-gap-flydown-column-generic:      var(--ds-layout-gutter); /* topNavigation/all/gap/flydown/column/generic — layout/gutter (01/10, antes spacing/3xl), gap horizontal entre columnas (reusado tal cual para el margin-bottom de apilado vertical dentro de una columna) */
+  --ds-top-navigation-gap-flydown-generic: var(--ds-spacing-xl); /* 16 — topNavigation/all/gap/flydown/generic, Tab title → columnas */
+  --ds-top-navigation-gap-flydown-links-group-generic: var(--ds-spacing-xl); /* 16 — topNavigation/all/gap/flydown/linksGroup/generic, título↔link y link↔link */
+  --ds-top-navigation-padding-flydown-links-group-generic: var(--ds-spacing-md); /* 8 — topNavigation/all/padding/flydown/linksGroup/generic */
   --ds-top-navigation-flydown-link-underline-hover: var(--ds-borderColor-primary); /* subrayado de los links del flydown en hover/foco (03/11: antes Mode directo en el JSX) */
-  --ds-top-navigation-mobile-panel-width:  320px; /* panel del menú en móvil/tablet — ancho de muestra, sin variable en Figma */
-  --ds-top-navigation-flydown-height:       400px; /* aproximado, a propósito ("de un vistazo") — nunca garantía matemática para cualquier volumen de contenido. Ancho ya NO acotado aquí — desde 25/09 el flydown es mega-menú a ancho completo (ver --ds-top-navigation-flydown-column-width y el CSS de .ds-top-navigation__flydown) */
-  --ds-top-navigation-flydown-column-width: 160px;
-  --ds-top-navigation-flydown-padding:      var(--ds-layout-margin); /* topNavigation/all/padding/flydown/generic — layout/margin (01/10, antes spacing/2xl) */
+  --ds-top-navigation-width-mobile-panel:  320px; /* panel del menú en móvil/tablet — ancho de muestra, sin variable en Figma */
+  --ds-top-navigation-height-flydown:       400px; /* aproximado, a propósito ("de un vistazo") — nunca garantía matemática para cualquier volumen de contenido. Ancho ya NO acotado aquí — desde 25/09 el flydown es mega-menú a ancho completo (ver --ds-top-navigation-width-flydown-column y el CSS de .ds-top-navigation__flydown) */
+  --ds-top-navigation-width-flydown-column: 160px;
+  --ds-top-navigation-padding-flydown-generic:      var(--ds-layout-margin); /* topNavigation/all/padding/flydown/generic — layout/margin (01/10, antes spacing/2xl) */
 }
 
 

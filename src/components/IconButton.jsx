@@ -47,7 +47,7 @@ const css = `
   gap: 0;
   /* Área de foco (08/10/2026, igual que Figma): padding del frame del
      componente para que el anillo quede DENTRO de su caja (Large = 56 + 2×4). */
-  padding: var(--ds-icon-button-focus-area-padding);
+  padding: var(--ds-icon-button-padding-focus-area);
   border-radius: var(--ds-icon-button-border-radius);
   border: 0 solid transparent;
   background: transparent;
@@ -64,21 +64,21 @@ const css = `
   border: 0 solid transparent; /* sin grosor explícito el navegador aplica 3px (medium) invisibles */
   box-sizing: border-box;
 }
-.ds-icon-btn--small  { --_pad: var(--ds-icon-button-padding-small); }
-.ds-icon-btn--medium { --_pad: var(--ds-icon-button-padding-medium); }
-.ds-icon-btn--large  { --_pad: var(--ds-icon-button-padding-large); }
+.ds-icon-btn--small  { --_pad: var(--ds-icon-button-padding-icon-small); }
+.ds-icon-btn--medium { --_pad: var(--ds-icon-button-padding-icon-medium); }
+.ds-icon-btn--large  { --_pad: var(--ds-icon-button-padding-icon-large); }
 .ds-icon-btn__circle { padding: var(--_pad); }
 /* Borde por dentro, como Figma (strokeAlign INSIDE): el padding descuenta el
    borde para que Secondary mida lo mismo que Primary/Tertiary (32/44/56). */
 .ds-icon-btn--default-secondary,
-.ds-icon-btn--accent-secondary { --_bw: var(--ds-icon-button-border-width-secondary); }
+.ds-icon-btn--accent-secondary { --_bw: var(--ds-icon-button-border-width-secondary-generic); }
 .ds-icon-btn--default-secondary .ds-icon-btn__circle,
 .ds-icon-btn--accent-secondary .ds-icon-btn__circle {
   padding: calc(var(--_pad) - var(--_bw));
 }
 
 .ds-icon-btn__label {
-  padding: 0 var(--ds-icon-button-label-padding-hor);
+  padding: 0 var(--ds-icon-button-padding-hor-label);
   font-weight: var(--ds-font-weight-bold);
   white-space: nowrap;
 }
@@ -94,9 +94,9 @@ const css = `
    en el color de foco del sistema (outline con offset). El borde de Secondary
    queda intacto. Cabe entero en el padding del área de foco, sin cortarse. */
 .ds-icon-btn:focus-visible .ds-icon-btn__circle {
-  outline:        var(--ds-icon-button-focus-width) solid var(--ds-icon-button-border-color-focus-outer);
-  outline-offset: var(--ds-icon-button-focus-width);
-  box-shadow:     0 0 0 var(--ds-icon-button-focus-width) var(--ds-icon-button-border-color-focus-inner);
+  outline:        var(--ds-icon-button-border-width-focus) solid var(--ds-icon-button-border-color-focus-outer);
+  outline-offset: var(--ds-icon-button-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-icon-button-border-width-focus) var(--ds-icon-button-border-color-focus-inner);
 }
 .ds-icon-btn:disabled {
   cursor: not-allowed;
@@ -105,15 +105,15 @@ const css = `
 
 /* Colores por tipo: relleno de Primary, velo de hover, línea y tinta de
    contorno, icono sobre color. */
-.ds-icon-btn--default { --_fill: var(--ds-icon-button-bg-default-primary); --_mix: var(--ds-icon-button-bg-mix-default-hover); --_line: var(--ds-icon-button-border-color-default); --_ink: var(--ds-icon-button-icon-fg-on-outline-default); --_on: var(--ds-icon-button-icon-fg-on-color-default); }
-.ds-icon-btn--accent  { --_fill: var(--ds-icon-button-bg-accent-primary);  --_mix: var(--ds-icon-button-bg-mix-accent-hover);  --_line: var(--ds-icon-button-border-color-accent);  --_ink: var(--ds-icon-button-icon-fg-on-outline-accent);  --_on: var(--ds-icon-button-icon-fg-on-color-accent); }
+.ds-icon-btn--default { --_fill: var(--ds-icon-button-bg-default-primary); --_mix: var(--ds-icon-button-bg-mix-default-hover); --_line: var(--ds-icon-button-border-color-default); --_ink: var(--ds-icon-button-fg-icon-on-outline-default); --_on: var(--ds-icon-button-fg-icon-on-color-default); }
+.ds-icon-btn--accent  { --_fill: var(--ds-icon-button-bg-accent-primary);  --_mix: var(--ds-icon-button-bg-mix-accent-hover);  --_line: var(--ds-icon-button-border-color-accent);  --_ink: var(--ds-icon-button-fg-icon-on-outline-accent);  --_on: var(--ds-icon-button-fg-icon-on-color-accent); }
 
 /* Enabled */
 .ds-icon-btn--default-primary .ds-icon-btn__circle,
 .ds-icon-btn--accent-primary .ds-icon-btn__circle { background: var(--_fill); color: var(--_on); }
 .ds-icon-btn--default-secondary .ds-icon-btn__circle,
 .ds-icon-btn--accent-secondary .ds-icon-btn__circle {
-  border-width: var(--ds-icon-button-border-width-secondary);
+  border-width: var(--ds-icon-button-border-width-secondary-generic);
   border-color: var(--_line);
   color:        var(--_ink);
 }
@@ -136,15 +136,15 @@ const css = `
 /* Loading: aspecto de Enabled, spinner en el sitio del icono. */
 .ds-icon-btn--loading { cursor: progress; }
 .ds-icon-btn__spinner { width: var(--_icon); height: var(--_icon); }
-.ds-icon-btn--small  { --_icon: var(--ds-icon-button-icon-size-small); }
-.ds-icon-btn--medium { --_icon: var(--ds-icon-button-icon-size-medium); }
-.ds-icon-btn--large  { --_icon: var(--ds-icon-button-icon-size-large); }
+.ds-icon-btn--small  { --_icon: var(--ds-icon-button-size-icon-small); }
+.ds-icon-btn--medium { --_icon: var(--ds-icon-button-size-icon-medium); }
+.ds-icon-btn--large  { --_icon: var(--ds-icon-button-size-icon-large); }
 
 /* Disabled — mismo para las 3 variantes */
 .ds-icon-btn:disabled .ds-icon-btn__circle {
   background:   var(--ds-icon-button-bg-disabled);
   border-color: var(--ds-icon-button-border-color-disabled);
-  color:        var(--ds-icon-button-icon-fg-disabled);
+  color:        var(--ds-icon-button-fg-icon-disabled);
 }
 .ds-icon-btn--tertiary:disabled .ds-icon-btn__circle,
 .ds-icon-btn--default-tertiary:disabled .ds-icon-btn__circle,
@@ -152,10 +152,10 @@ const css = `
   background: transparent;
 }
 .ds-icon-btn:disabled .ds-icon-btn__label {
-  color: var(--ds-icon-button-label-fg-disabled);
+  color: var(--ds-icon-button-fg-label-disabled);
 }
-.ds-icon-btn--default:not(:disabled) .ds-icon-btn__label { color: var(--ds-icon-button-label-fg-default); }
-.ds-icon-btn--accent:not(:disabled) .ds-icon-btn__label  { color: var(--ds-icon-button-label-fg-accent); }
+.ds-icon-btn--default:not(:disabled) .ds-icon-btn__label { color: var(--ds-icon-button-fg-label-default); }
+.ds-icon-btn--accent:not(:disabled) .ds-icon-btn__label  { color: var(--ds-icon-button-fg-label-accent); }
 `;
 
 injectStyles('ds-icon-btn', css);

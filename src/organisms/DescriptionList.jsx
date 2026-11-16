@@ -43,7 +43,7 @@ const css = `
   display:        flex;
   flex-direction: column;
   align-items:    flex-start;
-  gap:            var(--ds-descriptionlist-gap);
+  gap:            var(--ds-description-list-gap-generic);
   width:          100%;
   font-family:    inherit;
 }
@@ -60,11 +60,11 @@ const css = `
    La línea es el borde del grupo, no un <hr> dentro de <dl> (A11y-5). */
 .ds-dl-item {
   display:        flex;
-  gap:            var(--ds-descriptionlist-gap);
-  padding-bottom: var(--ds-descriptionlist-gap);
-  border-bottom:  var(--ds-descriptionlist-divider-width) solid var(--ds-descriptionlist-divider-color);
+  gap:            var(--ds-description-list-gap-generic);
+  padding-bottom: var(--ds-description-list-gap-generic);
+  border-bottom:  var(--ds-descriptionlist-width-divider) solid var(--ds-descriptionlist-divider-color);
 }
-.ds-dl-item + .ds-dl-item { margin-top: var(--ds-descriptionlist-gap); }
+.ds-dl-item + .ds-dl-item { margin-top: var(--ds-description-list-gap-generic); }
 .ds-dl--landscape .ds-dl-item { flex-direction: row;    align-items: baseline; }
 .ds-dl--portrait  .ds-dl-item { flex-direction: column; }
 
@@ -72,7 +72,7 @@ const css = `
   font-size:   var(--ds-fontSize-label-md);
   line-height: var(--ds-lineHeight-label-md);
   font-weight: var(--ds-font-weight-regular);
-  color:       var(--ds-descriptionlist-label-fg-generic);
+  color:       var(--ds-description-list-fg-label-generic);
 }
 .ds-dl--landscape .ds-dl-item__label,
 .ds-dl--landscape .ds-dl-item__value { flex: 1 1 0; min-width: 0; }
@@ -83,36 +83,36 @@ const css = `
   display:        flex;
   flex-direction: column;
   align-items:    flex-start;
-  gap:            var(--ds-descriptionlist-gap);
+  gap:            var(--ds-description-list-gap-generic);
   min-width:      0;
   font-size:      var(--ds-fontSize-body-sm);
   line-height:    var(--ds-lineHeight-body-sm);
   font-weight:    var(--ds-font-weight-regular);
-  color:          var(--ds-descriptionlist-valuetext-fg-generic);
+  color:          var(--ds-description-list-fg-value-text-generic);
   overflow-wrap:  anywhere;
 }
-.ds-dl-item__value--empty { color: var(--ds-descriptionlist-valuetext-fg-subtle); }
+.ds-dl-item__value--empty { color: var(--ds-description-list-fg-value-text-subtle); }
 
 /* Account: icono opcional + nombre / importe / número / segundo valor */
-.ds-dl-account { display: flex; align-items: flex-start; gap: var(--ds-descriptionlist-gap); }
+.ds-dl-account { display: flex; align-items: flex-start; gap: var(--ds-description-list-gap-generic); }
 .ds-dl-account__icon {
   display: inline-flex; flex-shrink: 0;
-  width:  var(--ds-descriptionlist-icon-account-size);
-  height: var(--ds-descriptionlist-icon-account-size);
-  color:  var(--ds-descriptionlist-icon-account-fg);
+  width:  var(--ds-description-list-size-icon-account-generic);
+  height: var(--ds-description-list-size-icon-account-generic);
+  color:  var(--ds-description-list-fg-icon-account-generic);
 }
-.ds-dl-account__values { display: flex; flex-direction: column; align-items: flex-start; gap: var(--ds-descriptionlist-account-gap); min-width: 0; }
+.ds-dl-account__values { display: flex; flex-direction: column; align-items: flex-start; gap: var(--ds-description-list-gap-account-generic); min-width: 0; }
 .ds-dl-account__name {
   font-size: var(--ds-fontSize-label-md); line-height: var(--ds-lineHeight-label-md);
-  font-weight: var(--ds-font-weight-regular); color: var(--ds-descriptionlist-accountname-fg-generic);
+  font-weight: var(--ds-font-weight-regular); color: var(--ds-descriptionlist-fg-accountname-generic);
 }
 .ds-dl-account__number {
   font-size: var(--ds-fontSize-label-sm); line-height: var(--ds-lineHeight-label-sm);
-  font-weight: var(--ds-font-weight-regular); color: var(--ds-descriptionlist-iban-fg-generic);
+  font-weight: var(--ds-font-weight-regular); color: var(--ds-description-list-fg-iban-generic);
 }
 .ds-dl-account__helper {
   font-size: var(--ds-fontSize-body-xs); line-height: var(--ds-lineHeight-body-xs);
-  font-weight: var(--ds-font-weight-regular); color: var(--ds-descriptionlist-helpertext-fg-generic);
+  font-weight: var(--ds-font-weight-regular); color: var(--ds-description-list-fg-helper-text-generic);
 }
 `;
 

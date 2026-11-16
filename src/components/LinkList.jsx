@@ -19,13 +19,13 @@ const css = `
   flex-direction: column;
 }
 
-.ds-link-list__title { margin: 0; color: var(--ds-link-list-title-fg); }
+.ds-link-list__title { margin: 0; color: var(--ds-link-list-fg-title); }
 /* Icono de lista (Figma linkList/all/iconLeft/fg): mismo color en todas las filas, también en Accent */
-.ds-link-list .ds-link > .ds-link__icon:first-child { color: var(--ds-link-list-icon-fg); }
+.ds-link-list .ds-link > .ds-link__icon:first-child { color: var(--ds-link-list-fg-icon-left-generic); }
 
-.ds-link-list--gap-sm { gap: var(--ds-link-list-item-gap-sm); }
-.ds-link-list--gap-md { gap: var(--ds-link-list-item-gap-md); }
-.ds-link-list--gap-lg { gap: var(--ds-link-list-item-gap-lg); }
+.ds-link-list--gap-sm { gap: var(--ds-link-list-gap-item-sm); }
+.ds-link-list--gap-md { gap: var(--ds-link-list-gap-item-md); }
+.ds-link-list--gap-lg { gap: var(--ds-link-list-gap-item-lg); }
 `;
 
 let _styleInjected = false;

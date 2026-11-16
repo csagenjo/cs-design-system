@@ -15,7 +15,7 @@ const css = `
 
 
 /* Helper — encima del campo */
-.ds-input-dropdown__message { margin-top: var(--ds-input-validation-gap); }
+.ds-input-dropdown__message { margin-top: var(--ds-input-gap-validation); }
 
 .ds-input-dropdown__field-wrap {
   position: relative;
@@ -26,7 +26,7 @@ const css = `
 .ds-input-dropdown__control {
   width:              100%;
   padding:            var(--ds-input-padding-ver-inner) var(--ds-input-padding-hor);
-  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-icon-size) + var(--ds-input-field-icon-gap));
+  padding-right:      calc(var(--ds-input-padding-hor) + var(--ds-input-size-icon) + var(--ds-input-gap-field-icon));
   font-size:          var(--ds-fontSize-body-sm);
   font-family:        inherit;
   line-height:        var(--ds-lineHeight-body-sm);
@@ -51,9 +51,9 @@ const css = `
   display:        flex;
   align-items:    center;
   pointer-events: none;
-  color:          var(--ds-input-icon-fg-primary);
+  color:          var(--ds-input-fg-icon-primary);
 }
-.ds-input-dropdown--disabled .ds-input-dropdown__icon { color: var(--ds-input-icon-fg-disabled); }
+.ds-input-dropdown--disabled .ds-input-dropdown__icon { color: var(--ds-input-fg-icon-disabled); }
 
 `;
 

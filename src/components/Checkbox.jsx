@@ -46,16 +46,16 @@ const css = `
   position:      relative;
   display:       inline-flex;
   align-items:   center;
-  gap:           var(--ds-checkbox-label-gap);
-  padding:       var(--ds-checkbox-padding);
-  margin:        var(--ds-checkbox-focus-area-padding);
+  gap:           var(--ds-checkbox-gap-generic);
+  padding:       var(--ds-checkbox-padding-generic);
+  margin:        var(--ds-checkbox-padding-focus-area-generic);
   border-radius: var(--ds-checkbox-border-radius-row);
   font-family:   inherit;
   cursor:        pointer;
   box-sizing:    border-box;
   transition:    background 0.12s, opacity 0.12s;
 }
-.ds-checkbox--full-width { display: flex; width: calc(100% - 2 * var(--ds-checkbox-focus-area-padding)); }
+.ds-checkbox--full-width { display: flex; width: calc(100% - 2 * var(--ds-checkbox-padding-focus-area-generic)); }
 .ds-checkbox--disabled { cursor: not-allowed; }
 
 /* Visually hidden native input — still focusable and operable */
@@ -74,24 +74,24 @@ const css = `
 /* Hueco de 24 (checkbox/all/root/size) con la caja de 20 centrada (.CheckStates) */
 .ds-checkbox__slot {
   flex-shrink:     0;
-  width:           var(--ds-checkbox-size);
-  height:          var(--ds-checkbox-size);
+  width:           var(--ds-checkbox-size-generic);
+  height:          var(--ds-checkbox-size-generic);
   display:         flex;
   align-items:     center;
   justify-content: center;
   pointer-events:  none;
 }
 .ds-checkbox__box {
-  width:           var(--ds-checkbox-box-size);
-  height:          var(--ds-checkbox-box-size);
-  border:          var(--ds-checkbox-border-width) solid var(--ds-checkbox-border-default);
+  width:           var(--ds-checkbox-size-box);
+  height:          var(--ds-checkbox-size-box);
+  border:          var(--ds-checkbox-border-width) solid var(--ds-checkbox-border-color-default);
   border-radius:   var(--ds-checkbox-border-radius);
   background:      var(--ds-checkbox-bg-default);
   display:         flex;
   align-items:     center;
   justify-content: center;
   transition:      background 0.12s, border-color 0.12s;
-  color:           var(--ds-checkbox-icon-fg);
+  color:           var(--ds-checkbox-fg-icon);
   box-sizing:      border-box;
 }
 
@@ -99,15 +99,15 @@ const css = `
 .ds-checkbox__input:checked       + .ds-checkbox__slot .ds-checkbox__box,
 .ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-selected);
-  border-color: var(--ds-checkbox-border-selected);
+  border-color: var(--ds-checkbox-border-color-selected);
 }
 
 /* Error */
-.ds-checkbox--error .ds-checkbox__box { border-color: var(--ds-checkbox-border-error); }
+.ds-checkbox--error .ds-checkbox__box { border-color: var(--ds-checkbox-border-color-error); }
 .ds-checkbox--error .ds-checkbox__input:checked       + .ds-checkbox__slot .ds-checkbox__box,
 .ds-checkbox--error .ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-error);
-  border-color: var(--ds-checkbox-border-error);
+  border-color: var(--ds-checkbox-border-color-error);
 }
 
 /* Disabled — gana a selected/indeterminate */
@@ -115,19 +115,19 @@ const css = `
 .ds-checkbox--disabled .ds-checkbox__input:checked       + .ds-checkbox__slot .ds-checkbox__box,
 .ds-checkbox--disabled .ds-checkbox__input:indeterminate + .ds-checkbox__slot .ds-checkbox__box {
   background:   var(--ds-checkbox-bg-disabled);
-  border-color: var(--ds-checkbox-border-disabled);
-  color:        var(--ds-checkbox-icon-disabled);
+  border-color: var(--ds-checkbox-border-color-disabled);
+  color:        var(--ds-checkbox-fg-icon-disabled);
 }
 
 /* Hover y pressed: toda la fila (Figma: fill / opacidad del frame Root) */
 .ds-checkbox:not(.ds-checkbox--disabled):hover  { background: var(--ds-checkbox-bg-hover); }
-.ds-checkbox:not(.ds-checkbox--disabled):active { opacity: var(--ds-checkbox-opacity-pressed); }
+.ds-checkbox:not(.ds-checkbox--disabled):active { opacity: var(--ds-checkbox-bg-pressed); }
 
 /* Foco: anillo doble alrededor de la fila, dentro del área de foco */
 .ds-checkbox:has(.ds-checkbox__input:focus-visible) {
-  outline:        var(--ds-checkbox-focus-width) solid var(--ds-checkbox-focus-outer);
-  outline-offset: var(--ds-checkbox-focus-width);
-  box-shadow:     0 0 0 var(--ds-checkbox-focus-width) var(--ds-checkbox-focus-inner);
+  outline:        var(--ds-checkbox-border-width-focus) solid var(--ds-checkbox-border-color-focus-outer);
+  outline-offset: var(--ds-checkbox-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-checkbox-border-width-focus) var(--ds-checkbox-border-color-focus-inner);
 }
 
 /* Iconos — ocultos salvo en su estado */
@@ -140,10 +140,10 @@ const css = `
   font-size:   var(--ds-fontSize-label-md);
   font-weight: var(--ds-font-weight-regular);
   line-height: var(--ds-lineHeight-label-md);
-  color:       var(--ds-checkbox-label-fg);
+  color:       var(--ds-checkbox-fg-label);
   user-select: none;
 }
-.ds-checkbox--disabled .ds-checkbox__label { color: var(--ds-checkbox-label-disabled); }
+.ds-checkbox--disabled .ds-checkbox__label { color: var(--ds-checkbox-fg-label-disabled); }
 `;
 
 let _styleInjected = false;

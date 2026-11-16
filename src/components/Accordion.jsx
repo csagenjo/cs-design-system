@@ -68,7 +68,7 @@ const css = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--ds-accordion-title-gap);
+  gap: var(--ds-accordion-gap-title);
   width: 100%;
   box-sizing: border-box;
   border: none;
@@ -76,7 +76,7 @@ const css = `
      INSIDE de Figma: 6+28+6 = 40 exacto, en rejilla */
   box-shadow: inset 0 var(--ds-accordion-border-width) 0 var(--ds-accordion-border-color);
   background: transparent;
-  padding: var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-right) var(--ds-accordion-title-padding-ver) var(--ds-accordion-title-padding-left);
+  padding: var(--ds-accordion-padding-ver-title) var(--ds-accordion-padding-right-title) var(--ds-accordion-padding-ver-title) var(--ds-accordion-padding-left-title);
   color: var(--ds-accordion-fg-text);
   font-family: inherit;                       /* Nunito (fontFamily/default) */
   font-size: var(--ds-fontSize-title-md);      /* 19 */
@@ -92,9 +92,9 @@ const css = `
   opacity: var(--ds-accordion-opacity-pressed);
 }
 .ds-accordion__trigger:focus-visible {
-  outline: var(--ds-accordion-focus-width) solid var(--ds-accordion-focus-outer);
+  outline: var(--ds-accordion-border-width-focus) solid var(--ds-accordion-border-color-focus-outer);
   outline-offset: -2px;
-  box-shadow: inset 0 0 0 4px var(--ds-accordion-focus-inner),
+  box-shadow: inset 0 0 0 4px var(--ds-accordion-border-color-focus-inner),
               inset 0 var(--ds-accordion-border-width) 0 var(--ds-accordion-border-color);
 }
 .ds-accordion__icon {
@@ -104,9 +104,9 @@ const css = `
 .ds-accordion__content {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-accordion-content-gap);
+  gap: var(--ds-accordion-gap-content);
   box-sizing: border-box;
-  padding: var(--ds-accordion-content-padding-top) var(--ds-accordion-content-padding-right) var(--ds-accordion-content-padding-bottom) var(--ds-accordion-content-padding-left);
+  padding: var(--ds-accordion-padding-top-content) var(--ds-accordion-padding-right-content) var(--ds-accordion-padding-bottom-content) var(--ds-accordion-padding-left-content);
   margin: 0;
   color: var(--ds-accordion-fg-text);
   font-family: inherit;
@@ -124,7 +124,7 @@ const css = `
 .ds-accordion__content-inner--text {
   /* texto suelto: entra lo mismo que el área de foco de los campos (4) para
      alinearse con el título y con las cajas de los inputs del slot (13/11) */
-  padding-inline: var(--ds-accordion-root-inset-hor);
+  padding-inline: var(--ds-accordion-inset-hor);
   box-sizing: border-box;
 }
 .ds-accordion--last {

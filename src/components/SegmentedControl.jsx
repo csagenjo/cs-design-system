@@ -38,9 +38,9 @@ const css = `
 .ds-segmented-control {
   display: inline-flex;
   width: fit-content;   /* hug, también dentro de un padre flex en columna */
-  gap: var(--ds-segmented-control-root-gap);
-  background: var(--ds-segmented-control-root-bg);
-  border-radius: var(--ds-segmented-control-root-border-radius);
+  gap: var(--ds-segmented-control-gap);
+  background: var(--ds-segmented-control-bg);
+  border-radius: var(--ds-segmented-control-border-radius);
   box-sizing: border-box;
 }
 .ds-segmented-control__segment {
@@ -49,10 +49,10 @@ const css = `
   align-items: center;
   justify-content: center;
   border: none;
-  background: var(--ds-segmented-control-segment-bg);
-  color: var(--ds-segmented-control-label-fg);
+  background: var(--ds-segmented-control-bg-segment);
+  color: var(--ds-segmented-control-fg-label);
   margin: var(--ds-segmented-control-segment-focus-area);
-  border-radius: var(--ds-segmented-control-segment-border-radius);
+  border-radius: var(--ds-segmented-control-border-radius-segment);
   font-family: inherit;                       /* Nunito (fontFamily/default) */
   font-weight: var(--ds-font-weight-regular);  /* 400 */
   cursor: pointer;
@@ -68,34 +68,34 @@ const css = `
   pointer-events: none;
 }
 .ds-segmented-control__segment:hover::before {
-  background: var(--ds-segmented-control-bgmix-hover);
+  background: var(--ds-segmented-control-bg-mix-hover);
 }
 .ds-segmented-control__segment[aria-checked="true"] {
-  background: var(--ds-segmented-control-segment-bg-selected);
-  color: var(--ds-segmented-control-label-fg-selected);
+  background: var(--ds-segmented-control-bg-segment-selected);
+  color: var(--ds-segmented-control-fg-label-selected);
 }
 .ds-segmented-control__segment[aria-checked="true"]:hover::before {
-  background: var(--ds-segmented-control-bgmix-hover-selected);
+  background: var(--ds-segmented-control-bg-mix-hover-selected);
 }
 .ds-segmented-control__segment:active {
   opacity: var(--ds-segmented-control-opacity-pressed);
 }
 .ds-segmented-control__segment:focus-visible {
-  outline: var(--ds-segmented-control-focus-width) solid var(--ds-segmented-control-focus-outer);
+  outline: var(--ds-segmented-control-border-width-focus) solid var(--ds-segmented-control-border-color-focus-outer);
   outline-offset: 0;
-  box-shadow: inset 0 0 0 var(--ds-segmented-control-focus-width) var(--ds-segmented-control-focus-inner);
+  box-shadow: inset 0 0 0 var(--ds-segmented-control-border-width-focus) var(--ds-segmented-control-border-color-focus-inner);
 }
 
 .ds-segmented-control__segment--small {
-  padding: var(--ds-segmented-control-segment-padding-ver-sm) var(--ds-segmented-control-segment-padding-hor-sm);
+  padding: var(--ds-segmented-control-padding-ver-segment-sm) var(--ds-segmented-control-padding-hor-segment-sm);
   font-size: var(--ds-fontSize-label-sm); line-height: var(--ds-lineHeight-label-sm); /* 14/20 → 32 con el área */
 }
 .ds-segmented-control__segment--medium {
-  padding: var(--ds-segmented-control-segment-padding-ver-md) var(--ds-segmented-control-segment-padding-hor-sm);
+  padding: var(--ds-segmented-control-padding-ver-segment-md) var(--ds-segmented-control-padding-hor-segment-sm);
   font-size: var(--ds-fontSize-label-md); line-height: var(--ds-lineHeight-label-md); /* 16/24 → 40 */
 }
 .ds-segmented-control__segment--large {
-  padding: var(--ds-segmented-control-segment-padding-ver-lg) var(--ds-segmented-control-segment-padding-hor-lg);
+  padding: var(--ds-segmented-control-padding-ver-segment-lg) var(--ds-segmented-control-padding-hor-segment-lg);
   font-size: var(--ds-fontSize-label-lg); line-height: var(--ds-lineHeight-label-lg); /* 19/28 → 48 */
 }
 `;

@@ -8,7 +8,7 @@
  *
  * Tokens: familia table/all/* — cellCommon compartido + específico de Header.
  *   · color/bg/borde vía --ds-cell-common-* (Componente→Mode)
- *   · icono de orden vía --ds-cell-common-icon-fg (teal), currentColor en el SVG
+ *   · icono de orden vía --ds-cell-common-fg-icon (teal), currentColor en el SVG
  *   · tipografía directa de Device (Title/sm 16/24) — regla de tipografía §4
  *
  * Ejes (nombres compartidos con CellData/CellMore, significado propio):
@@ -44,7 +44,7 @@ const css = `
   font-size:     var(--ds-fontSize-title-sm);        /* 16 */
   font-weight:   var(--ds-font-weight-regular);      /* 400 */
   line-height:   var(--ds-lineHeight-title-sm);            /* 24 */
-  color:         var(--ds-cell-common-text-fg);      /* #050506 */
+  color:         var(--ds-cell-common-fg-text);      /* #050506 */
   border-bottom: var(--ds-cell-common-border-bottom-width) solid var(--ds-cell-common-border-bottom-color-subtle);
 }
 
@@ -69,7 +69,7 @@ const css = `
 .ds-cell-header__sort {
   display:     inline-flex;
   flex-shrink: 0;
-  color:       var(--ds-cell-common-icon-fg); /* #4BA9C0 */
+  color:       var(--ds-cell-common-fg-icon); /* #4BA9C0 */
 }
 
 /* Botón de orden (con onSort) — sin aspecto propio, hereda el de la celda */
@@ -105,9 +105,9 @@ const css = `
 .ds-cell-header--sortable:has(.ds-cell-header__sort-button:active) { opacity: var(--ds-cell-common-opacity-pressed); }
 /* Foco: anillo doble POR DENTRO de la celda (las celdas van pegadas) */
 .ds-cell-header__sort-button:focus-visible {
-  outline:        var(--ds-cell-common-focus-width) solid var(--ds-cell-common-focus-outer);
-  outline-offset: calc(var(--ds-cell-common-focus-width) * -1);
-  box-shadow:     inset 0 0 0 calc(var(--ds-cell-common-focus-width) * 2) var(--ds-cell-common-focus-inner);
+  outline:        var(--ds-cell-common-border-width-focus) solid var(--ds-cell-common-border-color-focus-outer);
+  outline-offset: calc(var(--ds-cell-common-border-width-focus) * -1);
+  box-shadow:     inset 0 0 0 calc(var(--ds-cell-common-border-width-focus) * 2) var(--ds-cell-common-border-color-focus-inner);
 }
 `;
 

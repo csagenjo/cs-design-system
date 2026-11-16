@@ -70,8 +70,8 @@ const css = `
 .ds-amount-view--iso-left { flex-direction: row-reverse; }
 
 /* ── Fondo + texto por highlight × type ──────────────────────────────────── */
-.ds-amount-view--emphasis.ds-amount-view--positive { background: var(--ds-amount-view-bg-positive-solid); color: var(--ds-amount-view-fg-onColor); }
-.ds-amount-view--emphasis.ds-amount-view--negative { background: var(--ds-amount-view-bg-negative-solid); color: var(--ds-amount-view-fg-onColor); }
+.ds-amount-view--emphasis.ds-amount-view--positive { background: var(--ds-amount-view-bg-positive-solid); color: var(--ds-amount-view-fg-on-color); }
+.ds-amount-view--emphasis.ds-amount-view--negative { background: var(--ds-amount-view-bg-negative-solid); color: var(--ds-amount-view-fg-on-color); }
 
 .ds-amount-view--subtle.ds-amount-view--positive   { background: var(--ds-amount-view-bg-positive-soft); }
 .ds-amount-view--subtle.ds-amount-view--negative   { background: var(--ds-amount-view-bg-negative-soft); }

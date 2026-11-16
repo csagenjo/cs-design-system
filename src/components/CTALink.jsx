@@ -14,7 +14,7 @@
  *   1,5) · Pressed (:active, opacidad) · Focus (anillo doble) · Disabled.
  *
  * Mide igual en los tres énfasis: padding 6/12 + área de foco de 4 px
- *   alrededor (margin, `--ds-cta-link-focus-area-padding`), donde va el
+ *   alrededor (margin, `--ds-cta-link-padding-focus-area`), donde va el
  *   anillo — mismo patrón que Button (el anillo nunca sale del componente).
  *
  * SIN `href` o `disabled` → <button type="button"> con el mismo aspecto
@@ -38,16 +38,16 @@ const css = `
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  margin:          var(--ds-cta-link-focus-area-padding);
+  margin:          var(--ds-cta-link-padding-focus-area);
   /* el borde (transparente salvo en Medium) va por dentro: el padding lo descuenta, como el stroke INSIDE de Figma */
-  padding:         calc(var(--ds-cta-link-padding-ver) - var(--ds-cta-link-border-width-medium)) calc(var(--ds-cta-link-padding-hor) - var(--ds-cta-link-border-width-medium));
+  padding:         calc(var(--ds-cta-link-padding-ver) - var(--ds-cta-link-border-width-medium-emphasis)) calc(var(--ds-cta-link-padding-hor) - var(--ds-cta-link-border-width-medium-emphasis));
   font-family:     inherit;
   font-size:       var(--ds-fontSize-label-lg);
   line-height:     var(--ds-lineHeight-label-lg);
   font-weight:     var(--ds-font-weight-bold);
   text-decoration: none;
   cursor:          pointer;
-  border:          var(--ds-cta-link-border-width-medium) solid transparent;
+  border:          var(--ds-cta-link-border-width-medium-emphasis) solid transparent;
   box-sizing:      border-box;
   background:      transparent;
   appearance:      none;
@@ -61,17 +61,17 @@ const css = `
 .ds-cta-link--low { border-radius: var(--ds-cta-link-border-radius-low); }
 .ds-cta-link--low.ds-cta-link--default { color: var(--ds-cta-link-fg-default); }
 .ds-cta-link--low.ds-cta-link--accent  { color: var(--ds-cta-link-fg-accent); }
-.ds-cta-link--low.ds-cta-link--default .ds-cta-link__label { --_ul: var(--ds-cta-link-border-bottom-default); }
-.ds-cta-link--low.ds-cta-link--accent  .ds-cta-link__label { --_ul: var(--ds-cta-link-border-bottom-accent); }
+.ds-cta-link--low.ds-cta-link--default .ds-cta-link__label { --_ul: var(--ds-cta-link-border-color-bottom-default); }
+.ds-cta-link--low.ds-cta-link--accent  .ds-cta-link__label { --_ul: var(--ds-cta-link-border-color-bottom-accent); }
 .ds-cta-link--low:hover:not(:disabled) .ds-cta-link__label { --_ulw: var(--ds-cta-link-border-bottom-width-hover); }
 
 /* ── Medium emphasis: contorno ── */
-.ds-cta-link--medium { border-radius: var(--ds-cta-link-border-radius-medium); }
-.ds-cta-link--medium.ds-cta-link--default { color: var(--ds-cta-link-fg-default); border-color: var(--ds-cta-link-border-secondary); }
-.ds-cta-link--medium.ds-cta-link--accent  { color: var(--ds-cta-link-fg-accent);  border-color: var(--ds-cta-link-border-accent-secondary); }
+.ds-cta-link--medium { border-radius: var(--ds-cta-link-border-radius-medium-emphasis); }
+.ds-cta-link--medium.ds-cta-link--default { color: var(--ds-cta-link-fg-default); border-color: var(--ds-cta-link-border-color-secondary); }
+.ds-cta-link--medium.ds-cta-link--accent  { color: var(--ds-cta-link-fg-accent);  border-color: var(--ds-cta-link-border-color-accent-secondary); }
 
 /* ── High emphasis: relleno ── */
-.ds-cta-link--high { border-radius: var(--ds-cta-link-border-radius-high); }
+.ds-cta-link--high { border-radius: var(--ds-cta-link-border-radius-high-emphasis); }
 .ds-cta-link--high.ds-cta-link--default { --_fill: var(--ds-cta-link-bg-primary);        color: var(--ds-cta-link-fg-primary);        background: var(--_fill); }
 .ds-cta-link--high.ds-cta-link--accent  { --_fill: var(--ds-cta-link-bg-accent-primary); color: var(--ds-cta-link-fg-accent-primary); background: var(--_fill); }
 
@@ -85,15 +85,15 @@ const css = `
 
 /* ── Focus: anillo doble dentro del área de foco (mismo patrón que Button) ── */
 .ds-cta-link:focus-visible {
-  outline:        var(--ds-cta-link-focus-width) solid var(--ds-cta-link-focus-outer);
-  outline-offset: var(--ds-cta-link-focus-width);
-  box-shadow:     0 0 0 var(--ds-cta-link-focus-width) var(--ds-cta-link-focus-inner);
+  outline:        var(--ds-cta-link-border-width-focus) solid var(--ds-cta-link-border-color-focus-outer);
+  outline-offset: var(--ds-cta-link-border-width-focus);
+  box-shadow:     0 0 0 var(--ds-cta-link-border-width-focus) var(--ds-cta-link-border-color-focus-inner);
 }
 
 /* ── Disabled: sus tokens, nunca opacidad ── */
-.ds-cta-link:disabled { cursor: not-allowed; color: var(--ds-cta-link-fg-disabled); }
-.ds-cta-link--low:disabled .ds-cta-link__label { --_ul: var(--ds-cta-link-border-disabled); }
-.ds-cta-link--medium:disabled { border-color: var(--ds-cta-link-border-disabled); }
+.ds-cta-link:disabled { cursor: not-allowed; color: var(--ds-cta-link-fg-label-disabled); }
+.ds-cta-link--low:disabled .ds-cta-link__label { --_ul: var(--ds-cta-link-border-color-disabled); }
+.ds-cta-link--medium:disabled { border-color: var(--ds-cta-link-border-color-disabled); }
 .ds-cta-link--high:disabled   { --_fill: var(--ds-cta-link-bg-disabled); background: var(--_fill); }
 `;
 
