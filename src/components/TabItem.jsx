@@ -1,6 +1,6 @@
 /**
  * TabItem — Componente atómico
- * CS Design System · v3.0
+ * CS Design System · v3.1
  *
  * Pestaña individual. `<button role="tab">` real — Hover/Pressed/Focus se
  * resuelven vía pseudo-clases CSS nativas (mismo criterio que Checkbox/
@@ -36,14 +36,25 @@
  *     aviso en desarrollo.
  *   · Grosores por token (ribbon 4 = borderWidth/xl, foco 2 = borderWidth/lg).
  *
+ * 16/11/2026 (v3.1), igual que Figma (Show Icon / Icon / Show Error):
+ *   · `icon` — icono decorativo a la izquierda (slot libre, cualquier nombre
+ *     del átomo Icon), color `tabs/all/icon/fg/generic`.
+ *   · `hasError` — circle-x a la derecha (`tabs/all/errorIcon/fg/generic` →
+ *     fg/icon/error) para marcar pestañas con campos que corregir. El color no
+ *     basta: el lector oye `errorLabel` ("has errors") detrás del nombre.
+ *   · Gap entre icono, texto y error: `tabs/all/root/gap/generic` (8).
+ *
  * USO:
  *   <TabItem size="m" selected>Resumen</TabItem>
+ *   <TabItem size="l" variant="contained" icon="file-text" hasError>Bank details</TabItem>
  *   <TabItem size="s" variant="contained" onClick={fn}>Movimientos</TabItem>
  */
 
 import React from 'react';
 import { injectStyles } from './_inputBase';
 import { warnOnce } from './_devWarn';
+import { Icon } from './Icon';
+import { VisuallyHidden } from './VisuallyHidden';
 
 const css = `
 .ds-tab-item {
@@ -64,7 +75,10 @@ const css = `
   color: var(--ds-tabs-text-fg-generic);
   white-space: nowrap;
   flex-shrink: 0;
+  gap: var(--ds-tabs-root-gap-generic);
 }
+.ds-tab-item__icon { display: inline-flex; color: var(--ds-tabs-icon-fg-generic); }
+.ds-tab-item__error { display: inline-flex; color: var(--ds-tabs-error-icon-fg-generic); }
 .ds-tab-item--s { --_pv: var(--ds-tabs-root-padding-ver-s); --_fs: var(--ds-fontSize-label-xs); --_lh: var(--ds-lineHeight-label-xs); }
 .ds-tab-item--m { --_pv: var(--ds-tabs-root-padding-ver-m); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); }
 .ds-tab-item--l { --_pv: var(--ds-tabs-root-padding-ver-l); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); }
@@ -122,6 +136,8 @@ const css = `
 
 injectStyles('ds-tab-item', css);
 
+const ICON_SIZE = { s: '2xs', m: 'xs', l: 'sm' }; // 16 / 20 / 24, cabe en el line-height de cada tamaño
+
 export function TabItem({
   size = 'm',          // 's' | 'm' | 'l'
   variant = 'line',    // 'line' | 'contained'
@@ -131,6 +147,9 @@ export function TabItem({
   children,
   id,
   className,
+  icon,                // nombre del átomo Icon, decorativo, a la izquierda
+  hasError = false,    // circle-x a la derecha + texto para lector
+  errorLabel = 'has errors',
   role = 'tab',   // A11y-1: TopNavigation la usa como botón de navegación (role={null}), no como pestaña
   ...rest         // A11y-1: aria-expanded/aria-controls/ref/onKeyDown… llegan al <button>
 }) {
@@ -152,7 +171,14 @@ export function TabItem({
       role={role || undefined}
       aria-selected={role === 'tab' ? selected : undefined}
     >
+      {icon && <span className="ds-tab-item__icon" aria-hidden="true"><Icon name={icon} size={ICON_SIZE[size]} /></span>}
       {children}
+      {hasError && (
+        <span className="ds-tab-item__error">
+          <Icon name="circle-x" size={ICON_SIZE[size]} />
+          <VisuallyHidden>{`, ${errorLabel}`}</VisuallyHidden>
+        </span>
+      )}
       {selected && <span className="ds-tab-item__ribbon" aria-hidden="true" />}
     </button>
   );

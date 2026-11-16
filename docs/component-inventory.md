@@ -4501,7 +4501,8 @@ A row of tabs that switches between views of the same content, one panel visible
 **Props**
 - Tabs · items [{ id, label }], selectedId, onChange(id), size 's'|'m'|'l', type 'fixed'|'scrollable', variant 'line'|'contained', ariaLabel / ariaLabelledBy, id (links each tab to its TabPanel)
 - TabPanel · tabsId, itemId, hidden, children
-- TabItem · size, variant, selected, onClick, role (null = plain button, used by Top Navigation)
+- TabItem · size, variant, selected, onClick, icon (decorative, left), hasError + errorLabel (circle-x on the right; the label is read after the name), role (null = plain button, used by Top Navigation)
+- Tabs items[] also take icon, hasError, errorLabel. Use hasError to point at tabs whose fields need fixing after a submit; the colour alone is not enough, the label carries it
 
 **Example**
 - `<Tabs id="account" ariaLabel="Account" items={[{ id: 'sum', label: 'Summary' }, { id: 'mov', label: 'Movements' }]} selectedId={tab} onChange={setTab} />`

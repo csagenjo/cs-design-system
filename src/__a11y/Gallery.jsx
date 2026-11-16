@@ -1069,6 +1069,11 @@ export default function Gallery({ mode, theme = 'retail' }) {
             {['s', 'm', 'l'].map((s) => <TabItem key={s} size={s} variant={v} selected={s === 'm'} onClick={noop}>{`Tab ${v} ${s}`}</TabItem>)}
           </div>
         ))}
+        {['line', 'contained'].map((v) => (
+          <div key={'ie' + v} role="tablist" aria-label={`Tabs ${v} with icon and error`} className="a11y-row">
+            {['s', 'm', 'l'].map((s) => <TabItem key={s} size={s} variant={v} selected={s === 's'} icon="file-text" hasError onClick={noop}>{`Tab ${v} ${s}`}</TabItem>)}
+          </div>
+        ))}
       </Section>
 
       <Section name="Text">

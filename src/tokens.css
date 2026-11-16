@@ -1961,6 +1961,9 @@
   --ds-tabs-root-border-color-focus-inner: var(--ds-borderColor-focus-inner); /* hueco del anillo doble (30/10) */
   --ds-tabs-root-border-width-focus:      var(--ds-border-width-lg);     /* 2 */
   --ds-tabs-text-fg-generic:              var(--ds-fg-default);          /* invierte */
+  --ds-tabs-icon-fg-generic:              var(--ds-fg-icon-default);     /* tabs/all/icon/fg/generic (16/11) */
+  --ds-tabs-error-icon-fg-generic:        var(--ds-fg-icon-error);       /* tabs/all/errorIcon/fg/generic (16/11) */
+  --ds-tabs-root-gap-generic:             var(--ds-spacing-md);          /* 8 — tabs/all/root/gap/generic (16/11) */
   --ds-tabs-ribbon-border-color-selected: var(--ds-borderColor-primary); /* #0A7C92 fijo */
   --ds-tabs-ribbon-border-width-selected: var(--ds-border-width-xl);     /* 4 */
 

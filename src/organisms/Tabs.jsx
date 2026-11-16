@@ -105,6 +105,9 @@ export function Tabs({
           size={size}
           variant={variant}
           selected={item.id === selectedId}
+          icon={item.icon}
+          hasError={item.hasError}
+          errorLabel={item.errorLabel}
           onClick={() => onChange?.(item.id)}
           {...getItemProps(i)}
         >
