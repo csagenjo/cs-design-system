@@ -66,8 +66,11 @@ Pantallas (página "Supplier form"):
   `tabs/all/errorIcon/fg/generic`, `tabs/all/root/gap/generic`. Están a mano en
   `tokens.css`; falta el export para confirmar el valor del icono (puesto a
   `fg/icon/default`).
-- **ButtonBar:** en Figma "Delete" y "Save draft" de la izquierda son negros
-  (Type Default); en código, teal. Abierto en `tech-debt.md`.
+- **ButtonBar en las pantallas:** "Delete" y "Save draft" salían negros porque
+  las instancias tenían `Type=Default` sobrescrito en el Button anidado (el
+  componente y el código usan Accent). Corregido en las 7 instancias (16/11).
+  Es justo lo que la regla de instancias anidadas evita: el conector lee el
+  override y lo da por diseño.
 - **Fondo de página:** no hay token de componente para el lienzo de la pantalla;
   el banco usa `bg/page`. Lo resolverían las plantillas de layout (paso 5).
 - **Plantilla de Vite:** `#root` limitaba el ancho a 1126. El banco lo anula.
