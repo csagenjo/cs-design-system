@@ -5391,25 +5391,42 @@ Running text for reading: it wraps onto as many lines as it needs. Text and Desc
 ## Headline
 
 **Group:** Content
-**Figma:** 🟢 Headline page → `Headline text` (Size display, 2xl–xs × Style Default · Primary · Secondary · onColor) · frame *Headline — How to use & Accessibility* (12/11; display 17/11)
+**Figma:** 🟢 Headline page → `Headline text` (Size display, 2xl–xs × Style Default · Primary · Secondary · onColor · Level text property) · frame *Headline — How to use & Accessibility* (12/11; display and Level 17/11)
 **Code:** `src/components/Headline.jsx` (atom)
-**Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`
+**Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`, `lineHeight/headline/*`
 
-Page and section titles. Size is visual only; the heading level comes from the page outline. Display (40/48 · 48/56 · 64/72) is the h1 size for a Hero, and only there.
+Page and section titles. Two separate choices: Level (h1–h6) is the place in the page outline; Size is only how big it looks. Display (40/48 · 48/56 · 64/72) is the h1 size for a Hero, and only there.
 
 ## How to use
 
 ### Designers · Figma
 
 **When to use**
-- Page title (one per page, level 1) and section titles · for titles inside lists and rows use Section Header
+- Page title (one per page) and the titles of its sections · titles inside lists and rows → Section Header
 
-**Properties**
-- Size → 2xl · xl · lg · md · sm · xs (responsive: 48 → 32 on mobile for 2xl) · Style → Default · Primary · Secondary · onColor
-- Write the heading level (h1–h6) in the instance name or description
+**Two separate choices**
+- Level (h1–h6) → the place of the title in the page outline; screen readers use it to jump between sections. Set it in the Level property of each instance (h2 by default)
+- Size → how big it looks: display · 2xl · xl · lg · md · sm · xs (responsive through the Device tokens)
+- Style → Default · Primary · Secondary · onColor
+
+**Which one to choose**
+
+| Where the title sits | Level | Size |
+|---|---|---|
+| Hero title (landing, portfolio home, case study) | h1 | display |
+| Page title (any other page, PageTitle) | h1 | 2xl |
+| Section of the page | h2 | xl |
+| Subsection | h3 | lg |
+| Group inside a subsection | h4 | md |
+| Title of a card or panel | next level after its section | sm |
+
+**Rules**
+- One h1 per page; go down one level at a time, never skip (h2 → h4)
+- Start from the size of the level; go smaller in dense places (cards, side panels), never bigger than the title above
+- Display only for the h1 of a Hero, once per page
 
 **Anatomy**
-- Text only, bold, left aligned · line height 1.25× on the 4 grid
+- Text only, bold, left aligned · line height on the 8 grid
 
 ### Developers · React
 
@@ -5417,7 +5434,7 @@ Page and section titles. Size is visual only; the heading level comes from the p
 - `import { Headline } from './components/Headline'`
 
 **Props**
-- level 1–6 (the tag) · size 'display' | '2xl'…'xs' (look only; defaults to the level's; display only for the h1 of a Hero) · color 'default' | 'primary' | 'secondary' | 'onColor'
+- level 1–6 (the tag; Figma's Level property) · size 'display' | '2xl'…'xs' (look only; defaults to the level's; display only for the h1 of a Hero) · color 'default' | 'primary' | 'secondary' | 'onColor'
 
 **Example**
 - `<Headline level={2} size="lg">Payments</Headline>`

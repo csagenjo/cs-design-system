@@ -29,8 +29,8 @@ siguientes, menús, diálogos, panel de filtros.
 Capas cuyo componente no es obvio por el nombre.
 - (nombre de capa) → (componente del sistema y variante)
 
-## 3. Títulos
-- h1: (siempre el de PageTitle)
+## 3. Títulos (solo si los Headline no tienen la propiedad Level puesta)
+- h1: (el de PageTitle, o el del Hero)
 - h2:
 - h3:
 
