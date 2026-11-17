@@ -1,6 +1,6 @@
 # Deuda técnica abierta
 
-Solo lo que sigue pendiente (30/10/2026). Lo resuelto y el detalle de cada
+Solo lo que sigue pendiente (17/11/2026). Lo resuelto y el detalle de cada
 punto, con su historia, están en `docs/changelog.md` → "Registro de deuda
 técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
@@ -23,6 +23,9 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 - **Rejilla de 8 · tanda 2 (botones y navegación).** Fuera de rejilla tras la tanda 1: IconButton 52/76, CTA link 52, Tab Item y Tabs 52, Segmented Control 36/52, Snackbar 52, TopNavigation 52, Collapsible Icon Button 52, PageTitle 84.
 - **Rejilla de 8 · tanda 3 (datos y paneles).** Table (celdas 36), List View (paneles 36/59), Selector (116/188/212), Description List (65–197), Steps (60/84), Dialog header (44/60), Picker (100–476), Country/Currency Picker (122–238), Tooltip (20/26), Slider knob (58), AmountView (.Amount 20–36), flydown de TopNavigation (203–299, 12 textos con line-height suelto), Checkmark List (28–44). En código: textarea Adaptive (77) y Combobox con chips (71) crecen fuera de rejilla.
 - **Frames *How to use* de Card y Accordion:** mencionar el slot `Content` (ya está en el inventario).
+
+- **No hay token de font-family en código (17/11).** Figma tiene `fontFamily/default` (Nunito) y `fontFamily/narrow`, pero `tokens.css` no expone ninguna `--ds-font-family-*`: los componentes heredan la fuente de la página y cada app la declara a mano (el portfolio pone `'Nunito Variable'` en `body`). Añadir `--ds-font-family-default` (y `narrow` si llega a tener uso) desde Device, como el resto de la tipografía, y aplicarlo en la raíz de cada componente o en `foundations.css`. Decidir también cómo se carga la fuente (el sistema no la empaqueta).
+- **El rosa de la forma del Hero va en un tema Portfolio (17/11).** `hero/all/bg/backdrop/generic` apunta a `bg/surface/secondary-medium`: rosa en Retail (`#FED8E8`, dark `#631C39`), pero con `data-theme="youth"` pasa a teal (`#CBE7EE`), porque Youth intercambia primary↔secondary. El rosa es la marca del portfolio, no del sistema: crear un tema **Portfolio** en Theme (con su paleta secondary) y aplicarlo con `<html data-theme="portfolio">` en el portfolio, en lugar de depender de que Retail sea rosa. Mismo caso para la fuente (punto anterior) si el portfolio llega a usar otra.
 
 ## Figma e IP
 
