@@ -4990,21 +4990,26 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 **Sizing**
 - Bar 56 · padding layout/margin · logo → tabs layout/gutter · flydown padding layout/margin, columns 160, groups 16 apart
 
+**Action**
+- "Show action" turns the button on the right on or off. Edit its label and icon on the exposed "Action" instance; its type, variant and size stay locked
+
 ### Developers · React
 
 **Import**
 - `import { TopNavigation } from './organisms/TopNavigation'`
 
 **Props**
-- logo (node), menuItems [{ id, label, onClick?, flydown?: [{ groupTitle?, links: [{ label, href?, onClick? }] } | { featured }] }], selectedId, onExit, exitLabel ('Log out'), ariaLabel ('Main'), openMenuLabel, menuLabel
+- logo (node), menuItems [{ id, label, href?, onClick?, flydown?: [{ groupTitle?, links: [{ label, href?, onClick? }] } | { featured }] }], selectedId, action ({ label, icon?, href? | onClick? }, optional: no action, no button), ariaLabel ('Main'), openMenuLabel, menuLabel
+- `exitLabel` / `onExit` still work: they equal `action={{ label, icon: 'log-out', onClick }}`
 
 **Example**
-- `<TopNavigation logo={<Logo />} selectedId="billing" onExit={logout} menuItems={[{ id: 'customers', label: 'Customers', onClick: goCustomers }, { id: 'billing', label: 'Billing', flydown: [{ groupTitle: 'Billing', links: [{ label: 'Invoices', href: '/invoices' }] }] }]} />`
+- `<TopNavigation logo={<Logo />} selectedId="billing" action={{ label: 'Log out', icon: 'log-out', onClick: logout }} menuItems={[{ id: 'customers', label: 'Customers', onClick: goCustomers }, { id: 'billing', label: 'Billing', flydown: [{ groupTitle: 'Billing', links: [{ label: 'Invoices', href: '/invoices' }] }] }]} />`
+- Website: `<TopNavigation logo={<Name />} selectedId="work" menuItems={[{ id: 'work', label: 'Work', href: '#work' }, { id: 'about', label: 'About', href: '#about' }]} action={{ label: 'Download CV', icon: 'download', href: '/cv.pdf' }} />`
 
 ### AI agents · Claude Code
 
 **Pick it when**
-- The main bar of any La Plataforma page
+- The main bar of a back-office tool or a website
 
 **Don't pick it when**
 - Navigation inside a page → Tabs · side navigation on desktop → SidebarMenu (on mobile and tablet TopNavigation already shows its own SidebarMenu)
@@ -5030,7 +5035,7 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 ### Developers · React
 
 **Semantics; the current section has aria-current="page" and the selected ribbon**
-- `<nav aria-label="Main">, items in a list; tab with flydown = button with aria-expanded and aria-controls (disclosure pattern); the flydown sits right after its tab in the Tab order`
+- `<nav aria-label="Main">, items in a list; a tab with `href` is a link (opens in a new tab, can be shared); tab with flydown = button with aria-expanded and aria-controls (disclosure pattern); the flydown sits right after its tab in the Tab order`
 - Mobile: menu button with aria-expanded and aria-haspopup="dialog"; the panel is a modal dialog (useModal)
 
 **Keyboard**
@@ -5043,7 +5048,8 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 
 **Check before shipping**
 - selectedId on the current section
-- exitLabel and labels in the user's language
+- action label and menu labels in the user's language
+- On a website, every section has an `href` (links, not buttons)
 
 **Don't**
 - Don't open flydowns only on hover

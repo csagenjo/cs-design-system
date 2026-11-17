@@ -58,6 +58,9 @@
  * (gratis, mismo hook). Si no se pasa `onToggleCollapse`, no pasa nada
  * (mismo comportamiento que si el consumidor no gestiona el estado).
  *
+ * 17/11/2026: un item sin hijos acepta `href` → la fila es un enlace (<a>)
+ * y `onSelect` se sigue llamando al pulsarla (para cerrar un menú, p. ej.).
+ *
  * USO:
  *   <SidebarMenu
  *     title="Gestión de cuentas"
@@ -155,6 +158,7 @@ function SidebarMenuNode({ item, level, selectedId, expandedIds, onSelect, onTog
               <Icon name="ChevronDown" size="sm" />
             </span>
           ) : null}
+          href={hasChildren ? undefined : item.href}
           onClick={() => (hasChildren ? onToggleExpand(item.id) : onSelect(item.id))}
         />
       </div>

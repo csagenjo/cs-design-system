@@ -305,6 +305,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
             <Button type={t} variant={v} iconRight="ArrowRight">{`${t} ${v} iconRight`}</Button>
             <Button type={t} variant={v} loading>{`${t} ${v} loading`}</Button>
             <Button type={t} variant={v} disabled>{`${t} ${v} disabled`}</Button>
+            <Button type={t} variant={v} iconLeft="Download" href="#cv">{`${t} ${v} link`}</Button>
           </Row>
         )))}
         <Row>
@@ -1074,6 +1075,10 @@ export default function Gallery({ mode, theme = 'retail' }) {
             {['s', 'm', 'l'].map((s) => <TabItem key={s} size={s} variant={v} selected={s === 's'} icon="file-text" hasError onClick={noop}>{`Tab ${v} ${s}`}</TabItem>)}
           </div>
         ))}
+        {/* Como enlace (navegación de un sitio): <a>, fuera de un tablist */}
+        <nav aria-label="Tab links" className="a11y-row">
+          {['s', 'm', 'l'].map((s) => <TabItem key={s} size={s} role={null} href={`#tab-${s}`} selected={s === 'l'} aria-current={s === 'l' ? 'page' : undefined}>{`Link ${s}`}</TabItem>)}
+        </nav>
       </Section>
 
       <Section name="Text">
@@ -1396,7 +1401,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
         <Contain height={120}>
           <TopNavigation
             logo={<Text>La Plataforma</Text>}
-            onExit={noop}
+            action={{ label: 'Log out', icon: 'log-out', onClick: noop }}
             selectedId="clientes"
             menuItems={[
               { id: 'clientes', label: 'Customers' },
@@ -1405,6 +1410,19 @@ export default function Gallery({ mode, theme = 'retail' }) {
                 { groupTitle: 'Payments', links: [{ label: 'Collections', onClick: noop }] },
               ] },
               { id: 'informes', label: 'Reports' },
+            ]}
+          />
+        </Contain>
+        {/* Sitio web: pestañas con href, sin acción */}
+        <Contain height={120}>
+          <TopNavigation
+            logo={<Text>Carol Sánchez Agenjo</Text>}
+            ariaLabel="Site"
+            selectedId="work"
+            menuItems={[
+              { id: 'work', label: 'Work', href: '#work' },
+              { id: 'about', label: 'About', href: '#about' },
+              { id: 'contact', label: 'Contact', href: '#contact' },
             ]}
           />
         </Contain>

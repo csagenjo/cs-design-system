@@ -1,9 +1,9 @@
 /**
  * ListView — Componente atómico
- * CS Design System · v2 (28/10/2026: alineado 1:1 con Figma)
+ * CS Design System · v2.1 (28/10/2026: alineado 1:1 con Figma)
  *
  * Fila interactiva de un listado (Search for Results, menús): la fila entera
- * es un <button>. Hover (azul), pressed (opacidad) y foco (doble anillo POR
+ * es un <button>, o un <a> con `href` (v2.1, 17/11: menús de un sitio web). Hover (azul), pressed (opacidad) y foco (doble anillo POR
  * DENTRO, las filas van apiladas) por pseudo-clases; solo `disabled` es prop.
  *
  * Figma `List View` (State × Divider; Selected, Description, Detail, Left
@@ -63,6 +63,7 @@ const css = `
   text-align: left;
   font-family: inherit;
   color: inherit;
+  text-decoration: none;  /* también como <a> (href) */
 }
 .ds-list-view:disabled { --_dc: var(--ds-list-view-divider-color-disabled); }
 
@@ -172,6 +173,7 @@ export function ListView({
   current            = 'true', // aria-current cuando `selected` — 'page' en navegación (SidebarMenu)
   divider            = 'none', // 'none' | 'partialBottom' | 'fullBottom' | 'allSides'
   disabled           = false,
+  href,              // 17/11: fila de navegación → <a> (SidebarMenu en un sitio). No con control ni disabled
   onClick,
   id,
   className,
@@ -200,14 +202,16 @@ export function ListView({
   const classes = ['ds-list-view', dividerClass, className || ''].filter(Boolean).join(' ');
   const indicator = role ? <ControlIndicator control={control} checked={checked} disabled={disabled} name={typeof header === 'string' ? header : 'option'} /> : null;
 
+  const asLink = href && !role && !disabled;
+  const Tag = asLink ? 'a' : 'button';
+
   return (
-    <button
+    <Tag
       {...rest}
+      {...(asLink ? { href } : { type: 'button', disabled })}
       ref={rootRef}
-      type="button"
       id={id}
       className={classes}
-      disabled={disabled}
       onClick={onClick}
       role={role}
       aria-checked={role ? !!checked : undefined}
@@ -248,7 +252,7 @@ export function ListView({
             <span className="ds-list-view__panel ds-list-view__panel--right">{rightPanelContent}</span>
           )}
       </span>
-    </button>
+    </Tag>
   );
 }
 
