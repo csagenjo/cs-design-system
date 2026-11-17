@@ -5391,7 +5391,7 @@ Running text for reading: it wraps onto as many lines as it needs. Text and Desc
 ## Headline
 
 **Group:** Content
-**Figma:** 🟢 Headline page → `Headline text` (Size display, 2xl–xs × Style Default · Primary · Secondary · onColor · Level text property) · frame *Headline — How to use & Accessibility* (12/11; display and Level 17/11)
+**Figma:** 🟢 Headline page → `Headline text` (Size display, 2xl–xs × Style Default · Primary · Secondary · onColor) · guide table *Which one to choose* in the documentation frame · frame *Headline — How to use & Accessibility* (12/11; display and guide 17/11)
 **Code:** `src/components/Headline.jsx` (atom)
 **Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`, `lineHeight/headline/*`
 
@@ -5405,7 +5405,7 @@ Page and section titles. Two separate choices: Level (h1–h6) is the place in t
 - Page title (one per page) and the titles of its sections · titles inside lists and rows → Section Header
 
 **Two separate choices**
-- Level (h1–h6) → the place of the title in the page outline; screen readers use it to jump between sections. Set it in the Level property of each instance (h2 by default)
+- Level (h1–h6) → the place of the title in the page outline; screen readers use it to jump between sections, and it is the tag in code. It is not a Figma property: follow the table below and annotate the level only when a title departs from it
 - Size → how big it looks: display · 2xl · xl · lg · md · sm · xs (responsive through the Device tokens)
 - Style → Default · Primary · Secondary · onColor
 
@@ -5434,7 +5434,7 @@ Page and section titles. Two separate choices: Level (h1–h6) is the place in t
 - `import { Headline } from './components/Headline'`
 
 **Props**
-- level 1–6 (the tag; Figma's Level property) · size 'display' | '2xl'…'xs' (look only; defaults to the level's; display only for the h1 of a Hero) · color 'default' | 'primary' | 'secondary' | 'onColor'
+- level 1–6 (the tag) · size 'display' | '2xl'…'xs' (look only; defaults to the level's; display only for the h1 of a Hero) · color 'default' | 'primary' | 'secondary' | 'onColor'
 
 **Example**
 - `<Headline level={2} size="lg">Payments</Headline>`
