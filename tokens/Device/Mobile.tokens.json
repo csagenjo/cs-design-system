@@ -1014,6 +1014,22 @@
             "targetVariableSetName": "Theme"
           }
         }
+      },
+      "display": {
+        "$type": "number",
+        "$value": 40,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:127",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:9df9c41c697a8492697109124f6b63793e7a21e1/-1:-1",
+            "targetVariableName": "fontSize/headline/display-mobile",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
       }
     },
     "label": {
@@ -1133,7 +1149,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 19,
+        "$value": 20,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:748",
           "com.figma.scopes": [
@@ -1149,7 +1165,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 22,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:749",
           "com.figma.scopes": [
@@ -1408,6 +1424,22 @@
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:e1254f3eef24a3cf13147142964afec41f0eb4b9/-1:-1",
             "targetVariableName": "lineHeight/headline/2xl-mobile",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "display": {
+        "$type": "number",
+        "$value": 48,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:128",
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:2519778ab6950279a5a1e20f66e877379f4b64f8/-1:-1",
+            "targetVariableName": "lineHeight/headline/display-mobile",
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }

@@ -4982,7 +4982,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Scrim (Cover) → Full (the whole image) · Gradient (60% behind the text, fading away from it)
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top in Shape, text at the bottom in Cover)
 - Show eyebrow · Show actions · Show backdrop (Shape)
-- Eyebrow and Title are exposed instances (Text, Headline); Content and Actions are slots
+- Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
 - Shape: select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px wide; the media area is 720 × 629 and the shape clips the bottom of the photo, so keep the person in the lower half and centred
@@ -4992,7 +4992,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Only Button Accent Primary: the hero is the main message of the page; secondary actions go further down
 
 **Sizing**
-- Padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl · actions gap spacing/md · Cover min height 584 (Desktop) / 600 (Stacked)
+- Title Headline display (40/48 · 48/56 · 64/72) · introduction Paragraph 24/32 · padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl · actions gap spacing/md · Cover min height 584 (Desktop) / 600 (Stacked)
 
 ### Developers · React
 
@@ -5000,10 +5000,10 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - `import { Hero } from './organisms/Hero'`
 
 **Props**
-- variant ('shape' | 'cover'), eyebrow, title, image ({ src, alt?, position? }), actions (node), backdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction)
+- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), backdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction: Paragraph size 24)
 
 **Example**
-- `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Text weight="regular">I simplify complex product systems…</Text></Hero>`
+- `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Paragraph size="24">I simplify complex product systems…</Paragraph></Hero>`
 - `<Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }} title="Design systems that scale" />`
 
 ### AI agents · Claude Code
@@ -5017,7 +5017,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 **Composition rules**
 - One per page; the title is the page h1
 - actions: only `<Button>` with the default type and variant (Accent Primary)
-- children: Text or DescriptionText with weight regular; the hero lets them wrap
+- children: Paragraph size 24 (in Cover the hero turns it onColor)
 
 ## Accessibility
 
@@ -5307,28 +5307,126 @@ Pick a value, or a range, by dragging a knob along a track. Figma's *Continuous*
 - Don't use a slider as the only way to enter a precise amount
 
 
-## Headline
+## Paragraph
 
 **Group:** Content
-**Figma:** 🟢 Headline page → `Headline text` (Size 2xl–xs × Style Default · Primary · Secondary · onColor) · frame *Headline — How to use & Accessibility* (12/11)
-**Code:** `src/components/Headline.jsx` (atom)
-**Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`
+**Figma:** 🟡 Paragraph page → `Paragraph` (Size 14 · 16 · 20 · 24 × Color Default · Subtle · onColor) · documentation frame and *Paragraph — How to use & Accessibility* (17/11)
+**Code:** `src/components/Paragraph.jsx` (atom)
+**Tokens:** `--ds-paragraph-fg-text-*` (`paragraph/all/fg/text/*` → Mode `fg/body/*`) · type straight from Device `fontSize/body/*`, `lineHeight/body/*`
 
-Page and section titles. Size is visual only; the heading level comes from the page outline.
+Running text for reading: it wraps onto as many lines as it needs. Text and DescriptionText are one-line labels; Paragraph is for reading.
 
 ## How to use
 
 ### Designers · Figma
 
 **When to use**
-- Page title (one per page, level 1) and section titles · for titles inside lists and rows use Section Header
+- Any text people read in full: introductions, case-study paragraphs, explanations, notes
+- Not for one-line labels in rows, buttons or cells → Text or DescriptionText
 
 **Properties**
-- Size → 2xl · xl · lg · md · sm · xs (responsive: 48 → 32 on mobile for 2xl) · Style → Default · Primary · Secondary · onColor
-- Write the heading level (h1–h6) in the instance name or description
+- Size → 14 (notes) · 16 (body, default) · 20 · 24 (lead paragraphs, such as the introduction of a Hero). Font sizes in steps of 4, line heights 24 · 24 · 32 · 32, the same in every device
+- Color → Default · Subtle (secondary text) · onColor (on an image or a colour surface)
+- Text → edit it from here; emphasise words with mixed styles (Bold inside the text). There is no Bold variant
+
+**Spacing and width**
+- No outer margin: the parent sets the space between paragraphs
+- Keep lines around 70 characters: the layout limits the width, not the paragraph
+
+### Developers · React
+
+**Import**
+- `import { Paragraph } from './components/Paragraph'`
+
+**Props**
+- size ('14' | '16' | '20' | '24', default '16'), color ('default' | 'subtle' | 'onColor'), id, className, children (the text; `<strong>` for emphasis)
+
+**Example**
+- `<Paragraph size="24">I simplify complex product systems so teams can operate with clarity.</Paragraph>`
+- `<Paragraph color="subtle" size="14">Figures as of November 2026.</Paragraph>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The text wraps onto more than one line, or is meant to be read in full
+
+**Don't pick it when**
+- A label, a row description or a button text → Text or DescriptionText · a title → Headline
+
+**Composition rules**
+- One Paragraph per paragraph of text; the parent sets the gap
+- Hero introduction: size 24 · on an image or colour surface: color onColor
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Default and Subtle meet 4.5:1 on page and container backgrounds in both modes; onColor is white in both modes
+- Line height at least 1.33 times the font size (24/16, 32/24)
+
+**Your job**
+- Keep paragraphs short and lines around 70 characters
+- Don't use Subtle for long text that people must read
+
+### Developers · React
+
+**Semantics**
+- A real `<p>`; emphasis with `<strong>`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Text that wraps goes in a Paragraph, not in Text
+
+**Don't**
+- Don't put headings or lists inside a Paragraph
+
+## Headline
+
+**Group:** Content
+**Figma:** 🟢 Headline page → `Headline text` (Size display, 2xl–xs × Style Default · Primary · Secondary · onColor) · guide table *Which one to choose* in the documentation frame · frame *Headline — How to use & Accessibility* (12/11; display and guide 17/11)
+**Code:** `src/components/Headline.jsx` (atom)
+**Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`, `lineHeight/headline/*`
+
+Page and section titles. Two separate choices: Level (h1–h6) is the place in the page outline; Size is only how big it looks. Display (40/48 · 48/56 · 64/72) is the h1 size for a Hero, and only there.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Page title (one per page) and the titles of its sections · titles inside lists and rows → Section Header
+
+**Two separate choices**
+- Level (h1–h6) → the place of the title in the page outline; screen readers use it to jump between sections, and it is the tag in code. It is not a Figma property: follow the table below and annotate the level only when a title departs from it
+- Size → how big it looks: display · 2xl · xl · lg · md · sm · xs (responsive through the Device tokens)
+- Style → Default · Primary · Secondary · onColor
+
+**Which one to choose**
+
+| Where the title sits | Level | Size |
+|---|---|---|
+| Hero title (landing, portfolio home, case study) | h1 | display |
+| Page title (any other page, PageTitle) | h1 | 2xl |
+| Section of the page | h2 | xl |
+| Subsection | h3 | lg |
+| Group inside a subsection | h4 | md |
+| Title of a card or panel | next level after its section | sm |
+
+**Rules**
+- One h1 per page; go down one level at a time, never skip (h2 → h4)
+- Start from the size of the level; go smaller in dense places (cards, side panels), never bigger than the title above
+- Display only for the h1 of a Hero, once per page
 
 **Anatomy**
-- Text only, bold, left aligned · line height 1.25× on the 4 grid
+- Text only, bold, left aligned · line height on the 8 grid
 
 ### Developers · React
 
@@ -5336,7 +5434,7 @@ Page and section titles. Size is visual only; the heading level comes from the p
 - `import { Headline } from './components/Headline'`
 
 **Props**
-- level 1–6 (the tag) · size '2xl'…'xs' (look only; defaults to the level's) · color 'default' | 'primary' | 'secondary' | 'onColor'
+- level 1–6 (the tag) · size 'display' | '2xl'…'xs' (look only; defaults to the level's; display only for the h1 of a Hero) · color 'default' | 'primary' | 'secondary' | 'onColor'
 
 **Example**
 - `<Headline level={2} size="lg">Payments</Headline>`

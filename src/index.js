@@ -52,6 +52,7 @@ export * from './components/LiveRegion.jsx';
 export * from './components/LoadingSpinner.jsx';
 export * from './components/Node.jsx';
 export * from './components/Pagination.jsx';
+export * from './components/Paragraph.jsx';
 export * from './components/PopoverSheet.jsx';
 export * from './components/ProgressBar.jsx';
 export * from './components/Radio.jsx';

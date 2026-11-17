@@ -49,7 +49,7 @@ Pantallas (página "Supplier form"):
 |---|---|---|
 | 1 | Las instancias llegan aplanadas en `div`: no dice "esto es InputDropdown" | Deducido del nombre de capa (`Dropdown`, `Telephone Field`, `Stepper Build`) y de los iconos. Solo Cards, Headline, SectionHeader, Checkbox y Drawer Toggle llegan como componente con props |
 | 2 | Variante de Button | Deducida del token (`bg/accent-primary`, `bordercolor/default-generic`, `paddinghor/medium`) |
-| 3 | Nivel de encabezado | No está en el dato. h1 el título (lo dice Page Title), h2 cada sección, h3 los subgrupos |
+| 3 | Nivel de encabezado | No está en el dato. h1 el título (lo dice Page Title), h2 cada sección, h3 los subgrupos. **17/11:** guía nivel → tamaño en la documentación de Headline (Which one to choose); el agente la sigue y lee las anotaciones de nivel cuando las hay |
 | 4 | Pestañas ocultas | El conector solo trae la visible; el contenido de las otras 4 salió de la pantalla de Cards |
 | 5 | Modo de Device | Las pantallas resuelven los tokens en Mobile (headline md 22, gutter 24); el código pinta Desktop (28, 32). Diferencia visual que no es un error del código |
 | 6 | Medidas fijas viejas | Instancias con tamaños de antes de la rejilla estricta (stepper 148, file selector 288, hueco vacío de 359 para acciones del título). Se ignoraron: manda el componente |

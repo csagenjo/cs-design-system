@@ -1,8 +1,12 @@
 /**
  * Headline — Componente atómico
- * CS Design System · v2.1 (12/11/2026: tokens headline/all/text/fg/* en Figma; injectStyles común)
+ * CS Design System · v2.2 (17/11/2026: tamaño display para el h1 del Hero)
  *
- * Títulos semánticos h1–h6. 6 tamaños × 4 colores.
+ * Títulos semánticos h1–h6. 7 tamaños × 4 colores.
+ *
+ * 17/11/2026 (v2.2): `size="display"` (40/48 · 48/56 · 64/72), por encima de
+ * 2xl. Es el h1 de un Hero (portada, caso de estudio) y solo se usa ahí, una
+ * vez por página. Ningún level lo usa por defecto: el h1 normal sigue en 2xl.
  *
  * Tokens: color vía --ds-headline-fg-* (Componente→Mode). Tipografía directa de
  * Device (fontSize/headline/*, fontFamily/headline, fontWeight/bold) — sin
@@ -69,6 +73,7 @@ const css = `
 .ds-headline--md  { font-size: var(--ds-fontSize-headline-md);  line-height: var(--ds-lineHeight-headline-md);  }
 .ds-headline--sm  { font-size: var(--ds-fontSize-headline-sm);  line-height: var(--ds-lineHeight-headline-sm);  }
 .ds-headline--xs  { font-size: var(--ds-fontSize-headline-xs);  line-height: var(--ds-lineHeight-headline-xs);  }
+.ds-headline--display { font-size: var(--ds-fontSize-headline-display); line-height: var(--ds-lineHeight-headline-display); }
 
 /* Color */
 .ds-headline--primary   { color: var(--ds-headline-fg-text-primary);   }
@@ -84,7 +89,7 @@ const SIZES = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs'];          // índice = level
 
 export function Headline({
   level = 1,          // 1..6 → h1..h6 (solo la etiqueta)
-  size,               // '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' — por defecto, el del level
+  size,               // 'display' | '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' — por defecto, el del level (display: solo el h1 del Hero)
   color = 'default',  // 'default' | 'primary' | 'secondary' | 'onColor'
   children,
   id,
@@ -92,7 +97,7 @@ export function Headline({
 }) {
   const lvl = Math.min(6, Math.max(1, level));
   const Tag = `h${lvl}`;
-  const resolvedSize = SIZES.includes(size) ? size : SIZES[lvl - 1];
+  const resolvedSize = SIZES.includes(size) || size === 'display' ? size : SIZES[lvl - 1];
 
   const classes = [
     'ds-headline',

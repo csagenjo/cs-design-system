@@ -104,7 +104,8 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 
 | Component | What it is | Use it for | Not for (use instead) |
 |---|---|---|---|
-| Headline | Heading h1–h6, 6 responsive sizes | Page and section titles | Titles of rows and lists (SectionHeader) |
+| Headline | Heading h1–h6, 6 responsive sizes + display (the h1 of a Hero) | Page and section titles | Titles of rows and lists (SectionHeader) |
+| Paragraph | Running text that wraps (14 · 16 · 20 · 24) | Introductions, case-study text, explanations | One-line labels (Text, DescriptionText) |
 | SectionHeader | Title of a group (16 / 19) | Titles inside ListView, Selector, DescriptionList | The page title (PageTitle / Headline) |
 | Text | Short emphasised label, optional chevron | Description slot of a row | Clickable text (Link) |
 | DescriptionText | Secondary text under a title | One line that explains a title | Icon + value (DetailText) |

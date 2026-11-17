@@ -1,6 +1,9 @@
 /**
  * Hero — Organismo
- * CS Design System · v1 (17/11/2026, igual que Figma: set "Hero", Style × Scrim × Layout)
+ * CS Design System · v1.1 (17/11/2026, igual que Figma: set "Hero", Style × Scrim × Layout)
+ *
+ * v1.1: el título es Headline size="display" (el h1 de Hero) y la
+ * introducción, Paragraph 24 (antes Text con un apaño para partir líneas).
  *
  * Bloque de apertura de una página: eyebrow, el título (siempre h1) y una
  * introducción, con una imagen. Uno por página.
@@ -22,8 +25,9 @@
  *             imagen y el texto (`scrim`): negro 60 % en los dos modos, que
  *             con texto blanco garantiza ≥ 4,5:1 sobre cualquier imagen (el
  *             mínimo es 54 %). 'full' cubre toda la imagen; 'gradient'
- *             mantiene el 60 % detrás del texto (hasta el 55 %) y se desvanece
- *             hacia el otro lado. Stacked: el texto abajo.
+ *             mantiene el 60 % detrás del texto (desktop: hasta el 55 % del
+ *             ancho; stacked: pegado al bloque de texto, que crece con él) y
+ *             se desvanece hacia el otro lado. Stacked: el texto abajo.
  *             El texto pasa a onColor: Headline con color="onColor" y Text
  *             re-tematizado localmente (sus variables CSS redefinidas desde el
  *             Hero, mismo mecanismo que Collapsible con Button).
@@ -42,7 +46,7 @@
  *     image={{ src: '/carol.png', alt: '' }}
  *     actions={<Button href="#work">See my work</Button>}
  *   >
- *     <Text weight="regular">I simplify complex product systems…</Text>
+ *     <Paragraph size="24">I simplify complex product systems…</Paragraph>
  *   </Hero>
  *
  *   <Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }}
@@ -85,11 +89,6 @@ const css = `
   flex-direction: column;
   gap: var(--ds-hero-gap-text-generic);
 }
-/* Text y DescriptionText son etiquetas de una línea (nowrap); en la
-   introducción se parten en líneas. Igual que en Figma (Content con el texto
-   en alto automático). Pendiente: un átomo de párrafo (ver tech-debt). */
-.ds-hero__content .ds-text,
-.ds-hero__content .ds-description-text { white-space: normal; }
 .ds-hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -111,9 +110,11 @@ const css = `
 .ds-hero--cover {
   min-height: var(--ds-hero-cover-height-min-stacked);
   align-content: end;            /* Stacked: el texto abajo */
-  /* Texto blanco: re-tematiza Text localmente, sin tocar el átomo */
-  --ds-text-fg-default:         var(--ds-hero-cover-fg-text-generic);
-  --ds-text-fg-label-secondary: var(--ds-hero-cover-fg-text-generic);
+  /* Texto blanco: re-tematiza Text (eyebrow) y Paragraph localmente, sin tocar los átomos */
+  --ds-text-fg-default:            var(--ds-hero-cover-fg-text-generic);
+  --ds-text-fg-label-secondary:    var(--ds-hero-cover-fg-text-generic);
+  --ds-paragraph-fg-text-default:  var(--ds-hero-cover-fg-text-generic);
+  --ds-paragraph-fg-text-subtle:   var(--ds-hero-cover-fg-text-generic);
 }
 .ds-hero__cover-img {
   position: absolute;
@@ -127,8 +128,21 @@ const css = `
   inset: 0;
   background: var(--ds-hero-cover-bg-scrim-generic);
 }
-.ds-hero__scrim--gradient {
-  background: linear-gradient(to top, var(--ds-hero-cover-bg-scrim-generic) 0%, var(--ds-hero-cover-bg-scrim-generic) 55%, transparent 100%);
+.ds-hero__scrim--gradient { display: none; }
+/* Stacked + Gradient: el velo va pegado al bloque de texto y crece con él,
+   así el 60 % siempre queda detrás de todo el texto (un porcentaje fijo del
+   alto fallaba con títulos de varias líneas: medido 3,8:1). Se desvanece en
+   los --ds-hero-cover-height-fade-stacked de encima. */
+.ds-hero--gradient .ds-hero__text { z-index: 1; }
+.ds-hero--gradient .ds-hero__text::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: calc(-1 * var(--ds-hero-padding-hor-generic));
+  right: calc(-1 * var(--ds-hero-padding-hor-generic));
+  bottom: calc(-1 * var(--ds-hero-padding-ver-generic));
+  top: calc(-1 * var(--ds-hero-cover-height-fade-stacked));
+  background: linear-gradient(to top, var(--ds-hero-cover-bg-scrim-generic) 0%, var(--ds-hero-cover-bg-scrim-generic) calc(100% - var(--ds-hero-cover-height-fade-stacked)), transparent 100%);
 }
 
 @media (min-width: 1024px) {
@@ -142,7 +156,9 @@ const css = `
     min-height: var(--ds-hero-cover-height-min-desktop);
     align-content: center;
   }
+  .ds-hero--gradient .ds-hero__text::before { content: none; }
   .ds-hero__scrim--gradient {
+    display: block;
     background: linear-gradient(to right, var(--ds-hero-cover-bg-scrim-generic) 0%, var(--ds-hero-cover-bg-scrim-generic) 55%, transparent 100%);
   }
 }
@@ -195,7 +211,7 @@ export function Hero({
   scrim = 'full',         // cover: 'full' | 'gradient'
   mediaPosition = 'end',  // shape, desktop: 'end' (derecha) | 'start' (izquierda)
   titleId,
-  children,               // la introducción (Text, párrafos)
+  children,               // la introducción: Paragraph size="24"
   className,
   style,
 }) {
@@ -207,6 +223,7 @@ export function Hero({
     'ds-hero',
     `ds-hero--${isCover ? 'cover' : 'shape'}`,
     !isCover && mediaPosition === 'start' ? 'ds-hero--media-start' : '',
+    isCover && scrim === 'gradient' ? 'ds-hero--gradient' : '',
     className || '',
   ].filter(Boolean).join(' ');
 
@@ -224,7 +241,7 @@ export function Hero({
 
       <div className="ds-hero__text">
         {eyebrow && <Text color="secondary" weight="regular">{eyebrow}</Text>}
-        <Headline level={1} size="2xl" color={isCover ? 'onColor' : 'default'} id={headingId}>{title}</Headline>
+        <Headline level={1} size="display" color={isCover ? 'onColor' : 'default'} id={headingId}>{title}</Headline>
         {children && <div className="ds-hero__content">{children}</div>}
         {actions && <div className="ds-hero__actions">{actions}</div>}
       </div>
