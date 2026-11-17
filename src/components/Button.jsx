@@ -1,6 +1,6 @@
 /**
  * Button — Componente atómico
- * CS Design System · v3.0 (26/10/2026: alineado 1:1 con Figma)
+ * CS Design System · v3.1 (26/10/2026: alineado 1:1 con Figma)
  *
  * Tokens: todos los estilos vienen de tokens.css (--ds-button-*).
  * Iconos: átomo Icon (Lucide). Sin hex ni px sueltos.
@@ -12,6 +12,9 @@
  *   fullWidth→ Width=Full
  *   disabled / loading → State=Disabled / State=Loading
  *   Hover, Pressed, Focus… → pseudo-clases CSS
+ *   href     → (v3.1, 17/11) se pinta un <a> con el mismo aspecto: para
+ *              navegar (descargar un CV, ir a otra página), no para acciones.
+ *              Con disabled o loading sigue siendo <button>.
  *
  * Valores antiguos (antes de v3) — siguen funcionando con aviso en desarrollo:
  *   variant="accent"            → type="accent"  variant="primary"
@@ -28,6 +31,7 @@
  *   <Button iconLeft="search">Search</Button>
  *   <Button type="default" variant="secondary" iconLeft="chevron-left">Back</Button>
  *   <Button variant="tertiary">Cancel</Button>
+<Button variant="secondary" iconLeft="download" href="/cv.pdf">Download CV</Button>
  */
 
 import React from 'react';
@@ -147,6 +151,7 @@ export function Button({
   onClick,
   loadingLabel = 'Loading',  // se lee con el botón en `loading` (inglés por defecto)
   htmlType  = 'button',
+  href,                      // 17/11: con href se pinta un <a> con el mismo aspecto (navegación, no acción)
   children,
   outline,                   // API anterior a v3 (ver resolveAxes)
   floating,                  // eliminado: no existe en Figma
@@ -186,15 +191,19 @@ export function Button({
     loading   ? 'ds-btn--loading'    : '',
   ].filter(Boolean).join(' ');
 
+  // Un enlace no se deshabilita ni carga: con disabled o loading sigue siendo <button>.
+  const asLink = href && !disabled && !loading;
+  const Tag = asLink ? 'a' : 'button';
+  const tagProps = asLink
+    ? { href }
+    : { type: htmlType, disabled, 'aria-disabled': loading && !disabled ? 'true' : undefined, 'aria-busy': loading || undefined };
+
   return (
-    <button
+    <Tag
       {...rest}
-      type={htmlType}
+      {...tagProps}
       className={classes}
       onClick={handleClick}
-      disabled={disabled}
-      aria-disabled={loading && !disabled ? 'true' : undefined}
-      aria-busy={loading || undefined}
     >
       {loading  && <LoadingSpinner color="current" label="" className="ds-btn__spinner" />}
       {!loading && iconLeft && <Icon name={iconLeft} size={iconSize} />}
@@ -203,7 +212,7 @@ export function Button({
         {loading && <VisuallyHidden>{`, ${loadingLabel}`}</VisuallyHidden>}
       </span>
       {!loading && iconRight && <Icon name={iconRight} size={iconSize} />}
-    </button>
+    </Tag>
   );
 }
 

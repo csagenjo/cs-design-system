@@ -1,6 +1,6 @@
 /**
  * TopNavigation — Organismo
- * CS Design System · v1.1
+ * CS Design System · v1.2
  *
  * Barra de navegación principal para Web (genérico — no ata a un consumidor
  * concreto, mismo criterio que Page Title). Reemplaza las 576 variantes
@@ -15,7 +15,7 @@
  * (imposible hacer responsive de verdad con esa arquitectura de variantes).
  *
  * Por encima del breakpoint: Logo (slot libre) + fila de `TabItem`
- * (`size="l"`, sin límite de items) + `Button` de salir. Un item
+ * (`size="l"`, sin límite de items) + `Button` de acción (opcional, `action`). Un item
  * con `flydown` abre un MEGA-MENÚ (`Card`, ancho completo de la barra —
  * ref. real de Carol: mollie.com/es, 25/09) al hacer hover/focus, con los
  * links agrupados por columna — cada link es un `Link` re-tematizado
@@ -72,11 +72,19 @@
  * como Children directos. Aceptable porque es una vista de apoyo (móvil/
  * tablet), no la primaria.
  *
+ * 17/11/2026 (v1.2), para usarla también en un sitio web (portfolio):
+ *   · `action` — `{ label, icon?, href? | onClick? }`, el botón de la derecha
+ *     (y última opción del menú móvil). Es opcional: sin `action` no hay
+ *     botón. Sustituye a `exitLabel`/`onExit`, que siguen funcionando y
+ *     equivalen a `action={{ label, icon: 'log-out', onClick }}`.
+ *   · `href` en cada item de `menuItems` (sin flydown) → la pestaña es un
+ *     enlace (<a>), también en el menú móvil: se abre en otra pestaña, se
+ *     comparte, y la actual lleva aria-current="page".
+ *
  * USO:
  *   <TopNavigation
  *     logo={<MyLogo />}
- *     exitLabel="Salir"
- *     onExit={() => logout()}
+ *     action={{ label: 'Log out', icon: 'log-out', onClick: () => logout() }}
  *     menuItems={[
  *       { id: 'clientes', label: 'Clientes' },
  *       {
@@ -238,7 +246,7 @@ function flydownToSidebarChildren(flydown, onSelectLeaf, parentId) {
       group.links.map((link, i) => {
         const id = `${parentId}-${groupIndex}-${i}`;
         onSelectLeaf[id] = link.onClick;
-        return { id, label: link.label };
+        return { id, label: link.label, href: link.href };
       })
     );
 }
@@ -247,7 +255,8 @@ export function TopNavigation({
   logo,
   menuItems = [],
   selectedId,              // 03/11: sección actual → pestaña seleccionada (ribbon) + aria-current="page"
-  exitLabel = 'Log out',   // A11y-5 (K): textos por defecto en inglés
+  action,                  // 17/11: { label, icon?, href? | onClick? } — botón a la derecha; sin action no hay botón
+  exitLabel,               // API anterior: equivale a action={{ label: exitLabel, icon: 'log-out', onClick: onExit }}
   onExit,
   ariaLabel = 'Main',            // nombre del landmark <nav> (inglés por defecto, decisión 20/10)
   openMenuLabel = 'Open menu',   // botón hamburguesa (mobile)
@@ -266,6 +275,11 @@ export function TopNavigation({
   const openedByHover = useRef(false);
   const mobileModalRef = useRef(null);
 
+  // API anterior (exitLabel/onExit) → action con el icono de salir.
+  const act = action || (onExit || exitLabel
+    ? { label: exitLabel || 'Log out', icon: 'log-out', onClick: onExit }
+    : null);
+
   const closeMobileMenu = () => setMobileMenuOpen(false);
   // Panel móvil = modal de verdad: foco dentro, Tab atrapado, fondo inert,
   // Escape cierra, foco de vuelta al botón hamburguesa (A11y-1, audit §B).
@@ -279,13 +293,16 @@ export function TopNavigation({
     return {
       id: item.id,
       label: item.label,
+      href: item.flydown ? undefined : item.href,
       children: flydownToSidebarChildren(item.flydown, onSelectLeaf, item.id),
     };
   });
-  // Salir NO es un botón aparte junto al hamburger en mobile — es la última
+  // La acción NO es un botón aparte junto al hamburger en mobile — es la última
   // opción del propio SidebarMenu desplegado (pedido explícito de Carol).
-  onSelectLeaf.exit = onExit;
-  sidebarItems.push({ id: 'exit', label: exitLabel });
+  if (act) {
+    onSelectLeaf.action = act.onClick;
+    sidebarItems.push({ id: 'action', label: act.label, href: act.href });
+  }
 
   function handleSidebarSelect(id) {
     onSelectLeaf[id]?.();
@@ -349,6 +366,7 @@ export function TopNavigation({
                     ref={(el) => { triggerRefs.current[item.id] = el; }}
                     aria-expanded={hasFlydown ? isOpen : undefined}
                     aria-controls={hasFlydown ? flydownId(item.id) : undefined}
+                    href={hasFlydown ? undefined : item.href}
                     onClick={hasFlydown
                       ? () => {
                           if (isOpen && openedByHover.current) { openedByHover.current = false; return; }
@@ -389,7 +407,9 @@ export function TopNavigation({
             })}
           </div>
         </div>
-        <Button type="accent" variant="tertiary" size="lg" iconRight="log-out" onClick={onExit}>{exitLabel}</Button>
+        {act && (
+          <Button type="accent" variant="tertiary" size="lg" iconRight={act.icon} href={act.href} onClick={act.onClick}>{act.label}</Button>
+        )}
       </div>
 
       {/* ── Mobile/Tablet, colapsado ────────────────────────────────────── */}

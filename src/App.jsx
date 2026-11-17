@@ -397,7 +397,7 @@ export default function App() {
         <a href="?screen=tabs&data=valid">Tabs (valid)</a>
         <label><input type="checkbox" checked={dark} onChange={(e) => setDark(e.target.checked)} /> dark</label>
       </div>
-      <TopNavigation logo={<span>Logo</span>} menuItems={MENU} selectedId="suppliers" onExit={() => {}} />
+      <TopNavigation logo={<span>Logo</span>} menuItems={MENU} selectedId="suppliers" action={{ label: 'Log out', icon: 'log-out', onClick: () => {} }} />
       <div className="ds-sf-body">
         <SidebarMenu title="Suppliers" items={SIDEBAR} selectedId="new" onSelect={() => {}}
           collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed((c) => !c)} />

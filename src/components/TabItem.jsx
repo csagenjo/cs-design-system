@@ -1,6 +1,6 @@
 /**
  * TabItem — Componente atómico
- * CS Design System · v3.1
+ * CS Design System · v3.2
  *
  * Pestaña individual. `<button role="tab">` real — Hover/Pressed/Focus se
  * resuelven vía pseudo-clases CSS nativas (mismo criterio que Checkbox/
@@ -44,6 +44,13 @@
  *     basta: el lector oye `errorLabel` ("has errors") detrás del nombre.
  *   · Gap entre icono, texto y error: `tabs/all/gap/generic` (8).
  *
+ * 17/11/2026 (v3.2):
+ *   · `href` — se pinta un <a> en lugar de <button>, para la navegación de
+ *     un sitio (TopNavigation). Se puede abrir en otra pestaña y compartir.
+ *   · El seleccionado se marca con la clase `--selected`, no con
+ *     aria-selected: así también va en negrita fuera de un tablist
+ *     (TopNavigation, que la usa con role={null} y aria-current).
+ *
  * USO:
  *   <TabItem size="m" selected>Resumen</TabItem>
  *   <TabItem size="l" variant="contained" icon="file-text" hasError>Bank details</TabItem>
@@ -69,6 +76,7 @@ const css = `
   margin: 0;
   cursor: pointer;
   font-family: inherit;
+  text-decoration: none;  /* también como <a> (href) */
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--_fs);
   line-height: var(--_lh);
@@ -83,7 +91,7 @@ const css = `
 .ds-tab-item--m { --_pv: var(--ds-tabs-padding-ver-m); --_fs: var(--ds-fontSize-label-sm); --_lh: var(--ds-lineHeight-label-sm); }
 .ds-tab-item--l { --_pv: var(--ds-tabs-padding-ver-l); --_fs: var(--ds-fontSize-label-md); --_lh: var(--ds-lineHeight-label-md); }
 
-.ds-tab-item[aria-selected="true"],
+.ds-tab-item--selected,
 .ds-tab-item:active:not(:disabled) {
   font-weight: var(--ds-font-weight-bold);
 }
@@ -121,7 +129,7 @@ const css = `
   background: var(--ds-tabs-bg-generic);
   box-shadow: inset 0 0 0 var(--_bw) var(--_bc);
 }
-.ds-tab-item--contained[aria-selected="true"] {
+.ds-tab-item--contained.ds-tab-item--selected {
   background: var(--ds-tabs-contained-bg-selected);
   /* sin borde inferior: se une al panel */
   box-shadow: inset var(--_bw) 0 0 var(--_bc), inset calc(-1 * var(--_bw)) 0 0 var(--_bc), inset 0 var(--_bw) 0 var(--_bc);
@@ -150,22 +158,25 @@ export function TabItem({
   icon,                // nombre del átomo Icon, decorativo, a la izquierda
   hasError = false,    // circle-x a la derecha + texto para lector
   errorLabel = 'has errors',
+  href,           // 17/11 (v3.2): con href se pinta un <a> (navegación de sitio); aria-current lo pone quien la usa
   role = 'tab',   // A11y-1: TopNavigation la usa como botón de navegación (role={null}), no como pestaña
   ...rest         // A11y-1: aria-expanded/aria-controls/ref/onKeyDown… llegan al <button>
 }) {
   if (disabled !== undefined) warnOnce('TabItem.disabled', '[DS TabItem] `disabled` ya no existe (Figma no tiene estado Disabled): si la pestaña no aplica, no la muestres.');
+  const Tag = href ? 'a' : 'button';
   const classes = [
     'ds-tab-item',
     `ds-tab-item--${size}`,
     `ds-tab-item--${variant}`,
+    selected ? 'ds-tab-item--selected' : '',
     className || '',
   ].filter(Boolean).join(' ');
 
   return (
-    <button
+    <Tag
       {...rest}
+      {...(href ? { href } : { type: 'button' })}
       id={id}
-      type="button"
       className={classes}
       onClick={onClick}
       role={role || undefined}
@@ -180,7 +191,7 @@ export function TabItem({
         </span>
       )}
       {selected && <span className="ds-tab-item__ribbon" aria-hidden="true" />}
-    </button>
+    </Tag>
   );
 }
 

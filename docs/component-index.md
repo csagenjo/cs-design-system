@@ -12,7 +12,7 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 
 | Component | What it is | Use it for | Not for (use instead) |
 |---|---|---|---|
-| Button | Text button, Accent or Default, Primary / Secondary / Tertiary, 3 sizes | Any action with a label | Navigating to another page (Link) · icon only (IconButton) |
+| Button | Text button, Accent or Default, Primary / Secondary / Tertiary, 3 sizes; with `href` it is a link that looks like a button | Any action with a label · a prominent link (Download CV) | Links inside text (Link) · icon only (IconButton) |
 | IconButton | Round icon-only button | Compact actions with a clear icon and an `ariaLabel` | Actions that need words to be understood (Button) |
 | ButtonBar | Row of 1–3 buttons at the end of a form or dialog | Primary + secondary actions of a form | A toolbar inside a table (CellActions) |
 
@@ -79,7 +79,7 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 
 | Component | What it is | Use it for | Not for (use instead) |
 |---|---|---|---|
-| TopNavigation | Page header with mega-menu | The top bar of La Plataforma | — |
+| TopNavigation | Page header with tabs, mega-menu and an optional action | The top bar of a back-office tool or a website | Navigation inside a page (Tabs) |
 | SidebarMenu | Collapsible side menu | Section navigation in La Plataforma | — |
 | PageTitle | Page heading with back link and actions | The title of every page (level 1) | Section titles (Headline) |
 | Tabs | Tabs with panels | Switching between panels of one page | Changing a view filter (SegmentedControl) |
