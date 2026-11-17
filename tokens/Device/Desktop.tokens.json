@@ -1014,6 +1014,22 @@
             "targetVariableSetName": "Theme"
           }
         }
+      },
+      "display": {
+        "$type": "number",
+        "$value": 64,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:127",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:e05685b32d1b9fd5c5814b1dbecc97995943a104/-1:-1",
+            "targetVariableName": "fontSize/headline/display-desktop",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
       }
     },
     "label": {
@@ -1133,7 +1149,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 19,
+        "$value": 20,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:748",
           "com.figma.scopes": [
@@ -1149,7 +1165,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 28,
+        "$value": 24,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:749",
           "com.figma.scopes": [
@@ -1408,6 +1424,22 @@
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:b87c532b6da2c3159c9a5c3703596301472cf12d/-1:-1",
             "targetVariableName": "lineHeight/headline/2xl-desktop",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "display": {
+        "$type": "number",
+        "$value": 72,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:128",
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:b0a086d0241961a0f263173f2d322bbb62456ec1/-1:-1",
+            "targetVariableName": "lineHeight/headline/display-desktop",
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }
@@ -1695,7 +1727,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 40,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28371",
           "com.figma.scopes": [

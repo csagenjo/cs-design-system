@@ -22161,6 +22161,89 @@
       }
     }
   },
+  "paragraph": {
+    "all": {
+      "fg": {
+        "text": {
+          "default": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.019607843831181526,
+                0.019607843831181526,
+                0.0235294122248888
+              ],
+              "alpha": 1,
+              "hex": "#050506"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:33002:1677",
+              "com.figma.scopes": [
+                "TEXT_FILL"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:5ce0917574fff4ce0dfa15a6aab6cac302f45499/-1:-1",
+                "targetVariableName": "fg/body/default",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          },
+          "subtle": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.40392157435417175,
+                0.4274509847164154,
+                0.4627451002597809
+              ],
+              "alpha": 1,
+              "hex": "#676D76"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:33002:1678",
+              "com.figma.scopes": [
+                "TEXT_FILL"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:56dd5911eac7d0619816ba6a9b339db2e0518f47/-1:-1",
+                "targetVariableName": "fg/body/subtle",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          },
+          "onColor": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#FFFFFF"
+            },
+            "$extensions": {
+              "com.figma.variableId": "VariableID:33002:1679",
+              "com.figma.scopes": [
+                "TEXT_FILL"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:68919667480f15343ad4d37e829ccb6940a170a9/-1:-1",
+                "targetVariableName": "fg/body/onColor",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "$extensions": {
     "com.figma.modeName": "Mode 1"
   }

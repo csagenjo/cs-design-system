@@ -1014,6 +1014,22 @@
             "targetVariableSetName": "Theme"
           }
         }
+      },
+      "display": {
+        "$type": "number",
+        "$value": 48,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:127",
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:def15550b8384137938260cc4ad0436fee7355c7/-1:-1",
+            "targetVariableName": "fontSize/headline/display-tablet",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
       }
     },
     "label": {
@@ -1133,7 +1149,7 @@
       },
       "md": {
         "$type": "number",
-        "$value": 19,
+        "$value": 20,
         "$extensions": {
           "com.figma.variableId": "VariableID:2391:748",
           "com.figma.scopes": [
@@ -1408,6 +1424,22 @@
           "com.figma.aliasData": {
             "targetVariableId": "VariableID:3ea399d41859825911fe471871bc7b07e795eafe/-1:-1",
             "targetVariableName": "lineHeight/headline/2xl-tablet",
+            "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+            "targetVariableSetName": "Theme"
+          }
+        }
+      },
+      "display": {
+        "$type": "number",
+        "$value": 56,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:128",
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:ad33fdb77079861c2945b61ba296e82061377968/-1:-1",
+            "targetVariableName": "lineHeight/headline/display-tablet",
             "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
             "targetVariableSetName": "Theme"
           }
@@ -1695,7 +1727,7 @@
       },
       "lg": {
         "$type": "number",
-        "$value": 40,
+        "$value": 32,
         "$extensions": {
           "com.figma.variableId": "VariableID:32371:28371",
           "com.figma.scopes": [

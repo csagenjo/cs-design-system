@@ -2249,6 +2249,13 @@
           "com.figma.hiddenFromPublishing": true
         }
       },
+      "20": {
+        "$type": "number",
+        "$value": 20,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:118"
+        }
+      },
       "22": {
         "$type": "number",
         "$value": 22,
@@ -2403,6 +2410,13 @@
           "com.figma.hiddenFromPublishing": true
         }
       },
+      "56": {
+        "$type": "number",
+        "$value": 56,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:119"
+        }
+      },
       "60": {
         "$type": "number",
         "$value": 60,
@@ -2417,6 +2431,13 @@
         "$extensions": {
           "com.figma.variableId": "VariableID:32933:130",
           "com.figma.hiddenFromPublishing": true
+        }
+      },
+      "72": {
+        "$type": "number",
+        "$value": 72,
+        "$extensions": {
+          "com.figma.variableId": "VariableID:33002:120"
         }
       },
       "80": {
