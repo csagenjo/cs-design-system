@@ -93,6 +93,18 @@ Después de pulsarlo, los errores se recalculan al escribir. Con todo correcto
 aparece "Supplier created.". `?screen=tabs` arranca con tres fallos para verlo;
 `?screen=tabs&data=valid` arranca con los datos correctos.
 
+## Regla: pantallas viejas = contenido, sistema = composición (17/11)
+
+Las pantallas viejas (Figma Sites, diseños anteriores al sistema) sirven para el
+**contenido**: textos, imágenes y orden. La **composición** sale de los
+componentes del sistema con sus valores por defecto de Figma. Si algo no existe
+en el sistema, **se para y se pregunta**: no se inventan piezas, iconos ni
+estilos en la pantalla.
+
+Origen: al montar la portada del portfolio se copiaron de la pantalla vieja
+iconos de marca, CSS propio y un icono en el botón del Footer, en lugar de usar
+el Footer del sistema tal como estaba diseñado.
+
 ## Brief de pantalla
 
 Lo que hubo que suponer se pide ahora con `docs/screen-brief.md`: contenido
