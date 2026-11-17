@@ -1,20 +1,41 @@
 {
   "name": "cs-design-system",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "CS Design System: React components and design tokens.",
   "type": "module",
+  "exports": {
+    ".": "./src/index.js",
+    "./tokens.css": "./src/tokens.css",
+    "./foundations.css": "./src/foundations.css"
+  },
+  "files": [
+    "src/components",
+    "src/organisms",
+    "src/index.js",
+    "src/tokens.css",
+    "src/foundations.css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "a11y": "vite build --config vite.a11y.config.js && node scripts/a11y-scan.mjs",
-    "tokens:check": "node scripts/tokens-check.mjs"
+    "tokens:check": "node scripts/tokens-check.mjs",
+    "index": "node scripts/build-index.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.17.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
