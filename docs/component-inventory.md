@@ -4963,7 +4963,7 @@ The side navigation of La Plataforma, up to three levels.
 ## Hero
 
 **Group:** Content
-**Figma:** 🟡 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked) · documentation frame and *Hero — How to use & Accessibility* (17/11)
+**Figma:** 🟢 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked) · documentation frame and *Hero — How to use & Accessibility* (17/11)
 **Code:** `src/organisms/Hero.jsx`
 **Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image`
 
@@ -5055,7 +5055,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 ## Footer
 
 **Group:** Content
-**Figma:** 🟡 Footer page → `Footer` (Layout Desktop / Stacked) · documentation frame and *Footer — How to use & Accessibility* (17/11)
+**Figma:** 🟢 Footer page → `Footer` (Layout Desktop / Stacked) · documentation frame and *Footer — How to use & Accessibility* (17/11)
 **Code:** `src/organisms/Footer.jsx`
 **Tokens:** `--ds-footer-*` (`footer/all/*`)
 
@@ -5310,7 +5310,7 @@ Pick a value, or a range, by dragging a knob along a track. Figma's *Continuous*
 ## Paragraph
 
 **Group:** Content
-**Figma:** 🟡 Paragraph page → `Paragraph` (Size 14 · 16 · 20 · 24 × Color Default · Subtle · onColor) · documentation frame and *Paragraph — How to use & Accessibility* (17/11)
+**Figma:** 🟢 Paragraph page → `Paragraph` (Size 14 · 16 · 20 · 24 × Color Default · Subtle · onColor) · documentation frame and *Paragraph — How to use & Accessibility* (17/11)
 **Code:** `src/components/Paragraph.jsx` (atom)
 **Tokens:** `--ds-paragraph-fg-text-*` (`paragraph/all/fg/text/*` → Mode `fg/body/*`) · type straight from Device `fontSize/body/*`, `lineHeight/body/*`
 
