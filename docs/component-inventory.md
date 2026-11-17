@@ -4963,7 +4963,7 @@ The side navigation of La Plataforma, up to three levels.
 ## Hero
 
 **Group:** Content
-**Figma:** 🟡 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked) · Hero documentation frame (17/11)
+**Figma:** 🟡 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked) · documentation frame and *Hero — How to use & Accessibility* (17/11)
 **Code:** `src/organisms/Hero.jsx`
 **Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image`
 
@@ -5055,7 +5055,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 ## Footer
 
 **Group:** Content
-**Figma:** 🟡 Footer page → `Footer` (Layout Desktop / Stacked) · Footer documentation frame (17/11)
+**Figma:** 🟡 Footer page → `Footer` (Layout Desktop / Stacked) · documentation frame and *Footer — How to use & Accessibility* (17/11)
 **Code:** `src/organisms/Footer.jsx`
 **Tokens:** `--ds-footer-*` (`footer/all/*`)
 
