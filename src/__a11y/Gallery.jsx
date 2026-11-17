@@ -77,6 +77,7 @@ import { StepVer } from '../components/StepVer';
 import { SteppedSlider } from '../components/SteppedSlider';
 import { TabItem } from '../components/TabItem';
 import { Text } from '../components/Text';
+import { Paragraph } from '../components/Paragraph';
 import { Tooltip } from '../components/Tooltip';
 import { VisuallyHidden } from '../components/VisuallyHidden';
 
@@ -1432,18 +1433,31 @@ export default function Gallery({ mode, theme = 'retail' }) {
         </Contain>
       </Section>
 
+      <Section name="Paragraph">
+        {['14', '16', '20', '24'].map((sz) => (
+          <div key={sz} style={{ display: 'grid', gap: 'var(--ds-spacing-xl)', maxWidth: '40rem' }}>
+            {['default', 'subtle'].map((c) => (
+              <Paragraph key={c} size={sz} color={c}>Paragraph {sz} {c}. Running text wraps onto as many lines as it needs, with <strong>strong emphasis</strong> inside.</Paragraph>
+            ))}
+          </div>
+        ))}
+        <div className="a11y-onsurface">
+          <Paragraph color="onColor">Paragraph 16 onColor, on a colour surface.</Paragraph>
+        </div>
+      </Section>
+
       <Section name="Hero">
         {[['shape', 'full'], ['cover', 'full'], ['cover', 'gradient']].map(([v, sc]) => (
           <Hero key={v + sc} variant={v} scrim={sc}
             eyebrow="Senior Product Designer" title={`Hero ${v}${v === 'cover' ? ' ' + sc : ''}`}
             image={{ src: v === 'cover' ? heroCoverImg : heroShapeImg, alt: '' }}
             actions={<Button>See my work</Button>}>
-            <Text weight="regular">I simplify complex product systems so teams can operate with clarity.</Text>
+            <Paragraph size="24">I simplify complex product systems so teams can operate with clarity.</Paragraph>
           </Hero>
         ))}
         <Hero eyebrow="Without backdrop" title="Hero shape, media start" mediaPosition="start" backdrop={false}
           image={{ src: heroShapeImg, alt: 'Portrait of the designer' }}>
-          <Text weight="regular">Photo described for screen readers.</Text>
+          <Paragraph size="24">Photo described for screen readers.</Paragraph>
         </Hero>
       </Section>
 

@@ -4982,7 +4982,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Scrim (Cover) → Full (the whole image) · Gradient (60% behind the text, fading away from it)
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top in Shape, text at the bottom in Cover)
 - Show eyebrow · Show actions · Show backdrop (Shape)
-- Eyebrow and Title are exposed instances (Text, Headline); Content and Actions are slots
+- Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
 - Shape: select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px wide; the media area is 720 × 629 and the shape clips the bottom of the photo, so keep the person in the lower half and centred
@@ -4992,7 +4992,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Only Button Accent Primary: the hero is the main message of the page; secondary actions go further down
 
 **Sizing**
-- Padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl · actions gap spacing/md · Cover min height 584 (Desktop) / 600 (Stacked)
+- Title Headline display (40/48 · 48/56 · 64/72) · introduction Paragraph 24/32 · padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl · actions gap spacing/md · Cover min height 584 (Desktop) / 600 (Stacked)
 
 ### Developers · React
 
@@ -5000,10 +5000,10 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - `import { Hero } from './organisms/Hero'`
 
 **Props**
-- variant ('shape' | 'cover'), eyebrow, title, image ({ src, alt?, position? }), actions (node), backdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction)
+- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), backdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction: Paragraph size 24)
 
 **Example**
-- `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Text weight="regular">I simplify complex product systems…</Text></Hero>`
+- `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Paragraph size="24">I simplify complex product systems…</Paragraph></Hero>`
 - `<Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }} title="Design systems that scale" />`
 
 ### AI agents · Claude Code
@@ -5017,7 +5017,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 **Composition rules**
 - One per page; the title is the page h1
 - actions: only `<Button>` with the default type and variant (Accent Primary)
-- children: Text or DescriptionText with weight regular; the hero lets them wrap
+- children: Paragraph size 24 (in Cover the hero turns it onColor)
 
 ## Accessibility
 
@@ -5307,14 +5307,95 @@ Pick a value, or a range, by dragging a knob along a track. Figma's *Continuous*
 - Don't use a slider as the only way to enter a precise amount
 
 
+## Paragraph
+
+**Group:** Content
+**Figma:** 🟡 Paragraph page → `Paragraph` (Size 14 · 16 · 20 · 24 × Color Default · Subtle · onColor) · documentation frame and *Paragraph — How to use & Accessibility* (17/11)
+**Code:** `src/components/Paragraph.jsx` (atom)
+**Tokens:** `--ds-paragraph-fg-text-*` (`paragraph/all/fg/text/*` → Mode `fg/body/*`) · type straight from Device `fontSize/body/*`, `lineHeight/body/*`
+
+Running text for reading: it wraps onto as many lines as it needs. Text and DescriptionText are one-line labels; Paragraph is for reading.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Any text people read in full: introductions, case-study paragraphs, explanations, notes
+- Not for one-line labels in rows, buttons or cells → Text or DescriptionText
+
+**Properties**
+- Size → 14 (notes) · 16 (body, default) · 20 · 24 (lead paragraphs, such as the introduction of a Hero). Font sizes in steps of 4, line heights 24 · 24 · 32 · 32, the same in every device
+- Color → Default · Subtle (secondary text) · onColor (on an image or a colour surface)
+- Text → edit it from here; emphasise words with mixed styles (Bold inside the text). There is no Bold variant
+
+**Spacing and width**
+- No outer margin: the parent sets the space between paragraphs
+- Keep lines around 70 characters: the layout limits the width, not the paragraph
+
+### Developers · React
+
+**Import**
+- `import { Paragraph } from './components/Paragraph'`
+
+**Props**
+- size ('14' | '16' | '20' | '24', default '16'), color ('default' | 'subtle' | 'onColor'), id, className, children (the text; `<strong>` for emphasis)
+
+**Example**
+- `<Paragraph size="24">I simplify complex product systems so teams can operate with clarity.</Paragraph>`
+- `<Paragraph color="subtle" size="14">Figures as of November 2026.</Paragraph>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The text wraps onto more than one line, or is meant to be read in full
+
+**Don't pick it when**
+- A label, a row description or a button text → Text or DescriptionText · a title → Headline
+
+**Composition rules**
+- One Paragraph per paragraph of text; the parent sets the gap
+- Hero introduction: size 24 · on an image or colour surface: color onColor
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Default and Subtle meet 4.5:1 on page and container backgrounds in both modes; onColor is white in both modes
+- Line height at least 1.33 times the font size (24/16, 32/24)
+
+**Your job**
+- Keep paragraphs short and lines around 70 characters
+- Don't use Subtle for long text that people must read
+
+### Developers · React
+
+**Semantics**
+- A real `<p>`; emphasis with `<strong>`
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Text that wraps goes in a Paragraph, not in Text
+
+**Don't**
+- Don't put headings or lists inside a Paragraph
+
 ## Headline
 
 **Group:** Content
-**Figma:** 🟢 Headline page → `Headline text` (Size 2xl–xs × Style Default · Primary · Secondary · onColor) · frame *Headline — How to use & Accessibility* (12/11)
+**Figma:** 🟢 Headline page → `Headline text` (Size display, 2xl–xs × Style Default · Primary · Secondary · onColor) · frame *Headline — How to use & Accessibility* (12/11; display 17/11)
 **Code:** `src/components/Headline.jsx` (atom)
 **Tokens:** `--ds-headline-fg-*` (Figma `headline/all/text/fg/*`) · type straight from Device `fontSize/headline/*`
 
-Page and section titles. Size is visual only; the heading level comes from the page outline.
+Page and section titles. Size is visual only; the heading level comes from the page outline. Display (40/48 · 48/56 · 64/72) is the h1 size for a Hero, and only there.
 
 ## How to use
 
@@ -5336,7 +5417,7 @@ Page and section titles. Size is visual only; the heading level comes from the p
 - `import { Headline } from './components/Headline'`
 
 **Props**
-- level 1–6 (the tag) · size '2xl'…'xs' (look only; defaults to the level's) · color 'default' | 'primary' | 'secondary' | 'onColor'
+- level 1–6 (the tag) · size 'display' | '2xl'…'xs' (look only; defaults to the level's; display only for the h1 of a Hero) · color 'default' | 'primary' | 'secondary' | 'onColor'
 
 **Example**
 - `<Headline level={2} size="lg">Payments</Headline>`

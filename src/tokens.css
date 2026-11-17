@@ -355,8 +355,8 @@
   --ds-fontSize-body-2xs:       12px;
   --ds-fontSize-body-xs:        14px;
   --ds-fontSize-body-sm:        16px;
-  --ds-fontSize-body-md:        19px;
-  --ds-fontSize-body-lg:        22px;  /* T 24 · D 28 */
+  --ds-fontSize-body-md:        20px;  /* 17/11: era 19 (herencia de Sistema Origen) — escala de 4 */
+  --ds-fontSize-body-lg:        24px;  /* 17/11: igual en los 3 devices (era 22 · 24 · 28) */
   --ds-fontSize-title-sm:       16px;
   --ds-fontSize-title-md:       19px;
   --ds-fontSize-title-lg:       22px;  /* T 24 · D 24 */
@@ -372,6 +372,7 @@
   --ds-fontSize-headline-lg:    24px;  /* T 28 · D 32 */
   --ds-fontSize-headline-xl:    28px;  /* T 32 · D 36 */
   --ds-fontSize-headline-2xl:   32px;  /* T 40 · D 48 */
+  --ds-fontSize-headline-display: 40px; /* 17/11: h1 del Hero — T 48 · D 64 */
 
   --ds-font-weight-regular: 400;
   --ds-font-weight-medium:  500;
@@ -394,7 +395,7 @@
   --ds-lineHeight-body-xs:        24px;
   --ds-lineHeight-body-sm:        24px;
   --ds-lineHeight-body-md:        32px;
-  --ds-lineHeight-body-lg:        32px;  /* T 40px · D 40px */
+  --ds-lineHeight-body-lg:        32px;  /* 17/11: igual en los 3 devices (era 32 · 40 · 40) */
   --ds-lineHeight-title-sm:       24px;
   --ds-lineHeight-title-md:       32px;
   --ds-lineHeight-title-lg:       32px;  /* T 40px · D 40px */
@@ -410,6 +411,7 @@
   --ds-lineHeight-headline-lg:    32px;  /* T 40px · D 40px */
   --ds-lineHeight-headline-xl:    40px;  /* T 40px · D 48px */
   --ds-lineHeight-headline-2xl:   40px;  /* T 48px · D 64px */
+  --ds-lineHeight-headline-display: 48px; /* 17/11 — T 56 · D 72 */
 
 
   /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1863,6 +1865,12 @@
   --ds-description-text-fg-text-disabled: var(--ds-fg-disabled);      /* descriptionText/all/fg/text/disabled → fg/disabled (mismo valor que fg/body/disabled) */
   --ds-description-text-fg-text-on-color:  var(--ds-fg-body-onColor);  /* 12/11: Color=onColor — blanco en los dos modos, sobre superficies de color */
 
+  /* Paragraph (paragraph/all/*) — 17/11/2026. Texto corrido que parte líneas.
+     Tipografía directa de Device (fontSize/body/*, lineHeight/body/*). */
+  --ds-paragraph-fg-text-default:  var(--ds-fg-body-default);  /* paragraph/all/fg/text/default → fg/body/default */
+  --ds-paragraph-fg-text-subtle:   var(--ds-fg-body-subtle);   /* paragraph/all/fg/text/subtle → fg/body/subtle */
+  --ds-paragraph-fg-text-on-color: var(--ds-fg-body-onColor);  /* paragraph/all/fg/text/onColor → fg/body/onColor */
+
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — ListView (listView/all/*)
@@ -2208,6 +2216,7 @@
   --ds-hero-cover-fg-text-generic:  var(--ds-fg-onColor);        /* hero/cover/fg/text/generic → fg/onColor */
   --ds-hero-cover-height-min-desktop: 584px; /* alto del Cover en Figma (Desktop), sin variable — múltiplo de 8 */
   --ds-hero-cover-height-min-stacked: 600px; /* alto del Cover en Figma (Stacked), sin variable */
+  --ds-hero-cover-height-fade-stacked: 160px; /* Gradient en Stacked: alto del degradado encima del bloque de texto, sin variable */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Footer (footer/all/*) — 17/11/2026
@@ -2586,7 +2595,6 @@
   :root {
     --ds-layout-margin: 24px;
     --ds-layout-gutter: 32px;
-    --ds-fontSize-body-lg:        24px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       28px;
     --ds-fontSize-subheadline-md: 24px;
@@ -2598,12 +2606,13 @@
     --ds-fontSize-headline-lg:    28px;
     --ds-fontSize-headline-xl:    32px;
     --ds-fontSize-headline-2xl:   40px;
-    --ds-lineHeight-body-lg:        40px;
+    --ds-fontSize-headline-display: 48px;
     --ds-lineHeight-title-lg:       40px;
     --ds-lineHeight-subheadline-lg: 40px;
     --ds-lineHeight-headline-sm:    32px;
     --ds-lineHeight-headline-lg:    40px;
     --ds-lineHeight-headline-2xl:   48px;
+    --ds-lineHeight-headline-display: 56px;
   }
 }
 
@@ -2612,7 +2621,6 @@
   :root {
     --ds-layout-margin: 32px;
     --ds-layout-gutter: 32px;
-    --ds-fontSize-body-lg:        28px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       32px;
     --ds-fontSize-subheadline-md: 28px;
@@ -2624,7 +2632,7 @@
     --ds-fontSize-headline-lg:    32px;
     --ds-fontSize-headline-xl:    36px;
     --ds-fontSize-headline-2xl:   48px;
-    --ds-lineHeight-body-lg:        40px;
+    --ds-fontSize-headline-display: 64px;
     --ds-lineHeight-title-lg:       40px;
     --ds-lineHeight-title-xl:       48px;
     --ds-lineHeight-subheadline-md: 40px;
@@ -2635,5 +2643,6 @@
     --ds-lineHeight-headline-lg:    40px;
     --ds-lineHeight-headline-xl:    48px;
     --ds-lineHeight-headline-2xl:   64px;
+    --ds-lineHeight-headline-display: 72px;
   }
 }
