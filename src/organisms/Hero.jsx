@@ -1,6 +1,6 @@
 /**
  * Hero — Organismo
- * CS Design System · v1.1 (17/11/2026, igual que Figma: set "Hero", Style × Scrim × Layout)
+ * CS Design System · v1.2 (17/11/2026, igual que Figma: set "Hero", Style × Scrim × Layout)
  *
  * v1.1: el título es Headline size="display" (el h1 de Hero) y la
  * introducción, Paragraph 24 (antes Text con un apaño para partir líneas).
@@ -17,6 +17,9 @@
  *             La forma recorta la foto (clipPath) y, con `backdrop`, la misma
  *             forma va detrás en `hero/all/bg/backdrop/generic`. Mejor un PNG
  *             recortado con fondo transparente: alrededor se ve el color.
+ *             v1.2: la foto se ajusta al área de 720 × 629 (alto completo,
+ *             centrada y apoyada abajo), no a la caja de la forma — así la
+ *             cabeza no queda por encima del área visible. La forma la recorta.
  *             Proporciones de Figma: área de 720 × 629; la forma mide
  *             777 × 877 y sube 248, así que sobresale por arriba y a la
  *             derecha — el Hero la recorta (overflow hidden).
@@ -61,8 +64,6 @@ import { Text } from '../components/Text';
 const SHAPE_PATH = 'M 426.75 0.66 C 526.01 5.38 630.42 42.26 691.02 119.06 C 747.05 190.06 709.40 290.89 725.41 379.11 C 738.28 450.04 786.30 512.96 775.40 584.20 C 763.33 663.13 724.84 738.45 662.53 790.19 C 597.27 844.37 510.84 889.89 426.75 873.67 C 345.26 857.95 319.88 754.82 250.25 710.64 C 174.07 662.29 41.25 688.78 6.43 606.91 C -27.68 526.71 83.96 456.26 106.31 372.21 C 131.07 279.11 79.61 166.63 143.09 93.02 C 208.87 16.76 324.69 -4.19 426.75 0.66 Z';
 const AREA_W = 720;  // área de la imagen en Figma
 const AREA_H = 629;
-const SHAPE_W = 777;
-const SHAPE_H = 877;
 const SHAPE_Y = -248; // la forma sube 248 sobre el área
 
 const css = `
@@ -189,10 +190,10 @@ function ShapeMedia({ image, backdrop }) {
           <image
             href={image.src}
             x="0"
-            y={SHAPE_Y}
-            width={SHAPE_W}
-            height={SHAPE_H}
-            preserveAspectRatio="xMidYMid slice"
+            y="0"
+            width={AREA_W}
+            height={AREA_H}
+            preserveAspectRatio="xMidYMax meet"
             clipPath={`url(#${clipId})`}
           />
         )}

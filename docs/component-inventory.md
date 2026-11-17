@@ -4985,7 +4985,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
-- Shape: select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px wide; the media area is 720 × 629 and the shape clips the bottom of the photo, so keep the person in the lower half and centred
+- Shape: select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall for sharp screens. The photo fits the media area (720 × 629): full height, centred, resting on the bottom; the shape clips its edges
 - Cover: select the Image layer and replace its image fill. Any image; keep the subject away from the text side (left in Desktop, bottom in Stacked)
 
 **Actions**
