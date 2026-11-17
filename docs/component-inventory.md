@@ -4960,6 +4960,175 @@ The side navigation of La Plataforma, up to three levels.
 - Don't use role="tree": it's links in lists
 - Don't exceed 8 Parent items (dev warning)
 
+## Hero
+
+**Group:** Content
+**Figma:** 🟡 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked) · Hero documentation frame (17/11)
+**Code:** `src/organisms/Hero.jsx`
+**Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image`
+
+The opening block of a page: eyebrow, the page title (h1) and an introduction, with a photo inside the portfolio shape (Shape) or any image as background (Cover).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Once per page, at the top: it says who or what the page is about
+- Shape: a person or object cut out, next to the text · Cover: an atmosphere image behind the text
+
+**Properties**
+- Style → Shape (photo in the shape + backdrop) · Cover (image + scrim)
+- Scrim (Cover) → Full (the whole image) · Gradient (60% behind the text, fading away from it)
+- Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top in Shape, text at the bottom in Cover)
+- Show eyebrow · Show actions · Show backdrop (Shape)
+- Eyebrow and Title are exposed instances (Text, Headline); Content and Actions are slots
+
+**Images**
+- Shape: select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px wide; the media area is 720 × 629 and the shape clips the bottom of the photo, so keep the person in the lower half and centred
+- Cover: select the Image layer and replace its image fill. Any image; keep the subject away from the text side (left in Desktop, bottom in Stacked)
+
+**Actions**
+- Only Button Accent Primary: the hero is the main message of the page; secondary actions go further down
+
+**Sizing**
+- Padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl · actions gap spacing/md · Cover min height 584 (Desktop) / 600 (Stacked)
+
+### Developers · React
+
+**Import**
+- `import { Hero } from './organisms/Hero'`
+
+**Props**
+- variant ('shape' | 'cover'), eyebrow, title, image ({ src, alt?, position? }), actions (node), backdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction)
+
+**Example**
+- `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Text weight="regular">I simplify complex product systems…</Text></Hero>`
+- `<Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }} title="Design systems that scale" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The first block of a landing page, a portfolio home or a case study
+
+**Don't pick it when**
+- A section title inside the page → Headline or SectionHeader · the page header of a back-office tool → PageTitle
+
+**Composition rules**
+- One per page; the title is the page h1
+- actions: only `<Button>` with the default type and variant (Accent Primary)
+- children: Text or DescriptionText with weight regular; the hero lets them wrap
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Cover: the scrim (black 60%, both modes) gives white text at least 4.5:1 over any image (measured 5.5:1 on a near-white image)
+- Shape: the backdrop and the photo are decorative unless the photo is described
+
+**Your job**
+- Say whether the image is decorative or needs a description
+- Keep the eyebrow and title short
+
+### Developers · React
+
+**Semantics**
+- `<section aria-labelledby>` named by the h1 · Cover image `<img alt="">` by default · Shape photo in an `<svg role="img" aria-label>` when `image.alt` is set, otherwise aria-hidden
+
+**Keyboard**
+- Only the actions are focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- One Hero per page, title in the page language
+- `image.alt` set when the photo carries information
+
+**Don't**
+- Don't lower the scrim or put text outside the scrim area in Gradient
+- Don't put secondary or tertiary buttons in actions
+
+## Footer
+
+**Group:** Content
+**Figma:** 🟡 Footer page → `Footer` (Layout Desktop / Stacked) · Footer documentation frame (17/11)
+**Code:** `src/organisms/Footer.jsx`
+**Tokens:** `--ds-footer-*` (`footer/all/*`)
+
+The closing block of a page: contact and social links, an optional action and a short note, with a decorative wave.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- At the very end of every page of a website, the same on every page
+
+**Properties**
+- Layout → Desktop · Stacked (the same piece at two widths)
+- Links: slot, text Links by default; brand logos go here, each with an accessible name (Lucide has no brand icons and the system does not ship them)
+- Action: exposed Button, Accent Primary Small (Download CV) · Show action
+- Note: exposed Text 14 · Decoration: the wave · Show decoration
+
+**Sizing**
+- Content padding spacing/3xl top and bottom · gap spacing/xl · links gap spacing/2xl · wave 160 (Desktop) / 64 (Stacked)
+
+### Developers · React
+
+**Import**
+- `import { Footer } from './organisms/Footer'`
+
+**Props**
+- links (node), linksLabel ('Contact'), action ({ label, icon?, href? | onClick? }), note, decoration (true)
+
+**Example**
+- `<Footer links={<><Link href="https://linkedin.com/in/…" rightIcon={false}>LinkedIn</Link><Link href="mailto:…" rightIcon={false}>Email</Link></>} action={{ label: 'Download CV', icon: 'download', href: '/cv.pdf' }} note="© 2026 Carol Sánchez" />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- The bottom of every page of a website
+
+**Don't pick it when**
+- Actions of a form or a dialog → ButtonBar
+
+**Composition rules**
+- Same links in the same order on every page
+- Logos as links: each one with an accessible name (aria-label or visually hidden text)
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The wave is decorative; links and button keep their own focus
+
+**Your job**
+- Name every logo link
+
+### Developers · React
+
+**Semantics**
+- `<footer>` (contentinfo when it is the page footer) · links inside `<nav aria-label="Contact">` · wave `<svg aria-hidden>`
+
+**Keyboard**
+- Tab through the links, then the button
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- linksLabel in the page language when it is not English
+
+**Don't**
+- Don't use icon-only links without a name
+
 ## TopNavigation
 
 **Group:** Navigation

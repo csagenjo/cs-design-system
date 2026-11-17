@@ -12,6 +12,7 @@ técnica". Al cerrar un punto: se borra de aquí y se apunta en el changelog.
 
 - **Área de foco de Button / Icon Button en otros componentes.** Las instancias crecieron 8 px (08/10). Revisar cada padre (TopNavigation, PageTitle…; InlineNotification revisado 10/11; Collapsible revisado 12/11: el área la pone el Button anidado y no hay gap que restar: Figma ya cuenta el área en el Button Container); si un gap se diseñó con el botón pegado al borde, restar 4 en el token del padre, nunca quitar el área.
 - **Drawer: icono + título en la misma fila del toggle.** Hoy el título de SidebarMenu va como primera línea del contenido.
+- **Átomo de párrafo.** Text y DescriptionText son etiquetas de una línea (`nowrap`). Hero deja partir líneas en su Content; los casos de estudio del portfolio (ContentBlock) necesitarán texto de cuerpo de verdad: un átomo Paragraph (body sm/md/lg) en Figma y código. El intento anterior de Figma ("⚠ Paragraph") se descartó.
 - **SidebarMenu: límites conocidos.** Colapsado oculta el árbol entero (sin vista solo iconos con tooltip) y no tiene slot de pie (perfil, salir, versión).
 
 ## Tokens

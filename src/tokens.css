@@ -201,6 +201,7 @@
   --ds-bg-inverse:          #050506;
   --ds-bg-onColor:          #FFFFFF;
   --ds-bg-overlay:          rgba(5,5,6,0.3);
+  --ds-bg-overlay-image:    rgba(5,5,6,0.6); /* 17/11: bg/overlay-image → opacity/overlay/image → color/opacity/black/60%. Igual en los dos modos (la imagen no cambia): con texto blanco da ≥ 4,5:1 sobre cualquier imagen (mínimo 54 %) */
 
   /* bg marca */
   --ds-bg-primary:          #0A7C92;
@@ -2191,6 +2192,33 @@
   --ds-top-navigation-height-flydown:       400px; /* aproximado, a propósito ("de un vistazo") — nunca garantía matemática para cualquier volumen de contenido. Ancho ya NO acotado aquí — desde 25/09 el flydown es mega-menú a ancho completo (ver --ds-top-navigation-width-flydown-column y el CSS de .ds-top-navigation__flydown) */
   --ds-top-navigation-width-flydown-column: 160px;
   --ds-top-navigation-padding-flydown-generic:      var(--ds-layout-margin); /* topNavigation/all/padding/flydown/generic — layout/margin (01/10, antes spacing/2xl) */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Hero (hero/all/*, hero/cover/*) — 17/11/2026
+     Bloque de apertura de una página. Shape: foto dentro de la forma del
+     portfolio, junto al texto. Cover: imagen de fondo con velo.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-hero-padding-hor-generic:  var(--ds-layout-margin);   /* hero/all/padding/hor/generic */
+  --ds-hero-padding-ver-generic:  var(--ds-spacing-3xl);     /* 32 — hero/all/padding/ver/generic */
+  --ds-hero-gap-generic:          var(--ds-layout-gutter);   /* hero/all/gap/generic — texto ↔ imagen */
+  --ds-hero-gap-text-generic:     var(--ds-spacing-xl);      /* 16 — hero/all/gap/text/generic */
+  --ds-hero-gap-actions-generic:  var(--ds-spacing-md);      /* 8  — hero/all/gap/actions/generic (+ 8 del área de foco de Button) */
+  --ds-hero-bg-backdrop-generic:  var(--ds-bg-secondary-medium); /* hero/all/bg/backdrop/generic → bg/surface/secondary-medium */
+  --ds-hero-cover-bg-scrim-generic: var(--ds-bg-overlay-image);  /* hero/cover/bg/scrim/generic → bg/overlay-image */
+  --ds-hero-cover-fg-text-generic:  var(--ds-fg-onColor);        /* hero/cover/fg/text/generic → fg/onColor */
+  --ds-hero-cover-height-min-desktop: 584px; /* alto del Cover en Figma (Desktop), sin variable — múltiplo de 8 */
+  --ds-hero-cover-height-min-stacked: 600px; /* alto del Cover en Figma (Stacked), sin variable */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Footer (footer/all/*) — 17/11/2026
+     Bloque de cierre: enlaces, acción opcional, nota y ola decorativa.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-footer-padding-top-generic:     var(--ds-spacing-3xl); /* 32 — footer/all/padding/top/generic (arriba y abajo del contenido) */
+  --ds-footer-gap-generic:             var(--ds-spacing-xl);  /* 16 — footer/all/gap/generic */
+  --ds-footer-gap-links-generic:       var(--ds-spacing-2xl); /* 24 — footer/all/gap/links/generic */
+  --ds-footer-bg-decoration-generic:   var(--ds-bg-primary);  /* footer/all/bg/decoration/generic → bg/surface/primary */
+  --ds-footer-height-decoration-desktop: 160px; /* alto de la ola en Figma (Desktop), sin variable */
+  --ds-footer-height-decoration-stacked: 64px;  /* alto de la ola en Figma (Stacked), sin variable */
 }
 
 
