@@ -88,6 +88,8 @@ export * from './organisms/CurrencyPicker.jsx';
 export * from './organisms/DescriptionList.jsx';
 export * from './organisms/FileSelector.jsx';
 export * from './organisms/FileUpload.jsx';
+export * from './organisms/Footer.jsx';
+export * from './organisms/Hero.jsx';
 export * from './organisms/PageTitle.jsx';
 export * from './organisms/RadioGroup.jsx';
 export * from './organisms/SidebarMenu.jsx';

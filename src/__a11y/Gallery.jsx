@@ -100,6 +100,10 @@ import { Switch } from '../components/Switch';
 import { Table, TableRow } from '../organisms/Table';
 import { Tabs, TabPanel } from '../organisms/Tabs';
 import { TopNavigation } from '../organisms/TopNavigation';
+import { Hero } from '../organisms/Hero';
+import { Footer } from '../organisms/Footer';
+import heroCoverImg from './assets/hero-cover-test.jpg';
+import heroShapeImg from './assets/hero-shape-test.png';
 
 const noop = () => {};
 
@@ -1426,6 +1430,34 @@ export default function Gallery({ mode, theme = 'retail' }) {
             ]}
           />
         </Contain>
+      </Section>
+
+      <Section name="Hero">
+        {[['shape', 'full'], ['cover', 'full'], ['cover', 'gradient']].map(([v, sc]) => (
+          <Hero key={v + sc} variant={v} scrim={sc}
+            eyebrow="Senior Product Designer" title={`Hero ${v}${v === 'cover' ? ' ' + sc : ''}`}
+            image={{ src: v === 'cover' ? heroCoverImg : heroShapeImg, alt: '' }}
+            actions={<Button>See my work</Button>}>
+            <Text weight="regular">I simplify complex product systems so teams can operate with clarity.</Text>
+          </Hero>
+        ))}
+        <Hero eyebrow="Without backdrop" title="Hero shape, media start" mediaPosition="start" backdrop={false}
+          image={{ src: heroShapeImg, alt: 'Portrait of the designer' }}>
+          <Text weight="regular">Photo described for screen readers.</Text>
+        </Hero>
+      </Section>
+
+      <Section name="Footer">
+        <Footer
+          links={<>
+            <Link href="#linkedin" rightIcon={false}>LinkedIn</Link>
+            <Link href="#instagram" rightIcon={false}>Instagram</Link>
+            <Link href="#email" rightIcon={false}>Email</Link>
+          </>}
+          action={{ label: 'Download CV', icon: 'download', href: '#cv' }}
+          note="© 2026 Your Name"
+        />
+        <Footer linksLabel="Contact without action" links={<Link href="#email" rightIcon={false}>Email</Link>} note="No action, no decoration" decoration={false} />
       </Section>
     </main>
   );

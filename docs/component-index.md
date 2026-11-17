@@ -82,6 +82,8 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 | TopNavigation | Page header with tabs, mega-menu and an optional action | The top bar of a back-office tool or a website | Navigation inside a page (Tabs) |
 | SidebarMenu | Collapsible side menu | Section navigation in La Plataforma | — |
 | PageTitle | Page heading with back link and actions | The title of every page (level 1) | Section titles (Headline) |
+| Hero | Opening block: eyebrow, h1, introduction and an image (photo in shape, or background image with scrim) | The top of a landing page, portfolio home or case study | The header of a back-office page (PageTitle) |
+| Footer | Closing block: contact links, optional action, note and wave | The bottom of every page of a website | Form or dialog actions (ButtonBar) |
 | Tabs | Tabs with panels | Switching between panels of one page | Changing a view filter (SegmentedControl) |
 | TabItem · TabPanel | Parts of Tabs | Custom tab layouts | — |
 | Link | Text link (or button-looking text without href) | Going to another page or inline actions | Main actions (Button) |

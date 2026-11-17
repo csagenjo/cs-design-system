@@ -3820,6 +3820,28 @@
             "targetVariableSetName": "Base"
           }
         }
+      },
+      "image": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.019607843831181526,
+            0.019607843831181526,
+            0.0235294122248888
+          ],
+          "alpha": 0.6000000238418579,
+          "hex": "#050506"
+        },
+        "$extensions": {
+          "com.figma.variableId": "VariableID:32994:68",
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:2967f12e14bfa9bc29e80230d0b2559de256768c/-1:-1",
+            "targetVariableName": "color/opacity/black/60%",
+            "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+            "targetVariableSetName": "Base"
+          }
+        }
       }
     },
     "hover": {
