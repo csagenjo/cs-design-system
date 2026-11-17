@@ -1817,6 +1817,33 @@
         }
       }
     },
+    "overlay-image": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.019607843831181526,
+          0.019607843831181526,
+          0.0235294122248888
+        ],
+        "alpha": 0.6000000238418579,
+        "hex": "#050506"
+      },
+      "$description": "Scrim between a background image and the text on it: black 60% in both modes. With white text it gives at least 4.5:1 over any image (the minimum is 54%).",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:32994:69",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e952eb79c59b4eecf962d4c749a5c7356e78354c/-1:-1",
+          "targetVariableName": "opacity/overlay/image",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
     "surface": {
       "primary": {
         "$type": "color",
