@@ -3355,7 +3355,7 @@ An empty surface that groups related content: background, radius and shadow. Wha
 ## Image
 
 **Group:** Data
-**Figma:** 🟢 Image page → `Image` set (Variant Rounded Corners / Circle (only 1:1) × Size 1:1 / 3:2 / 4:3 / 16:9 × Fit Cover / Contain; Show Caption, Caption) · frame *Image — How to use & Accessibility* (11/11, Fit 17/11)
+**Figma:** 🟠 Image page → `Image` set (Variant Rounded Corners / Circle (only 1:1) × Size 1:1 / 3:2 / 4:3 / 16:9 × Fit Cover / Contain; Show Caption, Caption) · frame *Image — How to use & Accessibility* (11/11, Fit 17/11)
 **Code:** `src/components/Image.jsx` (atom)
 **Tokens:** `--ds-image-*` (`image/all/*`)
 
@@ -3374,6 +3374,7 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 - Size → 1:1 · 3:2 · 4:3 · 16:9 (width from the layout)
 - Variant → Rounded Corners · Circle (only 1:1)
 - Fit → Cover (default, photos) · Contain (logos, screenshots)
+- Resize the instance and the frame keeps its ratio (18/11)
 - Show Caption + Caption
 
 **Behaviour**
@@ -4968,9 +4969,9 @@ The side navigation of La Plataforma, up to three levels.
 ## Hero
 
 **Group:** Content
-**Figma:** 🟢 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked) · documentation frame and *Hero — How to use & Accessibility* (17/11)
+**Figma:** 🟠 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked; Shape Media exposed, 18/11) · documentation frame and *Hero — How to use & Accessibility* (17/11)
 **Code:** `src/organisms/Hero.jsx`
-**Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image`
+**Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image` · the shape colour comes from ShapeMedia (`shapeMedia/*`)
 
 The opening block of a page: eyebrow, the page title (h1) and an introduction, with a photo inside the portfolio shape (Shape) or any image as background (Cover).
 
@@ -4986,11 +4987,12 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Style → Shape (photo in the shape + backdrop) · Cover (image + scrim)
 - Scrim (Cover) → Full (the whole image) · Gradient (60% behind the text, fading away from it)
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top in Shape, text at the bottom in Cover)
-- Show eyebrow · Show actions · Show backdrop (Shape)
+- Show eyebrow · Show actions
+- Shape: the photo is a Shape Media instance (exposed): Shape (Blob · Pill), Backdrop (Secondary by default · Default · Primary · Tertiary), Show backdrop and Pop out (Pill only)
 - Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
-- Shape: select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall for sharp screens. The photo fits the media area (720 × 629): full height, centred, resting on the bottom; the shape clips its edges
+- Shape: select the Photo layer inside Shape Media and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall for sharp screens. The photo fits the media area (720 × 629): full height, centred, resting on the bottom; the shape clips its edges
 - Cover: select the Image layer and replace its image fill. Any image; keep the subject away from the text side (left in Desktop, bottom in Stacked)
 
 **Actions**
@@ -5005,7 +5007,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - `import { Hero } from './organisms/Hero'`
 
 **Props**
-- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), backdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction: Paragraph size 24)
+- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), shape ('blob' | 'pill'), backdrop ('secondary' | 'default' | 'primary' | 'tertiary'; false = none), showBackdrop (true), popOut (false), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction: Paragraph size 24)
 
 **Example**
 - `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Paragraph size="24">I simplify complex product systems…</Paragraph></Hero>`
@@ -5056,6 +5058,253 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 **Don't**
 - Don't lower the scrim or put text outside the scrim area in Gradient
 - Don't put secondary or tertiary buttons in actions
+
+## ShapeMedia
+
+**Group:** Content
+**Figma:** 🟠 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary; Show backdrop, Pop out) · frame *Shape Media — How to use & Accessibility* (18/11)
+**Code:** `src/components/ShapeMedia.jsx` (atom)
+**Tokens:** `--ds-shape-media-*` (`shapeMedia/{default|secondary|primary|tertiary}/bg/backdrop/generic` → Mode `bg/subtle`, `bg/surface/{secondary|primary|tertiary}-medium`)
+
+A photo inside a shape, with the same shape behind it in colour. Used by Hero (Shape) and ContentBlock.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- Inside Hero and Content Block (it's already there, exposed). On its own only to place a cut-out photo with a coloured shape in a layout of your own
+
+**Properties**
+- Shape → Blob (the portfolio shape) · Pill (vertical capsule)
+- Backdrop → Default (grey, no brand) · Secondary · Primary · Tertiary (the brand medium surfaces, light and dark)
+- Show backdrop → off = only the photo cut by the shape
+- Pop out (Pill only) → on = the shape stops cutting the photo: it stays as a coloured backdrop and the photo shows whole, cut only by the edges of the area
+
+**Images**
+- Select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall: the colour shows around the person
+- The photo fits the area (720 × 629 in code): full height, centred, resting on the bottom; the shape clips it
+- Keep the Photo fill on Fit (the default): it's what the code does. Fill zooms in and crops at the edges of the area; it doesn't exist in code, so a design made with Fill won't look the same on the web
+
+**Pop out: keep in mind**
+- Pill only: on Blob it does nothing (the design gets messy)
+- Only with a cut-out PNG: with a photo that has a background, its whole rectangle shows over the pill
+- The subject only goes past the pill if the image reaches there: crop the PNG tight to the subject or scale it up
+- The edges of the area still cut the photo, and the container (Hero, Content Block) cuts what goes past it
+
+**Behaviour**
+- Resize the instance and everything scales. Blob goes past the top and right edges: the container clips it
+
+**Adding a shape**
+- Draw it in the area, add a Shape option with the four backdrops, and add its path to `SHAPES` in ShapeMedia.jsx. No free colours: only the backdrop tokens (they follow dark mode and themes)
+
+### Developers · React
+
+**Import**
+- `import { ShapeMedia } from './components/ShapeMedia'`
+
+**Props**
+- shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), image ({ src, alt? }), className, style
+
+**Example**
+- `<ShapeMedia shape="pill" backdrop="tertiary" image={{ src: carol }} />`
+- `<ShapeMedia shape="pill" backdrop="secondary" popOut image={{ src: cutout }} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A cut-out photo inside a coloured shape, outside Hero and ContentBlock (they already include it)
+
+**Don't pick it when**
+- A plain photo in a frame → Image · a background image → Hero Cover
+
+**Composition rules**
+- The parent clips the overflow (`overflow: hidden`) when the shape is Blob
+- backdrop only from the four options; never a hex
+- popOut only with shape="pill" and a cut-out PNG (transparent background)
+- Adding a shape: say in `SHAPES` whether it allows popOut
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Decorative by default: the shape and the photo are hidden from screen readers
+
+**Your job**
+- Say whether the photo needs a description
+
+### Developers · React
+
+**Semantics**
+- `<svg aria-hidden>` by default; with `image.alt`, `<svg role="img" aria-label>`
+- Forced colours: the backdrop becomes Canvas with a CanvasText outline
+
+**Keyboard**
+- Not focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- `image.alt` set only when the photo carries information (not for a decorative portrait next to the person's name)
+
+## ContentBlock
+
+**Group:** Content
+**Figma:** 🟠 Content Block page → `Content Block` (Layout Desktop / Stacked; Content slot; Shape Media exposed) · frame *Content Block — How to use & Accessibility* (18/11)
+**Code:** `src/organisms/ContentBlock.jsx`
+**Tokens:** `--ds-content-block-*` (`contentBlock/all/*`) · the shape colour comes from ShapeMedia
+
+A page section with a title (h2), its text and a photo in a shape: Portfolio, About me.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A section of a landing page or portfolio that introduces a topic with a photo: Portfolio, About me
+- It can repeat on the page; the Hero is the one opening block with the h1
+
+**Properties**
+- Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top)
+- Title → Headline 2xl (exposed text)
+- Content → slot: Paragraph 24 for the introduction, then List, or a Headline h3 + Paragraph
+- Shape Media (exposed) → Shape, Backdrop (Default grey by default · Secondary · Primary · Tertiary), Show backdrop, Pop out (Pill only)
+
+**Sizing**
+- Title Headline 2xl (32/40 · 40/48 · 48/64) · padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl
+
+### Developers · React
+
+**Import**
+- `import { ContentBlock } from './organisms/ContentBlock'`
+
+**Props**
+- title (h2), titleId, image ({ src, alt? }), shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), children, id, className, style
+
+**Example**
+- `<ContentBlock title="Portfolio" backdrop="secondary" image={{ src: carol }}><Paragraph size="24">These projects focus on…</Paragraph></ContentBlock>`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A page section with a title, text and a cut-out photo
+
+**Don't pick it when**
+- The first block of the page → Hero · a list of linked items → MediaCard
+
+**Composition rules**
+- children: Paragraph size 24 first; subsections with Headline level 3
+- Alternate backdrops between consecutive blocks (Default / a brand colour) so they don't merge
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Title is an h2 that names the section
+- The photo is decorative unless described
+
+**Your job**
+- Keep the heading order: h2 for the block, h3 inside
+
+### Developers · React
+
+**Semantics**
+- `<section aria-labelledby>` named by its h2 · photo through ShapeMedia (aria-hidden or `role="img"` with `image.alt`)
+
+**Keyboard**
+- Only what's inside the content is focusable
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- No skipped heading levels inside children
+
+## MediaCard
+
+**Group:** Content
+**Figma:** 🟠 Media Card page → `Media Card` (Layout Desktop / Stacked) over `.Media Card Body` (Show subtitle; Title, Subtitle, Description, Link and Image exposed) · frame *Media Card — How to use & Accessibility* (18/11)
+**Code:** `src/organisms/MediaCard.jsx`
+**Tokens:** `--ds-media-card-*` (`mediaCard/all/*`) · Card Basic underneath
+
+A card that links to a piece of work: title, optional subtitle, description and one link, next to a grey panel with an image (a logo).
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A list of case studies or projects, each with its logo or a screenshot
+
+**Properties**
+- Layout → Desktop (side by side) · Stacked (image on top)
+- On the Body instance inside the card: Show subtitle, and the Title, Subtitle, Description, Link and Image instances
+
+**Images**
+- Image 4:3, Fit Contain: a logo is shown whole on the grey panel, never cropped
+
+**Behaviour**
+- Only the link is clickable
+
+**Sizing**
+- Title Headline md (22/32 · 24/32 · 28/40) · subtitle Paragraph 16 subtle · description Paragraph 16 · text padding spacing/2xl · copy gap spacing/md · copy → link spacing/xl · media padding spacing/2xl · panel bg/subtle
+
+### Developers · React
+
+**Import**
+- `import { MediaCard } from './organisms/MediaCard'`
+
+**Props**
+- title, subtitle, description, href, linkLabel ('Case study'), image ({ src, alt? } — alt '' by default), headingLevel (4), titleId, className, style
+
+**Example**
+- `<MediaCard title="BBVA Contact Center" subtitle="Multi-role support system" description="Unified fragmented tools…" href="/bbva-contact-center" image={{ src: bbvaLogo }} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A card that leads to a case study or project page
+
+**Don't pick it when**
+- No link → Card with your own content · a photo with a shape → ContentBlock
+
+**Composition rules**
+- Put them under a group title one level up (Headline h3 "Case studies" → cards h4); set `headingLevel` if the level is different
+- One link per card; don't wrap the whole card in a link
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- The link name includes the project: "Case study: BBVA Contact Center"
+- The logo is decorative: the title already names the project
+
+**Your job**
+- Keep link labels short and the same across cards
+
+### Developers · React
+
+**Semantics**
+- `<article aria-labelledby>` named by its title · Link with VisuallyHidden ": {title}" · Image `alt=""` by default
+
+**Keyboard**
+- One tab stop per card: the link
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- `headingLevel` follows the page outline (axe heading-order passes)
 
 ## Footer
 

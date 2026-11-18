@@ -102,9 +102,13 @@ import { Table, TableRow } from '../organisms/Table';
 import { Tabs, TabPanel } from '../organisms/Tabs';
 import { TopNavigation } from '../organisms/TopNavigation';
 import { Hero } from '../organisms/Hero';
+import { ContentBlock } from '../organisms/ContentBlock';
+import { MediaCard } from '../organisms/MediaCard';
+import { ShapeMedia } from '../components/ShapeMedia';
 import { Footer } from '../organisms/Footer';
 import heroCoverImg from './assets/hero-cover-test.jpg';
 import heroShapeImg from './assets/hero-shape-test.png';
+import popOutImg from './assets/pop-out-test.png';
 
 const noop = () => {};
 
@@ -1461,10 +1465,48 @@ export default function Gallery({ mode, theme = 'retail' }) {
             <Paragraph size="24">I simplify complex product systems so teams can operate with clarity.</Paragraph>
           </Hero>
         ))}
+        <Hero eyebrow="Pill, tertiary" title="Hero shape, pill" shape="pill" backdrop="tertiary"
+          image={{ src: heroShapeImg, alt: '' }} />
         <Hero eyebrow="Without backdrop" title="Hero shape, media start" mediaPosition="start" backdrop={false}
           image={{ src: heroShapeImg, alt: 'Portrait of the designer' }}>
           <Paragraph size="24">Photo described for screen readers.</Paragraph>
         </Hero>
+      </Section>
+
+      <Section name="ShapeMedia">
+        {['blob', 'pill'].map((sh) => (
+          <Row key={sh}>
+            {['default', 'secondary', 'primary', 'tertiary'].map((bd) => (
+              <div key={bd} style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop={bd} image={{ src: heroShapeImg }} /></div>
+            ))}
+            <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} showBackdrop={false} image={{ src: heroShapeImg, alt: 'Portrait of the designer' }} /></div>
+            <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" image={{ src: popOutImg }} /></div>
+            {sh === 'pill' && <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" popOut image={{ src: popOutImg }} /></div>}
+          </Row>
+        ))}
+      </Section>
+
+      <Section name="ContentBlock">
+        <ContentBlock title="Portfolio" backdrop="secondary" image={{ src: heroShapeImg }}>
+          <Paragraph size="24">These projects focus on simplifying complex systems, where multiple roles and decisions need to work together.</Paragraph>
+        </ContentBlock>
+        <ContentBlock title="About me" image={{ src: heroShapeImg }} shape="pill">
+          <Paragraph size="24">Senior Product Designer with a strong interest in complex systems.</Paragraph>
+          <Headline level={3} size="sm" color="primary">Outside of work</Headline>
+          <Paragraph>Wannabe surfer since 2017.</Paragraph>
+        </ContentBlock>
+      </Section>
+
+      <Section name="MediaCard">
+        <div style={{ display: 'grid', gap: 24 }}>
+          <Headline level={3}>Case studies</Headline>
+          <MediaCard title="BBVA Contact Center" subtitle="Multi-role support system"
+            description="Unified fragmented tools into a single operational workspace."
+            href="#bbva" image={{ src: heroCoverImg }} />
+          <MediaCard title="Additional projects"
+            description="Selected work across different products and digital services."
+            href="#more" linkLabel="View all projects" image={{ src: heroShapeImg }} />
+        </div>
       </Section>
 
       <Section name="Footer">
