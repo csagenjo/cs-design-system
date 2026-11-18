@@ -22529,6 +22529,26 @@
             }
           }
         }
+      },
+      "height": {
+        "media": {
+          "generic": {
+            "$type": "number",
+            "$value": 240,
+            "$extensions": {
+              "com.figma.variableId": "VariableID:33057:492",
+              "com.figma.scopes": [
+                "WIDTH_HEIGHT"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:fa5a6a8b682d79ae9bbb51f7f0988770c51ed63f/-1:-1",
+                "targetVariableName": "layout/mediaHeight",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
+              }
+            }
+          }
+        }
       }
     }
   },

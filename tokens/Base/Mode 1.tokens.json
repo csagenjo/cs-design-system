@@ -2071,6 +2071,30 @@
         "com.figma.hiddenFromPublishing": true
       }
     },
+    "3000": {
+      "$type": "number",
+      "$value": 240,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33057:485",
+        "com.figma.hiddenFromPublishing": true
+      }
+    },
+    "4000": {
+      "$type": "number",
+      "$value": 320,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33057:486",
+        "com.figma.hiddenFromPublishing": true
+      }
+    },
+    "5000": {
+      "$type": "number",
+      "$value": 400,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33057:487",
+        "com.figma.hiddenFromPublishing": true
+      }
+    },
     "iconStroke": {
       "$type": "number",
       "$value": 2.6700000762939453,
