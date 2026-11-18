@@ -13,7 +13,7 @@
  *
  * La foto es ShapeMedia: `shape` ('blob' | 'pill'), `backdrop` ('default' gris
  * sin marca — por defecto — | 'secondary' | 'primary' | 'tertiary') y
- * `showBackdrop` y `popOut` (la foto sobresale de la forma). En Figma, la
+ * `showBackdrop` y `popOut` (solo Pill: la foto no se recorta con la forma). En Figma, la
  * instancia Shape Media está expuesta.
  *
  * Responsive: por encima de 1024 (Desktop) texto e imagen lado a lado; por
@@ -73,7 +73,7 @@ export function ContentBlock({
   shape = 'blob',           // 'blob' | 'pill'
   backdrop = 'default',     // 'default' | 'secondary' | 'primary' | 'tertiary'
   showBackdrop = true,
-  popOut = false,           // la foto sobresale de la forma por arriba y por los lados (PNG recortado)
+  popOut = false,           // solo Pill: la foto no se recorta con la forma (PNG recortado)
   children,                 // Paragraph 24, List, Headline h3 + Paragraph…
   className,
   style,

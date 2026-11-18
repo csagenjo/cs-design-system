@@ -4988,7 +4988,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Scrim (Cover) → Full (the whole image) · Gradient (60% behind the text, fading away from it)
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top in Shape, text at the bottom in Cover)
 - Show eyebrow · Show actions
-- Shape: the photo is a Shape Media instance (exposed): Shape (Blob · Pill), Backdrop (Secondary by default · Default · Primary · Tertiary), Show backdrop and Pop out
+- Shape: the photo is a Shape Media instance (exposed): Shape (Blob · Pill), Backdrop (Secondary by default · Default · Primary · Tertiary), Show backdrop and Pop out (Pill only)
 - Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
@@ -5079,17 +5079,17 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - Shape → Blob (the portfolio shape) · Pill (vertical capsule)
 - Backdrop → Default (grey, no brand) · Secondary · Primary · Tertiary (the brand medium surfaces, light and dark)
 - Show backdrop → off = only the photo cut by the shape
-- Pop out → on = the photo goes past the shape at the top and the sides; only the bottom curve cuts it (Pill: from where the bottom curve starts; Blob: from its widest point)
+- Pop out (Pill only) → on = the shape stops cutting the photo: it stays as a coloured backdrop and the photo shows whole, cut only by the edges of the area
 
 **Images**
 - Select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall: the colour shows around the person
 - The photo fits the area (720 × 629 in code): full height, centred, resting on the bottom; the shape clips it
 
 **Pop out: keep in mind**
-- Only with a cut-out PNG: with a photo that has a background, its rectangle shows above the cut line
-- What goes past the shape shows only if the image reaches there: a small subject inside a lot of transparent margin stays inside the shape (crop the PNG tight or scale the image up)
-- Below the cut line the shape still clips: legs or a body wider than the shape are cut by the bottom curve
-- What goes past the area (Blob already does at the top) is still clipped by the container (Hero, Content Block)
+- Pill only: on Blob it does nothing (the design gets messy)
+- Only with a cut-out PNG: with a photo that has a background, its whole rectangle shows over the pill
+- The subject only goes past the pill if the image reaches there: crop the PNG tight to the subject or scale it up
+- The edges of the area still cut the photo, and the container (Hero, Content Block) cuts what goes past it
 
 **Behaviour**
 - Resize the instance and everything scales. Blob goes past the top and right edges: the container clips it
@@ -5120,8 +5120,8 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 **Composition rules**
 - The parent clips the overflow (`overflow: hidden`) when the shape is Blob
 - backdrop only from the four options; never a hex
-- popOut only with a cut-out PNG (transparent background)
-- Adding a shape: give it its `openY` (the Pop out cut line) next to its path
+- popOut only with shape="pill" and a cut-out PNG (transparent background)
+- Adding a shape: say in `SHAPES` whether it allows popOut
 
 ## Accessibility
 
@@ -5171,7 +5171,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top)
 - Title → Headline 2xl (exposed text)
 - Content → slot: Paragraph 24 for the introduction, then List, or a Headline h3 + Paragraph
-- Shape Media (exposed) → Shape, Backdrop (Default grey by default · Secondary · Primary · Tertiary), Show backdrop, Pop out
+- Shape Media (exposed) → Shape, Backdrop (Default grey by default · Secondary · Primary · Tertiary), Show backdrop, Pop out (Pill only)
 
 **Sizing**
 - Title Headline 2xl (32/40 · 40/48 · 48/64) · padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl

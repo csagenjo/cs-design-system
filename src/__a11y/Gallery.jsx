@@ -1481,7 +1481,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
             ))}
             <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} showBackdrop={false} image={{ src: heroShapeImg, alt: 'Portrait of the designer' }} /></div>
             <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" image={{ src: popOutImg }} /></div>
-            <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" popOut image={{ src: popOutImg }} /></div>
+            {sh === 'pill' && <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" popOut image={{ src: popOutImg }} /></div>}
           </Row>
         ))}
       </Section>

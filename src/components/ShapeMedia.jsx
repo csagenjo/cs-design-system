@@ -19,13 +19,11 @@
  *             (las superficies medium de marca, claro y oscuro). Solo tokens:
  *             un color libre rompería el modo oscuro y los temas.
  * showBackdrop → false = solo la foto recortada por la forma.
- * popOut    → la foto sobresale de la forma por arriba y por los lados: la
- *             máscara pasa a ser la forma + un rectángulo desde arriba del área
- *             hasta la línea de corte de la forma (`openY`): Pill, donde empieza
- *             la curva de abajo; Blob, su parte más ancha. Por debajo de esa
- *             línea, la forma recorta (corte redondeado abajo). Solo con un PNG
- *             recortado: con una foto con fondo se vería el rectángulo arriba.
- *             Lo que salga del área lo sigue recortando el contenedor.
+ * popOut    → solo Pill (decisión de Carol, 18/11): la forma deja de recortar
+ *             la foto y queda solo como fondo de color; la foto se ve entera,
+ *             recortada únicamente por los bordes del área. Solo con un PNG
+ *             recortado: con una foto con fondo se vería su rectángulo entero.
+ *             En Blob no hace nada (el diseño se complica).
  *
  * Accesibilidad: decorativa por defecto (aria-hidden). Con `image.alt`, el
  * <svg> pasa a role="img" con ese nombre.
@@ -51,10 +49,10 @@ const PILL_X = (AREA_W - PILL_W) / 2;
 const PILL_R = PILL_W / 2;
 const PILL_PATH = `M ${PILL_X + PILL_R} 0 H ${PILL_X + PILL_W - PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X + PILL_W} ${PILL_R} V ${AREA_H - PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X + PILL_W - PILL_R} ${AREA_H} H ${PILL_X + PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X} ${AREA_H - PILL_R} V ${PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X + PILL_R} 0 Z`;
 
-/* openY: línea de corte de Pop out, en coordenadas del área (Figma: 278 y 355 sobre 520). */
+/* popOut: si la forma lo admite, la foto deja de recortarse con ella. */
 const SHAPES = {
-  blob: { d: BLOB_PATH, transform: 'translate(0 -248)', openY: 336 }, // sube 248; parte más ancha en y = 584 del trazado
-  pill: { d: PILL_PATH, openY: AREA_H - PILL_R },                      // donde empieza la semicircunferencia de abajo
+  blob: { d: BLOB_PATH, transform: 'translate(0 -248)', popOut: false }, // la forma sube 248 sobre el área
+  pill: { d: PILL_PATH, popOut: true },
 };
 const BACKDROPS = ['default', 'secondary', 'primary', 'tertiary'];
 
@@ -78,7 +76,7 @@ export function ShapeMedia({
   shape = 'blob',          // 'blob' | 'pill'
   backdrop = 'default',    // 'default' | 'secondary' | 'primary' | 'tertiary'
   showBackdrop = true,
-  popOut = false,          // la foto sobresale por arriba y por los lados (solo con PNG recortado)
+  popOut = false,          // solo Pill: la foto no se recorta con la forma (solo con PNG recortado)
   image,                   // { src, alt? }
   className,
   style,
@@ -87,6 +85,10 @@ export function ShapeMedia({
   const s = SHAPES[shape] || SHAPES.blob;
   const bd = BACKDROPS.includes(backdrop) ? backdrop : 'default';
   const named = Boolean(image?.alt);
+  if (process.env.NODE_ENV !== 'production' && popOut && !s.popOut) {
+    console.warn(`[DS ShapeMedia] popOut solo funciona con shape="pill"; se ignora en "${shape}".`);
+  }
+  const clipped = !(popOut && s.popOut);
   return (
     <svg
       className={['ds-shape-media', `ds-shape-media--${bd}`, className || ''].filter(Boolean).join(' ')}
@@ -100,7 +102,6 @@ export function ShapeMedia({
       <defs>
         <clipPath id={clipId}>
           <path d={s.d} transform={s.transform} />
-          {popOut && <rect x="0" y="0" width={AREA_W} height={s.openY} />}
         </clipPath>
       </defs>
       {showBackdrop && <path className="ds-shape-media__backdrop" d={s.d} transform={s.transform} />}
@@ -112,7 +113,7 @@ export function ShapeMedia({
           width={AREA_W}
           height={AREA_H}
           preserveAspectRatio="xMidYMax meet"
-          clipPath={`url(#${clipId})`}
+          clipPath={clipped ? `url(#${clipId})` : undefined}
         />
       )}
     </svg>

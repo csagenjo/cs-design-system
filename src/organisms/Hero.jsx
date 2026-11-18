@@ -5,8 +5,8 @@
  * v1.3: la foto en la forma es el átomo ShapeMedia (compartido con ContentBlock).
  * Nuevas: `shape` ('blob' | 'pill') y `backdrop` como color ('secondary' por
  * defecto | 'default' | 'primary' | 'tertiary'); `showBackdrop` la quita.
- * `backdrop={false}` sigue funcionando (= showBackdrop false). `popOut`: la
- * foto sobresale de la forma (ver ShapeMedia). En Figma, la
+ * `backdrop={false}` sigue funcionando (= showBackdrop false). `popOut` (solo
+ * Pill): la foto no se recorta con la forma (ver ShapeMedia). En Figma, la
  * instancia Shape Media está expuesta dentro del Hero.
  *
  * v1.1: el título es Headline size="display" (el h1 de Hero) y la
@@ -164,7 +164,7 @@ export function Hero({
   shape = 'blob',         // shape: 'blob' | 'pill'
   backdrop = 'secondary', // shape: color de la forma de detrás — 'secondary' | 'default' | 'primary' | 'tertiary' (false = sin ella)
   showBackdrop = true,    // shape: false = solo la foto recortada por la forma
-  popOut = false,         // shape: la foto sobresale de la forma por arriba y por los lados (PNG recortado)
+  popOut = false,         // shape: solo Pill: la foto no se recorta con la forma (PNG recortado)
   scrim = 'full',         // cover: 'full' | 'gradient'
   mediaPosition = 'end',  // shape, desktop: 'end' (derecha) | 'start' (izquierda)
   titleId,
