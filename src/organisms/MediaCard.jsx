@@ -1,6 +1,6 @@
 /**
  * MediaCard — Organismo
- * CS Design System · v1 (18/11/2026, igual que Figma: set "Media Card", Layout)
+ * CS Design System · v1.1 (18/11/2026, igual que Figma: set "Media Card", Layout)
  *
  * Tarjeta que enlaza a un trabajo (un case study): título, subtítulo opcional,
  * descripción y un enlace, junto a un panel gris con una imagen (un logo).
@@ -19,7 +19,10 @@
  *                 por defecto: el título ya nombra el proyecto.
  *
  * Responsive: por encima de 1024 (Desktop) texto e imagen lado a lado; por
- * debajo (Stacked) la imagen arriba.
+ * debajo (Stacked) la imagen arriba. El panel mide como mínimo
+ * `mediaCard/all/height/media/generic` (layout/mediaHeight: 240 · 320 · 400,
+ * por Device) y la imagen 4:3 cabe dentro: el alto de la tarjeta queda en la
+ * rejilla de 8 a cualquier ancho (crece solo si el texto es más alto).
  *
  * Accesibilidad: <article> con el nombre de su título (aria-labelledby).
  *
@@ -69,9 +72,14 @@ const css = `
   justify-content: center;
   padding: var(--ds-media-card-padding-media-generic);
   background: var(--ds-media-card-bg-media-generic);
+  min-height: var(--ds-media-card-height-media-generic);   /* rejilla de 8 a cualquier ancho */
+  box-sizing: border-box;
   min-width: 0;
 }
-.ds-media-card__media > .ds-image { width: 100%; }
+/* La imagen 4:3 cabe en el alto del panel: ancho = alto útil × 4/3, sin pasar del panel */
+.ds-media-card__media > .ds-image {
+  width: min(100%, calc((var(--ds-media-card-height-media-generic) - 2 * var(--ds-media-card-padding-media-generic)) * 4 / 3));
+}
 
 @media (min-width: 1024px) {
   .ds-media-card { grid-template-columns: repeat(2, minmax(0, 1fr)); }

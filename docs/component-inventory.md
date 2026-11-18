@@ -5251,12 +5251,14 @@ A card that links to a piece of work: title, optional subtitle, description and 
 
 **Images**
 - Image 4:3, Fit Contain: a logo is shown whole on the grey panel, never cropped
+- The grey panel has a minimum height by device (240 Mobile · 320 Tablet · 400 Desktop) and the image fits inside it, centred. The card stays on the 8 grid at any width; it only grows if the text is taller
+- Wide images (a diagram, a map) look small on the panel: compose them close to 4:3
 
 **Behaviour**
 - Only the link is clickable
 
 **Sizing**
-- Title Headline md (22/32 · 24/32 · 28/40) · subtitle Paragraph 16 subtle · description Paragraph 16 · text padding spacing/2xl · copy gap spacing/md · copy → link spacing/xl · media padding spacing/2xl · panel bg/subtle
+- Title Headline md (22/32 · 24/32 · 28/40) · subtitle Paragraph 16 subtle · description Paragraph 16 · text padding spacing/2xl · copy gap spacing/md · copy → link spacing/xl · media padding spacing/2xl · panel min height `mediaCard/all/height/media/generic` → layout/mediaHeight (240 · 320 · 400) · panel bg/subtle
 
 ### Developers · React
 
