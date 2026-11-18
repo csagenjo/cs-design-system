@@ -2211,12 +2211,42 @@
   --ds-hero-gap-generic:          var(--ds-layout-gutter);   /* hero/all/gap/generic — texto ↔ imagen */
   --ds-hero-gap-text-generic:     var(--ds-spacing-xl);      /* 16 — hero/all/gap/text/generic */
   --ds-hero-gap-actions-generic:  var(--ds-spacing-md);      /* 8  — hero/all/gap/actions/generic (+ 8 del área de foco de Button) */
-  --ds-hero-bg-backdrop-generic:  var(--ds-bg-secondary-medium); /* hero/all/bg/backdrop/generic → bg/surface/secondary-medium */
+  /* 18/11: hero/all/bg/backdrop/generic eliminado — el fondo de la forma lo pone Shape Media (shapeMedia/*). */
   --ds-hero-cover-bg-scrim-generic: var(--ds-bg-overlay-image);  /* hero/cover/bg/scrim/generic → bg/overlay-image */
   --ds-hero-cover-fg-text-generic:  var(--ds-fg-onColor);        /* hero/cover/fg/text/generic → fg/onColor */
   --ds-hero-cover-height-min-desktop: 584px; /* alto del Cover en Figma (Desktop), sin variable — múltiplo de 8 */
   --ds-hero-cover-height-min-stacked: 600px; /* alto del Cover en Figma (Stacked), sin variable */
   --ds-hero-cover-height-fade-stacked: 160px; /* Gradient en Stacked: alto del degradado encima del bloque de texto, sin variable */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Shape Media (shapeMedia/*) — 18/11/2026
+     La foto dentro de una forma, con la misma forma detrás en color. La usan
+     Hero (Shape) y Content Block. Backdrop: default = gris sin marca;
+     secondary / primary / tertiary = las superficies medium de marca.
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-shape-media-default-bg-backdrop-generic:   var(--ds-bg-subtle);           /* shapeMedia/default/bg/backdrop/generic → bg/subtle */
+  --ds-shape-media-secondary-bg-backdrop-generic: var(--ds-bg-secondary-medium); /* shapeMedia/secondary/bg/backdrop/generic → bg/surface/secondary-medium */
+  --ds-shape-media-primary-bg-backdrop-generic:   var(--ds-bg-primary-medium);   /* shapeMedia/primary/bg/backdrop/generic → bg/surface/primary-medium */
+  --ds-shape-media-tertiary-bg-backdrop-generic:  var(--ds-bg-tertiary-medium);  /* shapeMedia/tertiary/bg/backdrop/generic → bg/surface/tertiary-medium */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Content Block (contentBlock/all/*) — 18/11/2026
+     Sección de página con título h2, texto y foto en forma (Portfolio, About me).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-content-block-padding-hor-generic: var(--ds-layout-margin); /* contentBlock/all/padding/hor/generic */
+  --ds-content-block-padding-ver-generic: var(--ds-spacing-3xl);   /* 32 — contentBlock/all/padding/ver/generic */
+  --ds-content-block-gap-generic:         var(--ds-layout-gutter); /* contentBlock/all/gap/generic — texto ↔ imagen */
+  --ds-content-block-gap-text-generic:    var(--ds-spacing-xl);    /* 16 — contentBlock/all/gap/text/generic */
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Media Card (mediaCard/all/*) — 18/11/2026
+     Tarjeta que enlaza a un trabajo: texto + panel gris con imagen (logo).
+     ══════════════════════════════════════════════════════════════════════════ */
+  --ds-media-card-padding-text-generic:  var(--ds-spacing-2xl); /* 24 — mediaCard/all/padding/text/generic */
+  --ds-media-card-padding-media-generic: var(--ds-spacing-2xl); /* 24 — mediaCard/all/padding/media/generic */
+  --ds-media-card-gap-text-generic:      var(--ds-spacing-md);  /* 8  — mediaCard/all/gap/text/generic */
+  --ds-media-card-gap-link-generic:      var(--ds-spacing-xl);  /* 16 — mediaCard/all/gap/link/generic */
+  --ds-media-card-bg-media-generic:      var(--ds-bg-subtle);   /* mediaCard/all/bg/media/generic → bg/subtle (el mismo gris que el marco de Image) */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Footer (footer/all/*) — 17/11/2026

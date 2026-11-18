@@ -1,6 +1,12 @@
 /**
  * Hero — Organismo
- * CS Design System · v1.2 (17/11/2026, igual que Figma: set "Hero", Style × Scrim × Layout)
+ * CS Design System · v1.3 (18/11/2026, igual que Figma: set "Hero", Style × Scrim × Layout)
+ *
+ * v1.3: la foto en la forma es el átomo ShapeMedia (compartido con ContentBlock).
+ * Nuevas: `shape` ('blob' | 'pill') y `backdrop` como color ('secondary' por
+ * defecto | 'default' | 'primary' | 'tertiary'); `showBackdrop` la quita.
+ * `backdrop={false}` sigue funcionando (= showBackdrop false). En Figma, la
+ * instancia Shape Media está expuesta dentro del Hero.
  *
  * v1.1: el título es Headline size="display" (el h1 de Hero) y la
  * introducción, Paragraph 24 (antes Text con un apaño para partir líneas).
@@ -13,17 +19,10 @@
  * apilan. En Figma son la variante Layout porque Figma no tiene media query.
  *
  * variant
- *   'shape' → la foto va DENTRO de la forma del portfolio, junto al texto.
- *             La forma recorta la foto (clipPath) y, con `backdrop`, la misma
- *             forma va detrás en `hero/all/bg/backdrop/generic`. Mejor un PNG
- *             recortado con fondo transparente: alrededor se ve el color.
- *             v1.2: la foto se ajusta al área de 720 × 629 (alto completo,
- *             centrada y apoyada abajo), no a la caja de la forma — así la
- *             cabeza no queda por encima del área visible. La forma la recorta.
- *             Proporciones de Figma: área de 720 × 629; la forma mide
- *             777 × 877 y sube 248, así que sobresale por arriba y a la
- *             derecha — el Hero la recorta (overflow hidden).
- *             Stacked: la foto arriba.
+ *   'shape' → la foto va DENTRO de una forma (ShapeMedia), junto al texto,
+ *             con la misma forma detrás en color. Mejor un PNG recortado con
+ *             fondo transparente. Blob sobresale por arriba y a la derecha:
+ *             el Hero la recorta (overflow hidden). Stacked: la foto arriba.
  *   'cover' → cualquier imagen de fondo de todo el bloque, con velo entre la
  *             imagen y el texto (`scrim`): negro 60 % en los dos modos, que
  *             con texto blanco garantiza ≥ 4,5:1 sobre cualquier imagen (el
@@ -52,6 +51,7 @@
  *     <Paragraph size="24">I simplify complex product systems…</Paragraph>
  *   </Hero>
  *
+ *   <Hero shape="pill" backdrop="tertiary" title="…" image={{ src: '/carol.webp' }} />
  *   <Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }}
  *     title="Design systems that scale" />
  */
@@ -59,12 +59,7 @@ import React, { useId } from 'react';
 import { injectStyles } from '../components/_inputBase';
 import { Headline } from '../components/Headline';
 import { Text } from '../components/Text';
-
-/* Forma del portfolio (trazado de Carol, "brand-bg", 777 × 877). */
-const SHAPE_PATH = 'M 426.75 0.66 C 526.01 5.38 630.42 42.26 691.02 119.06 C 747.05 190.06 709.40 290.89 725.41 379.11 C 738.28 450.04 786.30 512.96 775.40 584.20 C 763.33 663.13 724.84 738.45 662.53 790.19 C 597.27 844.37 510.84 889.89 426.75 873.67 C 345.26 857.95 319.88 754.82 250.25 710.64 C 174.07 662.29 41.25 688.78 6.43 606.91 C -27.68 526.71 83.96 456.26 106.31 372.21 C 131.07 279.11 79.61 166.63 143.09 93.02 C 208.87 16.76 324.69 -4.19 426.75 0.66 Z';
-const AREA_W = 720;  // área de la imagen en Figma
-const AREA_H = 629;
-const SHAPE_Y = -248; // la forma sube 248 sobre el área
+import { ShapeMedia } from '../components/ShapeMedia';
 
 const css = `
 .ds-hero {
@@ -98,14 +93,6 @@ const css = `
 
 /* ── Shape ── */
 .ds-hero--shape .ds-hero__media { order: -1; min-width: 0; }  /* Stacked: la foto arriba */
-.ds-hero__shape {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: ${AREA_W} / ${AREA_H};
-  overflow: visible;             /* la forma sobresale; la recorta el Hero */
-}
-.ds-hero__backdrop { fill: var(--ds-hero-bg-backdrop-generic); }
 
 /* ── Cover ── */
 .ds-hero--cover {
@@ -167,48 +154,15 @@ const css = `
 
 injectStyles('ds-hero', css);
 
-function ShapeMedia({ image, backdrop }) {
-  const clipId = `${useId()}-shape`;
-  const named = Boolean(image?.alt);
-  return (
-    <div className="ds-hero__media">
-      <svg
-        className="ds-hero__shape"
-        viewBox={`0 0 ${AREA_W} ${AREA_H}`}
-        role={named ? 'img' : undefined}
-        aria-label={named ? image.alt : undefined}
-        aria-hidden={named ? undefined : 'true'}
-        focusable="false"
-      >
-        <defs>
-          <clipPath id={clipId}>
-            <path d={SHAPE_PATH} transform={`translate(0 ${SHAPE_Y})`} />
-          </clipPath>
-        </defs>
-        {backdrop && <path className="ds-hero__backdrop" d={SHAPE_PATH} transform={`translate(0 ${SHAPE_Y})`} />}
-        {image?.src && (
-          <image
-            href={image.src}
-            x="0"
-            y="0"
-            width={AREA_W}
-            height={AREA_H}
-            preserveAspectRatio="xMidYMax meet"
-            clipPath={`url(#${clipId})`}
-          />
-        )}
-      </svg>
-    </div>
-  );
-}
-
 export function Hero({
   variant = 'shape',      // 'shape' | 'cover'
   eyebrow,                // texto corto encima del título (opcional)
   title,                  // siempre h1
   image,                  // { src, alt?, position? } — position solo en cover (object-position)
   actions,                // Button Accent Primary (uno o dos)
-  backdrop = true,        // shape: la forma de color detrás de la foto
+  shape = 'blob',         // shape: 'blob' | 'pill'
+  backdrop = 'secondary', // shape: color de la forma de detrás — 'secondary' | 'default' | 'primary' | 'tertiary' (false = sin ella)
+  showBackdrop = true,    // shape: false = solo la foto recortada por la forma
   scrim = 'full',         // cover: 'full' | 'gradient'
   mediaPosition = 'end',  // shape, desktop: 'end' (derecha) | 'start' (izquierda)
   titleId,
@@ -247,7 +201,16 @@ export function Hero({
         {actions && <div className="ds-hero__actions">{actions}</div>}
       </div>
 
-      {!isCover && <ShapeMedia image={image} backdrop={backdrop} />}
+      {!isCover && (
+        <div className="ds-hero__media">
+          <ShapeMedia
+            shape={shape}
+            backdrop={typeof backdrop === 'string' ? backdrop : 'secondary'}
+            showBackdrop={showBackdrop && backdrop !== false}
+            image={image}
+          />
+        </div>
+      )}
     </section>
   );
 }
