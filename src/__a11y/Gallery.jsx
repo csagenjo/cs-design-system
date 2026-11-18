@@ -659,6 +659,12 @@ export default function Gallery({ mode, theme = 'retail' }) {
           ))}
           <div style={{ width: '7.5rem' }}><Image size="1:1" variant="circle" alt="Profile photo" showCaption={false} /></div>
         </Row>
+        <Row>
+          {['cover', 'contain'].map((f) => (
+            <div key={f} style={{ width: '12.5rem' }}><Image size="16:9" fit={f} src={heroShapeImg} alt="" caption={`fit="${f}"`} /></div>
+          ))}
+          <div style={{ width: '7.5rem' }}><Image size="1:1" variant="circle" fit="contain" src={heroShapeImg} alt="Portrait" showCaption={false} /></div>
+        </Row>
       </Section>
 
       <Section name="InlineNotification">

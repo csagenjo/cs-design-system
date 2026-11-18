@@ -59,7 +59,7 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 | AmountView | Formatted amount with currency, highlight and sign | Showing money read-only | Typing money (InputAmount) |
 | List | Bullet, numbered or check list | Short scannable text | Interactive rows (ListView) |
 | Card | Surface that groups content (Basic elevated, Full flat) | Grouping a block on a page | Lists of rows (ListView) |
-| Image | Picture at a fixed ratio, optional caption | Photos and illustrations | Icons (Icon) |
+| Image | Picture at a fixed ratio, optional caption; fit cover or contain | Photos, illustrations, logos | Icons (Icon) |
 | Divider | Hairline between groups | Separating blocks | Spacing alone is enough |
 | CountryFlag | Real flag, one size | Next to a country name or prefix | Decoration |
 
