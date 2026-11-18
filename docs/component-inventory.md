@@ -4982,6 +4982,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 **When to use**
 - Once per page, at the top: it says who or what the page is about
 - Shape: a person or object cut out, next to the text · Cover: an atmosphere image behind the text
+- No background of its own: it shows the page's (`bg/page` or whatever the designer chooses). Don't add a fill to the component
 
 **Properties**
 - Style → Shape (photo in the shape + backdrop) · Cover (image + scrim)
@@ -5167,6 +5168,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 **When to use**
 - A section of a landing page or portfolio that introduces a topic with a photo: Portfolio, About me
 - It can repeat on the page; the Hero is the one opening block with the h1
+- No background of its own: it shows the page's (`bg/page` or whatever the designer chooses). Don't add a fill to the component
 
 **Properties**
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top)
