@@ -1,6 +1,6 @@
 /**
  * ShapeMedia — Átomo
- * CS Design System · v1 (18/11/2026, igual que Figma: set "Shape Media", Shape × Backdrop)
+ * CS Design System · v1.1 (18/11/2026, igual que Figma: set "Shape Media", Shape × Backdrop, Show backdrop, Pop out)
  *
  * La foto dentro de una forma, con la misma forma detrás en color (el
  * backdrop). Sale del Hero v1.2 para compartirla: la usan Hero (Shape) y
@@ -19,6 +19,13 @@
  *             (las superficies medium de marca, claro y oscuro). Solo tokens:
  *             un color libre rompería el modo oscuro y los temas.
  * showBackdrop → false = solo la foto recortada por la forma.
+ * popOut    → la foto sobresale de la forma por arriba y por los lados: la
+ *             máscara pasa a ser la forma + un rectángulo desde arriba del área
+ *             hasta la línea de corte de la forma (`openY`): Pill, donde empieza
+ *             la curva de abajo; Blob, su parte más ancha. Por debajo de esa
+ *             línea, la forma recorta (corte redondeado abajo). Solo con un PNG
+ *             recortado: con una foto con fondo se vería el rectángulo arriba.
+ *             Lo que salga del área lo sigue recortando el contenedor.
  *
  * Accesibilidad: decorativa por defecto (aria-hidden). Con `image.alt`, el
  * <svg> pasa a role="img" con ese nombre.
@@ -29,6 +36,7 @@
  * USO:
  *   <ShapeMedia image={{ src: '/carol.webp', alt: '' }} backdrop="secondary" />
  *   <ShapeMedia shape="pill" backdrop="tertiary" image={{ src: '/carol.webp' }} />
+ *   <ShapeMedia shape="pill" popOut image={{ src: '/carol-cutout.png' }} />
  */
 import React, { useId } from 'react';
 import { injectStyles } from './_inputBase';
@@ -43,9 +51,10 @@ const PILL_X = (AREA_W - PILL_W) / 2;
 const PILL_R = PILL_W / 2;
 const PILL_PATH = `M ${PILL_X + PILL_R} 0 H ${PILL_X + PILL_W - PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X + PILL_W} ${PILL_R} V ${AREA_H - PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X + PILL_W - PILL_R} ${AREA_H} H ${PILL_X + PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X} ${AREA_H - PILL_R} V ${PILL_R} A ${PILL_R} ${PILL_R} 0 0 1 ${PILL_X + PILL_R} 0 Z`;
 
+/* openY: línea de corte de Pop out, en coordenadas del área (Figma: 278 y 355 sobre 520). */
 const SHAPES = {
-  blob: { d: BLOB_PATH, transform: 'translate(0 -248)' }, // la forma sube 248 sobre el área
-  pill: { d: PILL_PATH },
+  blob: { d: BLOB_PATH, transform: 'translate(0 -248)', openY: 336 }, // sube 248; parte más ancha en y = 584 del trazado
+  pill: { d: PILL_PATH, openY: AREA_H - PILL_R },                      // donde empieza la semicircunferencia de abajo
 };
 const BACKDROPS = ['default', 'secondary', 'primary', 'tertiary'];
 
@@ -69,6 +78,7 @@ export function ShapeMedia({
   shape = 'blob',          // 'blob' | 'pill'
   backdrop = 'default',    // 'default' | 'secondary' | 'primary' | 'tertiary'
   showBackdrop = true,
+  popOut = false,          // la foto sobresale por arriba y por los lados (solo con PNG recortado)
   image,                   // { src, alt? }
   className,
   style,
@@ -90,6 +100,7 @@ export function ShapeMedia({
       <defs>
         <clipPath id={clipId}>
           <path d={s.d} transform={s.transform} />
+          {popOut && <rect x="0" y="0" width={AREA_W} height={s.openY} />}
         </clipPath>
       </defs>
       {showBackdrop && <path className="ds-shape-media__backdrop" d={s.d} transform={s.transform} />}

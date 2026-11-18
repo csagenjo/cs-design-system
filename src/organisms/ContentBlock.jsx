@@ -13,7 +13,8 @@
  *
  * La foto es ShapeMedia: `shape` ('blob' | 'pill'), `backdrop` ('default' gris
  * sin marca — por defecto — | 'secondary' | 'primary' | 'tertiary') y
- * `showBackdrop`. En Figma, la instancia Shape Media está expuesta.
+ * `showBackdrop` y `popOut` (la foto sobresale de la forma). En Figma, la
+ * instancia Shape Media está expuesta.
  *
  * Responsive: por encima de 1024 (Desktop) texto e imagen lado a lado; por
  * debajo (Stacked) la foto arriba. Mismo mecanismo que Hero.
@@ -72,6 +73,7 @@ export function ContentBlock({
   shape = 'blob',           // 'blob' | 'pill'
   backdrop = 'default',     // 'default' | 'secondary' | 'primary' | 'tertiary'
   showBackdrop = true,
+  popOut = false,           // la foto sobresale de la forma por arriba y por los lados (PNG recortado)
   children,                 // Paragraph 24, List, Headline h3 + Paragraph…
   className,
   style,
@@ -91,7 +93,7 @@ export function ContentBlock({
         {children && <div className="ds-content-block__content">{children}</div>}
       </div>
       <div className="ds-content-block__media">
-        <ShapeMedia shape={shape} backdrop={backdrop} showBackdrop={showBackdrop} image={image} />
+        <ShapeMedia shape={shape} backdrop={backdrop} showBackdrop={showBackdrop} popOut={popOut} image={image} />
       </div>
     </section>
   );

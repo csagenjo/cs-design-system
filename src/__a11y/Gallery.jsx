@@ -108,6 +108,7 @@ import { ShapeMedia } from '../components/ShapeMedia';
 import { Footer } from '../organisms/Footer';
 import heroCoverImg from './assets/hero-cover-test.jpg';
 import heroShapeImg from './assets/hero-shape-test.png';
+import popOutImg from './assets/pop-out-test.png';
 
 const noop = () => {};
 
@@ -1479,6 +1480,8 @@ export default function Gallery({ mode, theme = 'retail' }) {
               <div key={bd} style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop={bd} image={{ src: heroShapeImg }} /></div>
             ))}
             <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} showBackdrop={false} image={{ src: heroShapeImg, alt: 'Portrait of the designer' }} /></div>
+            <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" image={{ src: popOutImg }} /></div>
+            <div style={{ width: '12.5rem', overflow: 'hidden' }}><ShapeMedia shape={sh} backdrop="secondary" popOut image={{ src: popOutImg }} /></div>
           </Row>
         ))}
       </Section>

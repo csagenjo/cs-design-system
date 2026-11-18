@@ -4988,7 +4988,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Scrim (Cover) → Full (the whole image) · Gradient (60% behind the text, fading away from it)
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top in Shape, text at the bottom in Cover)
 - Show eyebrow · Show actions
-- Shape: the photo is a Shape Media instance (exposed): Shape (Blob · Pill), Backdrop (Secondary by default · Default · Primary · Tertiary) and Show backdrop
+- Shape: the photo is a Shape Media instance (exposed): Shape (Blob · Pill), Backdrop (Secondary by default · Default · Primary · Tertiary), Show backdrop and Pop out
 - Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
@@ -5007,7 +5007,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - `import { Hero } from './organisms/Hero'`
 
 **Props**
-- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), shape ('blob' | 'pill'), backdrop ('secondary' | 'default' | 'primary' | 'tertiary'; false = none), showBackdrop (true), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction: Paragraph size 24)
+- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), shape ('blob' | 'pill'), backdrop ('secondary' | 'default' | 'primary' | 'tertiary'; false = none), showBackdrop (true), popOut (false), scrim ('full' | 'gradient'), mediaPosition ('end' | 'start'), titleId, children (the introduction: Paragraph size 24)
 
 **Example**
 - `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Paragraph size="24">I simplify complex product systems…</Paragraph></Hero>`
@@ -5062,7 +5062,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 ## ShapeMedia
 
 **Group:** Content
-**Figma:** 🟠 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary; Show backdrop) · frame *Shape Media — How to use & Accessibility* (18/11)
+**Figma:** 🟠 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary; Show backdrop, Pop out) · frame *Shape Media — How to use & Accessibility* (18/11)
 **Code:** `src/components/ShapeMedia.jsx` (atom)
 **Tokens:** `--ds-shape-media-*` (`shapeMedia/{default|secondary|primary|tertiary}/bg/backdrop/generic` → Mode `bg/subtle`, `bg/surface/{secondary|primary|tertiary}-medium`)
 
@@ -5079,10 +5079,17 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - Shape → Blob (the portfolio shape) · Pill (vertical capsule)
 - Backdrop → Default (grey, no brand) · Secondary · Primary · Tertiary (the brand medium surfaces, light and dark)
 - Show backdrop → off = only the photo cut by the shape
+- Pop out → on = the photo goes past the shape at the top and the sides; only the bottom curve cuts it (Pill: from where the bottom curve starts; Blob: from its widest point)
 
 **Images**
 - Select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall: the colour shows around the person
 - The photo fits the area (720 × 629 in code): full height, centred, resting on the bottom; the shape clips it
+
+**Pop out: keep in mind**
+- Only with a cut-out PNG: with a photo that has a background, its rectangle shows above the cut line
+- What goes past the shape shows only if the image reaches there: a small subject inside a lot of transparent margin stays inside the shape (crop the PNG tight or scale the image up)
+- Below the cut line the shape still clips: legs or a body wider than the shape are cut by the bottom curve
+- What goes past the area (Blob already does at the top) is still clipped by the container (Hero, Content Block)
 
 **Behaviour**
 - Resize the instance and everything scales. Blob goes past the top and right edges: the container clips it
@@ -5096,10 +5103,11 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - `import { ShapeMedia } from './components/ShapeMedia'`
 
 **Props**
-- shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), image ({ src, alt? }), className, style
+- shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), image ({ src, alt? }), className, style
 
 **Example**
 - `<ShapeMedia shape="pill" backdrop="tertiary" image={{ src: carol }} />`
+- `<ShapeMedia shape="pill" backdrop="secondary" popOut image={{ src: cutout }} />`
 
 ### AI agents · Claude Code
 
@@ -5112,6 +5120,8 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 **Composition rules**
 - The parent clips the overflow (`overflow: hidden`) when the shape is Blob
 - backdrop only from the four options; never a hex
+- popOut only with a cut-out PNG (transparent background)
+- Adding a shape: give it its `openY` (the Pop out cut line) next to its path
 
 ## Accessibility
 
@@ -5161,7 +5171,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top)
 - Title → Headline 2xl (exposed text)
 - Content → slot: Paragraph 24 for the introduction, then List, or a Headline h3 + Paragraph
-- Shape Media (exposed) → Shape, Backdrop (Default grey by default · Secondary · Primary · Tertiary), Show backdrop
+- Shape Media (exposed) → Shape, Backdrop (Default grey by default · Secondary · Primary · Tertiary), Show backdrop, Pop out
 
 **Sizing**
 - Title Headline 2xl (32/40 · 40/48 · 48/64) · padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl
@@ -5172,7 +5182,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 - `import { ContentBlock } from './organisms/ContentBlock'`
 
 **Props**
-- title (h2), titleId, image ({ src, alt? }), shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), children, id, className, style
+- title (h2), titleId, image ({ src, alt? }), shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), children, id, className, style
 
 **Example**
 - `<ContentBlock title="Portfolio" backdrop="secondary" image={{ src: carol }}><Paragraph size="24">These projects focus on…</Paragraph></ContentBlock>`
