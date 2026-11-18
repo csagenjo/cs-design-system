@@ -5084,6 +5084,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 **Images**
 - Select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall: the colour shows around the person
 - The photo fits the area (720 × 629 in code): full height, centred, resting on the bottom; the shape clips it
+- Keep the Photo fill on Fit (the default): it's what the code does. Fill zooms in and crops at the edges of the area; it doesn't exist in code, so a design made with Fill won't look the same on the web
 
 **Pop out: keep in mind**
 - Pill only: on Blob it does nothing (the design gets messy)
