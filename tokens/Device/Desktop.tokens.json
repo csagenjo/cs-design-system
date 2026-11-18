@@ -1907,6 +1907,23 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "mediaHeight": {
+      "$type": "number",
+      "$value": 400,
+      "$description": "Alto mínimo del panel de medios (MediaCard): 240 Mobile · 320 Tablet · 400 Desktop.",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33057:491",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:925f9e11b3c277f3ad6c455b5f83b86074f05a35/-1:-1",
+          "targetVariableName": "layout/mediaHeight-desktop",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "$extensions": {

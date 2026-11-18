@@ -301,6 +301,7 @@
      encogían Button/Icon Button/Segmented Large e Inputs en Mobile. */
   --ds-layout-margin: 16px;  /* T 24 · D 32 */
   --ds-layout-gutter: 24px;  /* T 32 · D 32 */
+  --ds-layout-media-height: 240px; /* T 320 · D 400 — layout/mediaHeight: alto mínimo de un panel de medios */
 
   /* Breakpoints (Base breakpoint/*) — referencia: CSS no admite var() dentro de
      @media, los valores van literales en los @media de Device al final del archivo.
@@ -2246,6 +2247,7 @@
   --ds-media-card-padding-media-generic: var(--ds-spacing-2xl); /* 24 — mediaCard/all/padding/media/generic */
   --ds-media-card-gap-text-generic:      var(--ds-spacing-md);  /* 8  — mediaCard/all/gap/text/generic */
   --ds-media-card-gap-link-generic:      var(--ds-spacing-xl);  /* 16 — mediaCard/all/gap/link/generic */
+  --ds-media-card-height-media-generic:  var(--ds-layout-media-height); /* mediaCard/all/height/media/generic → layout/mediaHeight (240 · 320 · 400) */
   --ds-media-card-bg-media-generic:      var(--ds-bg-subtle);   /* mediaCard/all/bg/media/generic → bg/subtle (el mismo gris que el marco de Image) */
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -2625,6 +2627,7 @@
   :root {
     --ds-layout-margin: 24px;
     --ds-layout-gutter: 32px;
+    --ds-layout-media-height: 320px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       28px;
     --ds-fontSize-subheadline-md: 24px;
@@ -2651,6 +2654,7 @@
   :root {
     --ds-layout-margin: 32px;
     --ds-layout-gutter: 32px;
+    --ds-layout-media-height: 400px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       32px;
     --ds-fontSize-subheadline-md: 28px;
