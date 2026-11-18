@@ -3355,7 +3355,7 @@ An empty surface that groups related content: background, radius and shadow. Wha
 ## Image
 
 **Group:** Data
-**Figma:** 🟢 Image page → `Image` set (Variant Rounded Corners / Circle (only 1:1) × Size 1:1 / 3:2 / 4:3 / 16:9 × Fit Cover / Contain; Show Caption, Caption) · frame *Image — How to use & Accessibility* (11/11, Fit 17/11)
+**Figma:** 🟠 Image page → `Image` set (Variant Rounded Corners / Circle (only 1:1) × Size 1:1 / 3:2 / 4:3 / 16:9 × Fit Cover / Contain; Show Caption, Caption) · frame *Image — How to use & Accessibility* (11/11, Fit 17/11)
 **Code:** `src/components/Image.jsx` (atom)
 **Tokens:** `--ds-image-*` (`image/all/*`)
 
@@ -4969,7 +4969,7 @@ The side navigation of La Plataforma, up to three levels.
 ## Hero
 
 **Group:** Content
-**Figma:** 🟢 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked; Shape Media exposed, 18/11) · documentation frame and *Hero — How to use & Accessibility* (17/11)
+**Figma:** 🟠 Hero page → `Hero` (Style Shape / Cover × Scrim None / Full / Gradient × Layout Desktop / Stacked; Shape Media exposed, 18/11) · documentation frame and *Hero — How to use & Accessibility* (17/11)
 **Code:** `src/organisms/Hero.jsx`
 **Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image` · the shape colour comes from ShapeMedia (`shapeMedia/*`)
 
@@ -5062,7 +5062,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 ## ShapeMedia
 
 **Group:** Content
-**Figma:** 🟢 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary; Show backdrop) · frame *Shape Media — How to use & Accessibility* (18/11)
+**Figma:** 🟠 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary; Show backdrop) · frame *Shape Media — How to use & Accessibility* (18/11)
 **Code:** `src/components/ShapeMedia.jsx` (atom)
 **Tokens:** `--ds-shape-media-*` (`shapeMedia/{default|secondary|primary|tertiary}/bg/backdrop/generic` → Mode `bg/subtle`, `bg/surface/{secondary|primary|tertiary}-medium`)
 
@@ -5143,7 +5143,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 ## ContentBlock
 
 **Group:** Content
-**Figma:** 🟢 Content Block page → `Content Block` (Layout Desktop / Stacked; Content slot; Shape Media exposed) · frame *Content Block — How to use & Accessibility* (18/11)
+**Figma:** 🟠 Content Block page → `Content Block` (Layout Desktop / Stacked; Content slot; Shape Media exposed) · frame *Content Block — How to use & Accessibility* (18/11)
 **Code:** `src/organisms/ContentBlock.jsx`
 **Tokens:** `--ds-content-block-*` (`contentBlock/all/*`) · the shape colour comes from ShapeMedia
 
@@ -5219,7 +5219,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 ## MediaCard
 
 **Group:** Content
-**Figma:** 🟢 Media Card page → `Media Card` (Layout Desktop / Stacked) over `.Media Card Body` (Show subtitle; Title, Subtitle, Description, Link and Image exposed) · frame *Media Card — How to use & Accessibility* (18/11)
+**Figma:** 🟠 Media Card page → `Media Card` (Layout Desktop / Stacked) over `.Media Card Body` (Show subtitle; Title, Subtitle, Description, Link and Image exposed) · frame *Media Card — How to use & Accessibility* (18/11)
 **Code:** `src/organisms/MediaCard.jsx`
 **Tokens:** `--ds-media-card-*` (`mediaCard/all/*`) · Card Basic underneath
 
