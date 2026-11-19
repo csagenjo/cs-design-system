@@ -166,7 +166,7 @@ export function Hero({
   showBackdrop = true,    // shape: false = solo la foto recortada por la forma
   popOut = false,         // shape: solo Pill: la foto no se recorta con la forma (PNG recortado)
   scrim = 'full',         // cover: 'full' | 'gradient'
-  mediaPosition = 'end',  // shape, desktop: 'end' (derecha) | 'start' (izquierda)
+  mediaPosition = 'right',  // shape, desktop: 'right' | 'left' (acepta también 'end' / 'start')
   titleId,
   children,               // la introducción: Paragraph size="24"
   className,
@@ -179,7 +179,7 @@ export function Hero({
   const classes = [
     'ds-hero',
     `ds-hero--${isCover ? 'cover' : 'shape'}`,
-    !isCover && mediaPosition === 'start' ? 'ds-hero--media-start' : '',
+    !isCover && (mediaPosition === 'left' || mediaPosition === 'start') ? 'ds-hero--media-start' : '',
     isCover && scrim === 'gradient' ? 'ds-hero--gradient' : '',
     className || '',
   ].filter(Boolean).join(' ');
