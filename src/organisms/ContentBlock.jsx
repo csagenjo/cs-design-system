@@ -1,6 +1,6 @@
 /**
  * ContentBlock — Organismo
- * CS Design System · v1 (18/11/2026, igual que Figma: set "Content Block", Layout)
+ * CS Design System · v1.1 (19/11/2026, igual que Figma: set "Content Block", Layout · Media position)
  *
  * Sección de página con título, su texto y una foto en una forma: Portfolio,
  * About me. Como el Hero Shape, pero con un h2 y sin eyebrow ni botones, así
@@ -18,6 +18,11 @@
  *
  * Responsive: por encima de 1024 (Desktop) texto e imagen lado a lado; por
  * debajo (Stacked) la foto arriba. Mismo mecanismo que Hero.
+ *
+ * `mediaPosition` ('end' por defecto | 'start'): en Desktop, la foto a la
+ * derecha o a la izquierda del texto (como en Hero). En Stacked no cambia: la
+ * foto siempre arriba. El orden del DOM no cambia (título y texto primero),
+ * así que el lector de pantalla y el tabulador leen igual en los dos casos.
  *
  * Accesibilidad: <section> con el nombre de su h2 (aria-labelledby). La foto
  * es decorativa por defecto; `image.alt` la describe si aporta información.
@@ -61,6 +66,7 @@ const css = `
     align-items: center;
   }
   .ds-content-block__media { order: 0; }
+  .ds-content-block--media-start .ds-content-block__media { order: -1; }
 }
 `;
 
@@ -74,6 +80,7 @@ export function ContentBlock({
   backdrop = 'default',     // 'default' | 'secondary' | 'primary' | 'tertiary'
   showBackdrop = true,
   popOut = false,           // solo Pill: la foto no se recorta con la forma (PNG recortado)
+  mediaPosition = 'end',    // Desktop: 'end' (derecha) | 'start' (izquierda)
   children,                 // Paragraph 24, List, Headline h3 + Paragraph…
   className,
   style,
@@ -84,7 +91,7 @@ export function ContentBlock({
   return (
     <section
       id={id}
-      className={['ds-content-block', className || ''].filter(Boolean).join(' ')}
+      className={['ds-content-block', mediaPosition === 'start' ? 'ds-content-block--media-start' : '', className || ''].filter(Boolean).join(' ')}
       style={style}
       aria-labelledby={headingId}
     >

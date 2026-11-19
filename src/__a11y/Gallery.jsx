@@ -1490,7 +1490,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
         <ContentBlock title="Portfolio" backdrop="secondary" image={{ src: heroShapeImg }}>
           <Paragraph size="24">These projects focus on simplifying complex systems, where multiple roles and decisions need to work together.</Paragraph>
         </ContentBlock>
-        <ContentBlock title="About me" image={{ src: heroShapeImg }} shape="pill">
+        <ContentBlock title="About me" image={{ src: heroShapeImg }} shape="pill" mediaPosition="start">
           <Paragraph size="24">Senior Product Designer with a strong interest in complex systems.</Paragraph>
           <Headline level={3} size="sm" color="primary">Outside of work</Headline>
           <Paragraph>Wannabe surfer since 2017.</Paragraph>

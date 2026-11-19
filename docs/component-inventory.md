@@ -5155,7 +5155,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 ## ContentBlock
 
 **Group:** Content
-**Figma:** 🟠 Content Block page → `Content Block` (Layout Desktop / Stacked; Content slot; Shape Media exposed) · frame *Content Block — How to use & Accessibility* (18/11)
+**Figma:** 🟠 Content Block page → `Content Block` (Layout Desktop / Stacked; Media position End / Start; Content slot; Shape Media exposed) · frame *Content Block — How to use & Accessibility* (18/11, Media position 19/11)
 **Code:** `src/organisms/ContentBlock.jsx`
 **Tokens:** `--ds-content-block-*` (`contentBlock/all/*`) · the shape colour comes from ShapeMedia
 
@@ -5172,6 +5172,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 
 **Properties**
 - Layout → Desktop (side by side) · Stacked (mobile and tablet: photo on top)
+- Media position → End (photo on the right, default) · Start (photo on the left). Desktop only; Stacked keeps the photo on top. Alternate them down the page
 - Title → Headline 2xl (exposed text)
 - Content → slot: Paragraph 24 for the introduction, then List, or a Headline h3 + Paragraph
 - Shape Media (exposed) → Shape, Backdrop (Default grey by default · Secondary · Primary · Tertiary), Show backdrop, Pop out (Pill only)
@@ -5185,7 +5186,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 - `import { ContentBlock } from './organisms/ContentBlock'`
 
 **Props**
-- title (h2), titleId, image ({ src, alt? }), shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), children, id, className, style
+- title (h2), titleId, image ({ src, alt? }), shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), mediaPosition ('end' | 'start'), children, id, className, style
 
 **Example**
 - `<ContentBlock title="Portfolio" backdrop="secondary" image={{ src: carol }}><Paragraph size="24">These projects focus on…</Paragraph></ContentBlock>`
