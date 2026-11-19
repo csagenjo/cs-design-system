@@ -11,7 +11,7 @@
  *   texto. Un sitio puede poner sus logos de marca, cada uno con nombre
  *   accesible: Lucide no tiene iconos de marcas y el sistema no los trae.
  * action: { label, icon?, href? | onClick? } → Button Accent Primary Small
- *   (Figma: instancia Action expuesta, "Download CV"). Sin action, no hay botón.
+ *   (Figma: instancia Action expuesta, "Get the app"). Sin action, no hay botón.
  * note: texto corto → Text 14 Regular.
  * decoration: la ola, en footer/all/bg/decoration/generic. Decorativa
  *   (aria-hidden).
@@ -22,11 +22,11 @@
  * USO:
  *   <Footer
  *     links={<>
- *       <Link href="https://www.linkedin.com/in/…" rightIcon={false}>LinkedIn</Link>
- *       <Link href="mailto:…" rightIcon={false}>Email</Link>
+ *       <Link href="/help" rightIcon={false}>Help</Link>
+ *       <Link href="/privacy" rightIcon={false}>Privacy</Link>
  *     </>}
- *     action={{ label: 'Download CV', icon: 'download', href: '/cv.pdf' }}
- *     note="© 2026 Carol Sánchez"
+ *     action={{ label: 'Get the app', icon: 'download', href: '/app' }}
+ *     note="© 2026 Company name"
  *   />
  */
 import React from 'react';

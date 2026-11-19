@@ -314,7 +314,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
             <Button type={t} variant={v} iconRight="ArrowRight">{`${t} ${v} iconRight`}</Button>
             <Button type={t} variant={v} loading>{`${t} ${v} loading`}</Button>
             <Button type={t} variant={v} disabled>{`${t} ${v} disabled`}</Button>
-            <Button type={t} variant={v} iconLeft="Download" href="#cv">{`${t} ${v} link`}</Button>
+            <Button type={t} variant={v} iconLeft="Download" href="#statement">{`${t} ${v} link`}</Button>
           </Row>
         )))}
         <Row>
@@ -1431,7 +1431,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
         {/* Sitio web: pestañas con href, sin acción */}
         <Contain height={120}>
           <TopNavigation
-            logo={<Text>Carol Sánchez Agenjo</Text>}
+            logo={<Text>Company name</Text>}
             ariaLabel="Site"
             selectedId="work"
             menuItems={[
@@ -1459,7 +1459,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
       <Section name="Hero">
         {[['shape', 'full'], ['cover', 'full'], ['cover', 'gradient']].map(([v, sc]) => (
           <Hero key={v + sc} variant={v} scrim={sc}
-            eyebrow="Senior Product Designer" title={`Hero ${v}${v === 'cover' ? ' ' + sc : ''}`}
+            eyebrow="Personal account" title={`Hero ${v}${v === 'cover' ? ' ' + sc : ''}`}
             image={{ src: v === 'cover' ? heroCoverImg : heroShapeImg, alt: '' }}
             actions={<Button>See my work</Button>}>
             <Paragraph size="24">I simplify complex product systems so teams can operate with clarity.</Paragraph>
@@ -1467,7 +1467,7 @@ export default function Gallery({ mode, theme = 'retail' }) {
         ))}
         <Hero eyebrow="Pill, tertiary" title="Hero shape, pill" shape="pill" backdrop="tertiary"
           image={{ src: heroShapeImg, alt: '' }} />
-        <Hero eyebrow="Without backdrop" title="Hero shape, media start" mediaPosition="start" backdrop={false}
+        <Hero eyebrow="Without backdrop" title="Hero shape, media start" mediaPosition="left" backdrop={false}
           image={{ src: heroShapeImg, alt: 'Portrait of the designer' }}>
           <Paragraph size="24">Photo described for screen readers.</Paragraph>
         </Hero>
@@ -1487,39 +1487,39 @@ export default function Gallery({ mode, theme = 'retail' }) {
       </Section>
 
       <Section name="ContentBlock">
-        <ContentBlock title="Portfolio" backdrop="secondary" image={{ src: heroShapeImg }}>
-          <Paragraph size="24">These projects focus on simplifying complex systems, where multiple roles and decisions need to work together.</Paragraph>
+        <ContentBlock title="Send money in seconds" backdrop="secondary" image={{ src: heroShapeImg }}>
+          <Paragraph size="24">Pay friends and split bills from your phone, at no cost between accounts.</Paragraph>
         </ContentBlock>
-        <ContentBlock title="About me" image={{ src: heroShapeImg }} shape="pill">
-          <Paragraph size="24">Senior Product Designer with a strong interest in complex systems.</Paragraph>
-          <Headline level={3} size="sm" color="primary">Outside of work</Headline>
-          <Paragraph>Wannabe surfer since 2017.</Paragraph>
+        <ContentBlock title="Your card, your rules" image={{ src: heroShapeImg }} shape="pill" mediaPosition="left">
+          <Paragraph size="24">Freeze your card, set spending limits and get an alert for every payment.</Paragraph>
+          <Headline level={3} size="sm" color="primary">Safer online shopping</Headline>
+          <Paragraph>Confirm each online payment in the app.</Paragraph>
         </ContentBlock>
       </Section>
 
       <Section name="MediaCard">
         <div style={{ display: 'grid', gap: 24 }}>
-          <Headline level={3}>Case studies</Headline>
-          <MediaCard title="BBVA Contact Center" subtitle="Multi-role support system"
-            description="Unified fragmented tools into a single operational workspace."
-            href="#bbva" image={{ src: heroCoverImg }} />
-          <MediaCard title="Additional projects"
-            description="Selected work across different products and digital services."
-            href="#more" linkLabel="View all projects" image={{ src: heroShapeImg }} />
+          <Headline level={3}>Ways to get paid</Headline>
+          <MediaCard title="Card payments" subtitle="In store and online"
+            description="Accept cards with a reader or a payment link, and get the money the next day."
+            href="#card-payments" image={{ src: heroCoverImg }} />
+          <MediaCard title="Invoices"
+            description="Send invoices and let customers pay by card or bank transfer."
+            href="#invoices" linkLabel="See how it works" image={{ src: heroShapeImg }} />
         </div>
       </Section>
 
       <Section name="Footer">
         <Footer
           links={<>
-            <Link href="#linkedin" rightIcon={false}>LinkedIn</Link>
-            <Link href="#instagram" rightIcon={false}>Instagram</Link>
-            <Link href="#email" rightIcon={false}>Email</Link>
+            <Link href="#help" rightIcon={false}>Help</Link>
+            <Link href="#privacy" rightIcon={false}>Privacy</Link>
+            <Link href="#terms" rightIcon={false}>Terms</Link>
           </>}
-          action={{ label: 'Download CV', icon: 'download', href: '#cv' }}
-          note="© 2026 Your Name"
+          action={{ label: 'Get the app', icon: 'download', href: '#app' }}
+          note="© 2026 Company name"
         />
-        <Footer linksLabel="Contact without action" links={<Link href="#email" rightIcon={false}>Email</Link>} note="No action, no decoration" decoration={false} />
+        <Footer linksLabel="Contact without action" links={<Link href="#terms" rightIcon={false}>Terms</Link>} note="No action, no decoration" decoration={false} />
       </Section>
     </main>
   );

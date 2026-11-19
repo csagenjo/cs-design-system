@@ -83,9 +83,9 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 | TopNavigation | Page header with tabs, mega-menu and an optional action | The top bar of a back-office tool or a website | Navigation inside a page (Tabs) |
 | SidebarMenu | Collapsible side menu | Section navigation in La Plataforma | — |
 | PageTitle | Page heading with back link and actions | The title of every page (level 1) | Section titles (Headline) |
-| Hero | Opening block: eyebrow, h1, introduction and an image (photo in shape, or background image with scrim) | The top of a landing page, portfolio home or case study | The header of a back-office page (PageTitle) |
-| ContentBlock | Page section: h2, text and a photo in a shape | Portfolio, About me; repeats on the page | The opening block (Hero) |
-| MediaCard | Card with title, subtitle, description, one link and an image panel | Case studies, project lists | A card without a link (Card) |
+| Hero | Opening block: eyebrow, h1, introduction and an image (photo in shape, or background image with scrim) | The top of a landing page, product page or campaign | The header of a back-office page (PageTitle) |
+| ContentBlock | Page section: h2, text and a photo in a shape | A feature or topic of a landing page; repeats on the page | The opening block (Hero) |
+| MediaCard | Card with title, subtitle, description, one link and an image panel | Product, service or feature lists | A card without a link (Card) |
 | Footer | Closing block: contact links, optional action, note and wave | The bottom of every page of a website | Form or dialog actions (ButtonBar) |
 | Tabs | Tabs with panels | Switching between panels of one page | Changing a view filter (SegmentedControl) |
 | TabItem · TabPanel | Parts of Tabs | Custom tab layouts | — |

@@ -44,15 +44,15 @@
  *
  * USO:
  *   <Hero
- *     eyebrow="Senior Product Designer"
- *     title="Hi, I’m Carol Sánchez"
- *     image={{ src: '/carol.png', alt: '' }}
- *     actions={<Button href="#work">See my work</Button>}
+ *     eyebrow="Personal account"
+ *     title="Banking that fits in your pocket"
+ *     image={{ src: '/phone-cutout.png', alt: '' }}
+ *     actions={<Button href="#open">Open an account</Button>}
  *   >
- *     <Paragraph size="24">I simplify complex product systems…</Paragraph>
+ *     <Paragraph size="24">Pay, save and send money from one app…</Paragraph>
  *   </Hero>
  *
- *   <Hero shape="pill" backdrop="tertiary" title="…" image={{ src: '/carol.webp' }} />
+ *   <Hero shape="pill" backdrop="tertiary" title="…" image={{ src: '/phone-cutout.png' }} />
  *   <Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }}
  *     title="Design systems that scale" />
  */
@@ -163,10 +163,10 @@ export function Hero({
   actions,                // Button Accent Primary (uno o dos)
   shape = 'blob',         // shape: 'blob' | 'pill'
   backdrop = 'secondary', // shape: color de la forma de detrás — 'secondary' | 'default' | 'primary' | 'tertiary' (false = sin ella)
-  showBackdrop = true,    // shape: false = solo la foto recortada por la forma
+  showBackdrop = true,    // shape: false = sin forma (ni color ni recorte), la foto entera
   popOut = false,         // shape: solo Pill: la foto no se recorta con la forma (PNG recortado)
   scrim = 'full',         // cover: 'full' | 'gradient'
-  mediaPosition = 'end',  // shape, desktop: 'end' (derecha) | 'start' (izquierda)
+  mediaPosition = 'right',  // shape, desktop: 'right' | 'left' (acepta también 'end' / 'start')
   titleId,
   children,               // la introducción: Paragraph size="24"
   className,
@@ -179,7 +179,7 @@ export function Hero({
   const classes = [
     'ds-hero',
     `ds-hero--${isCover ? 'cover' : 'shape'}`,
-    !isCover && mediaPosition === 'start' ? 'ds-hero--media-start' : '',
+    !isCover && (mediaPosition === 'left' || mediaPosition === 'start') ? 'ds-hero--media-start' : '',
     isCover && scrim === 'gradient' ? 'ds-hero--gradient' : '',
     className || '',
   ].filter(Boolean).join(' ');
