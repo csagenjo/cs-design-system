@@ -13,7 +13,7 @@
  *   disabled / loading → State=Disabled / State=Loading
  *   Hover, Pressed, Focus… → pseudo-clases CSS
  *   href     → (v3.1, 17/11) se pinta un <a> con el mismo aspecto: para
- *              navegar (descargar un CV, ir a otra página), no para acciones.
+ *              navegar (descargar un documento, ir a otra página), no para acciones.
  *              Con disabled o loading sigue siendo <button>.
  *
  * Valores antiguos (antes de v3) — siguen funcionando con aviso en desarrollo:
@@ -31,7 +31,7 @@
  *   <Button iconLeft="search">Search</Button>
  *   <Button type="default" variant="secondary" iconLeft="chevron-left">Back</Button>
  *   <Button variant="tertiary">Cancel</Button>
-<Button variant="secondary" iconLeft="download" href="/cv.pdf">Download CV</Button>
+<Button variant="secondary" iconLeft="download" href="/statement.pdf">Download statement</Button>
  */
 
 import React from 'react';

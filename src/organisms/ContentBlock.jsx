@@ -2,8 +2,8 @@
  * ContentBlock — Organismo
  * CS Design System · v1.1 (19/11/2026, igual que Figma: set "Content Block", Layout · Media position)
  *
- * Sección de página con título, su texto y una foto en una forma: Portfolio,
- * About me. Como el Hero Shape, pero con un h2 y sin eyebrow ni botones, así
+ * Sección de página con título, su texto y una foto en una forma: una
+ * función o un tema de la página (pagos, seguridad de la tarjeta…). Como el Hero Shape, pero con un h2 y sin eyebrow ni botones, así
  * que se puede repetir en la página (el Hero es uno por página, con el h1).
  *
  * Título = Headline level 2, size '2xl'. Contenido = `children` (slot Content
@@ -28,8 +28,8 @@
  * es decorativa por defecto; `image.alt` la describe si aporta información.
  *
  * USO:
- *   <ContentBlock title="Portfolio" backdrop="secondary" image={{ src: carol }}>
- *     <Paragraph size="24">These projects focus on…</Paragraph>
+ *   <ContentBlock title="Send money in seconds" backdrop="secondary" image={{ src: phone }}>
+ *     <Paragraph size="24">Pay friends and split bills from your phone…</Paragraph>
  *   </ContentBlock>
  */
 import React, { useId } from 'react';

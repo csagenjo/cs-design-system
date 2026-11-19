@@ -11,7 +11,7 @@
  * (alto completo, centrada y apoyada abajo: `xMidYMax meet`) y la forma la
  * recorta (clipPath); con `showBackdrop`, la misma forma va detrás en color.
  *
- * shape     → 'blob' (la forma del portfolio: 777 × 877, sube 248 y sobresale
+ * shape     → 'blob' (la forma de marca: 777 × 877, sube 248 y sobresale
  *             por arriba y a la derecha — el contenedor la recorta) |
  *             'pill' (cápsula vertical, alto del área, 56 % del ancho)
  *             Añadir una forma = añadir su trazado aquí y su opción en Figma.
@@ -32,9 +32,9 @@
  * sobresale (Blob).
  *
  * USO:
- *   <ShapeMedia image={{ src: '/carol.webp', alt: '' }} backdrop="secondary" />
- *   <ShapeMedia shape="pill" backdrop="tertiary" image={{ src: '/carol.webp' }} />
- *   <ShapeMedia shape="pill" popOut image={{ src: '/carol-cutout.png' }} />
+ *   <ShapeMedia image={{ src: '/phone-cutout.png', alt: '' }} backdrop="secondary" />
+ *   <ShapeMedia shape="pill" backdrop="tertiary" image={{ src: '/phone-cutout.png' }} />
+ *   <ShapeMedia shape="pill" popOut image={{ src: '/phone-cutout.png' }} />
  */
 import React, { useId } from 'react';
 import { injectStyles } from './_inputBase';

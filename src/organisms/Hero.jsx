@@ -44,15 +44,15 @@
  *
  * USO:
  *   <Hero
- *     eyebrow="Senior Product Designer"
- *     title="Hi, I’m Carol Sánchez"
- *     image={{ src: '/carol.png', alt: '' }}
- *     actions={<Button href="#work">See my work</Button>}
+ *     eyebrow="Personal account"
+ *     title="Banking that fits in your pocket"
+ *     image={{ src: '/phone-cutout.png', alt: '' }}
+ *     actions={<Button href="#open">Open an account</Button>}
  *   >
- *     <Paragraph size="24">I simplify complex product systems…</Paragraph>
+ *     <Paragraph size="24">Pay, save and send money from one app…</Paragraph>
  *   </Hero>
  *
- *   <Hero shape="pill" backdrop="tertiary" title="…" image={{ src: '/carol.webp' }} />
+ *   <Hero shape="pill" backdrop="tertiary" title="…" image={{ src: '/phone-cutout.png' }} />
  *   <Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }}
  *     title="Design systems that scale" />
  */

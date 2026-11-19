@@ -4973,7 +4973,7 @@ The side navigation of La Plataforma, up to three levels.
 **Code:** `src/organisms/Hero.jsx`
 **Tokens:** `--ds-hero-*` (`hero/all/*`, `hero/cover/*`) · Mode `bg/overlay-image` · the shape colour comes from ShapeMedia (`shapeMedia/*`)
 
-The opening block of a page: eyebrow, the page title (h1) and an introduction, with a photo inside the portfolio shape (Shape) or any image as background (Cover).
+The opening block of a page: eyebrow, the page title (h1) and an introduction, with a photo inside the brand shape (Shape) or any image as background (Cover).
 
 ## How to use
 
@@ -5011,13 +5011,13 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), shape ('blob' | 'pill'), backdrop ('secondary' | 'default' | 'primary' | 'tertiary'; false = none), showBackdrop (true), popOut (false), scrim ('full' | 'gradient'), mediaPosition ('right' | 'left'; 'end' / 'start' also accepted), titleId, children (the introduction: Paragraph size 24)
 
 **Example**
-- `<Hero eyebrow="Senior Product Designer" title="Hi, I’m Carol Sánchez" image={{ src: '/carol.png', alt: '' }} actions={<Button href="#work">See my work</Button>}><Paragraph size="24">I simplify complex product systems…</Paragraph></Hero>`
+- `<Hero eyebrow="Personal account" title="Banking that fits in your pocket" image={{ src: '/phone-cutout.png', alt: '' }} actions={<Button href="#open">Open an account</Button>}><Paragraph size="24">Pay, save and send money from one app…</Paragraph></Hero>`
 - `<Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }} title="Design systems that scale" />`
 
 ### AI agents · Claude Code
 
 **Pick it when**
-- The first block of a landing page, a portfolio home or a case study
+- The first block of a landing page, a product page or a campaign
 
 **Don't pick it when**
 - A section title inside the page → Headline or SectionHeader · the page header of a back-office tool → PageTitle
@@ -5077,7 +5077,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - Inside Hero and Content Block (it's already there, exposed). On its own only to place a cut-out photo with a coloured shape in a layout of your own
 
 **Properties**
-- Shape → Blob (the portfolio shape) · Pill (vertical capsule)
+- Shape → Blob (the brand shape) · Pill (vertical capsule)
 - Backdrop → Default (grey, no brand) · Secondary · Primary · Tertiary (the brand medium surfaces, light and dark)
 - Show backdrop → off = only the photo cut by the shape
 - Pop out (Pill only) → on = the shape stops cutting the photo: it stays as a coloured backdrop and the photo shows whole, cut only by the edges of the area
@@ -5108,7 +5108,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), image ({ src, alt? }), className, style
 
 **Example**
-- `<ShapeMedia shape="pill" backdrop="tertiary" image={{ src: carol }} />`
+- `<ShapeMedia shape="pill" backdrop="tertiary" image={{ src: phone }} />`
 - `<ShapeMedia shape="pill" backdrop="secondary" popOut image={{ src: cutout }} />`
 
 ### AI agents · Claude Code
@@ -5159,14 +5159,14 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 **Code:** `src/organisms/ContentBlock.jsx`
 **Tokens:** `--ds-content-block-*` (`contentBlock/all/*`) · the shape colour comes from ShapeMedia
 
-A page section with a title (h2), its text and a photo in a shape: Portfolio, About me.
+A page section with a title (h2), its text and a photo in a shape: a feature or topic of the page (payments, card security…).
 
 ## How to use
 
 ### Designers · Figma
 
 **When to use**
-- A section of a landing page or portfolio that introduces a topic with a photo: Portfolio, About me
+- A section of a landing page that introduces a feature or topic with a photo: sending money, card controls, support
 - It can repeat on the page; the Hero is the one opening block with the h1
 - No background of its own: it shows the page's (`bg/page` or whatever the designer chooses). Don't add a fill to the component
 
@@ -5189,7 +5189,7 @@ A page section with a title (h2), its text and a photo in a shape: Portfolio, Ab
 - title (h2), titleId, image ({ src, alt? }), shape ('blob' | 'pill'), backdrop ('default' | 'secondary' | 'primary' | 'tertiary'), showBackdrop (true), popOut (false), mediaPosition ('right' | 'left'), children, id, className, style
 
 **Example**
-- `<ContentBlock title="Portfolio" backdrop="secondary" image={{ src: carol }}><Paragraph size="24">These projects focus on…</Paragraph></ContentBlock>`
+- `<ContentBlock title="Send money in seconds" backdrop="secondary" image={{ src: phone }}><Paragraph size="24">Pay friends and split bills from your phone…</Paragraph></ContentBlock>`
 
 ### AI agents · Claude Code
 
@@ -5244,7 +5244,7 @@ A card that links to a piece of work: title, optional subtitle, description and 
 ### Designers · Figma
 
 **When to use**
-- A list of case studies or projects, each with its logo or a screenshot
+- A list of products, services or features, each with its logo, an illustration or a screenshot
 
 **Properties**
 - Layout → Desktop (side by side) · Stacked (image on top)
@@ -5267,21 +5267,21 @@ A card that links to a piece of work: title, optional subtitle, description and 
 - `import { MediaCard } from './organisms/MediaCard'`
 
 **Props**
-- title, subtitle, description, href, linkLabel ('Case study'), image ({ src, alt? } — alt '' by default), headingLevel (4), titleId, className, style
+- title, subtitle, description, href, linkLabel ('Learn more'), image ({ src, alt? } — alt '' by default), headingLevel (4), titleId, className, style
 
 **Example**
-- `<MediaCard title="BBVA Contact Center" subtitle="Multi-role support system" description="Unified fragmented tools…" href="/bbva-contact-center" image={{ src: bbvaLogo }} />`
+- `<MediaCard title="Card payments" subtitle="In store and online" description="Accept cards with a reader or a payment link…" href="/card-payments" image={{ src: readerLogo }} />`
 
 ### AI agents · Claude Code
 
 **Pick it when**
-- A card that leads to a case study or project page
+- A card that leads to a product, service or feature page
 
 **Don't pick it when**
 - No link → Card with your own content · a photo with a shape → ContentBlock
 
 **Composition rules**
-- Put them under a group title one level up (Headline h3 "Case studies" → cards h4); set `headingLevel` if the level is different
+- Put them under a group title one level up (Headline h3 "Ways to get paid" → cards h4); set `headingLevel` if the level is different
 - One link per card; don't wrap the whole card in a link
 
 ## Accessibility
@@ -5289,7 +5289,7 @@ A card that links to a piece of work: title, optional subtitle, description and 
 ### Designers · Figma
 
 **Built in**
-- The link name includes the project: "Case study: BBVA Contact Center"
+- The link name includes the project: "Learn more: Card payments"
 - The logo is decorative: the title already names the project
 
 **Your job**
@@ -5330,7 +5330,7 @@ The closing block of a page: contact and social links, an optional action and a 
 **Properties**
 - Layout → Desktop · Stacked (the same piece at two widths)
 - Links: slot, text Links by default; brand logos go here, each with an accessible name (Lucide has no brand icons and the system does not ship them)
-- Action: exposed Button, Accent Primary Small (Download CV) · Show action
+- Action: exposed Button, Accent Primary Small (Get the app) · Show action
 - Note: exposed Text 14 · Decoration: the wave · Show decoration
 
 **Sizing**
@@ -5345,7 +5345,7 @@ The closing block of a page: contact and social links, an optional action and a 
 - links (node), linksLabel ('Contact'), action ({ label, icon?, href? | onClick? }), note, decoration (true)
 
 **Example**
-- `<Footer links={<><Link href="https://linkedin.com/in/…" rightIcon={false}>LinkedIn</Link><Link href="mailto:…" rightIcon={false}>Email</Link></>} action={{ label: 'Download CV', icon: 'download', href: '/cv.pdf' }} note="© 2026 Carol Sánchez" />`
+- `<Footer links={<><Link href="/help" rightIcon={false}>Help</Link><Link href="/privacy" rightIcon={false}>Privacy</Link></>} action={{ label: 'Get the app', icon: 'download', href: '/app' }} note="© 2026 Company name" />`
 
 ### AI agents · Claude Code
 
@@ -5432,7 +5432,7 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 
 **Example**
 - `<TopNavigation logo={<Logo />} selectedId="billing" action={{ label: 'Log out', icon: 'log-out', onClick: logout }} menuItems={[{ id: 'customers', label: 'Customers', onClick: goCustomers }, { id: 'billing', label: 'Billing', flydown: [{ groupTitle: 'Billing', links: [{ label: 'Invoices', href: '/invoices' }] }] }]} />`
-- Website: `<TopNavigation logo={<Name />} selectedId="work" menuItems={[{ id: 'work', label: 'Work', href: '#work' }, { id: 'about', label: 'About', href: '#about' }]} action={{ label: 'Download CV', icon: 'download', href: '/cv.pdf' }} />`
+- Website: `<TopNavigation logo={<Name />} selectedId="work" menuItems={[{ id: 'work', label: 'Work', href: '#work' }, { id: 'about', label: 'About', href: '#about' }]} action={{ label: 'Get the app', icon: 'download', href: '/app' }} />`
 
 ### AI agents · Claude Code
 
@@ -5672,7 +5672,7 @@ Page and section titles. Two separate choices: Level (h1–h6) is the place in t
 
 | Where the title sits | Level | Size |
 |---|---|---|
-| Hero title (landing, portfolio home, case study) | h1 | display |
+| Hero title (landing, product page, campaign) | h1 | display |
 | Page title (any other page, PageTitle) | h1 | 2xl |
 | Section of the page | h2 | xl |
 | Subsection | h3 | lg |

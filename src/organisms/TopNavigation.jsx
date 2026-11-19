@@ -72,7 +72,7 @@
  * como Children directos. Aceptable porque es una vista de apoyo (móvil/
  * tablet), no la primaria.
  *
- * 17/11/2026 (v1.2), para usarla también en un sitio web (portfolio):
+ * 17/11/2026 (v1.2), para usarla también en un sitio web:
  *   · `action` — `{ label, icon?, href? | onClick? }`, el botón de la derecha
  *     (y última opción del menú móvil). Es opcional: sin `action` no hay
  *     botón. Sustituye a `exitLabel`/`onExit`, que siguen funcionando y

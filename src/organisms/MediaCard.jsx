@@ -2,7 +2,7 @@
  * MediaCard — Organismo
  * CS Design System · v1.1 (18/11/2026, igual que Figma: set "Media Card", Layout)
  *
- * Tarjeta que enlaza a un trabajo (un case study): título, subtítulo opcional,
+ * Tarjeta que enlaza a una página de detalle (un producto, un servicio): título, subtítulo opcional,
  * descripción y un enlace, junto a un panel gris con una imagen (un logo).
  * Card Basic por debajo.
  *
@@ -14,7 +14,7 @@
  *   enlace      → Link (default, md, chevron). Solo el enlace es clicable:
  *                 una tarjeta entera como enlace se lee de golpe y no deja
  *                 seleccionar el texto. Su nombre accesible añade el título
- *                 ("Case study: BBVA Contact Center") con VisuallyHidden.
+ *                 ("Learn more: Card payments") con VisuallyHidden.
  *   imagen      → Image 4:3, fit="contain" (un logo no se recorta). Decorativa
  *                 por defecto: el título ya nombra el proyecto.
  *
@@ -28,11 +28,11 @@
  *
  * USO:
  *   <MediaCard
- *     title="BBVA Contact Center"
- *     subtitle="Multi-role support system"
- *     description="Unified fragmented tools into a single operational workspace…"
- *     href="/bbva-contact-center"
- *     image={{ src: bbvaLogo }}
+ *     title="Card payments"
+ *     subtitle="In store and online"
+ *     description="Accept cards with a reader or a payment link…"
+ *     href="/card-payments"
+ *     image={{ src: readerImage }}
  *   />
  */
 import React, { useId } from 'react';
@@ -94,7 +94,7 @@ export function MediaCard({
   subtitle,                 // opcional
   description,
   href,
-  linkLabel = 'Case study',
+  linkLabel = 'Learn more',
   image,                    // { src, alt? } — alt '' por defecto (decorativa)
   headingLevel = 4,
   titleId,

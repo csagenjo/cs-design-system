@@ -2204,8 +2204,8 @@
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Hero (hero/all/*, hero/cover/*) — 17/11/2026
-     Bloque de apertura de una página. Shape: foto dentro de la forma del
-     portfolio, junto al texto. Cover: imagen de fondo con velo.
+     Bloque de apertura de una página. Shape: foto dentro de la forma de
+     marca, junto al texto. Cover: imagen de fondo con velo.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-hero-padding-hor-generic:  var(--ds-layout-margin);   /* hero/all/padding/hor/generic */
   --ds-hero-padding-ver-generic:  var(--ds-spacing-3xl);     /* 32 — hero/all/padding/ver/generic */
@@ -2232,7 +2232,7 @@
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Content Block (contentBlock/all/*) — 18/11/2026
-     Sección de página con título h2, texto y foto en forma (Portfolio, About me).
+     Sección de página con título h2, texto y foto en forma (una función o tema).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-content-block-padding-hor-generic: var(--ds-layout-margin); /* contentBlock/all/padding/hor/generic */
   --ds-content-block-padding-ver-generic: var(--ds-spacing-3xl);   /* 32 — contentBlock/all/padding/ver/generic */
