@@ -1,6 +1,6 @@
 /**
  * ShapeMedia — Átomo
- * CS Design System · v1.1 (18/11/2026, igual que Figma: set "Shape Media", Shape × Backdrop, Show backdrop, Pop out)
+ * CS Design System · v1.2 (19/11/2026, igual que Figma: set "Shape Media", Shape × Backdrop, Show backdrop, Pop out)
  *
  * La foto dentro de una forma, con la misma forma detrás en color (el
  * backdrop). Sale del Hero v1.2 para compartirla: la usan Hero (Shape) y
@@ -18,7 +18,9 @@
  * backdrop  → 'default' (gris, sin marca) | 'secondary' | 'primary' | 'tertiary'
  *             (las superficies medium de marca, claro y oscuro). Solo tokens:
  *             un color libre rompería el modo oscuro y los temas.
- * showBackdrop → false = solo la foto recortada por la forma.
+ * showBackdrop → false = sin forma: ni color detrás ni recorte; la foto se ve
+ *             entera dentro del área (19/11, Carol). Pensado para PNG recortados
+ *             o ilustraciones; una foto con fondo se vería como rectángulo.
  * popOut    → solo Pill (decisión de Carol, 18/11): la forma deja de recortar
  *             la foto y queda solo como fondo de color; la foto se ve entera,
  *             recortada únicamente por los bordes del área. Solo con un PNG
@@ -88,7 +90,7 @@ export function ShapeMedia({
   if (process.env.NODE_ENV !== 'production' && popOut && !s.popOut) {
     console.warn(`[DS ShapeMedia] popOut solo funciona con shape="pill"; se ignora en "${shape}".`);
   }
-  const clipped = !(popOut && s.popOut);
+  const clipped = showBackdrop && !(popOut && s.popOut); // sin backdrop, sin recorte
   return (
     <svg
       className={['ds-shape-media', `ds-shape-media--${bd}`, className || ''].filter(Boolean).join(' ')}

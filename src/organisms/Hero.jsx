@@ -163,7 +163,7 @@ export function Hero({
   actions,                // Button Accent Primary (uno o dos)
   shape = 'blob',         // shape: 'blob' | 'pill'
   backdrop = 'secondary', // shape: color de la forma de detrás — 'secondary' | 'default' | 'primary' | 'tertiary' (false = sin ella)
-  showBackdrop = true,    // shape: false = solo la foto recortada por la forma
+  showBackdrop = true,    // shape: false = sin forma (ni color ni recorte), la foto entera
   popOut = false,         // shape: solo Pill: la foto no se recorta con la forma (PNG recortado)
   scrim = 'full',         // cover: 'full' | 'gradient'
   mediaPosition = 'right',  // shape, desktop: 'right' | 'left' (acepta también 'end' / 'start')

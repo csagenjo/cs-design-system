@@ -5079,7 +5079,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 **Properties**
 - Shape → Blob (the brand shape) · Pill (vertical capsule)
 - Backdrop → Default (grey, no brand) · Secondary · Primary · Tertiary (the brand medium surfaces, light and dark)
-- Show backdrop → off = only the photo cut by the shape
+- Show backdrop → off = no shape at all: no colour behind and no clipping, the photo shows whole inside the area (use a cut-out PNG or an illustration)
 - Pop out (Pill only) → on = the shape stops cutting the photo: it stays as a coloured backdrop and the photo shows whole, cut only by the edges of the area
 
 **Images**
