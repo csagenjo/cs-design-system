@@ -72,6 +72,9 @@ const css = `
   padding: var(--ds-hero-padding-ver-generic) var(--ds-hero-padding-hor-generic);
   box-sizing: border-box;
 }
+/* Pop out: la foto sobresale por arriba y por abajo (cabe en el padding);
+   a los lados se sigue recortando para no crear scroll horizontal. */
+.ds-hero--pop-out { overflow-x: clip; overflow-y: visible; }
 .ds-hero__text {
   position: relative;            /* por encima del velo en Cover */
   display: flex;
@@ -164,7 +167,7 @@ export function Hero({
   shape = 'blob',         // shape: 'blob' | 'pill'
   backdrop = 'secondary', // shape: color de la forma de detrás — 'secondary' | 'default' | 'primary' | 'tertiary' (false = sin ella)
   showBackdrop = true,    // shape: false = sin forma (ni color ni recorte), la foto entera
-  popOut = false,         // shape: solo Pill: la foto no se recorta con la forma (PNG recortado)
+  popOut = false,         // shape: solo Pill: la foto no se recorta y sobresale un 12 % por los cuatro lados (PNG recortado)
   scrim = 'full',         // cover: 'full' | 'gradient'
   mediaPosition = 'right',  // shape, desktop: 'right' | 'left' (acepta también 'end' / 'start')
   titleId,
@@ -181,6 +184,7 @@ export function Hero({
     `ds-hero--${isCover ? 'cover' : 'shape'}`,
     !isCover && (mediaPosition === 'left' || mediaPosition === 'start') ? 'ds-hero--media-start' : '',
     isCover && scrim === 'gradient' ? 'ds-hero--gradient' : '',
+    !isCover && popOut && shape === 'pill' && showBackdrop !== false && backdrop !== false ? 'ds-hero--pop-out' : '',
     className || '',
   ].filter(Boolean).join(' ');
 
