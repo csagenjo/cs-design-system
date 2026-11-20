@@ -1,6 +1,6 @@
 /**
  * Link — Componente atómico
- * CS Design System · v4.0 (26/10/2026: alineado 1:1 con Figma)
+ * CS Design System · v4.1 (20/11/2026: subrayado visitado; v4.0 26/10 alineado 1:1 con Figma)
  *
  * Tokens: --ds-link-* (tokens.css) ← link/all/* de Figma. Iconos: átomo Icon.
  *
@@ -68,20 +68,28 @@ const css = `
 }
 
 /* ── Subrayado bajo el texto (frame Link de Figma, borde inferior) ── */
-.ds-link__text { box-shadow: inset 0 calc(-1 * var(--ds-link-border-bottom-width)) 0 var(--_ul); } /* por dentro: no suma altura, como en Figma */
+/* Borde inferior real (no box-shadow): :visited solo deja cambiar colores de
+   propiedades estándar (border-color sí; box-shadow y variables CSS no), así
+   que con box-shadow el subrayado visitado se quedaba del color normal.
+   El line-height descuenta el borde: la caja mide lo mismo y el subrayado
+   queda por dentro, como en Figma. */
+.ds-link__text {
+  line-height:   calc(var(--_lh) - var(--ds-link-border-bottom-width));
+  border-bottom: var(--ds-link-border-bottom-width) solid var(--_ul);
+}
 
 /* ── Default ── */
 .ds-link--default                        { color: var(--ds-link-fg-label-default-generic); }
 .ds-link--default .ds-link__text         { --_ul: var(--ds-link-border-color-bottom-default); }
 .ds-link--default .ds-link__icon         { color: var(--ds-link-fg-icon-default); }
-.ds-link--default:visited .ds-link__text { --_ul: var(--ds-link-border-color-bottom-visited); }
+.ds-link--default:visited .ds-link__text { border-bottom-color: var(--ds-link-border-color-bottom-visited); }
 
 /* ── Accent ── */
 .ds-link--accent                          { color: var(--ds-link-fg-label-accent); }
 .ds-link--accent .ds-link__text           { --_ul: var(--ds-link-border-color-bottom-accent); }
 .ds-link--accent .ds-link__icon           { color: var(--ds-link-fg-icon-accent); }
 .ds-link--accent:visited                  { color: var(--ds-link-fg-label-accent-visited); }
-.ds-link--accent:visited .ds-link__text   { --_ul: var(--ds-link-border-color-bottom-visited); }
+.ds-link--accent:visited .ds-link__text   { border-bottom-color: var(--ds-link-border-color-bottom-visited); }
 .ds-link--accent:visited .ds-link__icon   { color: var(--ds-link-fg-icon-accent-visited); }
 
 /* ── Emphasis (Figma Type) ── */
