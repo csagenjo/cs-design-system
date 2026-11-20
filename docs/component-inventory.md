@@ -5063,7 +5063,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 ## ShapeMedia
 
 **Group:** Content
-**Figma:** 🟠 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary; Show backdrop, Pop out) · frame *Shape Media — How to use & Accessibility* (18/11)
+**Figma:** 🟠 Shape Media page → `Shape Media` (Shape Blob / Pill × Backdrop Default / Secondary / Primary / Tertiary × Pop out No / Yes (Pill only); Show backdrop) · frame *Shape Media — How to use & Accessibility* (18/11)
 **Code:** `src/components/ShapeMedia.jsx` (atom)
 **Tokens:** `--ds-shape-media-*` (`shapeMedia/{default|secondary|primary|tertiary}/bg/backdrop/generic` → Mode `bg/subtle`, `bg/surface/{secondary|primary|tertiary}-medium`)
 
@@ -5080,7 +5080,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - Shape → Blob (the brand shape) · Pill (vertical capsule)
 - Backdrop → Default (grey, no brand) · Secondary · Primary · Tertiary (the brand medium surfaces, light and dark)
 - Show backdrop → off = no shape at all: no colour behind and no clipping, the photo shows whole inside the area (use a cut-out PNG or an illustration)
-- Pop out (Pill only) → on = the shape stops cutting the photo: it stays as a coloured backdrop and the photo shows whole, cut only by the edges of the area
+- Pop out (Pill only, a variant: Yes / No) → Yes = nothing cuts the photo: the pill stays as a coloured backdrop and the photo grows 12% from the centre, past the pill on all four sides (head, hands, feet)
 
 **Images**
 - Select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall: the colour shows around the person
@@ -5090,8 +5090,8 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 **Pop out: keep in mind**
 - Pill only: on Blob it does nothing (the design gets messy)
 - Only with a cut-out PNG: with a photo that has a background, its whole rectangle shows over the pill
-- The subject only goes past the pill if the image reaches there: crop the PNG tight to the subject or scale it up
-- The edges of the area still cut the photo, and the container (Hero, Content Block) cuts what goes past it
+- Crop the PNG tight to the subject: transparent margins make the subject smaller and it won't go past the pill
+- The 12% fits in the vertical padding of Hero and Content Block; at the sides they still clip, so nothing creates horizontal scroll
 
 **Behaviour**
 - Resize the instance and everything scales. Blob goes past the top and right edges: the container clips it

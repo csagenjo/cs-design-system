@@ -1,6 +1,6 @@
 /**
  * ShapeMedia — Átomo
- * CS Design System · v1.2 (19/11/2026, igual que Figma: set "Shape Media", Shape × Backdrop, Show backdrop, Pop out)
+ * CS Design System · v1.3 (20/11/2026, igual que Figma: set "Shape Media", Shape × Backdrop, Show backdrop, Pop out)
  *
  * La foto dentro de una forma, con la misma forma detrás en color (el
  * backdrop). Sale del Hero v1.2 para compartirla: la usan Hero (Shape) y
@@ -21,11 +21,15 @@
  * showBackdrop → false = sin forma: ni color detrás ni recorte; la foto se ve
  *             entera dentro del área (19/11, Carol). Pensado para PNG recortados
  *             o ilustraciones; una foto con fondo se vería como rectángulo.
- * popOut    → solo Pill (decisión de Carol, 18/11): la forma deja de recortar
- *             la foto y queda solo como fondo de color; la foto se ve entera,
- *             recortada únicamente por los bordes del área. Solo con un PNG
+ * popOut    → solo Pill. La forma queda solo como fondo de color y la foto
+ *             no se recorta con nada (ni la forma ni el área): crece un 12 %
+ *             (POP_SCALE) desde el centro y sobresale por los cuatro lados
+ *             (20/11, Carol). El 12 % cabe en el padding vertical de Content
+ *             Block y Hero en Figma (520 × 6 % = 31 ≤ 32). Solo con un PNG
  *             recortado: con una foto con fondo se vería su rectángulo entero.
- *             En Blob no hace nada (el diseño se complica).
+ *             En Blob no hace nada: ya sobresale por diseño y chocaría con el
+ *             bloque de al lado. Una forma nueva lo activa en SHAPES.
+ *             En Figma es la variante Pop out = Yes (cambia la geometría).
  *
  * Accesibilidad: decorativa por defecto (aria-hidden). Con `image.alt`, el
  * <svg> pasa a role="img" con ese nombre.
@@ -57,6 +61,7 @@ const SHAPES = {
   pill: { d: PILL_PATH, popOut: true },
 };
 const BACKDROPS = ['default', 'secondary', 'primary', 'tertiary'];
+const POP_SCALE = 1.12; // popOut: la foto crece un 12 % desde el centro
 
 const css = `
 .ds-shape-media {
@@ -90,7 +95,11 @@ export function ShapeMedia({
   if (process.env.NODE_ENV !== 'production' && popOut && !s.popOut) {
     console.warn(`[DS ShapeMedia] popOut solo funciona con shape="pill"; se ignora en "${shape}".`);
   }
-  const clipped = showBackdrop && !(popOut && s.popOut); // sin backdrop, sin recorte
+  const popped = popOut && s.popOut;
+  const clipped = showBackdrop && !popped; // sin backdrop o con popOut, sin recorte
+  const box = popped
+    ? { x: -(POP_SCALE - 1) / 2 * AREA_W, y: -(POP_SCALE - 1) / 2 * AREA_H, w: AREA_W * POP_SCALE, h: AREA_H * POP_SCALE }
+    : { x: 0, y: 0, w: AREA_W, h: AREA_H };
   return (
     <svg
       className={['ds-shape-media', `ds-shape-media--${bd}`, className || ''].filter(Boolean).join(' ')}
@@ -110,10 +119,10 @@ export function ShapeMedia({
       {image?.src && (
         <image
           href={image.src}
-          x="0"
-          y="0"
-          width={AREA_W}
-          height={AREA_H}
+          x={box.x}
+          y={box.y}
+          width={box.w}
+          height={box.h}
           preserveAspectRatio="xMidYMax meet"
           clipPath={clipped ? `url(#${clipId})` : undefined}
         />

@@ -59,6 +59,9 @@ const css = `
   gap: var(--ds-content-block-gap-text-generic);
 }
 .ds-content-block__media { order: -1; min-width: 0; }  /* Stacked: la foto arriba */
+/* Pop out: la foto sobresale por arriba y por abajo (cabe en el padding);
+   a los lados se sigue recortando para no crear scroll horizontal. */
+.ds-content-block--pop-out { overflow-x: clip; overflow-y: visible; }
 
 @media (min-width: 1024px) {
   .ds-content-block {
@@ -79,7 +82,7 @@ export function ContentBlock({
   shape = 'blob',           // 'blob' | 'pill'
   backdrop = 'default',     // 'default' | 'secondary' | 'primary' | 'tertiary'
   showBackdrop = true,
-  popOut = false,           // solo Pill: la foto no se recorta con la forma (PNG recortado)
+  popOut = false,           // solo Pill: la foto no se recorta y sobresale un 12 % por los cuatro lados (PNG recortado)
   mediaPosition = 'right',  // Desktop: 'right' | 'left' (Figma: Media position Right / Left)
   children,                 // Paragraph 24, List, Headline h3 + Paragraph…
   className,
@@ -91,7 +94,7 @@ export function ContentBlock({
   return (
     <section
       id={id}
-      className={['ds-content-block', (mediaPosition === 'left' || mediaPosition === 'start') ? 'ds-content-block--media-start' : '', className || ''].filter(Boolean).join(' ')}
+      className={['ds-content-block', (mediaPosition === 'left' || mediaPosition === 'start') ? 'ds-content-block--media-start' : '', popOut && shape === 'pill' ? 'ds-content-block--pop-out' : '', className || ''].filter(Boolean).join(' ')}
       style={style}
       aria-labelledby={headingId}
     >
