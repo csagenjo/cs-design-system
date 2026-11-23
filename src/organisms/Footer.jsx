@@ -49,6 +49,10 @@ const css = `
   text-align: center;
   gap: var(--ds-footer-gap-generic);
   padding: var(--ds-footer-padding-top-generic) 0;
+  width: 100%;
+  max-width: var(--ds-footer-width-max-generic); /* la ola sigue de borde a borde */
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 .ds-footer__links {
   display: flex;

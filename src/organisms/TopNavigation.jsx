@@ -121,7 +121,8 @@ const css = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--ds-top-navigation-padding-hor-generic);
+  /* La barra va de borde a borde; el contenido se alinea con el ancho máximo de las secciones. */
+  padding: 0 max(var(--ds-top-navigation-padding-hor-generic), calc((100% - var(--ds-top-navigation-width-max-generic)) / 2 + var(--ds-top-navigation-padding-hor-generic)));
 }
 .ds-top-navigation__desktop { display: flex; }
 .ds-top-navigation__collapsed { display: none; }

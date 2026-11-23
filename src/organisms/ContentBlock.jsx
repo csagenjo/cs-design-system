@@ -44,7 +44,10 @@ const css = `
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--ds-content-block-gap-generic);
-  padding: var(--ds-content-block-padding-ver-generic) var(--ds-content-block-padding-hor-generic);
+  /* Ancho máximo (layout/maxWidth, márgenes incluidos): a partir de ahí el
+     margen lateral crece para centrar el contenido. */
+  padding: var(--ds-content-block-padding-ver-generic)
+    max(var(--ds-content-block-padding-hor-generic), calc((100% - var(--ds-content-block-width-max-generic)) / 2 + var(--ds-content-block-padding-hor-generic)));
   box-sizing: border-box;
 }
 .ds-content-block__text {
