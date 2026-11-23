@@ -2095,6 +2095,13 @@
         "com.figma.hiddenFromPublishing": true
       }
     },
+    "16000": {
+      "$type": "number",
+      "$value": 1280,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:67"
+      }
+    },
     "iconStroke": {
       "$type": "number",
       "$value": 2.6700000762939453,

@@ -10242,6 +10242,58 @@
           "targetVariableSetName": "Base"
         }
       }
+    },
+    "maxWidth": {
+      "$type": "number",
+      "$value": 1280,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:68",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:2423bddd9bf83bb96e411a5a00d091028930effa/-1:-1",
+          "targetVariableName": "dimension/16000",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base"
+        }
+      }
+    },
+    "section-mobile": {
+      "$type": "number",
+      "$value": 48,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:69",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:f273650e7579c4165aa3bdd71fe3f5e6a2024b25/-1:-1",
+          "targetVariableName": "dimension/600",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base"
+        }
+      }
+    },
+    "section-tablet": {
+      "$type": "number",
+      "$value": 64,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:70",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:7f4e7f15a1685d83cf0cddf5bcc7c6c0ea82f940/-1:-1",
+          "targetVariableName": "dimension/800",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base"
+        }
+      }
+    },
+    "section-desktop": {
+      "$type": "number",
+      "$value": 80,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:71",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:332cace5ffcfdeb8170c1e2d1bbd5a4a96c1ba59/-1:-1",
+          "targetVariableName": "dimension/1000",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base"
+        }
+      }
     }
   },
   "dimension": {

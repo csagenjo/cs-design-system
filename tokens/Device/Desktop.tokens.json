@@ -1924,6 +1924,44 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "maxWidth": {
+      "$type": "number",
+      "$value": 1280,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:72",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--ds-layout-max-width)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:67e47e15e0220f039918e8058fccfce631abbb84/-1:-1",
+          "targetVariableName": "layout/maxWidth",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
+    },
+    "section": {
+      "$type": "number",
+      "$value": 80,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33088:73",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--ds-layout-section)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:1fd5916db1fc19d573e98657a5d62d89c62598aa/-1:-1",
+          "targetVariableName": "layout/section-desktop",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "$extensions": {
