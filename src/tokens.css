@@ -302,6 +302,8 @@
   --ds-layout-margin: 16px;  /* T 24 · D 32 */
   --ds-layout-gutter: 24px;  /* T 32 · D 32 */
   --ds-layout-media-height: 240px; /* T 320 · D 400 — layout/mediaHeight: alto mínimo de un panel de medios */
+  --ds-layout-max-width: 1280px;   /* layout/maxWidth (23/11): ancho máximo de una sección de página, márgenes incluidos (= frame Desktop de Figma); igual en los 3 devices */
+  --ds-layout-section: 48px;       /* T 64 · D 80 — layout/section (23/11): padding vertical de las secciones de página (Hero, Content Block) */
 
   /* Breakpoints (Base breakpoint/*) — referencia: CSS no admite var() dentro de
      @media, los valores van literales en los @media de Device al final del archivo.
@@ -2188,6 +2190,7 @@
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-top-navigation-bg-generic:  var(--ds-bg-container); /* 11/11: bg/container — topNavigation/all/bg/generic */
   --ds-top-navigation-gap-generic: var(--ds-layout-gutter); /* topNavigation/all/gap/generic — layout/gutter (01/10, antes spacing/3xl), gap real entre Logo y Tabs */
+  --ds-top-navigation-width-max-generic: var(--ds-layout-max-width); /* topNavigation/all/width/max/generic → layout/maxWidth (el contenido; la barra sigue de borde a borde) */
   --ds-top-navigation-padding-hor-generic: var(--ds-layout-margin); /* topNavigation/all/paddingHor/generic — layout/margin (01/10, antes spacing/2xl), ahora bindeado en Figma (antes literal sin variable) */
   --ds-top-navigation-fg-flydown-group-title-generic: var(--ds-fg-subtle); /* topNavigation/all/fg/flydown/groupTitle/generic — corregido 24/09: Carol recoloreó el título de grupo a gris (fg/subtle) en Figma; el alias a fg/default (negro) quedó desincronizado */
   --ds-top-navigation-fg-flydown-tab-title-generic: var(--ds-fg-headline-default); /* topNavigation/all/fg/flydown/tabTitle/generic → Mode fg/headline/default (11/11: antes apuntaba a otro token de componente, headline/fg/default) */
@@ -2208,7 +2211,8 @@
      marca, junto al texto. Cover: imagen de fondo con velo.
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-hero-padding-hor-generic:  var(--ds-layout-margin);   /* hero/all/padding/hor/generic */
-  --ds-hero-padding-ver-generic:  var(--ds-spacing-3xl);     /* 32 — hero/all/padding/ver/generic */
+  --ds-hero-padding-ver-generic:  var(--ds-layout-section);  /* hero/all/padding/ver/generic → layout/section (23/11, antes spacing/3xl) */
+  --ds-hero-width-max-generic:    var(--ds-layout-max-width); /* hero/all/width/max/generic → layout/maxWidth */
   --ds-hero-gap-generic:          var(--ds-layout-gutter);   /* hero/all/gap/generic — texto ↔ imagen */
   --ds-hero-gap-text-generic:     var(--ds-spacing-xl);      /* 16 — hero/all/gap/text/generic */
   --ds-hero-gap-actions-generic:  var(--ds-spacing-md);      /* 8  — hero/all/gap/actions/generic (+ 8 del área de foco de Button) */
@@ -2235,7 +2239,8 @@
      Sección de página con título h2, texto y foto en forma (una función o tema).
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-content-block-padding-hor-generic: var(--ds-layout-margin); /* contentBlock/all/padding/hor/generic */
-  --ds-content-block-padding-ver-generic: var(--ds-spacing-3xl);   /* 32 — contentBlock/all/padding/ver/generic */
+  --ds-content-block-padding-ver-generic: var(--ds-layout-section); /* contentBlock/all/padding/ver/generic → layout/section (23/11, antes spacing/3xl) */
+  --ds-content-block-width-max-generic:   var(--ds-layout-max-width); /* contentBlock/all/width/max/generic → layout/maxWidth */
   --ds-content-block-gap-generic:         var(--ds-layout-gutter); /* contentBlock/all/gap/generic — texto ↔ imagen */
   --ds-content-block-gap-text-generic:    var(--ds-spacing-xl);    /* 16 — contentBlock/all/gap/text/generic */
 
@@ -2256,6 +2261,7 @@
      ══════════════════════════════════════════════════════════════════════════ */
   --ds-footer-padding-top-generic:     var(--ds-spacing-3xl); /* 32 — footer/all/padding/top/generic (arriba y abajo del contenido) */
   --ds-footer-gap-generic:             var(--ds-spacing-xl);  /* 16 — footer/all/gap/generic */
+  --ds-footer-width-max-generic:       var(--ds-layout-max-width); /* footer/all/width/max/generic → layout/maxWidth (el contenido; la ola sigue de borde a borde) */
   --ds-footer-gap-links-generic:       var(--ds-spacing-2xl); /* 24 — footer/all/gap/links/generic */
   --ds-footer-bg-decoration-generic:   var(--ds-bg-primary);  /* footer/all/bg/decoration/generic → bg/surface/primary */
   --ds-footer-height-decoration-desktop: 160px; /* alto de la ola en Figma (Desktop), sin variable */
@@ -2628,6 +2634,7 @@
     --ds-layout-margin: 24px;
     --ds-layout-gutter: 32px;
     --ds-layout-media-height: 320px;
+    --ds-layout-section: 64px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       28px;
     --ds-fontSize-subheadline-md: 24px;
@@ -2655,6 +2662,7 @@
     --ds-layout-margin: 32px;
     --ds-layout-gutter: 32px;
     --ds-layout-media-height: 400px;
+    --ds-layout-section: 80px;
     --ds-fontSize-title-lg:       24px;
     --ds-fontSize-title-xl:       32px;
     --ds-fontSize-subheadline-md: 28px;

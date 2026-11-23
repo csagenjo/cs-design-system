@@ -69,7 +69,10 @@ const css = `
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--ds-hero-gap-generic);
-  padding: var(--ds-hero-padding-ver-generic) var(--ds-hero-padding-hor-generic);
+  /* Ancho máximo (layout/maxWidth, márgenes incluidos): a partir de ahí el
+     margen lateral crece para centrar el contenido. */
+  padding: var(--ds-hero-padding-ver-generic)
+    max(var(--ds-hero-padding-hor-generic), calc((100% - var(--ds-hero-width-max-generic)) / 2 + var(--ds-hero-padding-hor-generic)));
   box-sizing: border-box;
 }
 /* Pop out: la foto sobresale por arriba y por abajo (cabe en el padding);
