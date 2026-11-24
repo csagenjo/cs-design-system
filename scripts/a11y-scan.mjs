@@ -1,5 +1,5 @@
 /**
- * Accessibility scan — axe-core over the a11y gallery (all 84 pieces, every
+ * Accessibility scan — axe-core over the a11y gallery (every piece, every
  * variant and state), in light and dark mode, for both themes (Retail, Youth).
  *
  *   npm run a11y          build the gallery + scan

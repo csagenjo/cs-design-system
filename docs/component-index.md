@@ -6,7 +6,7 @@ pieces, and then reads only their full entry in `docs/component-inventory.md`
 own.
 
 Imports: atoms from `src/components/{Name}`, organisms from `src/organisms/{Name}`.
-No barrel export. Screen-reader texts are in English and passed by prop.
+Or from the package: `import { Button } from 'cs-design-system'` (`src/index.js`, regenerated with `npm run index`). Screen-reader texts are in English and passed by prop.
 
 ## Actions
 
