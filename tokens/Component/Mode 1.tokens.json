@@ -22947,6 +22947,104 @@
       }
     }
   },
+  "logo": {
+    "wordmark": {
+      "height": {
+        "generic": {
+          "$type": "number",
+          "$value": 40,
+          "$description": "Height of a wordmark logo (wider than 1.5:1). Width follows the logo.",
+          "$extensions": {
+            "com.figma.variableId": "VariableID:33133:477",
+            "com.figma.scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "com.figma.aliasData": {
+              "targetVariableId": "VariableID:4f1405ea26c1e0d53b70ce20a2babe9324e345fe/-1:-1",
+              "targetVariableName": "sizing/lg",
+              "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+              "targetVariableSetName": "Device"
+            }
+          }
+        }
+      }
+    },
+    "symbol": {
+      "height": {
+        "generic": {
+          "$type": "number",
+          "$value": 56,
+          "$description": "Height of a symbol logo (square, tall or up to 1.5:1): one step taller than a wordmark so both weigh the same.",
+          "$extensions": {
+            "com.figma.variableId": "VariableID:33133:478",
+            "com.figma.scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "com.figma.aliasData": {
+              "targetVariableId": "VariableID:83e0f1bb46f4e20b9a7b46f2b6de12df8e00d1a3/-1:-1",
+              "targetVariableName": "sizing/2xl",
+              "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+              "targetVariableSetName": "Device"
+            }
+          }
+        }
+      }
+    },
+    "all": {
+      "bg": {
+        "placeholder": {
+          "generic": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9450980424880981,
+                0.9490196108818054,
+                0.95686274766922
+              ],
+              "alpha": 1,
+              "hex": "#F1F2F4"
+            },
+            "$description": "Placeholder shown only while the logo image is missing.",
+            "$extensions": {
+              "com.figma.variableId": "VariableID:33133:479",
+              "com.figma.scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:9a108136b583ea5d18ced1928e0b22a91450acc2/-1:-1",
+                "targetVariableName": "bg/subtle",
+                "targetVariableSetId": "VariableCollectionId:a39aec7a703dc806c600ccbb12e84a02b5e0e7d7/-1:-1",
+                "targetVariableSetName": "Mode"
+              }
+            }
+          }
+        }
+      },
+      "borderRadius": {
+        "placeholder": {
+          "generic": {
+            "$type": "number",
+            "$value": 4,
+            "$description": "Corner of the placeholder only; the logo itself has no frame.",
+            "$extensions": {
+              "com.figma.variableId": "VariableID:33133:480",
+              "com.figma.scopes": [
+                "CORNER_RADIUS"
+              ],
+              "com.figma.aliasData": {
+                "targetVariableId": "VariableID:4797fdf40ff3bf39c39ca1c9e886b3538d5de4c7/-1:-1",
+                "targetVariableName": "borderRadius/sm",
+                "targetVariableSetId": "VariableCollectionId:2e90023edd11d08667d2082e8797df614232065d/-1:-1",
+                "targetVariableSetName": "Device"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "$extensions": {
     "com.figma.modeName": "Mode 1"
   }

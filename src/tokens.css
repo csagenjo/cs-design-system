@@ -303,6 +303,7 @@
   --ds-layout-gutter: 24px;  /* T 32 · D 32 */
   --ds-layout-media-height: 240px; /* T 320 · D 400 — layout/mediaHeight: alto mínimo de un panel de medios */
   --ds-layout-max-width: 1280px;   /* layout/maxWidth (23/11): ancho máximo de una sección de página, márgenes incluidos (= frame Desktop de Figma); igual en los 3 devices */
+  --ds-layout-text-max-width: 800px; /* layout/textMaxWidth (24/11) → Theme layout/textMaxWidth → Base dimension/10000: ancho de lectura de una columna de texto que ocupa la página (~70 caracteres con Paragraph 20); igual en los 3 devices */
   --ds-layout-section: 48px;       /* T 64 · D 80 — layout/section (23/11): padding vertical de las secciones de página (Hero, Content Block) */
 
   /* Breakpoints (Base breakpoint/*) — referencia: CSS no admite var() dentro de
@@ -2304,6 +2305,14 @@
   --ds-media-card-gap-link-generic:      var(--ds-spacing-xl);  /* 16 — mediaCard/all/gap/link/generic */
   --ds-media-card-height-media-generic:  var(--ds-layout-media-height); /* mediaCard/all/height/media/generic → layout/mediaHeight (240 · 320 · 400) */
   --ds-media-card-bg-media-generic:      var(--ds-bg-subtle);   /* mediaCard/all/bg/media/generic → bg/subtle (el mismo gris que el marco de Image) */
+
+  /* ══ COMPONENT TOKENS — Logo (logo/*) · 24/11 ══
+     Logo de una empresa: alto fijo por tipo, ancho auto. El gris y el radio solo
+     se ven en el placeholder (sin src). */
+  --ds-logo-wordmark-height-generic:           var(--ds-sizing-lg);       /* 40 — logo/wordmark/height/generic */
+  --ds-logo-symbol-height-generic:             var(--ds-sizing-2xl);      /* 56 — logo/symbol/height/generic */
+  --ds-logo-bg-placeholder-generic:            var(--ds-bg-subtle);       /* logo/all/bg/placeholder/generic → bg/subtle */
+  --ds-logo-border-radius-placeholder-generic: var(--ds-border-radius-sm); /* 4 — logo/all/borderRadius/placeholder/generic */
 
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Footer (footer/all/*) — 17/11/2026

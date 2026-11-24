@@ -10294,6 +10294,19 @@
           "targetVariableSetName": "Base"
         }
       }
+    },
+    "textMaxWidth": {
+      "$type": "number",
+      "$value": 800,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33127:68",
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c290705fc338a927dfc4068ae187cb3e22d9eedb/-1:-1",
+          "targetVariableName": "dimension/10000",
+          "targetVariableSetId": "VariableCollectionId:2d562e18013b2fcdc353ac14cd46293a4d110e8a/-1:-1",
+          "targetVariableSetName": "Base"
+        }
+      }
     }
   },
   "dimension": {

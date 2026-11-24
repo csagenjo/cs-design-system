@@ -961,6 +961,7 @@ Re-enlace en Figma: ~1.600 nodos de texto + 121 overrides de instancia. **Lecci�
 | `layout/gutter` | 24 | 32 | 32 | separación entre bloques grandes: gap Logo↔Tabs, gap entre columnas del flydown |
 | `layout/section` | 48 | 64 | 80 | (23/11) padding vertical de las secciones de página: Hero y Content Block. Entre dos secciones quedan 96 / 128 / 160 |
 | `layout/maxWidth` | 1280 | 1280 | 1280 | (23/11) ancho máximo de una sección, márgenes incluidos (= frame Desktop de Figma). Más ancho, el margen crece y el contenido se centra. Top Navigation y Footer mantienen su barra y su ola de borde a borde y solo limitan el contenido |
+| `layout/textMaxWidth` | 800 | 800 | 800 | (24/11) ancho de lectura de una columna de texto que ocupa la página: unos 70 caracteres con Paragraph 20. Device → Theme `layout/textMaxWidth` → Base `dimension/10000` (800, oculto al publicar como el resto de `dimension/*`). Código `var(--ds-layout-text-max-width)`. Lo usa el layout 7 (Article / Case study) en las secciones de solo texto y en el texto sobre una figura a todo el ancho; en columnas de 592 (texto + figura) manda la columna |
 
 **Regla: un componente mide lo mismo en los tres dispositivos; lo que se adapta es el layout** (márgenes, gutters, tipografía de titulares). Mismo criterio que Carbon, Atlassian, Polaris y Material: botones e inputs de 40–48 px son además el tamaño táctil mínimo, reducirlos en mobile quita área táctil justo donde más falta.
 
