@@ -43,6 +43,7 @@ import { Image } from '../components/Image';
 import { Video } from '../components/Video';
 import { BottomNavigationItem } from '../components/BottomNavigationItem';
 import { BottomNavigation } from '../organisms/BottomNavigation';
+import { BottomSheet } from '../components/BottomSheet';
 import { InlineNotification } from '../components/InlineNotification';
 import { InputAmount } from '../components/InputAmount';
 import { InputCombobox } from '../components/InputCombobox';
@@ -335,6 +336,26 @@ export default function Gallery({ mode, theme = 'retail' }) {
               ].slice(0, n)} />
           </div>
         ))}
+      </Section>
+
+      <Section name="BottomSheet">
+        <Row>
+          <div style={{ width: '22.5rem' }}>
+            <BottomSheet modal={false} title="Sort by" description="Suppliers" onClose={noop}
+              footer={<ButtonBar variant="simple" primaryLabel="Apply" onPrimary={noop} ariaLabel="Sort actions" />}>
+              {['Name', 'Last payment', 'Amount due'].map((h, i) => (
+                <ListView key={h} header={h} description={false} detail={false} leftPanel={false} rightPanel={false}
+                  control="radio" controlPlacement="right" checked={i === 0} divider="partialBottom" onClick={noop} />
+              ))}
+            </BottomSheet>
+          </div>
+          <div style={{ width: '22.5rem' }}>
+            <BottomSheet modal={false} title="Documents" onClose={noop}>
+              <ListView header="Invoice 0042" descriptionText="PDF · 120 KB" detail={false} rightPanel={false}
+                leftIcon={<Icon name="file-text" />} divider="partialBottom" onClick={noop} />
+            </BottomSheet>
+          </div>
+        </Row>
       </Section>
 
       <Section name="Button">
