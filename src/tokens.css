@@ -1993,6 +1993,25 @@
      16/11: bg/container (antes bg/default: en dark no se fundía con la Card). */
   --ds-tabs-contained-bg-selected:        var(--ds-bg-container);        /* tabs/contained/bg/selected */
 
+  /* ══ COMPONENT TOKENS — Bottom Sheet (bottomSheet/all/*) · 24/11 ══
+     Saneado en Figma el 24/11: code syntax en todos, nombres por rol (antes headerTitle/…),
+     duplicados de radio/borde de la cabecera fuera, fondo del contenido ya no usa el token
+     de AccountSelector, bodyTitle/bodyDescription borrados (la variante Empty pasa a slot). */
+  --ds-bottom-sheet-bg-generic:           var(--ds-bg-container);        /* bottomSheet/all/bg/generic */
+  --ds-bottom-sheet-border-radius-top:    var(--ds-border-radius-xl);    /* 12 — …/borderRadius/top (solo esquinas de arriba) */
+  --ds-bottom-sheet-border-color-divider: var(--ds-borderColor-subtle);  /* …/borderColor/divider — bajo la cabecera y sobre el pie */
+  --ds-bottom-sheet-border-width-divider: var(--ds-border-width-sm);     /* 1 */
+  --ds-bottom-sheet-fg-title:             var(--ds-fg-title-default);    /* …/fg/title — title md bold */
+  --ds-bottom-sheet-fg-description:       var(--ds-fg-body-default);     /* …/fg/description — body 2xs */
+  --ds-bottom-sheet-gap-header:           var(--ds-spacing-lg);          /* 12 — textos → botón de cerrar */
+  --ds-bottom-sheet-padding-left-header:  var(--ds-spacing-xl);          /* 16 */
+  --ds-bottom-sheet-padding-right-header: var(--ds-spacing-lg);          /* 12 — + 4 de área de foco del IconButton = 16 visual */
+  --ds-bottom-sheet-padding-ver-header:   var(--ds-spacing-sm);          /* 6 — cabecera 64 = 6 + 52 (IconButton m + foco) + 6 */
+  --ds-bottom-sheet-padding-ver-content:  var(--ds-spacing-md);          /* 8 */
+  --ds-bottom-sheet-padding-footer:       var(--ds-spacing-xl);          /* 16 — pie 88 con ButtonBar de 56 */
+  --ds-bottom-sheet-shadow:               0 1px 5px 0 var(--ds-opacity-shadow-umbra), 0 3px 1px -2px var(--ds-opacity-shadow-ambient), 0 2px 2px 0 var(--ds-opacity-shadow-penumbra); /* efectos del componente en Figma (sin Effect Style) */
+  --ds-bottom-sheet-max-height:           calc(100dvh - var(--ds-spacing-3xl)); /* decisión de código, sin equivalente en Figma: deja ver 32 del Scrim arriba */
+
   /* ══ COMPONENT TOKENS — Bottom Navigation (bottomNavigation/all/*) · 24/11 ══
      Saneado en Figma el 24/11: code syntax en todos, `fg/icon/active` → `fg/icon/default`,
      paddings 8/8/4 (antes 6/4 y layout/margin), hover/pressed/foco/línea superior nuevos. */

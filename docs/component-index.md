@@ -126,6 +126,7 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 | ErrorAndEmptyState | Illustration + message + action | Empty lists and errors filling a page area | Small messages (InlineNotification) |
 | Scrim | Dark layer behind a modal | *Internal* — Dialog and Drawer add it | — |
 | PopoverSheet | Floating card attached to a button | Extra detail or 1–3 actions about one element | Blocking decisions (Dialog) · hints (Tooltip) |
+| BottomSheet | Modal panel from the bottom of a phone screen, with Content and Footer slots | One short task on mobile: sort, filter, pick an option | Tablet/desktop (Dialog, PopoverSheet) · blocking decisions (Dialog) |
 
 ## Page structure and layout
 

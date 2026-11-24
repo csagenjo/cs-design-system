@@ -46,10 +46,10 @@ Rules that apply to every entry:
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer (+ its toggle) · Card · Divider (see Data) |
-| Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · PopoverSheet |
+| Overlays | Dialog, DialogSimple, ErrorAndEmptyState, Scrim · PopoverSheet · BottomSheet |
 | Page structure | Accordion, AccordionGroup · Collapsible, CollapsibleIconButton |
 | Foundations | Icon · VisuallyHidden, LiveRegion (+ `announce`) |
-| Internal parts | Not for direct use — use the component named in brackets. `_inputBase` (common input box and `injectStyles`; use any Input) · `_requiredMark` (FieldLabel `required`) · `_choiceGroup`, `_radioGroupContext`, `_checkboxGroupContext` (RadioGroup / CheckboxGroup) · `_dialogBase`, `_useModal`, `_focus` (Dialog / DialogSimple / ErrorAndEmptyState / Drawer) · `_rovingFocus` (`useRovingFocus`, `useListbox`: keyboard for Tabs, SegmentedControl, pickers, Combobox) · `_popoverDismiss`, `_floating` (close and flip of PopoverSheet, Combobox and pickers) · `_pickerPanel`, `_usePickerListbox` (Combobox / CountryPicker / CurrencyPicker) · `_sliderKnob` (Slider / RangeSlider / SteppedSlider) · `_stepStatus`, `_stepAppearance` (Steps family) · `_devWarn` (dev-only console warnings) · `icons.js` (Icon) · `flags` (CountryFlag) |
+| Internal parts | Not for direct use — use the component named in brackets. `_inputBase` (common input box and `injectStyles`; use any Input) · `_requiredMark` (FieldLabel `required`) · `_choiceGroup`, `_radioGroupContext`, `_checkboxGroupContext` (RadioGroup / CheckboxGroup) · `_dialogBase`, `_useModal`, `_focus` (Dialog / DialogSimple / ErrorAndEmptyState / Drawer / BottomSheet) · `_rovingFocus` (`useRovingFocus`, `useListbox`: keyboard for Tabs, SegmentedControl, pickers, Combobox) · `_popoverDismiss`, `_floating` (close and flip of PopoverSheet, Combobox and pickers) · `_pickerPanel`, `_usePickerListbox` (Combobox / CountryPicker / CurrencyPicker) · `_sliderKnob` (Slider / RangeSlider / SteppedSlider) · `_stepStatus`, `_stepAppearance` (Steps family) · `_devWarn` (dev-only console warnings) · `icons.js` (Icon) · `flags` (CountryFlag) |
 
 ---
 
@@ -6371,6 +6371,98 @@ Pick one option out of a few, shown side by side as pills. Usually switches the 
 
 **Don't**
 - Don't use it for actions (buttons) or for more than 5 options
+
+
+## BottomSheet
+
+**Group:** Overlays
+**Figma:** 🟠 Bottom Sheet page → `Bottom Sheet` component (Title, Show Description + Description, Show Footer; slots Content and Footer; Close = Icon Button nested and locked) · *Bottom Sheet — Examples* (list, list + Button Bar, empty state) · frames *Bottom Sheet* (Documentation) and *Bottom Sheet — How to use & Accessibility* (24/11)
+**Code:** `src/components/BottomSheet.jsx` (atom)
+**Tokens:** `--ds-bottom-sheet-*` (`bottomSheet/all/*`)
+
+A modal panel that rises from the bottom of a phone screen over a Scrim, for one short task. Content and Footer are slots.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A short task that belongs to the current phone screen: sort or filter a list, pick one option, see the details of a row
+- Not on tablet or desktop: use Dialog, or Popover Sheet when it hangs from a button
+- Not for long flows (open a new screen) or for messages that need an answer first (use Dialog)
+
+**Properties**
+- Title · Show Description + Description
+- Content (slot) → List View rows, a small empty state (Image + title + text) or a short form
+- Footer (slot) + Show Footer → a Button Bar; keep one or two actions
+- Close is a nested Icon Button (Default, Tertiary, Medium, x): locked
+
+**Behaviour**
+- Opens over a Scrim, rising from the bottom edge; never shown without the Scrim
+- Height hugs the content up to a maximum (32 of Scrim visible on top), then Content scrolls; header and footer stay fixed
+- Closes with Close, a tap on the Scrim or Escape; no drag handle
+
+**Sizing**
+- Width = the screen · radius 12 on top only · bg/container
+- Header 64: padding 6 / 16 left / 12 right + Icon Button 52 (44 + focus area) · title md, description body 2xs
+- Content padding 8 top and bottom · footer 88 (16 + Button Bar 56 + 16) · dividers borderColor/subtle 1
+
+### Developers · React
+
+**Import**
+- `import { BottomSheet } from './components/BottomSheet'`
+
+**Props**
+- title (required), description, onClose, closeLabel ('Close'), children (Content), footer (Footer), modal (true; false renders only the panel), id, className
+
+**Example**
+- `{open && <BottomSheet title="Sort by" description="Suppliers" onClose={close} footer={<ButtonBar variant="simple" primaryLabel="Apply" onPrimary={apply} />}>{rows}</BottomSheet>}`
+
+**Tokens**
+- `--ds-bottom-sheet-*` (`bottomSheet/all/*`) · max height `100dvh − 32` (code only) · pads the phone's safe area at the bottom
+
+### AI agents · Claude Code
+
+**Pick it when**
+- One short task on a phone screen
+
+**Don't pick it when**
+- Tablet or desktop → Dialog / PopoverSheet · long flows → a new screen · a blocking decision → Dialog
+
+**Composition rules**
+- Render it only while open (`{open && …}`); always pass title and onClose
+- Content is free: compose ListView, Image, Headline, inputs…; never another modal (Dialog, ErrorAndEmptyState) inside
+- Footer: a `ButtonBar variant="simple"` with one or two actions
+
+## Accessibility
+
+### Designers · Figma
+
+**Name and purpose**
+- The title says what the sheet is for ("Sort by", "Filter"); the description adds context only if needed
+- Close stays visible: it is the keyboard and screen-reader way out
+
+### Developers · React
+
+**Semantics**
+- `role="dialog"` + `aria-modal`; named by the title (h2), described by the description
+- Scrim is decorative (`aria-hidden`) and closes on click; the page behind becomes inert
+
+**Keyboard**
+- Focus moves to the first control (Close) and is trapped inside; Escape closes; on close, focus returns to the control that opened it
+- The slide-up animation is off with reduced motion
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- npm run a11y passes with and without footer
+- title and onClose set; closeLabel in English by prop; focus comes back to the opener
+
+**Don't**
+- Don't put another modal inside, and don't show it without the Scrim
 
 
 ## PopoverSheet

@@ -22,6 +22,8 @@ import { RadioGroup } from './organisms/RadioGroup'
 import { FileUpload } from './organisms/FileUpload'
 import { Tabs, TabPanel } from './organisms/Tabs'
 import { Video } from './components/Video'
+import { BottomSheet } from './components/BottomSheet'
+import { ListView } from './components/ListView'
 
 /* Banco de pruebas — paso 4, pasada A (16/11/2026): pipeline Figma MCP sin Code Connect.
    Dos pantallas del alta de proveedor, compuestas solo con átomos y organismos del sistema:
@@ -395,9 +397,30 @@ function VideoScreen() {
   )
 }
 
+/* ?screen=sheet — BottomSheet modal de verdad (24/11): abre, Escape/Scrim/X cierran, foco vuelve al botón. */
+function SheetScreen() {
+  const [open, setOpen] = useState(false)
+  const [sort, setSort] = useState('Name')
+  const options = ['Name', 'Last payment', 'Amount due', 'Country', 'Created', 'Status', 'Category', 'Owner', 'Rating', 'Currency']
+  return (
+    <div>
+      <Button type="default" variant="secondary" onClick={() => setOpen(true)}>Sort: {sort}</Button>
+      {open && (
+        <BottomSheet title="Sort by" description="Suppliers" onClose={() => setOpen(false)}
+          footer={<ButtonBar variant="simple" primaryLabel="Apply" onPrimary={() => setOpen(false)} ariaLabel="Sort actions" />}>
+          {options.map((h) => (
+            <ListView key={h} header={h} description={false} detail={false} leftPanel={false} rightPanel={false}
+              control="radio" controlPlacement="right" checked={sort === h} divider="partialBottom" onClick={() => setSort(h)} />
+          ))}
+        </BottomSheet>
+      )}
+    </div>
+  )
+}
+
 export default function App() {
   const params = new URLSearchParams(location.search)
-  const screen = ['tabs', 'video'].includes(params.get('screen')) ? params.get('screen') : 'cards'
+  const screen = ['tabs', 'video', 'sheet'].includes(params.get('screen')) ? params.get('screen') : 'cards'
   const mistakes = params.get('data') !== 'valid'
   const [dark, setDark] = useState(params.get('mode') === 'dark')
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
@@ -411,6 +434,7 @@ export default function App() {
         <a href="?screen=tabs">Tabs (with mistakes)</a>
         <a href="?screen=tabs&data=valid">Tabs (valid)</a>
         <a href="?screen=video">Video</a>
+        <a href="?screen=sheet">Bottom sheet</a>
         <label><input type="checkbox" checked={dark} onChange={(e) => setDark(e.target.checked)} /> dark</label>
       </div>
       <TopNavigation logo={<span>Logo</span>} menuItems={MENU} selectedId="suppliers" action={{ label: 'Log out', icon: 'log-out', onClick: () => {} }} />
@@ -420,7 +444,7 @@ export default function App() {
         <main className="ds-sf-work">
           <PageTitle nav={{ type: 'breadcrumb', items: [{ label: 'Suppliers', href: '#' }, { label: 'New supplier' }] }} title="New supplier" />
           {screen === 'tabs' ? <TabsScreen initial={mistakes ? WITH_MISTAKES : FILLED} />
-            : screen === 'video' ? <VideoScreen /> : <CardsScreen />}
+            : screen === 'video' ? <VideoScreen /> : screen === 'sheet' ? <SheetScreen /> : <CardsScreen />}
         </main>
       </div>
     </div>
