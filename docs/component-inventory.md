@@ -42,7 +42,7 @@ Rules that apply to every entry:
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector (+ SelectorInvoker, SelectorListItem), AccountSelector (+ AccountSelectorInvoker, AccountSelectorListItem) · CountryPicker, CurrencyPicker |
 | Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Video · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
-| Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
+| Navigation | TopNavigation · SidebarMenu · BottomNavigation (+ BottomNavigationItem) · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
 | Steps | Node, StepHor, StepVer (Step Elements) · StepNavigator, SubstepNavigator · StepIndicatorLarge, StepIndicatorSmall |
 | Layout | Drawer (+ its toggle) · Card · Divider (see Data) |
@@ -4966,6 +4966,101 @@ A side or top panel that can collapse to a rail; the frame of Sidebar Menu.
 **Don't**
 - Don't put the only way to close it inside the content
 - Don't use Drawer as a modal: it doesn't trap focus
+
+## BottomNavigation
+
+**Group:** Navigation
+**Figma:** 🟠 Bottom Navigation page → `Bottom Navigation` set (Items 3 / 4 / 5) over `Bottom Navigation Item` (State Enabled / Hover / Pressed / Focus / Disabled × Selected Yes / No; Label, Show Badge; Icon and Badge exposed) · frame *Bottom Navigation — How to use & Accessibility* (24/11)
+**Code:** `src/organisms/BottomNavigation.jsx` (organism) + `src/components/BottomNavigationItem.jsx` (atom)
+**Tokens:** `--ds-bottom-navigation-*` (`bottomNavigation/all/*`)
+
+A bar of 3 to 5 destinations at the bottom of a phone screen: icon, label and an optional badge.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- The main destinations of an app on a phone: 3 to 5 places people switch between often
+- Not for actions (use Button) or for sections inside one page (use Tabs)
+- On tablet and desktop, use Top Navigation and Sidebar Menu instead
+
+**Properties**
+- Bottom Navigation → Items 3 · 4 · 5 (the items share the width)
+- Item → Label, Icon (swap), Selected, Show Badge + the badge number
+- State comes from interaction (Enabled, Hover, Pressed, Focus, Disabled): don't set it by hand in screens
+
+**Behaviour**
+- Exactly one item is selected: the current destination (fg/icon/primary icon, bold label)
+- Hover bg/hover-primary · Pressed bg/subtle · Focus double ring inside the item
+- Long labels are cut with an ellipsis: keep them to one short word
+
+**Sizing**
+- Height 56: padding 8 + icon 20 + gap 4 + label 16 (label xs) + padding 8 · 4 at the sides of each item
+- bg/container with a 1 px borderColor/subtle line on top (inside) · badge 12 right and 4 above the icon's top-left corner
+
+### Developers · React
+
+**Import**
+- `import { BottomNavigation } from './organisms/BottomNavigation'`
+- `import { BottomNavigationItem } from './components/BottomNavigationItem'`
+
+**Props**
+- BottomNavigation: items `[{ id, label, icon, href?, onClick?, badge?, badgeLabel?, disabled? }]` (3 to 5), selectedId, onSelect(id), ariaLabel (required), className, style
+- BottomNavigationItem: icon, label, selected, disabled, badge, badgeLabel, href | onClick
+
+**Example**
+- `<BottomNavigation ariaLabel="Main" selectedId="payments" items={[{ id: 'home', label: 'Home', icon: 'menu', href: '/' }, { id: 'payments', label: 'Payments', icon: 'wallet', href: '/payments', badge: '3', badgeLabel: '3 pending' }, { id: 'suppliers', label: 'Suppliers', icon: 'file-text', href: '/suppliers' }]} />`
+
+**Tokens**
+- `--ds-bottom-navigation-*` (`bottomNavigation/all/*`) · the bar adds the phone's safe area at the bottom (`env(safe-area-inset-bottom)`)
+
+### AI agents · Claude Code
+
+**Pick it when**
+- 3 to 5 top-level destinations on a phone layout
+
+**Don't pick it when**
+- More than 5 or fewer than 3 destinations · sections of one page → Tabs · tablet and desktop → TopNavigation / SidebarMenu
+
+**Composition rules**
+- Always pass ariaLabel and selectedId, and badgeLabel whenever there is a badge
+- The layout places it (fixed at the bottom, phones only); the component never positions itself
+- It doesn't replace Top Navigation's menu: one navigation per breakpoint
+
+## Accessibility
+
+### Designers · Figma
+
+**Names**
+- Every item has a visible label; an icon alone is not enough
+- A badge needs a text that says what it counts ("3 pending"); put it in the spec
+
+**Selected**
+- The current item is shown by colour and a bold label, never by colour alone
+
+### Developers · React
+
+**Semantics**
+- `<nav aria-label>` + list; each item is a link (href) or a button; the current one has `aria-current="page"`
+- Disabled = `aria-disabled`: still reachable with Tab, does nothing
+- The icon is decorative; the badge is read after the label: "Payments, 3 pending"
+
+**Keyboard**
+- Tab moves through the items; Enter (and Space on buttons) activates; double focus ring inside the item
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- npm run a11y passes with 3, 4 and 5 items and every state
+- ariaLabel set, one item selected, badgeLabel on every badge
+
+**Don't**
+- Don't hardcode screen-reader texts; pass ariaLabel and badgeLabel
+
 
 ## SidebarMenu
 
