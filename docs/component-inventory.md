@@ -3391,12 +3391,12 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 - `import { Image } from './components/Image'`
 
 **Props**
-- size '1:1'|'3:2'|'4:3'|'16:9', variant 'roundedCorners'|'circle', fit 'cover'|'contain' ('cover' by default), src, alt ('' by default = decorative), caption, showCaption, className, style
+- size '1:1'|'3:2'|'4:3'|'16:9', variant 'roundedCorners'|'circle', fit 'cover'|'contain' ('cover' by default), src, alt ('' by default = decorative), caption (text or nodes: `<><strong>Title</strong><br />Description</>` for the Figma figure caption, bold title + regular description, one `<figcaption>`), showCaption, className, style
 
 **Example**
 - `<Image size="16:9" src={photo} alt="Team at the Madrid office" caption="Our Madrid office" />`
 - `<Image size="1:1" variant="circle" src={avatar} alt="Laura Pérez" showCaption={false} />`
-- `<Image size="4:3" fit="contain" src={logo} alt="" />` (the card title already names the company)
+- `<Image size="16:9" fit="contain" src={flow} alt="Checkout flow in four screens" caption={<><strong>Checkout flow</strong><br />Four screens from cart to confirmation.</>} />`
 
 ### AI agents · Claude Code
 

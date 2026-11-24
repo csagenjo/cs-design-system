@@ -724,6 +724,12 @@ export default function Gallery({ mode, theme = 'retail' }) {
           ))}
           <div style={{ width: '7.5rem' }}><Image size="1:1" variant="circle" fit="contain" src={heroShapeImg} alt="Portrait" showCaption={false} /></div>
         </Row>
+        <Row>
+          <div style={{ width: '37rem' }}>
+            <Image size="16:9" fit="contain" src={heroShapeImg} alt="Portrait used as a sample figure"
+              caption={<><strong>Figure title</strong><br />A description of what the figure shows, in regular weight.</>} />
+          </div>
+        </Row>
       </Section>
 
       <Section name="Video">
