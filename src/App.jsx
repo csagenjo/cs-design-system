@@ -21,6 +21,7 @@ import { ButtonBar } from './organisms/ButtonBar'
 import { RadioGroup } from './organisms/RadioGroup'
 import { FileUpload } from './organisms/FileUpload'
 import { Tabs, TabPanel } from './organisms/Tabs'
+import { Video } from './components/Video'
 
 /* Banco de pruebas — paso 4, pasada A (16/11/2026): pipeline Figma MCP sin Code Connect.
    Dos pantallas del alta de proveedor, compuestas solo con átomos y organismos del sistema:
@@ -380,9 +381,23 @@ const SIDEBAR = [
   { id: 'drafts', label: 'Drafts' },
 ]
 
+/* ?screen=video — un caso de cada tamaño de Video (24/11), con el .vtt de ejemplo de public/. */
+function VideoScreen() {
+  const widths = { '16:9': '30rem', '4:3': '24rem', '9:16': '12rem' }
+  return (
+    <div style={{ display: 'flex', gap: 'var(--ds-spacing-xl)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+      {Object.entries(widths).map(([s, w]) => (
+        <div key={s} style={{ width: w }}>
+          <Video size={s} captionsSrc="/video-sample.vtt" label={`Sample video ${s}`} caption={`Video ${s}`} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function App() {
   const params = new URLSearchParams(location.search)
-  const screen = params.get('screen') === 'tabs' ? 'tabs' : 'cards'
+  const screen = ['tabs', 'video'].includes(params.get('screen')) ? params.get('screen') : 'cards'
   const mistakes = params.get('data') !== 'valid'
   const [dark, setDark] = useState(params.get('mode') === 'dark')
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
@@ -395,6 +410,7 @@ export default function App() {
         <a href="?screen=cards">Cards</a>
         <a href="?screen=tabs">Tabs (with mistakes)</a>
         <a href="?screen=tabs&data=valid">Tabs (valid)</a>
+        <a href="?screen=video">Video</a>
         <label><input type="checkbox" checked={dark} onChange={(e) => setDark(e.target.checked)} /> dark</label>
       </div>
       <TopNavigation logo={<span>Logo</span>} menuItems={MENU} selectedId="suppliers" action={{ label: 'Log out', icon: 'log-out', onClick: () => {} }} />
@@ -403,7 +419,8 @@ export default function App() {
           collapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed((c) => !c)} />
         <main className="ds-sf-work">
           <PageTitle nav={{ type: 'breadcrumb', items: [{ label: 'Suppliers', href: '#' }, { label: 'New supplier' }] }} title="New supplier" />
-          {screen === 'tabs' ? <TabsScreen initial={mistakes ? WITH_MISTAKES : FILLED} /> : <CardsScreen />}
+          {screen === 'tabs' ? <TabsScreen initial={mistakes ? WITH_MISTAKES : FILLED} />
+            : screen === 'video' ? <VideoScreen /> : <CardsScreen />}
         </main>
       </div>
     </div>

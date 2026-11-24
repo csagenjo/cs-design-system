@@ -10,7 +10,7 @@ import {
   ArrowUpAZ, ArrowDownZA, ArrowUpDown, Loader2,
   CircleX, Info, CircleCheck,
   Menu, LogOut, Share2, Heart, MapPin,
-  VolumeX, Volume2,
+  VolumeX, Volume2, Play,
 } from 'lucide-react';
 
 /**
@@ -37,6 +37,7 @@ export const ICONS = {
   Minus, 'minus': Minus,
   VolumeX, 'volume-x': VolumeX,
   Volume2, 'volume-2': Volume2,
+  Play, 'play': Play,
   X, 'x': X,
   Check, 'check': Check,
   Dot, 'dot': Dot,
