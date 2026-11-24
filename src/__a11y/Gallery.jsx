@@ -40,6 +40,7 @@ import { ValidationMessage } from '../components/ValidationMessage';
 import { Icon } from '../components/Icon';
 import { IconButton } from '../components/IconButton';
 import { Image } from '../components/Image';
+import { Video } from '../components/Video';
 import { InlineNotification } from '../components/InlineNotification';
 import { InputAmount } from '../components/InputAmount';
 import { InputCombobox } from '../components/InputCombobox';
@@ -669,6 +670,19 @@ export default function Gallery({ mode, theme = 'retail' }) {
           ))}
           <div style={{ width: '7.5rem' }}><Image size="1:1" variant="circle" fit="contain" src={heroShapeImg} alt="Portrait" showCaption={false} /></div>
         </Row>
+      </Section>
+
+      <Section name="Video">
+        {['contain', 'cover'].map((f) => (
+          <Row key={f}>
+            {[['16:9', '15rem'], ['4:3', '12.5rem'], ['9:16', '7.5rem']].map(([s, w]) => (
+              <div key={s} style={{ width: w }}>
+                <Video size={s} fit={f} poster={heroShapeImg} captionsSrc="/video-sample.vtt"
+                  label={`Sample video ${s} ${f}`} caption={`Video ${s} · fit="${f}"`} />
+              </div>
+            ))}
+          </Row>
+        ))}
       </Section>
 
       <Section name="InlineNotification">

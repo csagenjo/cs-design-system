@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · Collapsible, CollapsibleIconButton (see Page structure) |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector (+ SelectorInvoker, SelectorListItem), AccountSelector (+ AccountSelectorInvoker, AccountSelectorListItem) · CountryPicker, CurrencyPicker |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Divider · CountryFlag |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Video · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
@@ -3440,6 +3440,95 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 
 **Don't**
 - Don't use the caption as a replacement for alt
+
+
+## Video
+
+**Group:** Data
+**Figma:** 🟠 tokens `video/all/*` (24/11, replace `videoplayer/all/gap/generic`) · component set and frame *Video — How to use & Accessibility* pending
+**Code:** `src/components/Video.jsx` (atom)
+**Tokens:** `--ds-video-*` (`video/all/*`)
+
+A video in a fixed-ratio frame, with captions, a play button on top and an optional caption.
+
+## How to use
+
+### Designers · Figma
+
+**When to use**
+- A short clip that explains or shows something: a product tour, a how-to, an onboarding step
+- A still picture → Image
+
+**Properties**
+- Size → 16:9 · 4:3 · 9:16 (width from the layout)
+- Fit → Contain (default, the whole video shows) · Cover (fills the frame and crops)
+- Show Caption + Caption
+
+**Behaviour**
+- Starts stopped, never autoplay; the poster (or grey bg/subtle) shows until it plays
+- Play: Icon Button Primary Large with the Play icon, centred on the frame
+- After Play the button goes away and the browser's own controls appear
+
+**Sizing**
+- Radius 4 (borderRadius/sm) · frame → caption 8 · caption body sm, fg/body/subtle
+
+### Developers · React
+
+**Import**
+- `import { Video } from './components/Video'`
+
+**Props**
+- size '16:9'|'4:3'|'9:16' ('16:9' by default), fit 'contain'|'cover' ('contain' by default), src, poster, captionsSrc (required, .vtt), captionsLang ('en'), label (required, name of the video), playLabel ('Play video'), caption, showCaption (true), className, style
+
+**Example**
+- `<Video src={clip} poster={still} captionsSrc="/onboarding.vtt" label="How to add a supplier" caption="Adding a supplier in two minutes" />`
+- `<Video size="9:16" fit="cover" src={clip} captionsSrc={vtt} label="Product tour" showCaption={false} />`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- Showing a video clip
+
+**Don't pick it when**
+- It's a still picture → Image · it's a background animation (not supported)
+
+**Composition rules**
+- Always pass captionsSrc and label
+- Never autoplay; let the person start it with Play
+
+## Accessibility
+
+### Designers · Figma
+
+**Built in**
+- Captions on by default (`<track kind="captions" default>`)
+- Play button named by playLabel; the video named by label
+- With a caption it's a figure: the caption is linked to the video
+
+**Your job**
+- Provide the captions file (.vtt) for every video, and a label that says what it shows
+- No information only in the sound or only in the picture without captions
+
+### Developers · React
+
+**Semantics**
+- `<video aria-label preload="metadata">` with `<track kind="captions">` in a frame; with a caption, `<figure>` + `<figcaption>`
+- Before playing, the video is out of the tab order (tabindex -1) and has no controls; Play is the only control
+
+**Keyboard**
+- Tab to Play, Enter or Space starts the video; focus moves to the video, whose native controls take over
+
+**Known gaps**
+- No Figma component yet (only tokens)
+
+### AI agents · Claude Code
+
+**Check before shipping**
+- Every Video has captionsSrc and a meaningful label
+- npm run a11y passes with the 3 sizes and the 2 fits
+
+**Don't**
+- Don't write screen-reader texts inside the component; pass label and playLabel
 
 
 ## Divider

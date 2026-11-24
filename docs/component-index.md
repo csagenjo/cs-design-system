@@ -60,6 +60,7 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 | List | Bullet, numbered or check list | Short scannable text | Interactive rows (ListView) |
 | Card | Surface that groups content (Basic elevated, Full flat) | Grouping a block on a page | Lists of rows (ListView) |
 | Image | Picture at a fixed ratio, optional caption; fit cover or contain | Photos, illustrations, logos | Icons (Icon) |
+| Video | Video at a fixed ratio (16:9 / 4:3 / 9:16) with captions and a Play button; fit contain or cover | Short clips: tours, how-tos | A still picture (Image) |
 | ShapeMedia | Photo inside a shape with a coloured backdrop | Inside Hero/ContentBlock, or a cut-out photo on its own | A plain framed photo (Image) |
 | Divider | Hairline between groups | Separating blocks | Spacing alone is enough |
 | CountryFlag | Real flag, one size | Next to a country name or prefix | Decoration |
