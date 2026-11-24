@@ -41,6 +41,8 @@ import { Icon } from '../components/Icon';
 import { IconButton } from '../components/IconButton';
 import { Image } from '../components/Image';
 import { Video } from '../components/Video';
+import { BottomNavigationItem } from '../components/BottomNavigationItem';
+import { BottomNavigation } from '../organisms/BottomNavigation';
 import { InlineNotification } from '../components/InlineNotification';
 import { InputAmount } from '../components/InputAmount';
 import { InputCombobox } from '../components/InputCombobox';
@@ -305,6 +307,34 @@ export default function Gallery({ mode, theme = 'retail' }) {
           <BadgeNotification disabled label="3" ariaLabel="3 unread messages" />
           <BadgeNotification disabled size="expanded" label="3" ariaLabel="3 unread messages" />
         </Row>
+      </Section>
+
+      <Section name="BottomNavigationItem">
+        <Row>
+          {[false, true].map((sel) => (
+            <React.Fragment key={String(sel)}>
+              <div style={{ width: '5.5rem' }}><BottomNavigationItem icon="wallet" label={`Item ${sel ? 'on' : 'off'}`} selected={sel} onClick={noop} /></div>
+              <div style={{ width: '5.5rem' }}><BottomNavigationItem icon="file-text" label="Invoices" selected={sel} badge="3" badgeLabel="3 pending" href="#invoices" /></div>
+              <div style={{ width: '5.5rem' }}><BottomNavigationItem icon="search" label="Disabled" selected={sel} badge="2" badgeLabel="2 new" disabled /></div>
+            </React.Fragment>
+          ))}
+          <div style={{ width: '4.5rem' }}><BottomNavigationItem icon="credit-card" label="A very long destination name" onClick={noop} /></div>
+        </Row>
+      </Section>
+
+      <Section name="BottomNavigation">
+        {[3, 4, 5].map((n) => (
+          <div key={n} style={{ width: '22.5rem', marginBottom: 'var(--ds-spacing-xl)' }}>
+            <BottomNavigation ariaLabel={`Main ${n}`} selectedId="home" onSelect={noop}
+              items={[
+                { id: 'home', label: 'Home', icon: 'menu' },
+                { id: 'payments', label: 'Payments', icon: 'wallet', badge: '3', badgeLabel: '3 pending' },
+                { id: 'suppliers', label: 'Suppliers', icon: 'file-text', href: '#suppliers' },
+                { id: 'reports', label: 'Reports', icon: 'search', disabled: true },
+                { id: 'profile', label: 'Profile', icon: 'credit-card' },
+              ].slice(0, n)} />
+          </div>
+        ))}
       </Section>
 
       <Section name="Button">

@@ -83,6 +83,8 @@ No barrel export. Screen-reader texts are in English and passed by prop.
 |---|---|---|---|
 | TopNavigation | Page header with tabs, mega-menu and an optional action | The top bar of a back-office tool or a website | Navigation inside a page (Tabs) |
 | SidebarMenu | Collapsible side menu | Section navigation in La Plataforma | — |
+| BottomNavigation | Bar of 3–5 destinations (icon, label, badge) at the bottom of a phone screen | Main destinations on phone layouts | Tablet/desktop (TopNavigation, SidebarMenu) · sections of a page (Tabs) |
+| BottomNavigationItem | One destination of BottomNavigation | Building a BottomNavigation | — |
 | PageTitle | Page heading with back link and actions | The title of every page (level 1) | Section titles (Headline) |
 | Hero | Opening block: eyebrow, h1, introduction and an image (photo in shape, or background image with scrim) | The top of a landing page, product page or campaign | The header of a back-office page (PageTitle) |
 | ContentBlock | Page section: h2, text and a photo in a shape | A feature or topic of a landing page; repeats on the page | The opening block (Hero) |

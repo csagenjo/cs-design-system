@@ -1993,6 +1993,30 @@
      16/11: bg/container (antes bg/default: en dark no se fundía con la Card). */
   --ds-tabs-contained-bg-selected:        var(--ds-bg-container);        /* tabs/contained/bg/selected */
 
+  /* ══ COMPONENT TOKENS — Bottom Navigation (bottomNavigation/all/*) · 24/11 ══
+     Saneado en Figma el 24/11: code syntax en todos, `fg/icon/active` → `fg/icon/default`,
+     paddings 8/8/4 (antes 6/4 y layout/margin), hover/pressed/foco/línea superior nuevos. */
+  --ds-bottom-navigation-bg-generic:         var(--ds-bg-container);          /* bottomNavigation/all/bg/generic */
+  --ds-bottom-navigation-bg-hover:           var(--ds-bg-hover-primary);      /* …/bg/hover — familia azul (filas/opciones) */
+  --ds-bottom-navigation-bg-pressed:         var(--ds-bg-subtle);             /* …/bg/pressed — gris, como Tabs */
+  --ds-bottom-navigation-fg-icon-selected:   var(--ds-fg-icon-primary);       /* …/fg/icon/selected */
+  --ds-bottom-navigation-fg-icon-default:    var(--ds-fg-icon-subtle);        /* …/fg/icon/default (antes active) */
+  --ds-bottom-navigation-fg-icon-disabled:   var(--ds-fg-icon-disabled);      /* …/fg/icon/disabled */
+  --ds-bottom-navigation-fg-label-generic:   var(--ds-fg-label-default);      /* …/fg/label/generic */
+  --ds-bottom-navigation-fg-label-disabled:  var(--ds-fg-label-disabled);     /* …/fg/label/disabled */
+  --ds-bottom-navigation-border-color-top:   var(--ds-borderColor-subtle);    /* …/borderColor/top — línea sobre la barra */
+  --ds-bottom-navigation-border-width-top:   var(--ds-border-width-sm);       /* 1 — …/borderWidth/top (por dentro, no suma alto) */
+  --ds-bottom-navigation-border-color-focus-outer: var(--ds-borderColor-focus-outer);
+  --ds-bottom-navigation-border-color-focus-inner: var(--ds-borderColor-focus-inner);
+  --ds-bottom-navigation-border-width-focus: var(--ds-border-width-lg);       /* 2 */
+  --ds-bottom-navigation-gap-generic:        var(--ds-spacing-xs);            /* 4 — icono → label */
+  --ds-bottom-navigation-padding-top:        var(--ds-spacing-md);            /* 8 */
+  --ds-bottom-navigation-padding-bottom:     var(--ds-spacing-md);            /* 8 — alto 56 = 8 + 20 + 4 + 16 + 8 */
+  --ds-bottom-navigation-padding-hor:        var(--ds-spacing-xs);            /* 4 — antes layout/margin (con 5 items no cabía la label) */
+  --ds-bottom-navigation-size-icon:          var(--ds-sizing-xs);             /* 20 */
+  --ds-bottom-navigation-badge-top:          4px;  /* literal de Figma sin variable: badge 4 por encima del icono (8 − 4) */
+  --ds-bottom-navigation-badge-offset-x:     2px;  /* literal de Figma sin variable: borde izquierdo del badge 12 desde el del icono (centro + 2) */
+
   /* ══════════════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Drawer (drawer/all/*)
      Sprint 5, Pri 9. Riel lateral/superior colapsable — contenedor simple,
