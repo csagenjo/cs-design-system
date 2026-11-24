@@ -75,7 +75,7 @@ Detalle de cada uno en `docs/component-notes.md`.
 
 **Organismos (`src/organisms/`)** — ButtonBar v3.1 · Table v1 · CellActions v1 · DescriptionList v2 · FileUpload v2 · FileSelector v1 · Tabs v3.1 · RadioGroup v1 · CheckboxGroup v1 · AccordionGroup v1 · Combobox v1.3 · CountryPicker v1.2 · CurrencyPicker v1.1 · SidebarMenu v1.2 · TopNavigation v1.2 · BottomNavigation v1 · PageTitle v2 · Hero v1.3 · ContentBlock v1.1 · MediaCard v1.1 · Footer v1 · StepIndicatorLarge v1.1 · StepIndicatorSmall v1.1 · StepNavigator v1.1 · SubstepNavigator v1.1
 
-**Siguientes:** inventario completo (12/11): todas las piezas documentadas. Tokens auditados en las 5 colecciones y Youth en código (13/11). Rejilla de 8 estricta: tanda 1 hecha (line-heights + átomos de formulario); tandas 2 y 3 en `docs/tech-debt.md`. Paso 4: pasada A hecha (16/11, `docs/pipeline-figma-mcp.md`); falta la pasada B con Code Connect. Deuda en `docs/tech-debt.md`.
+**Siguientes:** inventario completo (12/11) y backlog cerrado (24/11): todas las piezas documentadas y las 55 páginas de componentes de Figma en 🟢. Tokens auditados en las 5 colecciones y Youth en código (13/11). Rejilla de 8 estricta: tanda 1 hecha (line-heights + átomos de formulario); tandas 2 y 3 en `docs/tech-debt.md`. Paso 4: pasada A hecha (16/11, `docs/pipeline-figma-mcp.md`); falta la pasada B con Code Connect. Deuda en `docs/tech-debt.md`.
 
 ## 7. Workflow
 
