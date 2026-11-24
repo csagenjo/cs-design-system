@@ -3445,32 +3445,35 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 ## Video
 
 **Group:** Data
-**Figma:** 🟠 tokens `video/all/*` (24/11, replace `videoplayer/all/gap/generic`) · component set and frame *Video — How to use & Accessibility* pending
+**Figma:** 🟠 Video page → `Video` set (Size 16:9 / 4:3 / 9:16 × Fit Contain / Cover; Show Caption, Caption; Play = Icon Button nested and locked) · frame *Video — How to use & Accessibility* (24/11)
 **Code:** `src/components/Video.jsx` (atom)
 **Tokens:** `--ds-video-*` (`video/all/*`)
 
-A video in a fixed-ratio frame, with captions, a play button on top and an optional caption.
+A video in a fixed-ratio frame with a poster, a centred Play button and an optional caption. Never autoplays; captions required.
 
 ## How to use
 
 ### Designers · Figma
 
 **When to use**
-- A short clip that explains or shows something: a product tour, a how-to, an onboarding step
-- A still picture → Image
+- A screen recording or a short clip that shows how something works: a flow in an app, a prototype, an interaction
+- A phone recording → Size 9:16; a desktop recording → 16:9 or 4:3
+- Not for still images (use Image) or decorative background loops: Video never plays by itself
 
 **Properties**
-- Size → 16:9 · 4:3 · 9:16 (width from the layout)
-- Fit → Contain (default, the whole video shows) · Cover (fills the frame and crops)
-- Show Caption + Caption
+- Size → 16:9 · 4:3 · 9:16 (fixed ratio, width from the layout)
+- Fit → Contain (default, recordings that must be seen whole) · Cover (fills the frame, crops)
+- Poster → select the Poster layer and replace its image fill with a still of the video
+- Show Caption + Caption → optional text below
+- Play is a nested Icon Button (Default, Primary, Large, play): locked, don't change it
 
 **Behaviour**
-- Starts stopped, never autoplay; the poster (or grey bg/subtle) shows until it plays
-- Play: Icon Button Primary Large with the Play icon, centred on the frame
-- After Play the button goes away and the browser's own controls appear
+- Before playing: the poster with a Play button (Icon Button, Primary, Large) in the centre
+- After Play: the button goes away and the browser's own controls take over (pause, time, volume, subtitles, full screen)
+- Grey bg/subtle shows while the poster loads, and around the video with Contain
 
 **Sizing**
-- Radius 4 (borderRadius/sm) · frame → caption 8 · caption body sm, fg/body/subtle
+- Radius 4 (borderRadius/sm) · frame → caption 8 · caption body sm, fg/body/subtle · Play button 64
 
 ### Developers · React
 
@@ -3478,54 +3481,59 @@ A video in a fixed-ratio frame, with captions, a play button on top and an optio
 - `import { Video } from './components/Video'`
 
 **Props**
-- size '16:9'|'4:3'|'9:16' ('16:9' by default), fit 'contain'|'cover' ('contain' by default), src, poster, captionsSrc (required, .vtt), captionsLang ('en'), label (required, name of the video), playLabel ('Play video'), caption, showCaption (true), className, style
+- size '16:9'|'4:3'|'9:16' ('16:9' by default), fit 'contain'|'cover' ('contain' by default), src, poster, captionsSrc (.vtt, required), captionsLang ('en'), label (accessible name, required), playLabel ('Play video'), caption, showCaption (true), className, style
 
 **Example**
-- `<Video src={clip} poster={still} captionsSrc="/onboarding.vtt" label="How to add a supplier" caption="Adding a supplier in two minutes" />`
-- `<Video size="9:16" fit="cover" src={clip} captionsSrc={vtt} label="Product tour" showCaption={false} />`
+- `<Video size="16:9" src={demo} poster={still} captionsSrc={demoVtt} label="Checkout flow demo" caption="Checkout in three steps" />`
+- `<Video size="9:16" src={phoneRec} poster={phoneStill} captionsSrc={phoneVtt} label="App navigation on a phone" />`
+- `<Video size="4:3" fit="cover" src={clip} poster={still} captionsSrc={clipVtt} label="Team workshop" showCaption={false} />`
+
+**Tokens**
+- `--ds-video-gap` · `--ds-video-frame-border-radius` · `--ds-video-frame-bg-generic` · `--ds-video-caption-fg-generic` (Play button: Icon Button tokens)
 
 ### AI agents · Claude Code
 
 **Pick it when**
-- Showing a video clip
+- Showing a screen recording or a short clip
 
 **Don't pick it when**
-- It's a still picture → Image · it's a background animation (not supported)
+- It's a still picture → Image · it's a decorative background loop (not supported)
 
 **Composition rules**
-- Always pass captionsSrc and label
-- Never autoplay; let the person start it with Play
+- Always pass label (what the video shows) and captionsSrc; never ship a video without subtitles
+- Pick the size by the recording: 9:16 for phones, 16:9 or 4:3 for desktop
+- Never add autoplay; if a page ever needs it, it must be muted and have a visible pause button
+- Screen-reader strings (label, playLabel) in English and passed by prop, never hardcoded
 
 ## Accessibility
 
 ### Designers · Figma
 
-**Built in**
-- Captions on by default (`<track kind="captions" default>`)
-- Play button named by playLabel; the video named by label
-- With a caption it's a figure: the caption is linked to the video
+**Captions and name**
+- Every video needs subtitles (captions file) and a name that says what it shows; put both in the spec
+- No sound-only information: what is said or heard must be in the subtitles
 
-**Your job**
-- Provide the captions file (.vtt) for every video, and a label that says what it shows
-- No information only in the sound or only in the picture without captions
+**Caption**
+- Visible to everyone; it complements the accessible name, it doesn't replace it or the subtitles
 
 ### Developers · React
 
 **Semantics**
-- `<video aria-label preload="metadata">` with `<track kind="captions">` in a frame; with a caption, `<figure>` + `<figcaption>`
-- Before playing, the video is out of the tab order (tabindex -1) and has no controls; Play is the only control
+- `<video>` with `<track kind="captions" default>`; aria-label from label; no autoplay; with a caption, `<figure>` + `<figcaption>`
+- Play is a real `<button>` (Icon Button) named by playLabel
 
 **Keyboard**
-- Tab to Play, Enter or Space starts the video; focus moves to the video, whose native controls take over
+- Before playing, the video is out of the tab order and Play is the only control; Enter or Space starts it and focus moves to the video and its native controls
 
 **Known gaps**
-- No Figma component yet (only tokens)
+- None
 
 ### AI agents · Claude Code
 
 **Check before shipping**
-- Every Video has captionsSrc and a meaningful label
-- npm run a11y passes with the 3 sizes and the 2 fits
+- npm run a11y passes for every size and fit
+- Every Video has label and captionsSrc; the .vtt exists and loads
+- No autoplay anywhere; Play is reachable with the keyboard and has a visible focus ring
 
 **Don't**
 - Don't write screen-reader texts inside the component; pass label and playLabel
