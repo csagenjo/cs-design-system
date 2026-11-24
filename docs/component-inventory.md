@@ -40,7 +40,7 @@ Rules that apply to every entry:
 |---|---|
 | Actions | Button, IconButton, ButtonBar · Collapsible, CollapsibleIconButton (see Page structure) |
 | Forms | Combobox (+ InputCombobox) · Switch · FileUpload, FileSelector, DropZone, DocumentItem, LabelDescription · FieldLabel, HelperText, ValidationMessage (Form Elements) · RadioGroup, CheckboxGroup · Checkbox, Radio, Chip · SegmentedControl · Slider, RangeSlider, SteppedSlider · InputText, InputDropdown, InputDate, InputStepper, InputTelephone, InputAmount · Selector (+ SelectorInvoker, SelectorListItem), AccountSelector (+ AccountSelectorInvoker, AccountSelectorListItem) · CountryPicker, CurrencyPicker |
-| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Video · Divider · CountryFlag |
+| Data | ListView · DescriptionList (+ DescriptionListItem, DescriptionListAccount) · Table (+ TableRow, CellHeader, CellData, CellMore, CellActions) · AmountView · List · Card · Image · Logo · Video · Divider · CountryFlag |
 | Feedback | Snackbar · InlineNotification · Tooltip · LoadingSpinner · ProgressBar · BadgeNotification · BadgeHighlight |
 | Navigation | TopNavigation · SidebarMenu · BottomNavigation (+ BottomNavigationItem) · PageTitle · Tabs (+ TabItem, TabPanel) · Link, LinkList, CTALink · Pagination |
 | Content | Headline · SectionHeader · Text · DescriptionText · DetailText |
@@ -3442,6 +3442,97 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 - Don't use the caption as a replacement for alt
 
 
+## Logo
+
+**Group:** Data
+**Figma:** 🟢 Logo page → `Logo` set (Type Wordmark / Symbol) · documentation frame and *Logo — How to use & Accessibility* (24/11)
+**Code:** `src/components/Logo.jsx` (atom)
+**Tokens:** `--ds-logo-*` (`logo/{wordmark|symbol}/height/generic`, `logo/all/bg|borderRadius/placeholder/generic`)
+
+The logo of a company or organisation: no frame, no background, a fixed height and the width the logo needs.
+
+## How to use
+
+### Designers · Figma
+
+**Pick it when**
+- You show who a piece of work was for: the client in a case-study Hero, a company in a gallery of projects
+
+**Don't pick it when**
+- The image is decorative or an illustration → Image or Shape Media
+- The company name is all you need → write it as text
+
+**Type**
+- Wordmark: the name written out, wider than 1.5:1 → height 40
+- Symbol: square, tall or up to 1.5:1 → height 56, one step taller so it weighs the same as a wordmark
+
+**How to use**
+- Select Logo image, replace its fill with the logo (Image, Fit) and set the instance width to height × the logo ratio. Never crop or stretch it
+- Use a trimmed PNG or SVG with a transparent background: no white box, no empty margins
+- No frame, no background, no shadow: the grey fill is only a placeholder
+
+**Sizing**
+- Wordmark 40 (`logo/wordmark/height/generic` → sizing/lg) · Symbol 56 (`logo/symbol/height/generic` → sizing/2xl) · width = height × the logo ratio · placeholder bg/subtle, radius borderRadius/sm (only without a file)
+
+### Developers · React
+
+**Import**
+- `import { Logo } from './components/Logo'`
+
+**Props**
+- src, alt (required: the company name, or `""` when the name is written next to it; dev warning if missing), type 'wordmark'|'symbol' ('wordmark' by default), className, style
+
+**Behaviour**
+- Height from `logo/{type}/height/generic`; width auto, so the logo keeps its proportion. No max width: a very long wordmark is a sign the file has empty margins
+- Without src it draws the grey placeholder (Wordmark 160 × 40, Symbol 56 × 56); the grey and the radius exist only there
+
+**Example**
+- `<Logo src={wordmark} alt="Company name" />`
+- `<Logo type="symbol" src={symbol} alt="" />` next to `<Text>Company name</Text>`
+- In a Hero: `<Hero … actions={<Logo src={wordmark} alt="Company name" />} />`
+
+**Tokens**
+- `--ds-logo-wordmark-height-generic` · `--ds-logo-symbol-height-generic` · `--ds-logo-bg-placeholder-generic` · `--ds-logo-border-radius-placeholder-generic`
+
+### AI agents · Claude Code
+
+**Pick it when**
+- A brief names the client or company of a project and a logo file is available
+
+**Rules**
+- Choose type from the file's ratio: wider than 1.5:1 = wordmark, otherwise symbol
+- If the file has a white background or wide empty margins, stop and ask for a trimmed, transparent one. Do not crop it in the page
+- Never build a logo from text or shapes, and never use one the brief does not name
+- Never put a logo in Image, Shape Media or a Media Card panel
+
+## Accessibility
+
+### Designers · Figma
+
+**Name**
+- The logo names the company: annotate alt = the company name, never "logo" or "image of"
+- If the name is written right next to it, the logo is decorative: alt ""
+
+### Developers · React
+
+**Markup**
+- Renders an `<img>` with the alt given. alt is required; pass `""` when the name is next to it
+- The placeholder (no src) is a `<span role="img" aria-label>` with the alt, or aria-hidden when alt is `""`
+- Logos in dark mode: provide a version that keeps 3:1 contrast against the page, or a transparent one that works on both
+
+**Keyboard**
+- Not focusable (if it's inside a link, the link carries the name)
+
+**Known gaps**
+- None
+
+### AI agents · Claude Code
+
+**Check**
+- alt is the company name or "" (never empty by omission)
+- The logo is not the only way to tell which company it is when the information matters
+
+
 ## Video
 
 **Group:** Data
@@ -5190,6 +5281,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 
 **Actions**
 - Only Button Accent Primary: the hero is the main message of the page; secondary actions go further down
+- Or a Logo instead of buttons: the client of a case study (24/11). Wordmark 40 or Symbol 56 high, width from the file; no buttons next to it
 
 **Sizing**
 - Title Headline display (40/48 · 48/56 · 64/72) · introduction Paragraph 24/32 · padding layout/margin × spacing/3xl · text ↔ image layout/gutter · text gap spacing/xl · actions gap spacing/md · Cover min height 584 (Desktop) / 600 (Stacked)
@@ -5200,11 +5292,12 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - `import { Hero } from './organisms/Hero'`
 
 **Props**
-- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node), shape ('blob' | 'pill'), backdrop ('secondary' | 'default' | 'primary' | 'tertiary'; false = none), showBackdrop (true), popOut (false), scrim ('full' | 'gradient'), mediaPosition ('right' | 'left'; 'end' / 'start' also accepted), titleId, children (the introduction: Paragraph size 24)
+- variant ('shape' | 'cover'), eyebrow, title (Headline display, h1), image ({ src, alt?, position? }), actions (node: Buttons, or a Logo), shape ('blob' | 'pill'), backdrop ('secondary' | 'default' | 'primary' | 'tertiary'; false = none), showBackdrop (true), popOut (false), scrim ('full' | 'gradient'), mediaPosition ('right' | 'left'; 'end' / 'start' also accepted), titleId, children (the introduction: Paragraph size 24)
 
 **Example**
 - `<Hero eyebrow="Personal account" title="Banking that fits in your pocket" image={{ src: '/phone-cutout.png', alt: '' }} actions={<Button href="#open">Open an account</Button>}><Paragraph size="24">Pay, save and send money from one app…</Paragraph></Hero>`
 - `<Hero variant="cover" scrim="gradient" image={{ src: '/office.jpg', alt: '', position: 'center 30%' }} title="Design systems that scale" />`
+- `<Hero eyebrow="Case study" title="Project name" backdrop="primary" image={{ src: '/project-blob.png', alt: '' }} actions={<Logo src={clientLogo} alt="Company name" />} />`
 
 ### AI agents · Claude Code
 
@@ -5216,7 +5309,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 
 **Composition rules**
 - One per page; the title is the page h1
-- actions: only `<Button>` with the default type and variant (Accent Primary)
+- actions: only `<Button>` with the default type and variant (Accent Primary), or one `<Logo>` (the client of a case study) instead of buttons
 - children: Paragraph size 24 (in Cover the hero turns it onColor)
 
 ## Accessibility
@@ -5251,6 +5344,7 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 **Don't**
 - Don't lower the scrim or put text outside the scrim area in Gradient
 - Don't put secondary or tertiary buttons in actions
+- A Logo in actions needs alt = the company name (or "" if the name is in the title or eyebrow)
 
 ## ShapeMedia
 

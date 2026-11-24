@@ -41,6 +41,7 @@ import { Icon } from '../components/Icon';
 import { IconButton } from '../components/IconButton';
 import { Image } from '../components/Image';
 import { Video } from '../components/Video';
+import { Logo } from '../components/Logo';
 import { BottomNavigationItem } from '../components/BottomNavigationItem';
 import { BottomNavigation } from '../organisms/BottomNavigation';
 import { BottomSheet } from '../components/BottomSheet';
@@ -113,6 +114,8 @@ import { Footer } from '../organisms/Footer';
 import heroCoverImg from './assets/hero-cover-test.jpg';
 import heroShapeImg from './assets/hero-shape-test.png';
 import popOutImg from './assets/pop-out-test.png';
+import logoWordmarkImg from './assets/logo-wordmark-sample.svg';
+import logoSymbolImg from './assets/logo-symbol-sample.svg';
 
 const noop = () => {};
 
@@ -933,6 +936,19 @@ export default function Gallery({ mode, theme = 'retail' }) {
         </Col>
       </Section>
 
+      <Section name="Logo">
+        <Row style={{ alignItems: 'center' }}>
+          <Logo src={logoWordmarkImg} alt="Company name" />
+          <Logo type="symbol" src={logoSymbolImg} alt="Company name" />
+          <Logo alt="Company name" />
+          <Logo type="symbol" alt="" />
+        </Row>
+        <Row style={{ alignItems: 'center' }}>
+          <Logo type="symbol" src={logoSymbolImg} alt="" />
+          <Text>Company name</Text>
+        </Row>
+      </Section>
+
       <Section name="LoadingSpinner">
         <Row>
           {['extraSmall', 'small', 'medium', 'large'].map((s) => <LoadingSpinner key={s} size={s} label={`Loading ${s}`} />)}
@@ -1530,6 +1546,11 @@ export default function Gallery({ mode, theme = 'retail' }) {
             <Paragraph size="24">I simplify complex product systems so teams can operate with clarity.</Paragraph>
           </Hero>
         ))}
+        <Hero eyebrow="Case study" title="Hero shape, logo in actions" backdrop="primary"
+          image={{ src: heroShapeImg, alt: '' }}
+          actions={<Logo src={logoWordmarkImg} alt="Company name" />}>
+          <Paragraph size="24">The client of the work is named by its logo instead of buttons.</Paragraph>
+        </Hero>
         <Hero eyebrow="Pill, tertiary" title="Hero shape, pill" shape="pill" backdrop="tertiary"
           image={{ src: heroShapeImg, alt: '' }} />
         <Hero eyebrow="Without backdrop" title="Hero shape, media start" mediaPosition="left" backdrop={false}

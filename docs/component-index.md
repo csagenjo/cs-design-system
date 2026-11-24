@@ -59,7 +59,8 @@ Or from the package: `import { Button } from 'cs-design-system'` (`src/index.js`
 | AmountView | Formatted amount with currency, highlight and sign | Showing money read-only | Typing money (InputAmount) |
 | List | Bullet, numbered or check list | Short scannable text | Interactive rows (ListView) |
 | Card | Surface that groups content (Basic elevated, Full flat) | Grouping a block on a page | Lists of rows (ListView) |
-| Image | Picture at a fixed ratio, optional caption; fit cover or contain | Photos, illustrations, logos | Icons (Icon) |
+| Image | Picture at a fixed ratio (1:1, 3:2, 4:3, 16:9), optional caption (plain text or bold title + description); fit cover (photos) or contain (screenshots, diagrams). File at the frame's ratio, 2× its largest size | Photos, illustrations, screenshots, case-study figures | Logos (Logo) · images in a shape (ShapeMedia) · icons (Icon) |
+| Logo | Company logo, no frame or background: height 40 (wordmark, wider than 1.5:1) or 56 (symbol), width auto; `alt` required | The client of a case study (Hero actions), a company in a gallery of projects | Decorative images (Image, ShapeMedia) · the name alone (Text) |
 | Video | Video at a fixed ratio (16:9 / 4:3 / 9:16) with captions and a Play button; fit contain or cover | Short clips: tours, how-tos | A still picture (Image) |
 | ShapeMedia | Photo inside a shape with a coloured backdrop | Inside Hero/ContentBlock, or a cut-out photo on its own | A plain framed photo (Image) |
 | Divider | Hairline between groups | Separating blocks | Spacing alone is enough |

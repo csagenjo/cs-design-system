@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48">
+  <!-- Logo genérico de ejemplo para la galería (no es una marca real) -->
+  <circle cx="24" cy="24" r="20" fill="#7A8794"/>
+  <rect x="16" y="16" width="16" height="16" rx="4" fill="#C9D1D8"/>
+  <text x="56" y="33" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#7A8794">Company</text>
+</svg>
