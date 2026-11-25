@@ -52,6 +52,7 @@ export * from './components/List.jsx';
 export * from './components/ListView.jsx';
 export * from './components/LiveRegion.jsx';
 export * from './components/LoadingSpinner.jsx';
+export * from './components/Logo.jsx';
 export * from './components/Node.jsx';
 export * from './components/Pagination.jsx';
 export * from './components/Paragraph.jsx';

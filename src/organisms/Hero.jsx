@@ -36,7 +36,9 @@
  *             Hero, mismo mecanismo que Collapsible con Button).
  *
  * actions: solo Button Accent Primary (decisión de Carol, 17/11): el Hero es
- * el mensaje principal de la página; lo secundario va más abajo.
+ * el mensaje principal de la página; lo secundario va más abajo. O, en lugar
+ * de botones, un Logo (24/11, Figma: "Actions can also hold a Logo"): el
+ * cliente de un case study. `actions={<Logo src={…} alt="Company name" />}`.
  *
  * Accesibilidad: <section> con nombre del h1 (aria-labelledby). La imagen es
  * decorativa por defecto (alt ''); si aporta información, `image.alt` la
@@ -166,7 +168,7 @@ export function Hero({
   eyebrow,                // texto corto encima del título (opcional)
   title,                  // siempre h1
   image,                  // { src, alt?, position? } — position solo en cover (object-position)
-  actions,                // Button Accent Primary (uno o dos)
+  actions,                // Button Accent Primary (uno o dos), o un Logo
   shape = 'blob',         // shape: 'blob' | 'pill'
   backdrop = 'secondary', // shape: color de la forma de detrás — 'secondary' | 'default' | 'primary' | 'tertiary' (false = sin ella)
   showBackdrop = true,    // shape: false = sin forma (ni color ni recorte), la foto entera

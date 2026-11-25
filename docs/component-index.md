@@ -8,6 +8,8 @@ own.
 Imports: atoms from `src/components/{Name}`, organisms from `src/organisms/{Name}`.
 Or from the package: `import { Button } from 'cs-design-system'` (`src/index.js`, regenerated with `npm run index`). Screen-reader texts are in English and passed by prop.
 
+Media (Image, Video, ShapeMedia, Hero, MediaCard, ContentBlock, ErrorAndEmptyState, TopNavigation Featured): each entry in the inventory has an **Images** section. Stop and ask, never crop or invent, when: an image with readable text would go in a shape or a small frame · the image doesn't have the frame's ratio · a logo has a white background or empty margins · a video has no `.vtt`.
+
 ## Actions
 
 | Component | What it is | Use it for | Not for (use instead) |
@@ -59,9 +61,10 @@ Or from the package: `import { Button } from 'cs-design-system'` (`src/index.js`
 | AmountView | Formatted amount with currency, highlight and sign | Showing money read-only | Typing money (InputAmount) |
 | List | Bullet, numbered or check list | Short scannable text | Interactive rows (ListView) |
 | Card | Surface that groups content (Basic elevated, Full flat) | Grouping a block on a page | Lists of rows (ListView) |
-| Image | Picture at a fixed ratio, optional caption; fit cover or contain | Photos, illustrations, logos | Icons (Icon) |
-| Video | Video at a fixed ratio (16:9 / 4:3 / 9:16) with captions and a Play button; fit contain or cover | Short clips: tours, how-tos | A still picture (Image) |
-| ShapeMedia | Photo inside a shape with a coloured backdrop | Inside Hero/ContentBlock, or a cut-out photo on its own | A plain framed photo (Image) |
+| Image | Picture at a fixed ratio (1:1, 3:2, 4:3, 16:9), optional caption (plain text or bold title + description); fit cover (photos) or contain (screenshots, diagrams). File at the frame's ratio, 2× its largest size | Photos, illustrations, screenshots, case-study figures | Logos (Logo) · images in a shape (ShapeMedia) · icons (Icon) |
+| Logo | Company logo, no frame or background: height 40 (wordmark, wider than 1.5:1) or 56 (symbol), width auto; `alt` required | The client of a case study (Hero actions), a company in a gallery of projects | Decorative images (Image, ShapeMedia) · the name alone (Text) |
+| Video | Video at a fixed ratio (16:9 / 4:3 / 9:16) with captions and a Play button; fit contain or cover. MP4 H.264 recorded at the frame's ratio, poster with a free centre, `.vtt` always, no autoplay | Short clips: tours, how-tos (readable UI only full width, 16:9 contain) | A still picture (Image) |
+| ShapeMedia | Photo inside a shape with a coloured backdrop. Templates: Blob / Pill 1184 × 1040, Pill pop out 1326 × 1164 (cut-outs only), safe areas in px and %; no readable text | Inside Hero/ContentBlock, or a cut-out photo on its own | A plain framed photo (Image) · images with text (Image figure) |
 | Divider | Hairline between groups | Separating blocks | Spacing alone is enough |
 | CountryFlag | Real flag, one size | Next to a country name or prefix | Decoration |
 
@@ -81,14 +84,14 @@ Or from the package: `import { Button } from 'cs-design-system'` (`src/index.js`
 
 | Component | What it is | Use it for | Not for (use instead) |
 |---|---|---|---|
-| TopNavigation | Page header with tabs, mega-menu and an optional action | The top bar of a back-office tool or a website | Navigation inside a page (Tabs) |
+| TopNavigation | Page header with tabs, mega-menu and an optional action · Featured images 16:9 428 × 240 or 1:1 240 × 240, no text | The top bar of a back-office tool or a website | Navigation inside a page (Tabs) |
 | SidebarMenu | Collapsible side menu | Section navigation in La Plataforma | — |
 | BottomNavigation | Bar of 3–5 destinations (icon, label, badge) at the bottom of a phone screen | Main destinations on phone layouts | Tablet/desktop (TopNavigation, SidebarMenu) · sections of a page (Tabs) |
 | BottomNavigationItem | One destination of BottomNavigation | Building a BottomNavigation | — |
 | PageTitle | Page heading with back link and actions | The title of every page (level 1) | Section titles (Headline) |
-| Hero | Opening block: eyebrow, h1, introduction and an image (photo in shape, or background image with scrim) | The top of a landing page, product page or campaign | The header of a back-office page (PageTitle) |
-| ContentBlock | Page section: h2, text and a photo in a shape | A feature or topic of a landing page; repeats on the page | The opening block (Hero) |
-| MediaCard | Card with title, subtitle, description, one link and an image panel | Product, service or feature lists | A card without a link (Card) |
+| Hero | Opening block: eyebrow, h1, introduction and an image (photo in shape, or background image with scrim) · Shape: image follows ShapeMedia · Cover: one 2560 × 1168 photo, subject in x 1248–1645, y 48–584, no text or logos (`image.position` to move the crop) · Actions can hold a Logo | The top of a landing page, product page or campaign | The header of a back-office page (PageTitle) |
+| ContentBlock | Page section: h2, text and a photo in a shape · image follows ShapeMedia (same templates) | A feature or topic of a landing page; repeats on the page | The opening block (Hero) |
+| MediaCard | Card with title, subtitle, description, one link and an image panel · image 4:3 Contain, file 928 × 696, never a logo | Product, service or feature lists | A card without a link (Card) |
 | Footer | Closing block: contact links, optional action, note and wave | The bottom of every page of a website | Form or dialog actions (ButtonBar) |
 | Tabs | Tabs with panels | Switching between panels of one page | Changing a view filter (SegmentedControl) |
 | TabItem · TabPanel | Parts of Tabs | Custom tab layouts | — |
@@ -123,7 +126,7 @@ Or from the package: `import { Button } from 'cs-design-system'` (`src/index.js`
 |---|---|---|---|
 | Dialog | Modal with title, content and buttons | Decisions or forms that block the page | Non-blocking info (PopoverSheet) |
 | DialogSimple | Short modal message with one or two buttons | Confirmations | — |
-| ErrorAndEmptyState | Illustration + message + action | Empty lists and errors filling a page area | Small messages (InlineNotification) |
+| ErrorAndEmptyState | Illustration + message + action · Image 1:1, file 240 × 240, one centred illustration, no text | Empty lists and errors filling a page area | Small messages (InlineNotification) |
 | Scrim | Dark layer behind a modal | *Internal* — Dialog and Drawer add it | — |
 | PopoverSheet | Floating card attached to a button | Extra detail or 1–3 actions about one element | Blocking decisions (Dialog) · hints (Tooltip) |
 | BottomSheet | Modal panel from the bottom of a phone screen, with Content and Footer slots | One short task on mobile: sort, filter, pick an option | Tablet/desktop (Dialog, PopoverSheet) · blocking decisions (Dialog) |

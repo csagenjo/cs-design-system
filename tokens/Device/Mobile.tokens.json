@@ -1962,6 +1962,26 @@
           "targetVariableSetName": "Theme"
         }
       }
+    },
+    "textMaxWidth": {
+      "$type": "number",
+      "$value": 800,
+      "$description": "Reading width for running text (about 70 characters a line at Paragraph 20): 800 in every device. Use it as max width of a text column that spans the page (case-study text, intros). Not for two-column rows: there each column already has its width.",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:33127:69",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--ds-layout-text-max-width)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:53280aaa39cefbfe876eb95f5fd206bb5ec2b8cd/-1:-1",
+          "targetVariableName": "layout/textMaxWidth",
+          "targetVariableSetId": "VariableCollectionId:54b71f78a5b00c3ce92ff27e0cd9f25a36242cee/-1:-1",
+          "targetVariableSetName": "Theme"
+        }
+      }
     }
   },
   "$extensions": {
