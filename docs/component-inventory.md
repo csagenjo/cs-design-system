@@ -22,6 +22,7 @@ written for the same three audiences, plus the token prefix:
 | **AI agents · Claude Code** | Agents | Pick it when / don't pick it when (and what to pick instead), composition rules |
 | **Accessibility** (same three audiences) | Everyone | What's built in, what the designer / developer / agent still has to do, known gaps (tracked in `docs/accessibility-audit.md`) |
 | **Tokens** | Everyone | The `--ds-{component}-*` prefix it consumes |
+| **Images** (media components only) | Everyone | How to make the image or video: templates, ratios, export sizes, safe areas, and when an agent must stop and ask. Mirrors the *Creating images* / *Images* frame of the Figma page |
 
 Rules that apply to every entry:
 
@@ -3359,7 +3360,7 @@ An empty surface that groups related content: background, radius and shadow. Wha
 **Code:** `src/components/Image.jsx` (atom)
 **Tokens:** `--ds-image-*` (`image/all/*`)
 
-A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
+A photo, illustration, screenshot or diagram in a fixed-ratio frame, with an optional caption (plain text, or a bold title and a description).
 
 ## How to use
 
@@ -3367,19 +3368,20 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 
 **When to use**
 - A photo or illustration that supports the content: a featured item in a menu, an empty state, an avatar
-- A logo or a screenshot that must be seen whole → Fit Contain
+- A screenshot, diagram or illustration that must be seen whole → Fit Contain
+- A logo → Logo (24/11) · an image in a shape → ShapeMedia
 - Icons → Icon · flags → CountryFlag
 
 **Properties**
 - Size → 1:1 · 3:2 · 4:3 · 16:9 (width from the layout)
 - Variant → Rounded Corners · Circle (only 1:1)
-- Fit → Cover (default, photos) · Contain (logos, screenshots)
+- Fit → Cover (default, photos) · Contain (screenshots, diagrams)
 - Resize the instance and the frame keeps its ratio (18/11)
 - Show Caption + Caption
 
 **Behaviour**
 - Cover: the image fills the frame and what overflows is cropped
-- Contain: the whole image shows and the grey frame stays around it; the space around a logo comes from the parent, not from Image
+- Contain: the whole image shows and the grey frame stays around it
 - Grey bg/subtle while it loads or without an image
 
 **Sizing**
@@ -3401,15 +3403,64 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 ### AI agents · Claude Code
 
 **Pick it when**
-- Showing a photo, an illustration or a logo
+- Showing a photo, an illustration, a screenshot or a diagram
 
 **Don't pick it when**
-- It's an icon → Icon · a country → CountryFlag
+- It's an icon → Icon · a country → CountryFlag · a logo → Logo · an image in a shape → ShapeMedia
 
 **Composition rules**
 - Always decide alt; alt="" only when the image adds nothing to the text around it
 - circle only with 1:1
-- fit="contain" for logos and screenshots; never cover on a logo (it gets cropped)
+- fit="contain" for screenshots and diagrams; fit="cover" for photos
+
+## Images
+
+Figma: 🟢 Image page → frame *Creating images* (`33139:283`), linked from *Media guidelines* at the end of the Image documentation.
+
+### Designers · Figma
+
+**Start from the template**
+- Duplicate the template of the frame's ratio (next to the frame), at 2×: 16:9 = 2432 × 1368 (full width 1216 × 684) · 4:3 = 1184 × 888 (half column 592 × 444) · 3:2 = 1184 × 790 (592 × 395) · 1:1 = 1184 × 1184 (592 × 592)
+- Keep what matters inside the dashed safe area: 24 px (1×, 48 at 2×) from the edges, where the corners round and Cover may trim
+- Always export at the ratio of the frame. Then Cover crops nothing and Contain shows no grey bands
+
+**Cover or Contain**
+- Cover: photos. The image fills the frame; anything outside the ratio is cut
+- Contain: screenshots, diagrams and illustrations that must be seen whole. The frame's grey shows around them if the ratio differs
+- Logos are not Images: use Logo
+
+**Where Image is used (export at 2×)**
+
+| Where | Ratio · fit | Shown at | Export |
+|---|---|---|---|
+| Media Card | 4:3 Contain | 464 × 348 (Desktop) · 256 × 192 (Stacked) | 928 × 696 |
+| Error and Empty State | 1:1 Cover | 120 × 120 | 240 × 240, one centred illustration, no text |
+| Top Navigation · Featured | 16:9 Cover · 1:1 Cover | 214 × 120 · 120 × 120 | 428 × 240 · 240 × 240 |
+| Case-study figures (layout 7) | 16:9 Contain | 592 × 333 · full width 1216 × 684 | 1184 × 666 · 2432 × 1368 |
+
+**Don't**
+- No text people must read in a small frame. A screenshot to be read goes full width (1216), and the caption or the page text repeats what matters
+- Hero (Shape) and Content Block don't use Image: their image follows Shape Media (Images in the shape)
+
+### Developers · React
+
+- size (1:1, 3:2, 4:3, 16:9) sets the frame; fit cover or contain. Give a src at the same ratio, at least 2× the largest width it shows at
+- WebP for photos and illustrations, PNG for screenshots with fine lines. Never stretch: the frame keeps the ratio, not the file
+- alt describes what the image shows when it carries information; decorative = alt "". The caption is not the alt
+
+### AI agents · Claude Code
+
+**When a page needs an image**
+- Pick the ratio from the component (table above). Create or request the image at that ratio and 2× its largest size
+- Image-generator brief: "{ratio} image, {w} × {h}, subject inside a box 48 px from every edge, no text." Photos: fit cover. Screenshots or diagrams: fit contain, full width
+
+**Rules**
+- Never put readable text in an image smaller than full width; put it in the page text or the caption
+- Never use Image for a logo (Logo) or for an image in a shape (Shape Media)
+- If the only image available has another ratio, stop and ask. Do not let Cover crop the subject
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
@@ -3420,7 +3471,7 @@ A photo, illustration or logo in a fixed-ratio frame, with an optional caption.
 
 **Your job**
 - Write the alt for every meaningful image in the spec; mark decorative ones
-- No text baked into images, except logos; a logo next to a title that already names it is decorative (alt="")
+- No text baked into images smaller than full width; logos go in Logo
 
 ### Developers · React
 
@@ -3595,6 +3646,44 @@ A video in a fixed-ratio frame with a poster, a centred Play button and an optio
 - Pick the size by the recording: 9:16 for phones, 16:9 or 4:3 for desktop
 - Never add autoplay; if a page ever needs it, it must be muted and have a visible pause button
 - Screen-reader strings (label, playLabel) in English and passed by prop, never hardcoded
+
+## Images
+
+Figma: 🟢 Video page → frame *Creating videos and posters* (`33139:686`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**Record or edit at the frame's ratio**
+- 16:9 for screen recordings and product videos (template 2432 × 1368, full width 1216) · 4:3 for half-column clips (1184 × 888, half column 592) · 9:16 for phone recordings (720 × 1280, 360 wide). Never letterbox inside the file: the frame does it if needed
+- Duplicate the poster template of that ratio. The poster is a still of the video, same ratio and size
+- Keep the centre of the poster free: the Play button (120 × 120 at 2×) sits on top of it. What matters goes inside the dashed safe area
+
+**Export**
+- Video: MP4 (H.264), at least the 2× width of the template, no sound needed unless it carries meaning. Under 30 seconds per clip when you can
+- Poster: PNG or WebP at the template size. Name both the same: `{topic}-{ratio}.mp4` and `{topic}-{ratio}-poster.webp`
+- Captions: a `.vtt` with the same name, always, even for recordings without speech (describe what happens if it matters)
+
+**Don't**
+- Screen recordings with UI to be read only full width (1216, 16:9, Fit Contain). Never in a half column or a card
+- No autoplay, no music beds, no flashing (more than 3 flashes a second)
+
+### Developers · React
+
+- size (16:9, 4:3, 9:16) and fit (contain default, cover). src = the MP4, poster = the still, captionsSrc = the `.vtt` (required), label = accessible name
+- Never autoplay; the Play button starts it and then the native controls take over
+
+### AI agents · Claude Code
+
+**When a page needs a video**
+- Pick size from the content: screen recording 16:9, phone recording 9:16. Ask for the MP4, the poster and the `.vtt` with the same name; if the `.vtt` is missing, stop and ask
+- Poster brief: "{ratio} still, {w} × {h}, subject inside a box 48 px from the edges, centre 120 × 120 free for the Play button, no text."
+
+**Rules**
+- A recording with readable UI goes full width with Fit Contain
+- Never generate a fake recording or a poster that does not come from the video
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
@@ -4307,6 +4396,31 @@ Modal surfaces: Dialog for a task or decision, Dialog Simple for a short questio
 - Never rebuild the header buttons: Back/Close are IconButton inside DialogHeader.
 - Main action = Primary button, the other = Secondary; header colour decides Default or Accent buttons.
 - Use `modal={false}` only for static documentation.
+
+## Images
+
+Figma: 🟢 Dialog page → frame *Images (Error and Empty State)* (`33143:2636`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**Illustration (Error and Empty State)**
+- Image 1:1, Cover, at 120 × 120. Draw it on Template · Image 1:1 (Image page) and export at 240 × 240
+- One centred illustration with air around it (inside the 48 safe area at 2×), transparent or on the page colour. It supports the title; it never replaces it
+
+**Don't**
+- No text, numbers or error codes in the illustration: the title and description say it
+- No photos of people or alarming imagery for errors
+
+### Developers · React
+
+- A 1:1 file at 240 × 240 (WebP or PNG). Decorative: alt "" (the title explains the state)
+
+### AI agents · Claude Code
+
+- Brief: "1:1 illustration, 240 × 240, simple, centred, transparent background, no text." If none is available, leave the image out rather than inventing one
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
@@ -5276,8 +5390,8 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - Eyebrow and Title are exposed instances (Text, Headline display: the h1 size for heroes); Content and Actions are slots
 
 **Images**
-- Shape: select the Photo layer inside Shape Media and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall for sharp screens. The photo fits the media area (720 × 629): full height, centred, resting on the bottom; the shape clips its edges
-- Cover: select the Image layer and replace its image fill. Any image; keep the subject away from the text side (left in Desktop, bottom in Stacked)
+- Shape: select the Photo layer inside Shape Media and replace its image fill, made on the Shape Media templates (see ShapeMedia → Images)
+- Cover: select the Image layer and replace its image fill with a 2560 × 1168 photo, subject in the focal area (see Images below)
 
 **Actions**
 - Only Button Accent Primary: the hero is the main message of the page; secondary actions go further down
@@ -5311,6 +5425,42 @@ The opening block of a page: eyebrow, the page title (h1) and an introduction, w
 - One per page; the title is the page h1
 - actions: only `<Button>` with the default type and variant (Accent Primary), or one `<Logo>` (the client of a case study) instead of buttons
 - children: Paragraph size 24 (in Cover the hero turns it onColor)
+
+## Images
+
+Figma: 🟢 Hero page → frame *Images* (`33140:427`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**Style Shape**
+- The image is a Shape Media: follow ShapeMedia → Images (Template · Blob / Pill / Pill pop out). Same rules for Content Block
+
+**Style Cover**
+- One photo, two crops: Desktop shows 1280 × 584 with the text on the left; Stacked (375 × 600) keeps only the centre strip, with the text at the bottom
+- Duplicate "Template · Hero Cover · 2560×1168". Subject in the green focal area (x 1248–1645, y 48–584 at 2×): right of the Desktop text and above the Stacked text. Calm, low-detail areas under both text zones; the scrim does the rest
+- Export JPG or WebP at 2560 × 1168, guides hidden
+
+**Don't**
+- No text, logos or UI inside the photo: the title is the page's h1, and anything written in the image is lost in Stacked and under the scrim
+- No illustrations with a transparent background in Cover: use Style Shape for those
+
+### Developers · React
+
+- variant="cover": `image.src` at 2560 × 1168 (2× Desktop), object-fit cover. Stacked keeps the centre
+- `image.position` moves the crop when the subject is not centred (for example "70% 30%"): check it at 375 wide before shipping
+- alt: describe the photo only if it adds information the title doesn't; decorative = alt ""
+
+### AI agents · Claude Code
+
+**When a page needs a Cover hero**
+- Photo brief: "2560 × 1168 photo, subject between x 1248 and 1645 and y 48 and 584, quiet left half and bottom, no text, no logos."
+- If the photo has its subject on the left, set `image.position` or ask for another photo. Never place the title over a busy area
+
+**Rules**
+- Illustrations and cut-outs go in Style Shape (Shape Media rules), not in Cover
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
@@ -5369,7 +5519,7 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - Pop out (Pill only, a variant: Yes / No) → Yes = nothing cuts the photo: the pill stays as a coloured backdrop and the photo grows 12% from the centre, past the pill on all four sides (head, hands, feet)
 
 **Images**
-- Select the Photo layer and replace its image fill. Use a cut-out with a transparent background (PNG), at least 1440 px tall: the colour shows around the person
+- Select the Photo layer and replace its image fill with the PNG made on the template of the shape (Images below): transparent background, the colour shows around the subject
 - The photo fits the area (720 × 629 in code): full height, centred, resting on the bottom; the shape clips it
 - Keep the Photo fill on Fit (the default): it's what the code does. Fill zooms in and crops at the edges of the area; it doesn't exist in code, so a design made with Fill won't look the same on the web
 
@@ -5410,6 +5560,53 @@ A photo inside a shape, with the same shape behind it in colour. Used by Hero (S
 - backdrop only from the four options; never a hex
 - popOut only with shape="pill" and a cut-out PNG (transparent background)
 - Adding a shape: say in `SHAPES` whether it allows popOut
+
+## Images
+
+Figma: 🟢 Shape Media page → frame *Images in the shape* (`33133:372`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**Templates and safe areas** (media area 592 × 520 at 1×; templates at 2×)
+- Blob: template 1184 × 1040. Safe area 4:3 = 416 × 312 at x 152, y 24 (1×); also 1:1 = 344 × 344 at x 224, y 24 · 3:2 = 448 × 296 at x 120, y 24
+- Pill: template 1184 × 1040. Safe area 3:4 = 240 × 320 at x 176, y 100 (1×); the pill is 330 × 520, centred
+- Pill · Pop out: template 1326 × 1164 (the Photo at 2×). Cut-out only. Photo = the area × 1.12 from the centre (663 × 582 at −36, −31). Body over the pill; arms or props up to the media area, never past it; feet on the ground line (y 551); top 24 from the photo edge
+
+**Start from the template**
+- Blob or Pill: duplicate "Template · Blob" or "Template · Pill". Transparent background. Draw inside the frame "Illustration": the safe area, 24 px of air inside the shape
+- Pill with Pop out: duplicate "Template · Pill pop out" and place a cut-out in the frame "Cut-out"
+
+**Export and place**
+- Hide the guides and export the whole canvas as PNG, named `{topic}-{blob|pill|popout}.png`
+- In the instance, put it in Photo with Fill (Pop out: Fit, as it comes). Do not move or scale it there: the canvas already places it
+
+**Don't**
+- No text people must read: labels, small UI copy, mind maps, diagrams with words. Short, large labels at most, and the same information in the page text
+- Pop out only with a cut-out (transparent background). A rectangular image shows its edges, because nothing cuts it
+- Pop out: don't cut the figure at the bottom edge of the canvas; whole figure, or a base that rests on the ground line
+
+### Developers · React
+
+- Use the exported PNG (or its WebP) as `image.src`. ShapeMedia fits it to the area (720 × 629 in code), so the safe area scales with it
+- Safe areas as % of the area: Blob 4:3 = x 25.7 %, y 4.6 %, w 70.3 %, h 60 % · Pill 3:4 = x 29.7 %, y 19.2 %, w 40.5 %, h 61.5 %
+- popOut: the photo is the area × 1.12 from the centre; the Pill pop out canvas has that proportion, so it fits without moving. Only with shape="pill" and a transparent PNG
+- alt describes the image only if it carries information; decorative = alt ""
+
+### AI agents · Claude Code
+
+**When a page needs an image in a shape**
+- Create or request it on the template canvas of the shape: Blob or Pill 1184 × 1040 · Pill pop out 1326 × 1164. Transparent background
+- Blob 4:3 at 2×: box 832 × 624 at x 304, y 48 · Pill 3:4 at 2×: box 480 × 640 at x 352, y 200
+- Pill pop out at 2×: cut-out subject, body between x 334 and 994, nothing outside x 72–1254, top below y 48, feet or base on y 1102
+- Image-generator brief: "Transparent background, {canvas} canvas, subject fully inside a {w} × {h} box at x {x}, y {y}, no text." For pop out add: "cut-out, whole figure standing on y 1102"
+
+**Rules**
+- Never put an image with readable text in Shape Media: that content goes in Paragraph or in an Image figure
+- popOut only with shape="pill" and a cut-out. If the image has a background, use popOut off
+- If the only image available does not fit the safe area, stop and ask. Do not crop or move it inside the instance
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
@@ -5489,6 +5686,29 @@ A page section with a title (h2), its text and a photo in a shape: a feature or 
 - children: Paragraph size 24 first; subsections with Headline level 3
 - Alternate backdrops between consecutive blocks (Default / a brand colour) so they don't merge
 
+## Images
+
+Figma: 🟢 Content Block page → frame *Images* (`33143:1328`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**The image is a Shape Media**
+- Content Block uses the same Shape Media as Hero (Shape): 592 × 520 on Desktop, 343 × 304 on Stacked, same proportion. No templates of its own
+- Create the image with Template · Blob, Pill or Pill pop out (Shape Media page) and follow ShapeMedia → Images (safe areas, export, what not to use)
+- mediaPosition only moves the image left or right on Desktop: the same file works on both sides
+- No text that must be read inside the shape: put it in the block's text
+
+### Developers · React
+
+- `image.src` is passed to ShapeMedia: same files and rules. popOut only with shape="pill" and a cut-out
+
+### AI agents · Claude Code
+
+- Follow ShapeMedia → Images: pick the shape, use its template canvas and safe area. If the image doesn't fit, stop and ask
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
+
 ## Accessibility
 
 ### Designers · Figma
@@ -5523,21 +5743,21 @@ A page section with a title (h2), its text and a photo in a shape: a feature or 
 **Code:** `src/organisms/MediaCard.jsx`
 **Tokens:** `--ds-media-card-*` (`mediaCard/all/*`) · Card Basic underneath
 
-A card that links to a piece of work: title, optional subtitle, description and one link, next to a grey panel with an image (a logo).
+A card that links to a piece of work: title, optional subtitle, description and one link, next to a grey panel with an image (an illustration or a clean screenshot of the work, 4:3).
 
 ## How to use
 
 ### Designers · Figma
 
 **When to use**
-- A list of products, services or features, each with its logo, an illustration or a screenshot
+- A list of products, services or features, each with an illustration or a screenshot (not a logo: use Logo or the title)
 
 **Properties**
 - Layout → Desktop (side by side) · Stacked (image on top)
 - On the Body instance inside the card: Show subtitle, and the Title, Subtitle, Description, Link and Image instances
 
 **Images**
-- Image 4:3, Fit Contain: a logo is shown whole on the grey panel, never cropped
+- Image 4:3, Fit Contain: the illustration is shown whole on the grey panel, never cropped (sizes in Images below)
 - The grey panel has a minimum height by device (240 Mobile · 320 Tablet · 400 Desktop) and the image fits inside it, centred. The card stays on the 8 grid at any width; it only grows if the text is taller
 - Wide images (a diagram, a map) look small on the panel: compose them close to 4:3
 
@@ -5569,6 +5789,38 @@ A card that links to a piece of work: title, optional subtitle, description and 
 **Composition rules**
 - Put them under a group title one level up (Headline h3 "Ways to get paid" → cards h4); set `headingLevel` if the level is different
 - One link per card; don't wrap the whole card in a link
+
+## Images
+
+Figma: 🟢 Media Card page → frame *Images* (`33143:668`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**Sizes**
+- Desktop: grey panel 624 × 480 (min height 400) with the Image 4:3 at 464 × 348, centred · Stacked: panel min height 240 (Mobile) or 320 (Tablet), the Image shrinks to 256 × 192 on Mobile. Same file: export 928 × 696
+
+**Start from the template**
+- Duplicate "Template · Media Card image · 928×696": the Image 4:3 at 2×, transparent background. Keep the drawing inside the dashed safe area (48 from the edges)
+- One image per piece of work: an illustration of the project or a clean screenshot. The same picture can be the project's cover elsewhere
+- Export PNG or WebP at 928 × 696. In the card: Body → Image → replace the fill; Fit stays Contain
+
+**Don't**
+- Not a logo: use Logo (or the title) to name the company
+- No text that must be read: at 256 × 192 on Mobile it can't be
+- No other ratio: the panel and the grid of 8 count on 4:3
+
+### Developers · React
+
+- image = { src, alt }: a 4:3 file at 928 × 696 (2× Desktop). Decorative by default (alt ""): the title already names the work
+- Image size and fit are fixed by the card (4:3, Contain). Files and formats: Image → Images
+
+### AI agents · Claude Code
+
+- Use the project's own illustration or cover at 4:3. Brief: "4:3 illustration, 928 × 696, transparent background, subject inside a box 48 px from the edges, no text."
+- If there is no image, stop and ask. Never put a logo or a photo of a person in the panel
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
@@ -5732,6 +5984,30 @@ The top bar of every page: logo, main sections with optional mega-menu, Log out;
 - One per page, above Page Title
 - A tab with flydown doesn't navigate itself: put its page in the flydown
 - Featured groups are decorative: they don't appear in the mobile menu
+
+## Images
+
+Figma: 🟢 Top Navigation page → frame *Images (Featured)* (`33143:4075`), linked from *Media guidelines*.
+
+### Designers · Figma
+
+**Featured images**
+- The Featured block of the menu uses Image with Cover: 16:9 at 214 × 120 (export 428 × 240) and 1:1 at 120 × 120 (export 240 × 240)
+- Draw or crop them on Template · Image 16:9 or 1:1 (Image page). At this size only one clear subject reads: keep it inside the 48 safe area at 2×
+
+**Don't**
+- No text, prices or logos in the image: the link label says where it goes
+
+### Developers · React
+
+- 16:9 file at 428 × 240 and 1:1 at 240 × 240. Decorative (alt ""): the link text names the destination
+
+### AI agents · Claude Code
+
+- Brief: "{ratio} photo or illustration, {w} × {h}, one subject inside a box 48 px from the edges, no text." If none is given, leave Featured out
+
+**Stop and ask (all media)**
+- An image with readable text for a shape or a frame smaller than full width · an image without the frame's ratio · a logo with a white background or empty margins · a video without its `.vtt`. Stop and ask: never crop, stretch or invent a replacement
 
 ## Accessibility
 
