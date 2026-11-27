@@ -187,7 +187,7 @@ function useSupplierForm(initial) {
     identification: (
       <>
         <Row>
-          {text('internalCode', 'Internal code', { state: 'disabled', helperText: 'Assigned automatically by the system' })}
+          {text('internalCode', 'Internal code', { state: 'disabled' })}
           {text('taxId', 'Tax ID (NIF / CIF / VAT)', { required: true })}
         </Row>
         <Row>{text('legalName', 'Legal name', { required: true })}</Row>
