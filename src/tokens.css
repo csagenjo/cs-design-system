@@ -347,6 +347,15 @@
      TYPOGRAPHY â€” Device tokens
      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
+  /* fontFamily — Device (Figma fontFamily/*, igual en los 3 devices; 27/11).
+     Nunito se sirve desde @fontsource-variable/nunito (foundations.css), sin CDN.
+     Respaldo: fontFamily/web/fallback (Arial). */
+  --ds-fontFamily-default:    'Nunito Variable', 'Nunito', Arial, sans-serif;
+  --ds-fontFamily-headline:   'Nunito Variable', 'Nunito', Arial, sans-serif;
+  --ds-fontFamily-narrow:     'Nunito Variable', 'Nunito', Arial, sans-serif;
+  --ds-fontFamily-code:       'JetBrains Mono', ui-monospace, monospace;
+  --ds-fontFamily-annotation: 'JetBrains Mono', ui-monospace, monospace;
+
   /* fontSize — Device (Figma fontSize/*), mobile-first 28/09/2026: :root = Mobile;
      Tablet/Desktop en los @media al final del archivo. Figma es la fuente de verdad. */
   --ds-fontSize-annotation-sm:  12px;
