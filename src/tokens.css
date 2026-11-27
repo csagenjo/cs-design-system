@@ -2186,6 +2186,7 @@
   --ds-video-frame-border-radius: var(--ds-border-radius-sm); /* 4 — video/all/borderRadius/frame/roundedCorners */
   --ds-video-frame-bg-generic:    var(--ds-bg-subtle);        /* video/all/bg/frame/generic — gris hasta que carga el poster */
   --ds-video-caption-fg-generic:  var(--ds-fg-subtle);        /* #676D76 — video/all/fg/caption/generic */
+  --ds-video-inset-pause-generic: var(--ds-spacing-md);       /* 8 — Pause de playback="autoplay-loop" a 8 de la esquina inferior derecha (27/11). Solo código: en Figma es posición absoluta (constraints MAX/MAX), sin variable enlazable */
 
   /* ══ COMPONENT TOKENS — Country Flag (countryFlag/all/*) · 11/11 ══
      El set vive en la librería de iconos (archivo aparte, 201 variantes 22×16). */
