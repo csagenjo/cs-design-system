@@ -96,6 +96,7 @@ Qué pasa al pulsar cada acción.
 | Campo | Obligatorio | Regla | Mensaje |
 |---|---|---|---|
 | Tax ID | sí | letra + 7 dígitos + letra o dígito, o 8 dígitos + letra | Enter a valid tax ID: 9 characters, for example B12345674. |
+| Legal name | sí | no vacío | Enter the legal name as it appears on official documents. |
 | Postcode | sí | 5 dígitos si el país es España | Enter a 5-digit postcode. |
 | IBAN | sí | dígitos de control (mod 97) | Check the IBAN: the control digits don't match. |
 | Emails | no | formato de email | Enter an email like name@company.com. |

@@ -99,6 +99,8 @@ const LABELS = {
   country: 'a country', ledger: 'the ledger account', operationType: 'an operation type', vatRate: 'a VAT rate',
   iban: 'the IBAN', holder: 'the account holder', paymentMethod: 'a payment method', paymentTerm: 'a payment term', currency: 'a currency',
 }
+// Mensajes que no siguen el patrón "Enter …" (igual que en Figma)
+const MESSAGES = { legalName: 'Enter the legal name as it appears on official documents.' }
 const isEmail = (v) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
 function ibanOk(raw) {
   const s = raw.replace(/\s+/g, '').toUpperCase()
@@ -113,7 +115,7 @@ function validate(v) {
   const e = {} // id de campo → { section, message }
   const add = (section, id, message) => { e[id] = { section, message } }
   for (const [section, ids] of Object.entries(REQUIRED))
-    for (const id of ids) if (String(v[id] ?? '').trim() === '') add(section, id, `Enter ${LABELS[id]}.`)
+    for (const id of ids) if (String(v[id] ?? '').trim() === '') add(section, id, MESSAGES[id] ?? `Enter ${LABELS[id]}.`)
   if (!e.taxId && !/^([A-Z]\d{7}[A-Z0-9]|\d{8}[A-Z])$/i.test(v.taxId.trim())) add('identification', 'taxId', 'Enter a valid tax ID: 9 characters, for example B12345674.')
   if (!e.postcode && v.country === 'es' && !/^\d{5}$/.test(v.postcode.trim())) add('identification', 'postcode', 'Enter a 5-digit postcode.')
   if (!isEmail(v.email)) add('contact', 'email', 'Enter an email like name@company.com.')
@@ -126,13 +128,12 @@ function validate(v) {
   return e
 }
 
-const NUM = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
 function summary(errors) {
   const bySection = SECTIONS.map((s) => ({ ...s, n: Object.values(errors).filter((x) => x.section === s.id).length })).filter((s) => s.n)
   const total = bySection.reduce((a, s) => a + s.n, 0)
   const parts = bySection.map((s) => `${s.n} in ${s.label}`)
   const list = parts.length > 1 ? `${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}` : parts[0]
-  return `${NUM[total] ?? total} field${total > 1 ? 's' : ''} need${total > 1 ? '' : 's'} your attention: ${list}.`
+  return `${total} field${total > 1 ? 's' : ''} need${total > 1 ? '' : 's'} your attention: ${list}.`
 }
 
 /* ── Piezas de la pantalla ───────────────────────────────────────────── */

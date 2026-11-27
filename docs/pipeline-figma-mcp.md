@@ -85,7 +85,7 @@ código postal, emails, dígitos de control del IBAN) y, si hay errores:
 - cada campo muestra su mensaje;
 - las pestañas con errores llevan el icono a la derecha y el lector oye
   "has errors";
-- la ButtonBar resume ("Three fields need your attention: 2 in Identification
+- la ButtonBar resume ("3 fields need your attention: 2 in Identification
   and 1 in Bank details.") en una región viva;
 - se abre la primera pestaña con errores y el foco va a su primer campo.
 
@@ -118,3 +118,12 @@ oculto, componentes dudosos, títulos, datos, validación y comportamiento.
   TopNavigation.
 - Poner Device = Desktop en las 6 pantallas antes de leerlas.
 - Medir lo mismo: llamadas, tokens, piezas identificadas sin suponer.
+
+## Textos igualados Figma ↔ código (27/11)
+
+Tras la pasada A, los mensajes de error diferían entre Figma y React. Se queda lo
+mejor de cada uno, en Figma, en el código y en el brief:
+
+- Tax ID: "Enter a valid tax ID: 9 characters, for example B12345674." (del brief).
+- Legal name: "Enter the legal name as it appears on official documents." (de Figma).
+- Resumen de la ButtonBar: con cifra, "3 fields need your attention: …" (de Figma).
