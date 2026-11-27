@@ -3587,11 +3587,11 @@ The logo of a company or organisation: no frame, no background, a fixed height a
 ## Video
 
 **Group:** Data
-**Figma:** 🟢 Video page → `Video` set (Size 16:9 / 4:3 / 9:16 × Fit Contain / Cover; Show Caption, Caption; Play = Icon Button nested and locked) · frame *Video — How to use & Accessibility* (24/11)
+**Figma:** 🟢 Video page → `Video` set (12 variants: Playback Click to play / Autoplay loop × Size 16:9 / 4:3 / 9:16 × Fit Contain / Cover; Show Caption, Caption; Play and Pause = Icon Buttons nested and locked) · frame *Video — How to use & Accessibility* (24/11, Playback 27/11)
 **Code:** `src/components/Video.jsx` (atom)
 **Tokens:** `--ds-video-*` (`video/all/*`)
 
-A video in a fixed-ratio frame with a poster, a centred Play button and an optional caption. Never autoplays; captions required.
+A video in a fixed-ratio frame with a poster and an optional caption. By default it never plays by itself: people start it with Play, and then the browser's own controls take over. Only short silent animations can use Autoplay loop: they loop muted, with a Pause button.
 
 ## How to use
 
@@ -3600,22 +3600,25 @@ A video in a fixed-ratio frame with a poster, a centred Play button and an optio
 **When to use**
 - A screen recording or a short clip that shows how something works: a flow in an app, a prototype, an interaction
 - A phone recording → Size 9:16; a desktop recording → 16:9 or 4:3
-- Not for still images (use Image) or decorative background loops: Video never plays by itself
+- Not for still images (use Image) or decorative background loops. Video doesn't play by itself, except with Playback = Autoplay loop (see Accessibility)
+- Playback Autoplay loop only for a short animation with no sound that explains something also told in text (a figure in a case study, a how-it-works loop). It always keeps a Pause button
 
 **Properties**
 - Size → 16:9 · 4:3 · 9:16 (fixed ratio, width from the layout)
 - Fit → Contain (default, recordings that must be seen whole) · Cover (fills the frame, crops)
+- Playback → Click to play (default: poster + Play in the centre) · Autoplay loop (short silent animation that loops, with a small Pause button in the corner)
 - Poster → select the Poster layer and replace its image fill with a still of the video
 - Show Caption + Caption → optional text below
-- Play is a nested Icon Button (Default, Primary, Large, play): locked, don't change it
+- Play is a nested Icon Button (Default, Primary, Large, play) and Pause one (Default, Primary, Small, pause): locked, don't change them
 
 **Behaviour**
 - Before playing: the poster with a Play button (Icon Button, Primary, Large) in the centre
 - After Play: the button goes away and the browser's own controls take over (pause, time, volume, subtitles, full screen)
+- Autoplay loop: plays muted and loops; Pause (Icon Button, Primary, Small, 8 from the bottom-right corner) pauses and resumes it; with Reduce motion on, only the poster shows
 - Grey bg/subtle shows while the poster loads, and around the video with Contain
 
 **Sizing**
-- Radius 4 (borderRadius/sm) · frame → caption 8 · caption body sm, fg/body/subtle · Play button 64
+- Radius 4 (borderRadius/sm) · frame → caption 8 · caption body sm, fg/body/subtle · Play button 64 · Pause button 40, 8 from the bottom-right corner
 
 ### Developers · React
 
@@ -3623,29 +3626,31 @@ A video in a fixed-ratio frame with a poster, a centred Play button and an optio
 - `import { Video } from './components/Video'`
 
 **Props**
-- size '16:9'|'4:3'|'9:16' ('16:9' by default), fit 'contain'|'cover' ('contain' by default), src, poster, captionsSrc (.vtt, required), captionsLang ('en'), label (accessible name, required), playLabel ('Play video'), caption, showCaption (true), className, style
+- playback 'click'|'autoplay-loop' ('click' by default), size '16:9'|'4:3'|'9:16' ('16:9' by default), fit 'contain'|'cover' ('contain' by default), src, poster, captionsSrc (.vtt, required with playback="click"), captionsLang ('en'), label (accessible name, required), playLabel ('Play video'), pauseLabel ('Pause animation'), caption, showCaption (true), className, style
 
 **Example**
 - `<Video size="16:9" src={demo} poster={still} captionsSrc={demoVtt} label="Checkout flow demo" caption="Checkout in three steps" />`
 - `<Video size="9:16" src={phoneRec} poster={phoneStill} captionsSrc={phoneVtt} label="App navigation on a phone" />`
 - `<Video size="4:3" fit="cover" src={clip} poster={still} captionsSrc={clipVtt} label="Team workshop" showCaption={false} />`
+- `<Video playback="autoplay-loop" src={anim} poster={animStill} label="An agent scans the index and picks one component" caption="How the agent chooses" />`
 
 **Tokens**
-- `--ds-video-gap` · `--ds-video-frame-border-radius` · `--ds-video-frame-bg-generic` · `--ds-video-caption-fg-generic` (Play button: Icon Button tokens)
+- `--ds-video-gap` · `--ds-video-frame-border-radius` · `--ds-video-frame-bg-generic` · `--ds-video-caption-fg-generic` · `--ds-video-inset-pause-generic` (8, code only: Pause is absolutely positioned in Figma) (Play and Pause: Icon Button tokens)
 
 ### AI agents · Claude Code
 
 **Pick it when**
 - Showing a screen recording or a short clip
+- `playback="autoplay-loop"`: a short animation with no sound that shows something also told in text
 
 **Don't pick it when**
 - It's a still picture → Image · it's a decorative background loop (not supported)
 
 **Composition rules**
-- Always pass label (what the video shows) and captionsSrc; never ship a video without subtitles
+- Always pass label (what the video shows); pass captionsSrc for every video with sound (required with playback="click")
 - Pick the size by the recording: 9:16 for phones, 16:9 or 4:3 for desktop
-- Never add autoplay; if a page ever needs it, it must be muted and have a visible pause button
-- Screen-reader strings (label, playLabel) in English and passed by prop, never hardcoded
+- Never add autoplay by hand: only `playback="autoplay-loop"`, and only for short silent animations (it is always muted, loops and keeps a visible Pause)
+- Screen-reader strings (label, playLabel, pauseLabel) in English and passed by prop, never hardcoded
 
 ## Images
 
@@ -3665,12 +3670,12 @@ Figma: 🟢 Video page → frame *Creating videos and posters* (`33139:686`), li
 
 **Don't**
 - Screen recordings with UI to be read only full width (1216, 16:9, Fit Contain). Never in a half column or a card
-- No autoplay, no music beds, no flashing (more than 3 flashes a second)
+- No autoplay (except Autoplay loop for short silent animations), no music beds, no flashing (more than 3 flashes a second)
 
 ### Developers · React
 
 - size (16:9, 4:3, 9:16) and fit (contain default, cover). src = the MP4, poster = the still, captionsSrc = the `.vtt` (required), label = accessible name
-- Never autoplay; the Play button starts it and then the native controls take over
+- Never autoplay with playback="click" (default); the Play button starts it and then the native controls take over. `playback="autoplay-loop"` only for short silent animations (no `.vtt` needed)
 
 ### AI agents · Claude Code
 
@@ -3696,14 +3701,23 @@ Figma: 🟢 Video page → frame *Creating videos and posters* (`33139:686`), li
 **Caption**
 - Visible to everyone; it complements the accessible name, it doesn't replace it or the subtitles
 
+**When Play can be left out (Playback = Autoplay loop)**
+- Only for short animations with no sound that show something also told in text (caption or accessible name). Never for recordings, demos or anything with sound
+- Always a visible Pause button: a loop runs longer than 5 seconds, so people must be able to stop it (WCAG 2.2.2 Pause, Stop, Hide)
+- Reduce motion on → poster only, no playback (WCAG 2.3.3)
+- Nothing flashes more than 3 times per second (WCAG 2.3.1)
+- No subtitles needed (no sound), but the accessible name says what happens, step by step
+
 ### Developers · React
 
 **Semantics**
-- `<video>` with `<track kind="captions" default>`; aria-label from label; no autoplay; with a caption, `<figure>` + `<figcaption>`
+- `<video>` with `<track kind="captions" default>`; aria-label from label; no autoplay, except playback="autoplay-loop"; with a caption, `<figure>` + `<figcaption>`
 - Play is a real `<button>` (Icon Button) named by playLabel
+- playback="autoplay-loop": `<video autoplay muted loop playsinline>`, no audio, no captions track; Pause is a real `<button>` with aria-pressed (pauseLabel / playLabel); prefers-reduced-motion: reduce → no autoplay, poster only (the button shows Play, so people can still start it)
 
 **Keyboard**
 - Before playing, the video is out of the tab order and Play is the only control; Enter or Space starts it and focus moves to the video and its native controls
+- Autoplay loop: the video stays out of the tab order; Pause is the only control, Enter or Space pauses and resumes, and focus stays on the button
 
 **Known gaps**
 - None
@@ -3711,12 +3725,12 @@ Figma: 🟢 Video page → frame *Creating videos and posters* (`33139:686`), li
 ### AI agents · Claude Code
 
 **Check before shipping**
-- npm run a11y passes for every size and fit
-- Every Video has label and captionsSrc; the .vtt exists and loads
-- No autoplay anywhere; Play is reachable with the keyboard and has a visible focus ring
+- npm run a11y passes for both playbacks, every size and fit
+- Every Video has label; captionsSrc is required except with playback="autoplay-loop" (no sound); the .vtt exists and loads
+- No autoplay except playback="autoplay-loop"; Play and Pause are reachable with the keyboard and have a visible focus ring
 
 **Don't**
-- Don't write screen-reader texts inside the component; pass label and playLabel
+- Don't write screen-reader texts inside the component; pass label, playLabel and pauseLabel
 
 
 ## Divider

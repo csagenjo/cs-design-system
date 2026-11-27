@@ -743,6 +743,18 @@ export default function Gallery({ mode, theme = 'retail' }) {
             ))}
           </Row>
         ))}
+        {['contain', 'cover'].map((f) => (
+          <Row key={`loop-${f}`}>
+            {[['16:9', '15rem'], ['4:3', '12.5rem'], ['9:16', '7.5rem']].map(([s, w]) => (
+              <div key={s} style={{ width: w }}>
+                <Video playback="autoplay-loop" size={s} fit={f}
+                  src="/video-autoplay-sample.mp4" poster="/video-autoplay-sample.jpg"
+                  label={`A marker moves from the first step to the third and back (${s} ${f})`}
+                  caption={`Autoplay loop ${s} · fit="${f}"`} />
+              </div>
+            ))}
+          </Row>
+        ))}
       </Section>
 
       <Section name="InlineNotification">

@@ -383,7 +383,7 @@ const SIDEBAR = [
   { id: 'drafts', label: 'Drafts' },
 ]
 
-/* ?screen=video — un caso de cada tamaño de Video (24/11), con el .vtt de ejemplo de public/. */
+/* ?screen=video — un caso de cada tamaño de Video (24/11), con el .vtt de ejemplo de public/, y un Autoplay loop (27/11). */
 function VideoScreen() {
   const widths = { '16:9': '30rem', '4:3': '24rem', '9:16': '12rem' }
   return (
@@ -393,6 +393,13 @@ function VideoScreen() {
           <Video size={s} captionsSrc="/video-sample.vtt" label={`Sample video ${s}`} caption={`Video ${s}`} />
         </div>
       ))}
+      {/* Autoplay loop (27/11): animación corta y muda, 16:9 Contain, con Pause en la esquina. */}
+      <div style={{ width: '30rem' }}>
+        <Video playback="autoplay-loop" size="16:9" fit="contain"
+          src="/video-autoplay-sample.mp4" poster="/video-autoplay-sample.jpg"
+          label="A marker moves from the first step to the third, lighting up each step, and back"
+          caption="Autoplay loop · 16:9 · Contain" />
+      </div>
     </div>
   )
 }
