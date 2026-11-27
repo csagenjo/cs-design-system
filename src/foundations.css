@@ -12,10 +12,23 @@
    no tiene sentido repetir en cada componente. Afectan solo a elementos con
    clase `ds-*` — nunca al resto de la app.
 
+   0. Tipografía           — Nunito (fontFamily/default), servida en local
    1. Movimiento reducido  — WCAG 2.3.3 (AAA, buena práctica)
    2. Colores forzados     — WCAG 2.4.7 / 1.4.11 en Windows High Contrast
    Ver docs/accessibility-audit.md §J y §F.
    ───────────────────────────────────────────────────────────────────────────── */
+
+
+/* 0. Tipografía ────────────────────────────────────────────────────────────
+   La fuente del sistema es Nunito (Figma fontFamily/default). Se carga desde el
+   paquete @fontsource-variable/nunito (todos los pesos, sin CDN) y se aplica a
+   las piezas `ds-*`; lo que va dentro la hereda (los controles usan
+   font-family: inherit). */
+@import '@fontsource-variable/nunito';
+
+:where([class^="ds-"], [class*=" ds-"]) {
+  font-family: var(--ds-fontFamily-default);
+}
 
 
 /* 1. Movimiento reducido ────────────────────────────────────────────────────
